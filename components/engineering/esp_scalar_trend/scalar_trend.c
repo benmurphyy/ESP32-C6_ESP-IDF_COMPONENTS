@@ -167,8 +167,8 @@ esp_err_t scalar_trend_init(const uint16_t samples_size, scalar_trend_handle_t *
     ESP_GOTO_ON_FALSE( out_handle->samples, ESP_ERR_NO_MEM, err_out_handle, TAG, "no memory for scalar trend handle samples, scalar trend handle initialization failed" );
 
     /* calculate absolute critical t value and copy configuration */
-    out_handle->critical_t           = fabs(t_inv(0.05/2, samples_size - 2));
-    out_handle->samples_size         = samples_size;
+    out_handle->critical_t   = fabs(t_inv(0.05/2, samples_size - 2));
+    out_handle->samples_size = samples_size;
 
     /* set output instance */
     *scalar_trend_handle = out_handle;
