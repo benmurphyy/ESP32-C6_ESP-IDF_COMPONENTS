@@ -1,0 +1,17 @@
+{
+    "idf.portWin": "COM3",
+    "files.associations": {
+        "tlv493d_task.h": "c",
+        "sgp4x_task.h": "c",
+        "ahtxx.h": "c",
+        "esp_log.h": "c",
+        "task.h": "c",
+        "bmp280_task.h": "c",
+        "hmc5883l.h": "c",
+        "freertos.h": "c",
+        "ltr390uv_task.h": "c"
+    },
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ]
+}

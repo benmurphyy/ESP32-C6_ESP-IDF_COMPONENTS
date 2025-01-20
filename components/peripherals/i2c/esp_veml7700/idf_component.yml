@@ -1,0 +1,6 @@
+version: "0.1.1"
+description: VEML7700 device driver for ESP-IDF.
+url: https://github.com/espressif/esp-bsp/tree/master/components/esp_veml7700
+dependencies:
+  idf:
+    version: ">5.3.0"

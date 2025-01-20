@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "esp-idf/sensirion_gas_index_algorithm",
+		"source" : "components/engineering/sensirion_gas_index_algorithm"
+	}
+}
