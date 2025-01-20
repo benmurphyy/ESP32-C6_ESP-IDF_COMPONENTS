@@ -68,8 +68,7 @@ const char* pressure_tendency_code_to_string(const pressure_tendency_codes_t cod
     }
 }
 
-esp_err_t pressure_tendency_init(const uint16_t samples_size, 
-                            pressure_tendency_handle_t *pressure_tendency_handle) {
+esp_err_t pressure_tendency_init(const uint16_t samples_size, pressure_tendency_handle_t *pressure_tendency_handle) {
     esp_err_t  ret = ESP_OK;
 
     /* validate arguments */
@@ -175,7 +174,7 @@ esp_err_t pressure_tendency_reset(pressure_tendency_handle_t pressure_tendency_h
     return ESP_OK;
 }
 
-esp_err_t pressure_tendency_del(pressure_tendency_handle_t pressure_tendency_handle) {
+esp_err_t pressure_tendency_delete(pressure_tendency_handle_t pressure_tendency_handle) {
     /* validate arguments */
     ESP_ARG_CHECK(pressure_tendency_handle);
     if(pressure_tendency_handle->samples) 

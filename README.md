@@ -105,8 +105,10 @@ Supported components include the following:
 
 - `Kalman Motion`: Kalman filter for motion based use-cases that leverage sensors such as a gyroscope and/or accelorometer.
 - `Sensirion Gas Index Algorithm`: A gas index algorithm for Sensirion air quality sensors.  This code base is maintained by Sensirion.
+- `Pressure Tendency`: A pressure tendency algorithm that monitors if pressure is rising, falling, or steady over the past 3-hours.
+- `Scalar Trend`: A scalar trend algorithm that monitors if a scalar variable is rising, falling, or steady over the past hour.
 
-See Sensirion SGP4X example on how the gas index algorithm is utilized with this sensor.
+See the Sensirion SGP4X example on how the gas index algorithm is utilized with this sensor.
 
 # ESP Schedule Components
 The ESP `time-into-interval` component synchronizes a FreeRTOS task with the system clock and user-defined time interval for temporal conditional scenarios.

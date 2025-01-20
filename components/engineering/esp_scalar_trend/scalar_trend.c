@@ -152,8 +152,7 @@ const char* scalar_trend_code_to_string(const scalar_trend_codes_t code) {
     }
 }
 
-esp_err_t scalar_trend_init(const uint16_t samples_size, 
-                            scalar_trend_handle_t *scalar_trend_handle) {
+esp_err_t scalar_trend_init(const uint16_t samples_size, scalar_trend_handle_t *scalar_trend_handle) {
     esp_err_t  ret = ESP_OK;
 
     /* validate arguments */
@@ -363,7 +362,7 @@ esp_err_t scalar_trend_reset(scalar_trend_handle_t scalar_trend_handle) {
     return ESP_OK;
 }
 
-esp_err_t scalar_trend_del(scalar_trend_handle_t scalar_trend_handle) {
+esp_err_t scalar_trend_delete(scalar_trend_handle_t scalar_trend_handle) {
     /* validate arguments */
     ESP_ARG_CHECK(scalar_trend_handle);
     if(scalar_trend_handle->samples) 

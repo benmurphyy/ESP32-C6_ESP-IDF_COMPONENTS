@@ -96,8 +96,7 @@ const char* scalar_trend_code_to_string(const scalar_trend_codes_t code);
  * @param scalar_trend_handle Scalar trend handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t scalar_trend_init(const uint16_t samples_size, 
-                            scalar_trend_handle_t *scalar_trend_handle);
+esp_err_t scalar_trend_init(const uint16_t samples_size, scalar_trend_handle_t *scalar_trend_handle);
 /**
  * @brief Analyzes historical samples and scalar Trend appears after one (1) 
  * hour of operation. The trend codes are a forecast of the 3-hr change based 
@@ -128,7 +127,7 @@ esp_err_t scalar_trend_reset(scalar_trend_handle_t scalar_trend_handle);
  * @param scalar_trend_handle Scalar trend handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t scalar_trend_del(scalar_trend_handle_t scalar_trend_handle);
+esp_err_t scalar_trend_delete(scalar_trend_handle_t scalar_trend_handle);
 
 
 #ifdef __cplusplus

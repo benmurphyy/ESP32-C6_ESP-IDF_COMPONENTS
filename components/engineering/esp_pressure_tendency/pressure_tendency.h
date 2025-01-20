@@ -124,7 +124,7 @@ esp_err_t pressure_tendency_reset(pressure_tendency_handle_t pressure_tendency_h
  * @param pressure_tendency_handle Pressure tendency handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t pressure_tendency_del(pressure_tendency_handle_t pressure_tendency_handle);
+esp_err_t pressure_tendency_delete(pressure_tendency_handle_t pressure_tendency_handle);
 
 
 #ifdef __cplusplus
