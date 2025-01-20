@@ -4,7 +4,7 @@ Thanks for visiting and hope you find something useful.  The code base is mainta
 # ESP32-S3 Components
 PlatformIO components with examples for the ESP32-S3 chipset.  This is a revised release utilizing esp-idf suggested design patterns through `handles` and using `i2c_master.h` for I2C transactions.  The drivers are organized in the components folder within the Visual Studio Code and PlatformIO environment.
 
-The folder structure for components, and its associated example, are outlined as follows:
+The folder structure for components, and associated example, are outlined as follows:
 ```
 |--components
 |  |
@@ -37,7 +37,7 @@ The folder structure for components, and its associated example, are outlined as
 |
 |- platformio.ini
 ```
-To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src` folder and go to the `void app_main( void )` subroutine to enable the device of interest.
+To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src` folder and go to the `void app_main( void )` subroutine to enable the device of interest.  The example code is located in the `[sensor]_task.h` and `[sensor]_task.c` files.
 ```
 /**
  * @brief Main application entry point.
@@ -96,7 +96,7 @@ Supported drivers include the following device peripherals:
  - OWB: Maxim-Integrated DS18B20
  - SPI: Analog Devices MAX31865 - Work in Progress
  
-Above peripheral drivers have been tested, validated with a logic analyzer where applicable, and still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
+The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and the above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 
 # ESP Engineering Components
 The ESP engineering components are generally used in conjunction with peripheral components for data processing.
