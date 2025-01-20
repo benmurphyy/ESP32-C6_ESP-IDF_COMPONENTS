@@ -122,7 +122,4 @@ Supported components include the following:
 - `NVS Ext`: A component extension that simplifies the process of reading and writing information to non-volatile storage (NVS).  See readme file in the component folder.
 
 
-
-
-
 Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
