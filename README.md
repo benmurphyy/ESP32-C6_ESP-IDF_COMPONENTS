@@ -37,7 +37,7 @@ The folder structure for components, and its associated example, are outlined as
 |
 |- platformio.ini
 ```
-To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src`folder and go to the `void app_main( void )` subroutine to enable the device of interest.
+To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src` folder and go to the `void app_main( void )` subroutine to enable the device of interest.
 ```
 /**
  * @brief Main application entry point.
@@ -67,7 +67,7 @@ void app_main( void ) {
 Once these initial steps are done, compile and upload the program, assuming your development board is equivalent to the `esp32s3box`.  Otherwise, you will have to configure the environment for your development board and recompile before uploading the program.
 
 # ESP Peripheral Components (ADC, I2C, OWB, SPI)
-The ESP peripheral components accomodate ADC, I2C, OWB, and SPI device interfacing supported by various device manufacturers.
+The ESP peripheral components accommodate ADC, I2C, OWB, and SPI device interfacing supported by various device manufacturers.
 
 Supported drivers include the following device peripherals:
  
@@ -103,8 +103,8 @@ The ESP engineering components are generally used in conjunction with peripheral
 
 Supported components include the following:
 
-- `Kalman Motion`: Kalman filter for motion based use-cases that leverage sensors such as a gyroscope and/or accelorometer.
-- `Sensirion Gas Index Algorithm`: A gas index algorithm for Sensirion air quality sensors.  This code base is maintained by Sensirion.
+- `Kalman Motion`: Kalman filter for motion based use-cases that leverage sensors such as a gyroscope and/or accelerometer.
+- `Sensirion Gas Index Algorithm`: A gas index algorithm for the Sensirion air quality sensors.  This code base is maintained by Sensirion.
 - `Pressure Tendency`: A pressure tendency algorithm that monitors if pressure is rising, falling, or steady over the past 3-hours.
 - `Scalar Trend`: A scalar trend algorithm that monitors if a scalar variable is rising, falling, or steady over the past hour.
 
