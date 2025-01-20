@@ -1,10 +1,15 @@
 dependencies:
+  esp_driver_i2c_ext:
+    component_hash: null
+    source:
+      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals
+      type: local
+    version: '*'
   idf:
+    component_hash: null
     source:
       type: idf
     version: 5.3.1
-direct_dependencies:
-- idf
-manifest_hash: e64a986f05541fcaaa213d1022801ddd51ddf22db5dedd02decf71da5a5688f8
-target: esp32
-version: 2.0.0
+manifest_hash: a120ff2ea09935153ea532db393c145144e0532f51f7eb7eb60a55c91c4fa4c7
+target: esp32s3
+version: 1.0.0

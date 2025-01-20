@@ -1,11 +1,11 @@
 version: "0.0.1"
-description: "ESP-IDF VEML7700 I2C device driver component."
+description: "ESP-IDF SSD1306 I2C device driver component."
 license: "MIT"
-url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_veml7700"
+url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ssd1306"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 tags:
-  - VEML7700
+  - SSD1306
   - I2C
   - ESP-IDF
   - ESP32

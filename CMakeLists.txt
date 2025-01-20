@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16.0)
 list(APPEND EXTRA_COMPONENT_DIRS
-                    "components/engineering/kalman_motion" 
+                    "components/engineering/esp_kalman_motion" 
+                    "components/engineering/esp_pressure_tendency" 
+                    "components/engineering/esp_scalar_trend" 
                     "components/engineering/sensirion_gas_index_algorithm" 
 
                     "components/peripherals/adc/esp_s12sd"
