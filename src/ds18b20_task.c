@@ -52,13 +52,14 @@ void owb0_ds18b20_task( void *pvParameters ) {
     // instantiate 1-wire device iterator handle
     ESP_ERROR_CHECK( onewire_new_device_iter(owb0_bus_hdl, &dev_iter_hdl) );
     //
-    // get next 1-wire device
+    // get 1-wire device
     if (onewire_device_iter_get_next(dev_iter_hdl, &dev) == ESP_OK) { // found a new device, let's check if we can upgrade it to a DS18B20
         // check if the device is a ds18b20, if so, return the ds18b20 handle
         if (owb_ds18b20_init(&dev, &dev_cfg, &dev_hdl) == ESP_OK) {
             ESP_LOGI(APP_TAG, "found a ds18b20, address: %016llX", dev.address);
         } else {
             ESP_LOGI(APP_TAG, "found an unknown device, address: %016llX", dev.address);
+            assert(dev.address);
         }
     }
     //
