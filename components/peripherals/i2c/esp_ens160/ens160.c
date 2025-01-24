@@ -99,7 +99,7 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "ens160";
 
@@ -117,7 +117,7 @@ static const struct I2C_ENS160_AQI_UBA_ROW_TAG i2c_ens160_aqi_uba_definition_tab
 };
 
 /*
-* functions and subrountines
+* functions and subroutines
 */
 
 /**
@@ -554,9 +554,9 @@ esp_err_t i2c_ens160_get_raw_measurement(i2c_ens160_handle_t ens160_handle, i2c_
     } while (gpr_data_is_ready == false);
 
     /* attempt i2c gpr data read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte64(ens160_handle->i2c_dev_handle, I2C_ENS160_REG_GPR_READ0_R, &rx), err, TAG, "read resitance signal gpr data registers for raw measurement failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte64(ens160_handle->i2c_dev_handle, I2C_ENS160_REG_GPR_READ0_R, &rx), err, TAG, "read resistance signal gpr data registers for raw measurement failed" );
 
-    /* convert gpr raw resitance and set resitance signals */
+    /* convert gpr raw resistance and set resistance signals */
     data->hp0_ri = I2C_ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[0] | ((uint16_t)rx[1] << 8)));
     data->hp1_ri = I2C_ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[2] | ((uint16_t)rx[3] << 8)));
     data->hp2_ri = I2C_ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[4] | ((uint16_t)rx[5] << 8)));
@@ -566,9 +566,9 @@ esp_err_t i2c_ens160_get_raw_measurement(i2c_ens160_handle_t ens160_handle, i2c_
     vTaskDelay(pdMS_TO_TICKS(I2C_ENS160_CMD_DELAY_MS));
 
     /* attempt i2c baseline data read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte64(ens160_handle->i2c_dev_handle, I2C_ENS160_REG_DATA_BL_R, &rx), err, TAG, "read baseline data registers for raw measurement failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte64(ens160_handle->i2c_dev_handle, I2C_ENS160_REG_DATA_BL_R, &rx), err, TAG, "read baseline resistance data registers for raw measurement failed" );
 
-    /* convert baseline raw resitance and set resitance signals */
+    /* convert baseline raw resistance and set resistance signals */
     data->hp0_bl = I2C_ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[0] | ((uint16_t)rx[1] << 8)));
     data->hp1_bl = I2C_ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[2] | ((uint16_t)rx[3] << 8)));
     data->hp2_bl = I2C_ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[4] | ((uint16_t)rx[5] << 8)));

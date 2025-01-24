@@ -1,5 +1,5 @@
 # Sensirion SHT4X Series of Sensors
-This driver was developed for the Sensirion SHT4X series of sensors.  Information on features and functionality is documented and can be found in the `sht4x.h` header file.
+This driver was developed for the Sensirion SHT4X series of sensors.  Information on features and functionality are documented and can be found in the `sht4x.h` header file.
 
 Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
 ```

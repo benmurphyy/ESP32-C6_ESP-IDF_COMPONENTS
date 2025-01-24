@@ -49,8 +49,8 @@ extern "C" {
 */
 #define I2C_ENS160_SCL_SPEED_HZ             UINT32_C(100000)  //!< ens160 I2C default clock frequency (100KHz)
 
-#define I2C_ENS160_ADDR_LO                  UINT8_C(0x52)   //!< ens160 I2C address ADDR pin low
-#define I2C_ENS160_ADDR_HI                  UINT8_C(0x53)   //!< ens160 I2C address ADDR pin high
+#define I2C_ENS160_DEV_ADDR_LO              UINT8_C(0x52)   //!< ens160 I2C address ADDR pin low
+#define I2C_ENS160_DEV_ADDR_HI              UINT8_C(0x53)   //!< ens160 I2C address ADDR pin high
 
 #define I2C_ENS160_TVOC_MIN                 UINT16_C(0)         /*!< ens160 tvoc minimum in ppb (section 5.1) */
 #define I2C_ENS160_TVOC_MAX                 UINT16_C(65000)     /*!< ens160 tvoc maximum in ppb (section 5.1) */
@@ -79,7 +79,7 @@ extern "C" {
  * @brief Macro that initializes `i2c_ens160_config_t` to default configuration settings.
  */
 #define I2C_ENS160_CONFIG_DEFAULT {                                             \
-        .dev_config.device_address  = I2C_ENS160_ADDR_HI,                       \
+        .dev_config.device_address  = I2C_ENS160_DEV_ADDR_HI,                   \
         .dev_config.scl_speed_hz    = I2C_ENS160_SCL_SPEED_HZ,                  \
         .irq_enabled                = false,                                    \
         .irq_data_enabled           = false,                                    \
@@ -88,7 +88,7 @@ extern "C" {
         .irq_pin_polarity           = I2C_ENS160_INT_PIN_POLARITY_ACTIVE_LO }
 
 /*
- * ENS160 enumerator and sructure declerations
+ * ENS160 enumerator and sructure declarations
 */
 
 /**
@@ -347,7 +347,7 @@ esp_err_t i2c_ens160_get_part_id_register(i2c_ens160_handle_t ens160_handle);
 esp_err_t i2c_ens160_init(i2c_master_bus_handle_t bus_handle, const i2c_ens160_config_t *ens160_config, i2c_ens160_handle_t *ens160_handle);
 
 /**
- * @brief Reads caculated air quality measurements from ENS160.
+ * @brief Reads calculated air quality measurements from ENS160.
  * 
  * @param[in] ens160_handle ENS160 device handle.
  * @param[out] data ENS160 air quality data structure.
