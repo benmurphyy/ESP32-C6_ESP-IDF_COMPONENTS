@@ -48,11 +48,26 @@ void owb0_ds18b20_task( void *pvParameters ) {
     owb_ds18b20_handle_t         dev_hdl;
     onewire_device_iter_handle_t dev_iter_hdl;
     onewire_device_t             dev;
+    // owb ds18b20 device detection
+    onewire_device_t             devs[5];
+    uint8_t                      devs_size = sizeof(devs) / sizeof(devs[0]);
+    uint8_t                      devs_count = 0;
+    //
+    // detect ds18b20 devices on 1-wire bus
+    esp_err_t ret = owb_ds18b20_detect(owb0_bus_hdl, devs, devs_size, &devs_count);
+    if(ret == ESP_OK) {
+        ESP_LOGW(APP_TAG, "ds18b20 devices detected: %u", devs_count);
+        for(uint8_t i = 0; i < devs_count; i++) {
+            ESP_LOGI(APP_TAG, "ds18b20(%u), address: %016llX", i, devs[i].address);
+        }
+    } else {
+        ESP_LOGE(APP_TAG, "ds18b20 device detect failed (%s)", esp_err_to_name(ret));
+    }
     //
     // instantiate 1-wire device iterator handle
     ESP_ERROR_CHECK( onewire_new_device_iter(owb0_bus_hdl, &dev_iter_hdl) );
     //
-    // get 1-wire device
+    // get 1-wire device - assumes there is only one ds18b20 device on the bus
     if (onewire_device_iter_get_next(dev_iter_hdl, &dev) == ESP_OK) { // found a new device, let's check if we can upgrade it to a DS18B20
         // check if the device is a ds18b20, if so, return the ds18b20 handle
         if (owb_ds18b20_init(&dev, &dev_cfg, &dev_hdl) == ESP_OK) {
@@ -65,6 +80,14 @@ void owb0_ds18b20_task( void *pvParameters ) {
     //
     // free device iter handle
     ESP_ERROR_CHECK( onewire_del_device_iter(dev_iter_hdl) );
+    //
+    // get/set/get resolution
+    owb_ds18b20_resolutions_t dev_reso;
+    ESP_ERROR_CHECK( owb_ds18b20_get_resolution(dev_hdl, &dev_reso) );
+    ESP_LOGW(APP_TAG, "ds18b20 get resolution: %d", dev_reso);
+    ESP_ERROR_CHECK( owb_ds18b20_set_resolution(dev_hdl, OWB_DS18B20_RESOLUTION_11BIT) );
+    ESP_ERROR_CHECK( owb_ds18b20_get_resolution(dev_hdl, &dev_reso) );
+    ESP_LOGW(APP_TAG, "ds18b20 get resolution: %d", dev_reso);
     //
     // validate device handle
     if(dev_hdl == NULL) {
@@ -82,7 +105,7 @@ void owb0_ds18b20_task( void *pvParameters ) {
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ds18b20 device read failed (%s)", esp_err_to_name(result));
         } else {
-            ESP_LOGI(APP_TAG, "temperature:     %.2f C", temperature);
+            ESP_LOGI(APP_TAG, "temperature:     %.2f°C", temperature);
         }
         //
         ESP_LOGI(APP_TAG, "######################## DS18B20 - END ###########################");
