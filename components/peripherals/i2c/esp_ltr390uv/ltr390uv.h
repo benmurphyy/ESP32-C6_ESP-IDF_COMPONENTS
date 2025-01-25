@@ -27,6 +27,11 @@
  * @{
  *
  * ESP-IDF driver for ltr390uv sensor
+ * 
+ * Source references:
+ * https://github.com/esphome/esphome/blob/dev/esphome/components/ltr390/ltr390.cpp
+ * https://github.com/DFRobot/DFRobot_LTR390UV/blob/master/DFRobot_LTR390UV.cpp
+ * 
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -133,7 +138,7 @@ typedef union __attribute__((packed)) {
         bool                            sensor_enabled:1;           /*!< ltr390uv light sensor (ALS/UVS) standby when false and active when true (bit:1) */
         uint8_t                         reserved2:1;                /*!< reserved                       (bit:2)  */
         i2c_ltr390uv_operation_modes_t  operation_mode:1;           /*!< ltr390uv operation mode (ALS or UVS) (bit:3) */
-        bool                            software_reset_enabled:1;   /*!< ltr390uv software reset triggerred when true (bit:4) */
+        bool                            software_reset_enabled:1;   /*!< ltr390uv software reset triggered when true (bit:4) */
         uint8_t                         reserved3:3;                /*!< reserved                       (bit:5-7) */
     } bits;
     uint8_t reg;
