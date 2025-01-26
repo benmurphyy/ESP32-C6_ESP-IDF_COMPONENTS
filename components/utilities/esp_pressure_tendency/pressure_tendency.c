@@ -33,8 +33,6 @@
  *
  * MIT Licensed as described in the file LICENSE
  * 
- * 
- * 
  */
 #include <esp_check.h>
 #include <esp_log.h>
@@ -48,8 +46,9 @@
  * macro definitions
 */
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "pressure_tendency";
 
@@ -78,7 +77,7 @@ esp_err_t pressure_tendency_init(const uint16_t samples_size, pressure_tendency_
     pressure_tendency_handle_t out_handle = (pressure_tendency_handle_t)calloc(1, sizeof(pressure_tendency_t)); 
     ESP_GOTO_ON_FALSE( out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for pressure tendency handle, pressure tendency handle initialization failed" );
 
-    /* validate memory availability for sampples array */
+    /* validate memory availability for samples array */
     out_handle->samples = (float*)calloc(samples_size, sizeof(float));
     ESP_GOTO_ON_FALSE( out_handle->samples, ESP_ERR_NO_MEM, err_out_handle, TAG, "no memory for pressure tendency handle samples, pressure tendency handle initialization failed" );
 

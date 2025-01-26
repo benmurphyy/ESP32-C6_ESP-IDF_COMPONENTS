@@ -98,8 +98,8 @@ Supported drivers include the following device peripherals:
  
 The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and the above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 
-# ESP Engineering Components
-The ESP engineering components are generally used in conjunction with peripheral components for data processing.
+# ESP Utilities Components
+The ESP Utilities components are generally used in conjunction with peripheral components for data processing.
 
 Supported components include the following:
 

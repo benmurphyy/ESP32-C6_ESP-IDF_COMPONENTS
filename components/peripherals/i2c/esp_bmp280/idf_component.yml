@@ -15,6 +15,6 @@ dependencies:
   esp_driver_i2c_ext: 
     version: ">=0.0.1"
     override_path: "../../" # use component in a local directory, not from registry
-    url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_driver_i2c_ext"
+    #url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_driver_i2c_ext"
 maintainers:
  - Eric Gionet <gionet.c.eric@gmail.com>

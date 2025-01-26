@@ -2,14 +2,20 @@ dependencies:
   esp_driver_i2c_ext:
     component_hash: null
     source:
-      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals
+      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_driver_i2c_ext
       type: local
-    version: '*'
+    version: 0.0.1
   idf:
     component_hash: null
     source:
       type: idf
     version: 5.3.1
-manifest_hash: a120ff2ea09935153ea532db393c145144e0532f51f7eb7eb60a55c91c4fa4c7
+  onewire_bus:
+    component_hash: null
+    source:
+      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\owb\onewire_bus
+      type: local
+    version: 1.0.2
+manifest_hash: 73e31aae4c0ebcf599de1b447565db261efa79606266af286be4c7f2c52fee58
 target: esp32s3
 version: 1.0.0

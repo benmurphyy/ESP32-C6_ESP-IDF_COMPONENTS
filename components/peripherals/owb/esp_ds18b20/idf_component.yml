@@ -15,6 +15,6 @@ dependencies:
   onewire_bus: 
     version: ">=0.0.1"
     override_path: "../../" # use component in a local directory, not from registry
-    url: "https://github.com/espressif/idf-extra-components/tree/e84bd3e48864b5fa1402244f095d68fa61d71fa5/onewire_bus"
+    #url: "https://github.com/espressif/idf-extra-components/tree/e84bd3e48864b5fa1402244f095d68fa61d71fa5/onewire_bus"
 maintainers:
  - Eric Gionet <gionet.c.eric@gmail.com>
