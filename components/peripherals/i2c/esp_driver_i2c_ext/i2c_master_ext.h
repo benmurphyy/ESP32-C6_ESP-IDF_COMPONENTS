@@ -41,6 +41,7 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <driver/i2c_master.h>
+#include <esp_mac.h>
 
 
 
@@ -101,6 +102,10 @@ typedef union {
 } i2c_bytes_to_int16_t;
 
 
+uint32_t get_chip_id(void);
+
+uint64_t get_efuse_mac(void);
+
 /**
  * @brief Converts `uint8_t` type to binary as a string.
  * 
@@ -125,31 +130,122 @@ const char *uint16_to_binary(uint16_t n);
  */
 const char *uint32_to_binary(uint32_t n);
 
-uint16_t bytes_to_uint16_t(const uint8_t* bytes);
+/**
+ * @brief Converts byte array to `uint16_t` data-type.
+ * 
+ * @param bytes Byte array to convert to `uint16_t` data-type.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ * @return uint16_t Converted byte array as `uint16_t` data-type.
+ */
+uint16_t bytes_to_uint16(const uint8_t* bytes, bool little_endian);
 
-uint32_t bytes_to_uint32_t(const uint8_t* bytes);
+/**
+ * @brief Converts byte array to `uint32_t` data-type.
+ * 
+ * @param bytes Byte array to convert to `uint32_t` data-type.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ * @return uint32_t Converted byte array as `uint32_t` data-type.
+ */
+uint32_t bytes_to_uint32(const uint8_t* bytes, bool little_endian);
 
-uint64_t bytes_to_uint64_t(const uint8_t* bytes);
+/**
+ * @brief Converts byte array to `uint64_t` data-type.
+ * 
+ * @param bytes Byte array to convert to `uint64_t` data-type.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ * @return uint64_t Converted byte array as `uint64_t` data-type.
+ */
+uint64_t bytes_to_uint64(const uint8_t* bytes, bool little_endian);
 
-int16_t bytes_to_int16_t(const uint8_t* bytes);
+/**
+ * @brief Converts byte array to `int16_t` data-type.
+ * 
+ * @param bytes Byte array to convert to `int16_t` data-type.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ * @return int16_t Converted byte array as `int16_t` data-type.
+ */
+int16_t bytes_to_int16(const uint8_t* bytes, bool little_endian);
 
-int32_t bytes_to_int32_t(const uint8_t* bytes);
+/**
+ * @brief Converts byte array to `int32_t` data-type.
+ * 
+ * @param bytes Byte array to convert to `int32_t` data-type.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ * @return int32_t Converted byte array as `int32_t` data-type.
+ */
+int32_t bytes_to_int32(const uint8_t* bytes, bool little_endian);
 
-int64_t bytes_to_int64_t(const uint8_t* bytes);
+/**
+ * @brief Converts byte array to `int64_t` data-type.
+ * 
+ * @param bytes Byte array to convert to `int64_t` data-type.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ * @return int64_t Converted byte array as `int64_t` data-type.
+ */
+int64_t bytes_to_int64(const uint8_t* bytes, bool little_endian);
 
-void uint16_t_to_bytes(const uint16_t value, uint8_t* bytes);
+/**
+ * @brief Converts `uint16_t` data-type to a byte array.
+ * 
+ * @param value `uint16_t` data-type to convert to byte array.
+ * @param bytes Converted `uint16_t` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void uint16_to_bytes(const uint16_t value, uint8_t* bytes, bool little_endian);
 
-void uint32_t_to_bytes(const uint32_t value, uint8_t* bytes);
+/**
+ * @brief Converts `uint32_t` data-type to a byte array.
+ * 
+ * @param value `uint32_t` data-type to convert to byte array.
+ * @param bytes Converted `uint32_t` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void uint32_to_bytes(const uint32_t value, uint8_t* bytes, bool little_endian);
 
-void uint64_t_to_bytes(const uint64_t value, uint8_t* bytes);
+/**
+ * @brief Converts `uint64_t` data-type to a byte array.
+ * 
+ * @param value `uint64_t` data-type to convert to byte array.
+ * @param bytes Converted `uint64_t` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void uint64_to_bytes(const uint64_t value, uint8_t* bytes, bool little_endian);
 
-void int16_t_to_bytes(const int16_t value, uint8_t* bytes);
+/**
+ * @brief Converts `int16_t` data-type to a byte array.
+ * 
+ * @param value `int16_t` data-type to convert to byte array.
+ * @param bytes Converted `int16_t` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void int16_to_bytes(const int16_t value, uint8_t* bytes, bool little_endian);
 
-void int32_t_to_bytes(const int32_t value, uint8_t* bytes);
+/**
+ * @brief Converts `int32_t` data-type to a byte array.
+ * 
+ * @param value `int32_t` data-type to convert to byte array.
+ * @param bytes Converted `int32_t` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void int32_to_bytes(const int32_t value, uint8_t* bytes, bool little_endian);
 
-void int64_t_to_bytes(const int64_t value, uint8_t* bytes);
+/**
+ * @brief Converts `int64_t` data-type to a byte array.
+ * 
+ * @param value `int64_t` data-type to convert to byte array.
+ * @param bytes Converted `int64_t` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian);
 
-void copy_bytes(const uint8_t* source, uint8_t* destination, uint16_t data_length);
+/**
+ * @brief Copies bytes from source byte array to destination byte array.
+ * 
+ * @param source Byte array source to copy from.
+ * @param destination Byte array destination to copy to.
+ * @param size Size of destination byte array.
+ */
+void copy_bytes(const uint8_t* source, uint8_t* destination, uint16_t size);
 
 /**
  * @brief I2C master bus device detection that prints the address (1-byte) of detected devices.
