@@ -68,8 +68,26 @@ extern "C" {
         .repeat_mode                   = I2C_SHT4X_REPEAT_HIGH, }
 
 /*
- * SHT4X enumerator and sructure declerations
+ * SHT4X enumerator and structure declarations
 */
+
+typedef union {
+    uint8_t  bytes[6];
+    struct temperature_tag {
+        union temperature_data_tag {
+            uint8_t  bytes[3];
+            uint16_t value;
+            uint8_t  crc;
+        } temperature_data;
+    } temperature;
+    struct humidity_tag {
+        union humidity_data_tag {
+            uint8_t  bytes[3];
+            uint16_t value;
+            uint8_t  crc;
+        } humidity_data;
+    } humidity;
+} i2c_sht4x_data_t;
 
 /** 
  * @brief SHT4X measurement heater modes enumerator.

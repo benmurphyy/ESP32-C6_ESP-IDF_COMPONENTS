@@ -101,34 +101,83 @@ typedef union {
     int16_t  value;
 } i2c_bytes_to_int16_t;
 
-
+/**
+ * @brief Generates a unique chip identifier from e-fuse mac address.
+ * 
+ * @return uint32_t Chip identifier.
+ */
 uint32_t get_chip_id(void);
 
+/**
+ * @brief Gets the e-fuse mac address.
+ * 
+ * @return uint64_t Mac address.
+ */
 uint64_t get_efuse_mac(void);
 
 /**
  * @brief Converts `uint8_t` type to binary as a string.
  * 
- * @param n `uint8_t` to transform to binary string.
+ * @param value `uint8_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint8_to_binary(uint8_t n);
+const char *uint8_to_binary(const uint8_t value);
+
+/**
+ * @brief Converts `int8_t` type to binary as a string.
+ * 
+ * @param value `int8_t` to transform to binary string.
+ * @return char* binary string representation.
+ */
+const char *int8_to_binary(const int8_t value);
 
 /**
  * @brief Converts `uint16_t` type to binary as a string.
  * 
- * @param n `uint16_t` to transform to binary string.
+ * @param value `uint16_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint16_to_binary(uint16_t n);
+const char *uint16_to_binary(const uint16_t value);
+
+/**
+ * @brief Converts `int16_t` type to binary as a string.
+ * 
+ * @param value `int16_t` to transform to binary string.
+ * @return char* binary string representation.
+ */
+const char *int16_to_binary(const int16_t value);
 
 /**
  * @brief Converts `uint32_t` type to binary as a string.
  * 
- * @param n `uint32_t` to transform to binary string.
+ * @param value `uint32_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint32_to_binary(uint32_t n);
+const char *uint32_to_binary(const uint32_t value);
+
+/**
+ * @brief Converts `int32_t` type to binary as a string.
+ * 
+ * @param value `int32_t` to transform to binary string.
+ * @return char* binary string representation.
+ */
+const char *int32_to_binary(const int32_t value);
+
+/**
+ * @brief Converts `uint64_t` type to binary as a string.
+ * 
+ * @param value `uint64_t` to transform to binary string.
+ * @return char* binary string representation.
+ */
+const char *uint64_to_binary(const uint64_t value);
+
+/**
+ * @brief Converts `int64_t` type to binary as a string.
+ * 
+ * @param value `int64_t` to transform to binary string.
+ * @return char* binary string representation.
+ */
+const char *int64_to_binary(const int64_t value);
 
 /**
  * @brief Converts byte array to `uint16_t` data-type.
@@ -245,7 +294,7 @@ void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian);
  * @param destination Byte array destination to copy to.
  * @param size Size of destination byte array.
  */
-void copy_bytes(const uint8_t* source, uint8_t* destination, uint16_t size);
+void copy_bytes(const uint8_t* source, uint8_t* destination, size_t size);
 
 /**
  * @brief I2C master bus device detection that prints the address (1-byte) of detected devices.

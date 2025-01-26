@@ -42,9 +42,10 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-#define UINT8_TO_BINARY_BUFFER_SIZE     (9)     // 8 bits + 1 for null terminator
-#define UINT16_TO_BINARY_BUFFER_SIZE    (17)    // 16 bits + 1 for null ter
-#define UINT32_TO_BINARY_BUFFER_SIZE    (33)    // 32 bits + 1 for null ter
+#define UINT8_TO_BINARY_BUFFER_SIZE     (8 + 1)     // 8 bits + 1 for null terminator
+#define UINT16_TO_BINARY_BUFFER_SIZE    (16 + 1)    // 16 bits + 1 for null terminator
+#define UINT32_TO_BINARY_BUFFER_SIZE    (32 + 1)    // 32 bits + 1 for null terminator
+#define UINT64_TO_BINARY_BUFFER_SIZE    (64 + 1)    // 64 bits + 1 for null terminator
 
 /*
  * macro definitions
@@ -52,10 +53,10 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 
-static char uint8_to_binary_buffer[UINT8_TO_BINARY_BUFFER_SIZE]; 
-static char uint16_to_binary_buffer[UINT16_TO_BINARY_BUFFER_SIZE]; 
-static char uint32_to_binary_buffer[UINT32_TO_BINARY_BUFFER_SIZE]; 
-
+static char bit8_to_binary_buffer[UINT8_TO_BINARY_BUFFER_SIZE]; 
+static char bit16_to_binary_buffer[UINT16_TO_BINARY_BUFFER_SIZE]; 
+static char bit32_to_binary_buffer[UINT32_TO_BINARY_BUFFER_SIZE]; 
+static char bit64_to_binary_buffer[UINT64_TO_BINARY_BUFFER_SIZE]; 
 
 /*
 * static constant declarations
@@ -80,85 +81,191 @@ uint64_t get_efuse_mac(void) {
     return chipmacid;
 }
 
-const char *uint8_to_binary(uint8_t n) {
-    uint8_to_binary_buffer[8] = '\0';
+const char *uint8_to_binary(const uint8_t value) {
+    bit8_to_binary_buffer[8] = '\0';
+    uint8_t n = value;
 
     for (int i = 7; i >= 0; --i) {
-        uint8_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        bit8_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return uint8_to_binary_buffer;
+    return bit8_to_binary_buffer;
 }
 
-const char *uint16_to_binary(uint16_t n) {
-    uint16_to_binary_buffer[16] = '\0';
+const char *int8_to_binary(const int8_t value) {
+    bit8_to_binary_buffer[8] = '\0';
+    int8_t n = value;
+
+    for (int i = 7; i >= 0; --i) {
+        bit8_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        n >>= 1; // shift to the next bit
+    }
+
+    return bit8_to_binary_buffer;
+}
+
+const char *uint16_to_binary(const uint16_t value) {
+    bit16_to_binary_buffer[16] = '\0';
+    uint16_t n = value;
 
     for (int i = 15; i >= 0; --i) {
-        uint16_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        bit16_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return uint16_to_binary_buffer;
+    return bit16_to_binary_buffer;
 }
 
-const char *uint32_to_binary(uint32_t n) {
-    uint32_to_binary_buffer[32] = '\0';
+const char *int16_to_binary(const int16_t value) {
+    bit16_to_binary_buffer[16] = '\0';
+    int16_t n = value;
+
+    for (int i = 15; i >= 0; --i) {
+        bit16_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        n >>= 1; // shift to the next bit
+    }
+
+    return bit16_to_binary_buffer;
+}
+
+const char *uint32_to_binary(const uint32_t value) {
+    bit32_to_binary_buffer[32] = '\0';
+    uint32_t n = value;
 
     for (int i = 31; i >= 0; --i) {
-        uint32_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        bit32_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return uint32_to_binary_buffer;
+    return bit32_to_binary_buffer;
 }
 
+const char *int32_to_binary(const int32_t value) {
+    bit32_to_binary_buffer[32] = '\0';
+    int32_t n = value;
+
+    for (int i = 31; i >= 0; --i) {
+        bit32_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        n >>= 1; // shift to the next bit
+    }
+
+    return bit32_to_binary_buffer;
+}
+
+const char *uint64_to_binary(const uint64_t value) {
+    bit64_to_binary_buffer[64] = '\0';
+    uint64_t n = value;
+
+    for (int i = 63; i >= 0; --i) {
+        bit64_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        n >>= 1; // shift to the next bit
+    }
+
+    return bit64_to_binary_buffer;
+}
+
+const char *int64_to_binary(const int64_t value) {
+    bit64_to_binary_buffer[64] = '\0';
+    int64_t n = value;
+
+    for (int i = 63; i >= 0; --i) {
+        bit64_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        n >>= 1; // shift to the next bit
+    }
+
+    return bit64_to_binary_buffer;
+}
 
 uint16_t bytes_to_uint16(const uint8_t* bytes, bool little_endian) {
     if(little_endian == true) {
-        return (uint16_t)bytes[0] | ((uint16_t)bytes[1] << 8);
+        return  (uint16_t)bytes[0] | 
+                ((uint16_t)bytes[1] << 8);
     } else {
-        return ((uint16_t)bytes[0] << 8) | (uint16_t)bytes[1];
+        return  ((uint16_t)bytes[0] << 8) | 
+                (uint16_t)bytes[1];
     }
 }
 
 uint32_t bytes_to_uint32(const uint8_t* bytes, bool little_endian) {
     if(little_endian == true) {
-        return (uint32_t)bytes[0] | ((uint32_t)bytes[1] << 8) | ((uint32_t)bytes[2] << 16) | ((uint32_t)bytes[3] << 24);
+        return  (uint32_t)bytes[0] | 
+                ((uint32_t)bytes[1] << 8) | 
+                ((uint32_t)bytes[2] << 16) | 
+                ((uint32_t)bytes[3] << 24);
     } else {
-        return ((uint32_t)bytes[0] << 24) | ((uint32_t)bytes[1] << 16) | ((uint32_t)bytes[2] << 8) | (uint32_t)bytes[3];
+        return  ((uint32_t)bytes[0] << 24) | 
+                ((uint32_t)bytes[1] << 16) | 
+                ((uint32_t)bytes[2] << 8) | 
+                (uint32_t)bytes[3];
     }
 }
 
 uint64_t bytes_to_uint64(const uint8_t* bytes, bool little_endian) {
     if(little_endian == true) {
-        return (uint64_t)bytes[0] | ((uint64_t)bytes[1] << 8) | ((uint64_t)bytes[2] << 16) | ((uint64_t)bytes[3] << 24) | ((uint64_t)bytes[4] << 32) | ((uint64_t)bytes[5] << 40) | ((uint64_t)bytes[6] << 48) | ((uint64_t)bytes[7] << 56);
+        return  (uint64_t)bytes[0] | 
+                ((uint64_t)bytes[1] << 8) | 
+                ((uint64_t)bytes[2] << 16) | 
+                ((uint64_t)bytes[3] << 24) | 
+                ((uint64_t)bytes[4] << 32) | 
+                ((uint64_t)bytes[5] << 40) | 
+                ((uint64_t)bytes[6] << 48) | 
+                ((uint64_t)bytes[7] << 56);
     } else {
-        return ((uint64_t)bytes[0] << 56) | ((uint64_t)bytes[1] << 48) | ((uint64_t)bytes[2] << 40) | ((uint64_t)bytes[3] << 32) | ((uint64_t)bytes[4] << 24) | ((uint64_t)bytes[5] << 16) | ((uint64_t)bytes[6] << 8) | (uint64_t)bytes[7];
+        return  ((uint64_t)bytes[0] << 56) | 
+                ((uint64_t)bytes[1] << 48) | 
+                ((uint64_t)bytes[2] << 40) | 
+                ((uint64_t)bytes[3] << 32) | 
+                ((uint64_t)bytes[4] << 24) | 
+                ((uint64_t)bytes[5] << 16) | 
+                ((uint64_t)bytes[6] << 8) | 
+                (uint64_t)bytes[7];
     }
 }
 
 int16_t bytes_to_int16(const uint8_t* bytes, bool little_endian) {
     if(little_endian == true) {
-        return (int16_t)bytes[0] | ((int16_t)bytes[1] << 8);
+        return  (int16_t)bytes[0] | 
+                ((int16_t)bytes[1] << 8);
     } else {
-        return ((int16_t)bytes[0] << 8) | (int16_t)bytes[1];
+        return  ((int16_t)bytes[0] << 8) | 
+                (int16_t)bytes[1];
     }
 }
 
 int32_t bytes_to_int32(const uint8_t* bytes, bool little_endian) {
     if(little_endian == true) {
-        return (int32_t)bytes[0] | ((int32_t)bytes[1] << 8) | ((int32_t)bytes[2] << 16) | ((int32_t)bytes[3] << 24);
+        return  (int32_t)bytes[0] | 
+                ((int32_t)bytes[1] << 8) | 
+                ((int32_t)bytes[2] << 16) | 
+                ((int32_t)bytes[3] << 24);
     } else {
-        return ((int32_t)bytes[0] << 24) | ((int32_t)bytes[1] << 16) | ((int32_t)bytes[2] << 8) | (int32_t)bytes[3];
+        return  ((int32_t)bytes[0] << 24) | 
+                ((int32_t)bytes[1] << 16) | 
+                ((int32_t)bytes[2] << 8) | 
+                (int32_t)bytes[3];
     }
 }
 
 int64_t bytes_to_int64(const uint8_t* bytes, bool little_endian) {
     if(little_endian == true) {
-        return (int64_t)bytes[0] | ((int64_t)bytes[1] << 8) | ((int64_t)bytes[2] << 16) | ((int64_t)bytes[3] << 24) | ((int64_t)bytes[4] << 32) | ((int64_t)bytes[5] << 40) | ((int64_t)bytes[6] << 48) | ((int64_t)bytes[7] << 56);
+        return  (int64_t)bytes[0] | 
+                ((int64_t)bytes[1] << 8) | 
+                ((int64_t)bytes[2] << 16) | 
+                ((int64_t)bytes[3] << 24) | 
+                ((int64_t)bytes[4] << 32) | 
+                ((int64_t)bytes[5] << 40) | 
+                ((int64_t)bytes[6] << 48) | 
+                ((int64_t)bytes[7] << 56);
     } else {
-        return ((int64_t)bytes[0] << 56) | ((int64_t)bytes[1] << 48) | ((int64_t)bytes[2] << 40) | ((int64_t)bytes[3] << 32) | ((int64_t)bytes[4] << 24) | ((int64_t)bytes[5] << 16) | ((int64_t)bytes[6] << 8) | (int64_t)bytes[7];
+        return  ((int64_t)bytes[0] << 56) | 
+                ((int64_t)bytes[1] << 48) | 
+                ((int64_t)bytes[2] << 40) | 
+                ((int64_t)bytes[3] << 32) | 
+                ((int64_t)bytes[4] << 24) | 
+                ((int64_t)bytes[5] << 16) | 
+                ((int64_t)bytes[6] << 8) | 
+                (int64_t)bytes[7];
     }
 }
 
@@ -254,10 +361,8 @@ void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void copy_bytes(const uint8_t* source, uint8_t* destination, uint16_t size) {
-    for(uint16_t i = 0; i < size; i ++) {
-        destination[i] = source[i];
-    }
+void copy_bytes(const uint8_t* source, uint8_t* destination, size_t size) {
+    memcpy(destination, source, size);
 }
 
 

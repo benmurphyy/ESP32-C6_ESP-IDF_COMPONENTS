@@ -96,7 +96,7 @@
 
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "ccs811";
 

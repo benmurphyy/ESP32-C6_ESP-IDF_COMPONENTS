@@ -27,6 +27,9 @@
  * @{
  *
  * ESP-IDF driver for as7341 11-channel spectrometer
+ * 
+ * https://github.com/DFRobot/DFRobot_AS7341/blob/master/DFRobot_AS7341.cpp
+ * https://github.com/adafruit/Adafruit_AS7341/blob/master/Adafruit_AS7341.cpp
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *

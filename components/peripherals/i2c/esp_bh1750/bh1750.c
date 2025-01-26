@@ -190,7 +190,7 @@ esp_err_t i2c_bh1750_get_ambient_light(i2c_bh1750_handle_t bh1750_handle, float 
     size_t delay_ticks          = 0;
     esp_err_t ret               = ESP_OK;
     i2c_uint8_t i2c_tx_buffer   = { 0 };
-    i2c_uint16_t i2c_rx_buffer  = { 0, 0 };
+    i2c_uint16_t i2c_rx_buffer  = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( bh1750_handle );
@@ -219,6 +219,7 @@ esp_err_t i2c_bh1750_get_ambient_light(i2c_bh1750_handle_t bh1750_handle, float 
 
     /* convert bh1750 results to engineering units of measure (lux) */
     uint16_t val = i2c_rx_buffer[0] << 8 | i2c_rx_buffer[1];
+    //uint16_t val = bytes_to_uint16(i2c_rx_buffer, false);
     *ambient_light = (float)(val * 10) / 12;
 
     /* set handle power status */

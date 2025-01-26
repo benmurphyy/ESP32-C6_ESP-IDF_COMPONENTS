@@ -26,7 +26,7 @@
  *
  * ESP-IDF driver for AS7341 11-channel spectrometer (350nm to 1000nm)
  *
- * Ported from esp-open-rtos
+ * 
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
