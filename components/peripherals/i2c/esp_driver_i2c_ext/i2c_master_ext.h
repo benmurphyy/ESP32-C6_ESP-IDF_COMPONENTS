@@ -75,31 +75,49 @@ typedef uint8_t             i2c_uint8_t[I2C_UINT8_SIZE];
 typedef union {
     uint8_t bytes[4];
     float   value;
-} i2c_bytes_to_float_t;
+} bytes_to_float_t;
+
+/* 8-byte conversion to double */
+typedef union {
+    uint8_t bytes[8];
+    double  value;
+} bytes_to_double_t;
+
+/* 8-byte conversion to uint64_t */
+typedef union {
+    uint8_t  bytes[8];
+    uint64_t value;
+} bytes_to_uint64_t;
+
+/* 8-byte conversion to int64_t */
+typedef union {
+    uint8_t  bytes[8];
+    int64_t  value;
+} bytes_to_int64_t;
 
 /* 4-byte conversion to uint32_t */
 typedef union {
     uint8_t  bytes[4];
     uint32_t value;
-} i2c_bytes_to_uint32_t;
+} bytes_to_uint32_t;
 
 /* 4-byte conversion to int32_t */
 typedef union {
     uint8_t  bytes[4];
     int32_t  value;
-} i2c_bytes_to_int32_t;
+} bytes_to_int32_t;
 
 /* 2-byte conversion to uint16_t */
 typedef union {
     uint8_t  bytes[2];
     uint16_t value;
-} i2c_bytes_to_uint16_t;
+} bytes_to_uint16_t;
 
 /* 2-byte conversion to int16_t */
 typedef union {
     uint8_t  bytes[2];
     int16_t  value;
-} i2c_bytes_to_int16_t;
+} bytes_to_int16_t;
 
 /**
  * @brief Generates a unique chip identifier from e-fuse mac address.
@@ -286,6 +304,24 @@ void int32_to_bytes(const int32_t value, uint8_t* bytes, bool little_endian);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
 void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian);
+
+/**
+ * @brief Converts `float` data-type to a byte array.
+ * 
+ * @param value `float` data-type to convert to byte array.
+ * @param bytes Converted `float` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void float_to_bytes(const float value, uint8_t* bytes, bool little_endian);
+
+/**
+ * @brief Converts `double` data-type to a byte array.
+ * 
+ * @param value `double` data-type to convert to byte array.
+ * @param bytes Converted `double` data-type as byte array.
+ * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
+ */
+void double_to_bytes(const double value, uint8_t* bytes, bool little_endian);
 
 /**
  * @brief Copies bytes from source byte array to destination byte array.

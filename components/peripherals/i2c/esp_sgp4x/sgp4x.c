@@ -142,10 +142,10 @@ static inline uint16_t i2c_sgp4x_get_command_duration_ms(const uint16_t command)
  * @brief Converts temperature to compensation ticks.
  * 
  * @param[in] temperature Temperature in degrees celcius.
- * @return i2c_bytes_to_uint16_t Temperature compensation ticks
+ * @return bytes_to_uint16_t Temperature compensation ticks
  */
-static inline i2c_bytes_to_uint16_t i2c_sgp4x_temperature_to_ticks(const float temperature) {
-    const i2c_bytes_to_uint16_t ticks = {.value = (uint16_t)(temperature + 45) * 65535 / 175};
+static inline bytes_to_uint16_t i2c_sgp4x_temperature_to_ticks(const float temperature) {
+    const bytes_to_uint16_t ticks = {.value = (uint16_t)(temperature + 45) * 65535 / 175};
     return ticks;
 }
 
@@ -153,10 +153,10 @@ static inline i2c_bytes_to_uint16_t i2c_sgp4x_temperature_to_ticks(const float t
  * @brief Converts humidity to compensation ticks.
  * 
  * @param[in] humidity Humidity in precentage.
- * @return i2c_bytes_to_uint16_t Humidity compensation ticks.
+ * @return bytes_to_uint16_t Humidity compensation ticks.
  */
-static inline i2c_bytes_to_uint16_t i2c_sgp4x_humidity_to_ticks(const float humidity) {
-    const i2c_bytes_to_uint16_t ticks = {.value = (uint16_t)llround(humidity * 65535 / 100)};
+static inline bytes_to_uint16_t i2c_sgp4x_humidity_to_ticks(const float humidity) {
+    const bytes_to_uint16_t ticks = {.value = (uint16_t)llround(humidity * 65535 / 100)};
     return ticks;
 }
 
@@ -168,7 +168,7 @@ static inline i2c_bytes_to_uint16_t i2c_sgp4x_humidity_to_ticks(const float humi
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_sgp4x_write_command(i2c_sgp4x_handle_t sgp4x_handle, const uint16_t command) {
-    const i2c_bytes_to_uint16_t cmd_bytes = { .value = command };
+    const bytes_to_uint16_t     cmd_bytes = { .value = command };
     const i2c_uint16_t          tx_buffer = { cmd_bytes.bytes[1], cmd_bytes.bytes[0] };
 
     /* validate arguments */
@@ -200,15 +200,15 @@ static inline esp_err_t i2c_sgp4x_get_serial_number_register(i2c_sgp4x_handle_t 
     ESP_RETURN_ON_ERROR( i2c_master_receive(sgp4x_handle->i2c_dev_handle, rx_buffer, I2C_UINT72_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to read to i2c device handle, read serial number failed");
 
     /* set 2-byte serial number parts */
-    const i2c_bytes_to_uint16_t sn_1 = {
+    const bytes_to_uint16_t sn_1 = {
         .bytes[0] = rx_buffer[0],
         .bytes[1] = rx_buffer[1]
     };
-    const i2c_bytes_to_uint16_t sn_2 = {
+    const bytes_to_uint16_t sn_2 = {
         .bytes[0] = rx_buffer[3],
         .bytes[1] = rx_buffer[4]
     };
-    const i2c_bytes_to_uint16_t sn_3 = {
+    const bytes_to_uint16_t sn_3 = {
         .bytes[0] = rx_buffer[6],
         .bytes[1] = rx_buffer[7]
     };
@@ -284,10 +284,10 @@ esp_err_t i2c_sgp4x_init(i2c_master_bus_handle_t bus_handle, const i2c_sgp4x_con
 
 esp_err_t i2c_sgp4x_execute_compensated_conditioning(i2c_sgp4x_handle_t sgp4x_handle, const float temperature, const float humidity, uint16_t *sraw_voc) {
     const uint8_t               rx_retry_max   = 5;
-    const i2c_bytes_to_uint16_t command        = { .value = I2C_SGP4X_CMD_EXEC_CONDITIONING };
+    const bytes_to_uint16_t     command        = { .value = I2C_SGP4X_CMD_EXEC_CONDITIONING };
     esp_err_t                   ret            = ESP_OK;
     uint8_t                     rx_retry_count = 0;
-    i2c_bytes_to_uint16_t       crc8_buffer    = { .value = 0 };
+    bytes_to_uint16_t           crc8_buffer    = { .value = 0 };
     i2c_uint64_t                tx_buffer      = {};
     i2c_uint24_t                rx_buffer      = {};
 
@@ -305,8 +305,8 @@ esp_err_t i2c_sgp4x_execute_compensated_conditioning(i2c_sgp4x_handle_t sgp4x_ha
     }
 
     /* convert compensation parameters to ticks */
-    const i2c_bytes_to_uint16_t temperature_ticks = i2c_sgp4x_temperature_to_ticks(temperature);
-    const i2c_bytes_to_uint16_t humidity_ticks    = i2c_sgp4x_humidity_to_ticks(humidity);
+    const bytes_to_uint16_t temperature_ticks = i2c_sgp4x_temperature_to_ticks(temperature);
+    const bytes_to_uint16_t humidity_ticks    = i2c_sgp4x_humidity_to_ticks(humidity);
 
     /* calculate crc8 for compensation parameter ticks - big-endian order */
     crc8_buffer.bytes[0] = temperature_ticks.bytes[1];
@@ -365,10 +365,10 @@ esp_err_t i2c_sgp4x_execute_conditioning(i2c_sgp4x_handle_t sgp4x_handle, uint16
 
 esp_err_t i2c_sgp4x_measure_compensated_raw_signals(i2c_sgp4x_handle_t sgp4x_handle, const float temperature, const float humidity, uint16_t *sraw_voc, uint16_t *sraw_nox) {
     const uint8_t               rx_retry_max   = 5;
-    const i2c_bytes_to_uint16_t command        = { .value = I2C_SGP4X_CMD_MEAS_RAW_SIGNALS };
+    const bytes_to_uint16_t     command        = { .value = I2C_SGP4X_CMD_MEAS_RAW_SIGNALS };
     esp_err_t                   ret            = ESP_OK;
     uint8_t                     rx_retry_count = 0;
-    i2c_bytes_to_uint16_t       crc8_buffer    = { .value = 0 };
+    bytes_to_uint16_t           crc8_buffer    = { .value = 0 };
     i2c_uint64_t                tx_buffer      = {};
     i2c_uint48_t                rx_buffer      = {};
 
@@ -386,8 +386,8 @@ esp_err_t i2c_sgp4x_measure_compensated_raw_signals(i2c_sgp4x_handle_t sgp4x_han
     }
 
     /* convert compensation parameters to ticks */
-    const i2c_bytes_to_uint16_t temperature_ticks = i2c_sgp4x_temperature_to_ticks(temperature);
-    const i2c_bytes_to_uint16_t humidity_ticks    = i2c_sgp4x_humidity_to_ticks(humidity);
+    const bytes_to_uint16_t temperature_ticks = i2c_sgp4x_temperature_to_ticks(temperature);
+    const bytes_to_uint16_t humidity_ticks    = i2c_sgp4x_humidity_to_ticks(humidity);
 
     /* calculate crc8 for compensation parameter ticks - big-endian order */
     crc8_buffer.bytes[0] = temperature_ticks.bytes[1];

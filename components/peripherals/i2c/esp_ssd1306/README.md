@@ -1,19 +1,19 @@
 # Generic SSD1306 (128x32 and 128x64) OLED Display
-This driver was developed for generic SSD1306 OLED displays.  Information on features and functionality are documented and can be found in the `ssd1306.h` header file.  The SSD1306 component is a compact and simplified driver that is compatible with 128x64 and 128x32 displays.  There is three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more.  This component has one font implemented at this time (i.e. 8x8 basic latin + control + extended latin) but ideal for most use-cases.
+This esp-idf driver was developed for generic SSD1306 OLED displays.  Information on features and functionality are documented and can be found in the `ssd1306.h` header file.  The SSD1306 component is a compact and simplified driver compatible with 128x64 and 128x32 OLED displays.  There are three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more.  This component has one font implemented now (i.e. 8x8 basic Latin + control + extended Latin) but is ideal for most use cases.
 
-The example initializes a 128x64 SSD1306 display and demonstrates the following features:
+The example initializes a 128x64 SSD1306 OLED display and demonstrates the following features:
 - Display large text (x3)
 - Display file receive and transmit bitmap icons
 - Display medium text (x2)
 - Display text
-- Display count down timer
+- Display countdown timer
 - Display text scrolling up
 - Display text scrolling down
 - Display text paging down and up
-- Display text scrolling horizontally from right and from left
+- Display text scrolling horizontally from right and left
 - Display text scrolling vertically downwards and upwards
 - Display bitmap images
-- Display invert text and fadeout
+- Display inverted text and fadeout
 
 Generic 128x64 SSD1306 OLED display example:
 ```

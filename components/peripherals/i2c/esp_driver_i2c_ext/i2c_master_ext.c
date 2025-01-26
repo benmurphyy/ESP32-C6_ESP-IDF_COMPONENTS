@@ -361,11 +361,27 @@ void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
+void float_to_bytes(const float value, uint8_t* bytes, bool little_endian) {
+    union { uint32_t u32_value; float float32; } tmp = { .float32 = value };
+    if(little_endian == true) {
+        uint32_to_bytes(tmp.u32_value, bytes, true);
+    } else {
+        uint32_to_bytes(tmp.u32_value, bytes, false);
+    }
+}
+
+void double_to_bytes(const double value, uint8_t* bytes, bool little_endian) {
+    union { uint64_t u64_value; double double64; } tmp = { .double64 = value };
+    if(little_endian == true) {
+        uint64_to_bytes(tmp.u64_value, bytes, true);
+    } else {
+        uint64_to_bytes(tmp.u64_value, bytes, false);
+    }
+}
+
 void copy_bytes(const uint8_t* source, uint8_t* destination, size_t size) {
     memcpy(destination, source, size);
 }
-
-
 
 
 
@@ -455,7 +471,7 @@ esp_err_t i2c_master_bus_read_byte24(i2c_master_dev_handle_t handle, const uint8
 }
 
 esp_err_t i2c_master_bus_read16_byte24(i2c_master_dev_handle_t handle, const uint16_t reg_addr, i2c_uint24_t *const data) {
-    const i2c_bytes_to_uint16_t tx = { .value = reg_addr };
+    const bytes_to_uint16_t tx = { .value = reg_addr };
 
     ESP_ARG_CHECK( handle && data ); // ignore `reg_addr` given a range of 0x00 to 0xff is acceptable
 
@@ -506,7 +522,7 @@ esp_err_t i2c_master_bus_read_byte48(i2c_master_dev_handle_t handle, const uint8
 }
 
 esp_err_t i2c_master_bus_read16_byte48(i2c_master_dev_handle_t handle, const uint16_t reg_addr, i2c_uint48_t *const data) {
-    const i2c_bytes_to_uint16_t tx = { .value = reg_addr };
+    const bytes_to_uint16_t tx = { .value = reg_addr };
 
     ESP_ARG_CHECK( handle && data ); // ignore `reg_addr` given a range of 0x00 to 0xff is acceptable
 
@@ -530,7 +546,7 @@ esp_err_t i2c_master_bus_read_byte64(i2c_master_dev_handle_t handle, const uint8
 }
 
 esp_err_t i2c_master_bus_read16_byte64(i2c_master_dev_handle_t handle, const uint16_t reg_addr, i2c_uint64_t *const data) {
-    const i2c_bytes_to_uint16_t tx = { .value = reg_addr };
+    const bytes_to_uint16_t tx = { .value = reg_addr };
 
     ESP_ARG_CHECK( handle && data ); // ignore `reg_addr` given a range of 0x00 to 0xff is acceptable
 
@@ -554,7 +570,7 @@ esp_err_t i2c_master_bus_write_cmd(i2c_master_dev_handle_t handle, const uint8_t
 }
 
 esp_err_t i2c_master_bus_write16_cmd(i2c_master_dev_handle_t handle, const uint16_t command) {
-    const i2c_bytes_to_uint16_t tx = { .value = command };
+    const bytes_to_uint16_t tx = { .value = command };
 
     ESP_ARG_CHECK( handle ); // ignore `command` given a range of 0x00 to 0xff is acceptable
 

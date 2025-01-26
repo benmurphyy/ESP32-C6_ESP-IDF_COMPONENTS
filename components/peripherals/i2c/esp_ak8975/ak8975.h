@@ -67,7 +67,7 @@ extern "C" {
     .dev_config.device_address = I2C_AK8975_DEV_ADDR_CAD1_0_CAD0_0, }
 
 /*
- * AK8975 enumerator and sructure declerations
+ * AK8975 enumerator and structure declarations
 */
 
 /**
@@ -144,9 +144,9 @@ typedef struct {
  * @brief AK8975 axes data registers (HX, HZ, HZ) structure.
  */
 typedef struct {
-    i2c_bytes_to_int16_t x_axis;
-    i2c_bytes_to_int16_t y_axis;
-    i2c_bytes_to_int16_t z_axis;
+    bytes_to_int16_t x_axis;
+    bytes_to_int16_t y_axis;
+    bytes_to_int16_t z_axis;
 } i2c_ak8975_axes_data_t;
 
 /**

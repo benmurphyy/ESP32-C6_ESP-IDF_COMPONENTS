@@ -1,5 +1,5 @@
 # Vishay VEML7700 Sensor
-This driver was developed for the Vishay VEML7700 sensor.  Information on features and functionality are documented and can be found in the `veml7700.h` header file.
+This esp-idf driver was developed for the Vishay VEML7700 sensor.  Information on features and functionality are documented and can be found in the `veml7700.h` header file.
 
 ## Typical Luminance Values
 Luminance ranges with use-case examples:
