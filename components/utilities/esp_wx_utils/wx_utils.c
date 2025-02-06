@@ -26,7 +26,10 @@
  *
  * ESP-IDF weather utilities (utils)
  *
- * Ported from esp-open-rtos
+ * References
+ * https://docs.vaisala.com/r/M212417EN-H/en-US/GUID-EBE2B115-3C98-4C8C-9F2D-A2FF1EFECFCC
+ * https://earthscience.stackexchange.com/questions/16366/weather-forecast-based-on-pressure-temperature-and-humidity-only-for-implement
+ * https://web.archive.org/web/20110610213848/http://www.meteormetrics.com/zambretti.htm
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -88,9 +91,9 @@ esp_err_t wx_set_humidity_range(const float maximum, const float minimum) {
     return ESP_OK;
 }
 
-esp_err_t wx_calculate_dewpoint(const float temperature, const float humidity, float *const dewpoint) {
+esp_err_t wx_td_range(const float temperature, const float humidity, float *const dewpoint) {
     /* validate arguments */
-    ESP_ARG_CHECK(dewpoint);
+    ESP_ARG_CHECK( dewpoint );
 
     // validate range of temperature parameter
     if(temperature > wx_temperature_range.maximum || temperature < wx_temperature_range.minimum) {
@@ -103,8 +106,89 @@ esp_err_t wx_calculate_dewpoint(const float temperature, const float humidity, f
     }
 
     // calculate dew-point temperature
-    double H = (log10(humidity)-2)/0.4343 + (17.62*temperature)/(243.12+temperature);
-    *dewpoint = 243.12*H/(17.62-H);
+    //double H = (log10(humidity)-2)/0.4343 + (17.62*temperature)/(243.12+temperature);
+    //*dewpoint = 243.12*H/(17.62-H);
+
+    *dewpoint = wx_td(temperature, humidity);
     
     return ESP_OK;
+}
+
+
+
+
+const double wx_c_to_k(const double t) {
+    return t + 273.15;
+}
+
+const double wx_k_to_c(const double t) {
+    return t - 273.15;
+}
+
+const double wx_v(const double t) {
+    const double c0 = 0.4931358;
+    const double c1 = -0.0046094296;
+    const double c2 = 0.000013746454;
+    const double c3 = -0.000000012743214;
+
+    return t - c0 - c1 * t - c2 * pow(t, 2) - c3 * pow(t, 3);
+}
+
+const double wx_pwi(const double t) {
+    const double a0 = -5674.5359;
+    const double a1 = 6.3925247;
+    const double a2 = -9.677843E-03;
+    const double a3 = 0.00000062215701;
+    const double a4 = 2.0747825E-09;
+    const double a5 = -9.484024E-13;
+    const double a6 = 4.1635019;
+
+    return exp( (a0 / t) + a1 + (a2 * t) + (a3 * pow(t, 2)) + (a4 * pow(t, 3)) + (a5 * pow(t, 4)) + (a6 * log(t)) ) * 0.01;
+}
+
+const double wx_pws(const double t) {
+    const double b_1 = -5800.2206;
+    const double b0 = 1.3914993;
+    const double b1 = -0.048640239;
+    const double b2 = 0.000041764768;
+    const double b3 = -0.000000014452093;
+    const double b4 = 6.5459673;
+    const double v = wx_v(t);
+
+    return exp( (b_1 / v) + b0 + (b1 * v) + (b2 * pow(v, 2)) + (b3 * pow(v, 3)) + (b4 * log(v)) ) * 0.01;
+}
+
+
+const double wx_pressure_at_sea_level(const double ph, const double a, const double t) {
+    // see https://keisan.casio.com/exec/system/1224575267
+
+    // precalculate altitude, corrected for the temperature lapse rate
+    const double hl = a * 0.0065;
+
+    return ph / pow(1.0-hl/(t+hl+273.15),5.257);
+}
+
+const double wx_td(const double ta, const double hr) {
+    const double a1 = 243.12;
+    const double a2 = 17.62;
+    const double H = log( hr * exp( (a2 * ta) / (a1 + ta) ) / 100 );
+
+    return (a1 * H) / (a2 - H);
+}
+
+static inline const double wx_phit(const double ta, const double tw, const double pa) {
+    const double pws_tw = wx_pws(wx_c_to_k(tw));
+
+    return pws_tw - 0.000662 * pa * (ta - tw);
+}
+
+static inline const double wx_pder(const double ta, const double tw, const double phit) {
+    return NAN;
+}
+
+const double wx_tw(const double ta, const double hr, const double td, const double pa) {
+    const double pws_td = wx_pws(wx_c_to_k(td));
+
+    double twet_init = 243.12 * ( log(pws_td / 6.112) / (17.62 - log(pws_td / 6.112)) );
+    return NAN;
 }

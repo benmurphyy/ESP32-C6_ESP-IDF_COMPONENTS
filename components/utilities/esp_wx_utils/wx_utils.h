@@ -37,9 +37,11 @@
 #ifndef __WX_UTILS_H__
 #define __WX_UTILS_H__
 
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
+#include <math.h>
 
 
 #ifdef __cplusplus
@@ -104,15 +106,129 @@ esp_err_t wx_set_temperature_range(const float maximum, const float minimum);
 esp_err_t wx_set_humidity_range(const float maximum, const float minimum);
 
 /**
- * @brief Calculates dewpoint temperature from air temperature and relative humidity.
+ * @brief Calculates dewpoint temperature from air temperature and relative humidity with range validation.
  *
  * @param[in] temperature Air temperature in degrees Celsius.
  * @param[in] humidity Relative humidity in percent.
  * @param[out] dewpoint Calculated dewpoint temperature in degrees Celsius.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t wx_calculate_dewpoint(const float temperature, const float humidity, float *const dewpoint);
+esp_err_t wx_td_range(const float temperature, const float humidity, float *const dewpoint);
 
+
+
+
+/**
+ * @brief Converts degrees celsius to kelvin.
+ * 
+ * @param t Temperature in degrees celsius.
+ * @return double Temperature in kelvin.
+ */
+const double wx_c_to_k(const double t);
+
+/**
+ * @brief Converts kelvin to degrees celsius
+ * 
+ * @param t Temperature in kelvin.
+ * @return double Temperature in degrees celsius.
+ */
+const double wx_k_to_c(const double t);
+
+/**
+ * @brief Calculates v at temperature.
+ * 
+ * @param t Temperature in kelvin.
+ * @return double v at temperature.
+ */
+const double wx_v(const double t);
+
+/**
+ * @brief Calculates aqueous vapor pressure of ice at temperature.
+ * 
+ * @param t Temperature in kelvin.
+ * @return double Aqueous vapor pressure of ice
+ */
+const double wx_pwi(const double t);
+
+/**
+ * @brief Calculates aqueous vapor pressure of water at temperature.
+ * 
+ * @param t Temperature in kelvin.
+ * @return double Aqueous vapor pressure of water.
+ */
+const double wx_pws(const double t);
+
+/**
+ * @brief Calculates the reduced air pressure QFF (pressure at sea level) without QFE.
+ * 
+ * @param pa Air pressure at this altitude in hecto-pascal.
+ * @param l Reduction level at this altitude in meters.
+ * @param ta Air temperature at this altitude in degrees celsius.
+ * @return float Reduced air pressure QFF in hecto-pascal.
+ */
+const double wx_pressure_at_sea_level(const double pa, const double l, const double ta);
+
+/**
+ * @brief Calculates the reduced air pressure QFE (pressure at a certain level).
+ * 
+ * @note The reduction level for QFE processing is the elevation difference of 
+ * the pressure sensor and the QFE level into which the pressure will be reduced. 
+ * If the pressure sensor is above the QFE level, the reduction level to get the 
+ * QFE level pressure is a positive value. If the sensor is below the QFE level, 
+ * the reduction level is a negative value.
+ * 
+ * @param pa Air pressure at this altitude in hecto-pascal.
+ * @param l Reduction level in meters.
+ * @param ta Air temperature at this altitude in degrees celsius.
+ * @return float Reduced air pressure QFE in hecto-pascal.
+ */
+const double wx_qfe(const double pa, const double l, const double ta);
+
+/**
+ * @brief Calculates the reduced air pressure QFF (pressure at sea level).
+ * 
+ * @note The reduction level is the elevation difference of the station altitude 
+ * and the mean sea level.
+ * 
+ * @param qfe Field elevation aire pressure in hecto-pascal.
+ * @param l Reduction level at this altitude in meters.
+ * @param ta Air temperature at this altitude in degrees celsius.
+ * @return float Reduced air pressure QFF in hecto-pascal.
+ */
+const double wx_qff(const double qfe, const double l, const double ta);
+
+/**
+ * @brief Calculates the reduced air pressure QNH (pressure at sea 
+ * level according to ICAO standard atmospheric).
+ * 
+ * @param qfe Staion level air pressure in hecto-pascal.
+ * @param h Elevation of pressure QFE in International Standard Atmosphere (ISA).
+ * @param a Station altitude in meters.
+ * @return float Reduced air pressure QNH in hecto-pascal.
+ */
+const double wx_qnh(const double qfe, const double h, const double a);
+
+/**
+ * @brief Calculates dewpoint temperature from air temperature and relative
+ * humidity.
+ * 
+ * @param ta Air temperature in degrees celsius.
+ * @param hr Relative humidity in percent.
+ * @return double Dewpoint temperature in degrees celsius.
+ */
+const double wx_td(const double ta, const double hr);
+
+/**
+ * @brief Calculates wetbulb temperature from air temperature, relative
+ * humidity, and dewpoint temperature.
+ * 
+ * @param ta Air temperature in degrees celsius.
+ * @param hr Relative humidity in percent.
+ * @param td Dewpoint temperature in degrees celsius.
+ * @param pa Air pressure in hecto-pascal.
+ * @return double Wetbulb temperature in degrees celsius.
+ */
+const double wx_tw(const double ta, const double hr, const double td, const double pa);
 
 
 
