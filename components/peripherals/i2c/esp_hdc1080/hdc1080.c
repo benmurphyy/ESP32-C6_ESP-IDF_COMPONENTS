@@ -151,7 +151,7 @@ static inline size_t i2c_hdc1080_get_temperature_tick_duration(const i2c_hdc1080
  */
 static inline esp_err_t i2c_hdc1080_calculate_dewpoint(const float temperature, const float humidity, float *const dewpoint) {
     /* validate arguments */
-    ESP_ARG_CHECK(temperature && humidity && dewpoint);
+    ESP_ARG_CHECK( dewpoint );
 
     /* validate temperature argument */
     if(temperature > I2C_HDC1080_TEMPERATURE_MAX || temperature < I2C_HDC1080_TEMPERATURE_MIN) {

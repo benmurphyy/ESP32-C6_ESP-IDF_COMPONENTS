@@ -81,7 +81,7 @@ static const char *TAG = "ahtxx";
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_ahtxx_calculate_dewpoint(const float temperature, const float humidity, float *const dewpoint) {
-    ESP_ARG_CHECK(temperature && humidity && dewpoint);
+    ESP_ARG_CHECK( dewpoint );
 
     // validate parameters
     if(temperature > 80 || temperature < -40) return ESP_ERR_INVALID_ARG;

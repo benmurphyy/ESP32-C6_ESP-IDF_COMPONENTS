@@ -24,7 +24,7 @@
 /**
  * @file type_utils.c
  *
- * ESP-IDF type utilities extension (utils)
+ * ESP-IDF type utilities (utils)
  *
  * Ported from esp-open-rtos
  *

@@ -186,13 +186,13 @@ static inline uint8_t i2c_sht4x_get_command(i2c_sht4x_handle_t sht4x_handle) {
  * @brief Calculates dewpoint temperature from air temperature and relative humidity.
  *
  * @param[in] temperature air temperature in degrees Celsius.
- * @param[in] humidity relative humiity in percent.
+ * @param[in] humidity relative humidity in percent.
  * @param[out] dewpoint calculated dewpoint temperature in degrees Celsius.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_sht4x_calculate_dewpoint(const float temperature, const float humidity, float *const dewpoint) {
     /* validate arguments */
-    ESP_ARG_CHECK(temperature && humidity && dewpoint);
+    ESP_ARG_CHECK(dewpoint);
 
     // validate range of temperature parameter
     if(temperature > I2C_SHT4X_TEMPERATURE_MAX || temperature < I2C_SHT4X_TEMPERATURE_MIN) {
