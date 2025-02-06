@@ -41,7 +41,7 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <driver/i2c_master.h>
-#include <idf_toolkit.h>
+#include <type_utils.h>
 
 
 #ifdef __cplusplus

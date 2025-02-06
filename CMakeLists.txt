@@ -4,7 +4,7 @@ list(APPEND EXTRA_COMPONENT_DIRS
                     "components/utilities/esp_pressure_tendency" 
                     "components/utilities/esp_scalar_trend" 
                     "components/utilities/sensirion_gas_index_algorithm"
-                    "components/utilities/esp_toolkit" 
+                    "components/utilities/esp_type_utils" 
 
                     "components/peripherals/adc/esp_s12sd"
 

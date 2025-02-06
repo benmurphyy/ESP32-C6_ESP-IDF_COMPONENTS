@@ -16,6 +16,6 @@ dependencies:
       path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\owb\onewire_bus
       type: local
     version: 1.0.2
-manifest_hash: 73e31aae4c0ebcf599de1b447565db261efa79606266af286be4c7f2c52fee58
+manifest_hash: f254ed164852cf6d954b50fd191bbfef5c36e64089661196941337c6d7d2cd08
 target: esp32s3
 version: 1.0.0
