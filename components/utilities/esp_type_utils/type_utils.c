@@ -179,7 +179,7 @@ const char *int64_to_binary(const int64_t value) {
     return bit64_to_binary_buffer;
 }
 
-uint16_t bytes_to_uint16(const uint8_t* bytes, bool little_endian) {
+uint16_t bytes_to_uint16(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         return  (uint16_t)bytes[0] | 
                 ((uint16_t)bytes[1] << 8);
@@ -189,7 +189,7 @@ uint16_t bytes_to_uint16(const uint8_t* bytes, bool little_endian) {
     }
 }
 
-uint32_t bytes_to_uint32(const uint8_t* bytes, bool little_endian) {
+uint32_t bytes_to_uint32(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         return  (uint32_t)bytes[0] | 
                 ((uint32_t)bytes[1] << 8) | 
@@ -203,7 +203,7 @@ uint32_t bytes_to_uint32(const uint8_t* bytes, bool little_endian) {
     }
 }
 
-uint64_t bytes_to_uint64(const uint8_t* bytes, bool little_endian) {
+uint64_t bytes_to_uint64(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         return  (uint64_t)bytes[0] | 
                 ((uint64_t)bytes[1] << 8) | 
@@ -225,7 +225,7 @@ uint64_t bytes_to_uint64(const uint8_t* bytes, bool little_endian) {
     }
 }
 
-int16_t bytes_to_int16(const uint8_t* bytes, bool little_endian) {
+int16_t bytes_to_int16(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         return  (int16_t)bytes[0] | 
                 ((int16_t)bytes[1] << 8);
@@ -235,7 +235,7 @@ int16_t bytes_to_int16(const uint8_t* bytes, bool little_endian) {
     }
 }
 
-int32_t bytes_to_int32(const uint8_t* bytes, bool little_endian) {
+int32_t bytes_to_int32(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         return  (int32_t)bytes[0] | 
                 ((int32_t)bytes[1] << 8) | 
@@ -249,7 +249,7 @@ int32_t bytes_to_int32(const uint8_t* bytes, bool little_endian) {
     }
 }
 
-int64_t bytes_to_int64(const uint8_t* bytes, bool little_endian) {
+int64_t bytes_to_int64(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         return  (int64_t)bytes[0] | 
                 ((int64_t)bytes[1] << 8) | 
@@ -271,7 +271,7 @@ int64_t bytes_to_int64(const uint8_t* bytes, bool little_endian) {
     }
 }
 
-void uint16_to_bytes(const uint16_t value, uint8_t* bytes, bool little_endian) {
+void uint16_to_bytes(const uint16_t value, uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         bytes[0] = (uint8_t)(value & 0xff);        // lsb
         bytes[1] = (uint8_t)((value >> 8) & 0xff); // msb
@@ -281,7 +281,7 @@ void uint16_to_bytes(const uint16_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void uint32_to_bytes(const uint32_t value, uint8_t* bytes, bool little_endian) {
+void uint32_to_bytes(const uint32_t value, uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         bytes[0] = (uint8_t)(value & 0xff);    
         bytes[1] = (uint8_t)((value >> 8) & 0xff);
@@ -295,7 +295,7 @@ void uint32_to_bytes(const uint32_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void uint64_to_bytes(const uint64_t value, uint8_t* bytes, bool little_endian) {
+void uint64_to_bytes(const uint64_t value, uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         bytes[0] = (uint8_t)(value & 0xff);   
         bytes[1] = (uint8_t)((value >> 8) & 0xff);
@@ -317,7 +317,7 @@ void uint64_to_bytes(const uint64_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void int16_to_bytes(const int16_t value, uint8_t* bytes, bool little_endian) {
+void int16_to_bytes(const int16_t value, uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         bytes[0] = (uint8_t)(value & 0xff);        // lsb
         bytes[1] = (uint8_t)((value >> 8) & 0xff); // msb
@@ -327,7 +327,7 @@ void int16_to_bytes(const int16_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void int32_to_bytes(const int32_t value, uint8_t* bytes, bool little_endian) {
+void int32_to_bytes(const int32_t value, uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         bytes[0] = (uint8_t)(value & 0xff);    
         bytes[1] = (uint8_t)((value >> 8) & 0xff);
@@ -341,7 +341,7 @@ void int32_to_bytes(const int32_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian) {
+void int64_to_bytes(const int64_t value, uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
         bytes[0] = (uint8_t)(value & 0xff);   
         bytes[1] = (uint8_t)((value >> 8) & 0xff);
@@ -363,7 +363,7 @@ void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void float_to_bytes(const float value, uint8_t* bytes, bool little_endian) {
+void float_to_bytes(const float value, uint8_t* bytes, const bool little_endian) {
     union { uint32_t u32_value; float float32; } tmp = { .float32 = value };
     if(little_endian == true) {
         uint32_to_bytes(tmp.u32_value, bytes, true);
@@ -372,7 +372,7 @@ void float_to_bytes(const float value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void double_to_bytes(const double value, uint8_t* bytes, bool little_endian) {
+void double_to_bytes(const double value, uint8_t* bytes, const bool little_endian) {
     union { uint64_t u64_value; double double64; } tmp = { .double64 = value };
     if(little_endian == true) {
         uint64_to_bytes(tmp.u64_value, bytes, true);
@@ -381,6 +381,6 @@ void double_to_bytes(const double value, uint8_t* bytes, bool little_endian) {
     }
 }
 
-void copy_bytes(const uint8_t* source, uint8_t* destination, size_t size) {
+void copy_bytes(const uint8_t* source, uint8_t* destination, const size_t size) {
     memcpy(destination, source, size);
 }

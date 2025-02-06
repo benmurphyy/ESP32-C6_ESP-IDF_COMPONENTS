@@ -48,49 +48,49 @@ extern "C" {
 #endif
 
 
-/* 4-byte conversion to float IEEE754 */
+/* 4-byte conversion to float IEEE754 (little endian) */
 typedef union {
     uint8_t bytes[4];
     float   value;
 } bytes_to_float_t;
 
-/* 8-byte conversion to double */
+/* 8-byte conversion to double (little endian) */
 typedef union {
     uint8_t bytes[8];
     double  value;
 } bytes_to_double_t;
 
-/* 8-byte conversion to uint64_t */
+/* 8-byte conversion to uint64_t (little endian) */
 typedef union {
     uint8_t  bytes[8];
     uint64_t value;
 } bytes_to_uint64_t;
 
-/* 8-byte conversion to int64_t */
+/* 8-byte conversion to int64_t (little endian) */
 typedef union {
     uint8_t  bytes[8];
     int64_t  value;
 } bytes_to_int64_t;
 
-/* 4-byte conversion to uint32_t */
+/* 4-byte conversion to uint32_t (little endian) */
 typedef union {
     uint8_t  bytes[4];
     uint32_t value;
 } bytes_to_uint32_t;
 
-/* 4-byte conversion to int32_t */
+/* 4-byte conversion to int32_t (little endian) */
 typedef union {
     uint8_t  bytes[4];
     int32_t  value;
 } bytes_to_int32_t;
 
-/* 2-byte conversion to uint16_t */
+/* 2-byte conversion to uint16_t (little endian) */
 typedef union {
     uint8_t  bytes[2];
     uint16_t value;
 } bytes_to_uint16_t;
 
-/* 2-byte conversion to int16_t */
+/* 2-byte conversion to int16_t (little endian) */
 typedef union {
     uint8_t  bytes[2];
     int16_t  value;
@@ -181,7 +181,7 @@ const char *int64_to_binary(const int64_t value);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  * @return uint16_t Converted byte array as `uint16_t` data-type.
  */
-uint16_t bytes_to_uint16(const uint8_t* bytes, bool little_endian);
+uint16_t bytes_to_uint16(const uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts byte array to `uint32_t` data-type.
@@ -190,7 +190,7 @@ uint16_t bytes_to_uint16(const uint8_t* bytes, bool little_endian);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  * @return uint32_t Converted byte array as `uint32_t` data-type.
  */
-uint32_t bytes_to_uint32(const uint8_t* bytes, bool little_endian);
+uint32_t bytes_to_uint32(const uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts byte array to `uint64_t` data-type.
@@ -199,7 +199,7 @@ uint32_t bytes_to_uint32(const uint8_t* bytes, bool little_endian);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  * @return uint64_t Converted byte array as `uint64_t` data-type.
  */
-uint64_t bytes_to_uint64(const uint8_t* bytes, bool little_endian);
+uint64_t bytes_to_uint64(const uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts byte array to `int16_t` data-type.
@@ -208,7 +208,7 @@ uint64_t bytes_to_uint64(const uint8_t* bytes, bool little_endian);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  * @return int16_t Converted byte array as `int16_t` data-type.
  */
-int16_t bytes_to_int16(const uint8_t* bytes, bool little_endian);
+int16_t bytes_to_int16(const uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts byte array to `int32_t` data-type.
@@ -217,7 +217,7 @@ int16_t bytes_to_int16(const uint8_t* bytes, bool little_endian);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  * @return int32_t Converted byte array as `int32_t` data-type.
  */
-int32_t bytes_to_int32(const uint8_t* bytes, bool little_endian);
+int32_t bytes_to_int32(const uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts byte array to `int64_t` data-type.
@@ -226,7 +226,7 @@ int32_t bytes_to_int32(const uint8_t* bytes, bool little_endian);
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  * @return int64_t Converted byte array as `int64_t` data-type.
  */
-int64_t bytes_to_int64(const uint8_t* bytes, bool little_endian);
+int64_t bytes_to_int64(const uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `uint16_t` data-type to a byte array.
@@ -235,7 +235,7 @@ int64_t bytes_to_int64(const uint8_t* bytes, bool little_endian);
  * @param bytes Converted `uint16_t` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void uint16_to_bytes(const uint16_t value, uint8_t* bytes, bool little_endian);
+void uint16_to_bytes(const uint16_t value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `uint32_t` data-type to a byte array.
@@ -244,7 +244,7 @@ void uint16_to_bytes(const uint16_t value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `uint32_t` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void uint32_to_bytes(const uint32_t value, uint8_t* bytes, bool little_endian);
+void uint32_to_bytes(const uint32_t value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `uint64_t` data-type to a byte array.
@@ -253,7 +253,7 @@ void uint32_to_bytes(const uint32_t value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `uint64_t` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void uint64_to_bytes(const uint64_t value, uint8_t* bytes, bool little_endian);
+void uint64_to_bytes(const uint64_t value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `int16_t` data-type to a byte array.
@@ -262,7 +262,7 @@ void uint64_to_bytes(const uint64_t value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `int16_t` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void int16_to_bytes(const int16_t value, uint8_t* bytes, bool little_endian);
+void int16_to_bytes(const int16_t value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `int32_t` data-type to a byte array.
@@ -271,7 +271,7 @@ void int16_to_bytes(const int16_t value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `int32_t` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void int32_to_bytes(const int32_t value, uint8_t* bytes, bool little_endian);
+void int32_to_bytes(const int32_t value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `int64_t` data-type to a byte array.
@@ -280,7 +280,7 @@ void int32_to_bytes(const int32_t value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `int64_t` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian);
+void int64_to_bytes(const int64_t value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `float` data-type to a byte array.
@@ -289,7 +289,7 @@ void int64_to_bytes(const int64_t value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `float` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void float_to_bytes(const float value, uint8_t* bytes, bool little_endian);
+void float_to_bytes(const float value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Converts `double` data-type to a byte array.
@@ -298,7 +298,7 @@ void float_to_bytes(const float value, uint8_t* bytes, bool little_endian);
  * @param bytes Converted `double` data-type as byte array.
  * @param little_endian Little endian byte order when true, otherwise, big endian byte order when false.
  */
-void double_to_bytes(const double value, uint8_t* bytes, bool little_endian);
+void double_to_bytes(const double value, uint8_t* bytes, const bool little_endian);
 
 /**
  * @brief Copies bytes from source byte array to destination byte array.
@@ -307,7 +307,7 @@ void double_to_bytes(const double value, uint8_t* bytes, bool little_endian);
  * @param destination Byte array destination to copy to.
  * @param size Size of destination byte array.
  */
-void copy_bytes(const uint8_t* source, uint8_t* destination, size_t size);
+void copy_bytes(const uint8_t* source, uint8_t* destination, const size_t size);
 
 
 
