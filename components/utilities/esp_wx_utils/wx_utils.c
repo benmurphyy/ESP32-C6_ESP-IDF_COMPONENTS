@@ -44,6 +44,15 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
+/*
+ * weather utilities definitions
+*/
+
+#define WX_TEMPERATURE_MAX       (float)(125.0)  //!< maximum temperature range
+#define WX_TEMPERATURE_MIN       (float)(-40.0)  //!< minimum temperature range
+#define WX_HUMIDITY_MAX          (float)(100.0)  //!< maximum humidity range
+#define WX_HUMIDITY_MIN          (float)(0.0)    //!< minimum humidity range
+
 
 /*
  * macro definitions
@@ -52,8 +61,18 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static declarations
+* weather utilities static global declarations
 */
+
+/**
+ * @brief Weather utilities temperature maximum and minimum ranges in degrees Celsius (default maximum 125 and minimum -40).
+ */
+static inline wx_scalar_range_t wx_temperature_range = { .maximum = WX_TEMPERATURE_MAX, .minimum = WX_TEMPERATURE_MIN };
+
+/**
+ * @brief Weather utilities humidity maximum and minimum ranges in percent (default maximum 100 and minimum 0).
+ */
+static inline wx_scalar_range_t wx_humidity_range = { .maximum = WX_HUMIDITY_MAX, .minimum = WX_HUMIDITY_MIN };
 
 
 /*

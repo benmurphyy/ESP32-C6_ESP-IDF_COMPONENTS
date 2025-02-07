@@ -48,14 +48,6 @@
 extern "C" {
 #endif
 
-/*
- * weather utilities definitions
-*/
-
-#define WX_TEMPERATURE_MAX       (float)(125.0)  //!< maximum temperature range
-#define WX_TEMPERATURE_MIN       (float)(-40.0)  //!< minimum temperature range
-#define WX_HUMIDITY_MAX          (float)(100.0)  //!< maximum humidity range
-#define WX_HUMIDITY_MIN          (float)(0.0)    //!< minimum humidity range
 
 /*
  * weather utilities enumerator and structure declarations
@@ -66,21 +58,6 @@ typedef struct {
     float minimum;
 } wx_scalar_range_t;
 
-
-
-/*
-* weather utilities static global declarations
-*/
-
-/**
- * @brief Weather utilities temperature maximum and minimum ranges in degrees Celsius (default maximum 125 and minimum -40).
- */
-static wx_scalar_range_t wx_temperature_range = { .maximum = WX_TEMPERATURE_MAX, .minimum = WX_TEMPERATURE_MIN };
-
-/**
- * @brief Weather utilities humidity maximum and minimum ranges in percent (default maximum 100 and minimum 0).
- */
-static wx_scalar_range_t wx_humidity_range = { .maximum = WX_HUMIDITY_MAX, .minimum = WX_HUMIDITY_MIN };
 
 
 /*
@@ -106,7 +83,9 @@ esp_err_t wx_set_temperature_range(const float maximum, const float minimum);
 esp_err_t wx_set_humidity_range(const float maximum, const float minimum);
 
 /**
- * @brief Calculates dewpoint temperature from air temperature and relative humidity with range validation.
+ * @brief Calculates dewpoint temperature from air temperature and relative humidity with range validation.  The 
+ * default temperature range is 125 to -40 degrees Celsius and default humidity range is 100 to 0 percent.  The
+ * default ranges can be adjusted through the set range functions.
  *
  * @param[in] temperature Air temperature in degrees Celsius.
  * @param[in] humidity Relative humidity in percent.
