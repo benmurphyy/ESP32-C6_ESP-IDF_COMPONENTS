@@ -36,13 +36,13 @@
 #include <string.h>
 #include <stdio.h>
 #include <sdkconfig.h>
-#include <esp_system.h>
+//#include <esp_system.h>
 #include <esp_types.h>
 #include <esp_log.h>
 #include <esp_check.h>
-#include <esp_adc/adc_oneshot.h>
-#include <esp_adc/adc_cali.h>
-#include <esp_adc/adc_cali_scheme.h>
+//#include <esp_adc/adc_oneshot.h>
+//#include <esp_adc/adc_cali.h>
+//#include <esp_adc/adc_cali_scheme.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -52,12 +52,12 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "s12sd";
 
 /*
-* functions and subrountines
+* functions and subroutines
 */
 
 /**
@@ -179,9 +179,11 @@ esp_err_t adc_s12sd_init(const adc_s12sd_config_t *s12sd_config, adc_s12sd_handl
 
     out_handle->adc_calibrate = adc_s12sd_calibration_init(s12sd_config, &out_handle->adc_cal_handle);
 
-    /* copy configuration and set device handle */
+    /* copy configuration */
     out_handle->adc_unit            = s12sd_config->unit;
     out_handle->adc_channel         = s12sd_config->channel;
+
+    /* set device handle */
     *s12sd_handle = out_handle;
 
     return ESP_OK;

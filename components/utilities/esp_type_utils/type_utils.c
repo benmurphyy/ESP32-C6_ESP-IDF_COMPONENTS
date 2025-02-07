@@ -41,10 +41,6 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-#define UINT8_TO_BINARY_BUFFER_SIZE     (8 + 1)     // 8 bits + 1 for null terminator
-#define UINT16_TO_BINARY_BUFFER_SIZE    (16 + 1)    // 16 bits + 1 for null terminator
-#define UINT32_TO_BINARY_BUFFER_SIZE    (32 + 1)    // 32 bits + 1 for null terminator
-#define UINT64_TO_BINARY_BUFFER_SIZE    (64 + 1)    // 64 bits + 1 for null terminator
 
 /*
  * macro definitions
@@ -52,18 +48,16 @@
 
 //#define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
+
 /*
 * static declarations
 */
-static char bit8_to_binary_buffer[UINT8_TO_BINARY_BUFFER_SIZE]; 
-static char bit16_to_binary_buffer[UINT16_TO_BINARY_BUFFER_SIZE]; 
-static char bit32_to_binary_buffer[UINT32_TO_BINARY_BUFFER_SIZE]; 
-static char bit64_to_binary_buffer[UINT64_TO_BINARY_BUFFER_SIZE]; 
+
 
 /*
 * static constant declarations
 */
-//static const char *TAG = "idf_toolkit";
+//static const char *TAG = "type_utils";
 
 /*
 * functions and subroutines
@@ -84,99 +78,107 @@ uint64_t get_efuse_mac(void) {
 }
 
 const char *uint8_to_binary(const uint8_t value) {
-    bit8_to_binary_buffer[8] = '\0';
+    bin8_char_buffer_t buffer;
+    buffer[8] = '\0';
     uint8_t n = value;
 
     for (int i = 7; i >= 0; --i) {
-        bit8_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit8_to_binary_buffer;
+    return buffer;
 }
 
 const char *int8_to_binary(const int8_t value) {
-    bit8_to_binary_buffer[8] = '\0';
+    bin8_char_buffer_t buffer;
+    buffer[8] = '\0';
     int8_t n = value;
 
     for (int i = 7; i >= 0; --i) {
-        bit8_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit8_to_binary_buffer;
+    return buffer;
 }
 
 const char *uint16_to_binary(const uint16_t value) {
-    bit16_to_binary_buffer[16] = '\0';
+    bin16_char_buffer_t buffer;
+    buffer[16] = '\0';
     uint16_t n = value;
 
     for (int i = 15; i >= 0; --i) {
-        bit16_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit16_to_binary_buffer;
+    return buffer;
 }
 
 const char *int16_to_binary(const int16_t value) {
-    bit16_to_binary_buffer[16] = '\0';
+    bin16_char_buffer_t buffer;
+    buffer[16] = '\0';
     int16_t n = value;
 
     for (int i = 15; i >= 0; --i) {
-        bit16_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit16_to_binary_buffer;
+    return buffer;
 }
 
 const char *uint32_to_binary(const uint32_t value) {
-    bit32_to_binary_buffer[32] = '\0';
+    bin32_char_buffer_t buffer;
+    buffer[32] = '\0';
     uint32_t n = value;
 
     for (int i = 31; i >= 0; --i) {
-        bit32_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit32_to_binary_buffer;
+    return buffer;
 }
 
 const char *int32_to_binary(const int32_t value) {
-    bit32_to_binary_buffer[32] = '\0';
+    bin32_char_buffer_t buffer;
+    buffer[32] = '\0';
     int32_t n = value;
 
     for (int i = 31; i >= 0; --i) {
-        bit32_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit32_to_binary_buffer;
+    return buffer;
 }
 
 const char *uint64_to_binary(const uint64_t value) {
-    bit64_to_binary_buffer[64] = '\0';
+    bin64_char_buffer_t buffer;
+    buffer[64] = '\0';
     uint64_t n = value;
 
     for (int i = 63; i >= 0; --i) {
-        bit64_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit64_to_binary_buffer;
+    return buffer;
 }
 
 const char *int64_to_binary(const int64_t value) {
-    bit64_to_binary_buffer[64] = '\0';
+    bin64_char_buffer_t buffer;
+    buffer[64] = '\0';
     int64_t n = value;
 
     for (int i = 63; i >= 0; --i) {
-        bit64_to_binary_buffer[i] = '0' + (n & 1); // '0' or '1'
+        buffer[i] = '0' + (n & 1); // '0' or '1'
         n >>= 1; // shift to the next bit
     }
 
-    return bit64_to_binary_buffer;
+    return buffer;
 }
 
 uint16_t bytes_to_uint16(const uint8_t* bytes, const bool little_endian) {

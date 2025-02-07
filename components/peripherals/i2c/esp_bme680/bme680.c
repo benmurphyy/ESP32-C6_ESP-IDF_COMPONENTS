@@ -392,7 +392,7 @@ static inline esp_err_t i2c_bme680_get_fixed_measurements(i2c_bme680_handle_t bm
     int32_t         adc_press;
     int32_t         adc_temp;
     int32_t         fine_temp;
-    i2c_uint48_t    data;
+    bit48_uint8_buffer_t data;
 
     /* validate arguments */
     ESP_ARG_CHECK( bme680_handle && temperature && pressure );

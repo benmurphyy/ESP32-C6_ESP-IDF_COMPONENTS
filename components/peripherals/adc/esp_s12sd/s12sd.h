@@ -95,11 +95,8 @@ extern "C" {
     .channel = ADC_UV_CHANNEL_DEFAULT,  } 
 
 /*
- * GUVA-S12SD prototype, enumerator and sructure declerations
+ * GUVA-S12SD prototype, enumerator and structure declarations
 */
-
-typedef struct i2c_s12sd_t i2c_s12sd_t;
-typedef struct adc_s12sd_t *adc_s12sd_handle_t;
 
 /**
  * @brief adc s12sd device configuration.
@@ -119,6 +116,17 @@ struct adc_s12sd_t {
     uint8_t                     adc_unit;       /*!< adc unit */
     uint8_t                     adc_channel;    /*!< adc channel */
 };
+
+/**
+ * @brief adc s12sd device structure definition.
+ */
+typedef struct adc_s12sd_t  adc_s12sd_t;
+
+/**
+ * @brief adc s12sd device handle definition.
+ */
+typedef struct adc_s12sd_t *adc_s12sd_handle_t;
+
 
 
 /**

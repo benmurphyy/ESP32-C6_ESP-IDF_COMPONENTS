@@ -51,29 +51,40 @@ extern "C" {
  * type utilities definitions
 */
 
-#define BIT72_BYTE_SIZE	    (9)
-#define BIT64_BYTE_SIZE	    (8)
-#define BIT56_BYTE_SIZE     (7)
-#define BIT48_BYTE_SIZE     (6)
-#define BIT40_BYTE_SIZE     (5)
-#define BIT32_BYTE_SIZE	    (4)
-#define BIT24_BYTE_SIZE	    (3)
-#define BIT16_BYTE_SIZE	    (2)
-#define BIT8_BYTE_SIZE	    (1)
+#define BIT8_UINT8_BUFFER_SIZE	    (1)
+#define BIT16_UINT8_BUFFER_SIZE	    (2)
+#define BIT24_UINT8_BUFFER_SIZE	    (3)
+#define BIT32_UINT8_BUFFER_SIZE	    (4)
+#define BIT40_UINT8_BUFFER_SIZE     (5)
+#define BIT48_UINT8_BUFFER_SIZE     (6)
+#define BIT56_UINT8_BUFFER_SIZE     (7)
+#define BIT64_UINT8_BUFFER_SIZE	    (8)
+#define BIT72_UINT8_BUFFER_SIZE     (9)
+
+#define BIN8_CHAR_BUFFER_SIZE       (8 + 1)     // 8 bytes + 1 byte for null terminator
+#define BIN16_CHAR_BUFFER_SIZE      (16 + 1)    // 16 bytes + 1 byte for null terminator
+#define BIN32_CHAR_BUFFER_SIZE      (32 + 1)    // 32 bytes + 1 byte for null terminator
+#define BIN64_CHAR_BUFFER_SIZE      (64 + 1)    // 64 bytes + 1 byte for null terminator
+
 
 /*
  * type utilities type definition declarations
 */
 
-typedef uint8_t bit72_bytes_t[BIT72_BYTE_SIZE];
-typedef uint8_t bit64_bytes_t[BIT64_BYTE_SIZE];
-typedef uint8_t bit56_bytes_t[BIT56_BYTE_SIZE];
-typedef uint8_t bit48_bytes_t[BIT48_BYTE_SIZE];
-typedef uint8_t bit40_bytes_t[BIT40_BYTE_SIZE];
-typedef uint8_t bit32_bytes_t[BIT32_BYTE_SIZE];
-typedef uint8_t bit24_bytes_t[BIT24_BYTE_SIZE];
-typedef uint8_t bit16_bytes_t[BIT16_BYTE_SIZE];
-typedef uint8_t bit8_bytes_t[BIT8_BYTE_SIZE];
+typedef uint8_t bit8_uint8_buffer_t[BIT8_UINT8_BUFFER_SIZE];    // 1 uint8 sized buffer
+typedef uint8_t bit16_uint8_buffer_t[BIT16_UINT8_BUFFER_SIZE];  // 2 uint8 sized buffer
+typedef uint8_t bit24_uint8_buffer_t[BIT24_UINT8_BUFFER_SIZE];  // 3 uint8 sized buffer
+typedef uint8_t bit32_uint8_buffer_t[BIT32_UINT8_BUFFER_SIZE];  // 4 uint8 sized buffer
+typedef uint8_t bit40_uint8_buffer_t[BIT40_UINT8_BUFFER_SIZE];  // 5 uint8 sized buffer
+typedef uint8_t bit48_uint8_buffer_t[BIT48_UINT8_BUFFER_SIZE];  // 6 uint8 sized buffer
+typedef uint8_t bit56_uint8_buffer_t[BIT56_UINT8_BUFFER_SIZE];  // 7 uint8 sized buffer
+typedef uint8_t bit64_uint8_buffer_t[BIT64_UINT8_BUFFER_SIZE];  // 8 uint8 sized buffer
+typedef uint8_t bit72_uint8_buffer_t[BIT72_UINT8_BUFFER_SIZE];  // 9 uint8 sized buffer
+
+typedef char bin8_char_buffer_t[BIN8_CHAR_BUFFER_SIZE];         // 9 char sized buffer (8 bytes + 1 byte for null terminator)
+typedef char bin16_char_buffer_t[BIN16_CHAR_BUFFER_SIZE];       // 17 char sized buffer (16 bytes + 1 byte for null terminator)
+typedef char bin32_char_buffer_t[BIN32_CHAR_BUFFER_SIZE];       // 33 char sized buffer (32 bytes + 1 byte for null terminator)
+typedef char bin64_char_buffer_t[BIN64_CHAR_BUFFER_SIZE];       // 65 char sized buffer (64 bytes + 1 byte for null terminator)
 
 /*
  * type utilities enumerator and structure declarations
@@ -81,50 +92,50 @@ typedef uint8_t bit8_bytes_t[BIT8_BYTE_SIZE];
 
 /* 4-byte conversion to float IEEE754 (little endian) */
 typedef union {
-    bit32_bytes_t bytes;
-    float         value;
+    bit32_uint8_buffer_t bytes;
+    float                value;
 } bytes_to_float_t;
 
 /* 8-byte conversion to double (little endian) */
 typedef union {
-    bit64_bytes_t bytes;
-    double        value;
+    bit64_uint8_buffer_t bytes;
+    double               value;
 } bytes_to_double_t;
 
 /* 8-byte conversion to uint64_t (little endian) */
 typedef union {
-    bit64_bytes_t bytes;
-    uint64_t      value;
+    bit64_uint8_buffer_t bytes;
+    uint64_t             value;
 } bytes_to_uint64_t;
 
 /* 8-byte conversion to int64_t (little endian) */
 typedef union {
-    bit64_bytes_t bytes;
-    int64_t       value;
+    bit64_uint8_buffer_t bytes;
+    int64_t              value;
 } bytes_to_int64_t;
 
 /* 4-byte conversion to uint32_t (little endian) */
 typedef union {
-    bit32_bytes_t bytes;
-    uint32_t      value;
+    bit32_uint8_buffer_t bytes;
+    uint32_t             value;
 } bytes_to_uint32_t;
 
 /* 4-byte conversion to int32_t (little endian) */
 typedef union {
-    bit32_bytes_t bytes;
-    int32_t       value;
+    bit32_uint8_buffer_t bytes;
+    int32_t              value;
 } bytes_to_int32_t;
 
 /* 2-byte conversion to uint16_t (little endian) */
 typedef union {
-    bit16_bytes_t bytes;
-    uint16_t      value;
+    bit16_uint8_buffer_t bytes;
+    uint16_t             value;
 } bytes_to_uint16_t;
 
 /* 2-byte conversion to int16_t (little endian) */
 typedef union {
-    bit16_bytes_t bytes;
-    int16_t       value;
+    bit16_uint8_buffer_t bytes;
+    int16_t              value;
 } bytes_to_int16_t;
 
 /*

@@ -198,7 +198,7 @@ static inline esp_err_t i2c_bmp280_get_fixed_measurements(i2c_bmp280_handle_t bm
     int32_t         adc_press;
     int32_t         adc_temp;
     int32_t         fine_temp;
-    bit48_bytes_t   data;
+    bit48_uint8_buffer_t data;
 
     /* validate arguments */
     ESP_ARG_CHECK( bmp280_handle && temperature && pressure );
@@ -253,7 +253,7 @@ static inline esp_err_t i2c_bmp280_get_fixed_temperature(i2c_bmp280_handle_t bmp
     bool            data_is_ready   = false;
     int32_t         adc_temp;
     int32_t         fine_temp;
-    bit24_bytes_t   data;
+    bit24_uint8_buffer_t data;
 
     /* validate arguments */
     ESP_ARG_CHECK( bmp280_handle && temperature );

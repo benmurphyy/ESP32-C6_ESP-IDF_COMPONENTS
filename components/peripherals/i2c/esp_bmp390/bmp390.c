@@ -559,7 +559,7 @@ esp_err_t i2c_bmp390_get_measurements(i2c_bmp390_handle_t bmp390_handle, float *
     uint64_t     start_time           = esp_timer_get_time(); /* set start time for timeout monitoring */
     bool         pressure_is_ready    = false;
     bool         temperature_is_ready = false;
-    bit48_bytes_t rx                   = {};
+    bit48_uint8_buffer_t rx                   = {};
 
     /* attempt to poll until data is available or timeout */
     do {

@@ -894,7 +894,7 @@ esp_err_t i2c_as3935_get_lightning_distance_km(i2c_as3935_handle_t as3935_handle
 }
 
 esp_err_t i2c_as3935_get_lightning_energy(i2c_as3935_handle_t as3935_handle, uint32_t *const energy) {
-    i2c_uint24_t data;
+    bit24_uint8_buffer_t data;
 
     ESP_ARG_CHECK( as3935_handle );
 

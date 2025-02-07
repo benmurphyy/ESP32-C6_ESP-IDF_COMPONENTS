@@ -333,7 +333,7 @@ esp_err_t i2c_hmc5883l_get_fixed_magnetic_axes(i2c_hmc5883l_handle_t hmc5883l_ha
     uint64_t     start     = esp_timer_get_time();
     bool         is_ready  = false;
     bool         is_locked = false;
-    bit48_bytes_t rx       = {};
+    bit48_uint8_buffer_t rx = { 0 };
 
     /* poll data status until data is ready or timeout condition is asserted */
     do {

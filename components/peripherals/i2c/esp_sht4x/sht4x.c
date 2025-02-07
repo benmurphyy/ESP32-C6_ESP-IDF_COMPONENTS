@@ -218,20 +218,20 @@ static inline esp_err_t i2c_sht4x_calculate_dewpoint(const float temperature, co
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_sht4x_get_serial_number_register(i2c_sht4x_handle_t sht4x_handle) {
-    const bit8_bytes_t i2c_tx_buffer = { I2C_SHT4X_CMD_SERIAL };
-    bit48_bytes_t i2c_rx_buffer	     = { 0, 0, 0, 0, 0, 0 };
+    const bit8_uint8_buffer_t i2c_tx_buffer = { I2C_SHT4X_CMD_SERIAL };
+    bit48_uint8_buffer_t i2c_rx_buffer	    = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( sht4x_handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(sht4x_handle->i2c_dev_handle, i2c_tx_buffer, BIT8_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, get serial number failed");
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(sht4x_handle->i2c_dev_handle, i2c_tx_buffer, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, get serial number failed");
 	
     /* delay before attempting i2c read transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_SHT4X_TX_RX_DELAY_MS));
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(sht4x_handle->i2c_dev_handle, i2c_rx_buffer, BIT48_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to read to i2c device handle, get serial number failed");
+    ESP_RETURN_ON_ERROR( i2c_master_receive(sht4x_handle->i2c_dev_handle, i2c_rx_buffer, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to read to i2c device handle, get serial number failed");
 	
     /* set serial number */
     sht4x_handle->serial_number = ((uint32_t)i2c_rx_buffer[0] << 24) | ((uint32_t)i2c_rx_buffer[1] << 16) | ((uint32_t)i2c_rx_buffer[3] << 8) | i2c_rx_buffer[4];
@@ -301,8 +301,8 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t sht4x_handle, float *cons
     uint8_t rx_retry_count      = 0;
     size_t delay_ticks 			= 0;
     esp_err_t ret               = ESP_OK;
-    bit8_bytes_t i2c_tx_buffer 	= { 0 };
-    bit48_bytes_t i2c_rx_buffer	= { 0 };
+    bit8_uint8_buffer_t i2c_tx_buffer  = { 0 };
+    bit48_uint8_buffer_t i2c_rx_buffer = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( sht4x_handle && temperature && humidity );
@@ -312,7 +312,7 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t sht4x_handle, float *cons
     delay_ticks      = i2c_sht4x_get_tick_duration(sht4x_handle);
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(sht4x_handle->i2c_dev_handle, i2c_tx_buffer, BIT8_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, get measurement failed");
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(sht4x_handle->i2c_dev_handle, i2c_tx_buffer, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, get measurement failed");
 	
 	/* delay task - allow time for the sensor to process measurement request */
     if(delay_ticks) vTaskDelay(delay_ticks);
@@ -320,7 +320,7 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t sht4x_handle, float *cons
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(sht4x_handle->i2c_dev_handle, i2c_rx_buffer, BIT48_BYTE_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = i2c_master_receive(sht4x_handle->i2c_dev_handle, i2c_rx_buffer, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(I2C_SHT4X_RETRY_DELAY_MS));

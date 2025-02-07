@@ -218,7 +218,7 @@ esp_err_t i2c_ccs811_get_error_register(i2c_ccs811_handle_t ccs811_handle) {
 }
 
 esp_err_t i2c_ccs811_set_environmental_data_register(i2c_ccs811_handle_t ccs811_handle, const float temperature, const float humidity) {
-    bit40_bytes_t tx = { I2C_CCS811_REG_ENV_DATA_W, 0, 0, 0, 0 };
+    bit40_uint8_buffer_t tx = { I2C_CCS811_REG_ENV_DATA_W, 0, 0, 0, 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( ccs811_handle );
@@ -248,7 +248,7 @@ esp_err_t i2c_ccs811_set_environmental_data_register(i2c_ccs811_handle_t ccs811_
 	tx[4] = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ccs811_handle->i2c_dev_handle, tx, BIT40_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write environmental data failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ccs811_handle->i2c_dev_handle, tx, BIT40_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write environmental data failed" );
 
     /* set handle environmental data parameters */
     ccs811_handle->enviromental_data_reg.humidity    = humidity;
@@ -258,7 +258,7 @@ esp_err_t i2c_ccs811_set_environmental_data_register(i2c_ccs811_handle_t ccs811_
 }
 
 esp_err_t i2c_ccs811_set_thresholds_register(i2c_ccs811_handle_t ccs811_handle, const uint16_t low_to_med, const uint16_t med_to_high, const uint8_t hysteresis) {
-    bit48_bytes_t                   tx                 = { I2C_CCS811_REG_THRESHOLDS_W, 0, 0, 0, 0, 0 };
+    bit48_uint8_buffer_t            tx                 = { I2C_CCS811_REG_THRESHOLDS_W, 0, 0, 0, 0, 0 };
     i2c_ccs811_threshold_value_t    low_to_med_value   = { .value = low_to_med };
     i2c_ccs811_threshold_value_t    med_to_high_value  = { .value = med_to_high };
 
@@ -281,7 +281,7 @@ esp_err_t i2c_ccs811_set_thresholds_register(i2c_ccs811_handle_t ccs811_handle, 
     tx[5] = hysteresis;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ccs811_handle->i2c_dev_handle, tx, BIT48_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write thresholds failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ccs811_handle->i2c_dev_handle, tx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write thresholds failed" );
 
     /* set handle threshold parameters */
     ccs811_handle->thresholds_reg.low_to_med  = low_to_med_value;
@@ -522,8 +522,8 @@ esp_err_t i2c_ccs811_get_measurement(i2c_ccs811_handle_t ccs811_handle, uint16_t
     uint64_t        start_time      = 0;
     bool            data_is_ready   = false;
     bool            has_error       = false;
-    const bit8_bytes_t tx           = { I2C_CCS811_REG_ALG_RESULT_DATA_R };
-    bit64_bytes_t   rx              = { };
+    const bit8_uint8_buffer_t tx    = { I2C_CCS811_REG_ALG_RESULT_DATA_R };
+    bit64_uint8_buffer_t   rx              = { };
 
     /* validate arguments */
     ESP_ARG_CHECK( ccs811_handle );
@@ -557,7 +557,7 @@ esp_err_t i2c_ccs811_get_measurement(i2c_ccs811_handle_t ccs811_handle, uint16_t
     }
 
     /* attempt i2c write and then read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(ccs811_handle->i2c_dev_handle, tx, BIT8_BYTE_SIZE, rx, BIT64_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read alg result data failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(ccs811_handle->i2c_dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT64_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read alg result data failed" );
 
     /* set eco2 and etvoc values */
     *eco2  = rx[1] | (rx[0] << 8);  // big endian order (msb | lsb)
@@ -637,7 +637,7 @@ esp_err_t i2c_ccs811_get_firmware_mode(i2c_ccs811_handle_t ccs811_handle, i2c_cc
 }
 
 esp_err_t i2c_ccs811_get_ntc_resistance(i2c_ccs811_handle_t ccs811_handle, const uint32_t r_ref, uint32_t *const resistance) {
-    bit32_bytes_t rx = { 0 };
+    bit32_uint8_buffer_t rx = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( ccs811_handle );
@@ -680,7 +680,7 @@ esp_err_t i2c_ccs811_get_error_status(i2c_ccs811_handle_t ccs811_handle, bool *c
 }
 
 esp_err_t i2c_ccs811_reset(i2c_ccs811_handle_t ccs811_handle) {
-    bit40_bytes_t tx  = { };
+    bit40_uint8_buffer_t tx  = { 0 };
 
     const static uint8_t sw_reset[4] = I2C_CCS811_SW_RESET_DATA;
 
@@ -695,7 +695,7 @@ esp_err_t i2c_ccs811_reset(i2c_ccs811_handle_t ccs811_handle) {
     ESP_ARG_CHECK( ccs811_handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ccs811_handle->i2c_dev_handle, tx, BIT40_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write soft-reset data failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ccs811_handle->i2c_dev_handle, tx, BIT40_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write soft-reset data failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_CCS811_RESET_DELAY_MS));

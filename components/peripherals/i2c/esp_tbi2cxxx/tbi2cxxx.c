@@ -127,17 +127,17 @@ static inline float i2c_tbi2cxxx_decode_temperature(uint16_t encoded_temperature
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_tbi2cxxx_read_word(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, const uint8_t reg_addr, uint16_t *const data) {
-    const i2c_uint8_t tx = { reg_addr };
-    i2c_uint24_t      rx = { };
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit24_uint8_buffer_t      rx = { };
 
     /* validate arguments */
     ESP_ARG_CHECK( tbi2cxxx_handle );
 
     /* attempt i2c write and read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(tbi2cxxx_handle->i2c_dev_handle, tx, I2C_UINT8_SIZE, rx, I2C_UINT24_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit and receive, read word failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(tbi2cxxx_handle->i2c_dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit and receive, read word failed" );
 
     /* set buffer data for pec validation */
-    const i2c_uint40_t pec_buf = { 
+    const bit40_uint8_buffer_t pec_buf = { 
         tbi2cxxx_handle->i2c_dev_address << 1,          /*<! i2c device write address */
         reg_addr,                                       /*!< i2c eeprom address */
         (tbi2cxxx_handle->i2c_dev_address << 1) | 0x01, /*<! i2c device read address */
@@ -146,7 +146,7 @@ static inline esp_err_t i2c_tbi2cxxx_read_word(i2c_tbi2cxxx_handle_t tbi2cxxx_ha
     };
 
     /* calculate and validate pec from rx data */
-    ESP_RETURN_ON_FALSE((rx[2] == i2c_tbi2cxxx_calculate_pec(pec_buf, I2C_UINT40_SIZE)), ESP_ERR_INVALID_CRC, TAG, "invalid pec received, read word failed" );
+    ESP_RETURN_ON_FALSE((rx[2] == i2c_tbi2cxxx_calculate_pec(pec_buf, BIT40_UINT8_BUFFER_SIZE)), ESP_ERR_INVALID_CRC, TAG, "invalid pec received, read word failed" );
 
     /* set output parameter */
     *data = (rx[1] << 8) | rx[0]; // high-byte | low-byte
@@ -166,7 +166,7 @@ static inline esp_err_t i2c_tbi2cxxx_read_word(i2c_tbi2cxxx_handle_t tbi2cxxx_ha
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_tbi2cxxx_write_word(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, const uint8_t reg_addr, const uint16_t data) {
-    i2c_uint32_t tx = { };
+    bit32_uint8_buffer_t tx = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( tbi2cxxx_handle );
@@ -185,7 +185,7 @@ static inline esp_err_t i2c_tbi2cxxx_write_word(i2c_tbi2cxxx_handle_t tbi2cxxx_h
     tx[3] = pec;   /*!< pec */
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(tbi2cxxx_handle->i2c_dev_handle, tx, I2C_UINT32_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit, write word failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(tbi2cxxx_handle->i2c_dev_handle, tx, BIT32_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit, write word failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_TBI2CXXX_CMD_DELAY_MS));

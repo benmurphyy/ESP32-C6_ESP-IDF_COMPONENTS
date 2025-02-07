@@ -339,7 +339,7 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t hdc1080_handle, float
     const uint8_t rx_retry_max   = 5;
     esp_err_t     ret            = ESP_OK;
     uint8_t       rx_retry_count = 0;
-    bit16_bytes_t rx             = { 0 };
+    bit16_uint8_buffer_t rx      = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( hdc1080_handle );
@@ -353,7 +353,7 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t hdc1080_handle, float
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(hdc1080_handle->i2c_dev_handle, rx, BIT16_BYTE_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = i2c_master_receive(hdc1080_handle->i2c_dev_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(I2C_HDC1080_RETRY_DELAY_MS));
@@ -375,7 +375,7 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t hdc1080_handle, float
     rx_retry_count = 0;
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(hdc1080_handle->i2c_dev_handle, rx, BIT16_BYTE_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = i2c_master_receive(hdc1080_handle->i2c_dev_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(I2C_HDC1080_RETRY_DELAY_MS));
