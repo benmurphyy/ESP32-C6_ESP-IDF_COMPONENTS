@@ -225,7 +225,7 @@ static inline esp_err_t i2c_hmc5883l_get_fixed_magnetic_axes(i2c_ak8975_handle_t
             return ESP_ERR_TIMEOUT;
     } while (data_is_ready == false);
     
-    i2c_uint48_t rx = { };
+    bit48_bytes_t rx = { };
 
     /* 6-byte i2c read transaction */
     ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte48(ak8975_handle->i2c_dev_handle, I2C_AK8975_REG_HXL_DATA_R, &rx), err, TAG, "read axes (x, y, z) bytes failed" );

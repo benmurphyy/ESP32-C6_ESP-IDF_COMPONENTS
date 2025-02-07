@@ -98,7 +98,7 @@ esp_err_t i2c_ahtxx_setup(i2c_ahtxx_handle_t ahtxx_handle) {
     /* validate arguments */
     ESP_ARG_CHECK( ahtxx_handle );
 
-    i2c_uint24_t tx = { 0, I2C_AHTXX_CTRL_CALI, I2C_AHTXX_CTRL_NOP };
+    bit24_bytes_t tx = { 0, I2C_AHTXX_CTRL_CALI, I2C_AHTXX_CTRL_NOP };
 
     if(ahtxx_handle->aht_type == I2C_AHTXX_AHT2X) {
         tx[0] = I2C_AHTXX_CMD_AHT2X_INIT;
@@ -107,7 +107,7 @@ esp_err_t i2c_ahtxx_setup(i2c_ahtxx_handle_t ahtxx_handle) {
     }
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, I2C_UINT24_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initializaion register 0xbe failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, BIT24_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initializaion register 0xbe failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_SETUP_DELAY_MS));
@@ -119,16 +119,16 @@ esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t ahtxx_handle) {
     /* validate arguments */
     ESP_ARG_CHECK( ahtxx_handle );
 
-    i2c_uint8_t tx = { I2C_AHTXX_CMD_STATUS };
+    const bit8_bytes_t tx = { I2C_AHTXX_CMD_STATUS };
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, I2C_UINT8_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, read status register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, BIT8_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, read status register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_TX_RX_DELAY_MS));
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(ahtxx_handle->i2c_dev_handle, &ahtxx_handle->status_reg.reg, I2C_UINT8_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_receive(ahtxx_handle->i2c_dev_handle, &ahtxx_handle->status_reg.reg, BIT8_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
@@ -191,9 +191,9 @@ esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t ahtxx_handle, float *cons
     //esp_err_t    ret        = ESP_OK;
     //uint64_t     start_time = 0;
     //bool         is_busy    = true;
-    uint32_t     raw       = 0;
-    i2c_uint24_t tx         = { I2C_AHTXX_CMD_TRIGGER_MEAS, I2C_AHTXX_CTRL_MEAS, I2C_AHTXX_CTRL_NOP };
-    i2c_uint48_t rx         = { };
+    uint32_t      raw       = 0;
+    bit24_bytes_t tx         = { I2C_AHTXX_CMD_TRIGGER_MEAS, I2C_AHTXX_CTRL_MEAS, I2C_AHTXX_CTRL_NOP };
+    bit48_bytes_t rx         = { };
 
     /* validate arguments */
     ESP_ARG_CHECK( ahtxx_handle );
@@ -202,7 +202,7 @@ esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t ahtxx_handle, float *cons
     //start_time = esp_timer_get_time(); 
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, I2C_UINT24_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write measurement trigger command for get measurement failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, BIT24_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write measurement trigger command for get measurement failed" );
 
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_DATA_POLL_TIMEOUT_MS));
 
@@ -228,7 +228,7 @@ esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t ahtxx_handle, float *cons
     //} while (is_busy == true);
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(ahtxx_handle->i2c_dev_handle, rx, I2C_UINT48_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_receive(ahtxx_handle->i2c_dev_handle, rx, BIT48_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
 
     /* compute and set humidity */
     raw = ((uint32_t)rx[1] << 12) | ((uint32_t)rx[2] << 4) | (rx[3] >> 4);

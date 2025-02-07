@@ -235,8 +235,8 @@ static inline esp_err_t i2c_tlv493d_get_fixed_magnetic_axes(i2c_tlv493d_handle_t
     esp_err_t               ret             = ESP_OK;
     uint64_t                start_time      = 0;
     bool                    data_is_ready   = false;
-    i2c_uint8_t             tx_buffer 	= { I2C_TLV493D_REG_BX_MSB_R };
-    i2c_uint56_t            rx_buffer	= {  };
+    const bit8_bytes_t      tx_buffer 	= { I2C_TLV493D_REG_BX_MSB_R };
+    bit56_bytes_t            rx_buffer	= {  };
     i2c_tlv493d_raw_data_t  out_data;
     i2c_tlv493d_temperature_msb_register_t  temperature_msb_reg;
     i2c_tlv493d_bx_by_lsb_register_t        bx_by_lsb_reg;
@@ -267,11 +267,11 @@ static inline esp_err_t i2c_tlv493d_get_fixed_magnetic_axes(i2c_tlv493d_handle_t
     /* attempt i2c write and read transaction */
     //ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(tlv493d_handle->i2c_dev_handle, tx_buffer, I2C_UINT8_SIZE, rx_buffer, I2C_UINT56_SIZE, I2C_XFR_TIMEOUT_MS), err, TAG, "unable to write to i2c device handle, get measurement failed");
 	
-    ESP_GOTO_ON_ERROR( i2c_master_transmit(tlv493d_handle->i2c_dev_handle, tx_buffer, I2C_UINT8_SIZE, I2C_XFR_TIMEOUT_MS), err, TAG, "unable to write to i2c device handle, get measurement failed");
+    ESP_GOTO_ON_ERROR( i2c_master_transmit(tlv493d_handle->i2c_dev_handle, tx_buffer, BIT8_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), err, TAG, "unable to write to i2c device handle, get measurement failed");
 	
     vTaskDelay(pdMS_TO_TICKS(5));
     
-    ESP_GOTO_ON_ERROR( i2c_master_receive(tlv493d_handle->i2c_dev_handle, rx_buffer, I2C_UINT56_SIZE, I2C_XFR_TIMEOUT_MS), err, TAG, "unable to read from i2c device handle, get measurement failed");
+    ESP_GOTO_ON_ERROR( i2c_master_receive(tlv493d_handle->i2c_dev_handle, rx_buffer, BIT56_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), err, TAG, "unable to read from i2c device handle, get measurement failed");
 	
 
     //data = rx[0] | (rx[1] << 8);

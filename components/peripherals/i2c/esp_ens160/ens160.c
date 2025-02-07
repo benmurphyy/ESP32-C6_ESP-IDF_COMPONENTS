@@ -532,7 +532,7 @@ esp_err_t i2c_ens160_get_raw_measurement(i2c_ens160_handle_t ens160_handle, i2c_
     esp_err_t       ret                 = ESP_OK;
     uint64_t        start_time          = 0;
     bool            gpr_data_is_ready   = false;
-    i2c_uint64_t    rx                  = { };
+    bit64_bytes_t   rx                  = { };
 
     /* validate arguments */
     ESP_ARG_CHECK( ens160_handle );

@@ -248,7 +248,7 @@ static inline esp_err_t i2c_ltr390uv_get_sensor_counts(i2c_ltr390uv_handle_t ltr
     /* initialize local variables */
     esp_err_t    ret           = ESP_OK;
     uint64_t     start_time    = esp_timer_get_time(); /* set start time for timeout monitoring */
-    i2c_uint24_t rx            = { 0 };
+    bit24_bytes_t rx           = { 0 };
     bool         data_is_ready = false;
 
     /* attempt to poll until data is available or timeout */
@@ -673,7 +673,7 @@ esp_err_t i2c_ltr390uv_get_status(i2c_ltr390uv_handle_t ltr390uv_handle, bool *c
 }
 
 esp_err_t i2c_ltr390uv_get_thresholds(i2c_ltr390uv_handle_t ltr390uv_handle, uint32_t *const lower_threshold, uint32_t *const uppper_threshold) {
-    i2c_uint24_t lower, upper;
+    bit24_bytes_t lower, upper;
 
     /* validate arguments */
     ESP_ARG_CHECK( ltr390uv_handle );
@@ -693,20 +693,20 @@ esp_err_t i2c_ltr390uv_set_thresholds(i2c_ltr390uv_handle_t ltr390uv_handle, con
     /* validate arguments */
     ESP_ARG_CHECK( ltr390uv_handle );
 
-    i2c_uint32_t lower;
+    bit32_bytes_t lower;
     lower[0] = I2C_LTR390UV_REG_ALS_THRES_LO_0_RW;
     lower[1] = lower_threshold & 0x000000FF; // lsb
     lower[2] = lower_threshold >> 8;
     lower[3] = lower_threshold >> 16;
 
-    i2c_uint32_t upper;
+    bit32_bytes_t upper;
     upper[0] = I2C_LTR390UV_REG_ALS_THRES_UP_0_RW;
     upper[1] = uppper_threshold & 0x000000FF; // lsb
     upper[2] = uppper_threshold >> 8;
     upper[3] = uppper_threshold >> 16;
 
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ltr390uv_handle->i2c_dev_handle, lower, I2C_UINT32_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write lower threshold failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ltr390uv_handle->i2c_dev_handle, upper, I2C_UINT32_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write upper threshold failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ltr390uv_handle->i2c_dev_handle, lower, BIT32_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write lower threshold failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(ltr390uv_handle->i2c_dev_handle, upper, BIT32_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write upper threshold failed" );
 
     return ESP_OK;
 }

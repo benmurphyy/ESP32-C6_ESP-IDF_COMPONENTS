@@ -47,54 +47,89 @@
 extern "C" {
 #endif
 
+/*
+ * type utilities definitions
+*/
+
+#define BIT72_BYTE_SIZE	    (9)
+#define BIT64_BYTE_SIZE	    (8)
+#define BIT56_BYTE_SIZE     (7)
+#define BIT48_BYTE_SIZE     (6)
+#define BIT40_BYTE_SIZE     (5)
+#define BIT32_BYTE_SIZE	    (4)
+#define BIT24_BYTE_SIZE	    (3)
+#define BIT16_BYTE_SIZE	    (2)
+#define BIT8_BYTE_SIZE	    (1)
+
+/*
+ * type utilities type definition declarations
+*/
+
+typedef uint8_t bit72_bytes_t[BIT72_BYTE_SIZE];
+typedef uint8_t bit64_bytes_t[BIT64_BYTE_SIZE];
+typedef uint8_t bit56_bytes_t[BIT56_BYTE_SIZE];
+typedef uint8_t bit48_bytes_t[BIT48_BYTE_SIZE];
+typedef uint8_t bit40_bytes_t[BIT40_BYTE_SIZE];
+typedef uint8_t bit32_bytes_t[BIT32_BYTE_SIZE];
+typedef uint8_t bit24_bytes_t[BIT24_BYTE_SIZE];
+typedef uint8_t bit16_bytes_t[BIT16_BYTE_SIZE];
+typedef uint8_t bit8_bytes_t[BIT8_BYTE_SIZE];
+
+/*
+ * type utilities enumerator and structure declarations
+*/
 
 /* 4-byte conversion to float IEEE754 (little endian) */
 typedef union {
-    uint8_t bytes[4];
-    float   value;
+    bit32_bytes_t bytes;
+    float         value;
 } bytes_to_float_t;
 
 /* 8-byte conversion to double (little endian) */
 typedef union {
-    uint8_t bytes[8];
-    double  value;
+    bit64_bytes_t bytes;
+    double        value;
 } bytes_to_double_t;
 
 /* 8-byte conversion to uint64_t (little endian) */
 typedef union {
-    uint8_t  bytes[8];
-    uint64_t value;
+    bit64_bytes_t bytes;
+    uint64_t      value;
 } bytes_to_uint64_t;
 
 /* 8-byte conversion to int64_t (little endian) */
 typedef union {
-    uint8_t  bytes[8];
-    int64_t  value;
+    bit64_bytes_t bytes;
+    int64_t       value;
 } bytes_to_int64_t;
 
 /* 4-byte conversion to uint32_t (little endian) */
 typedef union {
-    uint8_t  bytes[4];
-    uint32_t value;
+    bit32_bytes_t bytes;
+    uint32_t      value;
 } bytes_to_uint32_t;
 
 /* 4-byte conversion to int32_t (little endian) */
 typedef union {
-    uint8_t  bytes[4];
-    int32_t  value;
+    bit32_bytes_t bytes;
+    int32_t       value;
 } bytes_to_int32_t;
 
 /* 2-byte conversion to uint16_t (little endian) */
 typedef union {
-    uint8_t  bytes[2];
-    uint16_t value;
+    bit16_bytes_t bytes;
+    uint16_t      value;
 } bytes_to_uint16_t;
 
 /* 2-byte conversion to int16_t (little endian) */
 typedef union {
-    uint8_t  bytes[2];
-    int16_t  value;
+    bit16_bytes_t bytes;
+    int16_t       value;
 } bytes_to_int16_t;
+
+/*
+* function and subroutine declarations
+*/
 
 /**
  * @brief Generates a unique chip identifier from e-fuse mac address.

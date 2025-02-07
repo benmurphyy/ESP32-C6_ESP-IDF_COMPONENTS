@@ -682,8 +682,8 @@ static inline esp_err_t i2c_mpu6050_get_raw_motion(i2c_mpu6050_handle_t mpu6050_
     esp_err_t   ret             = ESP_OK;
     uint64_t    start_time      = 0;
     bool        data_is_ready   = false;
-    i2c_uint8_t tx              = { I2C_MPU6050_REG_ACCEL_XOUT_H_R };
-    uint8_t     rx[14]          = { };
+    const bit8_bytes_t tx       = { I2C_MPU6050_REG_ACCEL_XOUT_H_R };
+    uint8_t     rx[14]          = { 0 };
     
     /* validate arguments */
     ESP_ARG_CHECK( mpu6050_handle );
@@ -705,7 +705,7 @@ static inline esp_err_t i2c_mpu6050_get_raw_motion(i2c_mpu6050_handle_t mpu6050_
     } while (data_is_ready == false);
 
     /* attempt i2c accelerometer, temperature, and gyroscope data read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(mpu6050_handle->i2c_dev_handle, tx, I2C_UINT8_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), TAG, "read accelerometer, temperature, and gyroscope data registers failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(mpu6050_handle->i2c_dev_handle, tx, BIT8_BYTE_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), TAG, "read accelerometer, temperature, and gyroscope data registers failed" );
     
     /* set accelerometer raw data parameter */
     accel_data->x_axis = (int16_t)((rx[0] << 8) | (rx[1]));

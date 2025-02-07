@@ -404,7 +404,7 @@ static inline esp_err_t i2c_as7341_get_registers(i2c_as7341_handle_t as7341_hand
     ESP_RETURN_ON_ERROR(i2c_as7341_get_config6_register(as7341_handle), TAG, "read configuration 6 register for read registers failed");
 
     /* attempt to read flicker detection status register */
-    ESP_RETURN_ON_ERROR(i2c_as7341_get_flicker_detection_status_register(as7341_handle), TAG, "read flicker deteciont status register for read registers failed");
+    ESP_RETURN_ON_ERROR(i2c_as7341_get_flicker_detection_status_register(as7341_handle), TAG, "read flicker detection status register for read registers failed");
 
     return ESP_OK;
 }
@@ -651,7 +651,7 @@ esp_err_t i2c_as7341_set_config1_register(i2c_as7341_handle_t as7341_handle, con
     config1.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(as7341_handle->i2c_dev_handle, I2C_AS7341_CONFIG1, config1.reg), TAG, "write configurtion 1 register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(as7341_handle->i2c_dev_handle, I2C_AS7341_CONFIG1, config1.reg), TAG, "write configuration 1 register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AS7341_CMD_DELAY_MS));
@@ -923,7 +923,7 @@ esp_err_t i2c_as7341_get_spectral_measurements(i2c_as7341_handle_t as7341_handle
     double      integration_time = 0;
     uint64_t    start_time       = 0;
     bool        data_is_ready    = false;
-    i2c_uint8_t tx               = { I2C_AS7341_CH0_ADC_DATA_L };
+    const bit8_bytes_t tx        = { I2C_AS7341_CH0_ADC_DATA_L };
     uint8_t     rx[12]           = { 0 };
 
     /* validate arguments */
@@ -957,7 +957,7 @@ esp_err_t i2c_as7341_get_spectral_measurements(i2c_as7341_handle_t as7341_handle
     } while (data_is_ready == false);
 
     /* attempt to read spectral adc data from low channels */
-    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(as7341_handle->i2c_dev_handle, tx, I2C_UINT8_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read low channel measurements for get adc measurements failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(as7341_handle->i2c_dev_handle, tx, BIT8_BYTE_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read low channel measurements for get adc measurements failed" );
 
     /* set adc data for low channels */
     spectral_data->f1 = rx[0]  | (rx[1] << 8);
@@ -997,7 +997,7 @@ esp_err_t i2c_as7341_get_spectral_measurements(i2c_as7341_handle_t as7341_handle
     } while (data_is_ready == false);
 
     /* attempt to read spectral adc data from high channels */
-    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(as7341_handle->i2c_dev_handle, tx, I2C_UINT8_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read high channel measurements for get adc measurements failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(as7341_handle->i2c_dev_handle, tx, BIT8_BYTE_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read high channel measurements for get adc measurements failed" );
 
     /* set adc data for high channels */
     spectral_data->f5    = rx[0]  | (rx[1] << 8);

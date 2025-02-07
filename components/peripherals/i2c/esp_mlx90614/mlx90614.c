@@ -172,7 +172,7 @@ static inline int16_t i2c_mlx90614_decode_ir(const uint16_t raw_data) {
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_mlx90614_read_word(i2c_mlx90614_handle_t mlx90614_handle, const uint8_t reg_addr, uint16_t *const data) {
-    i2c_uint24_t buffer;
+    bit24_bytes_t buffer;
 
     /* validate arguments */
     ESP_ARG_CHECK( mlx90614_handle );
@@ -210,7 +210,7 @@ static inline esp_err_t i2c_mlx90614_read_word(i2c_mlx90614_handle_t mlx90614_ha
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_mlx90614_write_word(i2c_mlx90614_handle_t mlx90614_handle, const uint8_t reg_addr, const uint16_t data) {
-    uint8_t tx[I2C_UINT32_SIZE] = { 0, 0, 0, 0 };
+    uint8_t tx[BIT32_BYTE_SIZE] = { 0, 0, 0, 0 };
     uint8_t crc; 
 
     /* validate arguments */
@@ -228,7 +228,7 @@ static inline esp_err_t i2c_mlx90614_write_word(i2c_mlx90614_handle_t mlx90614_h
     tx[3] = crc;            // pec
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(mlx90614_handle->i2c_dev_handle, tx, I2C_UINT32_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_mlx90614_write_word failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(mlx90614_handle->i2c_dev_handle, tx, BIT32_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_mlx90614_write_word failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_MLX90614_CMD_DELAY_MS));
@@ -270,7 +270,7 @@ static inline esp_err_t i2c_mlx90614_write_eeprom(i2c_mlx90614_handle_t mlx90614
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_mlx90614_get_ident_numbers(i2c_mlx90614_handle_t mlx90614_handle) {
-    uint16_t id_num[I2C_UINT32_SIZE]; // 64-bit ident value
+    uint16_t id_num[BIT32_BYTE_SIZE]; // 64-bit ident value
 
     /* validate arguments */
     ESP_ARG_CHECK( mlx90614_handle );
@@ -287,7 +287,7 @@ static inline esp_err_t i2c_mlx90614_get_ident_numbers(i2c_mlx90614_handle_t mlx
 }
 
 static inline esp_err_t i2c_mlx90614_write_command(i2c_mlx90614_handle_t mlx90614_handle, const uint8_t command) {
-    uint8_t tx[I2C_UINT16_SIZE] = { 0, 0 };
+    uint8_t tx[BIT16_BYTE_SIZE] = { 0, 0 };
     uint8_t crc;
 
     /* validate arguments I2C_MLX90614_CMD_SLEEP */
@@ -306,7 +306,7 @@ static inline esp_err_t i2c_mlx90614_write_command(i2c_mlx90614_handle_t mlx9061
     tx[1] = crc;            // pec
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(mlx90614_handle->i2c_dev_handle, tx, I2C_UINT16_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_mlx90614_write_command failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(mlx90614_handle->i2c_dev_handle, tx, BIT16_BYTE_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_mlx90614_write_command failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_MLX90614_CMD_DELAY_MS));

@@ -312,7 +312,7 @@ esp_err_t i2c_mmc56x3_get_magnetic_axes(i2c_mmc56x3_handle_t mmc56x3_handle, i2c
     uint64_t                        start_time      = 0;
     bool                            data_is_ready   = false;
     i2c_mmc56x3_control0_register_t ctrl0;
-    i2c_uint8_t                     tx = { I2C_MMC56X3_REG_XOUT_0_R };
+    const bit8_bytes_t              tx = { I2C_MMC56X3_REG_XOUT_0_R };
     uint8_t                         rx[9];
 
     /* validate arguments */
@@ -347,7 +347,7 @@ esp_err_t i2c_mmc56x3_get_magnetic_axes(i2c_mmc56x3_handle_t mmc56x3_handle, i2c
     } while (data_is_ready == false);
 
     /* attempt i2c data write-read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(mmc56x3_handle->i2c_dev_handle, tx, I2C_UINT8_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read magnetic axes failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(mmc56x3_handle->i2c_dev_handle, tx, BIT8_BYTE_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read magnetic axes failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_MMC56X3_CMD_DELAY_MS));
