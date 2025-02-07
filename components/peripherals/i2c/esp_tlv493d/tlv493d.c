@@ -233,8 +233,8 @@ static inline int16_t i2c_tlv493d_concat_12bit_data(const uint8_t msb, const uin
 
 static inline esp_err_t i2c_tlv493d_get_fixed_magnetic_axes(i2c_tlv493d_handle_t tlv493d_handle, i2c_tlv493d_raw_data_t *const raw_data) {
     esp_err_t               ret             = ESP_OK;
-    uint64_t                start_time      = 0;
-    bool                    data_is_ready   = false;
+    //uint64_t                start_time      = 0;
+    //bool                    data_is_ready   = false;
     const bit8_bytes_t      tx_buffer 	= { I2C_TLV493D_REG_BX_MSB_R };
     bit56_bytes_t            rx_buffer	= {  };
     i2c_tlv493d_raw_data_t  out_data;
@@ -247,7 +247,7 @@ static inline esp_err_t i2c_tlv493d_get_fixed_magnetic_axes(i2c_tlv493d_handle_t
     ESP_ARG_CHECK( tlv493d_handle );
 
     /* set start time (us) for timeout monitoring */
-    start_time = esp_timer_get_time(); 
+    //start_time = esp_timer_get_time(); 
 
     /* attempt to poll until data is available or timeout */
    // do {
