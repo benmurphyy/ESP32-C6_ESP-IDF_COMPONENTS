@@ -65,7 +65,7 @@ typedef struct {
 */
 
 /**
- * @brief Sets the global weather utilities maximum and minimum temperature range (`wx_temperature_ranges`) in degrees Celsius.
+ * @brief Sets the global weather utilities maximum and minimum temperature range (`wx_temperature_range`) in degrees Celsius.
  * 
  * @param maximum Maximum temperature range in degrees Celsius.
  * @param minimum Minimum temperature range in degrees Celsius.
@@ -74,7 +74,7 @@ typedef struct {
 esp_err_t wx_set_temperature_range(const float maximum, const float minimum);
 
 /**
- * @brief Sets the global weather utilities humidity maximum and minimum range (`wx_humidity_ranges`) in percent.
+ * @brief Sets the global weather utilities humidity maximum and minimum range (`wx_humidity_range`) in percent.
  * 
  * @param maximum Maximum humidity range in percent.
  * @param minimum Minimum humidity range in percent.
@@ -84,8 +84,8 @@ esp_err_t wx_set_humidity_range(const float maximum, const float minimum);
 
 /**
  * @brief Calculates dewpoint temperature from air temperature and relative humidity with range validation.  The 
- * default temperature range is 125 to -40 degrees Celsius and default humidity range is 100 to 0 percent.  The
- * default ranges can be adjusted through the set range functions.
+ * default temperature range is from -40 to 125 degrees Celsius and default humidity range is from 0 to 100 percent.  
+ * The default ranges can be adjusted through the set range functions.
  *
  * @param[in] temperature Air temperature in degrees Celsius.
  * @param[in] humidity Relative humidity in percent.

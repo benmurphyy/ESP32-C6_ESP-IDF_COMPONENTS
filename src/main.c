@@ -347,7 +347,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_ENS160);
     //i2c0_component_example_start(I2C_COMPONENT_HDC1080);
     //i2c0_component_example_start(I2C_COMPONENT_HMC5883L);
-    //i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
+    i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
     //i2c0_component_example_start(I2C_COMPONENT_MLX90614);
     //i2c0_component_example_start(I2C_COMPONENT_MMC56X3);
     //i2c0_component_example_start(I2C_COMPONENT_MPU6050);
@@ -357,5 +357,5 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_TLV493D);
     //i2c0_component_example_start(I2C_COMPONENT_VEML7700);
 
-    owb0_component_example_start(OWB_COMPONENT_DS18B20);
+    //owb0_component_example_start(OWB_COMPONENT_DS18B20);
 }
