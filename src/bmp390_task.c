@@ -75,7 +75,7 @@ void i2c0_bmp390_task( void *pvParameters ) {
             ESP_LOGE(APP_TAG, "bmp390 device read failed (%s)", esp_err_to_name(result));
         } else {
             pressure = pressure / 100;
-            ESP_LOGI(APP_TAG, "air temperature:     %.2f C", temperature);
+            ESP_LOGI(APP_TAG, "air temperature:     %.2f °C", temperature);
             ESP_LOGI(APP_TAG, "barometric pressure: %.2f hPa", pressure);
         }
         //

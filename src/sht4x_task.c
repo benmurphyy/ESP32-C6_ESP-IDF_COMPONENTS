@@ -64,8 +64,8 @@ void i2c0_sht4x_task( void *pvParameters ) {
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "sht4x device read failed (%s)", esp_err_to_name(result));
         } else {
-            ESP_LOGI(APP_TAG, "air temperature:     %.2f C", temperature);
-            ESP_LOGI(APP_TAG, "relative humidity:   %.2f C", humidity);
+            ESP_LOGI(APP_TAG, "air temperature:     %.2f °C", temperature);
+            ESP_LOGI(APP_TAG, "relative humidity:   %.2f %c", humidity, '%');
         }
         //
         ESP_LOGI(APP_TAG, "######################## SHT4X - END ###########################");

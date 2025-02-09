@@ -1,7 +1,7 @@
-# Sensirion AHTXX Series of Sensors
-This esp-idf driver was developed for the ASAIR SHTXX series of sensors.  Information on features and functionality are documented and can be found in the `ahtxx.h` header file.
+# Asair AHTXX Series of Sensors
+This esp-idf driver was developed for the Asair AHTXX series of sensors (AHT10, AHT20, AHT21, AHT25, AND AHT30).  Information on features and functionality are documented and can be found in the `ahtxx.h` header file.
 
-Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings, AHT2X series, and makes a measurement request from the sensor at user defined interval and prints the results.
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings for the AHT10, AHT20, AHT21, AHT25, AND AHT30 sensor types and makes a measurement request from the sensor at user defined interval and prints the results.
 ```
 #include <ahtxx.h>
 
@@ -11,7 +11,7 @@ void i2c0_ahtxx_task( void *pvParameters ) {
     TickType_t         last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_ahtxx_config_t dev_cfg          = I2C_AHT2X_CONFIG_DEFAULT;
+    i2c_ahtxx_config_t dev_cfg          = I2C_AHT20_CONFIG_DEFAULT;
     i2c_ahtxx_handle_t dev_hdl;
     //
     // init device

@@ -203,14 +203,11 @@ static inline esp_err_t i2c_ak8975_get_device_information_register(i2c_ak8975_ha
  */
 static inline esp_err_t i2c_hmc5883l_get_fixed_magnetic_axes(i2c_ak8975_handle_t ak8975_handle, i2c_ak8975_axes_data_t *const axes_data) {
     esp_err_t ret           = ESP_OK;
-    uint64_t  start_time    = 0;
+    uint64_t  start_time    = esp_timer_get_time();
     bool      data_is_ready = false;
 
     /* validate arguments */
     ESP_ARG_CHECK( ak8975_handle );
-
-    /* set start time for timeout monitoring */
-    start_time = esp_timer_get_time(); 
 
     /* attempt to wait until data is available */
     do {

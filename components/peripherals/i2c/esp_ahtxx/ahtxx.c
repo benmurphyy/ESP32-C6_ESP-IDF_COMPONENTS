@@ -43,13 +43,26 @@
 #include <freertos/task.h>
 
 /*
- * AHTXX definitions
- */
-#define I2C_AHTXX_STATUS_WORD           UINT8_C(0x18) //!< ahtxx initialization status word (default)
+ * constant definitions
+*/
+
+#define I2C_AHTXX_CRC8_G_POLYNOM        UINT8_C(0x31)   //!< ahtxx I2C CRC8 polynomial
+
+#define I2C_AHTXX_STATUS_WORD           UINT8_C(0x18)   //!< ahtxx initialization status word (default)
+
+#define I2C_AHTXX_REG_1B                UINT8_C(0x1b)
+#define I2C_AHTXX_REG_1C                UINT8_C(0x1c)
+#define I2C_AHTXX_REG_1E                UINT8_C(0x1e)
 
 #define I2C_AHTXX_CTRL_CALI             UINT8_C(0x08)
 #define I2C_AHTXX_CTRL_MEAS             UINT8_C(0x33)
 #define I2C_AHTXX_CTRL_NOP              UINT8_C(0x00)
+
+#define I2C_AHTXX_CMD_AHT10_INIT        UINT8_C(0xe1)   /*!< aht10 initialization command + 0x08 + 0x00 */
+#define I2C_AHTXX_CMD_AHT20_INIT        UINT8_C(0xbe)   /*!< aht20 initialization command + 0x08 + 0x00 */
+#define I2C_AHTXX_CMD_STATUS            UINT8_C(0x71)   /*!< ahtxx status register command */
+#define I2C_AHTXX_CMD_TRIGGER_MEAS      UINT8_C(0xac)   /*!< ahtxx measurement trigger command + 0x33 + 0x00 */
+#define I2C_AHTXX_CMD_RESET             UINT8_C(0xba)   /*!< ahtxx soft-reset command */
 
 #define I2C_AHTXX_DATA_POLL_TIMEOUT_MS  UINT16_C(100)
 #define I2C_AHTXX_DATA_READY_DELAY_MS   UINT16_C(2)
@@ -57,7 +70,9 @@
 #define I2C_AHTXX_RESET_DELAY_MS        UINT16_C(25)
 #define I2C_AHTXX_SETUP_DELAY_MS        UINT16_C(15)
 #define I2C_AHTXX_APPSTART_DELAY_MS     UINT16_C(10)    /*!< ahtxx delay after initialization before application start-up */
+#define I2C_AHTXX_RETRY_DELAY_MS        UINT16_C(2)     /*!< ahtxx delay between an I2C receive transaction retry */
 #define I2C_AHTXX_CMD_DELAY_MS          UINT16_C(5)     /*!< ahtxx delay before attempting I2C transactions after a command is issued */
+#define I2C_AHTXX_MEAS_PROC_DELAY_MS    UINT16_C(80)    /*!< ahtxx delay before attempting I2C read transaction after a measurement trigger command is issued */
 #define I2C_AHTXX_TX_RX_DELAY_MS        UINT16_C(10)    /*!< ahtxx delay after attempting an I2C transmit transaction and attempting an I2C receive transaction */
 
 
@@ -68,9 +83,27 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "ahtxx";
+
+/**
+ * @brief Calculates AHTXX sensor types with CRC8 value.  See datasheet for details.
+ *
+ * @param[in] buffer[] Data buffer to perform CRC8 check against.
+ * @param[in] len Length of `data` buffer.
+ * @return uint8_t Calculated CRC8 value.
+ */
+static inline uint8_t i2c_ahtxx_calculate_crc8(const uint8_t buffer[], const uint8_t len) {
+    uint8_t crc = 0xff; /* crc initial value */
+    for (uint8_t byte = 0; byte < len; byte++) {
+        crc ^= buffer[byte];
+        for (uint8_t i = 0; i < 8; i++) {
+            crc = crc & 0x80 ? (crc << 1) ^ I2C_AHTXX_CRC8_G_POLYNOM : crc << 1;
+        }
+    }
+    return crc;
+}
 
 /**
  * @brief Calculates dewpoint temperature from air temperature and relative humidity.
@@ -94,20 +127,125 @@ static inline esp_err_t i2c_ahtxx_calculate_dewpoint(const float temperature, co
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_setup(i2c_ahtxx_handle_t ahtxx_handle) {
+/**
+ * @brief Converts temperature and humidity signals to engineering units of measure.
+ * 
+ * @param handle AHTXX device handle.
+ * @param buffer AHTXX measurement trigger command response data buffer.
+ * @param temperature Converted temperature measurement from AHTXX in degrees Celsius.
+ * @param humidity Converted humidity measurement from AHTXX in percent.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t i2c_ahtxx_convert_signals(i2c_ahtxx_handle_t handle, const bit56_uint8_buffer_t buffer, 
+                                                    float *const temperature, float *const humidity) {
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
-
-    bit24_uint8_buffer_t tx = { 0, I2C_AHTXX_CTRL_CALI, I2C_AHTXX_CTRL_NOP };
-
-    if(ahtxx_handle->aht_type == I2C_AHTXX_AHT2X) {
-        tx[0] = I2C_AHTXX_CMD_AHT2X_INIT;
-    } else {
-        tx[0] = I2C_AHTXX_CMD_AHT10_INIT;
+    ESP_ARG_CHECK( handle && buffer && temperature && humidity );
+                        
+    /* handle aht crc validation by sensor type */
+    if(handle->config.aht_type != I2C_AHTXX_AHT10) {
+        /* validate crc byte - 7th byte for aht20, aht21, aht25, and aht30 sensor type */
+        //if (buffer[6] != i2c_ahtxx_calculate_crc8(buffer, BIT56_UINT8_BUFFER_SIZE - 1)) {
+        //    return ESP_ERR_INVALID_CRC;
+        //}
     }
 
+    /* concat humidity signal */
+    const uint32_t humidity_sig = ((uint32_t)buffer[1] << 12) | ((uint32_t)buffer[2] << 4) | (buffer[3] >> 4);
+
+    /* convert humidity signal */
+    *humidity = ((float)humidity_sig / powf(2, 20)) * 100.0f;
+
+    /* concat temperature signal */
+    const uint32_t temperature_sig = ((uint32_t)(buffer[3] & 0x0f) << 16) | ((uint32_t)buffer[4] << 8) | buffer[5];
+
+    /* convert temperature signal */
+    *temperature = ((float)temperature_sig / powf(2, 20)) * 200.0f - 50.0f;
+
+    return ESP_OK;
+}
+
+/**
+ * @brief Resets AHTXX initialization register by register address.
+ * 
+ * @param handle AHTXX device handle.
+ * @param reg_addr AHTXX reset register.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t i2c_ahtxx_reset_init_register(i2c_ahtxx_handle_t handle, const uint8_t reg_addr) {
+    bit24_uint8_buffer_t tx = { 0 };
+    bit24_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* validate aht type */
+    if(handle->config.aht_type == I2C_AHTXX_AHT10) {
+        return ESP_ERR_NOT_ALLOWED;
+    }
+
+    /* set tx command packet */
+    tx[0] = reg_addr;
+    tx[1] = 0x00;
+    tx[2] = 0x00;
+
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initializaion register 0xbe failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write command to register 0x%02x for reset initialization register failed", reg_addr );
+    
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->dev_handle, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read from register 0x%02x for reset initialization register failed", reg_addr );
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
+    vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
+
+    /* set tx data packet */
+    tx[0] = 0xb0 | reg_addr;
+    tx[1] = rx[1];
+    tx[2] = rx[2];
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write data to register 0x%02x for reset initialization register failed", reg_addr );
+    
+    return ESP_OK;
+}
+
+/**
+ * @brief AHTXX initialization and calibration setup.  This is a one-time call at start-up if the device isn't initialized and calibrated.
+ *
+ * @param handle AHTXX device handle.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t i2c_ahtxx_setup(i2c_ahtxx_handle_t handle) {
+    const bit24_uint8_buffer_t aht10_tx = { I2C_AHTXX_CMD_AHT10_INIT, I2C_AHTXX_CTRL_CALI, I2C_AHTXX_CTRL_NOP };
+    const bit24_uint8_buffer_t aht20_tx = { I2C_AHTXX_CMD_AHT20_INIT, I2C_AHTXX_CTRL_CALI, I2C_AHTXX_CTRL_NOP };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* handle aht init command by sensor type */
+    switch(handle->config.aht_type) {
+        case I2C_AHTXX_AHT10:
+            /* attempt i2c write transaction for aht10 sensor type initialization */
+            ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, aht10_tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initialization register 0xe1 failed" );
+            break;
+        case I2C_AHTXX_AHT20:
+            /* attempt i2c write transaction for aht20 sensor type initialization */
+            ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, aht20_tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initialization register 0xbe failed" );
+            break;
+        case I2C_AHTXX_AHT21:
+        case I2C_AHTXX_AHT25:
+        case I2C_AHTXX_AHT30:
+            /* attempt i2c reset transaction for aht21, aht25, and aht30 sensor types initialization */
+            ESP_RETURN_ON_ERROR( i2c_ahtxx_reset_init_register(handle, I2C_AHTXX_REG_1B), TAG, "reset initialization registers 0x1b failed" );
+            ESP_RETURN_ON_ERROR( i2c_ahtxx_reset_init_register(handle, I2C_AHTXX_REG_1C), TAG, "reset initialization registers 0x1c failed" );
+            ESP_RETURN_ON_ERROR( i2c_ahtxx_reset_init_register(handle, I2C_AHTXX_REG_1E), TAG, "reset initialization registers 0x1e failed" );
+            break;
+        default:
+            return ESP_ERR_INVALID_ARG;
+    }
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_SETUP_DELAY_MS));
@@ -115,20 +253,24 @@ esp_err_t i2c_ahtxx_setup(i2c_ahtxx_handle_t ahtxx_handle) {
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t ahtxx_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
-
+esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const status_reg) {
     const bit8_uint8_buffer_t tx = { I2C_AHTXX_CMD_STATUS };
+    i2c_ahtxx_status_register_t out_status_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, read status register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, read status register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_TX_RX_DELAY_MS));
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(ahtxx_handle->i2c_dev_handle, &ahtxx_handle->status_reg.reg, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->dev_handle, &out_status_reg.reg, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
+
+    /* set output parameter */
+    *status_reg = out_status_reg;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
@@ -136,31 +278,36 @@ esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t ahtxx_handle) {
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_init(i2c_master_bus_handle_t bus_handle, const i2c_ahtxx_config_t *ahtxx_config, i2c_ahtxx_handle_t *ahtxx_handle) {
+esp_err_t i2c_ahtxx_init(const i2c_master_bus_handle_t bus_handle, const i2c_ahtxx_config_t *ahtxx_config, i2c_ahtxx_handle_t *const ahtxx_handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( bus_handle && ahtxx_config );
+    ESP_ARG_CHECK( bus_handle && (ahtxx_config || ahtxx_handle) );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_POWERUP_DELAY_MS));
 
     /* validate device exists on the master bus */
-    esp_err_t ret = i2c_master_probe(bus_handle, ahtxx_config->dev_config.device_address, I2C_XFR_TIMEOUT_MS);
-    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ahtxx device handle initialization failed", ahtxx_config->dev_config.device_address);
+    esp_err_t ret = i2c_master_probe(bus_handle, ahtxx_config->dev_address, I2C_XFR_TIMEOUT_MS);
+    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ahtxx device handle initialization failed", ahtxx_config->dev_address);
 
     /* validate memory availability for handle */
-    i2c_ahtxx_handle_t out_handle = (i2c_ahtxx_handle_t)calloc(1, sizeof(i2c_ahtxx_t));
+    //i2c_ahtxx_handle_t out_handle = (i2c_ahtxx_handle_t)calloc(1, sizeof(i2c_ahtxx_context_t));
+    i2c_ahtxx_handle_t out_handle;
+    out_handle = (i2c_ahtxx_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c ahtxx device, init failed");
+
+    /* copy configuration */
+    out_handle->config = *ahtxx_config;
 
     /* set i2c device configuration */
     const i2c_device_config_t i2c_dev_conf = {
         .dev_addr_length    = I2C_ADDR_BIT_LEN_7,
-        .device_address     = ahtxx_config->dev_config.device_address,
-        .scl_speed_hz       = ahtxx_config->dev_config.scl_speed_hz,
+        .device_address     = out_handle->config.dev_address,
+        .scl_speed_hz       = out_handle->config.dev_clock_speed,
     };
 
     /* validate device handle */
-    if (out_handle->i2c_dev_handle == NULL) {
-        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->i2c_dev_handle), err_handle, TAG, "i2c new bus for init failed");
+    if (out_handle->dev_handle == NULL) {
+        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->dev_handle), err_handle, TAG, "i2c new bus for init failed");
     }
 
     /* delay before next i2c transaction */
@@ -179,80 +326,74 @@ esp_err_t i2c_ahtxx_init(i2c_master_bus_handle_t bus_handle, const i2c_ahtxx_con
 
     err_handle:
         /* clean up handle instance */
-        if (out_handle && out_handle->i2c_dev_handle) {
-            i2c_master_bus_rm_device(out_handle->i2c_dev_handle);
+        if (out_handle && out_handle->dev_handle) {
+            i2c_master_bus_rm_device(out_handle->dev_handle);
         }
         free(out_handle);
     err:
         return ret;
 }
 
-esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t ahtxx_handle, float *const temperature, float *const humidity) {
-    //esp_err_t    ret        = ESP_OK;
-    //uint64_t     start_time = 0;
-    //bool         is_busy    = true;
-    uint32_t      raw       = 0;
+esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t handle, float *const temperature, float *const humidity) {
     const bit24_uint8_buffer_t tx = { I2C_AHTXX_CMD_TRIGGER_MEAS, I2C_AHTXX_CTRL_MEAS, I2C_AHTXX_CTRL_NOP };
-    bit48_uint8_buffer_t rx       = { 0 };
+    esp_err_t     ret        = ESP_OK;
+    uint64_t      start_time = esp_timer_get_time();
+    bool          is_busy    = true;
+    bit56_uint8_buffer_t rx  = { 0 };
 
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
-
-    /* set start time (us) for timeout monitoring */
-    //start_time = esp_timer_get_time(); 
+    ESP_ARG_CHECK( handle && (temperature || humidity) );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(ahtxx_handle->i2c_dev_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write measurement trigger command for get measurement failed" );
-
-    vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_DATA_POLL_TIMEOUT_MS));
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write measurement trigger command for get measurement failed" );
 
     /* delay before next i2c transaction */
-    //vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
+    vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_MEAS_PROC_DELAY_MS));
 
     /* attempt to poll status until data is available or timeout occurs  */
-    /*
-        NOTE this causes problems since ESP-IDF v5.3.1, unexpected NACK but it may be hardware related
-        some breakout SHT20 boards tested work with the do..while loop where others don't and generate an unexpected NACK
-        the SHT10 board tested generates an unexpected NACK
-    */
-    //do {
+    do {
         /* attempt to check if data is ready */
-    //    ESP_GOTO_ON_ERROR( i2c_ahtxx_get_busy_status(ahtxx_handle, &is_busy), err, TAG, "is busy read for get measurement failed." );
+        ESP_GOTO_ON_ERROR( i2c_ahtxx_get_busy_status(handle, &is_busy), err, TAG, "is busy read for get measurement failed." );
 
         /* delay task before next i2c transaction */
-    //    vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_DATA_READY_DELAY_MS));
+        vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_DATA_READY_DELAY_MS));
 
         /* validate timeout condition */
-    //    if (ESP_TIMEOUT_CHECK(start_time, (I2C_AHTXX_DATA_POLL_TIMEOUT_MS * 1000)))
-    //        return ESP_ERR_TIMEOUT;
-    //} while (is_busy == true);
+        if (ESP_TIMEOUT_CHECK(start_time, (I2C_AHTXX_DATA_POLL_TIMEOUT_MS * 1000)))
+            return ESP_ERR_TIMEOUT;
+    } while (is_busy == true);
 
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(ahtxx_handle->i2c_dev_handle, rx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+    /* handle aht sensor read by type */
+    if(handle->config.aht_type == I2C_AHTXX_AHT10) {
+        /* aht10 returns 6 bytes */
 
-    /* compute and set humidity */
-    raw = ((uint32_t)rx[1] << 12) | ((uint32_t)rx[2] << 4) | (rx[3] >> 4);
-    *humidity = (float)(raw * 100) / (float)0x100000;
+        /* attempt i2c read transaction for aht10 sensor type */
+        ESP_RETURN_ON_ERROR( i2c_master_receive(handle->dev_handle, rx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+    } else {
+        /* aht20, aht21, aht25, and aht30 return 7 bytes */
 
-    /* compute and set temperature */
-    raw = ((uint32_t)(rx[3] & 0x0f) << 16) | ((uint32_t)rx[4] << 8) | rx[5];
-    *temperature = (float)(raw * 200) / (float)0x100000 - 50;
+        /* attempt i2c read transaction for aht20, aht21, aht25, and aht30 sensor types */
+        ESP_RETURN_ON_ERROR( i2c_master_receive(handle->dev_handle, rx, BIT56_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+    }
+
+    /* compute and set temperature and humidity */
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_convert_signals(handle, rx, temperature, humidity), TAG, "convert signals for get measurement failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
     
     return ESP_OK;
 
-    //err:
-    //    return ret;
+    err:
+        return ret;
 }
 
-esp_err_t i2c_ahtxx_get_measurements(i2c_ahtxx_handle_t ahtxx_handle, float *const temperature, float *const humidity, float *const dewpoint) {
+esp_err_t i2c_ahtxx_get_measurements(i2c_ahtxx_handle_t handle, float *const temperature, float *const humidity, float *const dewpoint) {
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle && temperature && humidity && dewpoint );
+    ESP_ARG_CHECK( handle && (temperature || humidity || dewpoint) );
 
     /* attempt to get temperature and humidity measurements */
-    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_measurement(ahtxx_handle, temperature, humidity), TAG, "read measurement for get measurements failed" );
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_measurement(handle, temperature, humidity), TAG, "read measurement for get measurements failed" );
 
     /* compute dewpoint from temperature and humidity */
     ESP_RETURN_ON_ERROR( i2c_ahtxx_calculate_dewpoint(*temperature, *humidity, dewpoint), TAG, "calculate dew-point for get measurements failed" );
@@ -260,68 +401,90 @@ esp_err_t i2c_ahtxx_get_measurements(i2c_ahtxx_handle_t ahtxx_handle, float *con
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_get_busy_status(i2c_ahtxx_handle_t ahtxx_handle, bool *const busy) {
+esp_err_t i2c_ahtxx_get_busy_status(i2c_ahtxx_handle_t handle, bool *const busy) {
+    i2c_ahtxx_status_register_t status_reg;
+
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
+    ESP_ARG_CHECK( handle && busy );
 
     /* attempt to read status register */
-    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(ahtxx_handle), TAG, "read status register for busy status failed" );
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(handle, &status_reg), TAG, "read status register for busy status failed" );
 
-    /* set status */
-    *busy = ahtxx_handle->status_reg.bits.busy;
+    /* set output parameter */
+    *busy = status_reg.bits.busy;
 
     //ESP_LOGD(TAG, "aht2x busy state    %s", busy ? "true" : "false");
 
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_get_calibration_status(i2c_ahtxx_handle_t ahtxx_handle, bool *const calibrated) {
+esp_err_t i2c_ahtxx_get_calibration_status(i2c_ahtxx_handle_t handle, bool *const calibrated) {
+    i2c_ahtxx_status_register_t status_reg;
+
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
+    ESP_ARG_CHECK( handle && calibrated );
 
     /* attempt to read status register */
-    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(ahtxx_handle), TAG, "read status register for calibration status failed" );
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(handle, &status_reg), TAG, "read status register for calibration status failed" );
 
-    /* set status */
-    *calibrated = ahtxx_handle->status_reg.bits.calibrated;
+    /* set output parameter */
+    *calibrated = status_reg.bits.calibrated;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_get_status(i2c_ahtxx_handle_t ahtxx_handle, bool *const busy, bool *const calibrated) {
+esp_err_t i2c_ahtxx_get_status(i2c_ahtxx_handle_t handle, bool *const busy, bool *const calibrated) {
+    i2c_ahtxx_status_register_t status_reg;
+
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
+    ESP_ARG_CHECK( handle && (busy || calibrated) );
 
     /* attempt to read status register */
-    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(ahtxx_handle), TAG, "read status register for status failed" );
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(handle, &status_reg), TAG, "read status register for status failed" );
 
-    /* set status */
-    *busy       = ahtxx_handle->status_reg.bits.busy;
-    *calibrated = ahtxx_handle->status_reg.bits.calibrated;
+    /* set output parameters */
+    *busy       = status_reg.bits.busy;
+    *calibrated = status_reg.bits.calibrated;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_reset(i2c_ahtxx_handle_t ahtxx_handle) {
+esp_err_t i2c_ahtxx_reset(i2c_ahtxx_handle_t handle) {
+    i2c_ahtxx_status_register_t status_reg;
+
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(ahtxx_handle->i2c_dev_handle, I2C_AHTXX_CMD_RESET), TAG, "write reset command failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->dev_handle, I2C_AHTXX_CMD_RESET), TAG, "write reset command for reset failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_RESET_DELAY_MS));
 
-    /* attempt to read device status register */
-    ESP_RETURN_ON_ERROR(i2c_ahtxx_get_status_register(ahtxx_handle), TAG, "read status register for reset failed");
+    /* attempt to read status register */
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(handle, &status_reg), TAG, "read status register for reset failed" );
 
-    /* validate status register */
-    if(ahtxx_handle->status_reg.reg != I2C_AHTXX_STATUS_WORD) {
-        /* attempt to write init command */
-        ESP_RETURN_ON_ERROR(i2c_ahtxx_setup(ahtxx_handle), TAG, "setup failed");
+    /* handle sensor setup by sensor type */
+    if(handle->config.aht_type == I2C_AHTXX_AHT10 || handle->config.aht_type == I2C_AHTXX_AHT20) {
+        /* validate calibration status */
+        if(status_reg.bits.calibrated == false) {
+            /* attempt to write init command */
+            ESP_RETURN_ON_ERROR( i2c_ahtxx_setup(handle), TAG, "setup sensor for reset failed" );
+        }
+    } else {
+        /* validate register status */
+        if(status_reg.reg != I2C_AHTXX_STATUS_WORD) {
+            /* attempt to reset initialization registers */
+            ESP_RETURN_ON_ERROR( i2c_ahtxx_setup(handle), TAG, "setup sensor for reset failed" );
+        }
+    }
 
-        /* attempt to read device status register */
-        ESP_RETURN_ON_ERROR(i2c_ahtxx_get_status_register(ahtxx_handle), TAG, "read status register for reset failed");
+    /* attempt to read status register */
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_get_status_register(handle, &status_reg), TAG, "read status register for reset failed" );
+
+    /* validate calibration status */
+    if(status_reg.bits.calibrated == false) {
+        ESP_RETURN_ON_FALSE( false, ESP_ERR_INVALID_STATE, TAG, "setup and initialize sensor for reset failed" );
     }
 
     /* delay before next i2c transaction */
@@ -330,25 +493,25 @@ esp_err_t i2c_ahtxx_reset(i2c_ahtxx_handle_t ahtxx_handle) {
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_remove(i2c_ahtxx_handle_t ahtxx_handle) {
+esp_err_t i2c_ahtxx_remove(i2c_ahtxx_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* remove device from i2c master bus */
-    return i2c_master_bus_rm_device(ahtxx_handle->i2c_dev_handle);
+    return i2c_master_bus_rm_device(handle->dev_handle);
 }
 
-esp_err_t i2c_ahtxx_delete(i2c_ahtxx_handle_t ahtxx_handle) {
+esp_err_t i2c_ahtxx_delete(i2c_ahtxx_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( ahtxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* remove device from master bus */
-    ESP_RETURN_ON_ERROR( i2c_ahtxx_remove(ahtxx_handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
+    ESP_RETURN_ON_ERROR( i2c_ahtxx_remove(handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
 
     /* validate handle instance and free handles */
-    if(ahtxx_handle->i2c_dev_handle) {
-        free(ahtxx_handle->i2c_dev_handle);
-        free(ahtxx_handle);
+    if(handle->dev_handle) {
+        free(handle->dev_handle);
+        free(handle);
     }
 
     return ESP_OK;

@@ -859,8 +859,6 @@ esp_err_t i2c_as3935_set_internal_capacitors(i2c_as3935_handle_t as3935_handle, 
     return ESP_OK;
 }
 
-
-
 esp_err_t i2c_as3935_get_interrupt_state(i2c_as3935_handle_t as3935_handle, i2c_as3935_interrupt_states_t *const state) {
     ESP_ARG_CHECK( as3935_handle );
 

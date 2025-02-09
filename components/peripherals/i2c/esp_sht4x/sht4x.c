@@ -89,18 +89,19 @@ static const char *TAG = "sht4x";
 */
 
 /**
- * @brief Calculates SHT4X crc8 value.  See datasheet for details.
+ * @brief Calculates SHT4X CRC8 value.  See datasheet for details.
  *
- * @param[in] data[] Data buffer to perform crc8 check against.
+ * @param[in] data[] Data buffer to perform CRC8 check against.
  * @param[in] len Length of `data` buffer.
- * @return uint8_t Caculated crc8 value.
+ * @return uint8_t Calculated CRC8 value.
  */
-static inline uint8_t i2c_sht4x_crc8(const uint8_t data[], const size_t len) {
-    uint8_t crc = 0xff;
-    for (size_t i = 0; i < len; i++) {
-        crc ^= data[i];
-        for (size_t i = 0; i < 8; i++)
+static inline uint8_t i2c_sht4x_calculate_crc8(const uint8_t data[], const uint8_t len) {
+    uint8_t crc = 0xff; /* crc initial value */
+    for (uint8_t byte = 0; byte < len; byte++) {
+        crc ^= data[byte];
+        for (uint8_t i = 0; i < 8; i++) {
             crc = crc & 0x80 ? (crc << 1) ^ I2C_SHT4X_CRC8_G_POLYNOM : crc << 1;
+        }
     }
     return crc;
 }
@@ -244,7 +245,7 @@ static inline esp_err_t i2c_sht4x_get_serial_number_register(i2c_sht4x_handle_t 
 
 esp_err_t i2c_sht4x_init(i2c_master_bus_handle_t bus_handle, const i2c_sht4x_config_t *sht4x_config, i2c_sht4x_handle_t *sht4x_handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( bus_handle && sht4x_config );
+    ESP_ARG_CHECK( bus_handle && (sht4x_config || sht4x_handle) );
 
     /* power-up delay */
     vTaskDelay(pdMS_TO_TICKS(I2C_SHT4X_POWERUP_DELAY_MS));
@@ -305,7 +306,7 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t sht4x_handle, float *cons
     bit48_uint8_buffer_t i2c_rx_buffer = { 0 };
 
     /* validate arguments */
-    ESP_ARG_CHECK( sht4x_handle && temperature && humidity );
+    ESP_ARG_CHECK( sht4x_handle && (temperature || humidity) );
     
     /* get command and measurement duration from handle settings */
     i2c_tx_buffer[0] = i2c_sht4x_get_command(sht4x_handle);
@@ -330,7 +331,9 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t sht4x_handle, float *cons
     ESP_RETURN_ON_ERROR( ret, TAG, "unable to read to i2c device handle, get measurement failed" );
 	
     /* validate crc values */
-    if (i2c_rx_buffer[2] != i2c_sht4x_crc8(i2c_rx_buffer, 2) || i2c_rx_buffer[5] != i2c_sht4x_crc8(i2c_rx_buffer + 3, 2)) return ESP_ERR_INVALID_CRC;
+    if (i2c_rx_buffer[2] != i2c_sht4x_calculate_crc8(i2c_rx_buffer, 2) || i2c_rx_buffer[5] != i2c_sht4x_calculate_crc8(i2c_rx_buffer + 3, 2)) {
+        return ESP_ERR_INVALID_CRC;
+    }
 
 	// convert sht4x results to engineering units of measure (C and %)
     *temperature = ((uint16_t)i2c_rx_buffer[0] << 8 | i2c_rx_buffer[1]) * 175.0 / 65535.0 - 45.0;
@@ -344,7 +347,7 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t sht4x_handle, float *cons
 
 esp_err_t i2c_sht4x_get_measurements(i2c_sht4x_handle_t sht4x_handle, float *const temperature, float *const humidity, float *const dewpoint) {
     /* validate arguments */
-    ESP_ARG_CHECK( sht4x_handle && temperature && humidity && dewpoint );
+    ESP_ARG_CHECK( sht4x_handle && (temperature || humidity || dewpoint) );
 
     ESP_RETURN_ON_ERROR( i2c_sht4x_get_measurement(sht4x_handle, temperature, humidity), TAG, "unable to read measurement, read measurements failed" );
 

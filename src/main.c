@@ -337,7 +337,7 @@ void app_main( void ) {
     /* start a component example */
     /* note: only one component example can run at a time */
     
-    //i2c0_component_example_start(I2C_COMPONENT_AHTXX);
+    i2c0_component_example_start(I2C_COMPONENT_AHTXX);
     //i2c0_component_example_start(I2C_COMPONENT_AK8975);
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
@@ -347,7 +347,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_ENS160);
     //i2c0_component_example_start(I2C_COMPONENT_HDC1080);
     //i2c0_component_example_start(I2C_COMPONENT_HMC5883L);
-    i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
+    //i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
     //i2c0_component_example_start(I2C_COMPONENT_MLX90614);
     //i2c0_component_example_start(I2C_COMPONENT_MMC56X3);
     //i2c0_component_example_start(I2C_COMPONENT_MPU6050);

@@ -189,8 +189,8 @@ esp_err_t i2c_bh1750_get_ambient_light(i2c_bh1750_handle_t bh1750_handle, float 
     uint8_t rx_retry_count      = 0;
     size_t delay_ticks          = 0;
     esp_err_t ret               = ESP_OK;
-    const bit8_uint8_buffer_t i2c_tx_buffer  = { bh1750_handle->mode };
-    bit16_uint8_buffer_t i2c_rx_buffer = { 0 };
+    const bit8_uint8_buffer_t tx = { bh1750_handle->mode };
+    bit16_uint8_buffer_t rx     = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( bh1750_handle );
@@ -199,7 +199,7 @@ esp_err_t i2c_bh1750_get_ambient_light(i2c_bh1750_handle_t bh1750_handle, float 
     delay_ticks = i2c_bh1750_get_tick_duration(bh1750_handle);
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR(i2c_master_transmit(bh1750_handle->i2c_dev_handle, i2c_tx_buffer, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write measurement mode command to device, get measurement failed");
+    ESP_RETURN_ON_ERROR(i2c_master_transmit(bh1750_handle->i2c_dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write measurement mode command to device, get measurement failed");
 
     /* delay task - allow time for the sensor to process measurement request */
     if(delay_ticks) vTaskDelay(delay_ticks);
@@ -207,7 +207,7 @@ esp_err_t i2c_bh1750_get_ambient_light(i2c_bh1750_handle_t bh1750_handle, float 
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(bh1750_handle->i2c_dev_handle, i2c_rx_buffer, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = i2c_master_receive(bh1750_handle->i2c_dev_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(I2C_BH1750_RETRY_DELAY_MS));
@@ -217,7 +217,7 @@ esp_err_t i2c_bh1750_get_ambient_light(i2c_bh1750_handle_t bh1750_handle, float 
     ESP_RETURN_ON_ERROR( ret, TAG, "unable to read to i2c device handle, get measurement failed" );
 
     /* convert bh1750 results to engineering units of measure (lux) */
-    uint16_t val = i2c_rx_buffer[0] << 8 | i2c_rx_buffer[1];
+    uint16_t val = rx[0] << 8 | rx[1];
     //uint16_t val = bytes_to_uint16(i2c_rx_buffer, false);
     *ambient_light = (float)(val * 10) / 12;
 

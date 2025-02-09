@@ -921,7 +921,7 @@ esp_err_t i2c_as7341_init(i2c_master_bus_handle_t bus_handle, const i2c_as7341_c
 esp_err_t i2c_as7341_get_spectral_measurements(i2c_as7341_handle_t as7341_handle, i2c_as7341_channels_spectral_data_t *spectral_data) {
     esp_err_t   ret              = ESP_OK;
     double      integration_time = 0;
-    uint64_t    start_time       = 0;
+    uint64_t    start_time       = esp_timer_get_time();
     bool        data_is_ready    = false;
     const bit8_uint8_buffer_t tx = { I2C_AS7341_CH0_ADC_DATA_L };
     uint8_t     rx[12]           = { 0 };
@@ -939,9 +939,6 @@ esp_err_t i2c_as7341_get_spectral_measurements(i2c_as7341_handle_t as7341_handle
 
     /* attempt to enable spectral measurement for low channels */
     ESP_GOTO_ON_ERROR( i2c_as7341_enable_spectral_measurement(as7341_handle), err, TAG, "enable spectral measurement, low channels, for get adc measurements failed." );
-
-    /* set start time for timeout monitoring */
-    start_time = esp_timer_get_time(); 
 
     /* attempt to poll until data, low channels, is available or timeout */
     do {
@@ -979,7 +976,7 @@ esp_err_t i2c_as7341_get_spectral_measurements(i2c_as7341_handle_t as7341_handle
     /* attempt to enable spectral measurement for low channels */
     ESP_GOTO_ON_ERROR( i2c_as7341_enable_spectral_measurement(as7341_handle), err, TAG, "enable spectral measurement, high channels, for get adc measurements failed." );
 
-    /* set start time for timeout monitoring and reset data ready flag */
+    /* reset start time for timeout monitoring and reset data ready flag */
     start_time = esp_timer_get_time();
     data_is_ready = false;
 

@@ -392,7 +392,7 @@ static inline esp_err_t i2c_bme680_get_fixed_measurements(i2c_bme680_handle_t bm
     int32_t         adc_press;
     int32_t         adc_temp;
     int32_t         fine_temp;
-    bit48_uint8_buffer_t data;
+    bit48_uint8_buffer_t rx;
 
     /* validate arguments */
     ESP_ARG_CHECK( bme680_handle && temperature && pressure );
@@ -414,10 +414,10 @@ static inline esp_err_t i2c_bme680_get_fixed_measurements(i2c_bme680_handle_t bm
     } while (data_is_ready == false);
 
     // need to read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte48(bme680_handle->i2c_dev_handle, I2C_BMP280_REG_PRESSURE, &data), err, TAG, "read temperature and pressure data failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte48(bme680_handle->i2c_dev_handle, I2C_BMP280_REG_PRESSURE, &rx), err, TAG, "read temperature and pressure data failed" );
 
-    adc_press = data[0] << 12 | data[1] << 4 | data[2] >> 4;
-    adc_temp  = data[3] << 12 | data[4] << 4 | data[5] >> 4;
+    adc_press = rx[0] << 12 | rx[1] << 4 | rx[2] >> 4;
+    adc_temp  = rx[3] << 12 | rx[4] << 4 | rx[5] >> 4;
 
     ESP_LOGD(TAG, "ADC temperature: %" PRIi32, adc_temp);
     ESP_LOGD(TAG, "ADC pressure: %" PRIi32, adc_press);

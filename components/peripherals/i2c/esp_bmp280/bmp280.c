@@ -253,7 +253,7 @@ static inline esp_err_t i2c_bmp280_get_fixed_temperature(i2c_bmp280_handle_t bmp
     bool            data_is_ready   = false;
     int32_t         adc_temp;
     int32_t         fine_temp;
-    bit24_uint8_buffer_t data;
+    bit24_uint8_buffer_t rx;
 
     /* validate arguments */
     ESP_ARG_CHECK( bmp280_handle && temperature );
@@ -275,9 +275,9 @@ static inline esp_err_t i2c_bmp280_get_fixed_temperature(i2c_bmp280_handle_t bmp
     } while (data_is_ready == false);
 
     // need to read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte24(bmp280_handle->i2c_dev_handle, I2C_BMP280_REG_TEMP, &data), err, TAG, "read temperature data failed" );
+    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte24(bmp280_handle->i2c_dev_handle, I2C_BMP280_REG_TEMP, &rx), err, TAG, "read temperature data failed" );
 
-    adc_temp  = data[0] << 12 | data[1] << 4 | data[2] >> 4;
+    adc_temp  = rx[0] << 12 | rx[1] << 4 | rx[2] >> 4;
 
     ESP_LOGD(TAG, "ADC temperature: %" PRIi32, adc_temp);
 
@@ -383,13 +383,10 @@ esp_err_t i2c_bmp280_get_configuration_register(i2c_bmp280_handle_t bmp280_handl
 }
 
 esp_err_t i2c_bmp280_set_configuration_register(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_configuration_register_t config_reg) {
-    i2c_bmp280_configuration_register_t config;
+    i2c_bmp280_configuration_register_t config = { .reg = config_reg.reg};
 
     /* validate arguments */
     ESP_ARG_CHECK( bmp280_handle );
-
-    /* copy register */
-    config.reg = config_reg.reg;
 
     /* set reserved to 0 */
     config.bits.reserved = 0;
@@ -574,7 +571,7 @@ esp_err_t i2c_bmp280_get_power_mode(i2c_bmp280_handle_t bmp280_handle, i2c_bmp28
 }
 
 esp_err_t i2c_bmp280_set_power_mode(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_power_modes_t power_mode) {
-    i2c_bmp280_control_measurement_register_t   ctrl_meas_reg;
+    i2c_bmp280_control_measurement_register_t ctrl_meas_reg;
 
     /* validate arguments */
     ESP_ARG_CHECK( bmp280_handle );
