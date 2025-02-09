@@ -162,7 +162,7 @@ uint64_t get_efuse_mac(void);
  * @param value `uint8_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint8_to_binary(const uint8_t value);
+const char* uint8_to_binary(const uint8_t value);
 
 /**
  * @brief Converts `int8_t` type to binary as a string.
@@ -170,7 +170,7 @@ const char *uint8_to_binary(const uint8_t value);
  * @param value `int8_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *int8_to_binary(const int8_t value);
+const char* int8_to_binary(const int8_t value);
 
 /**
  * @brief Converts `uint16_t` type to binary as a string.
@@ -178,7 +178,7 @@ const char *int8_to_binary(const int8_t value);
  * @param value `uint16_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint16_to_binary(const uint16_t value);
+const char* uint16_to_binary(const uint16_t value);
 
 /**
  * @brief Converts `int16_t` type to binary as a string.
@@ -186,7 +186,7 @@ const char *uint16_to_binary(const uint16_t value);
  * @param value `int16_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *int16_to_binary(const int16_t value);
+const char* int16_to_binary(const int16_t value);
 
 /**
  * @brief Converts `uint32_t` type to binary as a string.
@@ -194,7 +194,7 @@ const char *int16_to_binary(const int16_t value);
  * @param value `uint32_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint32_to_binary(const uint32_t value);
+const char* uint32_to_binary(const uint32_t value);
 
 /**
  * @brief Converts `int32_t` type to binary as a string.
@@ -202,7 +202,7 @@ const char *uint32_to_binary(const uint32_t value);
  * @param value `int32_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *int32_to_binary(const int32_t value);
+const char* int32_to_binary(const int32_t value);
 
 /**
  * @brief Converts `uint64_t` type to binary as a string.
@@ -210,7 +210,7 @@ const char *int32_to_binary(const int32_t value);
  * @param value `uint64_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *uint64_to_binary(const uint64_t value);
+const char* uint64_to_binary(const uint64_t value);
 
 /**
  * @brief Converts `int64_t` type to binary as a string.
@@ -218,7 +218,7 @@ const char *uint64_to_binary(const uint64_t value);
  * @param value `int64_t` to transform to binary string.
  * @return char* binary string representation.
  */
-const char *int64_to_binary(const int64_t value);
+const char* int64_to_binary(const int64_t value);
 
 /**
  * @brief Converts byte array to `uint16_t` data-type.

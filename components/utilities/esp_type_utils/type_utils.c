@@ -57,7 +57,8 @@
 /*
 * static constant declarations
 */
-//static const char *TAG = "type_utils";
+
+//static const char* TAG = "type_utils";
 
 /*
 * functions and subroutines
@@ -77,7 +78,7 @@ uint64_t get_efuse_mac(void) {
     return chipmacid;
 }
 
-const char *uint8_to_binary(const uint8_t value) {
+const char* uint8_to_binary(const uint8_t value) {
     static bin8_char_buffer_t buffer;
     buffer[8] = '\0';
     uint8_t n = value;
@@ -90,7 +91,7 @@ const char *uint8_to_binary(const uint8_t value) {
     return buffer;
 }
 
-const char *int8_to_binary(const int8_t value) {
+const char* int8_to_binary(const int8_t value) {
     static bin8_char_buffer_t buffer;
     buffer[8] = '\0';
     int8_t n = value;
@@ -103,7 +104,7 @@ const char *int8_to_binary(const int8_t value) {
     return buffer;
 }
 
-const char *uint16_to_binary(const uint16_t value) {
+const char* uint16_to_binary(const uint16_t value) {
     static bin16_char_buffer_t buffer;
     buffer[16] = '\0';
     uint16_t n = value;
@@ -116,7 +117,7 @@ const char *uint16_to_binary(const uint16_t value) {
     return buffer;
 }
 
-const char *int16_to_binary(const int16_t value) {
+const char* int16_to_binary(const int16_t value) {
     static bin16_char_buffer_t buffer;
     buffer[16] = '\0';
     int16_t n = value;
@@ -129,7 +130,7 @@ const char *int16_to_binary(const int16_t value) {
     return buffer;
 }
 
-const char *uint32_to_binary(const uint32_t value) {
+const char* uint32_to_binary(const uint32_t value) {
     static bin32_char_buffer_t buffer;
     buffer[32] = '\0';
     uint32_t n = value;
@@ -142,7 +143,7 @@ const char *uint32_to_binary(const uint32_t value) {
     return buffer;
 }
 
-const char *int32_to_binary(const int32_t value) {
+const char* int32_to_binary(const int32_t value) {
     static bin32_char_buffer_t buffer;
     buffer[32] = '\0';
     int32_t n = value;
@@ -155,7 +156,7 @@ const char *int32_to_binary(const int32_t value) {
     return buffer;
 }
 
-const char *uint64_to_binary(const uint64_t value) {
+const char* uint64_to_binary(const uint64_t value) {
     static bin64_char_buffer_t buffer;
     buffer[64] = '\0';
     uint64_t n = value;
@@ -168,7 +169,7 @@ const char *uint64_to_binary(const uint64_t value) {
     return buffer;
 }
 
-const char *int64_to_binary(const int64_t value) {
+const char* int64_to_binary(const int64_t value) {
     static bin64_char_buffer_t buffer;
     buffer[64] = '\0';
     int64_t n = value;

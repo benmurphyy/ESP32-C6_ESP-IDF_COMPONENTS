@@ -35,23 +35,28 @@
 #ifndef __AHTXX_H__
 #define __AHTXX_H__
 
+/**
+ * dependency includes
+ */
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
 #include <i2c_master_ext.h>
+#include <ahtxx_version.h>
 
 
-/*
+/**
  * public constant definitions
-*/
+ */
 
-#define I2C_AHTXX_SCL_SPEED_HZ          UINT32_C(100000) //!< ahtxx I2C scl clock frequency (100KHz)
-#define I2C_AHTXX_DEV_ADDR              UINT8_C(0x38)    //!< ahtxx I2C device address
+#define I2C_AHTXX_SCL_SPEED_HZ  UINT32_C(100000) //!< ahtxx I2C scl clock frequency (100KHz)
+#define I2C_AHTXX_DEV_ADDR      UINT8_C(0x38)    //!< ahtxx I2C device address
 
 
-/*
+/**
  * public macro definitions
-*/
+ */
 
 #define I2C_AHT30_CONFIG_DEFAULT {                  \
     .dev_address     = I2C_AHTXX_DEV_ADDR,          \
@@ -83,12 +88,12 @@
 extern "C" {
 #endif
 
-/*
-* public enumerator and structure declarations
-*/
+/**
+ * public enumerator, union, and structure definitions
+ */
 
 /**
- * @brief AHTXX types enumerator.
+ * @brief AHTXX types enumerator definition.
  * 
  * @note AHTXX types vary slightly with respect to setup and initialization according to available documentation.
  * The AHT10 is setup through the initialization command.  The AHT20(?), AHT21, AHT25 and AHT30 are setup by initializing 
@@ -102,9 +107,8 @@ typedef enum i2c_ahtxx_types_e {
     I2C_AHTXX_AHT30
 } i2c_ahtxx_types_t;
 
-
 /**
- * @brief AHTXX status register structure.
+ * @brief AHTXX status register structure definition.
  */
 typedef union __attribute__((packed)) i2c_ahtxx_status_register_u {
     struct {
@@ -117,7 +121,7 @@ typedef union __attribute__((packed)) i2c_ahtxx_status_register_u {
 } i2c_ahtxx_status_register_t;
 
 /**
- * @brief AHTXX configuration structure.
+ * @brief AHTXX configuration structure definition.
  */
 typedef struct i2c_ahtxx_config_s {
     uint16_t          dev_address;      /*!< i2c device address */
@@ -128,30 +132,33 @@ typedef struct i2c_ahtxx_config_s {
 /**
  * @brief AHTXX context structure.
  */
-struct i2c_ahtxx_context_t {
+struct i2c_ahtxx_context_s {
     i2c_ahtxx_config_t      config;     /*!< configuration by the caller */
     i2c_master_dev_handle_t dev_handle; /*!< i2c device handle */
 };
 
 /**
- * @brief AHTXX context definition.
+ * @brief AHTXX context structure definition.
  */
-typedef struct i2c_ahtxx_context_t i2c_ahtxx_context_t;
+typedef struct i2c_ahtxx_context_s i2c_ahtxx_context_t;
 
 /**
- * @brief AHTXX handle definition.
+ * @brief AHTXX handle structure definition.
  */
-typedef struct i2c_ahtxx_context_t *i2c_ahtxx_handle_t;
+typedef struct i2c_ahtxx_context_s* i2c_ahtxx_handle_t;
 
+/**
+ * public function and subroutine declarations
+ */
 
 /**
  * @brief Reads status register from AHTXX.
  *
  * @param handle AHTXX device handle.
- * @param status_reg AHTXX status register
+ * @param reg AHTXX status register
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const status_reg);
+esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const reg);
 
 /**
  * @brief Initializes an AHTXX device onto the I2C master bus.

@@ -32,6 +32,11 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
+
+/**
+ * dependency includes
+ */
+
 #include "ahtxx.h"
 #include <string.h>
 #include <stdio.h>
@@ -42,9 +47,9 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-/*
+/**
  * constant definitions
-*/
+ */
 
 #define I2C_AHTXX_CRC8_G_POLYNOM        UINT8_C(0x31)   //!< ahtxx I2C CRC8 polynomial
 
@@ -76,16 +81,22 @@
 #define I2C_AHTXX_TX_RX_DELAY_MS        UINT16_C(10)    /*!< ahtxx delay after attempting an I2C transmit transaction and attempting an I2C receive transaction */
 
 
-/*
+/**
  * macro definitions
-*/
+ */
+
 #define ESP_TIMEOUT_CHECK(start, len) ((uint64_t)(esp_timer_get_time() - (start)) >= (len))
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
-/*
-* static constant declarations
-*/
-static const char *TAG = "ahtxx";
+/**
+ * static constant declarations
+ */
+
+static const char* TAG = "ahtxx";
+
+/**
+ * static function and subroutine declarations
+ */
 
 /**
  * @brief Calculates AHTXX sensor types with CRC8 value.  See datasheet for details.
@@ -168,7 +179,7 @@ static inline esp_err_t i2c_ahtxx_convert_signals(i2c_ahtxx_handle_t handle, con
  * @brief Resets AHTXX initialization register by register address.
  * 
  * @param handle AHTXX device handle.
- * @param reg_addr AHTXX reset register.
+ * @param reg_addr AHTXX reset register address.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t i2c_ahtxx_reset_init_register(i2c_ahtxx_handle_t handle, const uint8_t reg_addr) {
@@ -253,12 +264,20 @@ static inline esp_err_t i2c_ahtxx_setup(i2c_ahtxx_handle_t handle) {
     return ESP_OK;
 }
 
-esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const status_reg) {
+/**
+ * function and subroutine declarations
+ */
+
+const char* i2c_ahtxx_get_fw_version(void) {
+    return I2C_AHTXX_FW_VERSION_STR;
+}
+
+esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const reg) {
     const bit8_uint8_buffer_t tx = { I2C_AHTXX_CMD_STATUS };
-    i2c_ahtxx_status_register_t out_status_reg;
+    i2c_ahtxx_status_register_t out_reg;
 
     /* validate arguments */
-    ESP_ARG_CHECK( handle );
+    ESP_ARG_CHECK( handle && reg );
 
     /* attempt i2c write transaction */
     ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, read status register failed" );
@@ -267,10 +286,10 @@ esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_sta
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_TX_RX_DELAY_MS));
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->dev_handle, &out_status_reg.reg, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->dev_handle, &out_reg.reg, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
 
     /* set output parameter */
-    *status_reg = out_status_reg;
+    *reg = out_reg;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_AHTXX_CMD_DELAY_MS));
