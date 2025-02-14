@@ -47,21 +47,21 @@
 extern "C" {
 #endif
 
-#define MINIMAL_STACK_SIZE             (1024)
+#define TSK_MINIMAL_STACK_SIZE         (1024)
 
 #define I2C0_MASTER_PORT               I2C_NUM_0
 #define I2C0_MASTER_SDA_IO             GPIO_NUM_45 // blue
 #define I2C0_MASTER_SCL_IO             GPIO_NUM_48 // yellow
 //
 #define I2C0_TASK_SAMPLING_RATE        (10) // seconds
-#define I2C0_TASK_STACK_SIZE           (MINIMAL_STACK_SIZE * 8)
+#define I2C0_TASK_STACK_SIZE           (TSK_MINIMAL_STACK_SIZE * 8)
 #define I2C0_TASK_PRIORITY             (tskIDLE_PRIORITY + 2)
 
 #define OWB0_MASTER_DEVICE_MAX         (8)
 #define OWB0_MASTER_DQ_IO              GPIO_NUM_47
 
 #define OWB0_TASK_SAMPLING_RATE        (10) // seconds
-#define OWB0_TASK_STACK_SIZE           (MINIMAL_STACK_SIZE * 8)
+#define OWB0_TASK_STACK_SIZE           (TSK_MINIMAL_STACK_SIZE * 8)
 #define OWB0_TASK_PRIORITY             (tskIDLE_PRIORITY + 2)
 
 #define SPI1_MASTER_HOST               SPI1_HOST
@@ -70,7 +70,7 @@ extern "C" {
 #define SPI1_MASTER_MOSI_IO            GPIO_NUM_37 //
 
 #define SPI1_TASK_SAMPLING_RATE        (10) // seconds
-#define SPI1_TASK_STACK_SIZE           (MINIMAL_STACK_SIZE * 8)
+#define SPI1_TASK_STACK_SIZE           (TSK_MINIMAL_STACK_SIZE * 8)
 #define SPI1_TASK_PRIORITY             (tskIDLE_PRIORITY + 2)
 
 #define APP_TAG                         "ESP-IDF COMPONENTS [APP]"

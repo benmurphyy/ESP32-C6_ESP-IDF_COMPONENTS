@@ -39,15 +39,13 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <i2c_master_ext.h>
+#include "bmp280_version.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  * BMP280 definitions
 */
-#define I2C_BMP280_SCL_SPEED_HZ     UINT32_C(100000)          //!< bmp280 I2C default clock frequency (100KHz)
+#define I2C_BMP280_DEV_CLK_SPD      UINT32_C(100000)          //!< bmp280 I2C default clock frequency (100KHz)
 
 /*
  * supported device addresses
@@ -59,23 +57,27 @@ extern "C" {
  * BMP280 macros
 */
 #define I2C_BMP280_CONFIG_DEFAULT {                                              \
-        .dev_config.device_address  = I2C_BMP280_DEV_ADDR_HI,                    \
-        .dev_config.scl_speed_hz    = I2C_BMP280_SCL_SPEED_HZ,                   \
+        .i2c_address                = I2C_BMP280_DEV_ADDR_HI,                    \
+        .i2c_clock_speed            = I2C_BMP280_DEV_CLK_SPD,                    \
         .power_mode                 = I2C_BMP280_POWER_MODE_NORMAL,              \
         .iir_filter                 = I2C_BMP280_IIR_FILTER_OFF,                 \
         .pressure_oversampling      = I2C_BMP280_PRESSURE_OVERSAMPLING_4X,       \
         .temperature_oversampling   = I2C_BMP280_TEMPERATURE_OVERSAMPLING_1X,    \
         .standby_time               = I2C_BMP280_STANDBY_TIME_250MS }
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
- * BMP280 enumerator and sructure declerations
+ * BMP280 enumerator and structure declarations
 */
 
 /**
  * @brief BMP280 I2C IIR filters coefficient enumerator.
- * 
  */
-typedef enum {
+typedef enum i2c_bmp280_iir_filters_e {
     I2C_BMP280_IIR_FILTER_OFF = (0b000),
     I2C_BMP280_IIR_FILTER_2   = (0b001),
     I2C_BMP280_IIR_FILTER_4   = (0b010),
@@ -87,7 +89,7 @@ typedef enum {
  * @brief BMP280 I2C standby times enumerator.
  * 
  */
-typedef enum {
+typedef enum i2c_bmp280_standby_times_e {
     I2C_BMP280_STANDBY_TIME_0_5MS  = (0b000),  //!< stand by time 0.5ms
     I2C_BMP280_STANDBY_TIME_62_5MS = (0b001),  //!< stand by time 62.5ms
     I2C_BMP280_STANDBY_TIME_125MS  = (0b010),  //!< stand by time 125ms
@@ -102,18 +104,18 @@ typedef enum {
  * @brief BMP280 I2C power modes enumerator.
  * 
  */
-typedef enum {
+typedef enum i2c_bmp280_power_modes_e {
     I2C_BMP280_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
     I2C_BMP280_POWER_MODE_FORCED  = (0b01), //!< measurement is initiated by user
     I2C_BMP280_POWER_MODE_FORCED1 = (0b10), //!< measurement is initiated by user
-    I2C_BMP280_POWER_MODE_NORMAL  = (0b11)  //!< continuosly cycles between active measurement and inactive (standby-time) periods
+    I2C_BMP280_POWER_MODE_NORMAL  = (0b11)  //!< continuously cycles between active measurement and inactive (standby-time) periods
 } i2c_bmp280_power_modes_t;
 
 /**
  * @brief BMP280 I2C pressure oversampling enumerator.
  * 
  */
-typedef enum {
+typedef enum i2c_bmp280_pressure_oversampling_e {
     I2C_BMP280_PRESSURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
     I2C_BMP280_PRESSURE_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
     I2C_BMP280_PRESSURE_OVERSAMPLING_2X         = (0b010),  //!< low power
@@ -126,7 +128,7 @@ typedef enum {
  * @brief BMP280 I2C temperature oversampling enumerator.
  * 
  */
-typedef enum {
+typedef enum i2c_bmp280_temperature_oversampling_e {
     I2C_BMP280_TEMPERATURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
     I2C_BMP280_TEMPERATURE_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
     I2C_BMP280_TEMPERATURE_OVERSAMPLING_2X         = (0b010),  //!< low power
@@ -141,7 +143,7 @@ typedef enum {
  * @brief BMP280 I2C status register (0xf3) structure.  The reset state is 0x00 for this register.
  * 
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp280_status_register_u {
     struct {
         bool    image_update:1; /*!< bmp280 automatically set to 1 when NVM data are being copied to image registers and back to 0 when done (bit:0)  */
         uint8_t reserved1:2;    /*!< reserved (bit:1-2) */
@@ -155,7 +157,7 @@ typedef union __attribute__((packed)) {
  * @brief BMP280 I2C control measurement register (0xf4) structure.  The reset state is 0x00 for this register.
  * 
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp280_control_measurement_register_u {
     struct {
         i2c_bmp280_power_modes_t                power_mode:2;               /*!< bmp280 power mode of the device            (bit:0-1)  */
         i2c_bmp280_pressure_oversampling_t      pressure_oversampling:3;    /*!< bmp280 oversampling of pressure data       (bit:2-4) */
@@ -168,7 +170,7 @@ typedef union __attribute__((packed)) {
  * @brief BMP280 I2C configuration register (0xf5) structure.  The reset state is 0x00 for this register.
  * 
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp280_configuration_register_u {
     struct {
         bool                        spi_enabled:1;  /*!< bmp280 3-wire SPI interface enabled when true  (bit:0)  */
         uint8_t                     reserved:1;     /*!< bmp280 reserved                                (bit:1) */
@@ -182,7 +184,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP280 temperature and pressure calibration factors structure.
  */
-typedef struct {
+typedef struct i2c_bmp280_cal_factors_s {
     /* temperature and pressure compensation */
     uint16_t                dig_T1;
     int16_t                 dig_T2;
@@ -201,8 +203,9 @@ typedef struct {
 /**
  * @brief BMP280 I2C device configuration structure.
  */
-typedef struct {
-    i2c_device_config_t                         dev_config;                 /*!< I2C configuration for bmp280 device */
+typedef struct i2c_bmp280_config_s {
+    uint16_t                                    i2c_address;      /*!< i2c device address */
+    uint32_t                                    i2c_clock_speed;  /*!< i2c device scl clock speed  */
     i2c_bmp280_power_modes_t                    power_mode;                 /*!< bmp280 power mode setting */
     i2c_bmp280_iir_filters_t                    iir_filter;                 /*!< bmp280 IIR filter setting */
     i2c_bmp280_pressure_oversampling_t          pressure_oversampling;      /*!< bmp280 pressure oversampling setting */
@@ -211,238 +214,240 @@ typedef struct {
 } i2c_bmp280_config_t;
 
 /**
- * @brief BMP280 I2C device structure.
+ * @brief BMP280 I2C device context structure.
  */
-struct i2c_bmp280_t {
-    i2c_master_dev_handle_t                     i2c_dev_handle;    /*!< I2C device handle */
+struct i2c_bmp280_context_t {
+    i2c_bmp280_config_t                         dev_config;         /*!< bmp280 device configuration */  
+    i2c_master_dev_handle_t                     i2c_handle;         /*!< I2C device handle */
     i2c_bmp280_cal_factors_t                   *dev_cal_factors;    /*!< bmp280 device calibration factors */
-    uint8_t                                     dev_type;           /*!< device type, should be bmp280 */
-    i2c_bmp280_status_register_t                status_reg;         /*!< bmp280 status register */
-    i2c_bmp280_control_measurement_register_t   ctrl_meas_reg;      /*!< bmp280 control measurement register */
-    i2c_bmp280_configuration_register_t         config_reg;         /*!< bmp280 configuration register */
+    uint8_t                                     sensor_type;        /*!< sensor type, should be bmp280 */
 };
 
 /**
  * @brief BMP280 I2C device structure definition.
  */
-typedef struct i2c_bmp280_t i2c_bmp280_t;
+typedef struct i2c_bmp280_context_t i2c_bmp280_context_t;
 
 /**
  * @brief BMP280 I2C device handle definition.
  */
-typedef struct i2c_bmp280_t *i2c_bmp280_handle_t;
+typedef struct i2c_bmp280_context_t* i2c_bmp280_handle_t;
 
 
 /**
- * @brief reads chip indentification register from bmp280.
+ * @brief Reads chip identification register from BMP280.
  * 
- * @param bmp280_handle[in] bmp280 device handle.
+ * @param[in] handle BMP280 device handle.
+ * @param[out] reg BMP280 chip identification register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_chip_id_register(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_get_chip_id_register(i2c_bmp280_handle_t handle, uint8_t *const reg);
 
 /**
- * @brief reads status register from bmp280.
+ * @brief Reads status register from BMP280.
  * 
- * @param bmp280_handle[in] bmp280 device handle.
+ * @param handle[in] BMP280 device handle.
+ * @param[out] reg BMP280 status register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_status_register(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_get_status_register(i2c_bmp280_handle_t handle, i2c_bmp280_status_register_t *const reg);
 
 /**
- * @brief reads control measurement register from bmp280.
+ * @brief Reads control measurement register from BMP280.
  * 
- * @param bmp280_handle[in] bmp280 device handle.
+ * @param[in] handle BMP280 device handle.
+ * @param[out] reg BMP280 control measurement register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_control_measurement_register(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_get_control_measurement_register(i2c_bmp280_handle_t handle, i2c_bmp280_control_measurement_register_t *const reg);
 
 /**
- * @brief writes control measurement register to bmp280. 
+ * @brief Writes control measurement register to BMP280. 
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[in] ctrl_meas_reg control measurement register.
+ * @param[in] handle BMP280 device handle.
+ * @param[in] reg BMP280 control measurement register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_control_measurement_register(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_control_measurement_register_t ctrl_meas_reg);
+esp_err_t i2c_bmp280_set_control_measurement_register(i2c_bmp280_handle_t handle, const i2c_bmp280_control_measurement_register_t reg);
 
 /**
- * @brief reads configuration register from bmp280.
+ * @brief Reads configuration register from BMP280.
  * 
- * @param bmp280_handle[in] bmp280 device handle
+ * @param[in] handle BMP280 device handle.
+ * @param[out] reg BMP280 configuration register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_configuration_register(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_get_configuration_register(i2c_bmp280_handle_t handle, i2c_bmp280_configuration_register_t *const reg);
 
 /**
- * @brief writes configuration register to bmp280. 
+ * @brief Writes configuration register to BMP280. 
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[in] config_reg configuration register.
+ * @param[in] handle BMP280 device handle.
+ * @param[in] reg BMP280 configuration register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_configuration_register(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_configuration_register_t config_reg);
+esp_err_t i2c_bmp280_set_configuration_register(i2c_bmp280_handle_t handle, const i2c_bmp280_configuration_register_t reg);
 
 /**
- * @brief initializes an bmp280 device onto the master bus.
+ * @brief Initializes an BMP280 device onto the master bus.
  *
- * @param[in] bus_handle I2C master bus handle
- * @param[in] bmp280_config configuration of bmp280 device
- * @param[out] bmp280_handle bmp280 device handle
+ * @param[in] master_handle I2C master bus handle.
+ * @param[in] bmp280_config BMP280 device configuration.
+ * @param[out] bmp280_handle BMP280 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_init(i2c_master_bus_handle_t bus_handle, const i2c_bmp280_config_t *bmp280_config, i2c_bmp280_handle_t *bmp280_handle);
+esp_err_t i2c_bmp280_init(i2c_master_bus_handle_t master_handle, const i2c_bmp280_config_t *bmp280_config, i2c_bmp280_handle_t *bmp280_handle);
 
 /**
- * @brief high-level measurement (temperature & pressure) function for bmp280
+ * @brief Reads temperature and pressure measurements from BMP280.
  *
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] temperature temperature in degree Celsius
- * @param[out] pressure pressure in pascal
+ * @param[in] handle BMP280 device handle.
+ * @param[out] temperature Temperature in degree Celsius.
+ * @param[out] pressure Pressure in pascal.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_measurements(i2c_bmp280_handle_t bmp280_handle, float *const temperature, float *const pressure);
+esp_err_t i2c_bmp280_get_measurements(i2c_bmp280_handle_t handle, float *const temperature, float *const pressure);
 
 /**
- * @brief high-level temperature measurement function for bmp280
+ * @brief Reads temperature measurement from BMP280.
  *
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] temperature temperature in degree Celsius
+ * @param[in] handle BMP280 device handle.
+ * @param[out] temperature Temperature in degree Celsius.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_temperature(i2c_bmp280_handle_t bmp280_handle, float *const temperature);
+esp_err_t i2c_bmp280_get_temperature(i2c_bmp280_handle_t handle, float *const temperature);
 
 /**
- * @brief high-level pressure measurement function for bmp280
+ * @brief Reads pressure measurement from BMP280.
  *
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] pressure pressure in pascal
+ * @param[in] handle BMP280 device handle.
+ * @param[out] pressure Pressure in pascal.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_pressure(i2c_bmp280_handle_t bmp280_handle, float *const pressure);
+esp_err_t i2c_bmp280_get_pressure(i2c_bmp280_handle_t handle, float *const pressure);
 
 /**
- * @brief reads data status of the bmp280.
+ * @brief Reads data status from BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
+ * @param[in] handle bmp280 device handle.
  * @param[out] ready data is ready when asserted to true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_data_status(i2c_bmp280_handle_t bmp280_handle, bool *const ready);
+esp_err_t i2c_bmp280_get_data_status(i2c_bmp280_handle_t handle, bool *const ready);
 
 /**
- * @brief reads power mode setting from the bmp280.
+ * @brief Reads power mode setting from BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] power_mode power mode setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[out] power_mode Power mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_power_mode(i2c_bmp280_handle_t bmp280_handle, i2c_bmp280_power_modes_t *const power_mode);
+esp_err_t i2c_bmp280_get_power_mode(i2c_bmp280_handle_t handle, i2c_bmp280_power_modes_t *const power_mode);
 
 /**
- * @brief writes power mode setting to the bmp280.  See datasheet, section 3.6, table 10.
+ * @brief Writes power mode setting to the BMP280.  See datasheet, section 3.6, table 10.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[in] power_mode power mode setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[in] power_mode Power mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_power_mode(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_power_modes_t power_mode);
+esp_err_t i2c_bmp280_set_power_mode(i2c_bmp280_handle_t handle, const i2c_bmp280_power_modes_t power_mode);
 
 /**
- * @brief reads pressure oversampling setting from bmp280.
+ * @brief Reads pressure oversampling setting from BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] oversampling pressure oversampling setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[out] oversampling Pressure oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_pressure_oversampling(i2c_bmp280_handle_t bmp280_handle, i2c_bmp280_pressure_oversampling_t *const oversampling);
+esp_err_t i2c_bmp280_get_pressure_oversampling(i2c_bmp280_handle_t handle, i2c_bmp280_pressure_oversampling_t *const oversampling);
 
 /**
- * @brief writes pressure oversampling setting to bmp280.  See datasheet, section 3.3.1, table 4.
+ * @brief Writes pressure oversampling setting to BMP280.  See datasheet, section 3.3.1, table 4.
  * 
- * @param bmp280_handle[in] bmp280 device handle.
- * @param oversampling[in] pressure oversampling setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[in] oversampling Pressure oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_pressure_oversampling(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_pressure_oversampling_t oversampling);
+esp_err_t i2c_bmp280_set_pressure_oversampling(i2c_bmp280_handle_t handle, const i2c_bmp280_pressure_oversampling_t oversampling);
 
 /**
- * @brief reads temperature oversampling setting from bmp280.
+ * @brief Reads temperature oversampling setting from BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] oversampling temperature oversampling setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[out] oversampling Temperature oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_temperature_oversampling(i2c_bmp280_handle_t bmp280_handle, i2c_bmp280_temperature_oversampling_t *const oversampling);
+esp_err_t i2c_bmp280_get_temperature_oversampling(i2c_bmp280_handle_t handle, i2c_bmp280_temperature_oversampling_t *const oversampling);
 
 /**
- * @brief writes temperature oversampling setting to bmp280.  See datasheet, section 3.3.1, table 4.
+ * @brief Writes temperature oversampling setting to BMP280.  See datasheet, section 3.3.1, table 4.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[in] oversampling temperature oversampling setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[in] oversampling Temperature oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_temperature_oversampling(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_temperature_oversampling_t oversampling);
+esp_err_t i2c_bmp280_set_temperature_oversampling(i2c_bmp280_handle_t handle, const i2c_bmp280_temperature_oversampling_t oversampling);
 
 /**
- * @brief reads standby time setting from bmp280.
+ * @brief Reads stand-by time setting from BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[out] standby_time standby time setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[out] standby_time Stand-by time setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_standby_time(i2c_bmp280_handle_t bmp280_handle, i2c_bmp280_standby_times_t *const standby_time);
+esp_err_t i2c_bmp280_get_standby_time(i2c_bmp280_handle_t handle, i2c_bmp280_standby_times_t *const standby_time);
 
 /**
- * @brief writes standby time setting to bmp280.
+ * @brief Writes stand-by time setting to BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
- * @param[in] standby_time standby time setting.
+ * @param[in] handle BMP280 device handle.
+ * @param[in] standby_time Stand-by time setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_standby_time(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_standby_times_t standby_time);
+esp_err_t i2c_bmp280_set_standby_time(i2c_bmp280_handle_t handle, const i2c_bmp280_standby_times_t standby_time);
 
 /**
- * @brief reads IIR filter setting to bmp280.
+ * @brief Reads IIR filter setting to BMP280.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
+ * @param[in] handle BMP280 device handle.
  * @param[out] iir_filter IIR filter setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_get_iir_filter(i2c_bmp280_handle_t bmp280_handle, i2c_bmp280_iir_filters_t *const iir_filter);
+esp_err_t i2c_bmp280_get_iir_filter(i2c_bmp280_handle_t handle, i2c_bmp280_iir_filters_t *const iir_filter);
 
 /**
- * @brief writes IIR filter setting from bmp280.  See datasheet, section 3.4, table 7.
+ * @brief Writes IIR filter setting to BMP280.  See datasheet, section 3.4, table 7.
  * 
- * @param[in] bmp280_handle bmp280 device handle.
+ * @param[in] handle BMP280 device handle.
  * @param[in] iir_filter IIR filter setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_set_iir_filter(i2c_bmp280_handle_t bmp280_handle, const i2c_bmp280_iir_filters_t iir_filter);
+esp_err_t i2c_bmp280_set_iir_filter(i2c_bmp280_handle_t handle, const i2c_bmp280_iir_filters_t iir_filter);
 
 /**
- * @brief issues soft-reset sensor and initializes registers for bmp280.
+ * @brief Issues soft-reset sensor and initializes BMP280.
  *
- * @param[in] bmp280_handle bmp280 device handle.
+ * @param[in] handle BMP280 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_reset(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_reset(i2c_bmp280_handle_t handle);
 
 /**
- * @brief removes an bmp280 device from master bus.
+ * @brief Removes an BMP280 device from master bus.
  *
- * @param[in] bmp280_handle bmp280 device handle
+ * @param[in] handle BMP280 device handle
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_remove(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_remove(i2c_bmp280_handle_t handle);
 
 /**
- * @brief removes an bmp280 device from master bus and frees handle.
+ * @brief Removes an BMP280 device from master bus and frees handle.
  *
- * @param[in] bmp280_handle bmp280 device handle
+ * @param[in] handle BMP280 device handle
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp280_delete(i2c_bmp280_handle_t bmp280_handle);
+esp_err_t i2c_bmp280_delete(i2c_bmp280_handle_t handle);
 
 
 

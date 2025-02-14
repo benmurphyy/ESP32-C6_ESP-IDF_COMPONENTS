@@ -35,7 +35,7 @@
 #define __AHTXX_TASK_H__
 
 
-#include <app_config.h>
+#include "app_config.h"
 
 #ifdef __cplusplus
 extern "C" {

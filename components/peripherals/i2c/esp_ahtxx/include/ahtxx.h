@@ -43,45 +43,60 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <i2c_master_ext.h>
-#include <ahtxx_version.h>
+#include "ahtxx_version.h"
 
 
 /**
  * public constant definitions
  */
 
-#define I2C_AHTXX_SCL_SPEED_HZ  UINT32_C(100000) //!< ahtxx I2C scl clock frequency (100KHz)
-#define I2C_AHTXX_DEV_ADDR      UINT8_C(0x38)    //!< ahtxx I2C device address
+#define I2C_AHTXX_DEV_CLK_SPD   UINT32_C(100000) /*!< ahtxx i2c device scl clock frequency (100KHz) */
+#define I2C_AHTXX_DEV_ADDR      UINT8_C(0x38)    /*!< ahtxx i2c device address */
 
 
 /**
  * public macro definitions
  */
 
+/**
+ * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht30 sensor type.
+ */
 #define I2C_AHT30_CONFIG_DEFAULT {                  \
-    .dev_address     = I2C_AHTXX_DEV_ADDR,          \
-    .dev_clock_speed = I2C_AHTXX_SCL_SPEED_HZ,      \
-    .aht_type        = I2C_AHTXX_AHT30 }
+    .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
+    .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
+    .sensor_type     = I2C_AHTXX_AHT30 }
 
+/**
+ * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht25 sensor type.
+ */
 #define I2C_AHT25_CONFIG_DEFAULT {                  \
-    .dev_address     = I2C_AHTXX_DEV_ADDR,          \
-    .dev_clock_speed = I2C_AHTXX_SCL_SPEED_HZ,      \
-    .aht_type        = I2C_AHTXX_AHT25 }
+    .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
+    .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
+    .sensor_type     = I2C_AHTXX_AHT25 }
 
+/**
+ * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht21 sensor type.
+ */
 #define I2C_AHT21_CONFIG_DEFAULT {                  \
-    .dev_address     = I2C_AHTXX_DEV_ADDR,          \
-    .dev_clock_speed = I2C_AHTXX_SCL_SPEED_HZ,      \
-    .aht_type        = I2C_AHTXX_AHT21 }
+    .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
+    .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
+    .sensor_type     = I2C_AHTXX_AHT21 }
 
+/**
+ * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht20 sensor type.
+ */
 #define I2C_AHT20_CONFIG_DEFAULT {                  \
-    .dev_address     = I2C_AHTXX_DEV_ADDR,          \
-    .dev_clock_speed = I2C_AHTXX_SCL_SPEED_HZ,      \
-    .aht_type        = I2C_AHTXX_AHT20 }
+    .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
+    .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
+    .sensor_type     = I2C_AHTXX_AHT20 }
 
+/**
+ * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht10 sensor type.
+ */
 #define I2C_AHT10_CONFIG_DEFAULT {                  \
-    .dev_address     = I2C_AHTXX_DEV_ADDR,          \
-    .dev_clock_speed = I2C_AHTXX_SCL_SPEED_HZ,      \
-    .aht_type        = I2C_AHTXX_AHT10 }
+    .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
+    .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
+    .sensor_type     = I2C_AHTXX_AHT10 }
 
 
 #ifdef __cplusplus
@@ -93,19 +108,19 @@ extern "C" {
  */
 
 /**
- * @brief AHTXX types enumerator definition.
+ * @brief AHTXX sensor types enumerator definition.
  * 
  * @note AHTXX types vary slightly with respect to setup and initialization according to available documentation.
- * The AHT10 is setup through the initialization command.  The AHT20(?), AHT21, AHT25 and AHT30 are setup by initializing 
- * 0x1b, 0x1c, and 0x1e registers.
+ * The AHT10 and AHT20 are setup through the initialization command.  The AHT21, AHT25 and AHT30 are setup by resetting
+ * 0x1b, 0x1c, and 0x1e initializing registers.
  */
-typedef enum i2c_ahtxx_types_e {
+typedef enum i2c_ahtxx_sensor_types_s {
     I2C_AHTXX_AHT10,    /*!< */
     I2C_AHTXX_AHT20,
     I2C_AHTXX_AHT21,
     I2C_AHTXX_AHT25,
     I2C_AHTXX_AHT30
-} i2c_ahtxx_types_t;
+} i2c_ahtxx_sensor_types_t;
 
 /**
  * @brief AHTXX status register structure definition.
@@ -124,28 +139,28 @@ typedef union __attribute__((packed)) i2c_ahtxx_status_register_u {
  * @brief AHTXX configuration structure definition.
  */
 typedef struct i2c_ahtxx_config_s {
-    uint16_t          dev_address;      /*!< i2c device address */
-    uint32_t          dev_clock_speed;  /*!< i2c device scl clock speed  */
-    i2c_ahtxx_types_t aht_type;         /*!< aht sensor type, see `i2c_ahtxx_types_t` enumerator for support sensor types */
+    uint16_t          i2c_address;      /*!< i2c device address */
+    uint32_t          i2c_clock_speed;  /*!< i2c device scl clock speed in hz */
+    i2c_ahtxx_sensor_types_t sensor_type; /*!< aht sensor type, see `i2c_ahtxx_sensor_types_t` enumerator for support sensor types */
 } i2c_ahtxx_config_t;
 
 /**
  * @brief AHTXX context structure.
  */
-struct i2c_ahtxx_context_s {
-    i2c_ahtxx_config_t      config;     /*!< configuration by the caller */
-    i2c_master_dev_handle_t dev_handle; /*!< i2c device handle */
+struct i2c_ahtxx_context_t {
+    i2c_ahtxx_config_t      dev_config; /*!< device configuration */
+    i2c_master_dev_handle_t i2c_handle; /*!< i2c device handle */
 };
 
 /**
  * @brief AHTXX context structure definition.
  */
-typedef struct i2c_ahtxx_context_s i2c_ahtxx_context_t;
+typedef struct i2c_ahtxx_context_t i2c_ahtxx_context_t;
 
 /**
  * @brief AHTXX handle structure definition.
  */
-typedef struct i2c_ahtxx_context_s* i2c_ahtxx_handle_t;
+typedef struct i2c_ahtxx_context_t* i2c_ahtxx_handle_t;
 
 /**
  * public function and subroutine declarations
@@ -154,8 +169,8 @@ typedef struct i2c_ahtxx_context_s* i2c_ahtxx_handle_t;
 /**
  * @brief Reads status register from AHTXX.
  *
- * @param handle AHTXX device handle.
- * @param reg AHTXX status register
+ * @param[in] handle AHTXX device handle.
+ * @param[out] reg AHTXX status register.
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const reg);
@@ -163,12 +178,12 @@ esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_sta
 /**
  * @brief Initializes an AHTXX device onto the I2C master bus.
  *
- * @param[in] bus_handle I2C master bus handle.
- * @param[in] ahtxx_config Configuration of AHTXX device.
+ * @param[in] master_handle I2C master bus handle.
+ * @param[in] ahtxx_config AHTXX device configuration.
  * @param[out] ahtxx_handle AHTXX device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_init(const i2c_master_bus_handle_t bus_handle, const i2c_ahtxx_config_t *ahtxx_config, i2c_ahtxx_handle_t *const ahtxx_handle);
+esp_err_t i2c_ahtxx_init(const i2c_master_bus_handle_t master_handle, const i2c_ahtxx_config_t *ahtxx_config, i2c_ahtxx_handle_t *const ahtxx_handle);
 
 /**
  * @brief Reads temperature and relative humidity from AHTXX.
