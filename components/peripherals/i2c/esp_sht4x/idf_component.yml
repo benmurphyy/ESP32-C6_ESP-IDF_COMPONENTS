@@ -7,6 +7,7 @@ registry_url: "https://components.espressif.com"
 examples:
   url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/2d658238b446d47d3d926f0284a1b5e997843ec4/components/peripherals/i2c/esp_sht4x/README.md"
 tags:
+  - sensirion
   - sht4x
   - sht40
   - sht41

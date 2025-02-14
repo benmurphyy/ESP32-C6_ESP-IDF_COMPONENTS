@@ -1,7 +1,30 @@
 # Bosch BMP280 Sensor
-This esp-idf driver was developed for the Bosch BMP280 sensor.  Information on features and functionality are documented and can be found in the `bmp280.h` header file.
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Bosch BMP280 sensor.  Information on features and functionality are documented and can be found in the `bmp280.h` header file and in the `documentation` folder.
 
+## Repository
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/2d658238b446d47d3d926f0284a1b5e997843ec4/components/peripherals/i2c/esp_bmp280
+
+## General Usage
+To get started, simply copy the component to your project's `components` folder and reference the `bmp280.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+```
+components
+└── esp_bmp280
+    ├── CMakeLists.txt
+    ├── README.md
+    ├── LICENSE
+    ├── idf_component.yml
+    ├── library.json
+    ├── documentation
+    │   └── datasheets, etc.
+    ├── include
+    │   └── bmp280.h
+    └── bmp280.c
+```
+
+## Basic Example
 Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+
 ```
 #include <bmp280.h>
 

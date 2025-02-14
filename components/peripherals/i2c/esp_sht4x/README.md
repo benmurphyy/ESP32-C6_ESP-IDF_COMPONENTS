@@ -1,10 +1,32 @@
 # Sensirion SHT4X Series of Sensors
-This esp-idf driver was developed for the Sensirion SHT4X series of sensors.  Information on features and functionality are documented and can be found in the `sht4x.h` header file.
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Sensirion SHT4X series of sensors (SHT40, SHT41, SHT43, and SHT45).  Information on features and functionality are documented and can be found in the `sht4x.h` header file and in the `documentation` folder.
 
+## Repository
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/2d658238b446d47d3d926f0284a1b5e997843ec4/components/peripherals/i2c/esp_sht4x
+
+## General Usage
+To get started, simply copy the component to your project's `components` folder and reference the `sht4x.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+```
+components
+└── esp_sht4x
+    ├── CMakeLists.txt
+    ├── README.md
+    ├── LICENSE
+    ├── idf_component.yml
+    ├── library.json
+    ├── documentation
+    │   └── datasheets, etc.
+    ├── include
+    │   └── sht4x.h
+    └── sht4x.c
+```
+
+## Basic Example
 Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+
 ```
 #include <sht4x.h>
-
 
 void i2c0_sht4x_task( void *pvParameters ) {
     // initialize the xLastWakeTime variable with the current time.
@@ -31,8 +53,8 @@ void i2c0_sht4x_task( void *pvParameters ) {
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "sht4x device read failed (%s)", esp_err_to_name(result));
         } else {
-            ESP_LOGI(APP_TAG, "air temperature:     %.2f C", temperature);
-            ESP_LOGI(APP_TAG, "relative humidity:   %.2f C", humidity);
+            ESP_LOGI(APP_TAG, "air temperature:     %.2f °C", temperature);
+            ESP_LOGI(APP_TAG, "relative humidity:   %.2f %s", humidity, '%');
         }
         //
         ESP_LOGI(APP_TAG, "######################## SHT4X - END ###########################");
