@@ -5,7 +5,7 @@ url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/2d658238b446d47d
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 examples:
-  url: ""
+  url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/18c58a7534c71a2fcf1d759e7d999fe9cfc02a48/components/peripherals/i2c/esp_bmp280/README.md"
 tags:
   - bmp280
   - i2c
