@@ -589,9 +589,6 @@ esp_err_t i2c_bmp390_get_measurements(i2c_bmp390_handle_t bmp390_handle, float *
     data_msb  = (uint32_t)rx[5] << 16;
     adc_temp  = data_msb | data_lsb | data_xlsb;
 
-    ESP_LOGD(TAG, "ADC temperature: %" PRIi32, adc_temp);
-    ESP_LOGD(TAG, "ADC pressure: %" PRIi32, adc_press);
-
     /* apply compensation and convert pressure and temperature values to engineering units of measure */
     *temperature = i2c_bmp390_compensate_temperature(bmp390_handle, adc_temp);
     *pressure    = i2c_bmp390_compensate_pressure(bmp390_handle, adc_press);

@@ -314,7 +314,7 @@ typedef struct i2c_bmp390_t *i2c_bmp390_handle_t;
 
 
 /**
- * @brief Reads chip indentification register from BMP390.
+ * @brief Reads chip identification register from BMP390.
  * 
  * @param[in] bmp390_handle BMP390 device handle.
  * @return esp_err_t ESP_OK on success.

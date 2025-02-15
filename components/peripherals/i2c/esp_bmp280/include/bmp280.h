@@ -45,7 +45,7 @@
 /*
  * BMP280 definitions
 */
-#define I2C_BMP280_DEV_CLK_SPD      UINT32_C(100000)          //!< bmp280 I2C default clock frequency (100KHz)
+#define I2C_BMP280_DEV_CLK_SPD      UINT32_C(100000) //!< bmp280 I2C default clock frequency (100KHz)
 
 /*
  * supported device addresses
@@ -62,7 +62,7 @@
         .power_mode                 = I2C_BMP280_POWER_MODE_NORMAL,              \
         .iir_filter                 = I2C_BMP280_IIR_FILTER_OFF,                 \
         .pressure_oversampling      = I2C_BMP280_PRESSURE_OVERSAMPLING_4X,       \
-        .temperature_oversampling   = I2C_BMP280_TEMPERATURE_OVERSAMPLING_1X,    \
+        .temperature_oversampling   = I2C_BMP280_TEMPERATURE_OVERSAMPLING_4X,    \
         .standby_time               = I2C_BMP280_STANDBY_TIME_250MS }
 
 
@@ -182,7 +182,7 @@ typedef union __attribute__((packed)) i2c_bmp280_configuration_register_u {
 
 
 /**
- * @brief BMP280 temperature and pressure calibration factors structure.
+ * @brief BMP280 temperature and pressure calibration factors structure definition.
  */
 typedef struct i2c_bmp280_cal_factors_s {
     /* temperature and pressure compensation */
@@ -198,10 +198,11 @@ typedef struct i2c_bmp280_cal_factors_s {
     int16_t                 dig_P7;
     int16_t                 dig_P8;
     int16_t                 dig_P9;
+    int32_t                 t_fine;
 } i2c_bmp280_cal_factors_t;
 
 /**
- * @brief BMP280 I2C device configuration structure.
+ * @brief BMP280 configuration structure definition.
  */
 typedef struct i2c_bmp280_config_s {
     uint16_t                                    i2c_address;      /*!< i2c device address */
@@ -214,7 +215,7 @@ typedef struct i2c_bmp280_config_s {
 } i2c_bmp280_config_t;
 
 /**
- * @brief BMP280 I2C device context structure.
+ * @brief BMP280 context structure.
  */
 struct i2c_bmp280_context_t {
     i2c_bmp280_config_t                         dev_config;         /*!< bmp280 device configuration */  
@@ -224,12 +225,12 @@ struct i2c_bmp280_context_t {
 };
 
 /**
- * @brief BMP280 I2C device structure definition.
+ * @brief BMP280 context structure definition.
  */
 typedef struct i2c_bmp280_context_t i2c_bmp280_context_t;
 
 /**
- * @brief BMP280 I2C device handle definition.
+ * @brief BMP280 handle structure definition.
  */
 typedef struct i2c_bmp280_context_t* i2c_bmp280_handle_t;
 

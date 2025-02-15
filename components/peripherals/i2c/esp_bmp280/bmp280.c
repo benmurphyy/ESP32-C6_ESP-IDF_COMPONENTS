@@ -46,6 +46,7 @@
 /**
  * possible BMP280 registers
  */
+
 #define I2C_BMP280_REG_TEMP_XLSB            UINT8_C(0xFC)
 #define I2C_BMP280_REG_TEMP_LSB             UINT8_C(0xFB)
 #define I2C_BMP280_REG_TEMP_MSB             UINT8_C(0xFA)
@@ -84,6 +85,7 @@
 /*
 * static constant declarations
 */
+
 static const char *TAG = "bmp280";
 
 
@@ -92,18 +94,19 @@ static const char *TAG = "bmp280";
  *
  * @param[in] handle BMP280 device handle.
  * @param[in] adc_temperature Raw adc temperature.
- * @param[out] fine_temperature Fine temperature.
- * @return Fine temperature in degrees Celsius.
+ * @return Compensated temperature in degrees Celsius.
  */
-static inline int32_t i2c_bmp280_compensate_temperature(i2c_bmp280_handle_t handle, const int32_t adc_temperature, int32_t *const fine_temperature) {
+static inline float i2c_bmp280_compensate_temperature(i2c_bmp280_handle_t handle, const int32_t adc_temperature) {
     int32_t var1, var2;
 
     var1 = ((((adc_temperature >> 3) - ((int32_t)handle->dev_cal_factors->dig_T1 << 1))) * (int32_t)handle->dev_cal_factors->dig_T2) >> 11;
     var2 = (((((adc_temperature >> 4) - (int32_t)handle->dev_cal_factors->dig_T1) * ((adc_temperature >> 4) - (int32_t)handle->dev_cal_factors->dig_T1)) >> 12) * (int32_t)handle->dev_cal_factors->dig_T3) >> 14;
  
-    *fine_temperature = var1 + var2;
+    handle->dev_cal_factors->t_fine = var1 + var2;
 
-    return (*fine_temperature * 5 + 128) >> 8;
+    var1 = (handle->dev_cal_factors->t_fine * 5 + 128) >> 8;
+
+    return (float)var1 / 100.0f;
 }
 
 /**
@@ -111,13 +114,12 @@ static inline int32_t i2c_bmp280_compensate_temperature(i2c_bmp280_handle_t hand
  *
  * @param[in] handle BMP280 device handle.
  * @param[in] adc_pressure Raw adc pressure.
- * @param[in] fine_temperature Fine temperature in degrees Celsius.
- * @return Pa, 24 integer bits and 8 fractional bits.
+ * @return Compensated pressure in pascal.
  */
-static inline uint32_t i2c_bmp280_compensate_pressure(i2c_bmp280_handle_t handle, const int32_t adc_pressure, const int32_t fine_temperature) {
+static inline float i2c_bmp280_compensate_pressure(i2c_bmp280_handle_t handle, const int32_t adc_pressure) {
     int64_t var1, var2, p;
 
-    var1 = (int64_t)fine_temperature - 128000;
+    var1 = (int64_t)handle->dev_cal_factors->t_fine - 128000;
     var2 = var1 * var1 * (int64_t)handle->dev_cal_factors->dig_P6;
     var2 = var2 + ((var1 * (int64_t)handle->dev_cal_factors->dig_P5) << 17);
     var2 = var2 + (((int64_t)handle->dev_cal_factors->dig_P4) << 35);
@@ -134,7 +136,7 @@ static inline uint32_t i2c_bmp280_compensate_pressure(i2c_bmp280_handle_t handle
     var2 = ((int64_t)handle->dev_cal_factors->dig_P8 * p) >> 19;
     p = ((p + var1 + var2) >> 8) + ((int64_t)handle->dev_cal_factors->dig_P7 << 4);
 
-    return p;
+    return (float)p / 256.0f;;
 }
 
 /**
@@ -229,118 +231,9 @@ static inline esp_err_t i2c_bmp280_setup(i2c_bmp280_handle_t handle) {
     return ESP_OK;
 }
 
-/**
- * @brief Reads fixed measurements (temperature and pressure) from BMP280.  See datasheet for details.
- *
- * @param[in] handle BMP280 device handle.
- * @param[out] temperature Fixed temperature.
- * @param[out] pressure Fixed temperature.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t i2c_bmp280_get_fixed_measurements(i2c_bmp280_handle_t handle, int32_t *const temperature, uint32_t *const pressure) {
-    esp_err_t       ret             = ESP_OK;
-    uint64_t        start_time      = 0;
-    bool            data_is_ready   = false;
-    int32_t         adc_press;
-    int32_t         adc_temp;
-    int32_t         fine_temp;
-    bit48_uint8_buffer_t data;
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle && temperature && pressure );
-
-    /* set start time for timeout monitoring */
-    start_time = esp_timer_get_time();
-
-    /* attempt to poll until data is available or timeout */
-    do {
-        /* attempt to check if data is ready */
-        ESP_GOTO_ON_ERROR( i2c_bmp280_get_data_status(handle, &data_is_ready), err, TAG, "data ready ready for get fixed measurement failed." );
-
-        /* delay task before next i2c transaction */
-        vTaskDelay(pdMS_TO_TICKS(I2C_BMP280_DATA_READY_DELAY_MS));
-
-        /* validate timeout condition */
-        if (ESP_TIMEOUT_CHECK(start_time, I2C_BMP280_DATA_POLL_TIMEOUT_MS * 1000))
-            return ESP_ERR_TIMEOUT;
-    } while (data_is_ready == false);
-
-    // need to read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte48(handle->i2c_handle, I2C_BMP280_REG_PRESSURE, &data), err, TAG, "read temperature and pressure data failed" );
-
-    adc_press = data[0] << 12 | data[1] << 4 | data[2] >> 4;
-    adc_temp  = data[3] << 12 | data[4] << 4 | data[5] >> 4;
-
-    ESP_LOGD(TAG, "ADC temperature: %" PRIi32, adc_temp);
-    ESP_LOGD(TAG, "ADC pressure: %" PRIi32, adc_press);
-
-    *temperature = i2c_bmp280_compensate_temperature(handle, adc_temp, &fine_temp);
-    *pressure    = i2c_bmp280_compensate_pressure(handle, adc_press, fine_temp);
-
-    /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_BMP280_CMD_DELAY_MS));
-
-    return ESP_OK;
-
-    err:
-        return ret;
-}
-
-/**
- * @brief Reads fixed temperature measurement from BMP280.  See datasheet for details.
- *
- * @param[in] handle BMP280 device handle.
- * @param[out] temperature Fixed temperature.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t i2c_bmp280_get_fixed_temperature(i2c_bmp280_handle_t handle, int32_t *const temperature) {
-    esp_err_t       ret             = ESP_OK;
-    uint64_t        start_time      = 0;
-    bool            data_is_ready   = false;
-    int32_t         adc_temp;
-    int32_t         fine_temp;
-    bit24_uint8_buffer_t rx;
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle && temperature );
-
-    /* set start time for timeout monitoring */
-    start_time = esp_timer_get_time();
-
-    /* attempt to poll until data is available or timeout */
-    do {
-        /* attempt to check if data is ready */
-        ESP_GOTO_ON_ERROR( i2c_bmp280_get_data_status(handle, &data_is_ready), err, TAG, "data ready ready for get fixed measurement failed." );
-
-        /* delay task before next i2c transaction */
-        vTaskDelay(pdMS_TO_TICKS(I2C_BMP280_DATA_READY_DELAY_MS));
-
-        /* validate timeout condition */
-        if (ESP_TIMEOUT_CHECK(start_time, I2C_BMP280_DATA_POLL_TIMEOUT_MS * 1000))
-            return ESP_ERR_TIMEOUT;
-    } while (data_is_ready == false);
-
-    // need to read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte24(handle->i2c_handle, I2C_BMP280_REG_TEMP, &rx), err, TAG, "read temperature data failed" );
-
-    adc_temp  = rx[0] << 12 | rx[1] << 4 | rx[2] >> 4;
-
-    ESP_LOGD(TAG, "ADC temperature: %" PRIi32, adc_temp);
-
-    *temperature = i2c_bmp280_compensate_temperature(handle, adc_temp, &fine_temp);
-
-    /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_BMP280_CMD_DELAY_MS));
-
-    return ESP_OK;
-
-    err:
-        return ret;
-}
-
 esp_err_t i2c_bmp280_get_chip_id_register(i2c_bmp280_handle_t handle, uint8_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( handle );
+    ESP_ARG_CHECK( handle && reg );
 
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, I2C_BMP280_REG_ID, reg), TAG, "read chip identifier register failed" );
@@ -353,7 +246,7 @@ esp_err_t i2c_bmp280_get_chip_id_register(i2c_bmp280_handle_t handle, uint8_t *c
 
 esp_err_t i2c_bmp280_get_status_register(i2c_bmp280_handle_t handle, i2c_bmp280_status_register_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( handle );
+    ESP_ARG_CHECK( handle && reg );
 
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, I2C_BMP280_REG_STATUS, &reg->reg), TAG, "read status register failed" );
@@ -366,7 +259,7 @@ esp_err_t i2c_bmp280_get_status_register(i2c_bmp280_handle_t handle, i2c_bmp280_
 
 esp_err_t i2c_bmp280_get_control_measurement_register(i2c_bmp280_handle_t handle, i2c_bmp280_control_measurement_register_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( handle );
+    ESP_ARG_CHECK( handle && reg );
 
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, I2C_BMP280_REG_CTRL, &reg->reg), TAG, "read control measurement register failed" );
@@ -392,7 +285,7 @@ esp_err_t i2c_bmp280_set_control_measurement_register(i2c_bmp280_handle_t handle
 
 esp_err_t i2c_bmp280_get_configuration_register(i2c_bmp280_handle_t handle, i2c_bmp280_configuration_register_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( handle );
+    ESP_ARG_CHECK( handle && reg );
 
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, I2C_BMP280_REG_CONFIG, &reg->reg), TAG, "read configuration register failed" );
@@ -486,49 +379,67 @@ esp_err_t i2c_bmp280_init(i2c_master_bus_handle_t master_handle, const i2c_bmp28
 }
 
 esp_err_t i2c_bmp280_get_measurements(i2c_bmp280_handle_t handle, float *const temperature, float *const pressure) {
-    int32_t  fixed_temperature;
-    uint32_t fixed_pressure;
+    esp_err_t       ret             = ESP_OK;
+    uint64_t        start_time      = esp_timer_get_time();
+    bool            data_is_ready   = false;
+    bit48_uint8_buffer_t rx;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle && temperature && pressure );
 
-    /* attempt to read fixed measurements (temperature & pressure) */
-    ESP_ERROR_CHECK( i2c_bmp280_get_fixed_measurements(handle, &fixed_temperature, &fixed_pressure) );
+    /* attempt to poll until data is available or timeout */
+    do {
+        /* attempt to check if data is ready */
+        ESP_GOTO_ON_ERROR( i2c_bmp280_get_data_status(handle, &data_is_ready), err, TAG, "data ready ready for get fixed measurement failed." );
 
-    /* set output parameters */
-    *temperature = (float)fixed_temperature / 100;
-    *pressure    = (float)fixed_pressure / 256;
+        /* delay task before next i2c transaction */
+        vTaskDelay(pdMS_TO_TICKS(I2C_BMP280_DATA_READY_DELAY_MS));
+
+        /* validate timeout condition */
+        if (ESP_TIMEOUT_CHECK(start_time, I2C_BMP280_DATA_POLL_TIMEOUT_MS * 1000))
+            return ESP_ERR_TIMEOUT;
+    } while (data_is_ready == false);
+
+    // need to read in one sequence to ensure they match.
+    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte48(handle->i2c_handle, I2C_BMP280_REG_PRESSURE, &rx), err, TAG, "read temperature and pressure data failed" );
+
+    /* concat adc pressure & temperature bytes */
+    int32_t adc_press = rx[0] << 12 | rx[1] << 4 | rx[2] >> 4;
+    int32_t adc_temp  = rx[3] << 12 | rx[4] << 4 | rx[5] >> 4;
+
+    /* compensate adc temperature & pressure and set output parameters */
+    *temperature = i2c_bmp280_compensate_temperature(handle, adc_temp);
+    *pressure    = i2c_bmp280_compensate_pressure(handle, adc_press);
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(I2C_BMP280_CMD_DELAY_MS));
 
     return ESP_OK;
+
+    err:
+        return ret;
 }
 
 esp_err_t i2c_bmp280_get_temperature(i2c_bmp280_handle_t handle, float *const temperature) {
-    int32_t  fixed_temperature;
+    float pressure;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle && temperature );
 
-    /* attempt to read fixed temperature measurement */
-    ESP_ERROR_CHECK( i2c_bmp280_get_fixed_temperature(handle, &fixed_temperature) );
-
-    /* set output parameter */
-    *temperature = (float)fixed_temperature / 100;
+    /* attempt to read measurements (temperature & pressure) */
+    ESP_RETURN_ON_ERROR( i2c_bmp280_get_measurements(handle, temperature, &pressure), TAG, "unable to read measurements, get temperature failed" );
 
     return ESP_OK;
 }
 
 esp_err_t i2c_bmp280_get_pressure(i2c_bmp280_handle_t handle, float *const pressure) {
-    int32_t  fixed_temperature;
-    uint32_t fixed_pressure;
+    float temperature;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle && pressure );
 
-    /* attempt to read fixed measurements (temperature & pressure) */
-    ESP_ERROR_CHECK( i2c_bmp280_get_fixed_measurements(handle, &fixed_temperature, &fixed_pressure) );
-
-    /* set output parameter */
-    *pressure = (float)fixed_pressure / 256;
+    /* attempt to read measurements (temperature & pressure) */
+    ESP_RETURN_ON_ERROR( i2c_bmp280_get_measurements(handle, &temperature, pressure), TAG, "unable to read measurements, get pressure failed" );
 
     return ESP_OK;
 }
