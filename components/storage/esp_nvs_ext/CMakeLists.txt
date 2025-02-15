@@ -1,5 +1,5 @@
 idf_component_register(
     SRCS nvs_ext.c
-    INCLUDE_DIRS .
-    REQUIRES nvs_flash log
+    INCLUDE_DIRS include
+    REQUIRES nvs_flash
 )

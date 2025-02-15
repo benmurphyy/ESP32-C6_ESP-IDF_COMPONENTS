@@ -45,7 +45,7 @@
 #define NVS_EXT_NAMESPACE                   "nvs_ext_data"
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "nvs_ext";
 
@@ -539,3 +539,10 @@ esp_err_t nvs_read_struct(const char *key, void **read_struct, size_t size) {
     return err;
 }
 
+const char* nvs_ext_get_fw_version(void) {
+    return NVS_EXT_FW_VERSION_STR;
+}
+
+int32_t nvs_ext_get_fw_version_number(void) {
+    return NVS_EXT_FW_VERSION_INT32;
+}
