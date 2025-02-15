@@ -46,7 +46,7 @@ extern "C" {
 #endif
 
 /*
- * HDC1080 definitions
+ * definitions
 */
 #define I2C_HDC1080_DEV_CLK_SPD             UINT32_C(100000)   //!< hdc1080 I2C default clock frequency (100KHz)
 
@@ -56,7 +56,7 @@ extern "C" {
 #define I2C_HDC1080_DEV_ADDR_3              UINT8_C(0x43) //!< hdc1080 I2C address when ADR1 = 1, ADR0 = 1
 
 /*
- * HDC1080 macro definitions
+ * macro definitions
 */
 
 /**
@@ -70,7 +70,7 @@ extern "C" {
 
 
 /*
- * HDC1080 enumerator and structure declarations
+ * enumerator and structure declarations
 */
 
 

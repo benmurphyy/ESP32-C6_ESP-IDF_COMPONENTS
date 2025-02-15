@@ -35,6 +35,10 @@
 #ifndef __BMP280_H__
 #define __BMP280_H__
 
+/**
+ * dependency includes
+ */
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
@@ -45,20 +49,22 @@
 extern "C" {
 #endif
 
-/*
- * BMP280 definitions
-*/
+/**
+ * public constant definitions
+ */
+
 #define I2C_BMP280_DEV_CLK_SPD      UINT32_C(100000) //!< bmp280 I2C default clock frequency (100KHz)
 
-/*
- * supported device addresses
-*/
 #define I2C_BMP280_DEV_ADDR_LO      UINT8_C(0x76) //!< bmp280 I2C address when ADDR pin floating/low
 #define I2C_BMP280_DEV_ADDR_HI      UINT8_C(0x77) //!< bmp280 I2C address when ADDR pin high
 
-/*
- * BMP280 macros
-*/
+/**
+ * public macro definitions
+ */
+
+/**
+ * @brief Macro that initializes `i2c_bmp280_config_t` to default configuration settings.
+ */
 #define I2C_BMP280_CONFIG_DEFAULT {                                              \
         .i2c_address                = I2C_BMP280_DEV_ADDR_HI,                    \
         .i2c_clock_speed            = I2C_BMP280_DEV_CLK_SPD,                    \
@@ -69,12 +75,12 @@ extern "C" {
         .standby_time               = I2C_BMP280_STANDBY_TIME_250MS }
 
 
-/*
- * BMP280 enumerator and structure declarations
-*/
+/**
+ * public enumerator, union, and structure definitions
+ */
 
 /**
- * @brief BMP280 I2C IIR filters coefficient enumerator definition.
+ * @brief BMP280 IIR filters coefficient enumerator definition.
  */
 typedef enum i2c_bmp280_iir_filters_e {
     I2C_BMP280_IIR_FILTER_OFF = (0b000),
@@ -85,8 +91,7 @@ typedef enum i2c_bmp280_iir_filters_e {
 } i2c_bmp280_iir_filters_t;
 
 /**
- * @brief BMP280 I2C standby times enumerator definition.
- * 
+ * @brief BMP280 stand-by times enumerator definition.
  */
 typedef enum i2c_bmp280_standby_times_e {
     I2C_BMP280_STANDBY_TIME_0_5MS  = (0b000),  //!< stand by time 0.5ms
@@ -100,8 +105,7 @@ typedef enum i2c_bmp280_standby_times_e {
 } i2c_bmp280_standby_times_t;
 
 /**
- * @brief BMP280 I2C power modes enumerator definition.
- * 
+ * @brief BMP280 power modes enumerator definition.
  */
 typedef enum i2c_bmp280_power_modes_e {
     I2C_BMP280_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
@@ -111,8 +115,7 @@ typedef enum i2c_bmp280_power_modes_e {
 } i2c_bmp280_power_modes_t;
 
 /**
- * @brief BMP280 I2C pressure oversampling enumerator definition.
- * 
+ * @brief BMP280 pressure oversampling enumerator definition.
  */
 typedef enum i2c_bmp280_pressure_oversampling_e {
     I2C_BMP280_PRESSURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
@@ -124,8 +127,7 @@ typedef enum i2c_bmp280_pressure_oversampling_e {
 } i2c_bmp280_pressure_oversampling_t;
 
 /**
- * @brief BMP280 I2C temperature oversampling enumerator definition.
- * 
+ * @brief BMP280 temperature oversampling enumerator definition.
  */
 typedef enum i2c_bmp280_temperature_oversampling_e {
     I2C_BMP280_TEMPERATURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
@@ -139,8 +141,7 @@ typedef enum i2c_bmp280_temperature_oversampling_e {
 } i2c_bmp280_temperature_oversampling_t;
 
 /**
- * @brief BMP280 I2C status register (0xf3) structure definition.  The reset state is 0x00 for this register.
- * 
+ * @brief BMP280 status register (0xf3) structure definition.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) i2c_bmp280_status_register_u {
     struct {
@@ -153,8 +154,7 @@ typedef union __attribute__((packed)) i2c_bmp280_status_register_u {
 } i2c_bmp280_status_register_t;
 
 /**
- * @brief BMP280 I2C control measurement register (0xf4) structure definition.  The reset state is 0x00 for this register.
- * 
+ * @brief BMP280 control measurement register (0xf4) structure definition.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) i2c_bmp280_control_measurement_register_u {
     struct {
@@ -166,8 +166,7 @@ typedef union __attribute__((packed)) i2c_bmp280_control_measurement_register_u 
 } i2c_bmp280_control_measurement_register_t;
 
 /**
- * @brief BMP280 I2C configuration register (0xf5) structure definition.  The reset state is 0x00 for this register.
- * 
+ * @brief BMP280 configuration register (0xf5) structure definition.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) i2c_bmp280_configuration_register_u {
     struct {
@@ -233,6 +232,9 @@ typedef struct i2c_bmp280_context_t i2c_bmp280_context_t;
  */
 typedef struct i2c_bmp280_context_t* i2c_bmp280_handle_t;
 
+/**
+ * public function and subroutine declarations
+ */
 
 /**
  * @brief Reads chip identification register from BMP280.

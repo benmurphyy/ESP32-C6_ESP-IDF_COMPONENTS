@@ -291,7 +291,7 @@ void i2c0_ssd1306_task( void *pvParameters ) {
             memset(image, 0, sizeof(image));
             i2c_ssd1306_display_image(dev_hdl, top+1, (7*8-1), image, 8);
             memcpy(image, font8x8_latin_tr[font], 8);
-            if (dev_hdl->flip_enabled) i2c_ssd1306_flip_buffer(image, 8);
+            if (dev_hdl->dev_config.flip_enabled) i2c_ssd1306_flip_buffer(image, 8);
             i2c_ssd1306_display_image(dev_hdl, top+1, (7*8-1), image, 8);
             vTaskDelay(1000 / portTICK_PERIOD_MS);
         }

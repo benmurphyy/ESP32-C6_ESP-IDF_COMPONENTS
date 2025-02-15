@@ -1,6 +1,31 @@
 # Generic SSD1306 (128x32 and 128x64) OLED Display
 This esp-idf driver was developed for generic SSD1306 OLED displays.  Information on features and functionality are documented and can be found in the `ssd1306.h` header file.  The SSD1306 component is a compact and simplified driver compatible with 128x64 and 128x32 OLED displays.  There are three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more.  This component has one font implemented now (i.e. 8x8 basic Latin + control + extended Latin) but is ideal for most use cases.
 
+## Repository
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/3ce240335da20f4d97aaab5a6c431d43a8bd66ba/components/peripherals/i2c/esp_ssd1306
+
+## General Usage
+To get started, simply copy the component to your project's `components` folder and reference the `ssd1306.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+```
+components
+└── esp_ssd1306
+    ├── CMakeLists.txt
+    ├── README.md
+    ├── LICENSE
+    ├── idf_component.yml
+    ├── library.json
+    ├── documentation
+    │   └── datasheets, etc.
+    ├── include
+    │   └── ssd1306_version.h
+    │   └── ssd1306.h
+    └── ssd1306.c
+```
+
+## Basic Example
+Once a driver instance is instantiated the display panel is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and displays a sequence of text messages and bitmaps at user defined interval and prints the results.
+
 The example initializes a 128x64 SSD1306 OLED display and demonstrates the following features:
 - Display large text (x3)
 - Display file receive and transmit bitmap icons
@@ -15,8 +40,9 @@ The example initializes a 128x64 SSD1306 OLED display and demonstrates the follo
 - Display bitmap images
 - Display inverted text and fadeout
 
-Generic 128x64 SSD1306 OLED display example:
 ```
+#include <ssd1306.h>
+
 void i2c0_ssd1306_task( void *pvParameters ) {
     // initialize the xLastWakeTime variable with the current time.
     TickType_t          last_wake_time   = xTaskGetTickCount ();
@@ -206,8 +232,5 @@ void i2c0_ssd1306_task( void *pvParameters ) {
     vTaskDelete( NULL );
 }
 ```
-The source code for the above example and component are available here:
-- Example: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/main/src/ssd1306_task.c
-- Component: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ssd1306
 
 Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)

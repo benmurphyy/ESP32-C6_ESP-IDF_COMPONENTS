@@ -31,7 +31,7 @@ ESP-IDF component development status:
  - InvenSense MPU6050: initial component implementation completed.
  - Sensirion SGP4X: initial component implementation completed.
  - Sensirion SHT4X: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
- - Generic SSD1306 (128x32 and 128x64): initial component implementation completed.
+ - Generic SSD1306 (128x32 and 128x64): component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - Infineon TLV493D: component development is work in progress (WIP).
  - Vishay VEML7700: initial component implementation completed.
 
