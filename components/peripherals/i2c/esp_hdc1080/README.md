@@ -18,6 +18,7 @@ components
     ├── documentation
     │   └── datasheets, etc.
     ├── include
+    │   └── hdc1080_version.h
     │   └── hdc1080.h
     └── hdc1080.c
 ```

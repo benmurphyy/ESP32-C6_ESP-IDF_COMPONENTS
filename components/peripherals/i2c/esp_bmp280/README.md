@@ -18,6 +18,7 @@ components
     ├── documentation
     │   └── datasheets, etc.
     ├── include
+    │   └── bmp280_version.h
     │   └── bmp280.h
     └── bmp280.c
 ```

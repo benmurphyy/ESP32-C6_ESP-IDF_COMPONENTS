@@ -18,6 +18,7 @@ components
     ├── documentation
     │   └── datasheets, etc.
     ├── include
+    │   └── i2c_master_ext_version.h
     │   └── i2c_master_ext.h
     └── i2c_master_ext.c
 ```
@@ -28,7 +29,7 @@ Once the component is referenced as an include, the extended i2c functions shoul
 ```
 #include <i2c_master_ext.h>
 
-/* i2c read transaction: i2c_master_bus_read_uint8 performs an i2c write and then read transaction  */
+/* i2c read transaction: i2c_master_bus_read_uint8 function performs an i2c write and then read transaction  */
 esp_err_t i2c_bmp280_get_control_measurement_register(i2c_bmp280_handle_t handle, i2c_bmp280_control_measurement_register_t *const reg) {
     /* validate arguments */
     ESP_ARG_CHECK( handle && reg );
@@ -42,7 +43,7 @@ esp_err_t i2c_bmp280_get_control_measurement_register(i2c_bmp280_handle_t handle
     return ESP_OK;
 }
 
-/* i2c read transaction: i2c_master_bus_write_uint8 performs an i2c write transaction  */
+/* i2c read transaction: i2c_master_bus_write_uint8 function performs an i2c write transaction  */
 esp_err_t i2c_bmp280_set_control_measurement_register(i2c_bmp280_handle_t handle, const i2c_bmp280_control_measurement_register_t reg) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );

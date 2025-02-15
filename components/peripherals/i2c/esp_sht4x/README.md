@@ -18,6 +18,7 @@ components
     ├── documentation
     │   └── datasheets, etc.
     ├── include
+    │   └── sht4x_version.h
     │   └── sht4x.h
     └── sht4x.c
 ```
