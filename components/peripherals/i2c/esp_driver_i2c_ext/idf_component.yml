@@ -5,7 +5,7 @@ url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/23a7cbca34772c05
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 examples:
-  url: ""
+  url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/0c9e0105a8fe8d9b3e278dce28f87190c80a1992/components/peripherals/i2c/esp_driver_i2c_ext/README.md"
 tags:
   - i2c
   - espidf
