@@ -538,3 +538,7 @@ esp_err_t i2c_ahtxx_delete(i2c_ahtxx_handle_t handle) {
 const char* i2c_ahtxx_get_fw_version(void) {
     return I2C_AHTXX_FW_VERSION_STR;
 }
+
+int32_t i2c_ahtxx_get_fw_version_number(void) {
+    return I2C_AHTXX_FW_VERSION_INT32;
+}

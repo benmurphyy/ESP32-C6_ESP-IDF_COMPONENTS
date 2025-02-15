@@ -41,6 +41,9 @@
 #include <i2c_master_ext.h>
 #include "bmp280_version.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * BMP280 definitions
@@ -65,10 +68,6 @@
         .temperature_oversampling   = I2C_BMP280_TEMPERATURE_OVERSAMPLING_4X,    \
         .standby_time               = I2C_BMP280_STANDBY_TIME_250MS }
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  * BMP280 enumerator and structure declarations

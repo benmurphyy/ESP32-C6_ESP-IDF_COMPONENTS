@@ -103,7 +103,12 @@ extern "C" {
  */
 const char* i2c_bmp280_get_fw_version(void);
 
-
+/**
+ * @brief Converts BMP280 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t BMP280 firmware version number.
+ */
+int32_t i2c_bmp280_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

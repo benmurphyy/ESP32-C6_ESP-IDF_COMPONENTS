@@ -22,18 +22,18 @@
  */
 
 /**
- * @file ahtxx_version.h
- * @defgroup drivers ahtxx
+ * @file i2c_master_ext_version.h
+ * @defgroup drivers i2c_master_ext
  * @{
  *
- * ESP-IDF driver for ahtxx sensor
+ *
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __AHTXX_VERSION_H__
-#define __AHTXX_VERSION_H__
+#ifndef __I2C_MASTER_EXT_VERSION_H__
+#define __I2C_MASTER_EXT_VERSION_H__
 
 
 #ifdef __cplusplus
@@ -45,11 +45,11 @@ extern "C" {
  */
 
 /** Major version number (X.x.x) */
-#define I2C_AHTXX_FW_VERSION_MAJOR 1
+#define I2C_MASTER_EXT_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define I2C_AHTXX_FW_VERSION_MINOR 1
+#define I2C_MASTER_EXT_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define I2C_AHTXX_FW_VERSION_PATCH 0
+#define I2C_MASTER_EXT_FW_VERSION_PATCH 0
 
 
 /**
@@ -59,56 +59,56 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define I2C_AHTXX_STR_QUOTES( x ) #x
+#define I2C_MASTER_EXT_STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define I2C_AHTXX_STR( x ) I2C_AHTXX_STR_QUOTES( x )
+#define I2C_MASTER_EXT_STR( x ) I2C_MASTER_EXT_STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define I2C_AHTXX_FW_VERSION_STR                        \
-        I2C_AHTXX_STR( I2C_AHTXX_FW_VERSION_MAJOR ) "." \
-        I2C_AHTXX_STR( I2C_AHTXX_FW_VERSION_MINOR ) "." \
-        I2C_AHTXX_STR( I2C_AHTXX_FW_VERSION_PATCH )
+#define I2C_MASTER_EXT_FW_VERSION_STR                        \
+        I2C_MASTER_EXT_STR( I2C_MASTER_EXT_FW_VERSION_MAJOR ) "." \
+        I2C_MASTER_EXT_STR( I2C_MASTER_EXT_FW_VERSION_MINOR ) "." \
+        I2C_MASTER_EXT_STR( I2C_MASTER_EXT_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, I2C_AHTXX_FW_VERSION_INT32 >= I2C_AHTXX_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, I2C_MASTER_EXT_FW_VERSION_INT32 >= I2C_MASTER_EXT_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define I2C_AHTXX_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define I2C_MASTER_EXT_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, I2C_AHTXX_FW_VERSION_INT32 >= I2C_AHTXX_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, I2C_MASTER_EXT_FW_VERSION_INT32 >= I2C_MASTER_EXT_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define I2C_AHTXX_FW_VERSION_INT32                                      \
-        I2C_AHTXX_FW_VERSION_PARAMS_INT32(I2C_AHTXX_FW_VERSION_MAJOR,   \
-                                          I2C_AHTXX_FW_VERSION_MINOR,   \
-                                          I2C_AHTXX_FW_VERSION_PATCH)
+#define I2C_MASTER_EXT_FW_VERSION_INT32                                      \
+        I2C_MASTER_EXT_FW_VERSION_PARAMS_INT32(I2C_MASTER_EXT_FW_VERSION_MAJOR,  \
+                                          I2C_MASTER_EXT_FW_VERSION_MINOR,   \
+                                          I2C_MASTER_EXT_FW_VERSION_PATCH)
 
 
 
 /**
- * @brief Converts AHTXX firmware version numbers (major, minor, patch) into a string.
+ * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into a string.
  * 
- * @return char* AHTXX firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ * @return char* `i2c_master_ext` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
-const char* i2c_ahtxx_get_fw_version(void);
+const char* i2c_master_ext_get_fw_version(void);
 
 /**
- * @brief Converts AHTXX firmware version numbers (major, minor, patch) into an integer value.
+ * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into an integer value.
  * 
- * @return int32_t AHTXX firmware version number.
+ * @return int32_t `i2c_master_ext` firmware version number.
  */
-int32_t i2c_ahtxx_get_fw_version_number(void);
+int32_t i2c_master_ext_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
@@ -117,4 +117,4 @@ int32_t i2c_ahtxx_get_fw_version_number(void);
 
 /**@}*/
 
-#endif // __AHTXX_VERSION_H__
+#endif // __I2C_MASTER_EXT_VERSION_H__

@@ -78,7 +78,7 @@ extern "C" {
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, I2C_AHTXX_FW_VERSION_INT32 >= I2C_AHTXX_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, I2C_SHT4X_FW_VERSION_INT32 >= I2C_SHT4X_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
 #define I2C_SHT4X_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
@@ -102,6 +102,13 @@ extern "C" {
  * @return char* SHT4X firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
 const char* i2c_sht4x_get_fw_version(void);
+
+/**
+ * @brief Converts SHT4X firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t SHT4X firmware version number.
+ */
+int32_t i2c_sht4x_get_fw_version_number(void);
 
 
 

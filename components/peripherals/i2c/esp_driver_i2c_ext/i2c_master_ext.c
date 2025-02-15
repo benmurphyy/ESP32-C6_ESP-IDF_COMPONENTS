@@ -33,12 +33,12 @@
  * MIT Licensed as described in the file LICENSE
  */
 
-#include "i2c_master_ext.h"
+#include "include/i2c_master_ext.h"
 #include <string.h>
 #include <stdio.h>
 #include <esp_log.h>
 #include <esp_check.h>
-#include <driver/i2c_master.h>
+//#include <driver/i2c_master.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -278,4 +278,12 @@ esp_err_t i2c_master_bus_write_uint16(i2c_master_dev_handle_t handle, const uint
     ESP_LOGD(TAG, "i2c_master_bus_write_uint8 - tx[0] %02x | tx[1] %02x | tx[2] %02x", tx[0], tx[1], tx[2]);
 
     return ESP_OK;
+}
+
+const char* i2c_master_ext_get_fw_version(void) {
+    return I2C_MASTER_EXT_FW_VERSION_STR;
+}
+
+int32_t i2c_master_ext_get_fw_version_number(void) {
+    return I2C_MASTER_EXT_FW_VERSION_INT32;
 }

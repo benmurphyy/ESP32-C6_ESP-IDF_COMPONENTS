@@ -103,7 +103,12 @@ extern "C" {
  */
 const char* i2c_hdc1080_get_fw_version(void);
 
-
+/**
+ * @brief Converts HDC1080 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t HDC1080 firmware version number.
+ */
+int32_t i2c_hdc1080_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

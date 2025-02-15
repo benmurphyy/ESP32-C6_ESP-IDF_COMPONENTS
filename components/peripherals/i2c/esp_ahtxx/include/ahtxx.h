@@ -45,6 +45,9 @@
 #include <i2c_master_ext.h>
 #include "ahtxx_version.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * public constant definitions
@@ -99,9 +102,6 @@
     .sensor_type     = I2C_AHTXX_AHT10 }
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * public enumerator, union, and structure definitions

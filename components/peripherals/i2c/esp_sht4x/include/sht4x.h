@@ -45,6 +45,9 @@
 #include <i2c_master_ext.h>
 #include "sht4x_version.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * public constant definitions
@@ -69,10 +72,6 @@
         .heater_mode    = I2C_SHT4X_HEATER_OFF,         \
         .repeat_mode    = I2C_SHT4X_REPEAT_HIGH, }
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * public enumerator, union, and structure definitions

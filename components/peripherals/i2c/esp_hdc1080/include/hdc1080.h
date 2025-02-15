@@ -41,6 +41,9 @@
 #include <i2c_master_ext.h>
 #include "hdc1080_version.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * HDC1080 definitions
@@ -65,10 +68,6 @@
         .temperature_resolution     = I2C_HDC1080_TEMPERATURE_RESOLUTION_14BIT, \
         .humidity_resolution        = I2C_HDC1080_HUMIDITY_RESOLUTION_14BIT,    }
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*
  * HDC1080 enumerator and structure declarations
