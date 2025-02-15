@@ -273,6 +273,15 @@ esp_err_t i2c_hdc1080_enable_heater(i2c_hdc1080_handle_t handle);
 esp_err_t i2c_hdc1080_disable_heater(i2c_hdc1080_handle_t handle);
 
 /**
+ * @brief Reads temperature measurement resolution from HDC1080.
+ * 
+ * @param[in] handle HDC1080 device handle.
+ * @param[out] resolution HDC1080 temperature measurement resolution setting.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t i2c_hdc1080_get_temperature_resolution(i2c_hdc1080_handle_t handle, i2c_hdc1080_temperature_resolutions_t *const resolution);
+
+/**
  * @brief Writes temperature measurement resolution to HDC1080.
  * 
  * @param[in] handle HDC1080 device handle.
@@ -280,6 +289,15 @@ esp_err_t i2c_hdc1080_disable_heater(i2c_hdc1080_handle_t handle);
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t i2c_hdc1080_set_temperature_resolution(i2c_hdc1080_handle_t handle, const i2c_hdc1080_temperature_resolutions_t resolution);
+
+/**
+ * @brief Reads relative humidity measurement resolution from HDC1080.
+ * 
+ * @param[in] handle HDC1080 device handle.
+ * @param[out] resolution HDC1080 relative humidity measurement resolution setting.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t i2c_hdc1080_get_humidity_resolution(i2c_hdc1080_handle_t handle, i2c_hdc1080_humidity_resolutions_t *const resolution);
 
 /**
  * @brief Writes relative humidity measurement resolution to HDC1080.

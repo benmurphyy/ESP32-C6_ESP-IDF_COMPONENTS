@@ -141,6 +141,26 @@ static inline size_t i2c_hdc1080_get_temperature_tick_duration(const i2c_hdc1080
 }
 
 /**
+ * @brief Converts temperature signal to engineering units of measure.
+ * 
+ * @param temperature Temperature signal to convert.
+ * @return float Converted temperature in degrees Celsius.
+ */
+static inline float i2c_hdc1080_convert_temperature_signal(const uint16_t temperature) {
+    return (float)temperature / 65536.0f * 165.0f - 40.0f;
+}
+
+/**
+ * @brief Converts humidity signal to engineering units of measure.
+ * 
+ * @param humidity Humidity signal to convert.
+ * @return float Converted humidity in percent.
+ */
+static inline float i2c_hdc1080_convert_humidity_signal(const uint16_t humidity) {
+    return (float)humidity / 65536.0f * 100.0f;
+}
+
+/**
  * @brief Calculates dewpoint temperature from air temperature and relative humidity.
  *
  * @param[in] temperature Air temperature in degrees Celsius.
@@ -355,8 +375,8 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t handle, float *const 
     /* concat temperature bytes */
     uint16_t t_raw = ((uint16_t)rx[0] << 8) | rx[1];
 
-    /* set output parameter */
-    *temperature = (float)t_raw / 65536.0f * 165.0f - 40;
+    /* convert temperature and set output parameter */
+    *temperature = i2c_hdc1080_convert_temperature_signal(t_raw);
 
     /* attempt i2c write transaction */
     ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, I2C_HDC1080_REG_HUMIDITY), TAG, "unable to write to i2c device handle, write to trigger humidity measurement failed");
@@ -380,8 +400,8 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t handle, float *const 
     /* concat humidity bytes */
     uint16_t h_raw = ((uint16_t)rx[0] << 8) | rx[1];
 
-    /* set output parameter */
-    *humidity = (float)h_raw / 65536.0f * 100.0f;
+    /* convert humidity and set output parameter */
+    *humidity = i2c_hdc1080_convert_humidity_signal(h_raw);
 
     return ESP_OK;
 }
@@ -435,6 +455,21 @@ esp_err_t i2c_hdc1080_disable_heater(i2c_hdc1080_handle_t handle) {
     return ESP_OK;
 }
 
+esp_err_t i2c_hdc1080_get_temperature_resolution(i2c_hdc1080_handle_t handle, i2c_hdc1080_temperature_resolutions_t *const resolution) {
+    i2c_hdc1080_configuration_register_t config_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, get temperature resolution failed");
+
+    /* set output parameter */
+    *resolution = config_reg.bits.temperature_resolution;
+
+    return ESP_OK;
+}
+
 esp_err_t i2c_hdc1080_set_temperature_resolution(i2c_hdc1080_handle_t handle, const i2c_hdc1080_temperature_resolutions_t resolution) {
     i2c_hdc1080_configuration_register_t config_reg;
 
@@ -449,6 +484,21 @@ esp_err_t i2c_hdc1080_set_temperature_resolution(i2c_hdc1080_handle_t handle, co
 
     /* attempt to write configuration register */
     ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, set temperature resolution failed" );
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_hdc1080_get_humidity_resolution(i2c_hdc1080_handle_t handle, i2c_hdc1080_humidity_resolutions_t *const resolution) {
+    i2c_hdc1080_configuration_register_t config_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, get humidity resolution failed");
+
+    /* set output parameter */
+    *resolution = config_reg.bits.humidity_resolution;
 
     return ESP_OK;
 }
