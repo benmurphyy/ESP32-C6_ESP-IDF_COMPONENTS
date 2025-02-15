@@ -32,13 +32,12 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "hdc1080.h"
+#include "include/hdc1080.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
 #include <esp_log.h>
 #include <esp_check.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -75,12 +74,12 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "hdc1080";
 
 /*
-* functions and subrountines
+* functions and subroutines
 */
 
 /**
@@ -145,7 +144,7 @@ static inline size_t i2c_hdc1080_get_temperature_tick_duration(const i2c_hdc1080
  * @brief Calculates dewpoint temperature from air temperature and relative humidity.
  *
  * @param[in] temperature Air temperature in degrees Celsius.
- * @param[in] humidity Relative humiity in percentage.
+ * @param[in] humidity Relative humidity in percentage.
  * @param[out] dewpoint Calculated dewpoint temperature in degrees Celsius.
  * @return esp_err_t ESP_OK on success.
  */
@@ -170,19 +169,33 @@ static inline esp_err_t i2c_hdc1080_calculate_dewpoint(const float temperature, 
     return ESP_OK;
 }
 
-/**
- * @brief Reads unique serial number register from HDC1080.
- * 
- * @param[in] hdc1080_handle HDC1080 device handle.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t i2c_hdc1080_get_serial_number_register(i2c_hdc1080_handle_t hdc1080_handle) {
+static inline esp_err_t i2c_hdc1080_setup(i2c_hdc1080_handle_t handle) {
+    i2c_hdc1080_configuration_register_t config_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, setup failed");
+
+    /* configure device */
+    config_reg.bits.acquisition_mode       = I2C_HDC1080_ACQUISITION_SEQUENCED;
+    config_reg.bits.temperature_resolution = handle->dev_config.temperature_resolution;
+    config_reg.bits.humidity_resolution    = handle->dev_config.humidity_resolution;
+
+    /* attempt to write configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, setup failed");
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_hdc1080_get_serial_number_register(i2c_hdc1080_handle_t handle, uint64_t *const reg) {
     //uint16_t serial_id_fbp, serial_id_mbp, serial_id_lbp; // serial identifier parts
     //i2c_hdc1080_serial_number_register_t sn_reg; // this structure may not be needed
     // hdc1080_handle->dev_params->serial_number
 
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(I2C_HDC1080_CMD_DELAY_MS) );
@@ -190,18 +203,12 @@ static inline esp_err_t i2c_hdc1080_get_serial_number_register(i2c_hdc1080_handl
     return ESP_ERR_NOT_SUPPORTED;
 }
 
-/**
- * @brief Reads manufacturer identifier register from HDC1080.
- * 
- * @param[in] hdc1080_handle HDC1080 device handle.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t i2c_hdc1080_get_manufacturer_id_register(i2c_hdc1080_handle_t hdc1080_handle) {
+esp_err_t i2c_hdc1080_get_manufacturer_id_register(i2c_hdc1080_handle_t handle, uint16_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt to read manufacturer identifier */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(hdc1080_handle->i2c_dev_handle, I2C_HDC1080_REG_MANUFACTURER_ID, &hdc1080_handle->manufacturer_id), TAG, "read manufacturer identifier failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_HDC1080_REG_MANUFACTURER_ID, reg), TAG, "read manufacturer identifier failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(I2C_HDC1080_CMD_DELAY_MS) );
@@ -209,18 +216,12 @@ static inline esp_err_t i2c_hdc1080_get_manufacturer_id_register(i2c_hdc1080_han
     return ESP_OK;
 }
 
-/**
- * @brief Reads device identifier register from HDC1080.
- * 
- * @param[in] hdc1080_handle HDC1080 device handle.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t i2c_hdc1080_get_device_id_register(i2c_hdc1080_handle_t hdc1080_handle) {
+esp_err_t i2c_hdc1080_get_device_id_register(i2c_hdc1080_handle_t handle, uint16_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt to read device identifier */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(hdc1080_handle->i2c_dev_handle, I2C_HDC1080_REG_DEVICE_ID, &hdc1080_handle->device_id), TAG, "read device identifier failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_HDC1080_REG_DEVICE_ID, reg), TAG, "read device identifier failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(I2C_HDC1080_CMD_DELAY_MS) );
@@ -228,16 +229,16 @@ static inline esp_err_t i2c_hdc1080_get_device_id_register(i2c_hdc1080_handle_t 
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_get_configuration_register(i2c_hdc1080_handle_t hdc1080_handle) {
+esp_err_t i2c_hdc1080_get_configuration_register(i2c_hdc1080_handle_t handle, i2c_hdc1080_configuration_register_t *const reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt to read configuration register */
     uint16_t config;
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(hdc1080_handle->i2c_dev_handle, I2C_HDC1080_REG_CONFIGURATION, &config), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_HDC1080_REG_CONFIGURATION, &config), TAG, "read configuration register failed" );
 
-    /* set handle */
-    hdc1080_handle->config_reg.reg = config;
+    /* set output parameter */
+    reg->reg = config;
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(I2C_HDC1080_CMD_DELAY_MS) );
@@ -245,78 +246,67 @@ esp_err_t i2c_hdc1080_get_configuration_register(i2c_hdc1080_handle_t hdc1080_ha
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_set_configuration_register(i2c_hdc1080_handle_t hdc1080_handle, const i2c_hdc1080_configuration_register_t config_reg) {
+esp_err_t i2c_hdc1080_set_configuration_register(i2c_hdc1080_handle_t handle, const i2c_hdc1080_configuration_register_t reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* copy register */
-    i2c_hdc1080_configuration_register_t config = { .reg = config_reg.reg };
+    i2c_hdc1080_configuration_register_t config = { .reg = reg.reg };
 
     /* set configuration reserved fields to 0 */
     config.bits.reserved1 = 0;
     config.bits.reserved2 = 0;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(hdc1080_handle->i2c_dev_handle, I2C_HDC1080_REG_CONFIGURATION, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, I2C_HDC1080_REG_CONFIGURATION, config.reg), TAG, "write configuration register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(I2C_HDC1080_CMD_DELAY_MS) );
 
-    /* attempt to set device handle configuration register */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_get_configuration_register(hdc1080_handle), TAG, "Read configuration register for write configuration register failed" );
-
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_init(i2c_master_bus_handle_t bus_handle, const i2c_hdc1080_config_t *hdc1080_config, i2c_hdc1080_handle_t *hdc1080_handle) {
+esp_err_t i2c_hdc1080_init(i2c_master_bus_handle_t master_handle, const i2c_hdc1080_config_t *hdc1080_config, i2c_hdc1080_handle_t *hdc1080_handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( bus_handle && hdc1080_config );
+    ESP_ARG_CHECK( master_handle && hdc1080_config );
 
     /* power-up delay */
     vTaskDelay(pdMS_TO_TICKS(I2C_HDC1080_POWERUP_DELAY_MS));
 
     /* validate device exists on the master bus */
-    esp_err_t ret = i2c_master_probe(bus_handle, hdc1080_config->dev_config.device_address, I2C_XFR_TIMEOUT_MS);
-    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, hdc1080 device handle initialization failed", hdc1080_config->dev_config.device_address);
+    esp_err_t ret = i2c_master_probe(master_handle, hdc1080_config->i2c_address, I2C_XFR_TIMEOUT_MS);
+    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, hdc1080 device handle initialization failed", hdc1080_config->i2c_address);
 
     /* validate memory availability for handle */
-    i2c_hdc1080_handle_t out_handle = (i2c_hdc1080_handle_t)calloc(1, sizeof(i2c_hdc1080_t));
+    i2c_hdc1080_handle_t out_handle;
+    out_handle = (i2c_hdc1080_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c hdc1080 device");
+
+    /* copy configuration */
+    out_handle->dev_config = *hdc1080_config;
 
     /* set device configuration */
     const i2c_device_config_t i2c_dev_conf = {
         .dev_addr_length    = I2C_ADDR_BIT_LEN_7,
-        .device_address     = hdc1080_config->dev_config.device_address,
-        .scl_speed_hz       = hdc1080_config->dev_config.scl_speed_hz,
+        .device_address     = out_handle->dev_config.i2c_address,
+        .scl_speed_hz       = out_handle->dev_config.i2c_clock_speed,
     };
 
     /* validate device handle */
-    if (out_handle->i2c_dev_handle == NULL) {
-        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->i2c_dev_handle), err_handle, TAG, "i2c new bus failed");
+    if (out_handle->i2c_handle == NULL) {
+        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus failed");
     }
 
     /* attempt to reset the device */
     ESP_GOTO_ON_ERROR(i2c_hdc1080_reset(out_handle), err_handle, TAG, "i2c hdc1080 soft-reset device failed");
 
-    /* attempt to read configuration register */
-    ESP_GOTO_ON_ERROR(i2c_hdc1080_get_configuration_register(out_handle), err_handle, TAG, "i2c hdc1080 read configuration register failed");
-
     /* attempt to read manufacturer identifier */
-    ESP_GOTO_ON_ERROR(i2c_hdc1080_get_manufacturer_id_register(out_handle), err_handle, TAG, "i2c hdc1080 read manufacturer identifer failed");
+    ESP_GOTO_ON_ERROR(i2c_hdc1080_get_manufacturer_id_register(out_handle, &out_handle->manufacturer_id), err_handle, TAG, "i2c hdc1080 read manufacturer identifier failed");
 
     /* attempt to read device identifier */
-    ESP_GOTO_ON_ERROR(i2c_hdc1080_get_device_id_register(out_handle), err_handle, TAG, "i2c hdc1080 read device identifer failed");
+    ESP_GOTO_ON_ERROR(i2c_hdc1080_get_device_id_register(out_handle, &out_handle->device_id), err_handle, TAG, "i2c hdc1080 read device identifier failed");
 
     /* attempt to read device serial number */
-
-    /* configure device */
-    i2c_hdc1080_configuration_register_t config = { .reg = out_handle->config_reg.reg };
-    config.bits.acquisition_mode       = I2C_HDC1080_ACQUISITION_SEQUENCED;
-    config.bits.temperature_resolution = hdc1080_config->temperature_resolution;
-    config.bits.humidity_resolution    = hdc1080_config->humidity_resolution;
-
-    /* attempt to write configuration register */
-    ESP_GOTO_ON_ERROR(i2c_hdc1080_set_configuration_register(out_handle, config), err_handle, TAG, "i2c hdc1080 write configuration register failed");
 
     /* set device handle */
     *hdc1080_handle = out_handle;
@@ -327,33 +317,33 @@ esp_err_t i2c_hdc1080_init(i2c_master_bus_handle_t bus_handle, const i2c_hdc1080
     return ESP_OK;
 
     err_handle:
-        if (out_handle && out_handle->i2c_dev_handle) {
-            i2c_master_bus_rm_device(out_handle->i2c_dev_handle);
+        if (out_handle && out_handle->i2c_handle) {
+            i2c_master_bus_rm_device(out_handle->i2c_handle);
         }
         free(out_handle);
     err:
         return ret;
 }
 
-esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t hdc1080_handle, float *const temperature, float *const humidity) {
+esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t handle, float *const temperature, float *const humidity) {
     const uint8_t rx_retry_max   = 5;
     esp_err_t     ret            = ESP_OK;
     uint8_t       rx_retry_count = 0;
     bit16_uint8_buffer_t rx      = { 0 };
 
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(hdc1080_handle->i2c_dev_handle, I2C_HDC1080_REG_TEMPERATURE), TAG, "unable to write to i2c device handle, write to trigger temperature measurement failed");
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, I2C_HDC1080_REG_TEMPERATURE), TAG, "unable to write to i2c device handle, write to trigger temperature measurement failed");
 
     /* delay before next i2c transaction */
-    vTaskDelay(i2c_hdc1080_get_temperature_tick_duration(hdc1080_handle->config_reg.bits.temperature_resolution));
+    vTaskDelay(i2c_hdc1080_get_temperature_tick_duration(handle->dev_config.temperature_resolution));
 
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(hdc1080_handle->i2c_dev_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(I2C_HDC1080_RETRY_DELAY_MS));
@@ -362,20 +352,23 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t hdc1080_handle, float
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ret, TAG, "unable to read to i2c device handle, read temperature failed" );
 
+    /* concat temperature bytes */
     uint16_t t_raw = ((uint16_t)rx[0] << 8) | rx[1];
-    *temperature = t_raw / 65536.0f * 165.0f - 40;
+
+    /* set output parameter */
+    *temperature = (float)t_raw / 65536.0f * 165.0f - 40;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(hdc1080_handle->i2c_dev_handle, I2C_HDC1080_REG_HUMIDITY), TAG, "unable to write to i2c device handle, write to trigger humidity measurement failed");
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, I2C_HDC1080_REG_HUMIDITY), TAG, "unable to write to i2c device handle, write to trigger humidity measurement failed");
 
     /* delay before next i2c transaction */
-    vTaskDelay(i2c_hdc1080_get_humidity_tick_duration(hdc1080_handle->config_reg.bits.humidity_resolution));
+    vTaskDelay(i2c_hdc1080_get_humidity_tick_duration(handle->dev_config.humidity_resolution));
 
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     rx_retry_count = 0;
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(hdc1080_handle->i2c_dev_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(I2C_HDC1080_RETRY_DELAY_MS));
@@ -384,18 +377,21 @@ esp_err_t i2c_hdc1080_get_measurement(i2c_hdc1080_handle_t hdc1080_handle, float
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ret, TAG, "unable to read to i2c device handle, read humidity failed" );
 
+    /* concat humidity bytes */
     uint16_t h_raw = ((uint16_t)rx[0] << 8) | rx[1];
-    *humidity = h_raw / 65536.0f * 100.0f;
+
+    /* set output parameter */
+    *humidity = (float)h_raw / 65536.0f * 100.0f;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_get_measurements(i2c_hdc1080_handle_t hdc1080_handle, float *const temperature, float *const humidity, float *const dewpoint) {
+esp_err_t i2c_hdc1080_get_measurements(i2c_hdc1080_handle_t handle, float *const temperature, float *const humidity, float *const dewpoint) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt to read measurements */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_get_measurement(hdc1080_handle, temperature, humidity), TAG, "unable to read to i2c device handle, read measurements failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_get_measurement(handle, temperature, humidity), TAG, "unable to read to i2c device handle, read measurements failed" );
 
     /* calculate dewpoint */
     ESP_RETURN_ON_ERROR( i2c_hdc1080_calculate_dewpoint(*temperature, *humidity, dewpoint), TAG, "unable to calculate dewpoint, read measurements failed");
@@ -403,108 +399,125 @@ esp_err_t i2c_hdc1080_get_measurements(i2c_hdc1080_handle_t hdc1080_handle, floa
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_enable_heater(i2c_hdc1080_handle_t hdc1080_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+esp_err_t i2c_hdc1080_enable_heater(i2c_hdc1080_handle_t handle) {
+    i2c_hdc1080_configuration_register_t config_reg;
 
-    /* copy register from handle */
-    i2c_hdc1080_configuration_register_t config_reg = { .reg = hdc1080_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, enable heater failed");
 
     /* set heater state */
     config_reg.bits.heater_enabled = true;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(hdc1080_handle, config_reg), TAG, "unable to write to i2c handle, set configuration for enable heater failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, enable heater failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_disable_heater(i2c_hdc1080_handle_t hdc1080_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+esp_err_t i2c_hdc1080_disable_heater(i2c_hdc1080_handle_t handle) {
+    i2c_hdc1080_configuration_register_t config_reg;
 
-    /* copy register from handle */
-    i2c_hdc1080_configuration_register_t config_reg = { .reg = hdc1080_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, disable heater failed");
 
     /* set heater state */
     config_reg.bits.heater_enabled = false;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(hdc1080_handle, config_reg), TAG, "unable to write to i2c handle, set configuration for disable heater failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, disable heater failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_set_temperature_resolution(i2c_hdc1080_handle_t hdc1080_handle, const i2c_hdc1080_temperature_resolutions_t resolution) {
-    /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+esp_err_t i2c_hdc1080_set_temperature_resolution(i2c_hdc1080_handle_t handle, const i2c_hdc1080_temperature_resolutions_t resolution) {
+    i2c_hdc1080_configuration_register_t config_reg;
 
-    /* copy register from handle */
-    i2c_hdc1080_configuration_register_t config_reg = { .reg = hdc1080_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, set temperature resolution failed");
 
     /* set temperature resolution */
     config_reg.bits.temperature_resolution = resolution;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(hdc1080_handle, config_reg), TAG, "unable to write to i2c handle, set configuration for set temperature resolution failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, set temperature resolution failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_set_humidity_resolution(i2c_hdc1080_handle_t hdc1080_handle, const i2c_hdc1080_humidity_resolutions_t resolution) {
-    /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+esp_err_t i2c_hdc1080_set_humidity_resolution(i2c_hdc1080_handle_t handle, const i2c_hdc1080_humidity_resolutions_t resolution) {
+    i2c_hdc1080_configuration_register_t config_reg;
 
-    /* copy register from handle */
-    i2c_hdc1080_configuration_register_t config_reg = { .reg = hdc1080_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, set humidity resolution failed");
 
     /* set humidity resolution */
     config_reg.bits.humidity_resolution = resolution;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(hdc1080_handle, config_reg), TAG, "unable to write to i2c handle, set configuration for set humidity resolution failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, set humidity resolution failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_reset(i2c_hdc1080_handle_t hdc1080_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+esp_err_t i2c_hdc1080_reset(i2c_hdc1080_handle_t handle) {
+    i2c_hdc1080_configuration_register_t config_reg;
 
-    /* copy register from handle */
-    i2c_hdc1080_configuration_register_t config_reg = { .reg = hdc1080_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR(i2c_hdc1080_get_configuration_register(handle, &config_reg), TAG, "unable to read configuration register, reset failed");
 
     /* set soft-reset bit */
     config_reg.bits.reset_enabled = true;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(hdc1080_handle, config_reg), TAG, "unable to write to i2c handle, set configuration for reset failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_set_configuration_register(handle, config_reg), TAG, "unable to write configuration register, reset failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(I2C_HDC1080_RESET_DELAY_MS) );
 
+    /* attempt to setup device */
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_setup(handle), TAG, "unable to setup device, reset failed" );
+
     return ESP_OK;
 }
 
-esp_err_t i2c_hdc1080_remove(i2c_hdc1080_handle_t hdc1080_handle) {
+esp_err_t i2c_hdc1080_remove(i2c_hdc1080_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
-    return i2c_master_bus_rm_device(hdc1080_handle->i2c_dev_handle);
+    return i2c_master_bus_rm_device(handle->i2c_handle);
 }
 
-esp_err_t i2c_hdc1080_delete(i2c_hdc1080_handle_t hdc1080_handle) {
+esp_err_t i2c_hdc1080_delete(i2c_hdc1080_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( hdc1080_handle );
+    ESP_ARG_CHECK( handle );
 
     /* remove device from master bus */
-    ESP_RETURN_ON_ERROR( i2c_hdc1080_remove(hdc1080_handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
+    ESP_RETURN_ON_ERROR( i2c_hdc1080_remove(handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
 
     /* validate handle instance and free handles */
-    if(hdc1080_handle->i2c_dev_handle) {
-        free(hdc1080_handle->i2c_dev_handle);
-        free(hdc1080_handle);
+    if(handle->i2c_handle) {
+        free(handle->i2c_handle);
+        free(handle);
     }
 
     return ESP_OK;
+}
+
+const char* i2c_hdc1080_get_fw_version(void) {
+    return I2C_HDC1080_FW_VERSION_STR;
 }

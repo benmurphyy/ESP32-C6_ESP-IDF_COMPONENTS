@@ -123,8 +123,8 @@ typedef enum i2c_sht4x_repeat_modes_e {
  * @brief SHT4X configuration structure definition.
  */
 typedef struct i2c_sht4x_config_s {
-    uint16_t                 i2c_address;           /*!< i2c device address */
-    uint32_t                 i2c_clock_speed;       /*!< i2c device scl clock speed  */
+    uint16_t                 i2c_address;       /*!< sht4x i2c device address */
+    uint32_t                 i2c_clock_speed;   /*!< sht4x i2c device scl clock speed  */
     i2c_sht4x_repeat_modes_t repeat_mode;       /*!< sht4x measurement repeatability mode setting */
     i2c_sht4x_heater_modes_t heater_mode;       /*!< sht4x measurement heater mode setting */
 } i2c_sht4x_config_t;
@@ -133,8 +133,8 @@ typedef struct i2c_sht4x_config_s {
  * @brief SHT4X context structure.
  */
 struct i2c_sht4x_context_t {
-    i2c_sht4x_config_t       dev_config;          /*!< device configuration */
-    i2c_master_dev_handle_t  i2c_handle;      /*!< i2c device handle */
+    i2c_sht4x_config_t       dev_config;      /*!< sht4x device configuration */
+    i2c_master_dev_handle_t  i2c_handle;      /*!< sht4x i2c device handle */
     uint32_t                 serial_number;   /*!< sht4x device serial number */
 };
 

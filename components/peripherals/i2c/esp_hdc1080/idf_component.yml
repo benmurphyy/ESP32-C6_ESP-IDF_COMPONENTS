@@ -1,20 +1,23 @@
-version: "0.0.1"
-description: "ESP-IDF HDC1080 I2C device driver component."
+version: "1.1.0"
+description: "ESP32 espressif IoT development framework (esp-idf) compatible component for Texas Instruments HDC1080 temperature and humidity I2C sensor."
 license: "MIT"
-url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hdc1080"
+url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/2f662825bf50c863ff09dd461361724ba9e470f2/components/peripherals/i2c/esp_hdc1080"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
+examples:
+  url: ""
 tags:
-  - HDC1080
-  - I2C
-  - ESP-IDF
-  - ESP32
+  - hdc1080
+  - i2c
+  - espidf
+  - esp32
+targets:
+  - esp32s3
 dependencies:
   idf: 
     version: ">5.3.0"
   esp_driver_i2c_ext: 
-    version: ">=0.0.1"
+    version: ">=1.0.0"
     override_path: "../../" # use component in a local directory, not from registry
-    #url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_driver_i2c_ext"
 maintainers:
  - Eric Gionet <gionet.c.eric@gmail.com>

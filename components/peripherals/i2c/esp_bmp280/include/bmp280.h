@@ -75,7 +75,7 @@ extern "C" {
 */
 
 /**
- * @brief BMP280 I2C IIR filters coefficient enumerator.
+ * @brief BMP280 I2C IIR filters coefficient enumerator definition.
  */
 typedef enum i2c_bmp280_iir_filters_e {
     I2C_BMP280_IIR_FILTER_OFF = (0b000),
@@ -86,7 +86,7 @@ typedef enum i2c_bmp280_iir_filters_e {
 } i2c_bmp280_iir_filters_t;
 
 /**
- * @brief BMP280 I2C standby times enumerator.
+ * @brief BMP280 I2C standby times enumerator definition.
  * 
  */
 typedef enum i2c_bmp280_standby_times_e {
@@ -101,7 +101,7 @@ typedef enum i2c_bmp280_standby_times_e {
 } i2c_bmp280_standby_times_t;
 
 /**
- * @brief BMP280 I2C power modes enumerator.
+ * @brief BMP280 I2C power modes enumerator definition.
  * 
  */
 typedef enum i2c_bmp280_power_modes_e {
@@ -112,7 +112,7 @@ typedef enum i2c_bmp280_power_modes_e {
 } i2c_bmp280_power_modes_t;
 
 /**
- * @brief BMP280 I2C pressure oversampling enumerator.
+ * @brief BMP280 I2C pressure oversampling enumerator definition.
  * 
  */
 typedef enum i2c_bmp280_pressure_oversampling_e {
@@ -125,7 +125,7 @@ typedef enum i2c_bmp280_pressure_oversampling_e {
 } i2c_bmp280_pressure_oversampling_t;
 
 /**
- * @brief BMP280 I2C temperature oversampling enumerator.
+ * @brief BMP280 I2C temperature oversampling enumerator definition.
  * 
  */
 typedef enum i2c_bmp280_temperature_oversampling_e {
@@ -140,7 +140,7 @@ typedef enum i2c_bmp280_temperature_oversampling_e {
 } i2c_bmp280_temperature_oversampling_t;
 
 /**
- * @brief BMP280 I2C status register (0xf3) structure.  The reset state is 0x00 for this register.
+ * @brief BMP280 I2C status register (0xf3) structure definition.  The reset state is 0x00 for this register.
  * 
  */
 typedef union __attribute__((packed)) i2c_bmp280_status_register_u {
@@ -154,7 +154,7 @@ typedef union __attribute__((packed)) i2c_bmp280_status_register_u {
 } i2c_bmp280_status_register_t;
 
 /**
- * @brief BMP280 I2C control measurement register (0xf4) structure.  The reset state is 0x00 for this register.
+ * @brief BMP280 I2C control measurement register (0xf4) structure definition.  The reset state is 0x00 for this register.
  * 
  */
 typedef union __attribute__((packed)) i2c_bmp280_control_measurement_register_u {
@@ -167,7 +167,7 @@ typedef union __attribute__((packed)) i2c_bmp280_control_measurement_register_u 
 } i2c_bmp280_control_measurement_register_t;
 
 /**
- * @brief BMP280 I2C configuration register (0xf5) structure.  The reset state is 0x00 for this register.
+ * @brief BMP280 I2C configuration register (0xf5) structure definition.  The reset state is 0x00 for this register.
  * 
  */
 typedef union __attribute__((packed)) i2c_bmp280_configuration_register_u {
@@ -205,8 +205,8 @@ typedef struct i2c_bmp280_cal_factors_s {
  * @brief BMP280 configuration structure definition.
  */
 typedef struct i2c_bmp280_config_s {
-    uint16_t                                    i2c_address;      /*!< i2c device address */
-    uint32_t                                    i2c_clock_speed;  /*!< i2c device scl clock speed  */
+    uint16_t                                    i2c_address;                /*!< bmp280 i2c device address */
+    uint32_t                                    i2c_clock_speed;            /*!< bmp280 i2c device scl clock speed  */
     i2c_bmp280_power_modes_t                    power_mode;                 /*!< bmp280 power mode setting */
     i2c_bmp280_iir_filters_t                    iir_filter;                 /*!< bmp280 IIR filter setting */
     i2c_bmp280_pressure_oversampling_t          pressure_oversampling;      /*!< bmp280 pressure oversampling setting */
@@ -219,7 +219,7 @@ typedef struct i2c_bmp280_config_s {
  */
 struct i2c_bmp280_context_t {
     i2c_bmp280_config_t                         dev_config;         /*!< bmp280 device configuration */  
-    i2c_master_dev_handle_t                     i2c_handle;         /*!< I2C device handle */
+    i2c_master_dev_handle_t                     i2c_handle;         /*!< bmp280 i2c device handle */
     i2c_bmp280_cal_factors_t                   *dev_cal_factors;    /*!< bmp280 device calibration factors */
     uint8_t                                     sensor_type;        /*!< sensor type, should be bmp280 */
 };

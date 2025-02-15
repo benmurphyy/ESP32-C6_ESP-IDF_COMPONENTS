@@ -22,7 +22,7 @@ ESP-IDF component development status:
  - Bosch BMP390: initial component implementation completed.
  - ScioSense CCS811: initial component implementation completed.
  - ScioSense ENS160: initial component implementation completed.
- - Texas Instruments HDC1080: initial component implementation completed.
+ - Texas Instruments HDC1080: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - Honeywell HMC5883L: initial component implementation completed.
  - Lite-On LTR390UV: initial component implementation completed.
  - Maxim-Integrated MAX30105: component development is work in progress (WIP).
