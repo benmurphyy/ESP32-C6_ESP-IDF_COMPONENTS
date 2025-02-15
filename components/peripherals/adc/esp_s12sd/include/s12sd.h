@@ -44,6 +44,7 @@
 #include <esp_adc/adc_oneshot.h>
 #include <esp_adc/adc_cali.h>
 #include <esp_adc/adc_cali_scheme.h>
+#include "s12sd_version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -88,7 +89,7 @@ extern "C" {
 #define ADC_UV_MV_TO_INDEX_11_MIN   ADC_UV_MV_TO_INDEX_10_MAX
 #define ADC_UV_MV_TO_INDEX_11_MAX   (1500) // 1170+ but set a max of 1500
 
-/* macro definotions */
+/* macro definitions */
 
 #define ADC_UV_S12SD_CONFIG_DEFAULT {               \
     .unit = ADC_UV_UNIT_DEFAULT,                    \
@@ -99,62 +100,61 @@ extern "C" {
 */
 
 /**
- * @brief adc s12sd device configuration.
+ * @brief S12SD configuration structure definition.
  */
-typedef struct {
-    uint8_t     unit;     /*!< adc unit */
-    uint8_t     channel;  /*!< adc channel */
+typedef struct adc_s12sd_config_s {
+    uint8_t     adc_unit;     /*!< s12sd adc unit */
+    uint8_t     adc_channel;  /*!< s12sd adc channel */
 } adc_s12sd_config_t;
 
 /**
- * @brief adc s12sd device handle.
+ * @brief S12SD context structure.
  */
-struct adc_s12sd_t {
-    adc_oneshot_unit_handle_t   adc_dev_handle; /*!< adc device handle */
-    adc_cali_handle_t           adc_cal_handle; /*!< adc calibration handle */
-    bool                        adc_calibrate;  /*!< adc calibration initialization flag */
-    uint8_t                     adc_unit;       /*!< adc unit */
-    uint8_t                     adc_channel;    /*!< adc channel */
+struct adc_s12sd_context_t {
+    adc_s12sd_config_t          dev_config;     /*!< s12sd adc configuration */
+    adc_oneshot_unit_handle_t   adc_handle;     /*!< s12sd adc device handle */
+    adc_cali_handle_t           adc_cal_handle; /*!< s12sd adc calibration handle */
+    bool                        adc_calibrate;  /*!< s12sd adc calibration initialization flag */
 };
 
 /**
- * @brief adc s12sd device structure definition.
+ * @brief S12SD context structure definition.
  */
-typedef struct adc_s12sd_t  adc_s12sd_t;
+typedef struct adc_s12sd_context_t  adc_s12sd_context_t;
 
 /**
- * @brief adc s12sd device handle definition.
+ * @brief S12SD handle structure definition.
  */
-typedef struct adc_s12sd_t *adc_s12sd_handle_t;
+typedef struct adc_s12sd_context_t* adc_s12sd_handle_t;
 
 
 
 /**
- * @brief initializes an adc s12sd device.
+ * @brief Initializes an adc S12SD device.
  *
- * @param[in] s12sd_config configuration of s12sd device
- * @param[out] s12sd_handle s12sd device handle
+ * @param[in] s12sd_config S12SD device configuration.
+ * @param[out] s12sd_handle S12SD device handle.
  * @return ESP_OK: init success.
  */
 esp_err_t adc_s12sd_init(const adc_s12sd_config_t *s12sd_config, adc_s12sd_handle_t *s12sd_handle);
 
 /**
- * @brief Measure s12sd device.
+ * @brief Measure S12SD device.
  *
- * @param[in] s12sd_handle s12sd device handle
+ * @param[in] handle S12SD device handle
  * @param[out] uv_index uv index (1 to 11)
  * @return ESP_OK: init success.
  */
-esp_err_t adc_s12sd_measure(adc_s12sd_handle_t s12sd_handle, uint8_t *uv_index);
+esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index);
 
 
 /**
- * @brief Deinitialized s12sd device.
+ * @brief Deinitialize S12SD device.
  *
- * @param[in] s12sd_handle s12sd device handle
+ * @param[in] handle S12SD device handle
  * @return ESP_OK: init success.
  */
-esp_err_t adc_s12sd_deinit(adc_s12sd_handle_t s12sd_handle);
+esp_err_t adc_s12sd_deinit(adc_s12sd_handle_t handle);
 
 
 #ifdef __cplusplus

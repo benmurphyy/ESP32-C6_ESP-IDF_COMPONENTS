@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "nvs_ext.h"
+#include "include/nvs_ext.h"
 #include <string.h>
 #include <esp_log.h>
 #include <esp_check.h>

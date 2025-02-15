@@ -2,7 +2,7 @@
 The NVS extension simplifies the process of reading and writing information to non-volatile storage.  The NVS extension supports common data-types such as `uint8_t` to `uint64_t`, `int8_t` to `int64_t`, `float` and `double`, `string`, and `struct`.  The library can be used as is but you can implement wrappers if the information will be stored to a common key to reference the key-value pairs.
 
 ## Repository
-The component is hosted on github and is located here:
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/b34d78b383ce366b4954c946b7181bafb1c9ebb3/components/storage/esp_nvs_ext
 
 ## General Usage
 To get started, simply copy the component to your project's `components` folder and reference the `nvs_ext.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
