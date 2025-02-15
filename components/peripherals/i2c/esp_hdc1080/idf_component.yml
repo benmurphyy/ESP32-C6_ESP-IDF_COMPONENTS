@@ -5,7 +5,7 @@ url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/2f662825bf50c863
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 examples:
-  url: ""
+  url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/204913bd2409386a1a0e2e0a873048012afb33b8/components/peripherals/i2c/esp_hdc1080/README.md"
 tags:
   - hdc1080
   - i2c
