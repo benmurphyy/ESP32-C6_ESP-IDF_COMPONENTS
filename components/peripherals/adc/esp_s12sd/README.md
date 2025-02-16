@@ -29,8 +29,35 @@ Once a driver instance is instantiated the sensor is ready for usage as shown in
 ```
 #include <s12sd.h>
 
-void adc0_s12sd_task( void *pvParameters ) {
-    /* work in progress */
+static void adc_0_task( void *pvParameters ) {
+    TickType_t                         xLastWakeTime;
+    //
+    // initialize the xLastWakeTime variable with the current time.
+    xLastWakeTime                      = xTaskGetTickCount ();
+    //
+    //
+    // initialize s12sd device configuration
+    adc_s12sd_config_t                s12sd_dev_cfg = ADC_S12SD_CONFIG_DEFAULT;
+    adc_s12sd_handle_t                s12sd_dev_hdl;
+    //
+    // s12sd init device
+    adc_s12sd_init(&s12sd_dev_cfg, &s12sd_dev_hdl);
+    if (s12sd_dev_hdl == NULL) ESP_LOGE(CONFIG_APP_TAG, "[APP] adc0 s12sd handle init failed");
+    //
+    //
+    // task loop entry point
+    for ( ;; ) {
+        // read s12sd uv sensor
+        uint8_t uv_index;
+        adc_s12sd_measure(s12sd_dev_hdl, &uv_index);
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &xLastWakeTime, 10 );
+    }
+    //
+    // free up task resources and remove task from stack
+    adc_s12sd_delete(s12sd_dev_hdl);
+    vTaskDelete( NULL );
 }
 ```
 

@@ -36,11 +36,40 @@
 #include <string.h>
 #include <stdio.h>
 #include <sdkconfig.h>
-#include <esp_types.h>
-#include <esp_log.h>
-#include <esp_check.h>
+//#include <esp_types.h>
+//#include <esp_log.h>
+//#include <esp_check.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+
+/* UV millivolt to uv index upper and lower limit definitions
+ * see GUVA-S12SD datasheet for details
+*/
+
+#define ADC_UV_MV_TO_INDEX_0_MIN    (-1)
+#define ADC_UV_MV_TO_INDEX_0_MAX    (49)
+#define ADC_UV_MV_TO_INDEX_1_MIN    ADC_UV_MV_TO_INDEX_0_MAX
+#define ADC_UV_MV_TO_INDEX_1_MAX    (227)
+#define ADC_UV_MV_TO_INDEX_2_MIN    ADC_UV_MV_TO_INDEX_1_MAX
+#define ADC_UV_MV_TO_INDEX_2_MAX    (318)
+#define ADC_UV_MV_TO_INDEX_3_MIN    ADC_UV_MV_TO_INDEX_2_MAX
+#define ADC_UV_MV_TO_INDEX_3_MAX    (408)
+#define ADC_UV_MV_TO_INDEX_4_MIN    ADC_UV_MV_TO_INDEX_3_MAX
+#define ADC_UV_MV_TO_INDEX_4_MAX    (503)
+#define ADC_UV_MV_TO_INDEX_5_MIN    ADC_UV_MV_TO_INDEX_4_MAX
+#define ADC_UV_MV_TO_INDEX_5_MAX    (606)
+#define ADC_UV_MV_TO_INDEX_6_MIN    ADC_UV_MV_TO_INDEX_5_MAX
+#define ADC_UV_MV_TO_INDEX_6_MAX    (696)
+#define ADC_UV_MV_TO_INDEX_7_MIN    ADC_UV_MV_TO_INDEX_6_MAX
+#define ADC_UV_MV_TO_INDEX_7_MAX    (795)
+#define ADC_UV_MV_TO_INDEX_8_MIN    ADC_UV_MV_TO_INDEX_7_MAX
+#define ADC_UV_MV_TO_INDEX_8_MAX    (881)
+#define ADC_UV_MV_TO_INDEX_9_MIN    ADC_UV_MV_TO_INDEX_8_MAX
+#define ADC_UV_MV_TO_INDEX_9_MAX    (976)
+#define ADC_UV_MV_TO_INDEX_10_MIN   ADC_UV_MV_TO_INDEX_9_MAX
+#define ADC_UV_MV_TO_INDEX_10_MAX   (1079)
+#define ADC_UV_MV_TO_INDEX_11_MIN   ADC_UV_MV_TO_INDEX_10_MAX
+#define ADC_UV_MV_TO_INDEX_11_MAX   (1500) // 1170+ but set a max of 1500
 
 /*
  * macro definitions
@@ -57,7 +86,7 @@ static const char *TAG = "s12sd";
 */
 
 /**
- * @brief converts millivolt (0 to 1500mV) to uv index. see GUVA-S12SD datasheet for details.
+ * @brief Converts millivolt (0 to 1500mV) to uv index. see GUVA-S12SD datasheet for details.
  *
  * @param[in] milli_volt voltage, in millivolts, to convert
  * @return uv index (0 to 11), an out-of-range value returns 255
@@ -103,8 +132,8 @@ static inline bool adc_s12sd_calibration_init(const adc_s12sd_config_t *s12sd_co
         adc_cali_curve_fitting_config_t cali_config = {
             .unit_id = s12sd_config->adc_unit,
             .chan = s12sd_config->adc_channel,
-            .atten = ADC_UV_ATTEN,
-            .bitwidth = ADC_UV_DIGI_BIT_WIDTH,
+            .atten = ADC_S12SD_ATTEN,
+            .bitwidth = ADC_S12SD_DIGI_BIT_WIDTH,
         };
         ret = adc_cali_create_scheme_curve_fitting(&cali_config, &out_handle);
         if (ret == ESP_OK) {
@@ -118,8 +147,8 @@ static inline bool adc_s12sd_calibration_init(const adc_s12sd_config_t *s12sd_co
         ESP_LOGI(TAG, "calibration scheme version is %s", "Line Fitting");
         adc_cali_line_fitting_config_t cali_config = {
             .unit_id = s12sd_config->adc_unit,
-            .atten = ADC_UV_ATTEN,
-            .bitwidth = ADC_UV_DIGI_BIT_WIDTH,
+            .atten = ADC_S12SD_ATTEN,
+            .bitwidth = ADC_S12SD_DIGI_BIT_WIDTH,
         };
         ret = adc_cali_create_scheme_line_fitting(&cali_config, &out_handle);
         if (ret == ESP_OK) {
@@ -141,7 +170,7 @@ static inline bool adc_s12sd_calibration_init(const adc_s12sd_config_t *s12sd_co
     return calibrated;
 }
 
-static inline void adc_s12sd_calibration_deinit(adc_cali_handle_t cal_handle) {
+static inline void adc_s12sd_calibration_delete(adc_cali_handle_t cal_handle) {
 #if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED
     ESP_LOGI(TAG, "deregister %s calibration scheme", "Curve Fitting");
     ESP_ERROR_CHECK( adc_cali_delete_scheme_curve_fitting(cal_handle) );
@@ -171,8 +200,8 @@ esp_err_t adc_s12sd_init(const adc_s12sd_config_t *s12sd_config, adc_s12sd_handl
     ESP_GOTO_ON_ERROR(adc_oneshot_new_unit(&init_conf, &out_handle->adc_handle), err, TAG, "adc s12sd device new one-shot handle failed");
 
     adc_oneshot_chan_cfg_t os_conf = {
-        .bitwidth = ADC_UV_DIGI_BIT_WIDTH,
-        .atten    = ADC_UV_ATTEN,
+        .bitwidth = ADC_S12SD_DIGI_BIT_WIDTH,
+        .atten    = ADC_S12SD_ATTEN,
     };
 
     ESP_GOTO_ON_ERROR(adc_oneshot_config_channel(out_handle->adc_handle, out_handle->dev_config.adc_channel, &os_conf), err, TAG, "adc s12sd device configuration (one-shot) failed");
@@ -199,7 +228,7 @@ esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index) {
 
     ESP_ARG_CHECK( handle && uv_index );
 
-    for (int i=0; i<ADC_UV_SAMPLE_SIZE; i++) {
+    for (int i=0; i<ADC_S12SD_SAMPLE_SIZE; i++) {
         int adc_raw;
         int adc_volt;
 
@@ -219,7 +248,7 @@ esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index) {
     }
 
     // average voltage (mV)
-    avg_volt = avg_sum / ADC_UV_SAMPLE_SIZE;
+    avg_volt = avg_sum / ADC_S12SD_SAMPLE_SIZE;
 
     // convert voltage to uv index
     *uv_index = adc_s12sd_convert_uv_index(avg_volt);
@@ -231,7 +260,7 @@ esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index) {
     return ESP_OK;
 }
 
-esp_err_t adc_s12sd_deinit(adc_s12sd_handle_t handle) {
+esp_err_t adc_s12sd_delete(adc_s12sd_handle_t handle) {
     esp_err_t ret = ESP_OK;
 
     ESP_ARG_CHECK( handle );
@@ -239,16 +268,16 @@ esp_err_t adc_s12sd_deinit(adc_s12sd_handle_t handle) {
     ret = adc_oneshot_del_unit(handle->adc_handle);
 
     if (handle->adc_calibrate) {
-        adc_s12sd_calibration_deinit(handle->adc_cal_handle);
+        adc_s12sd_calibration_delete(handle->adc_cal_handle);
     }
 
     return ret;
 }
 
 const char* adc_s12sd_get_fw_version(void) {
-    return I2C_S12SD_FW_VERSION_STR;
+    return ADC_S12SD_FW_VERSION_STR;
 }
 
 int32_t adc_s12sd_get_fw_version_number(void) {
-    return I2C_S12SD_FW_VERSION_INT32;
+    return ADC_S12SD_FW_VERSION_INT32;
 }

@@ -22,8 +22,8 @@
  */
 
 /**
- * @file s12sd_version.h
- * @defgroup drivers s12sd
+ * @file type_utils_version.h
+ * @defgroup utilities
  * @{
  *
  *
@@ -32,8 +32,8 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __S12SD_VERSION_H__
-#define __S12SD_VERSION_H__
+#ifndef __TYPE_UTILS_VERSION_H__
+#define __TYPE_UTILS_VERSION_H__
 
 
 #ifdef __cplusplus
@@ -45,11 +45,11 @@ extern "C" {
  */
 
 /** Major version number (X.x.x) */
-#define ADC_S12SD_FW_VERSION_MAJOR 1
+#define TYPE_UTILS_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define ADC_S12SD_FW_VERSION_MINOR 1
+#define TYPE_UTILS_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define ADC_S12SD_FW_VERSION_PATCH 0
+#define TYPE_UTILS_FW_VERSION_PATCH 0
 
 
 /**
@@ -59,56 +59,56 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define ADC_S12SD_STR_QUOTES( x ) #x
+#define TYPE_UTILS_STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define ADC_S12SD_STR( x ) ADC_S12SD_STR_QUOTES( x )
+#define TYPE_UTILS_STR( x ) TYPE_UTILS_STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define ADC_S12SD_FW_VERSION_STR                        \
-        ADC_S12SD_STR( ADC_S12SD_FW_VERSION_MAJOR ) "." \
-        ADC_S12SD_STR( ADC_S12SD_FW_VERSION_MINOR ) "." \
-        ADC_S12SD_STR( ADC_S12SD_FW_VERSION_PATCH )
+#define TYPE_UTILS_FW_VERSION_STR                        \
+        TYPE_UTILS_STR( TYPE_UTILS_FW_VERSION_MAJOR ) "." \
+        TYPE_UTILS_STR( TYPE_UTILS_FW_VERSION_MINOR ) "." \
+        TYPE_UTILS_STR( TYPE_UTILS_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, ADC_S12SD_FW_VERSION_INT32 >= ADC_S12SD_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, TYPE_UTILS_FW_VERSION_INT32 >= TYPE_UTILS_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define ADC_S12SD_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define TYPE_UTILS_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, ADC_S12SD_FW_VERSION_INT32 >= ADC_S12SD_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, TYPE_UTILS_FW_VERSION_INT32 >= TYPE_UTILS_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define ADC_S12SD_FW_VERSION_INT32                                      \
-        ADC_S12SD_FW_VERSION_PARAMS_INT32(ADC_S12SD_FW_VERSION_MAJOR,   \
-                                          ADC_S12SD_FW_VERSION_MINOR,   \
-                                          ADC_S12SD_FW_VERSION_PATCH)
+#define TYPE_UTILS_FW_VERSION_INT32                                      \
+        TYPE_UTILS_FW_VERSION_PARAMS_INT32(TYPE_UTILS_FW_VERSION_MAJOR,   \
+                                          TYPE_UTILS_FW_VERSION_MINOR,   \
+                                          TYPE_UTILS_FW_VERSION_PATCH)
 
 
 
 /**
- * @brief Converts S12SD firmware version numbers (major, minor, patch) into a string.
+ * @brief Converts `type_utils` firmware version numbers (major, minor, patch) into a string.
  * 
- * @return char* S12SD firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ * @return char* `type_utils` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
-const char* adc_s12sd_get_fw_version(void);
+const char* type_utils_get_fw_version(void);
 
 /**
- * @brief Converts S12SD firmware version numbers (major, minor, patch) into an integer value.
+ * @brief Converts `type_utils` firmware version numbers (major, minor, patch) into an integer value.
  * 
- * @return int32_t S12SD firmware version number.
+ * @return int32_t `type_utils` firmware version number.
  */
-int32_t adc_s12sd_get_fw_version_number(void);
+int32_t type_utils_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
@@ -117,4 +117,4 @@ int32_t adc_s12sd_get_fw_version_number(void);
 
 /**@}*/
 
-#endif // __S12SD_VERSION_H__
+#endif // __TYPE_UTILS_VERSION_H__

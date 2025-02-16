@@ -33,13 +33,13 @@
  * MIT Licensed as described in the file LICENSE
  */
 
-#include "type_utils.h"
+#include "include/type_utils.h"
 #include <string.h>
 #include <stdio.h>
-#include <esp_log.h>
-#include <esp_check.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
+//#include <esp_log.h>
+//#include <esp_check.h>
+//#include <freertos/FreeRTOS.h>
+//#include <freertos/task.h>
 
 
 /*
@@ -386,4 +386,12 @@ void double_to_bytes(const double value, uint8_t* bytes, const bool little_endia
 
 void copy_bytes(const uint8_t* source, uint8_t* destination, const size_t size) {
     memcpy(destination, source, size);
+}
+
+const char* type_utils_get_fw_version(void) {
+    return TYPE_UTILS_FW_VERSION_STR;
+}
+
+int32_t type_utils_get_fw_version_number(void) {
+    return TYPE_UTILS_FW_VERSION_INT32;
 }

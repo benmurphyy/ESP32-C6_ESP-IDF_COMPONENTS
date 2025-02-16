@@ -23,12 +23,10 @@
 
 /**
  * @file type_utils.h
- * @defgroup type_utils
+ * @defgroup utilities
  * @{
  *
- * ESP-IDF type utilities
  * 
- * Ported from esp-open-rtos
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -41,7 +39,7 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <esp_mac.h>
-
+#include "type_utils_version.h"
 
 #ifdef __cplusplus
 extern "C" {
