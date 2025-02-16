@@ -36,17 +36,11 @@
 #include "include/type_utils.h"
 #include <string.h>
 #include <stdio.h>
-//#include <esp_log.h>
-//#include <esp_check.h>
-//#include <freertos/FreeRTOS.h>
-//#include <freertos/task.h>
 
 
 /*
  * macro definitions
 */
-
-//#define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 
 /*

@@ -36,16 +36,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <sdkconfig.h>
-//#include <esp_types.h>
-//#include <esp_log.h>
-//#include <esp_check.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+
+/**
+ * constant definitions
+ */
 
 /* UV millivolt to uv index upper and lower limit definitions
  * see GUVA-S12SD datasheet for details
 */
-
 #define ADC_UV_MV_TO_INDEX_0_MIN    (-1)
 #define ADC_UV_MV_TO_INDEX_0_MAX    (49)
 #define ADC_UV_MV_TO_INDEX_1_MIN    ADC_UV_MV_TO_INDEX_0_MAX
@@ -81,9 +81,6 @@
 */
 static const char *TAG = "s12sd";
 
-/*
-* functions and subroutines
-*/
 
 /**
  * @brief Converts millivolt (0 to 1500mV) to uv index. see GUVA-S12SD datasheet for details.
@@ -120,6 +117,10 @@ static inline uint8_t adc_s12sd_convert_uv_index(const float milli_volt) {
         return 255;
     }
 }
+
+/**
+ * function and subroutine declarations
+ */
 
 static inline bool adc_s12sd_calibration_init(const adc_s12sd_config_t *s12sd_config, adc_cali_handle_t *cal_handle) {
     adc_cali_handle_t out_handle = NULL;

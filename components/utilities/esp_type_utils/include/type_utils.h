@@ -37,7 +37,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <esp_err.h>
 #include <esp_mac.h>
 #include "type_utils_version.h"
 

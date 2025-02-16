@@ -14,11 +14,17 @@ The folder structure for components, and associated example, are outlined as fol
 |  |  |--i2c
 |  |  |  |
 |  |  |  |--esp_bmp_280
-|  |  |  |  |- BMP280 Datasheet.pdf
+|  |  |  |  |--documentation
+|  |  |  |      |- BMP280 Datasheet.pdf
+|  |  |  |  |--include
+|  |  |  |      |- bmp280_version.h
+|  |  |  |      |- bmp280.h
 |  |  |  |  |- bmp280.c
-|  |  |  |  |- bmp280.h
-|  |  |  |  |- CMakeList.txt
+|  |  |  |  |- CMakeLists.txt
 |  |  |  |  |- LICENSE
+|  |  |  |  |- README.md
+|  |  |  |  |- idf_component.yml
+|  |  |  |  |- library.json
 |  |  |
 |  |  |--owb
 |  |  |--spi
@@ -107,6 +113,7 @@ Supported components include the following:
 - `Sensirion Gas Index Algorithm`: A gas index algorithm for the Sensirion air quality sensors.  This code base is maintained by Sensirion.
 - `Pressure Tendency`: A pressure tendency algorithm that monitors if pressure is rising, falling, or steady over the past 3-hours.
 - `Scalar Trend`: A scalar trend algorithm that monitors if a scalar variable is rising, falling, or steady over the past hour.
+- `Type Utilities`: Type definitions common for i2c transactions, byte manipulation, and other tools.
 
 See the Sensirion SGP4X example on how the gas index algorithm is utilized with this sensor.
 
