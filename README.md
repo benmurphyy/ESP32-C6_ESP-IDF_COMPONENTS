@@ -82,7 +82,7 @@ Supported drivers include the following device peripherals:
  - I2C: AKM AK8975
  - I2C: OSRAM AS7341
  - I2C: ROHM BH1750FVI
- - I2C: Bosch BME680 - Work in Progress, Coming Soon!! 
+ - I2C: Bosch BME680 - Work in Progress, Coming Soon (waiting for sensor to arrive)!! 
  - I2C: Bosch BMP280
  - I2C: Bosch BMP390
  - I2C: ScioSense CCS811

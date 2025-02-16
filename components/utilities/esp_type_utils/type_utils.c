@@ -361,7 +361,7 @@ void int64_to_bytes(const int64_t value, uint8_t* bytes, const bool little_endia
 }
 
 void float_to_bytes(const float value, uint8_t* bytes, const bool little_endian) {
-    union { uint32_t u32_value; float float32; } tmp = { .float32 = value };
+    const union { uint32_t u32_value; float float32; } tmp = { .float32 = value };
     if(little_endian == true) {
         uint32_to_bytes(tmp.u32_value, bytes, true);
     } else {
@@ -370,7 +370,7 @@ void float_to_bytes(const float value, uint8_t* bytes, const bool little_endian)
 }
 
 void double_to_bytes(const double value, uint8_t* bytes, const bool little_endian) {
-    union { uint64_t u64_value; double double64; } tmp = { .double64 = value };
+    const union { uint64_t u64_value; double double64; } tmp = { .double64 = value };
     if(little_endian == true) {
         uint64_to_bytes(tmp.u64_value, bytes, true);
     } else {

@@ -8,7 +8,7 @@ ESP-IDF peripheral components that are flagged as completed work but they are un
 ## ADC
 ESP-IDF component development status:
 
- - Roithner LaserTechnik GUVA-S12SD: initial component implementation completed.
+ - Roithner LaserTechnik GUVA-S12SD: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
 
 ## I2C
 ESP-IDF component development status:
