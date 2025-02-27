@@ -15,19 +15,19 @@ This code is designed to be a central hub for testing and demonstrating various 
     - It's a repository for ESP-IDF components.
     - It includes basic examples for each component.
     - It's designed for the ESP32-S3 development board.
-    - It mentions how to configure I2C and component-specific settings (in app_config.h and [component-name]_task.h files).
-    - It also gives some important command to run in powershell for menuconfig and prune tasks.
+    - It mentions how to configure I2C and component-specific settings (in app_config.h and `[component-name]_task.h` files).
+    - It also gives some important command to run in powershell for `menuconfig` and prune tasks.
 
 3. ### Component Includes:
 
-- <stdio.h>, <stdlib.h>, <ctype.h>, <unistd.h>, <string.h>: Standard C library headers for input/output, memory allocation, character handling, POSIX operating system API, and string manipulation.
-- <esp_log.h>: ESP-IDF logging library for debugging.
-- <freertos/FreeRTOS.h>, <freertos/task.h>: FreeRTOS headers for task management.
+- `<stdio.h>`, `<stdlib.h>`, `<ctype.h>`, `<unistd.h>`, `<string.h>`: Standard C library headers for input/output, memory allocation, character handling, POSIX operating system API, and string manipulation.
+- `<esp_log.h>`: ESP-IDF logging library for debugging.
+- `<freertos/FreeRTOS.h>`, `<freertos/task.h>`: FreeRTOS headers for task management.
 - Component-specific headers:
-    - <i2c_master_ext.h>: Header for a custom I2C master driver.
-    - <nvs_ext.h>: Header for a custom Non-Volatile Storage (NVS) driver.
-    - <ahtxx_task.h>, <ak8975_task.h>, ... <veml7700_task.h>: Headers for the task functions that interact with specific I2C components (sensors, etc.).
-    - <ds18b20_task.h>: Header for the task function that interacts with the DS18B20 one-wire sensor.
+    - `<i2c_master_ext.h>`: Header for a custom I2C master driver.
+    - `<nvs_ext.h>`: Header for a custom Non-Volatile Storage (NVS) driver.
+    - `<ahtxx_task.h>`, `<ak8975_task.h>`, ... `<veml7700_task.h>`: Headers for the task functions that interact with specific I2C components (sensors, etc.).
+    - `<ds18b20_task.h>`: Header for the task function that interacts with the DS18B20 one-wire sensor.
 
 4. ### Component Enumerations:
 
