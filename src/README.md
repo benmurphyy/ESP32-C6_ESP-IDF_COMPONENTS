@@ -74,14 +74,14 @@ This code is designed to be a central hub for testing and demonstrating various 
     - Only the example of the BMP280 is uncommented.
 - vTaskDelay: A small delay before starting the component example, probably to allow the system to settle.
 
-### How to Use (Based on Comments and Structure)
+## How to Use (Based on Comments and Structure)
 
 1. Choose a Component: Decide which I2C or OWB component you want to test (e.g., AHTXX, DS18B20, BMP280, etc.).
 2. Uncomment the Appropriate Line: In the app_main function, uncomment the i2c0_component_example_start or owb0_component_example_start line that corresponds to the component you want to use.
 3. Build and Flash: Build the code using PlatformIO (or your preferred build system) and flash it to the ESP32-S3.
 4. Monitor Output: Use a serial monitor to view the log output and observe the results of the component's example.
 
-### In Essence:
+## In Essence:
 
 This code provides a well-structured framework for managing and running example code for a variety of peripheral components on the ESP32-S3. It's designed for:
 
