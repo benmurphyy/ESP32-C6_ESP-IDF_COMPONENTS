@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16.0)
 list(APPEND EXTRA_COMPONENT_DIRS
+
                     "components/utilities/esp_kalman_motion" 
                     "components/utilities/esp_pressure_tendency" 
                     "components/utilities/esp_scalar_trend" 

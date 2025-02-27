@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <as7341.h>
 
 #ifdef __cplusplus
 extern "C" {

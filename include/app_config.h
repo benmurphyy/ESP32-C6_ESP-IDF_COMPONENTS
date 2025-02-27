@@ -37,6 +37,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <esp_log.h>
 #include <driver/i2c_master.h>
 #include <driver/spi_master.h>
 #include <onewire_bus.h>

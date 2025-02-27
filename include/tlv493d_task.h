@@ -37,6 +37,7 @@
 
 
 #include <app_config.h>
+#include <tlv493d.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -36,6 +36,8 @@
 
 
 #include <app_config.h>
+#include <veml7700.h>
+
 
 #ifdef __cplusplus
 extern "C" {

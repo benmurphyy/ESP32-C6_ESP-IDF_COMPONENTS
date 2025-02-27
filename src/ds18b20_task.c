@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <ds18b20_task.h>
-#include <ds18b20.h>
+
 
 
 void owb0_ds18b20_task( void *pvParameters ) {

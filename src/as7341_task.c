@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <as7341_task.h>
-#include <as7341.h>
+
 
 
 void i2c0_as7341_task( void *pvParameters ) {

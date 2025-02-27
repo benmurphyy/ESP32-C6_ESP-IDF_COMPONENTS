@@ -98,7 +98,7 @@ typedef enum {
  * @brief MMC56X3 status 1 register (0x18) structure.
  */
 typedef union __attribute__((packed)) {
-    struct STS_REG_BITS_TAG {
+    struct MMC56X3_STS_REG_BITS_TAG {
         uint8_t             reserved:4;       /*!< reserved and set to 0                                    (bit:0-3) */
         bool                otp_read_done:1;  /*!< true when otp memory read                                (bit:4)   */
         bool                selftest:1;       /*!< false when selftest pass                                 (bit:5)   */

@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <ltr390uv_task.h>
-#include <ltr390uv.h>
+
 
 
 void i2c0_ltr390uv_task( void *pvParameters ) {

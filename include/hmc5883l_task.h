@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <hmc5883l.h>
 
 #ifdef __cplusplus
 extern "C" {

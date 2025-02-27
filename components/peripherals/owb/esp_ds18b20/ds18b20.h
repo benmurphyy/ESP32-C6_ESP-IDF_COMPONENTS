@@ -81,7 +81,7 @@ typedef enum {
  * @brief DS18B20 OWB configuration register structure.  See datasheet for details, Figure 10 and Table 2.
  */
 typedef union __attribute__((packed)) {
-    struct CFG_REG_BIT_TAG {
+    struct DS18B20_CFG_REG_BIT_TAG {
         uint8_t                     reserved1:5;  /*!< reserved and set 1      (bit:0-4) */
         owb_ds18b20_resolutions_t   resolution:2; /*!< temperature resolution  (bit:5-6) */
         uint8_t                     reserved2:1;  /*!< reserved and set 0      (bit:7)   */

@@ -31,12 +31,8 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <mmc56x3_task.h>
-#include <mmc56x3.h>
 
 
 void i2c0_mmc56x3_task( void *pvParameters ) {

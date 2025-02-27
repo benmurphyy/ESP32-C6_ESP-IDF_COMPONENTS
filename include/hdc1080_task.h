@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <hdc1080.h>
 
 #ifdef __cplusplus
 extern "C" {

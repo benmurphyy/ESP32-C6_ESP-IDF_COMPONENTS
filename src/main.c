@@ -83,6 +83,7 @@
 /* spi component tasks */
 
 
+
 /**
  * @brief I2C component examples enumerator.
  */

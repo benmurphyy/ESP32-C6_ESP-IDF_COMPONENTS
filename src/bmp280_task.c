@@ -31,12 +31,8 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <bmp280_task.h>
-#include <bmp280.h>
 
 
 void i2c0_bmp280_task( void *pvParameters ) {

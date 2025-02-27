@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <hmc5883l_task.h>
-#include <hmc5883l.h>
+
 
 
 void i2c0_hmc5883l_task( void *pvParameters ) {

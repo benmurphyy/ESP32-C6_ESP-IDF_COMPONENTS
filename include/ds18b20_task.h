@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <ds18b20.h>
 
 #ifdef __cplusplus
 extern "C" {

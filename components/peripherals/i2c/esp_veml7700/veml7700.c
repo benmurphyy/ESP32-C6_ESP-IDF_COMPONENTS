@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "veml7700.h"
+#include "include/veml7700.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>

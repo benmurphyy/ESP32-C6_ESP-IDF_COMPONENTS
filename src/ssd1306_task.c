@@ -37,13 +37,9 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <ssd1306_task.h>
-#include <ssd1306.h>
-#include <font8x8_latin.h>
+
 
 static uint8_t data_tx_img_32x32[128] = {
 	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 

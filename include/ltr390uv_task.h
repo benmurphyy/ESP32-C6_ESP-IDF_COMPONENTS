@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <ltr390uv.h>
 
 #ifdef __cplusplus
 extern "C" {

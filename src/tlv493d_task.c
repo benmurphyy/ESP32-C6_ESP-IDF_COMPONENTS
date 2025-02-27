@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <tlv493d_task.h>
-#include <tlv493d.h>
+
 
 
 void i2c0_tlv493d_task( void *pvParameters ) {

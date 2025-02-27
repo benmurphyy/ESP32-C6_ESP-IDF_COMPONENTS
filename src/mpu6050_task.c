@@ -32,12 +32,8 @@
  * MIT Licensed as described in the file LICENSE
  */
 #include <math.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <mpu6050_task.h>
-#include <mpu6050.h>
 
 
 void i2c0_mpu6050_task( void *pvParameters ) {

@@ -9,13 +9,13 @@ dependencies:
     component_hash: null
     source:
       type: idf
-    version: 5.3.1
+    version: 5.4.0
   onewire_bus:
     component_hash: null
     source:
       path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\owb\onewire_bus
       type: local
     version: 1.0.2
-manifest_hash: a4413abef1db21de98aa71e9497d91c7da1118035b0dbc0de1c2801c6ae40d97
+manifest_hash: 6460d34ce9a09e7943eb35be87b833f67d1bd923c814b1400997c9408801d1e7
 target: esp32s3
 version: 1.0.0

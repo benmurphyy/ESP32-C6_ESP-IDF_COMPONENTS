@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <mlx90614.h>
 
 #ifdef __cplusplus
 extern "C" {

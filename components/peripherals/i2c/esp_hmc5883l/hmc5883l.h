@@ -164,7 +164,7 @@ typedef union __attribute__((packed)) {
  * @brief HMC5883L mode register structure.
  */
 typedef union __attribute__((packed)) {
-    struct MODE_REG_BITS_TAG {
+    struct HMC5883L_MODE_REG_BITS_TAG {
         i2c_hmc5883l_modes_t            mode:2;        /*!< operation mode                              (bit:0-1)   */
         uint8_t                         high_speed:6;  /*!< set high to enable i2c high speed (3400khz) (bit:2-7)   */
     } bits;            /*!< represents the 8-bit mode register parts in bits.   */

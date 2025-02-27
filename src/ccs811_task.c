@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <ccs811_task.h>
-#include <ccs811.h>
+
 
 
 void i2c0_ccs811_task( void *pvParameters ) {

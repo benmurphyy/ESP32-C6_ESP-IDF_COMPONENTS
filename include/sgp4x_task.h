@@ -36,6 +36,8 @@
 
 
 #include <app_config.h>
+#include <sgp4x.h>
+#include <sensirion_gas_index_algorithm.h>
 
 #ifdef __cplusplus
 extern "C" {

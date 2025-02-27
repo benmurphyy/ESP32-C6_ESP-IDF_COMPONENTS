@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <mpu6050.h>
 
 #ifdef __cplusplus
 extern "C" {

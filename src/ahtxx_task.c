@@ -31,12 +31,8 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <ahtxx_task.h>
-#include <ahtxx.h>
 
 
 void i2c0_ahtxx_task( void *pvParameters ) {

@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <sht4x.h>
 
 #ifdef __cplusplus
 extern "C" {

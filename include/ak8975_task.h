@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <ak8975.h>
 
 #ifdef __cplusplus
 extern "C" {

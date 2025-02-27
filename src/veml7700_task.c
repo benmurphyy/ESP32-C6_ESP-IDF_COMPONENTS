@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <veml7700_task.h>
-#include <veml7700.h>
+
 
 
 void i2c0_veml7700_task( void *pvParameters ) {

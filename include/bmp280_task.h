@@ -36,6 +36,7 @@
 
 
 #include <app_config.h>
+#include <bmp280.h>
 
 #ifdef __cplusplus
 extern "C" {

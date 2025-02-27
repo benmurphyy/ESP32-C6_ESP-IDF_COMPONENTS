@@ -31,12 +31,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <mlx90614_task.h>
-#include <mlx90614.h>
+
 
 
 void i2c0_mlx90614_task( void *pvParameters ) {

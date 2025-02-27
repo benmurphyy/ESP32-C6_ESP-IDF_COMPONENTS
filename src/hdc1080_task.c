@@ -32,12 +32,9 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <esp_log.h>
 
 #include <hdc1080_task.h>
-#include <hdc1080.h>
+
 
 
 void i2c0_hdc1080_task( void *pvParameters ) {
