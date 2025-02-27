@@ -19,7 +19,7 @@ ESP-IDF component development status:
  - ROHM BH1750FVI: initial component implementation completed.
  - Bosch BME680: component development is work in progress (WIP), coming soon (waiting for sensor to arrive)!! 
  - Bosch BMP280: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
- - Bosch BMP390: initial component implementation completed.
+ - Bosch BMP390: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - ScioSense CCS811: initial component implementation completed.
  - ScioSense ENS160: initial component implementation completed.
  - Texas Instruments HDC1080: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
@@ -44,6 +44,9 @@ ESP-IDF component development status:
 ESP-IDF component development status:
 
 - Analog Devices MAX31865: component development is work in progress (WIP).
+
+#### Tags
+#### GUVA-S12SD AHTXX AK8975 AS7341 BH1750FVI BME680 BMP280 BMP390 CCS811 ENS160 HDC1080 HMC5883L LTR390UV MMC56X3 MPU6050 SGP4X SHT4X SSD1306 TLV493D VEML7700 DS18B20 MAX31865
 
 
 Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
