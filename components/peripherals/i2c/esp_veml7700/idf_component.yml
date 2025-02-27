@@ -4,6 +4,8 @@ license: "MIT"
 url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/d74f2254d808b55d1db944f0c931d3411bb1e697/components/peripherals/i2c/esp_veml7700"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
+examples:
+  url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/5f55371c65e467eaee9e8c2ecace31414874a04d/components/peripherals/i2c/esp_veml7700/README.md"
 tags:
   - esp32
   - espressif

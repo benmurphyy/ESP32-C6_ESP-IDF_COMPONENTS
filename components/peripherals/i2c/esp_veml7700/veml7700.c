@@ -261,15 +261,15 @@ static inline uint32_t i2c_veml7700_get_lowest_maximum_lux(void) {
  * Used to identify if a better range is possible for the current 
  * light levels.
  * 
- * @param veml7700_handle Handle for the device
+ * @param handle Handle for the device
  * 
  * @return uint32_t The next smallest maximum lux value.
  */
-static inline uint32_t i2c_veml7700_get_lower_maximum_lux(i2c_veml7700_handle_t veml7700_handle) {
-	int gain_index = i2c_veml7700_get_gain_index(veml7700_handle->config_reg.bits.gain);
-	int it_index = i2c_veml7700_get_it_index(veml7700_handle->config_reg.bits.integration_time);
+static inline uint32_t i2c_veml7700_get_lower_maximum_lux(i2c_veml7700_handle_t handle) {
+	int gain_index = i2c_veml7700_get_gain_index(handle->dev_config.gain);
+	int it_index = i2c_veml7700_get_it_index(handle->dev_config.integration_time);
 
-	// find the next smallest 'maximum' value in the mapped maximum luminocities
+	// find the next smallest 'maximum' value in the mapped maximum luminosities
 	if ((gain_index > 0) && (it_index > 0)) {
 		if (i2c_veml7700_maximums_map[it_index][gain_index - 1] >= i2c_veml7700_maximums_map[it_index - 1][gain_index]) {
 			return i2c_veml7700_maximums_map[it_index][gain_index - 1];
@@ -286,12 +286,12 @@ static inline uint32_t i2c_veml7700_get_lower_maximum_lux(i2c_veml7700_handle_t 
 /**
  * @brief Reads the maximum lux for the current configuration.
  * 
- * @param veml7700_handle VEML7700 device handle.
+ * @param handle VEML7700 device handle.
  * @return uint32_t The maximum lux value.
  */
-static inline uint32_t i2c_veml7700_get_current_maximum_lux(i2c_veml7700_handle_t veml7700_handle) {
-	int gain_index = i2c_veml7700_get_gain_index(veml7700_handle->config_reg.bits.gain);
-	int it_index = i2c_veml7700_get_it_index(veml7700_handle->config_reg.bits.integration_time);
+static inline uint32_t i2c_veml7700_get_current_maximum_lux(i2c_veml7700_handle_t handle) {
+	int gain_index = i2c_veml7700_get_gain_index(handle->dev_config.gain);
+	int it_index = i2c_veml7700_get_it_index(handle->dev_config.integration_time);
 
 	return i2c_veml7700_maximums_map[it_index][gain_index];
 }
@@ -299,68 +299,69 @@ static inline uint32_t i2c_veml7700_get_current_maximum_lux(i2c_veml7700_handle_
 /**
  * @brief Reads gain and integration time to calculate resolution.
  * 
- * @param veml7700_handle VEML7700 device handle.
+ * @param handle VEML7700 device handle.
  * @return float Calculated resolution.
  */
-static inline float i2c_veml7700_get_resolution(i2c_veml7700_handle_t veml7700_handle)
+static inline float i2c_veml7700_get_resolution(i2c_veml7700_handle_t handle)
 {
-	int gain_index = i2c_veml7700_get_gain_index(veml7700_handle->config_reg.bits.gain);
-	int it_index = i2c_veml7700_get_it_index(veml7700_handle->config_reg.bits.integration_time);
+	int gain_index = i2c_veml7700_get_gain_index(handle->dev_config.gain);
+	int it_index = i2c_veml7700_get_it_index(handle->dev_config.integration_time);
 
 	return i2c_veml7700_resolution_map[it_index][gain_index];
 }
 
 
-esp_err_t i2c_veml7700_optimize_configuration___(i2c_veml7700_handle_t veml7700_handle) {
+esp_err_t i2c_veml7700_optimize_configuration___(i2c_veml7700_handle_t handle) {
     bool optimized = false; uint16_t als_counts; 
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* enable power */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(veml7700_handle), TAG, "enable power failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(handle), TAG, "enable power failed" );
 
     /* set baseline integration time and gain */
-    int it_index                                      = i2c_veml7700_get_it_index(I2C_VEML7700_INTEGRATION_TIME_100MS); /* set baseline integration time to 100ms */
-    int gain_index                                    = i2c_veml7700_get_gain_index(I2C_VEML7700_GAIN_DIV_8);           /* set baseline gain to 1/8 */
-    veml7700_handle->config_reg.bits.integration_time = i2c_veml7700_integration_times[it_index];
-    veml7700_handle->config_reg.bits.gain             = i2c_veml7700_gains[gain_index];
+    i2c_veml7700_configuration_register_t config_reg;
+    int it_index                     = i2c_veml7700_get_it_index(I2C_VEML7700_INTEGRATION_TIME_100MS); /* set baseline integration time to 100ms */
+    int gain_index                   = i2c_veml7700_get_gain_index(I2C_VEML7700_GAIN_DIV_8);           /* set baseline gain to 1/8 */
+    config_reg.bits.integration_time = i2c_veml7700_integration_times[it_index];
+    config_reg.bits.gain             = i2c_veml7700_gains[gain_index];
 
     /* set baseline configuration */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, veml7700_handle->config_reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config_reg), TAG, "write configuration register failed" );
 
     /* optimize sensor */
     do {
         /* read ambient light counts */
-        ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(veml7700_handle, &als_counts), TAG, "read ambient light counts failed" );
+        ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(handle, &als_counts), TAG, "read ambient light counts failed" );
 
         /* validate als counts <= 100 */
         if(als_counts <= 100) {
             /* disable power */
-            ESP_RETURN_ON_ERROR( i2c_veml7700_disable_power(veml7700_handle), TAG, "disable power failed" );
+            ESP_RETURN_ON_ERROR( i2c_veml7700_disable_power(handle), TAG, "disable power failed" );
 
             /* validate index is within range */
             if(gain_index < I2C_VEML7700_GAIN_OPTIONS_COUNT - 1) {
                 /* if als counts ≤ 100 counts, set higher gain*/
-                ESP_RETURN_ON_ERROR(i2c_veml7700_set_gain(veml7700_handle, i2c_veml7700_gains[++gain_index]), TAG, "write gain failed" );
+                ESP_RETURN_ON_ERROR(i2c_veml7700_set_gain(handle, i2c_veml7700_gains[++gain_index]), TAG, "write gain failed" );
             }
 
             /* increase integration time if gain is I2C_VEML7700_GAIN_2 */
-            if(veml7700_handle->config_reg.bits.gain == I2C_VEML7700_GAIN_2) {
+            if(handle->dev_config.gain == I2C_VEML7700_GAIN_2) {
                 /* validate index is within range */
                 if(it_index < I2C_VEML7700_IT_TIMES_COUNT - 1) {
                     /* increase integration time */
-                    ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(veml7700_handle, i2c_veml7700_integration_times[++it_index]), TAG, "write integration time failed" );
+                    ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(handle, i2c_veml7700_integration_times[++it_index]), TAG, "write integration time failed" );
                 }
             } else {
                 /* enable power */
-                ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(veml7700_handle), TAG, "enable power failed" );
+                ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(handle), TAG, "enable power failed" );
             }
 
             /* sensor is optimize when integration time is I2C_VEML7700_INTEGRATION_TIME_800MS */
-            if(veml7700_handle->config_reg.bits.integration_time == I2C_VEML7700_INTEGRATION_TIME_800MS) {
-                ESP_LOGI(TAG, "IT     %d", veml7700_handle->config_reg.bits.integration_time);
-                ESP_LOGI(TAG, "Gain   %d", veml7700_handle->config_reg.bits.gain);
+            if(handle->dev_config.integration_time == I2C_VEML7700_INTEGRATION_TIME_800MS) {
+                ESP_LOGI(TAG, "IT     %d", handle->dev_config.integration_time);
+                ESP_LOGI(TAG, "Gain   %d", handle->dev_config.gain);
                 ESP_LOGI(TAG, "Counts %d", als_counts);
 
                 /* sensor is optimized */
@@ -368,7 +369,7 @@ esp_err_t i2c_veml7700_optimize_configuration___(i2c_veml7700_handle_t veml7700_
                 break;
             } else {
                 /* enable power */
-                ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(veml7700_handle), TAG, "enable power failed" );
+                ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(handle), TAG, "enable power failed" );
             }
         } else {
             /* validate als between 100 and 65535 count */
@@ -376,15 +377,15 @@ esp_err_t i2c_veml7700_optimize_configuration___(i2c_veml7700_handle_t veml7700_
                 /* validate index is within range */
                 if(it_index > -1) {
                     /* decrease integration time */
-                    ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(veml7700_handle, i2c_veml7700_integration_times[--it_index]), TAG, "write integration time failed" );
+                    ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(handle, i2c_veml7700_integration_times[--it_index]), TAG, "write integration time failed" );
                 }
 
                 /* validate als counts if integration time is I2C_VEML7700_INTEGRATION_TIME_25MS */
-                if(veml7700_handle->config_reg.bits.integration_time == I2C_VEML7700_INTEGRATION_TIME_25MS) {
+                if(handle->dev_config.integration_time == I2C_VEML7700_INTEGRATION_TIME_25MS) {
                     /* validate als counts >= 200 */
                     if(als_counts >= 200) {
-                        ESP_LOGI(TAG, "IT     %d", veml7700_handle->config_reg.bits.integration_time);
-                        ESP_LOGI(TAG, "Gain   %d", veml7700_handle->config_reg.bits.gain);
+                        ESP_LOGI(TAG, "IT     %d", handle->dev_config.integration_time);
+                        ESP_LOGI(TAG, "Gain   %d", handle->dev_config.gain);
                         ESP_LOGI(TAG, "Counts %d", als_counts);
 
                         /* sensor is optimized */
@@ -395,8 +396,8 @@ esp_err_t i2c_veml7700_optimize_configuration___(i2c_veml7700_handle_t veml7700_
             } else {
                 /* validate als counts 100 to 10000 */
                 if(als_counts >= 100 && als_counts <= 10000) {
-                    ESP_LOGI(TAG, "IT     %d", veml7700_handle->config_reg.bits.integration_time);
-                    ESP_LOGI(TAG, "Gain   %d", veml7700_handle->config_reg.bits.gain);
+                    ESP_LOGI(TAG, "IT     %d", handle->dev_config.integration_time);
+                    ESP_LOGI(TAG, "Gain   %d", handle->dev_config.gain);
                     ESP_LOGI(TAG, "Counts %d", als_counts);
 
                     /* sensor is optimized */
@@ -408,77 +409,78 @@ esp_err_t i2c_veml7700_optimize_configuration___(i2c_veml7700_handle_t veml7700_
     } while (optimized == false);
 
     /* enable power */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(veml7700_handle), TAG, "enable power failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(handle), TAG, "enable power failed" );
 
     return ESP_OK;
 }
 
 
-esp_err_t i2c_veml7700_optimize_configuration(i2c_veml7700_handle_t veml7700_handle) {
+esp_err_t i2c_veml7700_optimize_configuration(i2c_veml7700_handle_t handle) {
     uint16_t als_counts; 
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* enable power */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(veml7700_handle), TAG, "enable power failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_enable_power(handle), TAG, "enable power failed" );
 
     /* set baseline integration time and gain values */
-    int it_index                                      = i2c_veml7700_get_it_index(I2C_VEML7700_INTEGRATION_TIME_100MS); /* set baseline integration time to 100ms */
-    int gain_index                                    = i2c_veml7700_get_gain_index(I2C_VEML7700_GAIN_DIV_8);           /* set baseline gain to 1/8 */
-    veml7700_handle->config_reg.bits.integration_time = i2c_veml7700_integration_times[it_index];
-    veml7700_handle->config_reg.bits.gain             = i2c_veml7700_gains[gain_index];
+    i2c_veml7700_configuration_register_t config_reg;
+    int it_index                     = i2c_veml7700_get_it_index(I2C_VEML7700_INTEGRATION_TIME_100MS); /* set baseline integration time to 100ms */
+    int gain_index                   = i2c_veml7700_get_gain_index(I2C_VEML7700_GAIN_DIV_8);           /* set baseline gain to 1/8 */
+    config_reg.bits.integration_time = i2c_veml7700_integration_times[it_index];
+    config_reg.bits.gain             = i2c_veml7700_gains[gain_index];
 
     /* set baseline configuration */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, veml7700_handle->config_reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config_reg), TAG, "write configuration register failed" );
 
     /* read ambient light counts */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(veml7700_handle, &als_counts), TAG, "read ambient light counts failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(handle, &als_counts), TAG, "read ambient light counts failed" );
 
     if (als_counts <= 100) {
         // increase gain and then integration time as needed
         while ((als_counts <= 100) && !((gain_index == 3) && (it_index == 5))) {
             if (gain_index < 3) {
                 // increase and set gain
-                ESP_RETURN_ON_ERROR(i2c_veml7700_set_gain(veml7700_handle, i2c_veml7700_gains[++gain_index]), TAG, "write gain failed" );
+                ESP_RETURN_ON_ERROR(i2c_veml7700_set_gain(handle, i2c_veml7700_gains[++gain_index]), TAG, "write gain failed" );
             } else if (it_index < 5) {
                 // increase and set integration time
-                ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(veml7700_handle, i2c_veml7700_integration_times[++it_index]), TAG, "write integration time failed" );
+                ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(handle, i2c_veml7700_integration_times[++it_index]), TAG, "write integration time failed" );
             }
             /* read ambient light counts */
-            ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(veml7700_handle, &als_counts), TAG, "read ambient light counts failed" );
+            ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(handle, &als_counts), TAG, "read ambient light counts failed" );
         }
 
-        ESP_LOGI(TAG, "IT     %d", veml7700_handle->config_reg.bits.integration_time);
-        ESP_LOGI(TAG, "Gain   %d", veml7700_handle->config_reg.bits.gain);
+        ESP_LOGI(TAG, "IT     %d", handle->dev_config.integration_time);
+        ESP_LOGI(TAG, "Gain   %d", handle->dev_config.gain);
     } else {
         // decrease integration time as needed
         while ((als_counts > 10000) && (it_index > 0)) {
             // decrease and set integration time
-            ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(veml7700_handle, i2c_veml7700_integration_times[--it_index]), TAG, "write integration time failed" );
+            ESP_RETURN_ON_ERROR(i2c_veml7700_set_integration_time(handle, i2c_veml7700_integration_times[--it_index]), TAG, "write integration time failed" );
 
             /* read ambient light counts */
-            ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(veml7700_handle, &als_counts), TAG, "read ambient light counts failed" );
+            ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(handle, &als_counts), TAG, "read ambient light counts failed" );
         }
 
-        ESP_LOGI(TAG, "IT     %d", veml7700_handle->config_reg.bits.integration_time);
-        ESP_LOGI(TAG, "Gain   %d", veml7700_handle->config_reg.bits.gain);
+        ESP_LOGI(TAG, "IT     %d", handle->dev_config.integration_time);
+        ESP_LOGI(TAG, "Gain   %d", handle->dev_config.gain);
     }
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_configuration_register(i2c_veml7700_handle_t veml7700_handle) {
-    uint16_t reg = 0;
+esp_err_t i2c_veml7700_get_configuration_register(i2c_veml7700_handle_t handle, i2c_veml7700_configuration_register_t *const reg) {
+    uint16_t config = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_CONF, &reg), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_CONF, &config), TAG, "read configuration register failed" );
 
-    /* set handle register */
-    veml7700_handle->config_reg.reg = reg;
+    /* set output parameter */
+    reg->reg = config;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
@@ -486,12 +488,12 @@ esp_err_t i2c_veml7700_get_configuration_register(i2c_veml7700_handle_t veml7700
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_set_configuration_register(i2c_veml7700_handle_t veml7700_handle, const i2c_veml7700_configuration_register_t config_reg) {
+esp_err_t i2c_veml7700_set_configuration_register(i2c_veml7700_handle_t handle, const i2c_veml7700_configuration_register_t reg) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* copy register */
-    i2c_veml7700_configuration_register_t config = { .reg = config_reg.reg };
+    i2c_veml7700_configuration_register_t config = { .reg = reg.reg };
 
     /* set reserved values */
     config.bits.reserved1 = 0;
@@ -499,26 +501,23 @@ esp_err_t i2c_veml7700_set_configuration_register(i2c_veml7700_handle_t veml7700
     config.bits.reserved3 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_CONF, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_CONF, config.reg), TAG, "write configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
 
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(veml7700_handle), TAG, "read configuration register failed" );
-
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_threshold_registers(i2c_veml7700_handle_t veml7700_handle) {
+esp_err_t i2c_veml7700_get_threshold_registers(i2c_veml7700_handle_t handle, uint16_t *const hi_threshold, uint16_t *const lo_threshold) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_WH, &veml7700_handle->hi_threshold_reg), TAG, "read high threshold register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_WH, hi_threshold), TAG, "read high threshold register failed" );
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_WL, &veml7700_handle->lo_threshold_reg), TAG, "read low threshold register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_WL, lo_threshold), TAG, "read low threshold register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
@@ -526,36 +525,15 @@ esp_err_t i2c_veml7700_get_threshold_registers(i2c_veml7700_handle_t veml7700_ha
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_set_threshold_registers(i2c_veml7700_handle_t veml7700_handle, const uint16_t hi_threshold, const uint16_t lo_threshold) {
+esp_err_t i2c_veml7700_set_threshold_registers(i2c_veml7700_handle_t handle, const uint16_t hi_threshold, const uint16_t lo_threshold) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_WH, hi_threshold), TAG, "write high threshold register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_WH, hi_threshold), TAG, "write high threshold register failed" );
     
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_WL, lo_threshold), TAG, "write low threshold register failed" );
-
-    /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_threshold_registers(veml7700_handle), TAG, "read threshold registers failed" );
-
-    return ESP_OK;
-}
-
-esp_err_t i2c_veml7700_get_power_saving_mode_register(i2c_veml7700_handle_t veml7700_handle) {
-    uint16_t reg = 0;
-
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_POWER_SAVING, &reg), TAG, "read power saving mode register failed" );
-
-    /* set handle register */
-    veml7700_handle->power_saving_mode_reg.reg = reg;
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_WL, lo_threshold), TAG, "write low threshold register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
@@ -563,9 +541,27 @@ esp_err_t i2c_veml7700_get_power_saving_mode_register(i2c_veml7700_handle_t veml
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_set_power_saving_mode_register(i2c_veml7700_handle_t veml7700_handle, const i2c_veml7700_power_saving_mode_register_t power_saving_mode_reg) {
+esp_err_t i2c_veml7700_get_power_saving_mode_register(i2c_veml7700_handle_t handle, i2c_veml7700_power_saving_mode_register_t *const reg) {
+    uint16_t psm = 0;
+
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_POWER_SAVING, &psm), TAG, "read power saving mode register failed" );
+
+    /* set output parameter */
+    reg->reg = psm;
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_veml7700_set_power_saving_mode_register(i2c_veml7700_handle_t handle, const i2c_veml7700_power_saving_mode_register_t power_saving_mode_reg) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
 
     /* copy register */
     i2c_veml7700_power_saving_mode_register_t power_saving_mode = { .reg = power_saving_mode_reg.reg };
@@ -574,28 +570,25 @@ esp_err_t i2c_veml7700_set_power_saving_mode_register(i2c_veml7700_handle_t veml
     power_saving_mode.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_POWER_SAVING, power_saving_mode.reg), TAG, "write power saving mode register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, I2C_VEML7700_CMD_POWER_SAVING, power_saving_mode.reg), TAG, "write power saving mode register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
 
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_power_saving_mode_register(veml7700_handle), TAG, "read power saving mode register failed" );
-
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_interrupt_status_register(i2c_veml7700_handle_t veml7700_handle) {
-    uint16_t reg = 0;
+esp_err_t i2c_veml7700_get_interrupt_status_register(i2c_veml7700_handle_t handle, i2c_veml7700_interrupt_status_register_t *const reg) {
+    uint16_t irq = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS_INT, &reg), TAG, "read interrupt status register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS_INT, &irq), TAG, "read interrupt status register failed" );
 
     /* set handle register */
-    veml7700_handle->interrupt_status_reg.reg = reg;
+    reg->reg = irq;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
@@ -603,17 +596,17 @@ esp_err_t i2c_veml7700_get_interrupt_status_register(i2c_veml7700_handle_t veml7
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_identifier_register(i2c_veml7700_handle_t veml7700_handle) {
-    uint16_t reg = 0;
+esp_err_t i2c_veml7700_get_identifier_register(i2c_veml7700_handle_t handle, i2c_veml7700_identifier_register_t *const reg) {
+    uint16_t ident = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ID, &reg), TAG, "read identifier register failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ID, &ident), TAG, "read identifier register failed" );
 
     /* set handle register */
-    veml7700_handle->identifier_reg.reg = reg;
+    reg->reg = ident;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
@@ -624,72 +617,72 @@ esp_err_t i2c_veml7700_get_identifier_register(i2c_veml7700_handle_t veml7700_ha
 
 
 
-esp_err_t i2c_veml7700_init(i2c_master_bus_handle_t bus_handle, const i2c_veml7700_config_t *veml7700_config, i2c_veml7700_handle_t *veml7700_handle) {
+esp_err_t i2c_veml7700_init(i2c_master_bus_handle_t master_handle, const i2c_veml7700_config_t *veml7700_config, i2c_veml7700_handle_t *veml7700_handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( bus_handle && veml7700_config );
+    ESP_ARG_CHECK( master_handle && veml7700_config );
 
     /* power-up delay */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_POWERUP_DELAY_MS));
 
     /* validate device exists on the master bus */
-    esp_err_t ret = i2c_master_probe(bus_handle, veml7700_config->dev_config.device_address, I2C_XFR_TIMEOUT_MS);
-    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, veml7700 device handle initialization failed", veml7700_config->dev_config.device_address);
+    esp_err_t ret = i2c_master_probe(master_handle, veml7700_config->i2c_address, I2C_XFR_TIMEOUT_MS);
+    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, veml7700 device handle initialization failed", veml7700_config->i2c_address);
 
     /* validate memory availability for handle */
-    i2c_veml7700_handle_t out_handle = (i2c_veml7700_handle_t)calloc(1, sizeof(i2c_veml7700_t));
+    i2c_veml7700_handle_t out_handle;
+    out_handle = (i2c_veml7700_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for device, veml7700 device handle initialization failed");
+
+    /* copy configuration */
+    out_handle->dev_config = *veml7700_config;
 
     /* set device configuration */
     const i2c_device_config_t i2c_dev_conf = {
         .dev_addr_length    = I2C_ADDR_BIT_LEN_7,
-        .device_address     = veml7700_config->dev_config.device_address,
-        .scl_speed_hz       = veml7700_config->dev_config.scl_speed_hz,
+        .device_address     = veml7700_config->i2c_address,
+        .scl_speed_hz       = veml7700_config->i2c_clock_speed,
     };
 
     /* validate device handle */
-    if (out_handle->i2c_dev_handle == NULL) {
-        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->i2c_dev_handle), err_handle, TAG, "i2c0 new bus failed");
+    if (out_handle->i2c_handle == NULL) {
+        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c0 new bus failed");
     }
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(I2C_VEML7700_CMD_DELAY_MS));
 
     /* attempt to read initialization registers */
+    i2c_veml7700_configuration_register_t       cfg_reg;
+    i2c_veml7700_power_saving_mode_register_t   psm_reg;
     
     /* attempt to read configuration register */
-    ESP_GOTO_ON_ERROR(i2c_veml7700_get_configuration_register(out_handle), err_handle, TAG, "read configuration register failed");
-
-    /* attempt to read threshold registers */
-    ESP_GOTO_ON_ERROR(i2c_veml7700_get_threshold_registers(out_handle), err_handle, TAG, "read threshold registers failed");
+    ESP_GOTO_ON_ERROR(i2c_veml7700_get_configuration_register(out_handle, &cfg_reg), err_handle, TAG, "read configuration register failed");
 
     /* attempt to read power saving mode register */
-    ESP_GOTO_ON_ERROR(i2c_veml7700_get_power_saving_mode_register(out_handle), err_handle, TAG, "read power saving mode register failed");
+    ESP_GOTO_ON_ERROR(i2c_veml7700_get_power_saving_mode_register(out_handle, &psm_reg), err_handle, TAG, "read power saving mode register failed");
 
-    /* attempt to read interrupt status register */
-    ESP_GOTO_ON_ERROR(i2c_veml7700_get_interrupt_status_register(out_handle), err_handle, TAG, "read interrupt status register failed");
-
-    /* attempt to read identifier register */
-    ESP_GOTO_ON_ERROR(i2c_veml7700_get_identifier_register(out_handle), err_handle, TAG, "read identifier register failed");
 
     // set the resolution on the configuration struct
 	//out_handle->resolution  = i2c_veml7700_get_resolution(out_handle);
 	// set the current maximum value on the configuration struct
 	//out_handle->maximum_lux = i2c_veml7700_get_current_maximum_lux(out_handle);
 
-    /* attempt to set initialization registers from configuration */
-    i2c_veml7700_configuration_register_t       cfg_reg     = { .reg = out_handle->config_reg.reg };
-    i2c_veml7700_power_saving_mode_register_t   psm_reg     = { .reg = out_handle->power_saving_mode_reg.reg };
-    
     /* set configuration register */
-    cfg_reg.bits.gain                   = veml7700_config->gain;
-    cfg_reg.bits.integration_time       = veml7700_config->integration_time;
-    cfg_reg.bits.persistence_protect    = veml7700_config->persistence_protect;
-    cfg_reg.bits.irq_enabled            = veml7700_config->irq_enabled;
-    cfg_reg.bits.shutdown               = !veml7700_config->power_enabled;
+    cfg_reg.bits.gain                   = out_handle->dev_config.gain;
+    cfg_reg.bits.integration_time       = out_handle->dev_config.integration_time;
+    cfg_reg.bits.persistence_protect    = out_handle->dev_config.persistence_protect;
+    cfg_reg.bits.irq_enabled            = out_handle->dev_config.irq_enabled;
+    cfg_reg.bits.shutdown               = out_handle->dev_config.power_enabled;
 
     /* set power saving register */
     psm_reg.bits.power_saving_enabled   = veml7700_config->power_saving_enabled;
     psm_reg.bits.power_saving_mode      = veml7700_config->power_saving_mode;
+
+    /* validate thresholds configuration */
+    if(out_handle->dev_config.set_thresholds == true) {
+        /* attempt to write threshold registers */
+        ESP_GOTO_ON_ERROR(i2c_veml7700_set_threshold_registers(out_handle, out_handle->dev_config.hi_threshold, out_handle->dev_config.lo_threshold), err_handle, TAG, "read threshold registers failed");
+    }
 
     /* attempt to write configuration register */
     ESP_GOTO_ON_ERROR(i2c_veml7700_set_configuration_register(out_handle, cfg_reg), err_handle, TAG, "write configuration register failed");
@@ -706,31 +699,31 @@ esp_err_t i2c_veml7700_init(i2c_master_bus_handle_t bus_handle, const i2c_veml77
     return ESP_OK;
 
     err_handle:
-        if (out_handle && out_handle->i2c_dev_handle) {
-            i2c_master_bus_rm_device(out_handle->i2c_dev_handle);
+        if (out_handle && out_handle->i2c_handle) {
+            i2c_master_bus_rm_device(out_handle->i2c_handle);
         }
         free(out_handle);
     err:
         return ret;
 }
 
-esp_err_t i2c_veml7700_get_ambient_light_counts(i2c_veml7700_handle_t veml7700_handle, uint16_t *const counts) {
+esp_err_t i2c_veml7700_get_ambient_light_counts(i2c_veml7700_handle_t handle, uint16_t *const counts) {
     uint16_t als_counts = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle && counts);
+    ESP_ARG_CHECK( handle && counts);
 
     /* handle measurement refresh time */
-    if(veml7700_handle->power_saving_mode_reg.bits.power_saving_enabled) {
-        int psm_index = i2c_veml7700_get_psm_mode_index(veml7700_handle->power_saving_mode_reg.bits.power_saving_mode, veml7700_handle->config_reg.bits.integration_time);
+    if(handle->dev_config.power_saving_enabled) {
+        int psm_index = i2c_veml7700_get_psm_mode_index(handle->dev_config.power_saving_mode, handle->dev_config.integration_time);
         vTaskDelay(pdMS_TO_TICKS(i2c_veml7700_psm_refresh_time_map[psm_index][3]));
     } else {
-        int it_index = i2c_veml7700_get_it_index(veml7700_handle->config_reg.bits.integration_time);
+        int it_index = i2c_veml7700_get_it_index(handle->dev_config.integration_time);
         vTaskDelay(pdMS_TO_TICKS(i2c_veml7700_integration_time_map[it_index][1]));
     }
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_ALS, &als_counts), TAG, "read ambient light counts failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_ALS, &als_counts), TAG, "read ambient light counts failed" );
 
     /* set output parameter */
     *counts = als_counts;
@@ -741,17 +734,17 @@ esp_err_t i2c_veml7700_get_ambient_light_counts(i2c_veml7700_handle_t veml7700_h
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_ambient_light(i2c_veml7700_handle_t veml7700_handle, float *const ambient_light) {
+esp_err_t i2c_veml7700_get_ambient_light(i2c_veml7700_handle_t handle, float *const ambient_light) {
     uint16_t als_counts = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle && ambient_light);
+    ESP_ARG_CHECK( handle && ambient_light);
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(veml7700_handle, &als_counts), TAG, "read ambient light counts failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light_counts(handle, &als_counts), TAG, "read ambient light counts failed" );
 
     /* apply resolution correction */
-    float comp_lux = (float)(als_counts) * i2c_veml7700_get_resolution(veml7700_handle);
+    float comp_lux = (float)(als_counts) * i2c_veml7700_get_resolution(handle);
 
     /* apply correction formula for illumination > 1000 lux */
     if(comp_lux > 1000) {
@@ -768,15 +761,15 @@ esp_err_t i2c_veml7700_get_ambient_light(i2c_veml7700_handle_t veml7700_handle, 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_ambient_light_auto(i2c_veml7700_handle_t veml7700_handle, float *const ambient_light) {
+esp_err_t i2c_veml7700_get_ambient_light_auto(i2c_veml7700_handle_t handle, float *const ambient_light) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle && ambient_light);
+    ESP_ARG_CHECK( handle && ambient_light);
 
     // calculate and automatically reconfigure the optimal sensor configuration
-    ESP_RETURN_ON_ERROR( i2c_veml7700_optimize_configuration(veml7700_handle), TAG, "optimize configuration for read ambient light auto failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_optimize_configuration(handle), TAG, "optimize configuration for read ambient light auto failed" );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light(veml7700_handle, ambient_light), TAG, "read ambient light auto failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_ambient_light(handle, ambient_light), TAG, "read ambient light auto failed" );
 
 	//ESP_LOGD(TAG, "Configured maximum luminocity: %" PRIu32 "", veml7700_handle->maximum_lux);
 	//ESP_LOGD(TAG, "Configured resolution: %0.4f", veml7700_handle->resolution);
@@ -784,23 +777,23 @@ esp_err_t i2c_veml7700_get_ambient_light_auto(i2c_veml7700_handle_t veml7700_han
 	return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_white_channel_counts(i2c_veml7700_handle_t veml7700_handle, uint16_t *const counts) {
+esp_err_t i2c_veml7700_get_white_channel_counts(i2c_veml7700_handle_t handle, uint16_t *const counts) {
     uint16_t als_counts = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle && counts);
+    ESP_ARG_CHECK( handle && counts);
 
     /* handle measurement refresh time */
-    if(veml7700_handle->power_saving_mode_reg.bits.power_saving_enabled) {
-        int psm_index = i2c_veml7700_get_psm_mode_index(veml7700_handle->power_saving_mode_reg.bits.power_saving_mode, veml7700_handle->config_reg.bits.integration_time);
+    if(handle->dev_config.power_saving_enabled) {
+        int psm_index = i2c_veml7700_get_psm_mode_index(handle->dev_config.power_saving_mode, handle->dev_config.integration_time);
         vTaskDelay(pdMS_TO_TICKS(i2c_veml7700_psm_refresh_time_map[psm_index][3]));
     } else {
-        int it_index = i2c_veml7700_get_it_index(veml7700_handle->config_reg.bits.integration_time);
+        int it_index = i2c_veml7700_get_it_index(handle->dev_config.integration_time);
         vTaskDelay(pdMS_TO_TICKS(i2c_veml7700_integration_time_map[it_index][1]));
     }
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(veml7700_handle->i2c_dev_handle, I2C_VEML7700_CMD_WHITE, &als_counts), TAG, "read white channel counts failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, I2C_VEML7700_CMD_WHITE, &als_counts), TAG, "read white channel counts failed" );
 
     /* set output parameter */
     *counts = als_counts;
@@ -811,17 +804,17 @@ esp_err_t i2c_veml7700_get_white_channel_counts(i2c_veml7700_handle_t veml7700_h
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_white_channel(i2c_veml7700_handle_t veml7700_handle, float *const white_light) {
+esp_err_t i2c_veml7700_get_white_channel(i2c_veml7700_handle_t handle, float *const white_light) {
     uint16_t als_counts = 0;
 
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle && white_light);
+    ESP_ARG_CHECK( handle && white_light);
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_white_channel_counts(veml7700_handle, &als_counts), TAG, "read white channel failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_white_channel_counts(handle, &als_counts), TAG, "read white channel failed" );
 
     /* apply resolution correction */
-    float comp_lux = (float)(als_counts) * i2c_veml7700_get_resolution(veml7700_handle);
+    float comp_lux = (float)(als_counts) * i2c_veml7700_get_resolution(handle);
 
     /* apply correction formula for illumination > 1000 lux */
     if(comp_lux > 1000) {
@@ -838,15 +831,15 @@ esp_err_t i2c_veml7700_get_white_channel(i2c_veml7700_handle_t veml7700_handle, 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_white_channel_auto(i2c_veml7700_handle_t veml7700_handle, float *const white_light) {
+esp_err_t i2c_veml7700_get_white_channel_auto(i2c_veml7700_handle_t handle, float *const white_light) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle && white_light);
+    ESP_ARG_CHECK( handle && white_light);
 
     // calculate and automatically reconfigure the optimal sensor configuration
-    ESP_RETURN_ON_ERROR( i2c_veml7700_optimize_configuration(veml7700_handle), TAG, "optimize configuration for read white channel auto failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_optimize_configuration(handle), TAG, "optimize configuration for read white channel auto failed" );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_white_channel(veml7700_handle, white_light), TAG, "read white channel auto failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_white_channel(handle, white_light), TAG, "read white channel auto failed" );
 
 	//ESP_LOGD(TAG, "Configured maximum luminocity: %" PRIu32 "\n", veml7700_handle->maximum_lux);
 	//ESP_LOGD(TAG, "Configured resolution: %0.4f\n", veml7700_handle->resolution);
@@ -854,248 +847,294 @@ esp_err_t i2c_veml7700_get_white_channel_auto(i2c_veml7700_handle_t veml7700_han
 	return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_thresholds(i2c_veml7700_handle_t veml7700_handle, uint16_t *const hi_threshold, uint16_t *const lo_threshold) {
+esp_err_t i2c_veml7700_get_thresholds(i2c_veml7700_handle_t handle, uint16_t *const hi_threshold, uint16_t *const lo_threshold) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_threshold_registers(veml7700_handle), TAG, "read threshold registers for get thresholds failed" );
-
-    /* set output parameters */
-    *hi_threshold = veml7700_handle->hi_threshold_reg;
-    *lo_threshold = veml7700_handle->lo_threshold_reg;
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_threshold_registers(handle, hi_threshold, lo_threshold), TAG, "read threshold registers for get thresholds failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_set_thresholds(i2c_veml7700_handle_t veml7700_handle, const uint16_t hi_threshold, const uint16_t lo_threshold) {
+esp_err_t i2c_veml7700_set_thresholds(i2c_veml7700_handle_t handle, const uint16_t hi_threshold, const uint16_t lo_threshold) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_threshold_registers(veml7700_handle, hi_threshold, lo_threshold), TAG, "write threshold registers for set thresholds failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_threshold_registers(handle, hi_threshold, lo_threshold), TAG, "write threshold registers for set thresholds failed" );
+
+    /* set config parameters */
+    handle->dev_config.hi_threshold = hi_threshold;
+    handle->dev_config.lo_threshold = lo_threshold;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_gain(i2c_veml7700_handle_t veml7700_handle, i2c_veml7700_gains_t *const gain) {
+esp_err_t i2c_veml7700_get_gain(i2c_veml7700_handle_t handle, i2c_veml7700_gains_t *const gain) {
+    i2c_veml7700_configuration_register_t config;
+
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(veml7700_handle), TAG, "read configuration register for get gain failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
 
-    /* set output parameters */
-    *gain = veml7700_handle->config_reg.bits.gain;
+    *gain = config.bits.gain;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_set_gain(i2c_veml7700_handle_t veml7700_handle, const i2c_veml7700_gains_t gain) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+esp_err_t i2c_veml7700_set_gain(i2c_veml7700_handle_t handle, const i2c_veml7700_gains_t gain) {
+    i2c_veml7700_configuration_register_t config;
 
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "write configuration register for set gain failed" );
 
     /* set parameters */
-    config_reg.bits.gain = gain;
+    config.bits.gain = gain;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for set gain failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for set gain failed" );
+
+    /* set config parameter */
+    handle->dev_config.gain = gain;
+
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_integration_time(i2c_veml7700_handle_t veml7700_handle, i2c_veml7700_integration_times_t *const integration_time) {
+esp_err_t i2c_veml7700_get_integration_time(i2c_veml7700_handle_t handle, i2c_veml7700_integration_times_t *const integration_time) {
+    i2c_veml7700_configuration_register_t config;
+
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(veml7700_handle), TAG, "read configuration register for get gain failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "write configuration register for set gain failed" );
 
-    /* set output parameters */
-    *integration_time = veml7700_handle->config_reg.bits.integration_time;
-
-    return ESP_OK;
-}
-
-esp_err_t i2c_veml7700_set_integration_time(i2c_veml7700_handle_t veml7700_handle, const i2c_veml7700_integration_times_t integration_time) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
-
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
-
-    /* set parameters */
-    config_reg.bits.integration_time = integration_time;
-
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for set integration time failed" );
+    /* set output parameter */
+    *integration_time = config.bits.integration_time;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_persistence_protection(i2c_veml7700_handle_t veml7700_handle, i2c_veml7700_persistence_protections_t *const persistence_protection) {
+esp_err_t i2c_veml7700_set_integration_time(i2c_veml7700_handle_t handle, const i2c_veml7700_integration_times_t integration_time) {
+    i2c_veml7700_configuration_register_t config;
+
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(veml7700_handle), TAG, "read configuration register for get gain failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "write configuration register for set gain failed" );
 
-    /* set output parameters */
-    *persistence_protection = veml7700_handle->config_reg.bits.persistence_protect;
-
-    return ESP_OK;
-}
-
-esp_err_t i2c_veml7700_set_persistence_protection(i2c_veml7700_handle_t veml7700_handle, const i2c_veml7700_persistence_protections_t persistence_protection) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
-
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
-
-    /* set gain */
-    config_reg.bits.persistence_protect = persistence_protection;
+    /* set parameters */
+    config.bits.integration_time = integration_time;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for set persistence protection failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for set integration time failed" );
+
+    /* set config parameter */
+    handle->dev_config.integration_time = config.bits.integration_time;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_get_power_saving_mode(i2c_veml7700_handle_t veml7700_handle, i2c_veml7700_power_saving_modes_t *const power_saving_mode, bool *const power_saving_enabled) {
+esp_err_t i2c_veml7700_get_persistence_protection(i2c_veml7700_handle_t handle, i2c_veml7700_persistence_protections_t *const persistence_protection) {
+    i2c_veml7700_configuration_register_t config;
+
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_power_saving_mode_register(veml7700_handle), TAG, "read power saving mode register for get power saving mode failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
 
     /* set output parameters */
-    *power_saving_mode    = veml7700_handle->power_saving_mode_reg.bits.power_saving_mode;
-    *power_saving_enabled = veml7700_handle->power_saving_mode_reg.bits.power_saving_enabled;
+    *persistence_protection = config.bits.persistence_protect;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_set_power_saving_mode(i2c_veml7700_handle_t veml7700_handle, const i2c_veml7700_power_saving_modes_t power_saving_mode, const bool power_saving_enabled) {
+esp_err_t i2c_veml7700_set_persistence_protection(i2c_veml7700_handle_t handle, const i2c_veml7700_persistence_protections_t persistence_protection) {
+    i2c_veml7700_configuration_register_t config;
+
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
-
-    /* copy configuration register */
-    i2c_veml7700_power_saving_mode_register_t pwr_mode_reg = { .reg = veml7700_handle->power_saving_mode_reg.reg };
-
-    /* set parameters */
-    pwr_mode_reg.bits.power_saving_mode    = power_saving_mode;
-    pwr_mode_reg.bits.power_saving_enabled = power_saving_enabled;
-
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_power_saving_mode_register(veml7700_handle, pwr_mode_reg), TAG, "write power saving mode register for set power saving mode failed" );
-
-    return ESP_OK;
-}
-
-esp_err_t veml7700_get_interrupt_status(i2c_veml7700_handle_t veml7700_handle, bool *const hi_threshold_exceeded, bool *const lo_threshold_exceeded) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_get_interrupt_status_register(veml7700_handle), TAG, "read interrupt status register for interrupt status failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
+
+    /* set parameter */
+    config.bits.persistence_protect = persistence_protection;
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for set persistence protection failed" );
+
+    /* set config parameter */
+    handle->dev_config.persistence_protect = persistence_protection;
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_veml7700_get_power_saving_mode(i2c_veml7700_handle_t handle, i2c_veml7700_power_saving_modes_t *const power_saving_mode, bool *const power_saving_enabled) {
+    i2c_veml7700_power_saving_mode_register_t psm;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_power_saving_mode_register(handle, &psm), TAG, "read power saving mode register for get power saving mode failed" );
 
     /* set output parameters */
-    *hi_threshold_exceeded = veml7700_handle->interrupt_status_reg.bits.hi_threshold_exceeded;
-    *lo_threshold_exceeded = veml7700_handle->interrupt_status_reg.bits.lo_threshold_exceeded;
+    *power_saving_mode    = psm.bits.power_saving_mode;
+    *power_saving_enabled = psm.bits.power_saving_enabled;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_enable_irq(i2c_veml7700_handle_t veml7700_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+esp_err_t i2c_veml7700_set_power_saving_mode(i2c_veml7700_handle_t handle, const i2c_veml7700_power_saving_modes_t power_saving_mode, const bool power_saving_enabled) {
+    i2c_veml7700_power_saving_mode_register_t psm;
 
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_power_saving_mode_register(handle, &psm), TAG, "read power saving mode register for get power saving mode failed" );
 
     /* set parameters */
-    config_reg.bits.irq_enabled = true;
+    psm.bits.power_saving_mode    = power_saving_mode;
+    psm.bits.power_saving_enabled = power_saving_enabled;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for enable irq failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_power_saving_mode_register(handle, psm), TAG, "write power saving mode register for set power saving mode failed" );
+
+    /* set config parameter */
+    handle->dev_config.power_saving_mode    = power_saving_mode;
+    handle->dev_config.power_saving_enabled = power_saving_enabled;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_disable_irq(i2c_veml7700_handle_t veml7700_handle) {
+esp_err_t veml7700_get_interrupt_status(i2c_veml7700_handle_t handle, bool *const hi_threshold_exceeded, bool *const lo_threshold_exceeded) {
+    i2c_veml7700_interrupt_status_register_t irq;
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_interrupt_status_register(handle, &irq), TAG, "read interrupt status register for interrupt status failed" );
+
+    /* set output parameters */
+    *hi_threshold_exceeded = irq.bits.hi_threshold_exceeded;
+    *lo_threshold_exceeded = irq.bits.lo_threshold_exceeded;
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_veml7700_enable_irq(i2c_veml7700_handle_t handle) {
+    i2c_veml7700_configuration_register_t config;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
 
     /* set parameters */
-    config_reg.bits.irq_enabled = false;
+    config.bits.irq_enabled = true;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for disable irq failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for enable irq failed" );
+
+    /* set config parameter */
+    handle->dev_config.irq_enabled = true;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_disable_power(i2c_veml7700_handle_t veml7700_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+esp_err_t i2c_veml7700_disable_irq(i2c_veml7700_handle_t handle) {
+    i2c_veml7700_configuration_register_t config;
 
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
+
+    /* set parameters */
+    config.bits.irq_enabled = false;
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for disable irq failed" );
+
+    /* set config parameter */
+    handle->dev_config.irq_enabled = false;
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_veml7700_disable_power(i2c_veml7700_handle_t handle) {
+    i2c_veml7700_configuration_register_t config;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
 
     /* shutdown device */
-    config_reg.bits.shutdown = true;
+    config.bits.shutdown = true;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for shutdown failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for shutdown failed" );
 
-    veml7700_handle->sleeping = true;
+    /* set config parameter */
+    handle->dev_config.power_enabled = false;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_enable_power(i2c_veml7700_handle_t veml7700_handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+esp_err_t i2c_veml7700_enable_power(i2c_veml7700_handle_t handle) {
+    i2c_veml7700_configuration_register_t config;
 
-    /* copy configuration register */
-    i2c_veml7700_configuration_register_t config_reg = { .reg = veml7700_handle->config_reg.reg };
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_veml7700_get_configuration_register(handle, &config), TAG, "read configuration register for get gain failed" );
 
     /* wakeup device */
-    config_reg.bits.shutdown = false;
+    config.bits.shutdown = false;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(veml7700_handle, config_reg), TAG, "write configuration register for wake-up failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_set_configuration_register(handle, config), TAG, "write configuration register for wake-up failed" );
 
-    veml7700_handle->sleeping = false;
+    /* set config parameter */
+    handle->dev_config.power_enabled = false;
 
     return ESP_OK;
 }
 
-esp_err_t i2c_veml7700_remove(i2c_veml7700_handle_t veml7700_handle) {
+esp_err_t i2c_veml7700_remove(i2c_veml7700_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
-    return i2c_master_bus_rm_device(veml7700_handle->i2c_dev_handle);
+    return i2c_master_bus_rm_device(handle->i2c_handle);
 }
 
-esp_err_t i2c_veml7700_delete(i2c_veml7700_handle_t veml7700_handle) {
+esp_err_t i2c_veml7700_delete(i2c_veml7700_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( veml7700_handle );
+    ESP_ARG_CHECK( handle );
 
     /* remove device from master bus */
-    ESP_RETURN_ON_ERROR( i2c_veml7700_remove(veml7700_handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
+    ESP_RETURN_ON_ERROR( i2c_veml7700_remove(handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
 
     /* validate handle instance and free handles */
-    if(veml7700_handle->i2c_dev_handle) {
-        free(veml7700_handle->i2c_dev_handle);
-        free(veml7700_handle);
+    if(handle->i2c_handle) {
+        free(handle->i2c_handle);
+        free(handle);
     }
 
     return ESP_OK;
