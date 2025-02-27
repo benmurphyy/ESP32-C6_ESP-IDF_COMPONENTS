@@ -1,7 +1,7 @@
-version: "0.0.1"
-description: "ESP-IDF BMP390 I2C device driver component."
+version: "1.1.0"
+description: "ESP32 espressif IoT development framework (esp-idf) compatible component for Bosch BMP390 temperature and pressure I2C sensors."
 license: "MIT"
-url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp390"
+url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/e5b7051e796db2b5e93ac426611336bd6fc4c144/components/peripherals/i2c/esp_bmp390"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 tags:
@@ -15,6 +15,5 @@ dependencies:
   esp_driver_i2c_ext: 
     version: ">=0.0.1"
     override_path: "../../" # use component in a local directory, not from registry
-    #url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_driver_i2c_ext"
 maintainers:
  - Eric Gionet <gionet.c.eric@gmail.com>

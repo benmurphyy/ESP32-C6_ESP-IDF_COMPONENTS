@@ -1,4 +1,4 @@
-# ESP32-S3 ESP-IDF Component Repository
+# ESP32-S3 ESP-IDF Components Repository
 ## Overall Purpose
 
 This code is designed to be a central hub for testing and demonstrating various peripheral components (sensors, displays, etc.) that can interface with the ESP32-S3 microcontroller. It's part of a larger project (based on the directory structure and README.md) aimed at creating a reusable library of ESP-IDF components for common devices.

@@ -639,8 +639,8 @@ esp_err_t i2c_veml7700_init(i2c_master_bus_handle_t master_handle, const i2c_vem
     /* set device configuration */
     const i2c_device_config_t i2c_dev_conf = {
         .dev_addr_length    = I2C_ADDR_BIT_LEN_7,
-        .device_address     = veml7700_config->i2c_address,
-        .scl_speed_hz       = veml7700_config->i2c_clock_speed,
+        .device_address     = out_handle->dev_config.i2c_address,
+        .scl_speed_hz       = out_handle->dev_config.i2c_clock_speed,
     };
 
     /* validate device handle */

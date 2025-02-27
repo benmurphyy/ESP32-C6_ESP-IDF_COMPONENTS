@@ -39,6 +39,7 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <i2c_master_ext.h>
+#include "bmp390_version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,8 +60,8 @@ extern "C" {
  * BMP390 macros
 */
 #define I2C_BMP390_CONFIG_DEFAULT {                                              \
-        .dev_config.device_address  = I2C_BMP390_DEV_ADDR_HI,                    \
-        .dev_config.scl_speed_hz    = I2C_BMP390_SCL_SPEED_HZ,                   \
+        .i2c_address                = I2C_BMP390_DEV_ADDR_HI,                    \
+        .i2c_clock_speed            = I2C_BMP390_SCL_SPEED_HZ,                   \
         .power_mode                 = I2C_BMP390_POWER_MODE_NORMAL,              \
         .iir_filter                 = I2C_BMP390_IIR_FILTER_OFF,                 \
         .pressure_oversampling      = I2C_BMP390_PRESSURE_OVERSAMPLING_8X,       \
@@ -68,13 +69,13 @@ extern "C" {
         .output_data_rate           = I2C_BMP390_ODR_40MS }
 
 /*
- * BMP390 enumerator and sructure declerations
+ * BMP390 enumerator and structure declarations
 */
 
 /**
  * @brief BMP390 I2C IIR filters coefficient enumerator.
  */
-typedef enum {
+typedef enum i2c_bmp390_iir_filters_e {
     I2C_BMP390_IIR_FILTER_OFF   = (0b000),
     I2C_BMP390_IIR_FILTER_1     = (0b001),
     I2C_BMP390_IIR_FILTER_3     = (0b010),
@@ -88,7 +89,7 @@ typedef enum {
 /**
  * @brief BMP390 I2C output data rates enumerator.
  */
-typedef enum {
+typedef enum i2c_bmp390_output_data_rates_e {
     I2C_BMP390_ODR_5MS          = (0x00),  //!< sampling period 5ms
     I2C_BMP390_ODR_10MS         = (0x01),  //!< sampling period 10ms
     I2C_BMP390_ODR_20MS         = (0x02),  //!< sampling period 20ms
@@ -103,17 +104,17 @@ typedef enum {
 /**
  * @brief BMP390 I2C power modes enumerator.
  */
-typedef enum {
+typedef enum i2c_bmp390_power_modes_e {
     I2C_BMP390_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
     I2C_BMP390_POWER_MODE_FORCED  = (0b01), //!< measurement is initiated by user
     I2C_BMP390_POWER_MODE_FORCED1 = (0b10), //!< measurement is initiated by user
-    I2C_BMP390_POWER_MODE_NORMAL  = (0b11)  //!< continuosly cycles between active measurement and inactive (standby-time) periods
+    I2C_BMP390_POWER_MODE_NORMAL  = (0b11)  //!< continuously cycles between active measurement and inactive (standby-time) periods
 } i2c_bmp390_power_modes_t;
 
 /**
  * @brief BMP390 I2C pressure oversampling enumerator.
  */
-typedef enum {
+typedef enum i2c_bmp390_pressure_oversampling_e {
     I2C_BMP390_PRESSURE_OVERSAMPLING_SKIPPED        = (0b000),  //!< skipped, no measurement, output set to 0x80000
     I2C_BMP390_PRESSURE_OVERSAMPLING_2X             = (0b001),  //!< ultra low power
     I2C_BMP390_PRESSURE_OVERSAMPLING_4X             = (0b010),  //!< low power
@@ -125,7 +126,7 @@ typedef enum {
 /**
  * @brief BMP390 I2C temperature oversampling enumerator.
  */
-typedef enum {
+typedef enum i2c_bmp390_temperature_oversampling_e {
     I2C_BMP390_TEMPERATURE_OVERSAMPLING_SKIPPED     = (0b000),  //!< skipped, no measurement, output set to 0x80000
     I2C_BMP390_TEMPERATURE_OVERSAMPLING_2X          = (0b001),  //!< ultra low power
     I2C_BMP390_TEMPERATURE_OVERSAMPLING_4X          = (0b010),  //!< low power
@@ -137,7 +138,7 @@ typedef enum {
 /**
  * @brief BMP390 I2C status register (0x03) structure.  The reset state is 0x00 for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_status_register_u {
     struct {
         uint8_t reserved1:4;    			/*!< bmp390 reserved (bit:0-3) */
         bool    command_ready:1;			/*!< bmp390 command decoder is ready to accept a new command when true                      (bit:4) */
@@ -151,7 +152,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 I2C interrupt status register (0x11) structure.  The reset state is ? for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_interrupt_status_register_u {
     struct {
         bool    fifo_watermark_irq:1;  /*!< bmp390 FIFO watermark interrupt, cleared after reading       (bit:0) */
 		bool    fifo_full_irq:1;	   /*!< bmp390 FIFO full interrupt, cleared after reading            (bit:1) */
@@ -165,7 +166,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 I2C interrupt control register (0x19) structure.  The reset state is 0x02 for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_interrupt_control_register_u {
     struct {
         bool    irq_output:1;       /*!< bmp390 open-drain (true) or push-pull (false)            (bit:0) */
 		bool    irq_level:1;	     /*!< bmp390 active-high (true) or active-low (false)         (bit:1) */
@@ -182,7 +183,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 I2C power control register (0x1b) structure.  The reset state is 0x00 for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_power_control_register_u {
     struct {
 		bool						pressure_enabled:1;		/*!< bmp390 pressure sensor enabled when true     (bit:0) */
 		bool						temperature_enabled:1;	/*!< bmp390 temperature sensor enabled when true  (bit:1) */
@@ -196,7 +197,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 I2C OSR register (0x1c) structure.  The reset state is 0x02 for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_oversampling_register_u {
     struct {
         i2c_bmp390_pressure_oversampling_t      pressure_oversampling:3;    /*!< bmp390 oversampling of pressure data       (bit:0-2) */
         i2c_bmp390_temperature_oversampling_t   temperature_oversampling:3; /*!< bmp390 oversampling of temperature data    (bit:3-5) */
@@ -208,7 +209,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 I2C ODR register (0x1d) structure.  The reset state is 0x00 for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_output_data_rate_register_u {
     struct {
         i2c_bmp390_output_data_rates_t output_data_rate:5; /*!< bmp390 output data rate       (bit:0-4) */
         uint8_t						   reserved:3;    	   /*!< bmp390 reserved               (bit:5-7) */
@@ -219,7 +220,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 I2C configuration register (0x1f) structure.  The reset state is 0x00 for this register.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) i2c_bmp390_configuration_register_u {
     struct {
         uint8_t                     reserved1:1;    /*!< bmp390 reserved                                (bit:0) */
         i2c_bmp390_iir_filters_t    iir_filter:3;   /*!< bmp390 time constant of the IIR filter         (bit:1-3) */
@@ -232,7 +233,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief BMP390 temperature and pressure calibration factors structure.
  */
-typedef struct {
+typedef struct i2c_bmp390_cal_factors_s {
     /* temperature and pressure compensation */
     uint16_t                dig_T1;
     uint16_t                dig_T2;
@@ -253,7 +254,7 @@ typedef struct {
 /**
  * @brief BMP390 temperature and pressure converted calibration factors structure.
  */
-typedef struct {
+typedef struct i2c_bmp390_conv_cal_factors_s {
     /* temperature and pressure compensation */
     double                PAR_T1;
     double                PAR_T2;
@@ -273,10 +274,11 @@ typedef struct {
 } i2c_bmp390_conv_cal_factors_t;
 
 /**
- * @brief BMP390 I2C device configuration structure.
+ * @brief BMP390 configuration structure.
  */
-typedef struct {
-    i2c_device_config_t                         dev_config;                 /*!< I2C configuration for bmp390 device */
+typedef struct i2c_bmp390_config_s {
+    uint16_t                                    i2c_address;                /*!< bmp390 i2c device address */
+    uint32_t                                    i2c_clock_speed;            /*!< bmp390 i2c device scl clock speed  */
     i2c_bmp390_iir_filters_t                    iir_filter;                 /*!< bmp390 IIR filter setting */
     i2c_bmp390_pressure_oversampling_t          pressure_oversampling;      /*!< bmp390 pressure oversampling setting */
     i2c_bmp390_temperature_oversampling_t       temperature_oversampling;   /*!< bmp390 temperature oversampling setting */
@@ -285,297 +287,299 @@ typedef struct {
 } i2c_bmp390_config_t;
 
 /**
- * @brief BMP390 I2C device structure.
+ * @brief BMP390 context structure.
  */
-struct i2c_bmp390_t {
-    i2c_master_dev_handle_t                     i2c_dev_handle;         /*!< I2C device handle */
+struct i2c_bmp390_context_t {
+    i2c_bmp390_config_t                         dev_config;             /*!< bmp390 device configuration */
+    i2c_master_dev_handle_t                     i2c_handle;             /*!< bmp380 i2c device handle */
     i2c_bmp390_cal_factors_t                   *dev_cal_factors;        /*!< bmp390 device calibration factors */
     i2c_bmp390_conv_cal_factors_t              *dev_conv_cal_factors;   /*!< bmp390 device calibration factors converted to floating point numbers (section 8.4)*/
     uint8_t                                     dev_type;               /*!< device type, should be bmp390 */
-    i2c_bmp390_status_register_t                status_reg;             /*!< bmp390 status register */
-    i2c_bmp390_oversampling_register_t          oversampling_reg;       /*!< bmp390 oversampling register */
-    i2c_bmp390_configuration_register_t         config_reg;             /*!< bmp390 configuration register */
-    i2c_bmp390_output_data_rate_register_t      output_data_rate_reg;   /*!< bmp390 output data rate register */
-    i2c_bmp390_power_control_register_t         power_ctrl_reg;         /*!< bmp390 power control register */
-    i2c_bmp390_interrupt_status_register_t      interrupt_status_reg;   /*!< bmp390 interrupt status register */
-    i2c_bmp390_interrupt_control_register_t     interrupt_ctrl_reg;     /*!< bmp390 interrupt control register */
 };
 
 /**
- * @brief BMP390 I2C device definition.
+ * @brief BMP390 context structure definition.
  */
-typedef struct i2c_bmp390_t i2c_bmp390_t;
+typedef struct i2c_bmp390_context_t i2c_bmp390_context_t;
 
 /**
- * @brief BMP390 I2C device handle definition.
+ * @brief BMP390 handle structure definition.
  */
-typedef struct i2c_bmp390_t *i2c_bmp390_handle_t;
+typedef struct i2c_bmp390_context_t *i2c_bmp390_handle_t;
 
 
 
 /**
  * @brief Reads chip identification register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 chip identification register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_chip_id_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_chip_id_register(i2c_bmp390_handle_t handle, uint8_t *const reg);
 
 /**
  * @brief Reads status register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 status register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_status_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_status_register(i2c_bmp390_handle_t handle, i2c_bmp390_status_register_t *const reg);
 
 /**
  * @brief Reads interrupt control register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 interrupt status register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_interrupt_status_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_interrupt_status_register(i2c_bmp390_handle_t handle, i2c_bmp390_interrupt_status_register_t *const reg);
 
 /**
  * @brief Reads interrupt control register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 interrupt control register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_interrupt_control_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_interrupt_control_register(i2c_bmp390_handle_t handle, i2c_bmp390_interrupt_control_register_t *const reg);
 
 /**
  * @brief Writes interrupt control register to BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
- * @param[in] interrupt_control_reg Interrupt control register.
+ * @param[in] handle BMP390 device handle.
+ * @param[in] reg BMP390 interrupt control register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_interrupt_control_register(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_interrupt_control_register_t interrupt_control_reg);
+esp_err_t i2c_bmp390_set_interrupt_control_register(i2c_bmp390_handle_t handle, const i2c_bmp390_interrupt_control_register_t reg);
 
 /**
  * @brief Reads power control register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 power control register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_power_control_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_power_control_register(i2c_bmp390_handle_t handle, i2c_bmp390_power_control_register_t *const reg);
 
 /**
  * @brief Writes power control register to BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
- * @param[in] power_control_reg Power control register.
+ * @param[in] handle BMP390 device handle.
+ * @param[in] reg BMP390 power control register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_power_control_register(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_power_control_register_t power_control_reg);
+esp_err_t i2c_bmp390_set_power_control_register(i2c_bmp390_handle_t handle, const i2c_bmp390_power_control_register_t reg);
 
 /**
  * @brief Reads output data rate register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 output data rate register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_output_data_rate_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_output_data_rate_register(i2c_bmp390_handle_t handle, i2c_bmp390_output_data_rate_register_t *const reg);
 
 /**
  * @brief Writes output data rate register to BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
- * @param[in] output_data_rate_reg Output data rate register.
+ * @param[in] handle BMP390 device handle.
+ * @param[in] reg BMP390 output data rate register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_output_data_rate_register(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_output_data_rate_register_t output_data_rate_reg);
+esp_err_t i2c_bmp390_set_output_data_rate_register(i2c_bmp390_handle_t handle, const i2c_bmp390_output_data_rate_register_t reg);
 
 /**
  * @brief Reads oversampling register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 oversampling register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_oversampling_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_oversampling_register(i2c_bmp390_handle_t handle, i2c_bmp390_oversampling_register_t *const reg);
 
 /**
  * @brief Writes oversampling register to BMP390. 
  * 
- * @param[in] bmp390_handle BMP390 device handle.
- * @param[in] oversampling_reg Oversampling register.
+ * @param[in] handle BMP390 device handle.
+ * @param[in] reg BMP390 oversampling register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_oversampling_register(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_oversampling_register_t oversampling_reg);
+esp_err_t i2c_bmp390_set_oversampling_register(i2c_bmp390_handle_t handle, const i2c_bmp390_oversampling_register_t reg);
 
 /**
  * @brief Reads configuration register from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
+ * @param[out] reg BMP390 configuration register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_configuration_register(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_get_configuration_register(i2c_bmp390_handle_t handle, i2c_bmp390_configuration_register_t *const reg);
 
 /**
  * @brief Writes configuration register to BMP390. 
  * 
- * @param[in] bmp390_handle BMP390 device handle.
- * @param[in] config_reg Configuration register.
+ * @param[in] handle BMP390 device handle.
+ * @param[in] reg BMP390 configuration register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_configuration_register(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_configuration_register_t config_reg);
+esp_err_t i2c_bmp390_set_configuration_register(i2c_bmp390_handle_t handle, const i2c_bmp390_configuration_register_t reg);
 
 /**
  * @brief Initializes an BMP390 device onto the master bus.
  *
- * @param[in] bus_handle I2C master bus handle.
- * @param[in] bmp390_config Configuration of BMP390 device.
+ * @param[in] master_handle I2C master bus handle.
+ * @param[in] bmp390_config BMP390 device configuration.
  * @param[out] bmp390_handle BMP390 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_init(i2c_master_bus_handle_t bus_handle, const i2c_bmp390_config_t *bmp390_config, i2c_bmp390_handle_t *bmp280_handle);
+esp_err_t i2c_bmp390_init(i2c_master_bus_handle_t master_handle, const i2c_bmp390_config_t *bmp390_config, i2c_bmp390_handle_t *bmp280_handle);
 
 /**
  * @brief Reads high-level measurements (temperature & pressure) from BMP390.
  *
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] temperature Temperature in degree Celsius.
  * @param[out] pressure Pressure in pascal.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_measurements(i2c_bmp390_handle_t bmp390_handle, float *const temperature, float *const pressure);
+esp_err_t i2c_bmp390_get_measurements(i2c_bmp390_handle_t handle, float *const temperature, float *const pressure);
 
 /**
  * @brief Reads status of the BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] temperature_ready Temperature data is ready when asserted to true.
  * @param[out] pressure_ready Pressure data is ready when asserted to true.
  * @param[out] command_ready Command is ready when asserted to true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_status(i2c_bmp390_handle_t bmp390_handle, bool *const temperature_ready, bool *const pressure_ready, bool *const command_ready);
+esp_err_t i2c_bmp390_get_status(i2c_bmp390_handle_t handle, bool *const temperature_ready, bool *const pressure_ready, bool *const command_ready);
 
 /**
  * @brief Reads data status of the BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] temperature_ready Temperature data is ready when asserted to true.
  * @param[out] pressure_ready Pressure data is ready when asserted to true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_data_status(i2c_bmp390_handle_t bmp390_handle, bool *const temperature_ready, bool *const pressure_ready);
+esp_err_t i2c_bmp390_get_data_status(i2c_bmp390_handle_t handle, bool *const temperature_ready, bool *const pressure_ready);
 
 /**
  * @brief Reads power mode setting from the BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] power_mode BMP390 power mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_power_mode(i2c_bmp390_handle_t bmp390_handle, i2c_bmp390_power_modes_t *const power_mode);
+esp_err_t i2c_bmp390_get_power_mode(i2c_bmp390_handle_t handle, i2c_bmp390_power_modes_t *const power_mode);
 
 /**
  * @brief Writes power mode setting to the BMP390.  See datasheet, section 3.6, table 10.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[in] power_mode BMP390 power mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_power_mode(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_power_modes_t power_mode);
+esp_err_t i2c_bmp390_set_power_mode(i2c_bmp390_handle_t handle, const i2c_bmp390_power_modes_t power_mode);
 
 /**
  * @brief Reads pressure oversampling setting from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] oversampling BMP390 pressure oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_pressure_oversampling(i2c_bmp390_handle_t bmp390_handle, i2c_bmp390_pressure_oversampling_t *const oversampling);
+esp_err_t i2c_bmp390_get_pressure_oversampling(i2c_bmp390_handle_t handle, i2c_bmp390_pressure_oversampling_t *const oversampling);
 
 /**
  * @brief Writes pressure oversampling setting to BMP390.  See datasheet, section 3.3.1, table 4.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[in] oversampling BMP390 pressure oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_pressure_oversampling(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_pressure_oversampling_t oversampling);
+esp_err_t i2c_bmp390_set_pressure_oversampling(i2c_bmp390_handle_t handle, const i2c_bmp390_pressure_oversampling_t oversampling);
 
 /**
  * @brief Reads temperature oversampling setting from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] oversampling BMP390 temperature oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_temperature_oversampling(i2c_bmp390_handle_t bmp390_handle, i2c_bmp390_temperature_oversampling_t *const oversampling);
+esp_err_t i2c_bmp390_get_temperature_oversampling(i2c_bmp390_handle_t handle, i2c_bmp390_temperature_oversampling_t *const oversampling);
 
 /**
  * @brief Writes temperature oversampling setting to BMP390.  See datasheet, section 3.3.1, table 4.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[in] oversampling BMP390 temperature oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_temperature_oversampling(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_temperature_oversampling_t oversampling);
+esp_err_t i2c_bmp390_set_temperature_oversampling(i2c_bmp390_handle_t handle, const i2c_bmp390_temperature_oversampling_t oversampling);
 
 /**
  * @brief Reads output data rate setting from BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] output_data_rate BMP390 output data rate setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_output_data_rate(i2c_bmp390_handle_t bmp390_handle, i2c_bmp390_output_data_rates_t *const output_data_rate);
+esp_err_t i2c_bmp390_get_output_data_rate(i2c_bmp390_handle_t handle, i2c_bmp390_output_data_rates_t *const output_data_rate);
 
 /**
  * @brief writes output data rate setting to bmp390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[in] output_data_rate BMP390 output data rate setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_output_data_rate(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_output_data_rates_t output_data_rate);
+esp_err_t i2c_bmp390_set_output_data_rate(i2c_bmp390_handle_t handle, const i2c_bmp390_output_data_rates_t output_data_rate);
 
 /**
  * @brief Reads IIR filter setting to BMP390.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[out] iir_filter BMP390 IIR filter setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_get_iir_filter(i2c_bmp390_handle_t bmp390_handle, i2c_bmp390_iir_filters_t *const iir_filter);
+esp_err_t i2c_bmp390_get_iir_filter(i2c_bmp390_handle_t handle, i2c_bmp390_iir_filters_t *const iir_filter);
 
 /**
  * @brief Writes IIR filter setting from BMP390.  See datasheet, section 3.4, table 7.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @param[in] iir_filter BMP390 IIR filter setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_set_iir_filter(i2c_bmp390_handle_t bmp390_handle, const i2c_bmp390_iir_filters_t iir_filter);
+esp_err_t i2c_bmp390_set_iir_filter(i2c_bmp390_handle_t handle, const i2c_bmp390_iir_filters_t iir_filter);
 
 /**
  * @brief Issues soft-reset sensor and initializes registers for BMP390.
  *
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_reset(i2c_bmp390_handle_t bmp280_handle);
+esp_err_t i2c_bmp390_reset(i2c_bmp390_handle_t handle);
 
 /**
  * @brief removes an BMP390 device from master bus.
  *
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_remove(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_remove(i2c_bmp390_handle_t handle);
 
 /**
  * @brief Removes an BMP390 device from master I2C bus and delete the handle.
  * 
- * @param[in] bmp390_handle BMP390 device handle.
+ * @param[in] handle BMP390 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bmp390_delete(i2c_bmp390_handle_t bmp390_handle);
+esp_err_t i2c_bmp390_delete(i2c_bmp390_handle_t handle);
 
 
 #ifdef __cplusplus
