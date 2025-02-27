@@ -77,29 +77,30 @@ The ESP peripheral components accommodate ADC, I2C, OWB, and SPI device interfac
 
 Supported drivers include the following device peripherals:
  
- - ADC: Roithner LaserTechnik GUVA-S12SD
- - I2C: ASAIR AHTXX
- - I2C: AKM AK8975
- - I2C: OSRAM AS7341
- - I2C: ROHM BH1750FVI
+ - ADC: Roithner LaserTechnik GUVA-S12SD (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/adc/esp_s12sd)
+ - I2C: ASAIR AHTXX (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_ahtxx)
+ - I2C: AKM AK8975 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_ak8975)
+ - I2C: AMS AS3935 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_as3935)
+ - I2C: OSRAM AS7341 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_as7341)
+ - I2C: ROHM BH1750FVI (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_bh1750)
  - I2C: Bosch BME680 - Work in Progress, Coming Soon (waiting for sensor to arrive)!! 
- - I2C: Bosch BMP280
- - I2C: Bosch BMP390
- - I2C: ScioSense CCS811
- - I2C: ScioSense ENS160
- - I2C: Texas Instruments HDC1080
- - I2C: Honeywell HMC5883L
- - I2C: Lite-On LTR390UV
+ - I2C: Bosch BMP280 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_bmp280)
+ - I2C: Bosch BMP390 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_bmp390)
+ - I2C: ScioSense CCS811 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_ccs811)
+ - I2C: ScioSense ENS160 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_ens160)
+ - I2C: Texas Instruments HDC1080 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_hdc1080)
+ - I2C: Honeywell HMC5883L (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_hmc5883l)
+ - I2C: Lite-On LTR390UV (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_ltr390uv)
  - I2C: Maxim-Integrated MAX30105 - Work in Progress
- - I2C: Melexis MLX90614
- - I2C: Memsic MMC56X3
- - I2C: InvenSense MPU6050
- - I2C: Sensirion SGP4X
- - I2C: Sensirion SHT4X
- - I2C: Generic SSD1306 (128x32 and 128x64)
+ - I2C: Melexis MLX90614 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_mlx90614)
+ - I2C: Memsic MMC56X3 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_mmc56x3)
+ - I2C: InvenSense MPU6050 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_mpu6050)
+ - I2C: Sensirion SGP4X (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_sgp4x)
+ - I2C: Sensirion SHT4X (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_sht4x)
+ - I2C: Generic SSD1306 (128x32 and 128x64) (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_ssd1306)
  - I2C: Infineon TLV493D - Work in Progress
- - I2C: Vishay VEML7700
- - OWB: Maxim-Integrated DS18B20
+ - I2C: Vishay VEML7700 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/i2c/esp_veml7700)
+ - OWB: Maxim-Integrated DS18B20 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/1b46d895237f4f05ab8de7475ffe0eac6b388a42/components/peripherals/owb/esp_ds18b20)
  - SPI: Analog Devices MAX31865 - Work in Progress
  
 The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and the above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
