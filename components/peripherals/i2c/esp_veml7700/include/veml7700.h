@@ -217,12 +217,6 @@ typedef struct i2c_veml7700_config_s {
 struct i2c_veml7700_context_t {
     i2c_veml7700_config_t                       dev_config;             /*!< veml7700 device configuration */
     i2c_master_dev_handle_t                     i2c_handle;             /*!< veml7700 i2c device handle */
-    //i2c_veml7700_configuration_register_t       config_reg;             /*!< configuration register */
-    //uint16_t                                    hi_threshold_reg;       /*!< high threshold register for the interrupt */
-    //uint16_t                                    lo_threshold_reg;       /*!< low threshold register for the interrupt */
-    //i2c_veml7700_power_saving_mode_register_t   power_saving_mode_reg;  /*!< power saving mode register */
-    //i2c_veml7700_interrupt_status_register_t    interrupt_status_reg;   /*!< interrupt status register */
-    //i2c_veml7700_identifier_register_t          identifier_reg;         /*!< identifier register */
     //float                                       resolution;			    /*!< Current resolution and multiplier */
     //uint32_t                                    maximum_lux;		    /*!< Current maximum lux limit */
 };

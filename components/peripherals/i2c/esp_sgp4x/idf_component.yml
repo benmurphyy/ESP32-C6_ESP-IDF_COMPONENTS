@@ -4,6 +4,8 @@ license: "MIT"
 url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/5f55371c65e467eaee9e8c2ecace31414874a04d/components/peripherals/i2c/esp_sgp4x"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
+examples:
+  url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/dfc0c4d2faba884a95039eb44bb281b47a43b9e3/components/peripherals/i2c/esp_sgp4x/README.md"
 tags:
   - SGP4X
   - I2C
