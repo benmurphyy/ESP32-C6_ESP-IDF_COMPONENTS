@@ -1,0 +1,8 @@
+CMake Error at C:/Users/lavco/esp/v5.4/esp-idf/tools/cmake/build.cmake:610 (message):
+  ERROR: Manifest is not valid
+
+Call Stack (most recent call first):
+  C:/Users/lavco/esp/v5.4/esp-idf/tools/cmake/project.cmake:710 (idf_build_process)
+  CMakeLists.txt:45 (project)
+
+

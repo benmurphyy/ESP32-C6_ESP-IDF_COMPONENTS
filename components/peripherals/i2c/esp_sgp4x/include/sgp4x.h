@@ -49,7 +49,7 @@ extern "C"
 /*
  * SGP4X definitions
  */
-#define I2C_SGP4X_SCL_SPEED_HZ          UINT32_C(100000) //!< sgp4x I2C default clock frequency (100KHz)
+#define I2C_SGP4X_DEV_CLK_SPD           UINT32_C(100000) //!< sgp4x I2C default clock frequency (100KHz)
 
 #define I2C_SGP4X_DEV_ADDR              UINT8_C(0x59) //!< sgp4x I2C address
 
@@ -58,7 +58,7 @@ extern "C"
  */
 #define I2C_SGP41_CONFIG_DEFAULT {                   \
     .i2c_address        = I2C_SGP4X_DEV_ADDR,        \
-    .i2c_clock_speed    = I2C_SGP4X_SCL_SPEED_HZ,    \
+    .i2c_clock_speed    = I2C_SGP4X_DEV_CLK_SPD,     \
     .dev_version        = SGP4X_VERSION_SGP41 }
 
 

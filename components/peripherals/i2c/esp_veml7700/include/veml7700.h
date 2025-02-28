@@ -48,7 +48,7 @@ extern "C" {
 /*
  * VEML7700 definitions
 */
-#define I2C_VEML7700_SCL_SPEED_HZ           UINT32_C(100000)    //!< veml7700 I2C default clock frequency (100KHz)
+#define I2C_VEML7700_DEV_CLK_SPD            UINT32_C(100000)    //!< veml7700 I2C default clock frequency (100KHz)
 
 #define I2C_VEML7700_DEV_ADDR               UINT8_C(0x10)       //!< veml7700 I2C address
 
@@ -62,7 +62,7 @@ extern "C" {
  */
 #define I2C_VEML7700_CONFIG_DEFAULT {                                               \
             .i2c_address                = I2C_VEML7700_DEV_ADDR,                    \
-            .i2c_clock_speed            = I2C_VEML7700_SCL_SPEED_HZ,                \
+            .i2c_clock_speed            = I2C_VEML7700_DEV_CLK_SPD,                 \
             .gain                       = VEML7700_GAIN_DIV_4,                      \
             .integration_time           = VEML7700_INTEGRATION_TIME_400MS,          \
             .persistence_protect        = VEML7700_PERSISTENCE_PROTECTION_4,        \

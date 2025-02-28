@@ -48,7 +48,7 @@ extern "C" {
 /*
  * BMP390 definitions
 */
-#define I2C_BMP390_SCL_SPEED_HZ     UINT32_C(100000) //!< bmp390 I2C default clock frequency (100KHz)
+#define I2C_BMP390_DEV_CLK_SPD      UINT32_C(100000) //!< bmp390 I2C default clock frequency (100KHz)
 
 /*
  * supported device addresses
@@ -61,7 +61,7 @@ extern "C" {
 */
 #define I2C_BMP390_CONFIG_DEFAULT {                                          \
         .i2c_address                = I2C_BMP390_DEV_ADDR_HI,                \
-        .i2c_clock_speed            = I2C_BMP390_SCL_SPEED_HZ,               \
+        .i2c_clock_speed            = I2C_BMP390_DEV_CLK_SPD,                \
         .power_mode                 = BMP390_POWER_MODE_NORMAL,              \
         .iir_filter                 = BMP390_IIR_FILTER_OFF,                 \
         .pressure_oversampling      = BMP390_PRESSURE_OVERSAMPLING_8X,       \

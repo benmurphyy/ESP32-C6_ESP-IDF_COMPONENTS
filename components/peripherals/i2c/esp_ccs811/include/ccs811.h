@@ -49,7 +49,7 @@ extern "C" {
 /*
  * CCS811 definitions
 */
-#define I2C_CCS811_SCL_SPEED_HZ                 UINT32_C(100000) //!< ccs811 I2C default clock frequency (100KHz)
+#define I2C_CCS811_DEV_CLK_SPD                  UINT32_C(100000) //!< ccs811 I2C default clock frequency (100KHz)
 
 #define I2C_CCS811_DEV_ADDR_LO                  UINT8_C(0x5a)   //!< ccs811 I2C address when ADDR pin floating/low
 #define I2C_CCS811_DEV_ADDR_HI                  UINT8_C(0x5b)   //!< ccs811 I2C address when ADDR pin high
@@ -64,7 +64,7 @@ extern "C" {
 
 #define I2C_CCS811_CONFIG_DEFAULT   {                                           \
         .i2c_address                = I2C_CCS811_DEV_ADDR_LO,                   \
-        .i2c_clock_speed            = I2C_CCS811_SCL_SPEED_HZ,                  \
+        .i2c_clock_speed            = I2C_CCS811_DEV_CLK_SPD,                   \
         .wake_io_enabled            = false,                                    \
         .reset_io_enabled           = false,                                    \
         .irq_threshold_enabled      = false,                                    \
