@@ -59,16 +59,16 @@ extern "C"
 #define I2C_SGP41_CONFIG_DEFAULT {                   \
     .i2c_address        = I2C_SGP4X_DEV_ADDR,        \
     .i2c_clock_speed    = I2C_SGP4X_SCL_SPEED_HZ,    \
-    .dev_version        = I2C_SGP4X_VERSION_SGP41 }
+    .dev_version        = SGP4X_VERSION_SGP41 }
 
 
 /**
  * @brief SGP4X versions enumerator.
  */
-typedef enum i2c_sgp4x_version_tag {
-    I2C_SGP4X_VERSION_SGP40,  /*!< not implemented */
-    I2C_SGP4X_VERSION_SGP41
-} i2c_sgp4x_versions_t;
+typedef enum sgp4x_versions_e {
+    SGP4X_VERSION_SGP40,  /*!< not implemented */
+    SGP4X_VERSION_SGP41
+} sgp4x_versions_t;
 
 /**
  * @brief SGP4X self-test result structure.
@@ -80,7 +80,7 @@ typedef union __attribute__((packed)) {
         uint8_t reserved:6;         /*!< reserved      (bit:2-7) */
     } pixels;
     uint8_t integrity;
-} i2c_sgp4x_self_test_result_t;
+} sgp4x_self_test_result_t;
 
 /**
  * @brief SGP4X device configuration structure.
@@ -88,27 +88,27 @@ typedef union __attribute__((packed)) {
 typedef struct {
     uint16_t                i2c_address;        /*!< sgp4x i2c device address */
     uint32_t                i2c_clock_speed;    /*!< sgp4x i2c device scl clock speed  */
-    i2c_sgp4x_versions_t    dev_version;        /*!< sgp4x version */
-} i2c_sgp4x_config_t;
+    sgp4x_versions_t        dev_version;        /*!< sgp4x version */
+} sgp4x_config_t;
 
 /**
  * @brief SGP4X context structure.
  */
-struct i2c_sgp4x_context_t {
-    i2c_sgp4x_config_t          dev_config;     /*!< sgp4x device configuration */
-    i2c_master_dev_handle_t     i2c_handle;     /*!< sgp4x i2c device handle */
-    uint64_t                    serial_number;  /*!< sgp4x serial number */
+struct sgp4x_context_t {
+    sgp4x_config_t          dev_config;     /*!< sgp4x device configuration */
+    i2c_master_dev_handle_t i2c_handle;     /*!< sgp4x i2c device handle */
+    uint64_t                serial_number;  /*!< sgp4x serial number */
 };
 
 /**
  * @brief SGP4X context structure definition.
  */
-typedef struct i2c_sgp4x_context_t i2c_sgp4x_context_t;
+typedef struct sgp4x_context_t sgp4x_context_t;
 
 /**
  * @brief SGP4X handle structure definition.
  */
-typedef struct i2c_sgp4x_context_t *i2c_sgp4x_handle_t;
+typedef struct sgp4x_context_t *sgp4x_handle_t;
 
 
 /**
@@ -119,7 +119,7 @@ typedef struct i2c_sgp4x_context_t *i2c_sgp4x_handle_t;
  * @param[out] sgp4x_handle SGP4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_init(i2c_master_bus_handle_t master_handle, const i2c_sgp4x_config_t *sgp4x_config, i2c_sgp4x_handle_t *sgp4x_handle);
+esp_err_t sgp4x_init(i2c_master_bus_handle_t master_handle, const sgp4x_config_t *sgp4x_config, sgp4x_handle_t *sgp4x_handle);
 
 /**
  * @brief Starts the conditioning with temperature and humidity compensation, i.e., the VOC pixel will be operated at 
@@ -133,7 +133,7 @@ esp_err_t i2c_sgp4x_init(i2c_master_bus_handle_t master_handle, const i2c_sgp4x_
  * @param[out] sraw_voc Raw signal of VOC in ticks which is proportional to the logarithm of the resistance of the sensing element.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_execute_compensated_conditioning(i2c_sgp4x_handle_t handle, const float temperature, const float humidity, uint16_t *sraw_voc);
+esp_err_t sgp4x_execute_compensated_conditioning(sgp4x_handle_t handle, const float temperature, const float humidity, uint16_t *sraw_voc);
 
 /**
  * @brief Starts the conditioning, i.e., the VOC pixel will be operated at the same temperature as it is by calling the
@@ -145,7 +145,7 @@ esp_err_t i2c_sgp4x_execute_compensated_conditioning(i2c_sgp4x_handle_t handle, 
  * @param[out] sraw_voc Raw signal of VOC in ticks which is proportional to the logarithm of the resistance of the sensing element.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_execute_conditioning(i2c_sgp4x_handle_t handle, uint16_t *sraw_voc);
+esp_err_t sgp4x_execute_conditioning(sgp4x_handle_t handle, uint16_t *sraw_voc);
 
 /**
  * @brief Starts and/or continues the VOC and NOX measurement mode with temperature and humidity compensation.
@@ -157,7 +157,7 @@ esp_err_t i2c_sgp4x_execute_conditioning(i2c_sgp4x_handle_t handle, uint16_t *sr
  * @param[out] sraw_nox Raw signal of NOX in ticks which is proportional to the logarithm of the resistance of the sensing element.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_measure_compensated_raw_signals(i2c_sgp4x_handle_t handle, const float temperature, const float humidity, uint16_t *sraw_voc, uint16_t *sraw_nox);
+esp_err_t sgp4x_measure_compensated_signals(sgp4x_handle_t handle, const float temperature, const float humidity, uint16_t *sraw_voc, uint16_t *sraw_nox);
 
 /**
  * @brief Starts and/or continues the VOC and NOX measurement mode using default temperature and humidity compensation.
@@ -167,7 +167,7 @@ esp_err_t i2c_sgp4x_measure_compensated_raw_signals(i2c_sgp4x_handle_t handle, c
  * @param[out] sraw_nox Raw signal of NOX in ticks which is proportional to the logarithm of the resistance of the sensing element.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_measure_raw_signals(i2c_sgp4x_handle_t handle, uint16_t *sraw_voc, uint16_t *sraw_nox);
+esp_err_t sgp4x_measure_signals(sgp4x_handle_t handle, uint16_t *sraw_voc, uint16_t *sraw_nox);
 
 /**
  * @brief Performs the built-in self-test that checks for integrity of 
@@ -177,7 +177,7 @@ esp_err_t i2c_sgp4x_measure_raw_signals(i2c_sgp4x_handle_t handle, uint16_t *sra
  * @param[out] result Results of the self-tests.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_execute_self_test(i2c_sgp4x_handle_t handle, i2c_sgp4x_self_test_result_t *const result);
+esp_err_t sgp4x_execute_self_test(sgp4x_handle_t handle, sgp4x_self_test_result_t *const result);
 
 /**
  * @brief Turns the hotplate off, stops the measurement, and SGP4X enters idle mode.
@@ -185,7 +185,7 @@ esp_err_t i2c_sgp4x_execute_self_test(i2c_sgp4x_handle_t handle, i2c_sgp4x_self_
  * @param[in] handle SGP4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_turn_heater_off(i2c_sgp4x_handle_t handle);
+esp_err_t sgp4x_turn_heater_off(sgp4x_handle_t handle);
 
 /**
  * @brief Issues soft-reset and initializes SGP4X.  See datasheet for details.
@@ -193,7 +193,7 @@ esp_err_t i2c_sgp4x_turn_heater_off(i2c_sgp4x_handle_t handle);
  * @param[in] handle SGP4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_reset(i2c_sgp4x_handle_t handle);
+esp_err_t sgp4x_reset(sgp4x_handle_t handle);
 
 /**
  * @brief Removes an SGP4X device from master bus.
@@ -201,7 +201,7 @@ esp_err_t i2c_sgp4x_reset(i2c_sgp4x_handle_t handle);
  * @param[in] handle SGP4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_remove(i2c_sgp4x_handle_t handle);
+esp_err_t sgp4x_remove(sgp4x_handle_t handle);
 
 /**
  * @brief Removes an SGP4X device from master bus and frees handle.
@@ -209,7 +209,7 @@ esp_err_t i2c_sgp4x_remove(i2c_sgp4x_handle_t handle);
  * @param[in] handle SGP4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sgp4x_delete(i2c_sgp4x_handle_t handle);
+esp_err_t sgp4x_delete(sgp4x_handle_t handle);
 
 
 #ifdef __cplusplus

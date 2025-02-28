@@ -88,7 +88,7 @@ static const char *TAG = "s12sd";
  * @param[in] milli_volt voltage, in millivolts, to convert
  * @return uv index (0 to 11), an out-of-range value returns 255
  */
-static inline uint8_t adc_s12sd_convert_uv_index(const float milli_volt) {
+static inline uint8_t s12sd_convert_uv_index(const float milli_volt) {
     if(milli_volt > ADC_UV_MV_TO_INDEX_0_MIN && milli_volt <= ADC_UV_MV_TO_INDEX_0_MAX) {
         return 0;
     } else if(milli_volt > ADC_UV_MV_TO_INDEX_1_MIN && milli_volt <= ADC_UV_MV_TO_INDEX_1_MAX) {
@@ -122,7 +122,7 @@ static inline uint8_t adc_s12sd_convert_uv_index(const float milli_volt) {
  * function and subroutine declarations
  */
 
-static inline bool adc_s12sd_calibration_init(const adc_s12sd_config_t *s12sd_config, adc_cali_handle_t *cal_handle) {
+static inline bool s12sd_calibration_init(const s12sd_config_t *s12sd_config, adc_cali_handle_t *cal_handle) {
     adc_cali_handle_t out_handle = NULL;
     esp_err_t ret = ESP_FAIL;
     bool calibrated = false;
@@ -171,7 +171,7 @@ static inline bool adc_s12sd_calibration_init(const adc_s12sd_config_t *s12sd_co
     return calibrated;
 }
 
-static inline void adc_s12sd_calibration_delete(adc_cali_handle_t cal_handle) {
+static inline void s12sd_calibration_delete(adc_cali_handle_t cal_handle) {
 #if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED
     ESP_LOGI(TAG, "deregister %s calibration scheme", "Curve Fitting");
     ESP_ERROR_CHECK( adc_cali_delete_scheme_curve_fitting(cal_handle) );
@@ -182,13 +182,13 @@ static inline void adc_s12sd_calibration_delete(adc_cali_handle_t cal_handle) {
 #endif
 }
 
-esp_err_t adc_s12sd_init(const adc_s12sd_config_t *s12sd_config, adc_s12sd_handle_t *s12sd_handle) {
-    esp_err_t           ret = ESP_OK;
-    adc_s12sd_handle_t  out_handle;
+esp_err_t s12sd_init(const s12sd_config_t *s12sd_config, s12sd_handle_t *s12sd_handle) {
+    esp_err_t       ret = ESP_OK;
+    s12sd_handle_t  out_handle;
 
     ESP_ARG_CHECK( s12sd_config && s12sd_handle );
 
-    out_handle = (adc_s12sd_handle_t)calloc(1, sizeof(*out_handle));
+    out_handle = (s12sd_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for adc s12sd device");
 
     /* copy configuration */
@@ -207,7 +207,7 @@ esp_err_t adc_s12sd_init(const adc_s12sd_config_t *s12sd_config, adc_s12sd_handl
 
     ESP_GOTO_ON_ERROR(adc_oneshot_config_channel(out_handle->adc_handle, out_handle->dev_config.adc_channel, &os_conf), err, TAG, "adc s12sd device configuration (one-shot) failed");
 
-    out_handle->adc_calibrate = adc_s12sd_calibration_init(s12sd_config, &out_handle->adc_cal_handle);
+    out_handle->adc_calibrate = s12sd_calibration_init(s12sd_config, &out_handle->adc_cal_handle);
 
     /* set device handle */
     *s12sd_handle = out_handle;
@@ -222,7 +222,7 @@ esp_err_t adc_s12sd_init(const adc_s12sd_config_t *s12sd_config, adc_s12sd_handl
         return ret;
 }
 
-esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index) {
+esp_err_t s12sd_measure(s12sd_handle_t handle, uint8_t *uv_index) {
     esp_err_t   ret         = ESP_OK;
     int         avg_sum     = 0;
     float       avg_volt    = 0;
@@ -252,7 +252,7 @@ esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index) {
     avg_volt = avg_sum / ADC_S12SD_SAMPLE_SIZE;
 
     // convert voltage to uv index
-    *uv_index = adc_s12sd_convert_uv_index(avg_volt);
+    *uv_index = s12sd_convert_uv_index(avg_volt);
 
     //ESP_LOGI(TAG, "ADC%d Channel[%d] Samples(%d) Cali Voltage: %.2f mV", s12sd_handle->adc_unit, s12sd_handle->adc_channel, ADC_UV_SAMPLE_SIZE, avg_volt);
 
@@ -261,7 +261,7 @@ esp_err_t adc_s12sd_measure(adc_s12sd_handle_t handle, uint8_t *uv_index) {
     return ESP_OK;
 }
 
-esp_err_t adc_s12sd_delete(adc_s12sd_handle_t handle) {
+esp_err_t s12sd_delete(s12sd_handle_t handle) {
     esp_err_t ret = ESP_OK;
 
     ESP_ARG_CHECK( handle );
@@ -269,16 +269,16 @@ esp_err_t adc_s12sd_delete(adc_s12sd_handle_t handle) {
     ret = adc_oneshot_del_unit(handle->adc_handle);
 
     if (handle->adc_calibrate) {
-        adc_s12sd_calibration_delete(handle->adc_cal_handle);
+        s12sd_calibration_delete(handle->adc_cal_handle);
     }
 
     return ret;
 }
 
-const char* adc_s12sd_get_fw_version(void) {
-    return ADC_S12SD_FW_VERSION_STR;
+const char* s12sd_get_fw_version(void) {
+    return S12SD_FW_VERSION_STR;
 }
 
-int32_t adc_s12sd_get_fw_version_number(void) {
-    return ADC_S12SD_FW_VERSION_INT32;
+int32_t s12sd_get_fw_version_number(void) {
+    return S12SD_FW_VERSION_INT32;
 }

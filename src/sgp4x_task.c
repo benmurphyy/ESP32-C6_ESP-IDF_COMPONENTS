@@ -42,8 +42,8 @@ void i2c0_sgp4x_task( void *pvParameters ) {
     TickType_t         last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_sgp4x_config_t dev_cfg          = I2C_SGP41_CONFIG_DEFAULT;
-    i2c_sgp4x_handle_t dev_hdl;
+    sgp4x_config_t dev_cfg          = I2C_SGP41_CONFIG_DEFAULT;
+    sgp4x_handle_t dev_hdl;
     bool               dev_self_tested  = false;
     bool               dev_conditioned  = false;
     //
@@ -54,7 +54,7 @@ void i2c0_sgp4x_task( void *pvParameters ) {
     GasIndexAlgorithm_init(&nox_params, GasIndexAlgorithm_ALGORITHM_TYPE_NOX);
     //
     // init device
-    i2c_sgp4x_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    sgp4x_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "sgp4x handle init failed");
         assert(dev_hdl);
@@ -66,8 +66,8 @@ void i2c0_sgp4x_task( void *pvParameters ) {
         //
         // handle sensor
         if(dev_self_tested == false) {
-            i2c_sgp4x_self_test_result_t self_test_result;
-            esp_err_t result = i2c_sgp4x_execute_self_test(dev_hdl, &self_test_result);
+            sgp4x_self_test_result_t self_test_result;
+            esp_err_t result = sgp4x_execute_self_test(dev_hdl, &self_test_result);
             if(result != ESP_OK) {
                 ESP_LOGE(APP_TAG, "sgp4x device self-test failed (%s)", esp_err_to_name(result));
             } else {
@@ -80,7 +80,7 @@ void i2c0_sgp4x_task( void *pvParameters ) {
         if(dev_conditioned == false) {
             for(int i = 0; i < 10; i++) {
                 uint16_t sraw_voc; 
-                esp_err_t result = i2c_sgp4x_execute_conditioning(dev_hdl, &sraw_voc);
+                esp_err_t result = sgp4x_execute_conditioning(dev_hdl, &sraw_voc);
                 if(result != ESP_OK) {
                     ESP_LOGE(APP_TAG, "sgp4x device conditioning failed (%s)", esp_err_to_name(result));
                 } else {
@@ -92,7 +92,7 @@ void i2c0_sgp4x_task( void *pvParameters ) {
         } else {
             uint16_t sraw_voc; uint16_t sraw_nox;
             int32_t voc_index; int32_t nox_index;
-            esp_err_t result = i2c_sgp4x_measure_raw_signals(dev_hdl, &sraw_voc, &sraw_nox);
+            esp_err_t result = sgp4x_measure_signals(dev_hdl, &sraw_voc, &sraw_nox);
             if(result != ESP_OK) {
                 ESP_LOGE(APP_TAG, "sgp4x device conditioning failed (%s)", esp_err_to_name(result));
             } else {
@@ -113,6 +113,6 @@ void i2c0_sgp4x_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_sgp4x_delete( dev_hdl );
+    sgp4x_delete( dev_hdl );
     vTaskDelete( NULL );
 }

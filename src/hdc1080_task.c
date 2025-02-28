@@ -42,11 +42,11 @@ void i2c0_hdc1080_task( void *pvParameters ) {
     TickType_t         last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_hdc1080_config_t dev_cfg        = I2C_HDC1080_CONFIG_DEFAULT;
-    i2c_hdc1080_handle_t dev_hdl;
+    hdc1080_config_t dev_cfg        = I2C_HDC1080_CONFIG_DEFAULT;
+    hdc1080_handle_t dev_hdl;
 
     // init device
-    i2c_hdc1080_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    hdc1080_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "hdc1080 handle init failed");
         assert(dev_hdl);
@@ -63,7 +63,7 @@ void i2c0_hdc1080_task( void *pvParameters ) {
         // handle sensor
         
         float temperature; float humidity; float dewpoint;
-        esp_err_t result = i2c_hdc1080_get_measurements(dev_hdl, &temperature, &humidity, &dewpoint);
+        esp_err_t result = hdc1080_get_measurements(dev_hdl, &temperature, &humidity, &dewpoint);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "hdc1080 get measurement failed (%s)", esp_err_to_name(result));
         } else {
@@ -81,6 +81,6 @@ void i2c0_hdc1080_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_hdc1080_delete( dev_hdl );
+    hdc1080_delete( dev_hdl );
     vTaskDelete( NULL );
 }

@@ -41,37 +41,37 @@ void i2c0_bmp390_task( void *pvParameters ) {
     TickType_t          last_wake_time  = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_bmp390_config_t dev_cfg         = I2C_BMP390_CONFIG_DEFAULT;
-    i2c_bmp390_handle_t dev_hdl;
+    bmp390_config_t dev_cfg         = I2C_BMP390_CONFIG_DEFAULT;
+    bmp390_handle_t dev_hdl;
     //
     // init device
-    i2c_bmp390_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    bmp390_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "bmp390 handle init failed");
         assert(dev_hdl);
     }
 
     /* configuration registers */
-    i2c_bmp390_power_control_register_t     power_ctrl_reg;
-    i2c_bmp390_configuration_register_t     config_reg;
-    i2c_bmp390_oversampling_register_t      oversampling_reg;
-    i2c_bmp390_output_data_rate_register_t  output_data_rate_reg;
-    i2c_bmp390_interrupt_control_register_t interrupt_ctrl_reg;
+    bmp390_power_control_register_t     power_ctrl_reg;
+    bmp390_configuration_register_t     config_reg;
+    bmp390_oversampling_register_t      oversampling_reg;
+    bmp390_output_data_rate_register_t  output_data_rate_reg;
+    bmp390_interrupt_control_register_t interrupt_ctrl_reg;
 
     /* attempt to read configuration register */
-    i2c_bmp390_get_configuration_register(dev_hdl, &config_reg);
+    bmp390_get_configuration_register(dev_hdl, &config_reg);
 
     /* attempt to read oversampling register */
-    i2c_bmp390_get_oversampling_register(dev_hdl, &oversampling_reg);
+    bmp390_get_oversampling_register(dev_hdl, &oversampling_reg);
 
     /* attempt to read to power control register */
-    i2c_bmp390_get_power_control_register(dev_hdl, &power_ctrl_reg);
+    bmp390_get_power_control_register(dev_hdl, &power_ctrl_reg);
 
     /* attempt to read to output data rate register */
-    i2c_bmp390_get_output_data_rate_register(dev_hdl, &output_data_rate_reg);
+    bmp390_get_output_data_rate_register(dev_hdl, &output_data_rate_reg);
 
     /* attempt to read to interrupt control register */
-    i2c_bmp390_get_interrupt_control_register(dev_hdl, &interrupt_ctrl_reg);
+    bmp390_get_interrupt_control_register(dev_hdl, &interrupt_ctrl_reg);
 
 
     ESP_LOGI(APP_TAG, "Configuration (0x%02x): %s", config_reg.reg,           uint8_to_binary(config_reg.reg));
@@ -87,10 +87,10 @@ void i2c0_bmp390_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## BMP390 - START #########################");
         //
         // handle sensor
-        i2c_bmp390_set_power_mode(dev_hdl, I2C_BMP390_POWER_MODE_FORCED);
+        bmp390_set_power_mode(dev_hdl, BMP390_POWER_MODE_FORCED);
 
         float temperature, pressure;
-        esp_err_t result = i2c_bmp390_get_measurements(dev_hdl, &temperature, &pressure);
+        esp_err_t result = bmp390_get_measurements(dev_hdl, &temperature, &pressure);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "bmp390 device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -107,6 +107,6 @@ void i2c0_bmp390_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_bmp390_delete( dev_hdl );
+    bmp390_delete( dev_hdl );
     vTaskDelete( NULL );
 }

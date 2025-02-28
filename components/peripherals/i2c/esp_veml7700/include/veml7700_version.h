@@ -45,11 +45,11 @@ extern "C" {
  */
 
 /** Major version number (X.x.x) */
-#define I2C_VEML7700_FW_VERSION_MAJOR 1
+#define VEML7700_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define I2C_VEML7700_FW_VERSION_MINOR 1
+#define VEML7700_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define I2C_VEML7700_FW_VERSION_PATCH 0
+#define VEML7700_FW_VERSION_PATCH 0
 
 
 /**
@@ -59,40 +59,40 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define I2C_VEML7700_STR_QUOTES( x ) #x
+#define VEML7700_STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define I2C_VEML7700_STR( x ) I2C_VEML7700_STR_QUOTES( x )
+#define VEML7700_STR( x ) VEML7700_STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define I2C_VEML7700_FW_VERSION_STR                        \
-        I2C_VEML7700_STR( I2C_VEML7700_FW_VERSION_MAJOR ) "." \
-        I2C_VEML7700_STR( I2C_VEML7700_FW_VERSION_MINOR ) "." \
-        I2C_VEML7700_STR( I2C_VEML7700_FW_VERSION_PATCH )
+#define VEML7700_FW_VERSION_STR                        \
+        VEML7700_STR( VEML7700_FW_VERSION_MAJOR ) "." \
+        VEML7700_STR( VEML7700_FW_VERSION_MINOR ) "." \
+        VEML7700_STR( VEML7700_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, I2C_VEML7700_FW_VERSION_INT32 >= I2C_VEML7700_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define I2C_VEML7700_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define VEML7700_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, I2C_VEML7700_FW_VERSION_INT32 >= I2C_VEML7700_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define I2C_VEML7700_FW_VERSION_INT32                                      \
-        I2C_VEML7700_FW_VERSION_PARAMS_INT32(I2C_VEML7700_FW_VERSION_MAJOR,   \
-                                          I2C_VEML7700_FW_VERSION_MINOR,   \
-                                          I2C_VEML7700_FW_VERSION_PATCH)
+#define VEML7700_FW_VERSION_INT32                                      \
+        VEML7700_FW_VERSION_PARAMS_INT32(VEML7700_FW_VERSION_MAJOR,   \
+                                        VEML7700_FW_VERSION_MINOR,   \
+                                        VEML7700_FW_VERSION_PATCH)
 
 
 
@@ -101,14 +101,14 @@ extern "C" {
  * 
  * @return char* VEML7700 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
-const char* i2c_veml7700_get_fw_version(void);
+const char* veml7700_get_fw_version(void);
 
 /**
  * @brief Converts VEML7700 firmware version numbers (major, minor, patch) into an integer value.
  * 
  * @return int32_t VEML7700 firmware version number.
  */
-int32_t i2c_veml7700_get_fw_version_number(void);
+int32_t veml7700_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

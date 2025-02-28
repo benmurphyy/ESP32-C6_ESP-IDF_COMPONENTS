@@ -34,11 +34,11 @@ void i2c0_bmp280_task( void *pvParameters ) {
     TickType_t          last_wake_time  = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_bmp280_config_t dev_cfg         = I2C_BMP280_CONFIG_DEFAULT;
-    i2c_bmp280_handle_t dev_hdl;
+    bmp280_config_t dev_cfg         = I2C_BMP280_CONFIG_DEFAULT;
+    bmp280_handle_t dev_hdl;
     //
     // init device
-    i2c_bmp280_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    bmp280_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "bmp280 handle init failed");
         assert(dev_hdl);
@@ -50,7 +50,7 @@ void i2c0_bmp280_task( void *pvParameters ) {
         //
         // handle sensor
         float temperature, pressure;
-        esp_err_t result = i2c_bmp280_get_measurements(dev_hdl, &temperature, &pressure);
+        esp_err_t result = bmp280_get_measurements(dev_hdl, &temperature, &pressure);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "bmp280 device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -67,7 +67,7 @@ void i2c0_bmp280_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_bmp280_delete( dev_hdl );
+    bmp280_delete( dev_hdl );
     vTaskDelete( NULL );
 }
 ```

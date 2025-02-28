@@ -2,7 +2,7 @@
 # ESP-IDF Peripheral Components (ADC, I2C, OWB, SPI)
 The ESP-IDF peripheral components accommodate ADC, I2C, OWB, and SPI device interfacing supported by various device manufacturers.  Components are developed when needed for product development and/or prototyping purposes, and shared with the ESP32 community for ESP-IDF developers.  Custom component development is available upon request, please contact me directly, and I would be happy to discuss the details of your component needs.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 
-ESP-IDF peripheral components that are flagged as completed work but they are undergoing updates to satisfy ESP-IDF component packaging requirements (https://docs.espressif.com/projects/idf-component-manager/en/latest/guides/packaging_components.html).
+ESP-IDF peripheral components that are flagged as completed work but they are undergoing refactoring and updates to satisfy ESP-IDF component packaging requirements (https://docs.espressif.com/projects/idf-component-manager/en/latest/guides/packaging_components.html).
 
 
 ## ADC

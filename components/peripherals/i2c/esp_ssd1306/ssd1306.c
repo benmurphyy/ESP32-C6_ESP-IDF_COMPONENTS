@@ -57,53 +57,53 @@ Usage:
 0xC0 : Single Data byte 
 0x40 : Data Stream
 */
-#define I2C_SSD1306_CONTROL_BYTE_CMD_SINGLE    0x80
-#define I2C_SSD1306_CONTROL_BYTE_CMD_STREAM    0x00
-#define I2C_SSD1306_CONTROL_BYTE_DATA_SINGLE   0xC0
-#define I2C_SSD1306_CONTROL_BYTE_DATA_STREAM   0x40
+#define SSD1306_CONTROL_BYTE_CMD_SINGLE    0x80
+#define SSD1306_CONTROL_BYTE_CMD_STREAM    0x00
+#define SSD1306_CONTROL_BYTE_DATA_SINGLE   0xC0
+#define SSD1306_CONTROL_BYTE_DATA_STREAM   0x40
 
 // Fundamental commands (pg.28)
-#define I2C_SSD1306_CMD_SET_CONTRAST           0x81    // follow with 0x7F
-#define I2C_SSD1306_CMD_DISPLAY_RAM            0xA4
-#define I2C_SSD1306_CMD_DISPLAY_ALLON          0xA5
-#define I2C_SSD1306_CMD_DISPLAY_NORMAL         0xA6
-#define I2C_SSD1306_CMD_DISPLAY_INVERTED       0xA7
-#define I2C_SSD1306_CMD_DISPLAY_OFF            0xAE
-#define I2C_SSD1306_CMD_DISPLAY_ON             0xAF
+#define SSD1306_CMD_SET_CONTRAST           0x81    // follow with 0x7F
+#define SSD1306_CMD_DISPLAY_RAM            0xA4
+#define SSD1306_CMD_DISPLAY_ALLON          0xA5
+#define SSD1306_CMD_DISPLAY_NORMAL         0xA6
+#define SSD1306_CMD_DISPLAY_INVERTED       0xA7
+#define SSD1306_CMD_DISPLAY_OFF            0xAE
+#define SSD1306_CMD_DISPLAY_ON             0xAF
 
 // Addressing Command Table (pg.30)
-#define I2C_SSD1306_CMD_SET_MEMORY_ADDR_MODE   0x20
-#define I2C_SSD1306_CMD_SET_HORI_ADDR_MODE     0x00    // Horizontal Addressing Mode
-#define I2C_SSD1306_CMD_SET_VERT_ADDR_MODE     0x01    // Vertical Addressing Mode
-#define I2C_SSD1306_CMD_SET_PAGE_ADDR_MODE     0x02    // Page Addressing Mode
-#define I2C_SSD1306_CMD_SET_COLUMN_RANGE       0x21    // can be used only in HORZ/VERT mode - follow with 0x00 and 0x7F = COL127
-#define I2C_SSD1306_CMD_SET_PAGE_RANGE         0x22    // can be used only in HORZ/VERT mode - follow with 0x00 and 0x07 = PAGE7
+#define SSD1306_CMD_SET_MEMORY_ADDR_MODE   0x20
+#define SSD1306_CMD_SET_HORI_ADDR_MODE     0x00    // Horizontal Addressing Mode
+#define SSD1306_CMD_SET_VERT_ADDR_MODE     0x01    // Vertical Addressing Mode
+#define SSD1306_CMD_SET_PAGE_ADDR_MODE     0x02    // Page Addressing Mode
+#define SSD1306_CMD_SET_COLUMN_RANGE       0x21    // can be used only in HORZ/VERT mode - follow with 0x00 and 0x7F = COL127
+#define SSD1306_CMD_SET_PAGE_RANGE         0x22    // can be used only in HORZ/VERT mode - follow with 0x00 and 0x07 = PAGE7
 
 // Hardware Config (pg.31)
-#define I2C_SSD1306_CMD_SET_DISPLAY_START_LINE 0x40
-#define I2C_SSD1306_CMD_SET_SEGMENT_REMAP_0    0xA0    
-#define I2C_SSD1306_CMD_SET_SEGMENT_REMAP_1    0xA1    
-#define I2C_SSD1306_CMD_SET_MUX_RATIO          0xA8    // follow with 0x3F = 64 MUX
-#define I2C_SSD1306_CMD_SET_COM_SCAN_MODE      0xC8    
-#define I2C_SSD1306_CMD_SET_DISPLAY_OFFSET     0xD3    // follow with 0x00
-#define I2C_SSD1306_CMD_SET_COM_PIN_MAP        0xDA    // follow with 0x12
-#define I2C_SSD1306_CMD_NOP                    0xE3    // NOP
+#define SSD1306_CMD_SET_DISPLAY_START_LINE 0x40
+#define SSD1306_CMD_SET_SEGMENT_REMAP_0    0xA0    
+#define SSD1306_CMD_SET_SEGMENT_REMAP_1    0xA1    
+#define SSD1306_CMD_SET_MUX_RATIO          0xA8    // follow with 0x3F = 64 MUX
+#define SSD1306_CMD_SET_COM_SCAN_MODE      0xC8    
+#define SSD1306_CMD_SET_DISPLAY_OFFSET     0xD3    // follow with 0x00
+#define SSD1306_CMD_SET_COM_PIN_MAP        0xDA    // follow with 0x12
+#define SSD1306_CMD_NOP                    0xE3    // NOP
 
 // Timing and Driving Scheme (pg.32)
-#define I2C_SSD1306_CMD_SET_DISPLAY_CLK_DIV    0xD5    // follow with 0x80
-#define I2C_SSD1306_CMD_SET_PRECHARGE          0xD9    // follow with 0xF1
-#define I2C_SSD1306_CMD_SET_VCOMH_DESELCT      0xDB    // follow with 0x30
+#define SSD1306_CMD_SET_DISPLAY_CLK_DIV    0xD5    // follow with 0x80
+#define SSD1306_CMD_SET_PRECHARGE          0xD9    // follow with 0xF1
+#define SSD1306_CMD_SET_VCOMH_DESELCT      0xDB    // follow with 0x30
 
 // Charge Pump (pg.62)
-#define I2C_SSD1306_CMD_SET_CHARGE_PUMP        0x8D    // follow with 0x14
+#define SSD1306_CMD_SET_CHARGE_PUMP        0x8D    // follow with 0x14
 
 // Scrolling Command
-#define I2C_SSD1306_CMD_HORIZONTAL_RIGHT       0x26
-#define I2C_SSD1306_CMD_HORIZONTAL_LEFT        0x27
-#define I2C_SSD1306_CMD_CONTINUOUS_SCROLL      0x29
-#define I2C_SSD1306_CMD_DEACTIVE_SCROLL        0x2E
-#define I2C_SSD1306_CMD_ACTIVE_SCROLL          0x2F
-#define I2C_SSD1306_CMD_VERTICAL               0xA3
+#define SSD1306_CMD_HORIZONTAL_RIGHT       0x26
+#define SSD1306_CMD_HORIZONTAL_LEFT        0x27
+#define SSD1306_CMD_CONTINUOUS_SCROLL      0x29
+#define SSD1306_CMD_DEACTIVE_SCROLL        0x2E
+#define SSD1306_CMD_ACTIVE_SCROLL          0x2F
+#define SSD1306_CMD_VERTICAL               0xA3
 
 
 /*
@@ -124,7 +124,7 @@ typedef union i2c_ssd1306_out_column_t {
 
 
 // Set pixel to internal buffer. Not show it.
-esp_err_t i2c_ssd1306_set_pixel(i2c_ssd1306_handle_t handle, int16_t xpos, int16_t ypos, bool invert) {
+esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -142,7 +142,7 @@ esp_err_t i2c_ssd1306_set_pixel(i2c_ssd1306_handle_t handle, int16_t xpos, int16
 		wk0 = wk0 | wk1;
 	}
 
-	if (handle->dev_config.flip_enabled) wk0 = i2c_ssd1306_rotate_byte(wk0);
+	if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
 
 	ESP_LOGD(TAG, "wk0=0x%02x wk1=0x%02x", wk0, wk1);
 
@@ -152,7 +152,7 @@ esp_err_t i2c_ssd1306_set_pixel(i2c_ssd1306_handle_t handle, int16_t xpos, int16
 }
 
 // Set line to internal buffer. Not show it.
-esp_err_t i2c_ssd1306_set_line(i2c_ssd1306_handle_t handle, int16_t x1, int16_t y1, int16_t x2, int16_t y2,  bool invert) {
+esp_err_t ssd1306_set_line(ssd1306_handle_t handle, int16_t x1, int16_t y1, int16_t x2, int16_t y2,  bool invert) {
 	int16_t i;
 	int16_t dx,dy;
 	int16_t sx,sy;
@@ -173,7 +173,7 @@ esp_err_t i2c_ssd1306_set_line(i2c_ssd1306_handle_t handle, int16_t x1, int16_t 
 	if ( dx > dy ) {
 		E = -dx;
 		for ( i = 0 ; i <= dx ; i++ ) {
-			i2c_ssd1306_set_pixel(handle, x1, y1, invert);
+			ssd1306_set_pixel(handle, x1, y1, invert);
 			x1 += sx;
 			E += 2 * dy;
 			if ( E >= 0 ) {
@@ -185,7 +185,7 @@ esp_err_t i2c_ssd1306_set_line(i2c_ssd1306_handle_t handle, int16_t x1, int16_t 
 	} else {
 		E = -dy;
 		for ( i = 0 ; i <= dy ; i++ ) {
-			i2c_ssd1306_set_pixel(handle, x1, y1, invert);
+			ssd1306_set_pixel(handle, x1, y1, invert);
 			y1 += sy;
 			E += 2 * dx;
 			if ( E >= 0 ) {
@@ -199,7 +199,7 @@ esp_err_t i2c_ssd1306_set_line(i2c_ssd1306_handle_t handle, int16_t x1, int16_t 
 }
 
 // Draw circle
-esp_err_t i2c_ssd1306_set_circle(i2c_ssd1306_handle_t handle, int16_t x0, int16_t y0, int16_t r, bool invert) {
+esp_err_t ssd1306_set_circle(ssd1306_handle_t handle, int16_t x0, int16_t y0, int16_t r, bool invert) {
 	int16_t x;
 	int16_t y;
 	int16_t err;
@@ -213,10 +213,10 @@ esp_err_t i2c_ssd1306_set_circle(i2c_ssd1306_handle_t handle, int16_t x0, int16_
 	err=2-2*r;
 
 	do {
-		i2c_ssd1306_set_pixel(handle, x0-x, y0+y, invert); 
-		i2c_ssd1306_set_pixel(handle, x0-y, y0-x, invert); 
-		i2c_ssd1306_set_pixel(handle, x0+x, y0-y, invert); 
-		i2c_ssd1306_set_pixel(handle, x0+y, y0+x, invert); 
+		ssd1306_set_pixel(handle, x0-x, y0+y, invert); 
+		ssd1306_set_pixel(handle, x0-y, y0-x, invert); 
+		ssd1306_set_pixel(handle, x0+x, y0-y, invert); 
+		ssd1306_set_pixel(handle, x0+y, y0+x, invert); 
 
 		if ((old_err=err)<=x)	err+=++x*2+1;
 		if (old_err>y || err>x) err+=++y*2+1;	 
@@ -225,15 +225,15 @@ esp_err_t i2c_ssd1306_set_circle(i2c_ssd1306_handle_t handle, int16_t x0, int16_
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_enable_display(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_enable_display(ssd1306_handle_t handle) {
 	uint8_t out_buf[2];
 	uint8_t out_index = 0;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	out_buf[out_index++] = I2C_SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
-	out_buf[out_index++] = I2C_SSD1306_CMD_DISPLAY_ON; // AF
+	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
+	out_buf[out_index++] = SSD1306_CMD_DISPLAY_ON; // AF
 
 	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write contrast configuration failed");
 
@@ -243,15 +243,15 @@ esp_err_t i2c_ssd1306_enable_display(i2c_ssd1306_handle_t handle) {
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_disable_display(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_disable_display(ssd1306_handle_t handle) {
 	uint8_t out_buf[2];
 	uint8_t out_index = 0;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	out_buf[out_index++] = I2C_SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
-	out_buf[out_index++] = I2C_SSD1306_CMD_DISPLAY_OFF; // AE
+	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
+	out_buf[out_index++] = SSD1306_CMD_DISPLAY_OFF; // AE
 
 	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write contrast configuration failed");
 
@@ -261,18 +261,18 @@ esp_err_t i2c_ssd1306_disable_display(i2c_ssd1306_handle_t handle) {
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_display_pages(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_display_pages(ssd1306_handle_t handle) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
 	for (uint8_t page = 0; page < handle->pages; page++) {
-		ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, page, 0, handle->page[page].segment, handle->width), TAG, "show buffer failed (page %d)", page);
+		ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page, 0, handle->page[page].segment, handle->width), TAG, "show buffer failed (page %d)", page);
 	}
 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_set_pages(i2c_ssd1306_handle_t handle, uint8_t *buffer) {
+esp_err_t ssd1306_set_pages(ssd1306_handle_t handle, uint8_t *buffer) {
 	uint8_t index = 0;
 
 	/* validate parameters */
@@ -286,7 +286,7 @@ esp_err_t i2c_ssd1306_set_pages(i2c_ssd1306_handle_t handle, uint8_t *buffer) {
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_get_pages(i2c_ssd1306_handle_t handle, uint8_t *buffer) {
+esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer) {
 	uint8_t index = 0;
 
 	/* validate parameters */
@@ -300,7 +300,7 @@ esp_err_t i2c_ssd1306_get_pages(i2c_ssd1306_handle_t handle, uint8_t *buffer) {
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_display_bitmap(i2c_ssd1306_handle_t handle, int16_t xpos, int16_t ypos, uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -325,13 +325,13 @@ esp_err_t i2c_ssd1306_display_bitmap(i2c_ssd1306_handle_t handle, int16_t xpos, 
 		for (uint16_t index = 0; index < _width; index++) {
 			for (int8_t srcBits=7; srcBits>=0; srcBits--) {
 				wk0 = handle->page[page].segment[_seg];
-				if (handle->dev_config.flip_enabled) wk0 = i2c_ssd1306_rotate_byte(wk0);
+				if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
 
 				wk1 = bitmap[index+offset];
 				if (invert) wk1 = ~wk1;
 
-				wk2 = i2c_ssd1306_copy_bit(wk1, srcBits, wk0, dstBits);
-				if (handle->dev_config.flip_enabled) wk2 = i2c_ssd1306_rotate_byte(wk2);
+				wk2 = ssd1306_copy_bit(wk1, srcBits, wk0, dstBits);
+				if (handle->dev_config.flip_enabled) wk2 = ssd1306_rotate_byte(wk2);
 
 				ESP_LOGD(TAG, "index=%d offset=%d page=%d _seg=%d, wk2=%02x", index, offset, page, _seg, wk2);
 				handle->page[page].segment[_seg] = wk2;
@@ -348,12 +348,12 @@ esp_err_t i2c_ssd1306_display_bitmap(i2c_ssd1306_handle_t handle, int16_t xpos, 
 		}
 	}
 
-	ESP_RETURN_ON_ERROR(i2c_ssd1306_display_pages(handle), TAG, "display pages for bitmap failed");
+	ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for bitmap failed");
 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_display_image(i2c_ssd1306_handle_t handle, uint8_t page, uint8_t segment, uint8_t *image, uint8_t width) {
+esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t segment, uint8_t *image, uint8_t width) {
 	esp_err_t ret = ESP_OK;
 
 	/* validate parameters */
@@ -379,7 +379,7 @@ esp_err_t i2c_ssd1306_display_image(i2c_ssd1306_handle_t handle, uint8_t page, u
 	}
 
 	uint8_t out_index = 0;
-	out_buf[out_index++] = I2C_SSD1306_CONTROL_BYTE_CMD_STREAM;
+	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM;
 	// Set Lower Column Start Address for Page Addressing Mode
 	out_buf[out_index++] = (0x00 + columLow);
 	// Set Higher Column Start Address for Page Addressing Mode
@@ -389,7 +389,7 @@ esp_err_t i2c_ssd1306_display_image(i2c_ssd1306_handle_t handle, uint8_t page, u
 
 	ESP_GOTO_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), err, TAG, "write page addressing mode for image display failed");
 
-	out_buf[0] = I2C_SSD1306_CONTROL_BYTE_DATA_STREAM;
+	out_buf[0] = SSD1306_CONTROL_BYTE_DATA_STREAM;
 
 	memcpy(&out_buf[1], image, width);
 
@@ -407,7 +407,7 @@ esp_err_t i2c_ssd1306_display_image(i2c_ssd1306_handle_t handle, uint8_t page, u
 	return ret;
 }
 
-esp_err_t i2c_ssd1306_display_text(i2c_ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -420,16 +420,16 @@ esp_err_t i2c_ssd1306_display_text(i2c_ssd1306_handle_t handle, uint8_t page, ch
 
 	for (uint8_t i = 0; i < text_len; i++) {
 		memcpy(image, font8x8_latin_tr[(uint8_t)text[i]], 8);
-		if (invert) i2c_ssd1306_invert_buffer(image, 8);
-		if (handle->dev_config.flip_enabled) i2c_ssd1306_flip_buffer(image, 8);
-		ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, page, seg, image, 8), TAG, "display image for display text failed");
+		if (invert) ssd1306_invert_buffer(image, 8);
+		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
+		ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page, seg, image, 8), TAG, "display image for display text failed");
 		seg = seg + 8;
 	}
 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_display_text_x2(i2c_ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -466,10 +466,10 @@ esp_err_t i2c_ssd1306_display_text_x2(i2c_ssd1306_handle_t handle, uint8_t page,
 				image[xx*2+0] = 
 				image[xx*2+1] = out_columns[xx].u8[yy];
 			}
-			if (invert) i2c_ssd1306_invert_buffer(image, 16);
-			if (handle->dev_config.flip_enabled) i2c_ssd1306_flip_buffer(image, 16);
+			if (invert) ssd1306_invert_buffer(image, 16);
+			if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 16);
 			
-			ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, page+yy, seg, image, 16), TAG, "display image for display text x2 failed");
+			ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page+yy, seg, image, 16), TAG, "display image for display text x2 failed");
 
 			memcpy(&handle->page[page+yy].segment[seg], image, 16);
 		}
@@ -480,7 +480,7 @@ esp_err_t i2c_ssd1306_display_text_x2(i2c_ssd1306_handle_t handle, uint8_t page,
 }
 
 // by Coert Vonk
-esp_err_t i2c_ssd1306_display_text_x3(i2c_ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -518,10 +518,10 @@ esp_err_t i2c_ssd1306_display_text_x3(i2c_ssd1306_handle_t handle, uint8_t page,
 				image[xx*3+1] = 
 				image[xx*3+2] = out_columns[xx].u8[yy];
 			}
-			if (invert) i2c_ssd1306_invert_buffer(image, 24);
-			if (handle->dev_config.flip_enabled) i2c_ssd1306_flip_buffer(image, 24);
+			if (invert) ssd1306_invert_buffer(image, 24);
+			if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 24);
 			
-			ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, page+yy, seg, image, 24), TAG, "display image for display text x3 failed");
+			ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page+yy, seg, image, 24), TAG, "display image for display text x3 failed");
 
 			memcpy(&handle->page[page+yy].segment[seg], image, 24);
 		}
@@ -531,7 +531,7 @@ esp_err_t i2c_ssd1306_display_text_x3(i2c_ssd1306_handle_t handle, uint8_t page,
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_clear_display_page(i2c_ssd1306_handle_t handle, uint8_t page, bool invert) {
+esp_err_t ssd1306_clear_display_page(ssd1306_handle_t handle, uint8_t page, bool invert) {
 	char space[16];
 
 	/* validate parameters */
@@ -539,31 +539,31 @@ esp_err_t i2c_ssd1306_clear_display_page(i2c_ssd1306_handle_t handle, uint8_t pa
 
 	memset(space, 0x00, sizeof(space));
 
-	ESP_RETURN_ON_ERROR(i2c_ssd1306_display_text(handle, page, space, sizeof(space), invert), TAG, "display text for clear line failed");
+	ESP_RETURN_ON_ERROR(ssd1306_display_text(handle, page, space, sizeof(space), invert), TAG, "display text for clear line failed");
 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_clear_display(i2c_ssd1306_handle_t handle, bool invert) {
+esp_err_t ssd1306_clear_display(ssd1306_handle_t handle, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
 	for (uint8_t page = 0; page < handle->pages; page++) {
-		ESP_RETURN_ON_ERROR(i2c_ssd1306_clear_display_page(handle, page, invert), TAG, "clear line for clear screen failed");
+		ESP_RETURN_ON_ERROR(ssd1306_clear_display_page(handle, page, invert), TAG, "clear line for clear screen failed");
 	}
 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_set_display_contrast(i2c_ssd1306_handle_t handle, uint8_t contrast) {
+esp_err_t ssd1306_set_display_contrast(ssd1306_handle_t handle, uint8_t contrast) {
 	uint8_t out_buf[3];
 	uint8_t out_index = 0;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	out_buf[out_index++] = I2C_SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_CONTRAST; // 81
+	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
+	out_buf[out_index++] = SSD1306_CMD_SET_CONTRAST; // 81
 	out_buf[out_index++] = contrast;
 
 	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write contrast configuration failed");
@@ -571,7 +571,7 @@ esp_err_t i2c_ssd1306_set_display_contrast(i2c_ssd1306_handle_t handle, uint8_t 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_set_software_scroll(i2c_ssd1306_handle_t handle, uint8_t start, uint8_t end) {
+esp_err_t ssd1306_set_software_scroll(ssd1306_handle_t handle, uint8_t start, uint8_t end) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -590,7 +590,7 @@ esp_err_t i2c_ssd1306_set_software_scroll(i2c_ssd1306_handle_t handle, uint8_t s
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_display_scroll_text(i2c_ssd1306_handle_t handle, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -604,7 +604,7 @@ esp_err_t i2c_ssd1306_display_scroll_text(i2c_ssd1306_handle_t handle, char *tex
 		for(uint16_t seg = 0; seg < handle->width; seg++) {
 			handle->page[dstIndex].segment[seg] = handle->page[srcIndex].segment[seg];
 		}
-		ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, dstIndex, 0, handle->page[dstIndex].segment, sizeof(handle->page[dstIndex].segment)), TAG, "display image for scroll text failed");
+		ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, dstIndex, 0, handle->page[dstIndex].segment, sizeof(handle->page[dstIndex].segment)), TAG, "display image for scroll text failed");
 		if (srcIndex == handle->scroll_start) break;
 		srcIndex = srcIndex - handle->scroll_direction;
 	}
@@ -612,12 +612,12 @@ esp_err_t i2c_ssd1306_display_scroll_text(i2c_ssd1306_handle_t handle, char *tex
 	uint8_t _text_len = text_len;
 	if (_text_len > 16) _text_len = 16;
 	
-	ESP_RETURN_ON_ERROR(i2c_ssd1306_display_text(handle, srcIndex, text, text_len, invert), TAG, "display text for scroll text failed");
+	ESP_RETURN_ON_ERROR(ssd1306_display_text(handle, srcIndex, text, text_len, invert), TAG, "display text for scroll text failed");
 
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_clear_scroll_display(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_clear_scroll_display(ssd1306_handle_t handle) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -628,7 +628,7 @@ esp_err_t i2c_ssd1306_clear_scroll_display(i2c_ssd1306_handle_t handle) {
 	while(1) {
 		uint16_t dstIndex = srcIndex + handle->scroll_direction;
 		ESP_LOGD(TAG, "srcIndex=%d dstIndex=%d", srcIndex,dstIndex);
-		ESP_RETURN_ON_ERROR(i2c_ssd1306_clear_display_page(handle, dstIndex, false), TAG, "clear display page for scroll clear failed");
+		ESP_RETURN_ON_ERROR(ssd1306_clear_display_page(handle, dstIndex, false), TAG, "clear display page for scroll clear failed");
 		if (dstIndex == handle->scroll_start) break;
 		srcIndex = srcIndex - handle->scroll_direction;
 	}
@@ -636,73 +636,73 @@ esp_err_t i2c_ssd1306_clear_scroll_display(i2c_ssd1306_handle_t handle) {
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_set_hardware_scroll(i2c_ssd1306_handle_t handle, i2c_ssd1306_scroll_types_t scroll, i2c_ssd1306_scroll_frames_t frame_frequency) {
+esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, ssd1306_scroll_frames_t frame_frequency) {
     uint8_t out_buf[11];
     uint8_t out_index = 0;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	out_buf[out_index++] = I2C_SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
+	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
 
-	if (scroll == I2C_SSD1306_SCROLL_RIGHT) {
-		out_buf[out_index++] = I2C_SSD1306_CMD_HORIZONTAL_RIGHT; // 26
+	if (scroll == SSD1306_SCROLL_RIGHT) {
+		out_buf[out_index++] = SSD1306_CMD_HORIZONTAL_RIGHT; // 26
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
 		out_buf[out_index++] = frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x07; // Define end page address
 		out_buf[out_index++] = 0x00; // Dummy byte 0x00
 		out_buf[out_index++] = 0xFF; // Dummy byte 0xFF
-		out_buf[out_index++] = I2C_SSD1306_CMD_ACTIVE_SCROLL; // 2F
+		out_buf[out_index++] = SSD1306_CMD_ACTIVE_SCROLL; // 2F
 	} 
 
-	if (scroll == I2C_SSD1306_SCROLL_LEFT) {
-		out_buf[out_index++] = I2C_SSD1306_CMD_HORIZONTAL_LEFT; // 27
+	if (scroll == SSD1306_SCROLL_LEFT) {
+		out_buf[out_index++] = SSD1306_CMD_HORIZONTAL_LEFT; // 27
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
 		out_buf[out_index++] = frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x07; // Define end page address
 		out_buf[out_index++] = 0x00; //
 		out_buf[out_index++] = 0xFF; //
-		out_buf[out_index++] = I2C_SSD1306_CMD_ACTIVE_SCROLL; // 2F
+		out_buf[out_index++] = SSD1306_CMD_ACTIVE_SCROLL; // 2F
 	} 
 
-	if (scroll == I2C_SSD1306_SCROLL_DOWN) {
-		out_buf[out_index++] = I2C_SSD1306_CMD_CONTINUOUS_SCROLL; // 29
+	if (scroll == SSD1306_SCROLL_DOWN) {
+		out_buf[out_index++] = SSD1306_CMD_CONTINUOUS_SCROLL; // 29
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
 		out_buf[out_index++] = frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x00; // Define end page address
 		out_buf[out_index++] = 0x3F; // Vertical scrolling offset
 
-		out_buf[out_index++] = I2C_SSD1306_CMD_VERTICAL; // A3
+		out_buf[out_index++] = SSD1306_CMD_VERTICAL; // A3
 		out_buf[out_index++] = 0x00;
 		if (handle->height == 64)
 			out_buf[out_index++] = 0x40;
 		if (handle->height == 32)
 			out_buf[out_index++] = 0x20;
-		out_buf[out_index++] = I2C_SSD1306_CMD_ACTIVE_SCROLL; // 2F
+		out_buf[out_index++] = SSD1306_CMD_ACTIVE_SCROLL; // 2F
 	}
 
-	if (scroll == I2C_SSD1306_SCROLL_UP) {
-		out_buf[out_index++] = I2C_SSD1306_CMD_CONTINUOUS_SCROLL; // 29
+	if (scroll == SSD1306_SCROLL_UP) {
+		out_buf[out_index++] = SSD1306_CMD_CONTINUOUS_SCROLL; // 29
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
 		out_buf[out_index++] = frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x00; // Define end page address
 		out_buf[out_index++] = 0x01; // Vertical scrolling offset
 
-		out_buf[out_index++] = I2C_SSD1306_CMD_VERTICAL; // A3
+		out_buf[out_index++] = SSD1306_CMD_VERTICAL; // A3
 		out_buf[out_index++] = 0x00;
 		if (handle->height == 64)
 			out_buf[out_index++] = 0x40;
 		if (handle->height == 32)
 			out_buf[out_index++] = 0x20;
-		out_buf[out_index++] = I2C_SSD1306_CMD_ACTIVE_SCROLL; // 2F
+		out_buf[out_index++] = SSD1306_CMD_ACTIVE_SCROLL; // 2F
 	}
 
-	if (scroll == I2C_SSD1306_SCROLL_STOP) {
-		out_buf[out_index++] = I2C_SSD1306_CMD_DEACTIVE_SCROLL; // 2E
+	if (scroll == SSD1306_SCROLL_STOP) {
+		out_buf[out_index++] = SSD1306_CMD_DEACTIVE_SCROLL; // 2E
 	}
 
 	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write hardware scroll configuration failed");
@@ -713,11 +713,11 @@ esp_err_t i2c_ssd1306_set_hardware_scroll(i2c_ssd1306_handle_t handle, i2c_ssd13
 // delay = 0 : display with no wait
 // delay > 0 : display with wait
 // delay < 0 : no display
-esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_ssd1306_scroll_types_t scroll, uint8_t start, uint8_t end, int8_t delay) {
+esp_err_t ssd1306_set_display_wrap_around(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, uint8_t start, uint8_t end, int8_t delay) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	if (scroll == I2C_SSD1306_SCROLL_RIGHT) {
+	if (scroll == SSD1306_SCROLL_RIGHT) {
 		uint8_t _start = start; // 0 to 7
 		uint8_t _end = end; // 0 to 7
 		if (_end >= handle->pages) _end = handle->pages - 1;
@@ -729,7 +729,7 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 			}
 			handle->page[page].segment[0] = wk;
 		}
-	} else if (scroll == I2C_SSD1306_SCROLL_LEFT) {
+	} else if (scroll == SSD1306_SCROLL_LEFT) {
 		uint8_t _start = start; // 0 to 7
 		uint8_t _end = end; // 0 to 7
 		if (_end >= handle->pages) _end = handle->pages - 1;
@@ -742,7 +742,7 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 			handle->page[page].segment[127] = wk;
 		}
 
-	} else if (scroll == I2C_SSD1306_SCROLL_UP) {
+	} else if (scroll == SSD1306_SCROLL_UP) {
 		uint8_t _start = start; // 0 to {width-1}
 		uint8_t _end = end; // 0 to {width-1}
 		if (_end >= handle->width) _end = handle->width - 1;
@@ -759,8 +759,8 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 			for (uint8_t seg = _start; seg <= _end; seg++) {
 				wk0 = handle->page[page].segment[seg];
 				wk1 = handle->page[page+1].segment[seg];
-				if (handle->dev_config.flip_enabled) wk0 = i2c_ssd1306_rotate_byte(wk0);
-				if (handle->dev_config.flip_enabled) wk1 = i2c_ssd1306_rotate_byte(wk1);
+				if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
+				if (handle->dev_config.flip_enabled) wk1 = ssd1306_rotate_byte(wk1);
 				if (seg == 0) {
 					ESP_LOGD(TAG, "b page=%d wk0=%02x wk1=%02x", page, wk0, wk1);
 				}
@@ -771,7 +771,7 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 				if (seg == 0) {
 					ESP_LOGD(TAG, "a page=%d wk0=%02x wk1=%02x wk2=%02x", page, wk0, wk1, wk2);
 				}
-				if (handle->dev_config.flip_enabled) wk2 = i2c_ssd1306_rotate_byte(wk2);
+				if (handle->dev_config.flip_enabled) wk2 = ssd1306_rotate_byte(wk2);
 				handle->page[page].segment[seg] = wk2;
 			}
 		}
@@ -780,17 +780,17 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 		for (uint8_t seg = _start; seg <= _end; seg++) {
 			wk0 = handle->page[pages].segment[seg];
 			wk1 = save[seg];
-			if (handle->dev_config.flip_enabled) wk0 = i2c_ssd1306_rotate_byte(wk0);
-			if (handle->dev_config.flip_enabled) wk1 = i2c_ssd1306_rotate_byte(wk1);
+			if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
+			if (handle->dev_config.flip_enabled) wk1 = ssd1306_rotate_byte(wk1);
 			wk0 = wk0 >> 1;
 			wk1 = wk1 & 0x01;
 			wk1 = wk1 << 7;
 			wk2 = wk0 | wk1;
-			if (handle->dev_config.flip_enabled) wk2 = i2c_ssd1306_rotate_byte(wk2);
+			if (handle->dev_config.flip_enabled) wk2 = ssd1306_rotate_byte(wk2);
 			handle->page[pages].segment[seg] = wk2;
 		}
 
-	} else if (scroll == I2C_SSD1306_SCROLL_DOWN) {
+	} else if (scroll == SSD1306_SCROLL_DOWN) {
 		uint8_t _start = start; // 0 to {width-1}
 		uint8_t _end = end; // 0 to {width-1}
 		if (_end >= handle->width) _end = handle->width - 1;
@@ -808,8 +808,8 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 			for (uint8_t seg = _start; seg <= _end; seg++) {
 				wk0 = handle->page[page].segment[seg];
 				wk1 = handle->page[page-1].segment[seg];
-				if (handle->dev_config.flip_enabled) wk0 = i2c_ssd1306_rotate_byte(wk0);
-				if (handle->dev_config.flip_enabled) wk1 = i2c_ssd1306_rotate_byte(wk1);
+				if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
+				if (handle->dev_config.flip_enabled) wk1 = ssd1306_rotate_byte(wk1);
 				if (seg == 0) {
 					ESP_LOGD(TAG, "b page=%d wk0=%02x wk1=%02x", page, wk0, wk1);
 				}
@@ -820,7 +820,7 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 				if (seg == 0) {
 					ESP_LOGD(TAG, "a page=%d wk0=%02x wk1=%02x wk2=%02x", page, wk0, wk1, wk2);
 				}
-				if (handle->dev_config.flip_enabled) wk2 = i2c_ssd1306_rotate_byte(wk2);
+				if (handle->dev_config.flip_enabled) wk2 = ssd1306_rotate_byte(wk2);
 				handle->page[page].segment[seg] = wk2;
 			}
 		}
@@ -828,13 +828,13 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 		for (uint8_t seg = _start; seg <= _end; seg++) {
 			wk0 = handle->page[0].segment[seg];
 			wk1 = save[seg];
-			if (handle->dev_config.flip_enabled) wk0 = i2c_ssd1306_rotate_byte(wk0);
-			if (handle->dev_config.flip_enabled) wk1 = i2c_ssd1306_rotate_byte(wk1);
+			if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
+			if (handle->dev_config.flip_enabled) wk1 = ssd1306_rotate_byte(wk1);
 			wk0 = wk0 << 1;
 			wk1 = wk1 & 0x80;
 			wk1 = wk1 >> 7;
 			wk2 = wk0 | wk1;
-			if (handle->dev_config.flip_enabled) wk2 = i2c_ssd1306_rotate_byte(wk2);
+			if (handle->dev_config.flip_enabled) wk2 = ssd1306_rotate_byte(wk2);
 			handle->page[0].segment[seg] = wk2;
 		}
 
@@ -842,7 +842,7 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 
 	if(delay >= 0) {
 		for (uint8_t page = 0; page < handle->pages; page++) {
-			ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, page, 0, handle->page[page].segment, 128), TAG, "display image for wrap around failed");
+			ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page, 0, handle->page[page].segment, 128), TAG, "display image for wrap around failed");
 			if (delay) vTaskDelay(delay);
 		}
 	}
@@ -850,7 +850,7 @@ esp_err_t i2c_ssd1306_set_display_wrap_arround(i2c_ssd1306_handle_t handle, i2c_
 	return ESP_OK;
 }
 
-void i2c_ssd1306_invert_buffer(uint8_t *buf, size_t blen) {
+void ssd1306_invert_buffer(uint8_t *buf, size_t blen) {
 	uint8_t wk;
 	for(uint16_t i = 0; i < blen; i++) {
 		wk = buf[i];
@@ -858,7 +858,7 @@ void i2c_ssd1306_invert_buffer(uint8_t *buf, size_t blen) {
 	}
 }
 
-uint8_t i2c_ssd1306_copy_bit(uint8_t src, uint8_t src_bits, uint8_t dst, uint8_t dst_bits) {
+uint8_t ssd1306_copy_bit(uint8_t src, uint8_t src_bits, uint8_t dst, uint8_t dst_bits) {
 	ESP_LOGD(TAG, "src=%02x src_bits=%d dst=%02x dst_bits=%d", src, src_bits, dst, dst_bits);
 
 	uint8_t smask = 0x01 << src_bits;
@@ -876,14 +876,14 @@ uint8_t i2c_ssd1306_copy_bit(uint8_t src, uint8_t src_bits, uint8_t dst, uint8_t
 }
 
 // Flip upside down
-void i2c_ssd1306_flip_buffer(uint8_t *buf, size_t blen) {
+void ssd1306_flip_buffer(uint8_t *buf, size_t blen) {
 	for(uint16_t i = 0; i < blen; i++) {
-		buf[i] = i2c_ssd1306_rotate_byte(buf[i]);
+		buf[i] = ssd1306_rotate_byte(buf[i]);
 	}
 }
 
 
-uint8_t i2c_ssd1306_rotate_byte(uint8_t ch1) {
+uint8_t ssd1306_rotate_byte(uint8_t ch1) {
 	uint8_t ch2 = 0;
 
 	for (int8_t j = 0; j < 8; j++) {
@@ -894,7 +894,7 @@ uint8_t i2c_ssd1306_rotate_byte(uint8_t ch1) {
 	return ch2;
 }
 
-esp_err_t i2c_ssd1306_fadeout_display(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_fadeout_display(ssd1306_handle_t handle) {
 	uint8_t image[1];
 
 	/* validate parameters */
@@ -909,7 +909,7 @@ esp_err_t i2c_ssd1306_fadeout_display(i2c_ssd1306_handle_t handle) {
 				image[0] = image[0] << 1;
 			}
 			for(uint8_t seg = 0; seg < 128; seg++) {
-				ESP_RETURN_ON_ERROR(i2c_ssd1306_display_image(handle, page, seg, image, 1), TAG, "display image for fadeout failed");
+				ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page, seg, image, 1), TAG, "display image for fadeout failed");
 				handle->page[page].segment[seg] = image[0];
 			}
 		}
@@ -918,48 +918,48 @@ esp_err_t i2c_ssd1306_fadeout_display(i2c_ssd1306_handle_t handle) {
 	return ESP_OK;
 }
 
-static inline esp_err_t i2c_ssd1306_setup(i2c_ssd1306_handle_t handle) {
+static inline esp_err_t ssd1306_setup(ssd1306_handle_t handle) {
 	uint8_t	out_buf[27];
 	uint8_t	out_index = 0;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	out_buf[out_index++] = I2C_SSD1306_CONTROL_BYTE_CMD_STREAM;
-	out_buf[out_index++] = I2C_SSD1306_CMD_DISPLAY_OFF;	         // AE
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_MUX_RATIO;           // A8
+	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM;
+	out_buf[out_index++] = SSD1306_CMD_DISPLAY_OFF;	         // AE
+	out_buf[out_index++] = SSD1306_CMD_SET_MUX_RATIO;           // A8
 	if (handle->height == 64) out_buf[out_index++] = 0x3F;
 	if (handle->height == 32) out_buf[out_index++] = 0x1F;
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_DISPLAY_OFFSET;      // D3
+	out_buf[out_index++] = SSD1306_CMD_SET_DISPLAY_OFFSET;      // D3
 	out_buf[out_index++] = 0x00;
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_DISPLAY_START_LINE;	 // 40
+	out_buf[out_index++] = SSD1306_CMD_SET_DISPLAY_START_LINE;	 // 40
 	if (handle->dev_config.flip_enabled) {
-		out_buf[out_index++] = I2C_SSD1306_CMD_SET_SEGMENT_REMAP_0; // A0
+		out_buf[out_index++] = SSD1306_CMD_SET_SEGMENT_REMAP_0; // A0
 	} else {
-		out_buf[out_index++] = I2C_SSD1306_CMD_SET_SEGMENT_REMAP_1;  // A1
+		out_buf[out_index++] = SSD1306_CMD_SET_SEGMENT_REMAP_1;  // A1
 	}
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_COM_SCAN_MODE;		// C8
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_DISPLAY_CLK_DIV;		// D5
+	out_buf[out_index++] = SSD1306_CMD_SET_COM_SCAN_MODE;		// C8
+	out_buf[out_index++] = SSD1306_CMD_SET_DISPLAY_CLK_DIV;		// D5
 	out_buf[out_index++] = 0x80;
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_COM_PIN_MAP;			// DA
+	out_buf[out_index++] = SSD1306_CMD_SET_COM_PIN_MAP;			// DA
 	if (handle->height == 64) out_buf[out_index++] = 0x12;
 	if (handle->height == 32) out_buf[out_index++] = 0x02;
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_CONTRAST;			// 81
+	out_buf[out_index++] = SSD1306_CMD_SET_CONTRAST;			// 81
 	out_buf[out_index++] = 0xFF;
-	out_buf[out_index++] = I2C_SSD1306_CMD_DISPLAY_RAM;				// A4
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_VCOMH_DESELCT;		// DB
+	out_buf[out_index++] = SSD1306_CMD_DISPLAY_RAM;				// A4
+	out_buf[out_index++] = SSD1306_CMD_SET_VCOMH_DESELCT;		// DB
 	out_buf[out_index++] = 0x40;
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_MEMORY_ADDR_MODE;	// 20
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_PAGE_ADDR_MODE;		// 02
+	out_buf[out_index++] = SSD1306_CMD_SET_MEMORY_ADDR_MODE;	// 20
+	out_buf[out_index++] = SSD1306_CMD_SET_PAGE_ADDR_MODE;		// 02
 	// Set Lower Column Start Address for Page Addressing Mode
 	out_buf[out_index++] = 0x00;
 	// Set Higher Column Start Address for Page Addressing Mode
 	out_buf[out_index++] = 0x10;
-	out_buf[out_index++] = I2C_SSD1306_CMD_SET_CHARGE_PUMP;			// 8D
+	out_buf[out_index++] = SSD1306_CMD_SET_CHARGE_PUMP;			// 8D
 	out_buf[out_index++] = 0x14;
-	out_buf[out_index++] = I2C_SSD1306_CMD_DEACTIVE_SCROLL;			// 2E
-	out_buf[out_index++] = I2C_SSD1306_CMD_DISPLAY_NORMAL;			// A6
-	out_buf[out_index++] = I2C_SSD1306_CMD_DISPLAY_ON;				// AF
+	out_buf[out_index++] = SSD1306_CMD_DEACTIVE_SCROLL;			// 2E
+	out_buf[out_index++] = SSD1306_CMD_DISPLAY_NORMAL;			// A6
+	out_buf[out_index++] = SSD1306_CMD_DISPLAY_ON;				// AF
 
 	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write setup configuration failed");
 
@@ -968,7 +968,7 @@ static inline esp_err_t i2c_ssd1306_setup(i2c_ssd1306_handle_t handle) {
 	return ESP_OK;
 }
 
-esp_err_t i2c_ssd1306_init(i2c_master_bus_handle_t master_handle, const i2c_ssd1306_config_t *ssd1306_config, i2c_ssd1306_handle_t *ssd1306_handle) {
+esp_err_t ssd1306_init(i2c_master_bus_handle_t master_handle, const ssd1306_config_t *ssd1306_config, ssd1306_handle_t *ssd1306_handle) {
 	/* validate arguments */
 	ESP_ARG_CHECK( master_handle && ssd1306_config );
 
@@ -977,8 +977,8 @@ esp_err_t i2c_ssd1306_init(i2c_master_bus_handle_t master_handle, const i2c_ssd1
     ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ssd1306 device handle initialization failed", ssd1306_config->i2c_address);
 
 	/* validate memory availability for handle */
-	i2c_ssd1306_handle_t out_handle;
-    out_handle = (i2c_ssd1306_handle_t)calloc(1, sizeof(*out_handle));
+	ssd1306_handle_t out_handle;
+    out_handle = (ssd1306_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c ssd1306 device, init failed");
 
 	/* copy configuration */
@@ -997,7 +997,7 @@ esp_err_t i2c_ssd1306_init(i2c_master_bus_handle_t master_handle, const i2c_ssd1
     }
 
 	/* copy configuration */
-	if(out_handle->dev_config.panel_size == I2C_SSD1306_PANEL_128x32) {
+	if(out_handle->dev_config.panel_size == SSD1306_PANEL_128x32) {
 		out_handle->width 		= 128;
 		out_handle->height		= 32;
 		out_handle->pages 		= 4; 
@@ -1012,7 +1012,7 @@ esp_err_t i2c_ssd1306_init(i2c_master_bus_handle_t master_handle, const i2c_ssd1
 	}
 
 	/* attempt to setup display */
-	ESP_GOTO_ON_ERROR(i2c_ssd1306_setup(out_handle), err_handle, TAG, "panel setup for init failed");
+	ESP_GOTO_ON_ERROR(ssd1306_setup(out_handle), err_handle, TAG, "panel setup for init failed");
 
 	/* set device handle */
     *ssd1306_handle = out_handle;
@@ -1028,19 +1028,19 @@ esp_err_t i2c_ssd1306_init(i2c_master_bus_handle_t master_handle, const i2c_ssd1
         return ret;
 }
 
-esp_err_t i2c_ssd1306_remove(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_remove(ssd1306_handle_t handle) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
     return i2c_master_bus_rm_device(handle->i2c_handle);
 }
 
-esp_err_t i2c_ssd1306_delete(i2c_ssd1306_handle_t handle) {
+esp_err_t ssd1306_delete(ssd1306_handle_t handle) {
 	/* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* remove device from master bus */
-    ESP_RETURN_ON_ERROR( i2c_ssd1306_remove(handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
+    ESP_RETURN_ON_ERROR( ssd1306_remove(handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
 
     /* validate handle instance and free handles */
     if(handle->i2c_handle) {
@@ -1051,12 +1051,12 @@ esp_err_t i2c_ssd1306_delete(i2c_ssd1306_handle_t handle) {
     return ESP_OK;
 }
 
-const char* i2c_ssd1306_get_fw_version(void) {
-    return I2C_SSD1306_FW_VERSION_STR;
+const char* ssd1306_get_fw_version(void) {
+    return SSD1306_FW_VERSION_STR;
 }
 
-int32_t i2c_ssd1306_get_fw_version_number(void) {
-    return I2C_SSD1306_FW_VERSION_INT32;
+int32_t ssd1306_get_fw_version_number(void) {
+    return SSD1306_FW_VERSION_INT32;
 }
 
 

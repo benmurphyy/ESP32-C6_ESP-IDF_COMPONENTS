@@ -34,11 +34,11 @@ void i2c0_ahtxx_task( void *pvParameters ) {
     TickType_t         last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_ahtxx_config_t dev_cfg          = I2C_AHT20_CONFIG_DEFAULT;
-    i2c_ahtxx_handle_t dev_hdl;
+    ahtxx_config_t dev_cfg          = I2C_AHT20_CONFIG_DEFAULT;
+    ahtxx_handle_t dev_hdl;
     //
     // init device
-    i2c_ahtxx_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    ahtxx_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "ahtxx handle init failed");
         assert(dev_hdl);
@@ -50,7 +50,7 @@ void i2c0_ahtxx_task( void *pvParameters ) {
         //
         // handle sensor
         float temperature, humidity;
-        esp_err_t result = i2c_ahtxx_get_measurement(dev_hdl, &temperature, &humidity);
+        esp_err_t result = ahtxx_get_measurement(dev_hdl, &temperature, &humidity);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ahtxx device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -66,7 +66,7 @@ void i2c0_ahtxx_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_ahtxx_delete( dev_hdl );
+    ahtxx_delete( dev_hdl );
     vTaskDelete( NULL );
 }
 ```

@@ -22,18 +22,18 @@
  */
 
 /**
- * @file sgp4x_version.h
- * @defgroup drivers sht4x
+ * @file ccs811_version.h
+ * @defgroup drivers ccs811
  * @{
  *
- * ESP-IDF driver for sgp4x sensor
+ * ESP-IDF driver for ccs811 sensor
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __SGP4X_VERSION_H__
-#define __SGP4X_VERSION_H__
+#ifndef __CCS811_VERSION_H__
+#define __CCS811_VERSION_H__
 
 
 #ifdef __cplusplus
@@ -45,11 +45,11 @@ extern "C" {
  */
 
 /** Major version number (X.x.x) */
-#define SGP4X_FW_VERSION_MAJOR 1
+#define CCS811_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define SGP4X_FW_VERSION_MINOR 1
+#define CCS811_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define SGP4X_FW_VERSION_PATCH 0
+#define CCS811_FW_VERSION_PATCH 0
 
 
 /**
@@ -59,20 +59,20 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define SGP4X_STR_QUOTES( x ) #x
+#define CCS811_STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define SGP4X_STR( x ) SGP4X_STR_QUOTES( x )
+#define CCS811_STR( x ) CCS811_STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define SGP4X_FW_VERSION_STR                        \
-        SGP4X_STR( SGP4X_FW_VERSION_MAJOR ) "." \
-        SGP4X_STR( SGP4X_FW_VERSION_MINOR ) "." \
-        SGP4X_STR( SGP4X_FW_VERSION_PATCH )
+#define CCS811_FW_VERSION_STR                        \
+        CCS811_STR( CCS811_FW_VERSION_MAJOR ) "." \
+        CCS811_STR( CCS811_FW_VERSION_MINOR ) "." \
+        CCS811_STR( CCS811_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -80,7 +80,7 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define SGP4X_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define CCS811_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -89,28 +89,26 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define SGP4X_FW_VERSION_INT32                                      \
-        SGP4X_FW_VERSION_PARAMS_INT32(SGP4X_FW_VERSION_MAJOR,   \
-                                        SGP4X_FW_VERSION_MINOR,   \
-                                        SGP4X_FW_VERSION_PATCH)
+#define CCS811_FW_VERSION_INT32                                      \
+        CCS811_FW_VERSION_PARAMS_INT32(CCS811_FW_VERSION_MAJOR,   \
+                                        CCS811_FW_VERSION_MINOR,   \
+                                        CCS811_FW_VERSION_PATCH)
 
 
 
 /**
- * @brief Converts SGP4X firmware version numbers (major, minor, patch) into a string.
+ * @brief Converts CCS811 firmware version numbers (major, minor, patch) into a string.
  * 
- * @return char* SGP4X firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ * @return char* CCS811 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
-const char* sgp4x_get_fw_version(void);
+const char* ccs811_get_fw_version(void);
 
 /**
- * @brief Converts SGP4X firmware version numbers (major, minor, patch) into an integer value.
+ * @brief Converts CCS811 firmware version numbers (major, minor, patch) into an integer value.
  * 
- * @return int32_t SGP4X firmware version number.
+ * @return int32_t CCS811 firmware version number.
  */
-int32_t sgp4x_get_fw_version_number(void);
-
-
+int32_t ccs811_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
@@ -119,4 +117,4 @@ int32_t sgp4x_get_fw_version_number(void);
 
 /**@}*/
 
-#endif // __SGP4X_VERSION_H__
+#endif // __CCS811_VERSION_H__

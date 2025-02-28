@@ -67,7 +67,7 @@ extern "C" {
 #define I2C_AHT30_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
-    .sensor_type     = I2C_AHTXX_AHT30 }
+    .sensor_type     = AHTXX_AHT30 }
 
 /**
  * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht25 sensor type.
@@ -75,7 +75,7 @@ extern "C" {
 #define I2C_AHT25_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
-    .sensor_type     = I2C_AHTXX_AHT25 }
+    .sensor_type     = AHTXX_AHT25 }
 
 /**
  * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht21 sensor type.
@@ -83,7 +83,7 @@ extern "C" {
 #define I2C_AHT21_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
-    .sensor_type     = I2C_AHTXX_AHT21 }
+    .sensor_type     = AHTXX_AHT21 }
 
 /**
  * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht20 sensor type.
@@ -91,7 +91,7 @@ extern "C" {
 #define I2C_AHT20_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
-    .sensor_type     = I2C_AHTXX_AHT20 }
+    .sensor_type     = AHTXX_AHT20 }
 
 /**
  * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht10 sensor type.
@@ -99,7 +99,7 @@ extern "C" {
 #define I2C_AHT10_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AHTXX_DEV_CLK_SPD,       \
-    .sensor_type     = I2C_AHTXX_AHT10 }
+    .sensor_type     = AHTXX_AHT10 }
 
 
 
@@ -114,18 +114,18 @@ extern "C" {
  * The AHT10 and AHT20 are setup through the initialization command.  The AHT21, AHT25 and AHT30 are setup by resetting
  * 0x1b, 0x1c, and 0x1e initializing registers.
  */
-typedef enum i2c_ahtxx_sensor_types_s {
-    I2C_AHTXX_AHT10,    /*!< */
-    I2C_AHTXX_AHT20,
-    I2C_AHTXX_AHT21,
-    I2C_AHTXX_AHT25,
-    I2C_AHTXX_AHT30
-} i2c_ahtxx_sensor_types_t;
+typedef enum ahtxx_sensor_types_e {
+    AHTXX_AHT10,    /*!< */
+    AHTXX_AHT20,
+    AHTXX_AHT21,
+    AHTXX_AHT25,
+    AHTXX_AHT30
+} ahtxx_sensor_types_t;
 
 /**
  * @brief AHTXX status register structure definition.
  */
-typedef union __attribute__((packed)) i2c_ahtxx_status_register_u {
+typedef union __attribute__((packed)) ahtxx_status_register_u {
     struct {
         uint8_t reserved1:3; /*!< reserved                       (bit:0-2)  */
         bool calibrated:1;   /*!< ahtxx is calibrated when true  (bit:3) */
@@ -133,34 +133,34 @@ typedef union __attribute__((packed)) i2c_ahtxx_status_register_u {
         bool busy:1;         /*!< ahtxx is busy when true        (bit:7) */
     } bits;
     uint8_t reg;
-} i2c_ahtxx_status_register_t;
+} ahtxx_status_register_t;
 
 /**
  * @brief AHTXX configuration structure definition.
  */
-typedef struct i2c_ahtxx_config_s {
+typedef struct ahtxx_config_s {
     uint16_t          i2c_address;          /*!< ahtxx i2c device address */
     uint32_t          i2c_clock_speed;      /*!< ahtxx i2c device scl clock speed in hz */
-    i2c_ahtxx_sensor_types_t sensor_type;   /*!< aht sensor type, see `i2c_ahtxx_sensor_types_t` enumerator for support sensor types */
-} i2c_ahtxx_config_t;
+    ahtxx_sensor_types_t sensor_type;   /*!< aht sensor type, see `i2c_ahtxx_sensor_types_t` enumerator for support sensor types */
+} ahtxx_config_t;
 
 /**
  * @brief AHTXX context structure.
  */
-struct i2c_ahtxx_context_t {
-    i2c_ahtxx_config_t      dev_config; /*!< ahtxx device configuration */
+struct ahtxx_context_t {
+    ahtxx_config_t      dev_config; /*!< ahtxx device configuration */
     i2c_master_dev_handle_t i2c_handle; /*!< ahtxx i2c device handle */
 };
 
 /**
  * @brief AHTXX context structure definition.
  */
-typedef struct i2c_ahtxx_context_t i2c_ahtxx_context_t;
+typedef struct ahtxx_context_t ahtxx_context_t;
 
 /**
  * @brief AHTXX handle structure definition.
  */
-typedef struct i2c_ahtxx_context_t* i2c_ahtxx_handle_t;
+typedef struct ahtxx_context_t* ahtxx_handle_t;
 
 /**
  * public function and subroutine declarations
@@ -173,7 +173,7 @@ typedef struct i2c_ahtxx_context_t* i2c_ahtxx_handle_t;
  * @param[out] reg AHTXX status register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_status_register_t *const reg);
+esp_err_t ahtxx_get_status_register(ahtxx_handle_t handle, ahtxx_status_register_t *const reg);
 
 /**
  * @brief Initializes an AHTXX device onto the I2C master bus.
@@ -183,7 +183,7 @@ esp_err_t i2c_ahtxx_get_status_register(i2c_ahtxx_handle_t handle, i2c_ahtxx_sta
  * @param[out] ahtxx_handle AHTXX device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_init(const i2c_master_bus_handle_t master_handle, const i2c_ahtxx_config_t *ahtxx_config, i2c_ahtxx_handle_t *const ahtxx_handle);
+esp_err_t ahtxx_init(const i2c_master_bus_handle_t master_handle, const ahtxx_config_t *ahtxx_config, ahtxx_handle_t *const ahtxx_handle);
 
 /**
  * @brief Reads temperature and relative humidity from AHTXX.
@@ -193,7 +193,7 @@ esp_err_t i2c_ahtxx_init(const i2c_master_bus_handle_t master_handle, const i2c_
  * @param humidity Relative humidity in percentage.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t handle, float *const temperature, float *const humidity);
+esp_err_t ahtxx_get_measurement(ahtxx_handle_t handle, float *const temperature, float *const humidity);
 
 /**
  * @brief Similar to `i2c_aht2x_read_measurement` but it includes dewpoint in the results.
@@ -204,7 +204,7 @@ esp_err_t i2c_ahtxx_get_measurement(i2c_ahtxx_handle_t handle, float *const temp
  * @param[out] dewpoint Calculated dewpoint temperature in degree Celsius.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_measurements(i2c_ahtxx_handle_t handle, float *const temperature, float *const humidity, float *const dewpoint);
+esp_err_t ahtxx_get_measurements(ahtxx_handle_t handle, float *const temperature, float *const humidity, float *const dewpoint);
 
 /**
  * @brief Reads busy status flag from AHTXX.
@@ -213,7 +213,7 @@ esp_err_t i2c_ahtxx_get_measurements(i2c_ahtxx_handle_t handle, float *const tem
  * @param[out] busy AHTXX is busy when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_busy_status(i2c_ahtxx_handle_t handle, bool *const busy);
+esp_err_t ahtxx_get_busy_status(ahtxx_handle_t handle, bool *const busy);
 
 /**
  * @brief Reads calibration status flag from AHTXX.
@@ -222,7 +222,7 @@ esp_err_t i2c_ahtxx_get_busy_status(i2c_ahtxx_handle_t handle, bool *const busy)
  * @param[out] calibrated AHTXX is calibrated when true.  See `i2c_ahtxx_setup` and datasheet for details.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_calibration_status(i2c_ahtxx_handle_t handle, bool *const calibrated);
+esp_err_t ahtxx_get_calibration_status(ahtxx_handle_t handle, bool *const calibrated);
 
 /**
  * @brief Reads busy and calibrated status flags from AHTXX.
@@ -232,7 +232,7 @@ esp_err_t i2c_ahtxx_get_calibration_status(i2c_ahtxx_handle_t handle, bool *cons
  * @param[out] calibrated AHTXX is calibrated when true.  See `i2c_ahtxx_setup` and datasheet for details.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_get_status(i2c_ahtxx_handle_t handle, bool *const busy, bool *const calibrated);
+esp_err_t ahtxx_get_status(ahtxx_handle_t handle, bool *const busy, bool *const calibrated);
 
 /**
  * @brief Issues soft-reset and initializes AHTXX.  See datasheet for details.
@@ -240,7 +240,7 @@ esp_err_t i2c_ahtxx_get_status(i2c_ahtxx_handle_t handle, bool *const busy, bool
  * @param handle AHTXX device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_reset(i2c_ahtxx_handle_t handle);
+esp_err_t ahtxx_reset(ahtxx_handle_t handle);
 
 /**
  * @brief Removes an AHTXX device from master bus.
@@ -248,7 +248,7 @@ esp_err_t i2c_ahtxx_reset(i2c_ahtxx_handle_t handle);
  * @param[in] handle AHTXX device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_remove(i2c_ahtxx_handle_t handle);
+esp_err_t ahtxx_remove(ahtxx_handle_t handle);
 
 /**
  * @brief Removes an AHTXX device from master bus and frees handle.
@@ -256,7 +256,7 @@ esp_err_t i2c_ahtxx_remove(i2c_ahtxx_handle_t handle);
  * @param handle AHTXX device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_ahtxx_delete(i2c_ahtxx_handle_t handle);
+esp_err_t ahtxx_delete(ahtxx_handle_t handle);
 
 
 #ifdef __cplusplus

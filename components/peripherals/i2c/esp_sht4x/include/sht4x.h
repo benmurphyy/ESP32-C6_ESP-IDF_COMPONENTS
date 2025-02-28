@@ -69,8 +69,8 @@ extern "C" {
 #define I2C_SHT4X_CONFIG_DEFAULT {                      \
         .i2c_address    = I2C_SHT4X_DEV_ADDR_LO,        \
         .i2c_clock_speed= I2C_SHT4X_DEV_CLK_SPD,        \
-        .heater_mode    = I2C_SHT4X_HEATER_OFF,         \
-        .repeat_mode    = I2C_SHT4X_REPEAT_HIGH, }
+        .heater_mode    = SHT4X_HEATER_OFF,             \
+        .repeat_mode    = SHT4X_REPEAT_HIGH, }
 
 
 /**
@@ -99,40 +99,40 @@ typedef union {
 /** 
  * @brief SHT4X measurement heater modes enumerator definition.
 */
-typedef enum i2c_sht4x_heater_modes_e {
-    I2C_SHT4X_HEATER_OFF = 0,      /*!< heater is off, default */
-    I2C_SHT4X_HEATER_HIGH_LONG,    /*!< high power (~200mW), 1 second pulse */
-    I2C_SHT4X_HEATER_HIGH_SHORT,   /*!< high power (~200mW), 0.1 second pulse */
-    I2C_SHT4X_HEATER_MEDIUM_LONG,  /*!< medium power (~110mW), 1 second pulse */
-    I2C_SHT4X_HEATER_MEDIUM_SHORT, /*!< medium power (~110mW), 0.1 second pulse */
-    I2C_SHT4X_HEATER_LOW_LONG,     /*!< low power (~20mW), 1 second pulse */
-    I2C_SHT4X_HEATER_LOW_SHORT,    /*!< low power (~20mW), 0.1 second pulse */
-} i2c_sht4x_heater_modes_t;
+typedef enum sht4x_heater_modes_e {
+    SHT4X_HEATER_OFF = 0,      /*!< heater is off, default */
+    SHT4X_HEATER_HIGH_LONG,    /*!< high power (~200mW), 1 second pulse */
+    SHT4X_HEATER_HIGH_SHORT,   /*!< high power (~200mW), 0.1 second pulse */
+    SHT4X_HEATER_MEDIUM_LONG,  /*!< medium power (~110mW), 1 second pulse */
+    SHT4X_HEATER_MEDIUM_SHORT, /*!< medium power (~110mW), 0.1 second pulse */
+    SHT4X_HEATER_LOW_LONG,     /*!< low power (~20mW), 1 second pulse */
+    SHT4X_HEATER_LOW_SHORT,    /*!< low power (~20mW), 0.1 second pulse */
+} sht4x_heater_modes_t;
 
 /**
   * @brief SHT4X measurement repeatability modes enumerator definition.
  */
-typedef enum i2c_sht4x_repeat_modes_e {
-    I2C_SHT4X_REPEAT_HIGH = 0,     /*!< high repeatability (high resolution) */
-    I2C_SHT4X_REPEAT_MEDIUM,       /*!< medium repeatability (medium resolution) */
-    I2C_SHT4X_REPEAT_LOW           /*!< low repeatability (low resolution) */
-} i2c_sht4x_repeat_modes_t;
+typedef enum sht4x_repeat_modes_e {
+    SHT4X_REPEAT_HIGH = 0,     /*!< high repeatability (high resolution) */
+    SHT4X_REPEAT_MEDIUM,       /*!< medium repeatability (medium resolution) */
+    SHT4X_REPEAT_LOW           /*!< low repeatability (low resolution) */
+} sht4x_repeat_modes_t;
 
 /**
  * @brief SHT4X configuration structure definition.
  */
-typedef struct i2c_sht4x_config_s {
-    uint16_t                 i2c_address;       /*!< sht4x i2c device address */
-    uint32_t                 i2c_clock_speed;   /*!< sht4x i2c device scl clock speed  */
-    i2c_sht4x_repeat_modes_t repeat_mode;       /*!< sht4x measurement repeatability mode setting */
-    i2c_sht4x_heater_modes_t heater_mode;       /*!< sht4x measurement heater mode setting */
-} i2c_sht4x_config_t;
+typedef struct sht4x_config_s {
+    uint16_t             i2c_address;       /*!< sht4x i2c device address */
+    uint32_t             i2c_clock_speed;   /*!< sht4x i2c device scl clock speed  */
+    sht4x_repeat_modes_t repeat_mode;       /*!< sht4x measurement repeatability mode setting */
+    sht4x_heater_modes_t heater_mode;       /*!< sht4x measurement heater mode setting */
+} sht4x_config_t;
 
 /**
  * @brief SHT4X context structure.
  */
-struct i2c_sht4x_context_t {
-    i2c_sht4x_config_t       dev_config;      /*!< sht4x device configuration */
+struct sht4x_context_t {
+    sht4x_config_t           dev_config;      /*!< sht4x device configuration */
     i2c_master_dev_handle_t  i2c_handle;      /*!< sht4x i2c device handle */
     uint32_t                 serial_number;   /*!< sht4x device serial number */
 };
@@ -141,12 +141,12 @@ struct i2c_sht4x_context_t {
 /**
  * @brief SHT4X context structure definition.
  */
-typedef struct i2c_sht4x_context_t i2c_sht4x_context_t;
+typedef struct sht4x_context_t sht4x_context_t;
 
 /**
  * @brief SHT4X handle structure definition.
  */
-typedef struct i2c_sht4x_context_t* i2c_sht4x_handle_t;
+typedef struct sht4x_context_t* sht4x_handle_t;
 
 
 /**
@@ -157,7 +157,7 @@ typedef struct i2c_sht4x_context_t* i2c_sht4x_handle_t;
  * @param[out] sht4x_handle SHT4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_init(const i2c_master_bus_handle_t master_handle, const i2c_sht4x_config_t *sht4x_config, i2c_sht4x_handle_t *const sht4x_handle);
+esp_err_t sht4x_init(const i2c_master_bus_handle_t master_handle, const sht4x_config_t *sht4x_config, sht4x_handle_t *const sht4x_handle);
 
 /**
  * @brief Reads high-level measurements from SHT4X.  This is a blocking function.
@@ -171,7 +171,7 @@ esp_err_t i2c_sht4x_init(const i2c_master_bus_handle_t master_handle, const i2c_
  * @param[out] humidity Relative humidity in percentage.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t handle, float *const temperature, float *const humidity);
+esp_err_t sht4x_get_measurement(sht4x_handle_t handle, float *const temperature, float *const humidity);
 
 /**
  * @brief Similar to `i2c_sht4x_read_measurement` but it includes the dewpoint temperature in the results.
@@ -182,7 +182,7 @@ esp_err_t i2c_sht4x_get_measurement(i2c_sht4x_handle_t handle, float *const temp
  * @param[out] dewpoint Calculated dewpoint temperature in degree Celsius.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_get_measurements(i2c_sht4x_handle_t handle, float *const temperature, float *const humidity, float *const dewpoint);
+esp_err_t sht4x_get_measurements(sht4x_handle_t handle, float *const temperature, float *const humidity, float *const dewpoint);
 
 /**
  * @brief Reads measurement repeatability mode setting from SHT4X.
@@ -191,7 +191,7 @@ esp_err_t i2c_sht4x_get_measurements(i2c_sht4x_handle_t handle, float *const tem
  * @param mode Repeatability mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_get_repeat_mode(i2c_sht4x_handle_t handle, i2c_sht4x_repeat_modes_t *const mode);
+esp_err_t sht4x_get_repeat_mode(sht4x_handle_t handle, sht4x_repeat_modes_t *const mode);
 
 /**
  * @brief Writes measurement repeatability mode setting to SHT4X.
@@ -200,7 +200,7 @@ esp_err_t i2c_sht4x_get_repeat_mode(i2c_sht4x_handle_t handle, i2c_sht4x_repeat_
  * @param mode Repeatability mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_set_repeat_mode(i2c_sht4x_handle_t handle, const i2c_sht4x_repeat_modes_t mode);
+esp_err_t sht4x_set_repeat_mode(sht4x_handle_t handle, const sht4x_repeat_modes_t mode);
 
 /**
  * @brief Reads measurement heater mode setting from SHT4X.
@@ -209,7 +209,7 @@ esp_err_t i2c_sht4x_set_repeat_mode(i2c_sht4x_handle_t handle, const i2c_sht4x_r
  * @param mode Heater mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_get_heater_mode(i2c_sht4x_handle_t handle, i2c_sht4x_heater_modes_t *const mode);
+esp_err_t sht4x_get_heater_mode(sht4x_handle_t handle, sht4x_heater_modes_t *const mode);
 
 /**
  * @brief Writes measurement heater mode setting to SHT4X.
@@ -218,7 +218,7 @@ esp_err_t i2c_sht4x_get_heater_mode(i2c_sht4x_handle_t handle, i2c_sht4x_heater_
  * @param mode Heater mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_set_heater_mode(i2c_sht4x_handle_t handle, const i2c_sht4x_heater_modes_t mode);
+esp_err_t sht4x_set_heater_mode(sht4x_handle_t handle, const sht4x_heater_modes_t mode);
 
 /**
  * @brief Issues soft-reset to SHT4X.
@@ -226,7 +226,7 @@ esp_err_t i2c_sht4x_set_heater_mode(i2c_sht4x_handle_t handle, const i2c_sht4x_h
  * @param[in] handle SHT4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_reset(i2c_sht4x_handle_t handle);
+esp_err_t sht4x_reset(sht4x_handle_t handle);
 
 /**
  * @brief Removes an SHT4X device from master I2C bus.
@@ -234,7 +234,7 @@ esp_err_t i2c_sht4x_reset(i2c_sht4x_handle_t handle);
  * @param[in] handle SHT4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_remove(i2c_sht4x_handle_t handle);
+esp_err_t sht4x_remove(sht4x_handle_t handle);
 
 /**
  * @brief Removes an SHT4X device from master I2C bus and delete the handle.
@@ -242,7 +242,7 @@ esp_err_t i2c_sht4x_remove(i2c_sht4x_handle_t handle);
  * @param handle SHT4X device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_sht4x_delete(i2c_sht4x_handle_t handle);
+esp_err_t sht4x_delete(sht4x_handle_t handle);
 
 
 #ifdef __cplusplus
