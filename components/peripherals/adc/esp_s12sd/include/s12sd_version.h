@@ -35,6 +35,7 @@
 #ifndef __S12SD_VERSION_H__
 #define __S12SD_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

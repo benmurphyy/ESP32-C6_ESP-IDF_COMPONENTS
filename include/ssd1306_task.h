@@ -37,7 +37,6 @@
 
 #include <app_config.h>
 #include <ssd1306.h>
-#include <font8x8_latin.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -35,6 +35,7 @@
 #ifndef __AHTXX_VERSION_H__
 #define __AHTXX_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

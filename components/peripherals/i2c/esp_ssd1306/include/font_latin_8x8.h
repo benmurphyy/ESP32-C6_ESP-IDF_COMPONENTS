@@ -36,6 +36,8 @@
 #ifndef __FONT8X8_LATIN_H__
 #define __FONT8X8_LATIN_H__
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,7 +47,7 @@ extern "C" {
 
 
    Constant: font8x8_latin_tr
-   Contains an 90 digree transposed 8x8 font map for unicode points 
+   Contains an 90 degree transposed 8x8 font map for unicode points 
    
    U+0000 - U+00FF (latin)
    
@@ -74,10 +76,17 @@ extern "C" {
 	}
 */
 
+#define CHARS_8x8_COLS_LENGTH  8  // number of columns for chars
+
 
 // basic latin + control + extended latin
 
-static uint8_t font8x8_latin_tr[256][8] = {
+/**
+ * @brief 8x8 latin font map with control and extended characters.  This
+ *       font map is transposed 90 degrees for unicode points that are
+ *       compatible with the SSD13xx display panel.
+ */
+static const uint8_t font8x8_latin_tr[][CHARS_8x8_COLS_LENGTH] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0000 ()
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0001 ()
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0002 ()

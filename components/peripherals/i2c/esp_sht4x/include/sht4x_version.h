@@ -35,6 +35,7 @@
 #ifndef __SHT4X_VERSION_H__
 #define __SHT4X_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

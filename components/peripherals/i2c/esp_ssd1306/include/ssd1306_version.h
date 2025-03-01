@@ -35,6 +35,7 @@
 #ifndef __SSD1306_VERSION_H__
 #define __SSD1306_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

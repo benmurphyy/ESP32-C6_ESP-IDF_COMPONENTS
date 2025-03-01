@@ -35,6 +35,7 @@
 #ifndef __HDC1080_VERSION_H__
 #define __HDC1080_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

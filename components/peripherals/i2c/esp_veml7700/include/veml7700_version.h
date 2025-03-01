@@ -35,6 +35,7 @@
 #ifndef __VEML7700_VERSION_H__
 #define __VEML7700_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

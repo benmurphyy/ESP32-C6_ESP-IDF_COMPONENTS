@@ -35,6 +35,7 @@
 #ifndef __BMP280_VERSION_H__
 #define __BMP280_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

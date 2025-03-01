@@ -33,14 +33,14 @@
  * MIT Licensed as described in the file LICENSE
  */
 #include "include/ssd1306.h"
-#include "include/font8x8_latin.h"
+#include "include/font_latin_8x8.h"
 #include <string.h>
 #include <esp_log.h>
 #include <esp_check.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-// Following definitions are bollowed from 
+// Following definitions are borrowed from 
 // http://robotcantalk.blogspot.com/2015/03/interfacing-arduino-with-ssd1306-driven.html
 
 /* Control byte for i2c
@@ -57,22 +57,22 @@ Usage:
 0xC0 : Single Data byte 
 0x40 : Data Stream
 */
-#define SSD1306_CONTROL_BYTE_CMD_SINGLE    0x80
-#define SSD1306_CONTROL_BYTE_CMD_STREAM    0x00
-#define SSD1306_CONTROL_BYTE_DATA_SINGLE   0xC0
-#define SSD1306_CONTROL_BYTE_DATA_STREAM   0x40
+#define SSD1306_CONTROL_BYTE_CMD_SINGLE    0x80		// Continuation bit=1, D/C=0; 1000 0000
+#define SSD1306_CONTROL_BYTE_CMD_STREAM    0x00		// Continuation bit=0, D/C=0; 0000 0000
+#define SSD1306_CONTROL_BYTE_DATA_SINGLE   0xC0		// Continuation bit=1, D/C=1; 1100 0000
+#define SSD1306_CONTROL_BYTE_DATA_STREAM   0x40		// Continuation bit=0, D/C=1; 0100 0000
 
 // Fundamental commands (pg.28)
-#define SSD1306_CMD_SET_CONTRAST           0x81    // follow with 0x7F
-#define SSD1306_CMD_DISPLAY_RAM            0xA4
-#define SSD1306_CMD_DISPLAY_ALLON          0xA5
-#define SSD1306_CMD_DISPLAY_NORMAL         0xA6
-#define SSD1306_CMD_DISPLAY_INVERTED       0xA7
-#define SSD1306_CMD_DISPLAY_OFF            0xAE
-#define SSD1306_CMD_DISPLAY_ON             0xAF
+#define SSD1306_CMD_SET_CONTRAST           0x81     // Set Contrast Control, Double byte command to select 1 to 256 contrast steps, increases as the value increases
+#define SSD1306_CMD_DISPLAY_RAM            0xA4		// Entire Display ON, Output ignores RAM content
+#define SSD1306_CMD_DISPLAY_ALLON          0xA5		// Resume to RAM content display, Output follows RAM content
+#define SSD1306_CMD_DISPLAY_NORMAL         0xA6		// Normal display, 0 in RAM: OFF in display panel, 1 in RAM: ON in display panel
+#define SSD1306_CMD_DISPLAY_INVERTED       0xA7		// Inverse display, 0 in RAM: ON in display panel, 1 in RAM: OFF in display panel
+#define SSD1306_CMD_DISPLAY_OFF            0xAE		// Display OFF (sleep mode)
+#define SSD1306_CMD_DISPLAY_ON             0xAF		// Display ON in normal mode
 
 // Addressing Command Table (pg.30)
-#define SSD1306_CMD_SET_MEMORY_ADDR_MODE   0x20
+#define SSD1306_CMD_SET_MEMORY_ADDR_MODE   0x20    // Set Memory Addressing Mode
 #define SSD1306_CMD_SET_HORI_ADDR_MODE     0x00    // Horizontal Addressing Mode
 #define SSD1306_CMD_SET_VERT_ADDR_MODE     0x01    // Vertical Addressing Mode
 #define SSD1306_CMD_SET_PAGE_ADDR_MODE     0x02    // Page Addressing Mode
@@ -81,13 +81,15 @@ Usage:
 
 // Hardware Config (pg.31)
 #define SSD1306_CMD_SET_DISPLAY_START_LINE 0x40
-#define SSD1306_CMD_SET_SEGMENT_REMAP_0    0xA0    
-#define SSD1306_CMD_SET_SEGMENT_REMAP_1    0xA1    
-#define SSD1306_CMD_SET_MUX_RATIO          0xA8    // follow with 0x3F = 64 MUX
+#define SSD1306_CMD_SET_SEGMENT_REMAP_0    0xA0		// Set Segment Re-map, X[0]=0b column address 0 is mapped to SEG0    
+#define SSD1306_CMD_SET_SEGMENT_REMAP_1    0xA1    	// Set Segment Re-map, X[0]=1b: column address 127 is mapped to SEG0
+#define SSD1306_CMD_SET_MUX_RATIO          0xA8		// Set MUX ratio to N+1 MUX, N=A[5:0] : from 32MUX, 64MUX, and 128MUX
 #define SSD1306_CMD_SET_COM_SCAN_MODE      0xC8    
-#define SSD1306_CMD_SET_DISPLAY_OFFSET     0xD3    // follow with 0x00
-#define SSD1306_CMD_SET_COM_PIN_MAP        0xDA    // follow with 0x12
-#define SSD1306_CMD_NOP                    0xE3    // NOP
+#define SSD1306_CMD_SET_DISPLAY_OFFSET     0xD3    	// follow with 0x00
+#define SSD1306_CMD_SET_COM_PIN_MAP        0xDA    	// Set COM Pins Hardware Configuration,
+													// A[4]=0b, Sequential COM pin configuration, A[4]=1b(RESET), Alternative COM pin configuration
+                                          			// A[5]=0b(RESET), Disable COM Left/Right remap, A[5]=1b, Enable COM Left/Right remap 
+#define SSD1306_CMD_NOP                    0xE3    	// No operation
 
 // Timing and Driving Scheme (pg.32)
 #define SSD1306_CMD_SET_DISPLAY_CLK_DIV    0xD5    // follow with 0x80
@@ -300,7 +302,27 @@ esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer) {
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+	uint8_t i, j, byte_width = (width + 7) / 8;
+
+	/* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+	for (j = 0; j < height; j++) {
+        for (i = 0; i < width; i++) {
+            if (*(bitmap + j * byte_width + i / 8) & (128 >> (i & 7))) {
+                ssd1306_set_pixel(handle, xpos + i, ypos + j, 0);
+            }
+        }
+    }
+
+	ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for bitmap failed");
+
+	return ESP_OK;
+}
+
+/* this works fine for a 128x32 but the pages repeat after page 3, e.g. pages 0-3 and 4-7 are the same */
+esp_err_t ssd1306_display_bitmap__(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -316,13 +338,12 @@ esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t 
 	uint8_t page = (ypos / 8);
 	uint8_t _seg = xpos;
 	uint8_t dstBits = (ypos % 8);
+	uint8_t offset = 0;
 
 	ESP_LOGD(TAG, "ypos=%d page=%d dstBits=%d", ypos, page, dstBits);
 
-	uint8_t offset = 0;
-
-	for(uint16_t _height = 0; _height < height; _height++) {
-		for (uint16_t index = 0; index < _width; index++) {
+	for(uint8_t _height = 0; _height < height; _height++) {
+		for (uint8_t index = 0; index < _width; index++) {
 			for (int8_t srcBits=7; srcBits>=0; srcBits--) {
 				wk0 = handle->page[page].segment[_seg];
 				if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
@@ -353,7 +374,7 @@ esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t 
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t segment, uint8_t *image, uint8_t width) {
+esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const uint8_t *image, uint8_t width) {
 	esp_err_t ret = ESP_OK;
 
 	/* validate parameters */
@@ -372,7 +393,7 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	}
 
 	uint8_t *out_buf;
-	out_buf = malloc(width + 1);
+	out_buf = malloc(width < 4 ? 4 : width + 1);
 	if (out_buf == NULL) {
 		ESP_LOGE(TAG, "malloc for image display failed");
 		return ESP_ERR_NO_MEM;
@@ -407,7 +428,7 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	return ret;
 }
 
-esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -429,7 +450,7 @@ esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, char *text
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -479,8 +500,7 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, char *t
 	return ESP_OK;
 }
 
-// by Coert Vonk
-esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -590,7 +610,7 @@ esp_err_t ssd1306_set_software_scroll(ssd1306_handle_t handle, uint8_t start, ui
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -637,7 +657,7 @@ esp_err_t ssd1306_clear_scroll_display(ssd1306_handle_t handle) {
 }
 
 esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, ssd1306_scroll_frames_t frame_frequency) {
-    uint8_t out_buf[11];
+    uint8_t out_buf[15];
     uint8_t out_index = 0;
 
 	/* validate parameters */
@@ -650,7 +670,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
 		out_buf[out_index++] = frame_frequency; // Frame frequency
-		out_buf[out_index++] = 0x07; // Define end page address
+		out_buf[out_index++] = 0x01; // Define end page address
 		out_buf[out_index++] = 0x00; // Dummy byte 0x00
 		out_buf[out_index++] = 0xFF; // Dummy byte 0xFF
 		out_buf[out_index++] = SSD1306_CMD_ACTIVE_SCROLL; // 2F
@@ -661,7 +681,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
 		out_buf[out_index++] = frame_frequency; // Frame frequency
-		out_buf[out_index++] = 0x07; // Define end page address
+		out_buf[out_index++] = 0x01; // Define end page address
 		out_buf[out_index++] = 0x00; //
 		out_buf[out_index++] = 0xFF; //
 		out_buf[out_index++] = SSD1306_CMD_ACTIVE_SCROLL; // 2F
@@ -677,6 +697,8 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 
 		out_buf[out_index++] = SSD1306_CMD_VERTICAL; // A3
 		out_buf[out_index++] = 0x00;
+		if (handle->height == 128)
+			out_buf[out_index++] = 0x80;
 		if (handle->height == 64)
 			out_buf[out_index++] = 0x40;
 		if (handle->height == 32)
@@ -694,6 +716,8 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 
 		out_buf[out_index++] = SSD1306_CMD_VERTICAL; // A3
 		out_buf[out_index++] = 0x00;
+		if (handle->height == 128)
+			out_buf[out_index++] = 0x80;
 		if (handle->height == 64)
 			out_buf[out_index++] = 0x40;
 		if (handle->height == 32)
@@ -843,7 +867,7 @@ esp_err_t ssd1306_set_display_wrap_around(ssd1306_handle_t handle, ssd1306_scrol
 	if(delay >= 0) {
 		for (uint8_t page = 0; page < handle->pages; page++) {
 			ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page, 0, handle->page[page].segment, 128), TAG, "display image for wrap around failed");
-			if (delay) vTaskDelay(delay);
+			if (delay) vTaskDelay(delay / portTICK_PERIOD_MS);;
 		}
 	}
 
@@ -919,7 +943,7 @@ esp_err_t ssd1306_fadeout_display(ssd1306_handle_t handle) {
 }
 
 static inline esp_err_t ssd1306_setup(ssd1306_handle_t handle) {
-	uint8_t	out_buf[27];
+	uint8_t	out_buf[40];
 	uint8_t	out_index = 0;
 
 	/* validate parameters */
@@ -928,6 +952,7 @@ static inline esp_err_t ssd1306_setup(ssd1306_handle_t handle) {
 	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM;
 	out_buf[out_index++] = SSD1306_CMD_DISPLAY_OFF;	         // AE
 	out_buf[out_index++] = SSD1306_CMD_SET_MUX_RATIO;           // A8
+	if (handle->height == 128) out_buf[out_index++] = 0x7F;
 	if (handle->height == 64) out_buf[out_index++] = 0x3F;
 	if (handle->height == 32) out_buf[out_index++] = 0x1F;
 	out_buf[out_index++] = SSD1306_CMD_SET_DISPLAY_OFFSET;      // D3
@@ -941,7 +966,8 @@ static inline esp_err_t ssd1306_setup(ssd1306_handle_t handle) {
 	out_buf[out_index++] = SSD1306_CMD_SET_COM_SCAN_MODE;		// C8
 	out_buf[out_index++] = SSD1306_CMD_SET_DISPLAY_CLK_DIV;		// D5
 	out_buf[out_index++] = 0x80;
-	out_buf[out_index++] = SSD1306_CMD_SET_COM_PIN_MAP;			// DA
+	out_buf[out_index++] = SSD1306_CMD_SET_COM_PIN_MAP;			// DA 0x12 if height > 32 else 0x02
+	if (handle->height == 128) out_buf[out_index++] = 0x12;
 	if (handle->height == 64) out_buf[out_index++] = 0x12;
 	if (handle->height == 32) out_buf[out_index++] = 0x02;
 	out_buf[out_index++] = SSD1306_CMD_SET_CONTRAST;			// 81
@@ -1001,10 +1027,14 @@ esp_err_t ssd1306_init(i2c_master_bus_handle_t master_handle, const ssd1306_conf
 		out_handle->width 		= 128;
 		out_handle->height		= 32;
 		out_handle->pages 		= 4; 
-	} else {
+	} else if(out_handle->dev_config.panel_size == SSD1306_PANEL_128x64) {
 		out_handle->width 		= 128;
 		out_handle->height		= 64;
 		out_handle->pages		= 8;
+	} else {
+		out_handle->width 		= 128;
+		out_handle->height		= 128;
+		out_handle->pages		= 16;
 	}
 
 	for (uint8_t i = 0; i < out_handle->pages; i++) {
