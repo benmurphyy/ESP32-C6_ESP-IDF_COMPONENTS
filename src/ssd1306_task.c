@@ -68,9 +68,10 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_set_display_contrast(handle, 0xff);
 	ssd1306_clear_display(handle, false);
 	ssd1306_display_bitmap(handle, 31, 0, data_rx_icon_32x32, 32, 32, false);
-	vTaskDelay(500 / portTICK_PERIOD_MS);
+	vTaskDelay(1500 / portTICK_PERIOD_MS);
+	ssd1306_clear_display(handle, false);
 	ssd1306_display_bitmap(handle, 31, 0, data_tx_icon_32x32, 32, 32, false);
-	vTaskDelay(1000 / portTICK_PERIOD_MS);
+	vTaskDelay(1500 / portTICK_PERIOD_MS);
 
 	// Display x2 text
 	ESP_LOGI(APP_TAG, "Display x2 Text");
@@ -89,17 +90,39 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_display_text(handle, 2, "SSD1306 128x64", 15, true);
 	ssd1306_display_text(handle, 3, "Hello World!!", 14, true);
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+	// Display TextBox
+	ESP_LOGI(APP_TAG, "Display TextBox Banner");
+	ssd1306_clear_display(handle, false);
+	ssd1306_set_display_contrast(handle, 0xff);
+	ssd1306_display_textbox_banner(handle, 0, 48, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, 26, false, 25);
+	ssd1306_display_textbox_banner(handle, 1, 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8, 26, false, 10);
+	ssd1306_display_textbox_banner(handle, 2, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, 26, false, 25);
+	ssd1306_display_textbox_banner(handle, 3,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, 26, false, 15);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	// Display TextBox
+	ESP_LOGI(APP_TAG, "Display TextBox Ticker");
+	ssd1306_clear_display(handle, false);
+	ssd1306_set_display_contrast(handle, 0xff);
+	ssd1306_display_textbox_ticker(handle, 4, 48, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, 26, false, 25);
+	ssd1306_display_textbox_ticker(handle, 5, 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8, 26, false, 10);
+	ssd1306_display_textbox_ticker(handle, 6, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, 26, false, 25);
+	ssd1306_display_textbox_ticker(handle, 7,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, 26, false, 15);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	
 	// Display Count Down
 	ESP_LOGI(APP_TAG, "Display Count Down");
 	memset(image, 0, sizeof(image));
+	ssd1306_clear_display(handle, false);
+	ssd1306_set_display_contrast(handle, 0xff);
 	ssd1306_display_image(handle, top, (6*8-1), image, sizeof(image));
 	ssd1306_display_image(handle, top+1, (6*8-1), image, sizeof(image));
 	ssd1306_display_image(handle, top+2, (6*8-1), image, sizeof(image));
 	for(int font = 0x39; font > 0x30; font--) {
 		memset(image, 0, sizeof(image));
 		ssd1306_display_image(handle, top+1, (7*8-1), image, 8);
-		memcpy(image, font8x8_latin_tr[font], 8);
+		memcpy(image, font_latin_8x8_tr[font], 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
 		ssd1306_display_image(handle, top+1, (7*8-1), image, 8);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
@@ -244,10 +267,12 @@ static void ssd1306_contrast_demo(ssd1306_handle_t handle) {
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 
-	ssd1306_clear_display(handle, false);
-
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	ssd1306_clear_display(handle, false);
 }
+
+
 
 void i2c0_ssd1306_task( void *pvParameters ) {
     // initialize the xLastWakeTime variable with the current time.
@@ -282,12 +307,12 @@ void i2c0_ssd1306_task( void *pvParameters ) {
 		//
 		// contrast demo
 		ssd1306_contrast_demo(dev_hdl);
-        //
+		//
         ESP_LOGI(APP_TAG, "######################## SSD1306 - END ###########################");
         //
         //
         // pause the task per defined wait period
-        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE + 50 );
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE + 110 );
     }
     //
     // free resources

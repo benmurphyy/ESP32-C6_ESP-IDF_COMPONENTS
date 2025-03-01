@@ -43,9 +43,7 @@ extern "C" {
 #endif
 
 /*
-   https://github.com/dhepper/font8x8/blob/master/font8x8_control.h
-
-
+ 
    Constant: font8x8_latin_tr
    Contains an 90 degree transposed 8x8 font map for unicode points 
    
@@ -76,7 +74,31 @@ extern "C" {
 	}
 */
 
-#define CHARS_8x8_COLS_LENGTH  8  // number of columns for chars
+/*
+static const struct {
+    unsigned int   width;
+    unsigned int   height;
+    unsigned int   bytes_per_pixel; // 3:RGB, 4:RGBA  
+    char          *comment;
+    unsigned char  pixel_data[8 * 8 * 3 + 1];
+  } gimp_image = {
+    8, 8, 3,
+    "Created with GIMP",
+    "\377\377\377\377\377\377\0\0\0\377\377\377\377\377\377\377\377\377\377\377"
+    "\377\377\377\377\377\377\377\377\377\377\0\0\0\377\377\377\377\377\377\377"
+    "\377\377\377\377\377\377\377\377\377\377\377\377\377\377\0\0\0\377\377\377"
+    "\0\0\0\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\0\0\0"
+    "\0\0\0\377\377\377\0\0\0\377\377\377\377\377\377\377\377\377\377\377\377"
+    "\0\0\0\377\377\377\377\377\377\377\377\377\0\0\0\377\377\377\377\377\377"
+    "\377\377\377\0\0\0\377\377\377\377\377\377\377\377\377\0\0\0\377\377\377"
+    "\377\377\377\377\377\377\0\0\0\377\377\377\377\377\377\0\0\0\377\377\377"
+    "\377\377\377\377\377\377\377\377\377\0\0\0\0\0\0\0\0\0\0\0\0\377\377\377"
+    "\377\377\377",
+  };
+*/
+
+#define FONT_LATIN_8x8_COLS_SIZE  8    // number of columns for chars
+#define FONT_LATIN_8x8_ROWS_SIZE  256  // number of rows for chars
 
 
 // basic latin + control + extended latin
@@ -86,7 +108,7 @@ extern "C" {
  *       font map is transposed 90 degrees for unicode points that are
  *       compatible with the SSD13xx display panel.
  */
-static const uint8_t font8x8_latin_tr[][CHARS_8x8_COLS_LENGTH] = {
+static const uint8_t font_latin_8x8_tr[FONT_LATIN_8x8_ROWS_SIZE][FONT_LATIN_8x8_COLS_SIZE] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0000 ()
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0001 ()
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0002 ()
@@ -119,7 +141,7 @@ static const uint8_t font8x8_latin_tr[][CHARS_8x8_COLS_LENGTH] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+001D ()
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+001E ()
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+001F ()
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0020 ( ) 
+    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // U+0020 ( ) space
     { 0x00, 0x00, 0x06, 0x5F, 0x5F, 0x06, 0x00, 0x00 },   // U+0021 (!)
     { 0x00, 0x03, 0x03, 0x00, 0x03, 0x03, 0x00, 0x00 },   // U+0022 (")
     { 0x14, 0x7F, 0x7F, 0x14, 0x7F, 0x7F, 0x14, 0x00 },   // U+0023 (#)

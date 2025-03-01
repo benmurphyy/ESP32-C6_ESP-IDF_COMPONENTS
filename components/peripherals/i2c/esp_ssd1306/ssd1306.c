@@ -119,6 +119,15 @@ Usage:
 */
 static const char *TAG = "ssd1306";
 
+/**
+ * @brief SSD1306 panel properties for each display panel size supported.
+ */
+static const ssd1306_panel_t ssd1306_panel_properties[] = {
+	{ .panel_size = SSD1306_PANEL_128x32, .width = SSD1306_PANEL_128x32_WIDTH, .height = SSD1306_PANEL_128x32_HEIGHT, .pages = SSD1306_PAGE_128x32_SIZE },
+	{ .panel_size = SSD1306_PANEL_128x64, .width = SSD1306_PANEL_128x64_WIDTH, .height = SSD1306_PANEL_128x64_HEIGHT, .pages = SSD1306_PAGE_128x64_SIZE },
+	{ .panel_size = SSD1306_PANEL_128x128, .width = SSD1306_PANEL_128x128_WIDTH, .height = SSD1306_PANEL_128x128_HEIGHT, .pages = SSD1306_PAGE_128x128_SIZE }
+};
+
 typedef union i2c_ssd1306_out_column_t {
 	uint32_t u32;
 	uint8_t  u8[4];
@@ -440,7 +449,7 @@ esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char
 	uint8_t image[8];
 
 	for (uint8_t i = 0; i < text_len; i++) {
-		memcpy(image, font8x8_latin_tr[(uint8_t)text[i]], 8);
+		memcpy(image, font_latin_8x8_tr[(uint8_t)text[i]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
 		ESP_RETURN_ON_ERROR(ssd1306_display_image(handle, page, seg, image, 8), TAG, "display image for display text failed");
@@ -461,7 +470,7 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const c
 	uint8_t seg = 0;
 
 	for (uint8_t nn = 0; nn < text_len; nn++) {
-		uint8_t const * const in_columns = font8x8_latin_tr[(uint8_t)text[nn]];
+		uint8_t const * const in_columns = font_latin_8x8_tr[(uint8_t)text[nn]];
 
 		// make the character 2x as high
 		i2c_ssd1306_out_column_t out_columns[8];
@@ -511,7 +520,7 @@ esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const c
 	uint8_t seg = 0;
 
 	for (uint8_t nn = 0; nn < text_len; nn++) {
-		uint8_t const * const in_columns = font8x8_latin_tr[(uint8_t)text[nn]];
+		uint8_t const * const in_columns = font_latin_8x8_tr[(uint8_t)text[nn]];
 
 		// make the character 3x as high
 		i2c_ssd1306_out_column_t out_columns[8];
@@ -546,6 +555,97 @@ esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const c
 			memcpy(&handle->page[page+yy].segment[seg], image, 24);
 		}
 		seg = seg + 24;
+	}
+
+	return ESP_OK;
+}
+
+esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay) {
+	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
+	uint8_t text_box_pixel = box_width * 8;
+	if (segment + text_box_pixel > handle->width) return ESP_ERR_INVALID_SIZE;
+    if (text_len > 100) text_len = 100;
+
+	uint8_t _seg = segment;
+	uint8_t image[8];
+
+	for (int i = 0; i < box_width; i++) {
+		memcpy(image, font_latin_8x8_tr[(uint8_t)text[i]], 8);
+		if (invert) ssd1306_invert_buffer(image, 8);
+		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
+		ssd1306_display_image(handle, page, _seg, image, 8);
+		_seg = _seg + 8;
+	}
+	vTaskDelay(delay / portTICK_PERIOD_MS);
+
+	// Horizontally scroll inside the box
+	for (int _text=box_width; _text<text_len; _text++) {
+		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
+		if (invert) ssd1306_invert_buffer(image, 8);
+		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
+		for (int _bit=0;_bit<8;_bit++) {
+			for (int _pixel=0;_pixel<text_box_pixel;_pixel++) {
+				//ESP_LOGI(TAG, "_text=%d _bit=%d _pixel=%d", _text, _bit, _pixel);
+				handle->page[page].segment[_pixel+segment] = handle->page[page].segment[_pixel+segment+1];
+			}
+			handle->page[page].segment[segment+text_box_pixel-1] = image[_bit];
+			ssd1306_display_image(handle, page, segment, &handle->page[page].segment[segment], text_box_pixel);
+			vTaskDelay(delay / portTICK_PERIOD_MS);
+		}
+	}
+
+	return ESP_OK;
+}
+
+esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay) {
+	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
+	uint8_t text_box_pixel = box_width * 8;
+	if (segment + text_box_pixel > handle->width) return ESP_ERR_INVALID_SIZE;
+    if (text_len > 100) text_len = 100;
+
+	uint8_t _seg = segment;
+	uint8_t image[8];
+
+    // fill box with spaces
+	for (int i = 0; i < box_width; i++) {
+		memcpy(image, font_latin_8x8_tr[21], 8);
+		if (invert) ssd1306_invert_buffer(image, 8);
+		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
+		ssd1306_display_image(handle, page, _seg, image, 8);
+		_seg = _seg + 8;
+	}
+	vTaskDelay(delay / portTICK_PERIOD_MS);
+
+	// Horizontally scroll inside the box
+	for (int _text=0; _text<text_len; _text++) {
+		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
+		if (invert) ssd1306_invert_buffer(image, 8);
+		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
+		for (int _bit=0;_bit<8;_bit++) {
+			for (int _pixel=0;_pixel<text_box_pixel;_pixel++) {
+				//ESP_LOGI(TAG, "_text=%d _bit=%d _pixel=%d", _text, _bit, _pixel);
+				handle->page[page].segment[_pixel+segment] = handle->page[page].segment[_pixel+segment+1];
+			}
+			handle->page[page].segment[segment+text_box_pixel-1] = image[_bit];
+			ssd1306_display_image(handle, page, segment, &handle->page[page].segment[segment], text_box_pixel);
+			vTaskDelay(delay / portTICK_PERIOD_MS);
+		}
+	}
+
+    // Horizontally scroll inside the box
+	for (int _text=0; _text<box_width; _text++) {
+		memcpy(image, font_latin_8x8_tr[21], 8);
+		if (invert) ssd1306_invert_buffer(image, 8);
+		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
+		for (int _bit=0;_bit<8;_bit++) {
+			for (int _pixel=0;_pixel<text_box_pixel;_pixel++) {
+				//ESP_LOGI(TAG, "_text=%d _bit=%d _pixel=%d", _text, _bit, _pixel);
+				handle->page[page].segment[_pixel+segment] = handle->page[page].segment[_pixel+segment+1];
+			}
+			handle->page[page].segment[segment+text_box_pixel-1] = image[_bit];
+			ssd1306_display_image(handle, page, segment, &handle->page[page].segment[segment], text_box_pixel);
+			vTaskDelay(delay / portTICK_PERIOD_MS);
+		}
 	}
 
 	return ESP_OK;
@@ -1022,23 +1122,14 @@ esp_err_t ssd1306_init(i2c_master_bus_handle_t master_handle, const ssd1306_conf
         ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus for init failed");
     }
 
-	/* copy configuration */
-	if(out_handle->dev_config.panel_size == SSD1306_PANEL_128x32) {
-		out_handle->width 		= 128;
-		out_handle->height		= 32;
-		out_handle->pages 		= 4; 
-	} else if(out_handle->dev_config.panel_size == SSD1306_PANEL_128x64) {
-		out_handle->width 		= 128;
-		out_handle->height		= 64;
-		out_handle->pages		= 8;
-	} else {
-		out_handle->width 		= 128;
-		out_handle->height		= 128;
-		out_handle->pages		= 16;
-	}
+    /* set panel properties */
+	out_handle->width  = ssd1306_panel_properties[out_handle->dev_config.panel_size].width;
+	out_handle->height = ssd1306_panel_properties[out_handle->dev_config.panel_size].height;
+	out_handle->pages  = ssd1306_panel_properties[out_handle->dev_config.panel_size].pages;
 
+    /* initialize page and segment buffer */
 	for (uint8_t i = 0; i < out_handle->pages; i++) {
-		memset(out_handle->page[i].segment, 0, 128);
+		memset(out_handle->page[i].segment, 0, SSD1306_PAGE_SEGMENT_SIZE);
 	}
 
 	/* attempt to setup display */
@@ -1088,5 +1179,3 @@ const char* ssd1306_get_fw_version(void) {
 int32_t ssd1306_get_fw_version_number(void) {
     return SSD1306_FW_VERSION_INT32;
 }
-
-

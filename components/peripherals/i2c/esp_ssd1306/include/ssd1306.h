@@ -57,6 +57,20 @@ extern "C" {
 
 #define I2C_SSD1306_DEV_ADDR               		UINT8_C(0x3c)   //!< ssd1306 I2C address
 
+
+#define SSD1306_PAGE_SEGMENT_SIZE				128		//!< ssd1306 segment size
+#define SSD1306_PAGE_128x32_SIZE				4		//!< ssd1306 128x32 page size
+#define SSD1306_PAGE_128x64_SIZE				8		//!< ssd1306 128x64 page size
+#define SSD1306_PAGE_128x128_SIZE				16		//!< ssd1306 128x128 page size
+
+#define SSD1306_PANEL_128x32_WIDTH				128		//!< ssd1306 128x32 panel width
+#define SSD1306_PANEL_128x64_WIDTH				128		//!< ssd1306 128x64 panel width
+#define SSD1306_PANEL_128x128_WIDTH				128		//!< ssd1306 128x128 panel width
+
+#define SSD1306_PANEL_128x32_HEIGHT				32		//!< ssd1306 128x32 panel height
+#define SSD1306_PANEL_128x64_HEIGHT				64		//!< ssd1306 128x64 panel height
+#define SSD1306_PANEL_128x128_HEIGHT			128		//!< ssd1306 128x128 panel height
+
 /**
  * public macro definitions
  */
@@ -96,6 +110,7 @@ extern "C" {
  * enumerator and structure declarations
 */
 
+
 /**
  * @brief SSD1306 scroll step in terms of frame frequency enumerator definition.
  * 
@@ -128,17 +143,27 @@ typedef enum ssd1306_scroll_types_e {
  * 
  */
 typedef enum ssd1306_panel_sizes_e {
-	SSD1306_PANEL_128x32  = 1, /*!< 128x32 ssd1306 display */
-	SSD1306_PANEL_128x64  = 2, /*!< 128x64 ssd1306 display */
-	SSD1306_PANEL_128x128 = 3  /*!< 128x128 ssd1327 display */
+	SSD1306_PANEL_128x32  = 0, /*!< 128x32 ssd1306 display */
+	SSD1306_PANEL_128x64  = 1, /*!< 128x64 ssd1306 display */
+	SSD1306_PANEL_128x128 = 2  /*!< 128x128 ssd1327 display */
 } ssd1306_panel_sizes_t;
 
 /**
  * @brief SSD1306 page structure definition.
  */
 typedef struct ssd1306_page_s {
-	uint8_t segment[128];		/*!< page segment data to display */
+	uint8_t segment[SSD1306_PAGE_SEGMENT_SIZE];		/*!< page segment data to display */
 } ssd1306_page_t;
+
+/**
+ * @brief SSD1306 panel structure definition.
+ */
+typedef struct ssd1306_panel_s {
+	ssd1306_panel_sizes_t	panel_size;	/*!< ssd1306 display panel size */
+	uint8_t 				width;		/*!< ssd1306 width of display panel */
+	uint8_t 				height;		/*!< ssd1306 height of display panel */
+	uint8_t 				pages;		/*!< ssd1306 number of pages supported by display panel */
+} ssd1306_panel_t;
 
 /**
  * @brief SSD1306 configuration structure definition.
@@ -308,7 +333,7 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
  * 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
- * @param text Text characters.
+ * @param text Text characters to display.
  * @param text_len Length of text (16-characters maximum).
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
@@ -322,7 +347,7 @@ esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char
  * 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
- * @param text Text characters.
+ * @param text Text characters to display.
  * @param text_len Length of text (8-characters maximum).
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
@@ -336,12 +361,42 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const c
  * 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
- * @param text Text characters.
+ * @param text Text characters to display.
  * @param text_len Length of text (5-characters maximum).
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert);
+
+/**
+ * @brief Displays scrolling text within a box as banner by page and segment on the SSD1306 with a maximum of 100-characters.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param page Index of page.
+ * @param seg Index of segment data.
+ * @param text Text characters to display.
+ * @param box_width Width of the box.
+ * @param text_len Length of text (100 characters maximum).
+ * @param invert Text is inverted when true.
+ * @param delay Delay in milliseconds before information is displayed, a value 0 there is no wait.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay);
+
+/**
+ * @brief Displays scrolling text within a box as a ticker by page and segment on the SSD1306 with a maximum of 100-characters.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param page Index of page.
+ * @param seg Index of segment data.
+ * @param text Text characters to display.
+ * @param box_width Width of the box.
+ * @param text_len Length of text (100 characters maximum).
+ * @param invert Text is inverted when true.
+ * @param delay Delay in milliseconds before information is displayed, a value 0 there is no wait.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay);
 
 /**
  * @brief Clears a page from the SSD1306 display.
