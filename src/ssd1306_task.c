@@ -45,8 +45,7 @@
 
 #include <ssd1306_task.h>
 #include <font_latin_8x8.h>
-#include <bitmap_64x64.h>
-#include <bitmap_32x32.h>
+#include <bitmap_icon.h>
 
 
 
@@ -193,11 +192,19 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 
 	ssd1306_clear_display(handle, false);
-	ssd1306_display_bitmap(handle, ((handle->width/2)-(64/2)), 0, biohazard_icon_64x64, 64, 64, false);
+	ssd1306_display_bitmap(handle, ((handle->width/2)-(70/2)), 0, biohazard_icon_70x64, 70, 64, false);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 
 	ssd1306_clear_display(handle, false);
-	ssd1306_display_bitmap(handle, ((handle->width/2)-(64/2)), 0, skull_icon_64x64, 64, 64, false);
+	ssd1306_display_bitmap(handle, ((handle->width/2)-(50/2)), 0, skull_icon_50x64, 50, 64, false);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	ssd1306_clear_display(handle, false);
+	ssd1306_display_bitmap(handle, ((handle->width/2)-(64/2)), 0, proton_icon_64x64, 64, 64, false);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	ssd1306_clear_display(handle, false);
+	ssd1306_display_bitmap(handle, ((handle->width/2)-(64/2)), 0, molecule_icon_64x64, 64, 64, false);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 
 	// Invert
