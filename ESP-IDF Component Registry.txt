@@ -2,6 +2,15 @@
 COMPONENT MANAGEMENT
 https://docs.espressif.com/projects/idf-component-manager/en/latest/getting_started/index.html
 
+LOGIN via CLI
+compote registry login --profile "default" --registry-url "https://components.espressif.com" --default-namespace <your_github_username>
+
+LOGIN to Staging Registry
+compote registry login --profile "staging" --registry-url "https://components-staging.espressif.com" --default-namespace <your-github-username>
+
+COMPONENT CI ACTION (GITHUB)
+https://github.com/espressif/upload-components-ci-action
+
 COMPOTE
 https://docs.espressif.com/projects/idf-component-manager/en/latest/reference/compote_cli.html#compote-component-upload
 
