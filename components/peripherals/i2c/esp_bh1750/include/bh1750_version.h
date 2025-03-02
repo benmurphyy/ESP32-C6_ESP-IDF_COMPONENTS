@@ -60,20 +60,20 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define BH1750_STR_QUOTES( x ) #x
+#define STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define BH1750_STR( x ) BH1750_STR_QUOTES( x )
+#define STR( x ) STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
 #define BH1750_FW_VERSION_STR                        \
-                BH1750_STR( BH1750_FW_VERSION_MAJOR ) "." \
-                BH1750_STR( BH1750_FW_VERSION_MINOR ) "." \
-                BH1750_STR( BH1750_FW_VERSION_PATCH )
+                STR( BH1750_FW_VERSION_MAJOR ) "." \
+                STR( BH1750_FW_VERSION_MINOR ) "." \
+                STR( BH1750_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 

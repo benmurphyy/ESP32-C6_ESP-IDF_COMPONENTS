@@ -62,7 +62,7 @@ extern "C" {
  */
 
 /**
- * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht30 sensor type.
+ * @brief Macro that initializes `ahtxx_config_t` to default configuration settings for the aht30 sensor type.
  */
 #define I2C_AHT30_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
@@ -70,7 +70,7 @@ extern "C" {
     .sensor_type     = AHTXX_AHT30 }
 
 /**
- * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht25 sensor type.
+ * @brief Macro that initializes `ahtxx_config_t` to default configuration settings for the aht25 sensor type.
  */
 #define I2C_AHT25_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
@@ -78,7 +78,7 @@ extern "C" {
     .sensor_type     = AHTXX_AHT25 }
 
 /**
- * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht21 sensor type.
+ * @brief Macro that initializes `ahtxx_config_t` to default configuration settings for the aht21 sensor type.
  */
 #define I2C_AHT21_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
@@ -86,7 +86,7 @@ extern "C" {
     .sensor_type     = AHTXX_AHT21 }
 
 /**
- * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht20 sensor type.
+ * @brief Macro that initializes `ahtxx_config_t` to default configuration settings for the aht20 sensor type.
  */
 #define I2C_AHT20_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \
@@ -94,7 +94,7 @@ extern "C" {
     .sensor_type     = AHTXX_AHT20 }
 
 /**
- * @brief Macro that initializes `i2c_ahtxx_config_t` to default configuration settings for the aht10 sensor type.
+ * @brief Macro that initializes `ahtxx_config_t` to default configuration settings for the aht10 sensor type.
  */
 #define I2C_AHT10_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AHTXX_DEV_ADDR,          \

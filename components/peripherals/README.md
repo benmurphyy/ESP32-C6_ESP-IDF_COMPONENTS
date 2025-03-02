@@ -24,7 +24,7 @@ ESP-IDF component development status:
  - ScioSense ENS160: initial component implementation completed.
  - Texas Instruments HDC1080: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - Honeywell HMC5883L: initial component implementation completed.
- - Lite-On LTR390UV: initial component implementation completed.
+ - Lite-On LTR390UV: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - Maxim-Integrated MAX30105: component development is work in progress (WIP).
  - Melexis MLX90614: initial component implementation completed.
  - Memsic MMC56X3: initial component implementation completed.

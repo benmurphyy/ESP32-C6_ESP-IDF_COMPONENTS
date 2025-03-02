@@ -1,3 +1,5 @@
+[![Push components to https://components.espressif.com](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/esp-idf_component_registry.yml/badge.svg)](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/esp-idf_component_registry.yml)
+
 # Welcome
 Thanks for visiting and hope you find something useful.  The code base is maintained as well as one person can manage in their spare time. The development environment is under Visual Studio Code with the PlatformIO (6.1.16) and ESP-IDF (v5.3.1) extensions.  There is always room for improvement to optimize the code base and open to suggestions.
 

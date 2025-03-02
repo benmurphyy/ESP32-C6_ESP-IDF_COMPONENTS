@@ -60,20 +60,20 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define SGP4X_STR_QUOTES( x ) #x
+#define STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define SGP4X_STR( x ) SGP4X_STR_QUOTES( x )
+#define STR( x ) STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define SGP4X_FW_VERSION_STR                        \
-        SGP4X_STR( SGP4X_FW_VERSION_MAJOR ) "." \
-        SGP4X_STR( SGP4X_FW_VERSION_MINOR ) "." \
-        SGP4X_STR( SGP4X_FW_VERSION_PATCH )
+#define SGP4X_FW_VERSION_STR              \
+        STR( SGP4X_FW_VERSION_MAJOR ) "." \
+        STR( SGP4X_FW_VERSION_MINOR ) "." \
+        STR( SGP4X_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 

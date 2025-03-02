@@ -60,20 +60,20 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define HDC1080_STR_QUOTES( x ) #x
+#define STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define HDC1080_STR( x ) HDC1080_STR_QUOTES( x )
+#define STR( x ) STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
 #define HDC1080_FW_VERSION_STR                        \
-        HDC1080_STR( HDC1080_FW_VERSION_MAJOR ) "." \
-        HDC1080_STR( HDC1080_FW_VERSION_MINOR ) "." \
-        HDC1080_STR( HDC1080_FW_VERSION_PATCH )
+        STR( HDC1080_FW_VERSION_MAJOR ) "." \
+        STR( HDC1080_FW_VERSION_MINOR ) "." \
+        STR( HDC1080_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 

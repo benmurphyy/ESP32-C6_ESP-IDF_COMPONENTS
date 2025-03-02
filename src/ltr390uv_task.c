@@ -41,20 +41,31 @@ void i2c0_ltr390uv_task( void *pvParameters ) {
     TickType_t         last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_ltr390uv_config_t dev_cfg          = I2C_LTR390UV_CONFIG_DEFAULT;
-    i2c_ltr390uv_handle_t dev_hdl;
+    ltr390uv_config_t dev_cfg          = I2C_LTR390UV_CONFIG_DEFAULT;
+    ltr390uv_handle_t dev_hdl;
     //
     // init device
-    i2c_ltr390uv_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    ltr390uv_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "ltr390uv handle init failed");
         assert(dev_hdl);
     }
     //
-    ESP_LOGI(APP_TAG, "Control Register (0x%02x): %s", dev_hdl->control_reg.reg, uint8_to_binary(dev_hdl->control_reg.reg));
-    ESP_LOGI(APP_TAG, "Measure Register (0x%02x): %s", dev_hdl->measure_reg.reg, uint8_to_binary(dev_hdl->measure_reg.reg));
-    ESP_LOGI(APP_TAG, "Gain Register    (0x%02x): %s", dev_hdl->gain_reg.reg, uint8_to_binary(dev_hdl->gain_reg.reg));
-    ESP_LOGI(APP_TAG, "IRQ Cfg Register (0x%02x): %s", dev_hdl->irq_config_reg.reg, uint8_to_binary(dev_hdl->irq_config_reg.reg));
+    ltr390uv_control_register_t c_reg;
+    ltr390uv_interrupt_config_register_t ic_reg;
+    ltr390uv_measure_register_t m_reg;
+    ltr390uv_gain_register_t    g_reg;
+    //
+    /* attempt i2c read transaction */
+    ltr390uv_get_measure_register(dev_hdl, &m_reg);
+    ltr390uv_get_gain_register(dev_hdl, &g_reg);
+    ltr390uv_get_interrupt_config_register(dev_hdl, &ic_reg);
+    ltr390uv_get_control_register(dev_hdl, &c_reg);
+    //
+    ESP_LOGI(APP_TAG, "Control Register (0x%02x): %s", c_reg.reg, uint8_to_binary(c_reg.reg));
+    ESP_LOGI(APP_TAG, "Measure Register (0x%02x): %s", m_reg.reg, uint8_to_binary(m_reg.reg));
+    ESP_LOGI(APP_TAG, "Gain Register    (0x%02x): %s", g_reg.reg, uint8_to_binary(g_reg.reg));
+    ESP_LOGI(APP_TAG, "IRQ Cfg Register (0x%02x): %s", ic_reg.reg, uint8_to_binary(ic_reg.reg));
     //
     // task loop entry point
     for ( ;; ) {
@@ -63,7 +74,7 @@ void i2c0_ltr390uv_task( void *pvParameters ) {
         // handle sensor
         
         float ambient_light; 
-        esp_err_t result = i2c_ltr390uv_get_ambient_light(dev_hdl, &ambient_light);
+        esp_err_t result = ltr390uv_get_ambient_light(dev_hdl, &ambient_light);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ltr390uv device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -71,7 +82,7 @@ void i2c0_ltr390uv_task( void *pvParameters ) {
         }
 
         uint32_t sensor_counts;
-        result = i2c_ltr390uv_get_als(dev_hdl, &sensor_counts);
+        result = ltr390uv_get_als(dev_hdl, &sensor_counts);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ltr390uv device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -79,14 +90,14 @@ void i2c0_ltr390uv_task( void *pvParameters ) {
         }
 
         float uvi;
-        result = i2c_ltr390uv_get_ultraviolet_index(dev_hdl, &uvi);
+        result = ltr390uv_get_ultraviolet_index(dev_hdl, &uvi);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ltr390uv device read failed (%s)", esp_err_to_name(result));
         } else {
             ESP_LOGI(APP_TAG, "ultraviolet index: %f", uvi);
         }
 
-        result = i2c_ltr390uv_get_uvs(dev_hdl, &sensor_counts);
+        result = ltr390uv_get_uvs(dev_hdl, &sensor_counts);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ltr390uv device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -101,6 +112,6 @@ void i2c0_ltr390uv_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_ltr390uv_delete( dev_hdl );
+    ltr390uv_delete( dev_hdl );
     vTaskDelete( NULL );
 }

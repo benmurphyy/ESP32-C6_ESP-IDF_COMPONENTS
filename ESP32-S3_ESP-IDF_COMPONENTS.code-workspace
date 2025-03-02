@@ -19,7 +19,9 @@
 			"hdc1080_task.h": "c",
 			"bh1750_task.h": "c",
 			"timer.h": "c",
-			"ssd1306.h": "c"
+			"ssd1306.h": "c",
+			"format": "c",
+			"app_config.h": "c"
 		}
 	}
 }

@@ -60,20 +60,20 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define VEML7700_STR_QUOTES( x ) #x
+#define STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define VEML7700_STR( x ) VEML7700_STR_QUOTES( x )
+#define STR( x ) STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
 #define VEML7700_FW_VERSION_STR                        \
-        VEML7700_STR( VEML7700_FW_VERSION_MAJOR ) "." \
-        VEML7700_STR( VEML7700_FW_VERSION_MINOR ) "." \
-        VEML7700_STR( VEML7700_FW_VERSION_PATCH )
+        STR( VEML7700_FW_VERSION_MAJOR ) "." \
+        STR( VEML7700_FW_VERSION_MINOR ) "." \
+        STR( VEML7700_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 

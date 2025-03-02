@@ -22,18 +22,18 @@
  */
 
 /**
- * @file ahtxx_version.h
- * @defgroup drivers ahtxx
+ * @file ltr390uv_version.h
+ * @defgroup drivers ltr390uv
  * @{
  *
- * ESP-IDF driver for ahtxx sensor
+ * ESP-IDF driver for ltr390uv sensor
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __AHTXX_VERSION_H__
-#define __AHTXX_VERSION_H__
+#ifndef __LTR390UV_VERSION_H__
+#define __LTR390UV_VERSION_H__
 
 #include <stdint.h>
 
@@ -46,11 +46,11 @@ extern "C" {
  */
 
 /** Major version number (X.x.x) */
-#define AHTXX_FW_VERSION_MAJOR 1
+#define LTR390UV_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define AHTXX_FW_VERSION_MINOR 1
+#define LTR390UV_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define AHTXX_FW_VERSION_PATCH 0
+#define LTR390UV_FW_VERSION_PATCH 0
 
 
 /**
@@ -70,10 +70,10 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define AHTXX_FW_VERSION_STR                        \
-        STR( AHTXX_FW_VERSION_MAJOR ) "." \
-        STR( AHTXX_FW_VERSION_MINOR ) "." \
-        STR( AHTXX_FW_VERSION_PATCH )
+#define LTR390UV_FW_VERSION_STR                        \
+        STR( LTR390UV_FW_VERSION_MAJOR ) "." \
+        STR( LTR390UV_FW_VERSION_MINOR ) "." \
+        STR( LTR390UV_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -81,7 +81,7 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AHTXX_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define LTR390UV_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -90,26 +90,26 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AHTXX_FW_VERSION_INT32                                      \
-        AHTXX_FW_VERSION_PARAMS_INT32(AHTXX_FW_VERSION_MAJOR,   \
-                                          AHTXX_FW_VERSION_MINOR,   \
-                                          AHTXX_FW_VERSION_PATCH)
+#define LTR390UV_FW_VERSION_INT32                                      \
+        LTR390UV_FW_VERSION_PARAMS_INT32(LTR390UV_FW_VERSION_MAJOR,   \
+                                        LTR390UV_FW_VERSION_MINOR,   \
+                                        LTR390UV_FW_VERSION_PATCH)
 
 
 
 /**
- * @brief Converts AHTXX firmware version numbers (major, minor, patch) into a string.
+ * @brief Converts LTR390UV firmware version numbers (major, minor, patch) into a string.
  * 
- * @return char* AHTXX firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ * @return char* LTR390UV firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
-const char* ahtxx_get_fw_version(void);
+const char* ltr390uv_get_fw_version(void);
 
 /**
- * @brief Converts AHTXX firmware version numbers (major, minor, patch) into an integer value.
+ * @brief Converts LTR390UV firmware version numbers (major, minor, patch) into an integer value.
  * 
- * @return int32_t AHTXX firmware version number.
+ * @return int32_t LTR390UV firmware version number.
  */
-int32_t ahtxx_get_fw_version_number(void);
+int32_t ltr390uv_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
@@ -118,4 +118,4 @@ int32_t ahtxx_get_fw_version_number(void);
 
 /**@}*/
 
-#endif // __AHTXX_VERSION_H__
+#endif // __LTR390UV_VERSION_H__
