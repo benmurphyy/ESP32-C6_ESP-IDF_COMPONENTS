@@ -15,6 +15,7 @@ jobs:
         with:
           components: |
             esp_s12sd:components/peripherals/adc/esp_s12sd
+            esp_type_utils:components/utilities/esp_type_utils
             esp_driver_i2c_ext:components/peripherals/i2c/esp_driver_i2c_ext
             esp_ahtxx:components/peripherals/i2c/esp_ahtxx
             esp_bh1750:components/peripherals/i2c/esp_bh1750
