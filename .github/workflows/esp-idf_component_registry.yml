@@ -26,5 +26,5 @@ jobs:
             esp_ssd1306:components/peripherals/i2c/esp_ssd1306
             esp_veml7700:components/peripherals/i2c/esp_veml7700
           version: ${{ github.ref_name }}
-          namespace: "espressif"
+          namespace: "k0i05"
           api_token: ${{ secrets.IDF_COMPONENT_API_TOKEN }}
