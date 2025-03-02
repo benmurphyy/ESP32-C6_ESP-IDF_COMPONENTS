@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_driver_i2c_ext">
+<img src="https://components.espressif.com/components/k0i05/esp_driver_i2c_ext/badge.svg" />
+</a>
+
 # ESP-IDF I2C Component Extension
 This ESP32 espressif IoT development framework (esp-idf) i2c component extension was developed to extend `i2c_master.h` i2c peripheral driver functionality.  This component is a dependency for all i2c peripheral components.  Information on features and functionality are documented and can be found in the `i2c_master_ext.h` header file.
 

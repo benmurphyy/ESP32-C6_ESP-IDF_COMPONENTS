@@ -1,5 +1,5 @@
 <a href="https://components.espressif.com/components/k0i05/esp_ssd1306">
-<img src="https://components.espressif.com/components/k0i05/esp_ssd1306/badge.svg" alt="k0i05/esp_ssd1306 Version: 1.1.0" />
+<img src="https://components.espressif.com/components/k0i05/esp_ssd1306/badge.svg" />
 </a>
 
 # Generic SSD1306 (128x32 and 128x64) OLED Display

@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_sht4x">
+<img src="https://components.espressif.com/components/k0i05/esp_sht4x/badge.svg" />
+</a>
+
 # Sensirion SHT4X Series of Sensors
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Sensirion SHT4X series of sensors (SHT40, SHT41, SHT43, and SHT45).  Information on features and functionality are documented and can be found in the `sht4x.h` header file and in the `documentation` folder.
 

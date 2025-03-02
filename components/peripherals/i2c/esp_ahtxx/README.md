@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_ahtxx">
+<img src="https://components.espressif.com/components/k0i05/esp_ahtxx/badge.svg" />
+</a>
+
 # Asair AHTXX Series of Sensors
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Asair AHTXX series of sensors (AHT10, AHT20, AHT21, AHT25, AND AHT30).  Information on features and functionality are documented and can be found in the `ahtxx.h` header file and in the `documentation` folder.
 

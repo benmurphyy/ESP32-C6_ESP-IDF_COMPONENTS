@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_bmp280">
+<img src="https://components.espressif.com/components/k0i05/esp_bmp280/badge.svg" />
+</a>
+
 # Bosch BMP280 Sensor
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Bosch BMP280 sensor.  Information on features and functionality are documented and can be found in the `bmp280.h` header file and in the `documentation` folder.
 

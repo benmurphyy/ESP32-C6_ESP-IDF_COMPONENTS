@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_hdc1080">
+<img src="https://components.espressif.com/components/k0i05/esp_hdc1080/badge.svg" />
+</a>
+
 # Texas Instruments HDC1080 Sensor
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Texas Instruments HDC1080 sensor.  Information on features and functionality are documented and can be found in the `hdc1080.h` header file and in the `documentation` folder.
 

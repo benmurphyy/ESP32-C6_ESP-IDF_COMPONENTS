@@ -14,7 +14,12 @@ compote component upload --name esp_driver_i2c_ext --profile "staging" --project
 compote component upload --name esp_ahtxx --profile "staging" --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ahtxx" --dest-dir "C:\Espressif\component_archive"
 
 
+
+
 PRODUCTION
+
+compote component upload --name esp_s12d --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\adc\esp_s12sd" --dest-dir "C:\Espressif\component_archive"
+
 
 compote component upload --name esp_driver_i2c_ext --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_driver_i2c_ext" --dest-dir "C:\Espressif\component_archive"
 

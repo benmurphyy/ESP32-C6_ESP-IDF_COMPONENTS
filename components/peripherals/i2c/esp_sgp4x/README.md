@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_sgp4x">
+<img src="https://components.espressif.com/components/k0i05/esp_sgp4x/badge.svg" />
+</a>
+
 # Sensirion SGP4X Series of Sensors
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Sensirion SGP4X series of sensors (SGP40 and SGP41).  Information on features and functionality are documented and can be found in the `sgp4x.h` header file and in the `documentation` folder.
 

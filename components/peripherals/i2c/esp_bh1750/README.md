@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_bh1750">
+<img src="https://components.espressif.com/components/k0i05/esp_bh1750/badge.svg" />
+</a>
+
 # Rohm BH1750 Sensor
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Rohm BH1750 sensor.  Information on features and functionality are documented and can be found in the `bh1750.h` header file and in the `documentation` folder.
 

@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_s12d">
+<img src="https://components.espressif.com/components/k0i05/esp_s12d/badge.svg" />
+</a>
+
 # Roithner LaserTechnik GUVA-S12SD Sensor
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Roithner LaserTechnik GUVA-S12SD ultraviolet analog sensor.  Information on features and functionality are documented and can be found in the `s12sd.h` header file and in the `documentation` folder.
 
