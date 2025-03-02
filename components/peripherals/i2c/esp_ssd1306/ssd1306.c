@@ -137,7 +137,99 @@ typedef union i2c_ssd1306_out_column_t {
 
 
 
+esp_err_t ssd1306_load_bitmap_font(const uint8_t *font, int encoding, uint8_t *bitmap, ssd1306_bdf_font_t *const bdf_font) {
+	ESP_LOGI(TAG, "encoding=%d", encoding);
+	int index = 2;
+	while (1) {
+		ESP_LOGD(TAG, "font[%d]=%d size=%d", index, font[index], font[index+6]);
+		if (font[index+6] == 0) break;
+		if (font[index] == encoding) {
+			bdf_font->encoding = font[index];
+			bdf_font->width = font[index+1];
+			bdf_font->bbw = font[index+2];
+			bdf_font->bbh = font[index+3];
+			bdf_font->bbx = font[index+4];
+			bdf_font->bby = font[index+5];
+			bdf_font->num_data = font[index+6];
+			bdf_font->y_start = font[index+7];
+			bdf_font->y_end = font[index+8];
+			for (int i=0;i<font[index+6];i++) {
+				ESP_LOGD(TAG, "font[%d]=0x%x", index+9+i, font[index+9+i]);
+				bitmap[i] = font[index+9+i];
+			}
+			return ESP_OK;
+		}
+		index = index + font[index+6] + 9;;
+	} // end while
+	return ESP_ERR_NOT_FOUND;
+}
 
+esp_err_t ssd1306_display_bdf_text(ssd1306_handle_t handle, const uint8_t *font, const char *text, int xpos, int ypos) {
+	int fontboundingbox_width = font[0];
+	int fontboundingbox_height = font[1];
+	size_t bitmap_size = ((fontboundingbox_width + 7) / 8) * fontboundingbox_height;
+	ESP_LOGD(TAG, "fontboundingbox_width=%d fontboundingbox_height=%d bitmap_size=%d",
+		fontboundingbox_width, fontboundingbox_height, bitmap_size);
+	uint8_t *bitmap = malloc(bitmap_size);
+	if (bitmap == NULL) {
+		ESP_LOGE(TAG, "malloc fail");
+		return ESP_ERR_NO_MEM;
+	}
+	ssd1306_bdf_font_t bdf_font;
+	int _xpos = xpos;
+	for (int i=0;i<strlen(text);i++) {
+		memset(bitmap, 0, bitmap_size);
+		int ch = text[i];
+		esp_err_t err = ssd1306_load_bitmap_font(font, ch, bitmap, &bdf_font);
+		if (err != ESP_OK) {
+			ESP_LOGE(TAG, "font not found [%d]", ch);
+			continue;
+		}
+		//ESP_LOG_BUFFER_HEXDUMP(tag, bitmap, bdf_font.num_data, ESP_LOG_INFO);
+		ESP_LOGD(TAG, "bdf_font.width=%d", bdf_font.width);
+		ESP_LOGD(TAG, "bdf_font.bbx=%d, bby=%d", bdf_font.bbx, bdf_font.bby);
+		ESP_LOGD(TAG, "bdf_font.y_start=%d, y_end=%d", bdf_font.y_start, bdf_font.y_end);
+		int bitmap_height = bdf_font.y_end - bdf_font.y_start + 1;
+		int bitmap_width = bdf_font.num_data / bitmap_height;
+		ESP_LOGD(TAG, "bitmap_width=%d bitmap_height=%d", bitmap_width, bitmap_height);
+		ssd1306_set_bitmap(handle, _xpos, ypos+bdf_font.y_start, bitmap, bitmap_width*8, bitmap_height, false);
+		_xpos = _xpos + bdf_font.width;
+	}
+	ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for display bdf text failed");
+	free(bitmap);
+	return ESP_OK;
+}
+
+esp_err_t ssd1306_display_bdf_code(ssd1306_handle_t handle, const uint8_t *font, int code, int xpos, int ypos) {
+	int fontboundingbox_width = font[0];
+	int fontboundingbox_height = font[1];
+	size_t bitmap_size = ((fontboundingbox_width + 7) / 8) * fontboundingbox_height;
+	ESP_LOGD(TAG, "fontboundingbox_width=%d fontboundingbox_height=%d bitmap_size=%d",
+		fontboundingbox_width, fontboundingbox_height, bitmap_size);
+	uint8_t *bitmap = malloc(bitmap_size);
+	if (bitmap == NULL) {
+		ESP_LOGE(TAG, "malloc fail");
+		return ESP_ERR_NO_MEM;
+	}
+	ssd1306_bdf_font_t bdf_font;
+	memset(bitmap, 0, bitmap_size);
+	esp_err_t err = ssd1306_load_bitmap_font(font, code, bitmap, &bdf_font);
+	if (err != ESP_OK) {
+		ESP_LOGE(TAG, "font not found [%d]", code);
+		return err;
+	}
+	//ESP_LOG_BUFFER_HEXDUMP(tag, bitmap, bdf_font.num_data, ESP_LOG_INFO);
+	ESP_LOGD(TAG, "bdf_font.width=%d", bdf_font.width);
+	ESP_LOGD(TAG, "bdf_font.bbx=%d, bby=%d", bdf_font.bbx, bdf_font.bby);
+	ESP_LOGD(TAG, "bdf_font.y_start=%d, y_end=%d", bdf_font.y_start, bdf_font.y_end);
+	int bitmap_height = bdf_font.y_end - bdf_font.y_start + 1;
+	int bitmap_width = bdf_font.num_data / bitmap_height;
+	ESP_LOGD(TAG, "bitmap_width=%d bitmap_height=%d", bitmap_width, bitmap_height);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, bitmap, bdf_font.num_data, ESP_LOG_DEBUG);
+	ssd1306_display_bitmap(handle, xpos, ypos+bdf_font.y_start, bitmap, bitmap_width*8, bitmap_height, false);
+	free(bitmap);
+	return ESP_OK;
+}
 
 esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, bool invert) {
 	/* validate parameters */
@@ -501,7 +593,7 @@ esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer) {
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+esp_err_t ssd1306_set_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
 	uint8_t i, j, byte_width = (width + 7) / 8;
 
 	/* validate parameters */
@@ -514,6 +606,15 @@ esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t 
             }
         }
     }
+
+	return ESP_OK;
+}
+
+esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+	/* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+	ESP_RETURN_ON_ERROR(ssd1306_set_bitmap(handle, xpos, ypos, bitmap, width, height, invert), TAG, "set bitmap for display bitmap failed");
 
 	ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for bitmap failed");
 
@@ -627,18 +728,18 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	return ret;
 }
 
-esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 
-	if (text_len > 16) text_len = 16;
+	if (strlen(text) > 18) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t seg = 0;
 	uint8_t image[8];
 
-	for (uint8_t i = 0; i < text_len; i++) {
+	for (uint8_t i = 0; i < strlen(text); i++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[i]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -649,17 +750,17 @@ esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 
-	if (text_len > 8) text_len = 8;
+	if (strlen(text) > 8) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t seg = 0;
 
-	for (uint8_t nn = 0; nn < text_len; nn++) {
+	for (uint8_t nn = 0; nn < strlen(text); nn++) {
 		uint8_t const * const in_columns = font_latin_8x8_tr[(uint8_t)text[nn]];
 
 		// make the character 2x as high
@@ -699,17 +800,17 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const c
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 
-	if (text_len > 5) text_len = 5;
+	if (strlen(text) > 5) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t seg = 0;
 
-	for (uint8_t nn = 0; nn < text_len; nn++) {
+	for (uint8_t nn = 0; nn < strlen(text); nn++) {
 		uint8_t const * const in_columns = font_latin_8x8_tr[(uint8_t)text[nn]];
 
 		// make the character 3x as high
@@ -750,11 +851,11 @@ esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const c
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay) {
+esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, bool invert, uint8_t delay) {
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 	uint8_t text_box_pixel = box_width * 8;
 	if (segment + text_box_pixel > handle->width) return ESP_ERR_INVALID_SIZE;
-    if (text_len > 100) text_len = 100;
+    if (strlen(text) > 100) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t _seg = segment;
 	uint8_t image[8];
@@ -769,7 +870,7 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
 	vTaskDelay(delay / portTICK_PERIOD_MS);
 
 	// Horizontally scroll inside the box
-	for (uint8_t _text=box_width; _text<text_len; _text++) {
+	for (uint8_t _text=box_width; _text<strlen(text); _text++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -787,11 +888,11 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay) {
+esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, bool invert, uint8_t delay) {
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 	uint8_t text_box_pixel = box_width * 8;
 	if (segment + text_box_pixel > handle->width) return ESP_ERR_INVALID_SIZE;
-    if (text_len > 100) text_len = 100;
+    if (strlen(text) > 100) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t _seg = segment;
 	uint8_t image[8];
@@ -807,7 +908,7 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 	vTaskDelay(delay / portTICK_PERIOD_MS);
 
 	// Horizontally scroll inside the box
-	for (uint8_t _text=0; _text<text_len; _text++) {
+	for (uint8_t _text=0; _text<strlen(text); _text++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -842,14 +943,10 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 }
 
 esp_err_t ssd1306_clear_display_page(ssd1306_handle_t handle, uint8_t page, bool invert) {
-	char space[16];
-
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	memset(space, 0x00, sizeof(space));
-
-	ESP_RETURN_ON_ERROR(ssd1306_display_text(handle, page, space, sizeof(space), invert), TAG, "display text for clear line failed");
+	ESP_RETURN_ON_ERROR(ssd1306_display_text(handle, page, "                ", invert), TAG, "display text for clear line failed");
 
 	return ESP_OK;
 }
@@ -900,9 +997,11 @@ esp_err_t ssd1306_set_software_scroll(ssd1306_handle_t handle, uint8_t start, ui
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const char *text, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
+
+	if (strlen(text) > 18) return ESP_ERR_INVALID_SIZE;
 
 	ESP_LOGD(TAG, "ssd1306_handle->dev_params->scroll_enabled=%d", handle->scroll_enabled);
 	if (handle->scroll_enabled == false) return ESP_ERR_INVALID_ARG;
@@ -919,10 +1018,7 @@ esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const ch
 		srcIndex = srcIndex - handle->scroll_direction;
 	}
 	
-	uint8_t _text_len = text_len;
-	if (_text_len > 16) _text_len = 16;
-	
-	ESP_RETURN_ON_ERROR(ssd1306_display_text(handle, srcIndex, text, text_len, invert), TAG, "display text for scroll text failed");
+	ESP_RETURN_ON_ERROR(ssd1306_display_text(handle, srcIndex, text, invert), TAG, "display text for scroll text failed");
 
 	return ESP_OK;
 }

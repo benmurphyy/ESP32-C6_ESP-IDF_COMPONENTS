@@ -166,6 +166,21 @@ typedef struct ssd1306_panel_s {
 } ssd1306_panel_t;
 
 /**
+ * @brief SSD1306 BDF font structure definition.
+ */
+typedef struct ssd1306_bdf_font_s {
+	uint8_t encoding;
+	uint8_t width;
+	uint8_t bbw;
+	uint8_t bbh;
+	uint8_t bbx;
+	uint8_t bby;
+	uint8_t num_data;
+	uint8_t y_start;
+	uint8_t y_end;
+} ssd1306_bdf_font_t;
+
+/**
  * @brief SSD1306 configuration structure definition.
  */
 typedef struct ssd1306_config_s {
@@ -203,9 +218,46 @@ typedef struct ssd1306_context_t ssd1306_context_t;
  */
 typedef struct ssd1306_context_t* ssd1306_handle_t;
 
+
+
 /**
  * public function and subroutine declarations
  */
+
+/**
+ * @brief Loads a BDF bitmap font and BDF font structure from a font file.
+ * 
+ * @param[in] font BDF font bitmap data.
+ * @param[in] encoding BDF font encoding.
+ * @param[out] bitmap BDF font bitmap data.
+ * @param[out] bdf_font BDF font structure.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_load_bitmap_font(const uint8_t *font, int encoding, uint8_t *bitmap, ssd1306_bdf_font_t *const bdf_font);
+
+/**
+ * @brief Displays text on the SSD1306 with BDF font support.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param font BDF font bitmap data.
+ * @param text Text characters to display.
+ * @param xpos X-axis position of the font character.
+ * @param ypos Y-axis position of the font character.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_display_bdf_text(ssd1306_handle_t handle, const uint8_t *font, const char *text, int xpos, int ypos);
+
+/**
+ * @brief Displays BDF font code on the SSD1306.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param font BDF font bitmap data.
+ * @param code BDF font code to display.
+ * @param xpos X-axis position of the font character.
+ * @param ypos Y-axis position of the font character.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_display_bdf_code(ssd1306_handle_t handle, const uint8_t *font, int code, int xpos, int ypos);
 
 /**
  * @brief Turns SSD1306 display panel on.
@@ -250,7 +302,7 @@ esp_err_t ssd1306_set_pages(ssd1306_handle_t handle, uint8_t *buffer);
 esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer);
 
 /**
- * @brief Sets SSD1306 page segment data for a pixel.
+ * @brief Sets SSD1306 pages and segments data for a pixel.
  * 
  * @note Call `ssd1306_display_pages` to display the pixel.
  * 
@@ -366,6 +418,22 @@ esp_err_t ssd1306_display_filled_rectangle(ssd1306_handle_t handle, uint8_t x, u
 esp_err_t ssd1306_set_contrast(ssd1306_handle_t handle, uint8_t contrast);
 
 /**
+ * @brief Sets SSD1306 pages and segments data for a bitmap.
+ * 
+ * @note Call `ssd1306_display_pages` to display the bitmap.
+ *  
+ * @param handle SSD1306 device handle.
+ * @param xpos X-axis position of the bitmap.
+ * @param ypos Y-axis position of the bitmap.
+ * @param bitmap Bitmap data.
+ * @param width Width of the bitmap.
+ * @param height Height of the bitmap
+ * @param invert Bitmap is inverted when true.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_set_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert);
+
+/**
  * @brief Displays a bitmap on the SSD1306.
  * 
  * @note Image to byte converter: https://mischianti.org/images-to-byte-array-online-converter-cpp-arduino/
@@ -398,12 +466,11 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
  * 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
- * @param text Text characters to display.
- * @param text_len Length of text (16-characters maximum).
+ * @param text Text characters (16 characters maximum) to display.
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert);
+esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert);
 
 /**
  * @brief Displays text x2 larger by page on the SSD1306.
@@ -412,12 +479,11 @@ esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char
  * 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
- * @param text Text characters to display.
- * @param text_len Length of text (8-characters maximum).
+ * @param text Text characters (8 characters maximum) to display.
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert);
+esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert);
 
 /**
  * @brief Displays text x3 larger by page on the SSD1306.
@@ -426,12 +492,11 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const c
  * 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
- * @param text Text characters to display.
- * @param text_len Length of text (5-characters maximum).
+ * @param text Text characters (5 characters maximum) to display.
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const char *text, uint8_t text_len, bool invert);
+esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert);
 
 /**
  * @brief Displays scrolling text within a box as banner by page and segment on the SSD1306 with a maximum of 100-characters.
@@ -439,14 +504,13 @@ esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const c
  * @param handle SSD1306 device handle.
  * @param page Index of page.
  * @param seg Index of segment data.
- * @param text Text characters to display.
+ * @param text Text characters (100 characters maximum) to display.
  * @param box_width Width of the box.
- * @param text_len Length of text (100 characters maximum).
  * @param invert Text is inverted when true.
  * @param delay Delay in milliseconds before information is displayed, a value 0 there is no wait.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay);
+esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, bool invert, uint8_t delay);
 
 /**
  * @brief Displays scrolling text within a box as a ticker by page and segment on the SSD1306 with a maximum of 100-characters.
@@ -454,14 +518,13 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
  * @param handle SSD1306 device handle.
  * @param page Index of page.
  * @param seg Index of segment data.
- * @param text Text characters to display.
+ * @param text Text characters (100 characters maximum) to display.
  * @param box_width Width of the box.
- * @param text_len Length of text (100 characters maximum).
  * @param invert Text is inverted when true.
  * @param delay Delay in milliseconds before information is displayed, a value 0 there is no wait.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, uint8_t text_len, bool invert, uint8_t delay);
+esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, uint8_t segment, const char *text, uint8_t box_width, bool invert, uint8_t delay);
 
 /**
  * @brief Clears a page from the SSD1306 display.
@@ -510,12 +573,11 @@ esp_err_t ssd1306_set_software_scroll(ssd1306_handle_t handle, uint8_t start, ui
  * @brief Displays software based scrolling text on the SSD1306.
  * 
  * @param handle SSD1306 device handle.
- * @param text Text characters.
- * @param text_len Length of text.
+ * @param text Text characters (16 characters maximum) to display.
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert);
+esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const char *text, bool invert);
 
 /**
  * @brief Clears software based scrolling text from SSD1306 display.

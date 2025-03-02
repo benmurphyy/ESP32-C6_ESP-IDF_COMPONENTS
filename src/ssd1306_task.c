@@ -46,6 +46,8 @@
 #include <ssd1306_task.h>
 #include <font_latin_8x8.h>
 #include <bitmap_icon.h>
+#include <bdf_font_nenr12_21x26.h>
+#include <bdf_font_emoticon_22x21.h>
 
 
 
@@ -60,7 +62,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display x3 Text");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text_x3(handle, 0, "Hello", 6, false);
+	ssd1306_display_text_x3(handle, 0, "Hello", false);
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 
 	// Display bitmap icons
@@ -77,38 +79,38 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display x2 Text");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text_x2(handle, 0, "{xTEXTx}", 9, false);
-	ssd1306_display_text_x2(handle, 2, " X2-X2", 7, false);
+	ssd1306_display_text_x2(handle, 0, "{xTEXTx}", false);
+	ssd1306_display_text_x2(handle, 2, " X2-X2", false);
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 
 	// Display text
 	ESP_LOGI(APP_TAG, "Display Text");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 0, "SSD1306 128x64", 15, false);
-	ssd1306_display_text(handle, 1, "Hello World!!", 14, false);
-	ssd1306_display_text(handle, 2, "SSD1306 128x64", 15, true);
-	ssd1306_display_text(handle, 3, "Hello World!!", 14, true);
+	ssd1306_display_text(handle, 0, "SSD1306 128x64", false);
+	ssd1306_display_text(handle, 1, "Hello World!!", false);
+	ssd1306_display_text(handle, 2, "SSD1306 128x64", true);
+	ssd1306_display_text(handle, 3, "Hello World!!", true);
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 
 	// Display TextBox
 	ESP_LOGI(APP_TAG, "Display TextBox Banner");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_textbox_banner(handle, 0, 48, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, 26, false, 25);
-	ssd1306_display_textbox_banner(handle, 1, 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8, 26, false, 10);
-	ssd1306_display_textbox_banner(handle, 2, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, 26, false, 25);
-	ssd1306_display_textbox_banner(handle, 3,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, 26, false, 15);
+	ssd1306_display_textbox_banner(handle, 0, 48, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, false, 25);
+	ssd1306_display_textbox_banner(handle, 1, 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8, false, 10);
+	ssd1306_display_textbox_banner(handle, 2, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, false, 25);
+	ssd1306_display_textbox_banner(handle, 3,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, false, 15);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 
 	// Display TextBox
 	ESP_LOGI(APP_TAG, "Display TextBox Ticker");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_textbox_ticker(handle, 4, 48, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, 26, false, 25);
-	ssd1306_display_textbox_ticker(handle, 5, 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8, 26, false, 10);
-	ssd1306_display_textbox_ticker(handle, 6, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, 26, false, 25);
-	ssd1306_display_textbox_ticker(handle, 7,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, 26, false, 15);
+	ssd1306_display_textbox_ticker(handle, 4, 48, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, false, 25);
+	ssd1306_display_textbox_ticker(handle, 5, 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8, false, 10);
+	ssd1306_display_textbox_ticker(handle, 6, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, false, 25);
+	ssd1306_display_textbox_ticker(handle, 7,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, false, 15);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	
 	// Display Count Down
@@ -132,12 +134,12 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Scroll Up");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 0, "---Scroll UP---", 16, true);
+	ssd1306_display_text(handle, 0, "---Scroll UP---", true);
 	ssd1306_set_software_scroll(handle, (handle->pages - 1), 1);
 	for (int line = 0; line < bottom+10; line++) {
 		lineChar[0] = 0x01;
 		sprintf(&lineChar[1], " Line %02d", line);
-		ssd1306_display_software_scroll_text(handle, lineChar, strlen(lineChar), false);
+		ssd1306_display_software_scroll_text(handle, lineChar, false);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -147,12 +149,12 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Scroll Down");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 0, "--Scroll DOWN--", 16, true);
+	ssd1306_display_text(handle, 0, "--Scroll DOWN--", true);
 	ssd1306_set_software_scroll(handle, 1, (handle->pages - 1) );
 	for (int page = 0; page < bottom+10; page++) {
 		lineChar[0] = 0x02;
 		sprintf(&lineChar[1], " Line %02d", page);
-		ssd1306_display_software_scroll_text(handle, lineChar, strlen(lineChar), false);
+		ssd1306_display_software_scroll_text(handle, lineChar, false);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -162,13 +164,13 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Page Down");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 0, "---Page	DOWN---", 16, true);
+	ssd1306_display_text(handle, 0, "---Page	DOWN---", true);
 	ssd1306_set_software_scroll(handle, 1, (handle->pages-1) );
 	for (int page = 0; page < bottom+10; page++) {
 		if ( (page % (handle->pages-1)) == 0) ssd1306_clear_display_software_scroll(handle);
 		lineChar[0] = 0x02;
 		sprintf(&lineChar[1], " Line %02d", page);
-		ssd1306_display_software_scroll_text(handle, lineChar, strlen(lineChar), false);
+		ssd1306_display_software_scroll_text(handle, lineChar, false);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -178,7 +180,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Horizontal Scroll");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, center, "Horizontal", 11, false);
+	ssd1306_display_text(handle, center, "Horizontal", false);
 	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_RIGHT, SSD1306_SCROLL_2_FRAMES);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_LEFT, SSD1306_SCROLL_2_FRAMES);
@@ -189,7 +191,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Vertical Scroll");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, center, "Vertical", 9, false);
+	ssd1306_display_text(handle, center, "Vertical", false);
 	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_DOWN, SSD1306_SCROLL_2_FRAMES);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_UP, SSD1306_SCROLL_2_FRAMES);
@@ -200,7 +202,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Batman Bitmap");
 	ssd1306_clear_display(handle, false);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 1, "BATMAN", 7, false);
+	ssd1306_display_text(handle, 1, "BATMAN", false);
 	int bitmap_width = 4*8;
 	int xpos = (handle->width/2) - (bitmap_width/2); // center of width
 	int ypos = 20;
@@ -241,7 +243,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Circle");
 	ssd1306_clear_display(handle, true);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 0, "Circle", 7, true);
+	ssd1306_display_text(handle, 0, "Circle", true);
 	ssd1306_display_circle(handle, 32, 32, 20, true);
 	ssd1306_display_filled_circle(handle, 48, 48, 25, true);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
@@ -250,7 +252,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Display Rectangle");
 	ssd1306_clear_display(handle, true);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, 0, "Rectangle", 10, true);
+	ssd1306_display_text(handle, 0, "Rectangle", true);
 	ssd1306_display_rectangle(handle, 10, 10, 50, 70, true);
 	ssd1306_display_filled_rectangle(handle, 40, 30, 30, 50, true);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
@@ -259,12 +261,41 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ESP_LOGI(APP_TAG, "Invert Display");
 	ssd1306_clear_display(handle, true);
 	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, center, "  Good Bye!!", 13, true);
+	ssd1306_display_text(handle, center, "  Good Bye!!", true);
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 
 	// Fade Out
 	ESP_LOGI(APP_TAG, "Display Fade Out");
 	ssd1306_display_fadeout(handle);
+}
+
+static void ssd1306_bdf_font_demo(ssd1306_handle_t handle) {
+	ESP_LOGI(APP_TAG, "BDF Font Demo");
+
+	ESP_LOGI(APP_TAG, "Display Nenr12 21x26 BDF Font");
+	ssd1306_clear_display(handle, false);
+	ssd1306_set_contrast(handle, 0xff);
+	ssd1306_display_bdf_text(handle, bdf_font_nenr12_21x26, "Hello World", 0, 32);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	int xpos = 0;
+	ssd1306_clear_display(handle, false);
+	ssd1306_set_contrast(handle, 0xff);
+	for (int code=181;code<190;code++) {
+		ssd1306_display_bdf_code(handle, bdf_font_nenr12_21x26, code, xpos, 32);
+		xpos = xpos + 12;
+	}
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	ESP_LOGI(APP_TAG, "Display Nenr12 21x26 BDF Code");
+	ssd1306_clear_display(handle, false);
+	ssd1306_set_contrast(handle, 0xff);
+	ssd1306_display_bdf_code(handle, bdf_font_emoticon_22x21, 48, 0, 37);
+	ssd1306_display_bdf_code(handle, bdf_font_emoticon_22x21, 49, 24, 37);
+	ssd1306_display_bdf_code(handle, bdf_font_emoticon_22x21, 50, 48, 37);
+	ssd1306_display_bdf_code(handle, bdf_font_emoticon_22x21, 51, 72, 37);
+	ssd1306_display_bdf_code(handle, bdf_font_emoticon_22x21, 52, 96, 37);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
 }
 
 static void ssd1306_contrast_demo(ssd1306_handle_t handle) {
@@ -282,7 +313,7 @@ static void ssd1306_contrast_demo(ssd1306_handle_t handle) {
 		ssd1306_set_contrast(handle, contrast);
 
 		sprintf(lineChar, "Contrast %02d", i);
-		ssd1306_display_text(handle, 1, lineChar, strlen(lineChar), true);
+		ssd1306_display_text(handle, 1, lineChar, true);
 
 		if (contrast == 0xff) direction = -1;
 		if (contrast == 0x00) direction = 1;
@@ -326,6 +357,8 @@ void i2c0_ssd1306_task( void *pvParameters ) {
 		} else {
 			ESP_LOGI(APP_TAG, "Display Panel: 128x128");
 		}
+		//
+		ssd1306_bdf_font_demo(dev_hdl);
         //
 		// full demo
 		ssd1306_full_demo(dev_hdl);
