@@ -16,7 +16,7 @@ ESP-IDF component development status:
  - ASAIR AHTXX: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - AKM AK8975: initial component implementation completed.
  - OSRAM AS7341: initial component implementation completed.
- - ROHM BH1750FVI: initial component implementation completed.
+ - ROHM BH1750FVI: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - Bosch BME680: component development is work in progress (WIP), coming soon (waiting for sensor to arrive)!! 
  - Bosch BMP280: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
  - Bosch BMP390: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).

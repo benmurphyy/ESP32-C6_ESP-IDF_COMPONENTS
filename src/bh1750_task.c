@@ -41,11 +41,11 @@ void i2c0_bh1750_task( void *pvParameters ) {
     TickType_t          last_wake_time  = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_bh1750_config_t dev_cfg         = I2C_BH1750_CONFIG_DEFAULT;
-    i2c_bh1750_handle_t dev_hdl;
+    bh1750_config_t dev_cfg         = I2C_BH1750_CONFIG_DEFAULT;
+    bh1750_handle_t dev_hdl;
     //
     // init device
-    i2c_bh1750_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    bh1750_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "bh1750 handle init failed");
         assert(dev_hdl);
@@ -57,7 +57,7 @@ void i2c0_bh1750_task( void *pvParameters ) {
         //
         // handle sensor
         float ambient_light;
-        esp_err_t result = i2c_bh1750_get_ambient_light(dev_hdl, &ambient_light);
+        esp_err_t result = bh1750_get_ambient_light(dev_hdl, &ambient_light);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "bh1750 device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -73,6 +73,6 @@ void i2c0_bh1750_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_bh1750_delete( dev_hdl );
+    bh1750_delete( dev_hdl );
     vTaskDelete( NULL );
 }
