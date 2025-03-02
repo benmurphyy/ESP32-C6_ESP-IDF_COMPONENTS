@@ -217,6 +217,20 @@ esp_err_t i2c_master_bus_write_uint8(i2c_master_dev_handle_t handle, const uint8
  */
 esp_err_t i2c_master_bus_write_uint16(i2c_master_dev_handle_t handle, const uint8_t reg_addr, const uint16_t data);
 
+/**
+ * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* `i2c_master_ext` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* i2c_master_ext_get_fw_version(void);
+
+/**
+ * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t `i2c_master_ext` firmware version number.
+ */
+int32_t i2c_master_ext_get_fw_version_number(void);
+
 #ifdef __cplusplus
 }
 #endif

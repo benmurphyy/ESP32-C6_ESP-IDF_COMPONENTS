@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_ltr390uv">
+<img src="https://components.espressif.com/components/k0i05/esp_ltr390uv/badge.svg" alt="k0i05/esp_ltr390uv Version: 1.1.0" />
+</a>
+
 # Lite-On LTR390UV Sensor
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Lite-On LTR390UV I2C sensor.  Information on features and functionality are documented and can be found in the `ltr390uv.h` header file and in the `documentation` folder.
 

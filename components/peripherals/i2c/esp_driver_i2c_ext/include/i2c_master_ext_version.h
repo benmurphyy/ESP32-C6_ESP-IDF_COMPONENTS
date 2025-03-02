@@ -59,20 +59,20 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define I2C_MASTER_EXT_STR_QUOTES( x ) #x
+#define STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define I2C_MASTER_EXT_STR( x ) I2C_MASTER_EXT_STR_QUOTES( x )
+#define STR( x ) STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
 #define I2C_MASTER_EXT_FW_VERSION_STR                        \
-        I2C_MASTER_EXT_STR( I2C_MASTER_EXT_FW_VERSION_MAJOR ) "." \
-        I2C_MASTER_EXT_STR( I2C_MASTER_EXT_FW_VERSION_MINOR ) "." \
-        I2C_MASTER_EXT_STR( I2C_MASTER_EXT_FW_VERSION_PATCH )
+        STR( I2C_MASTER_EXT_FW_VERSION_MAJOR ) "." \
+        STR( I2C_MASTER_EXT_FW_VERSION_MINOR ) "." \
+        STR( I2C_MASTER_EXT_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -96,19 +96,6 @@ extern "C" {
 
 
 
-/**
- * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* `i2c_master_ext` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* i2c_master_ext_get_fw_version(void);
-
-/**
- * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t `i2c_master_ext` firmware version number.
- */
-int32_t i2c_master_ext_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
