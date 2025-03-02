@@ -260,7 +260,7 @@ esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer);
  * @param invert Pixel is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, bool invert);
+esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, bool invert);
 
 /**
  * @brief Sets SSD1306 pages and segments data for a line.
@@ -275,7 +275,7 @@ esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, int16_t xpos, int16_t ypos,
  * @param invert Line is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_set_line(ssd1306_handle_t handle, int16_t x1, int16_t y1, int16_t x2, int16_t y2,  bool invert);
+esp_err_t ssd1306_set_line(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool invert);
 
 /**
  * @brief Sets SSD1306 pages and segments data for a circle.
@@ -289,7 +289,72 @@ esp_err_t ssd1306_set_line(ssd1306_handle_t handle, int16_t x1, int16_t y1, int1
  * @param invert Circle is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_set_circle(ssd1306_handle_t handle, int16_t x0, int16_t y0, int16_t r, bool invert);
+esp_err_t ssd1306_set_circle(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t r, bool invert);
+
+/**
+ * @brief Sets SSD1306 pages and segments data for a circle and display's the circle.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param x0 X-axis start position of the circle.
+ * @param y0 Y-axis start position of the circle.
+ * @param r Radius of the circle.
+ * @param invert Circle is inverted when true.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_display_circle(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t r, bool invert);
+
+/**
+ * @brief Sets SSD1306 pages and segments data for a filled circle and display's the filled circle.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param x0 X-axis start position of the circle.
+ * @param y0 Y-axis start position of the circle.
+ * @param r Radius of the circle.
+ * @param invert Circle is inverted when true.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ssd1306_display_filled_circle(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t r, bool invert);
+
+/**
+ * @brief Sets SSD1306 pages and segments data for a rectangle.
+ * 
+ * @note Call `ssd1306_display_pages` to display the rectangle.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param x X-axis start position of the rectangle.
+ * @param y Y-axis start position of the rectangle.
+ * @param w Width of the rectangle.
+ * @param h Height of the rectangle.
+ * @param invert Rectangle is inverted when true.
+ * @return esp_err_t 
+ */
+esp_err_t ssd1306_set_rectangle(ssd1306_handle_t handle, uint8_t x, uint8_t y, uint8_t w, uint8_t h, bool invert);
+
+/**
+ * @brief Sets SSD1306 pages and segments data for a rectangle and display's the rectangle.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param x X-axis start position of the rectangle.
+ * @param y Y-axis start position of the rectangle.
+ * @param w Width of the rectangle.
+ * @param h Height of the rectangle.
+ * @param invert Rectangle is inverted when true.
+ * @return esp_err_t 
+ */
+esp_err_t ssd1306_display_rectangle(ssd1306_handle_t handle, uint8_t x, uint8_t y, uint8_t w, uint8_t h, bool invert);
+
+/**
+ * @brief Sets SSD1306 pages and segments data for a filled rectangle and display's the filled rectangle.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param x X-axis start position of the rectangle.
+ * @param y Y-axis start position of the rectangle.
+ * @param w Width of the rectangle.
+ * @param h Height of the rectangle.
+ * @param invert Rectangle is inverted when true.
+ * @return esp_err_t 
+ */
+esp_err_t ssd1306_display_filled_rectangle(ssd1306_handle_t handle, uint8_t x, uint8_t y, uint8_t w, uint8_t h, bool invert);
 
 /**
  * @brief Sets contrast of the SSD1306 display panel.
@@ -298,7 +363,7 @@ esp_err_t ssd1306_set_circle(ssd1306_handle_t handle, int16_t x0, int16_t y0, in
  * @param contrast Contrast of information being displayed (0 to 255).
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_set_display_contrast(ssd1306_handle_t handle, uint8_t contrast);
+esp_err_t ssd1306_set_contrast(ssd1306_handle_t handle, uint8_t contrast);
 
 /**
  * @brief Displays a bitmap on the SSD1306.
@@ -314,7 +379,7 @@ esp_err_t ssd1306_set_display_contrast(ssd1306_handle_t handle, uint8_t contrast
  * @param invert Bitmap is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert);
+esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert);
 
 /**
  * @brief Displays an image by page and segment on the SSD1306.
@@ -450,7 +515,7 @@ esp_err_t ssd1306_set_software_scroll(ssd1306_handle_t handle, uint8_t start, ui
  * @param invert Text is inverted when true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert);
+esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert);
 
 /**
  * @brief Clears software based scrolling text from SSD1306 display.
@@ -458,7 +523,7 @@ esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, const char *text,
  * @param handle SSD1306 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_clear_scroll_display(ssd1306_handle_t handle);
+esp_err_t ssd1306_clear_display_software_scroll(ssd1306_handle_t handle);
 
 /**
  * @brief Sets SSD1306 scroll orientation, start and end pages to wrap around the display.
@@ -467,10 +532,10 @@ esp_err_t ssd1306_clear_scroll_display(ssd1306_handle_t handle);
  * @param scroll Scrolling orientation.
  * @param start Index of page for left or right scroll, otherwise, height position for up or down scroll.
  * @param end Index of page for left or right scroll, otherwise, height position for up or down scroll.
- * @param delay Delay in milliseconds before information is display, a value 0 there is no wait, and nothing is displayed with a value of -1.
+ * @param delay Delay in milliseconds (0-255) before information is displayed, a value 0 there is no wait, and nothing is displayed with a value of -1.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_set_display_wrap_around(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, uint8_t start, uint8_t end, int8_t delay);
+esp_err_t ssd1306_display_wrap_around(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, uint8_t start, uint8_t end, int8_t delay);
 
 /**
  * @brief Copies bit from source to destination.
@@ -513,7 +578,7 @@ uint8_t ssd1306_rotate_byte(uint8_t ch1);
  * @param handle SSD1306 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ssd1306_fadeout_display(ssd1306_handle_t handle);
+esp_err_t ssd1306_display_fadeout(ssd1306_handle_t handle);
 
 /**
  * @brief Initializes an SSD1306 device onto the I2C master bus.

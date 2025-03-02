@@ -42,6 +42,7 @@
 
 // Following definitions are borrowed from 
 // http://robotcantalk.blogspot.com/2015/03/interfacing-arduino-with-ssd1306-driven.html
+// https://github.com/nopnop2002/esp-idf-ssd1306/tree/master/components/ssd1306
 
 /* Control byte for i2c
 Co : bit 8 : Continuation Bit 
@@ -134,10 +135,21 @@ typedef union i2c_ssd1306_out_column_t {
 } PACK8 i2c_ssd1306_out_column_t;
 
 
-// Set pixel to internal buffer. Not show it.
-esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, bool invert) {
+
+
+
+
+esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
+
+    if (
+		xpos >= handle->width ||
+		ypos >= handle->height
+	) {
+		/* Error */
+		return ESP_ERR_INVALID_SIZE;
+	}
 
 	uint8_t _page = (ypos / 8);
 	uint8_t _bits = (ypos % 8);
@@ -162,78 +174,256 @@ esp_err_t ssd1306_set_pixel(ssd1306_handle_t handle, int16_t xpos, int16_t ypos,
 	return ESP_OK;
 }
 
-// Set line to internal buffer. Not show it.
-esp_err_t ssd1306_set_line(ssd1306_handle_t handle, int16_t x1, int16_t y1, int16_t x2, int16_t y2,  bool invert) {
-	int16_t i;
-	int16_t dx,dy;
-	int16_t sx,sy;
-	int16_t E;
+
+esp_err_t ssd1306_set_line(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,  bool invert) {
+	int16_t dx, dy, sx, sy, err, e2, i, tmp; 
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	/* distance between two points */
-	dx = ( x2 > x1 ) ? x2 - x1 : x1 - x2;
-	dy = ( y2 > y1 ) ? y2 - y1 : y1 - y2;
+	/* Check for overflow */
+	if (x0 >= handle->width) {
+		x0 = handle->width - 1;
+	}
+	if (x1 >= handle->width) {
+		x1 = handle->width - 1;
+	}
+	if (y0 >= handle->height) {
+		y0 = handle->height - 1;
+	}
+	if (y1 >= handle->height) {
+		y1 = handle->height - 1;
+	}
+	
+	dx = (x0 < x1) ? (x1 - x0) : (x0 - x1); 
+	dy = (y0 < y1) ? (y1 - y0) : (y0 - y1); 
+	sx = (x0 < x1) ? 1 : -1; 
+	sy = (y0 < y1) ? 1 : -1; 
+	err = ((dx > dy) ? dx : -dy) / 2; 
 
-	/* direction of two point */
-	sx = ( x2 > x1 ) ? 1 : -1;
-	sy = ( y2 > y1 ) ? 1 : -1;
-
-	/* inclination < 1 */
-	if ( dx > dy ) {
-		E = -dx;
-		for ( i = 0 ; i <= dx ; i++ ) {
-			ssd1306_set_pixel(handle, x1, y1, invert);
-			x1 += sx;
-			E += 2 * dy;
-			if ( E >= 0 ) {
-				y1 += sy;
-				E -= 2 * dx;
-			}
+	if (dx == 0) {
+		if (y1 < y0) {
+			tmp = y1;
+			y1 = y0;
+			y0 = tmp;
 		}
-	/* inclination >= 1 */
-	} else {
-		E = -dy;
-		for ( i = 0 ; i <= dy ; i++ ) {
-			ssd1306_set_pixel(handle, x1, y1, invert);
-			y1 += sy;
-			E += 2 * dx;
-			if ( E >= 0 ) {
-				x1 += sx;
-				E -= 2 * dy;
-			}
+		
+		if (x1 < x0) {
+			tmp = x1;
+			x1 = x0;
+			x0 = tmp;
 		}
+		
+		/* Vertical line */
+		for (i = y0; i <= y1; i++) {
+			ssd1306_set_pixel(handle, x0, i, invert);
+		}
+		
+		/* Return from function */
+		return ESP_OK;
+	}
+	
+	if (dy == 0) {
+		if (y1 < y0) {
+			tmp = y1;
+			y1 = y0;
+			y0 = tmp;
+		}
+		
+		if (x1 < x0) {
+			tmp = x1;
+			x1 = x0;
+			x0 = tmp;
+		}
+		
+		/* Horizontal line */
+		for (i = x0; i <= x1; i++) {
+			ssd1306_set_pixel(handle, i, y0, invert);
+		}
+		
+		/* Return from function */
+		return ESP_OK;
+	}
+	
+	while (1) {
+		ssd1306_set_pixel(handle, x0, y0, invert);
+		if (x0 == x1 && y0 == y1) {
+			break;
+		}
+		e2 = err; 
+		if (e2 > -dx) {
+			err -= dy;
+			x0 += sx;
+		} 
+		if (e2 < dy) {
+			err += dx;
+			y0 += sy;
+		} 
 	}
 
 	return ESP_OK;
 }
 
-// Draw circle
-esp_err_t ssd1306_set_circle(ssd1306_handle_t handle, int16_t x0, int16_t y0, int16_t r, bool invert) {
-	int16_t x;
-	int16_t y;
-	int16_t err;
-	int16_t old_err;
+
+esp_err_t ssd1306_set_circle(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t r, bool invert) {
+	int16_t f = 1 - r;
+	int16_t ddF_x = 1;
+	int16_t ddF_y = -2 * r;
+	int16_t x = 0;
+	int16_t y = r;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	x=0;
-	y=-r;
-	err=2-2*r;
+    ssd1306_set_pixel(handle, x0, y0 + r, invert);
+    ssd1306_set_pixel(handle, x0, y0 - r, invert);
+    ssd1306_set_pixel(handle, x0 + r, y0, invert);
+    ssd1306_set_pixel(handle, x0 - r, y0, invert);
 
-	do {
-		ssd1306_set_pixel(handle, x0-x, y0+y, invert); 
-		ssd1306_set_pixel(handle, x0-y, y0-x, invert); 
-		ssd1306_set_pixel(handle, x0+x, y0-y, invert); 
-		ssd1306_set_pixel(handle, x0+y, y0+x, invert); 
+    while (x < y) {
+        if (f >= 0) {
+            y--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f += ddF_x;
 
-		if ((old_err=err)<=x)	err+=++x*2+1;
-		if (old_err>y || err>x) err+=++y*2+1;	 
-	} while(y < 0);
+        ssd1306_set_pixel(handle, x0 + x, y0 + y, invert);
+        ssd1306_set_pixel(handle, x0 - x, y0 + y, invert);
+        ssd1306_set_pixel(handle, x0 + x, y0 - y, invert);
+        ssd1306_set_pixel(handle, x0 - x, y0 - y, invert);
+
+        ssd1306_set_pixel(handle, x0 + y, y0 + x, invert);
+        ssd1306_set_pixel(handle, x0 - y, y0 + x, invert);
+        ssd1306_set_pixel(handle, x0 + y, y0 - x, invert);
+        ssd1306_set_pixel(handle, x0 - y, y0 - x, invert);
+    }
 
 	return ESP_OK;
+}
+
+esp_err_t ssd1306_display_circle(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t r, bool invert) {
+	/* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+    ESP_RETURN_ON_ERROR(ssd1306_set_circle(handle, x0, y0, r, invert), TAG, "set circle for display circle failed");
+
+    ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for circle failed");
+
+	return ESP_OK;
+}
+
+esp_err_t ssd1306_display_filled_circle(ssd1306_handle_t handle, uint8_t x0, uint8_t y0, uint8_t r, bool invert) {
+	int16_t f = 1 - r;
+	int16_t ddF_x = 1;
+	int16_t ddF_y = -2 * r;
+	int16_t x = 0;
+	int16_t y = r;
+
+    /* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+    ssd1306_set_pixel(handle, x0, y0 + r, invert);
+    ssd1306_set_pixel(handle, x0, y0 - r, invert);
+    ssd1306_set_pixel(handle, x0 + r, y0, invert);
+    ssd1306_set_pixel(handle, x0 - r, y0, invert);
+    ssd1306_set_line(handle, x0 - r, y0, x0 + r, y0, invert);
+
+    while (x < y) {
+        if (f >= 0) {
+            y--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f += ddF_x;
+
+        ssd1306_set_line(handle, x0 - x, y0 + y, x0 + x, y0 + y, invert);
+        ssd1306_set_line(handle, x0 + x, y0 - y, x0 - x, y0 - y, invert);
+
+        ssd1306_set_line(handle, x0 + y, y0 + x, x0 - y, y0 + x, invert);
+        ssd1306_set_line(handle, x0 + y, y0 - x, x0 - y, y0 - x, invert);
+    }
+
+    ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for filled circle failed");
+
+	return ESP_OK;
+}
+
+esp_err_t ssd1306_set_rectangle(ssd1306_handle_t handle, uint8_t x, uint8_t y, uint8_t w, uint8_t h, bool invert) {
+    /* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+    /* Check input parameters */
+	if (
+		x >= handle->width ||
+		y >= handle->height
+	) {
+		/* Return error */
+		return ESP_ERR_INVALID_SIZE;
+	}
+	
+	/* Check width and height */
+	if ((x + w) >= handle->width) {
+		w = handle->width - x;
+	}
+	if ((y + h) >= handle->height) {
+		h = handle->height - y;
+	}
+
+    /* Set 4 lines */
+	ssd1306_set_line(handle, x, y, x + w, y, invert);         /* Top line */
+	ssd1306_set_line(handle, x, y + h, x + w, y + h, invert); /* Bottom line */
+	ssd1306_set_line(handle, x, y, x, y + h, invert);         /* Left line */
+	ssd1306_set_line(handle, x + w, y, x + w, y + h, invert); /* Right line */
+
+    return ESP_OK;
+}
+
+esp_err_t ssd1306_display_rectangle(ssd1306_handle_t handle, uint8_t x, uint8_t y, uint8_t w, uint8_t h, bool invert) {
+    /* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+    ESP_RETURN_ON_ERROR(ssd1306_set_rectangle(handle, x, y, w, h, invert), TAG, "set rectangle for display rectangle failed");
+
+    ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for rectangle failed");
+
+    return ESP_OK;
+}
+
+esp_err_t ssd1306_display_filled_rectangle(ssd1306_handle_t handle, uint8_t x, uint8_t y, uint8_t w, uint8_t h, bool invert) {
+    /* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+    /* Check input parameters */
+	if (
+		x >= handle->width ||
+		y >= handle->height
+	) {
+		/* Return error */
+		return ESP_ERR_INVALID_SIZE;
+	}
+	
+	/* Check width and height */
+	if ((x + w) >= handle->width) {
+		w = handle->width - x;
+	}
+	if ((y + h) >= handle->height) {
+		h = handle->height - y;
+	}
+
+    /* Set lines */
+	for (uint8_t i = 0; i <= h; i++) {
+		/* Set line */
+		ssd1306_set_line(handle, x, y + i, x + w, y + i, invert);
+	}
+
+    ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for rectangle failed");
+
+    return ESP_OK;
 }
 
 esp_err_t ssd1306_enable_display(ssd1306_handle_t handle) {
@@ -311,7 +501,7 @@ esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer) {
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
 	uint8_t i, j, byte_width = (width + 7) / 8;
 
 	/* validate parameters */
@@ -331,7 +521,7 @@ esp_err_t ssd1306_display_bitmap(ssd1306_handle_t handle, int16_t xpos, int16_t 
 }
 
 /* this works fine for a 128x32 but the pages repeat after page 3, e.g. pages 0-3 and 4-7 are the same */
-esp_err_t ssd1306_display_bitmap__(ssd1306_handle_t handle, int16_t xpos, int16_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
+esp_err_t ssd1306_display_bitmap__(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -569,7 +759,7 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
 	uint8_t _seg = segment;
 	uint8_t image[8];
 
-	for (int i = 0; i < box_width; i++) {
+	for (uint8_t i = 0; i < box_width; i++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[i]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -579,11 +769,11 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
 	vTaskDelay(delay / portTICK_PERIOD_MS);
 
 	// Horizontally scroll inside the box
-	for (int _text=box_width; _text<text_len; _text++) {
+	for (uint8_t _text=box_width; _text<text_len; _text++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
-		for (int _bit=0;_bit<8;_bit++) {
+		for (uint8_t _bit=0;_bit<8;_bit++) {
 			for (int _pixel=0;_pixel<text_box_pixel;_pixel++) {
 				//ESP_LOGI(TAG, "_text=%d _bit=%d _pixel=%d", _text, _bit, _pixel);
 				handle->page[page].segment[_pixel+segment] = handle->page[page].segment[_pixel+segment+1];
@@ -607,7 +797,7 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 	uint8_t image[8];
 
     // fill box with spaces
-	for (int i = 0; i < box_width; i++) {
+	for (uint8_t i = 0; i < box_width; i++) {
 		memcpy(image, font_latin_8x8_tr[21], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -617,12 +807,12 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 	vTaskDelay(delay / portTICK_PERIOD_MS);
 
 	// Horizontally scroll inside the box
-	for (int _text=0; _text<text_len; _text++) {
+	for (uint8_t _text=0; _text<text_len; _text++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
-		for (int _bit=0;_bit<8;_bit++) {
-			for (int _pixel=0;_pixel<text_box_pixel;_pixel++) {
+		for (uint8_t _bit=0;_bit<8;_bit++) {
+			for (uint8_t _pixel=0;_pixel<text_box_pixel;_pixel++) {
 				//ESP_LOGI(TAG, "_text=%d _bit=%d _pixel=%d", _text, _bit, _pixel);
 				handle->page[page].segment[_pixel+segment] = handle->page[page].segment[_pixel+segment+1];
 			}
@@ -633,12 +823,12 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 	}
 
     // Horizontally scroll inside the box
-	for (int _text=0; _text<box_width; _text++) {
+	for (uint8_t _text=0; _text<box_width; _text++) {
 		memcpy(image, font_latin_8x8_tr[21], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
-		for (int _bit=0;_bit<8;_bit++) {
-			for (int _pixel=0;_pixel<text_box_pixel;_pixel++) {
+		for (uint8_t _bit=0;_bit<8;_bit++) {
+			for (uint8_t _pixel=0;_pixel<text_box_pixel;_pixel++) {
 				//ESP_LOGI(TAG, "_text=%d _bit=%d _pixel=%d", _text, _bit, _pixel);
 				handle->page[page].segment[_pixel+segment] = handle->page[page].segment[_pixel+segment+1];
 			}
@@ -675,7 +865,7 @@ esp_err_t ssd1306_clear_display(ssd1306_handle_t handle, bool invert) {
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_set_display_contrast(ssd1306_handle_t handle, uint8_t contrast) {
+esp_err_t ssd1306_set_contrast(ssd1306_handle_t handle, uint8_t contrast) {
 	uint8_t out_buf[3];
 	uint8_t out_index = 0;
 
@@ -710,7 +900,7 @@ esp_err_t ssd1306_set_software_scroll(ssd1306_handle_t handle, uint8_t start, ui
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert) {
+esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const char *text, uint8_t text_len, bool invert) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -737,7 +927,7 @@ esp_err_t ssd1306_display_scroll_text(ssd1306_handle_t handle, const char *text,
 	return ESP_OK;
 }
 
-esp_err_t ssd1306_clear_scroll_display(ssd1306_handle_t handle) {
+esp_err_t ssd1306_clear_display_software_scroll(ssd1306_handle_t handle) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -837,7 +1027,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 // delay = 0 : display with no wait
 // delay > 0 : display with wait
 // delay < 0 : no display
-esp_err_t ssd1306_set_display_wrap_around(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, uint8_t start, uint8_t end, int8_t delay) {
+esp_err_t ssd1306_display_wrap_around(ssd1306_handle_t handle, ssd1306_scroll_types_t scroll, uint8_t start, uint8_t end, int8_t delay) {
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
@@ -1018,7 +1208,7 @@ uint8_t ssd1306_rotate_byte(uint8_t ch1) {
 	return ch2;
 }
 
-esp_err_t ssd1306_fadeout_display(ssd1306_handle_t handle) {
+esp_err_t ssd1306_display_fadeout(ssd1306_handle_t handle) {
 	uint8_t image[1];
 
 	/* validate parameters */
