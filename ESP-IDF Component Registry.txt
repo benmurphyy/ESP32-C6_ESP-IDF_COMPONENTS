@@ -30,6 +30,7 @@ Use git tag to version the commit and components.
 
 compote component upload --name esp_s12d --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\adc\esp_s12sd" --dest-dir "C:\Espressif\component_archive"
 
+compote component upload --name esp_type_utils --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\utilities\esp_type_utils" --dest-dir "C:\Espressif\component_archive"
 
 compote component upload --name esp_driver_i2c_ext --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_driver_i2c_ext" --dest-dir "C:\Espressif\component_archive"
 
