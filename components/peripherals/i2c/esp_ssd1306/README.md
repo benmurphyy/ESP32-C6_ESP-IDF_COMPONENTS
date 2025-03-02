@@ -1,3 +1,7 @@
+<a href="https://components.espressif.com/components/k0i05/esp_ssd1306">
+<img src="https://components.espressif.com/components/k0i05/esp_ssd1306/badge.svg" alt="k0i05/esp_ssd1306 Version: 1.1.0" />
+</a>
+
 # Generic SSD1306 (128x32 and 128x64) OLED Display
 This esp-idf driver was developed for generic SSD1306 OLED displays.  Information on features and functionality are documented and can be found in the `ssd1306.h` header file.  The SSD1306 component is a compact and simplified driver compatible with 128x64 and 128x32 OLED displays.  There are three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more.  This component has one font implemented now (i.e. 8x8 basic Latin + control + extended Latin) but is ideal for most use cases.
 

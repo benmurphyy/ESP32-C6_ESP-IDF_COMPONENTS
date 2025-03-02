@@ -1,0 +1,38 @@
+
+COMPONENT MANAGEMENT
+https://docs.espressif.com/projects/idf-component-manager/en/latest/getting_started/index.html
+
+COMPOTE
+https://docs.espressif.com/projects/idf-component-manager/en/latest/reference/compote_cli.html#compote-component-upload
+
+Open command prompt from ESP-IDF extension 'Open ESP-IDF Terminal' to use 'compote'.
+
+STAGING
+
+compote component upload --name esp_driver_i2c_ext --profile "staging" --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_driver_i2c_ext" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_ahtxx --profile "staging" --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ahtxx" --dest-dir "C:\Espressif\component_archive"
+
+
+PRODUCTION
+
+compote component upload --name esp_driver_i2c_ext --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_driver_i2c_ext" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_ahtxx --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ahtxx" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_bh1750 --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_bh1750" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_bmp280 --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_bmp280" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_bmp390 --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_bmp390" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_hdc1080 --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_hdc1080" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_sgp4x --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_sgp4x" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_sht4x --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_sht4x" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_ssd1306 --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ssd1306" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_veml7700 --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_veml7700" --dest-dir "C:\Espressif\component_archive"
+

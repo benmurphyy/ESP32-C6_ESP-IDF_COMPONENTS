@@ -4,13 +4,13 @@ license: "MIT"
 url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_driver_i2c_ext"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
-examples:
-  url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/main/components/peripherals/i2c/esp_driver_i2c_ext/README.md"
+documentation: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/blob/main/components/peripherals/i2c/esp_driver_i2c_ext/README.md"
 tags:
   - i2c
   - espidf
   - esp32
 targets:
+  - esp32
   - esp32s3
 dependencies:
   idf: 
