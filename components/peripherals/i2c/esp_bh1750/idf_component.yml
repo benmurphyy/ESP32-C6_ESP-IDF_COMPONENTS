@@ -1,7 +1,7 @@
 version: "1.1.0"
 description: "ESP32 espressif IoT development framework (esp-idf) compatible component for Rohm BH1750 I2C ambient light sensor."
 license: "MIT"
-url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/b078d5bec745a7953d74438723c52c1fdf7b2cea/components/peripherals/i2c/esp_bh1750"
+url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bh1750"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 tags:

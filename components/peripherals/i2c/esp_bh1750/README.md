@@ -2,7 +2,7 @@
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Rohm BH1750 sensor.  Information on features and functionality are documented and can be found in the `bh1750.h` header file and in the `documentation` folder.
 
 ## Repository
-The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/b078d5bec745a7953d74438723c52c1fdf7b2cea/components/peripherals/i2c/esp_bh1750
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bh1750
 
 ## General Usage
 To get started, simply copy the component to your project's `components` folder and reference the `bh1750.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
