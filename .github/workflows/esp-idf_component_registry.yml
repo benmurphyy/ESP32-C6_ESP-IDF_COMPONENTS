@@ -21,6 +21,7 @@ jobs:
             esp_bmp280:components/peripherals/i2c/esp_bmp280
             esp_bmp390:components/peripherals/i2c/esp_bmp390
             esp_hdc1080:components/peripherals/i2c/esp_hdc1080
+            esp_ltr390uv:components/peripherals/i2c/esp_ltr390uv
             esp_sgp4x:components/peripherals/i2c/esp_sgp4x
             esp_sht4x:components/peripherals/i2c/esp_sht4x
             esp_ssd1306:components/peripherals/i2c/esp_ssd1306
