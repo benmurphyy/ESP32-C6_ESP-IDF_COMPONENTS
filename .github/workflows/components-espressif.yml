@@ -27,6 +27,6 @@ jobs:
             esp_sht4x:components/peripherals/i2c/esp_sht4x
             esp_ssd1306:components/peripherals/i2c/esp_ssd1306
             esp_veml7700:components/peripherals/i2c/esp_veml7700
-          version: ${{ github.ref_name }}
+          version: git
           namespace: "k0i05"
           api_token: ${{ secrets.IDF_COMPONENT_API_TOKEN }}
