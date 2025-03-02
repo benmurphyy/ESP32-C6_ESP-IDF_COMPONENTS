@@ -97,19 +97,6 @@ extern "C" {
 
 
 
-/**
- * @brief Converts SHT4X firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* SHT4X firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* sht4x_get_fw_version(void);
-
-/**
- * @brief Converts SHT4X firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t SHT4X firmware version number.
- */
-int32_t sht4x_get_fw_version_number(void);
 
 
 

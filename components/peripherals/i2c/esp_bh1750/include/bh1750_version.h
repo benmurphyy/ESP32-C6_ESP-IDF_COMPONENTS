@@ -68,12 +68,12 @@ extern "C" {
 #define STR( x ) STR_QUOTES( x )
 
 /** 
- * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
+ * Macro to generate current firmware version numbers (major, minor, patch, build) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define BH1750_FW_VERSION_STR                        \
-                STR( BH1750_FW_VERSION_MAJOR ) "." \
-                STR( BH1750_FW_VERSION_MINOR ) "." \
-                STR( BH1750_FW_VERSION_PATCH )
+#define BH1750_FW_VERSION_STR              \
+        STR( BH1750_FW_VERSION_MAJOR ) "." \
+        STR( BH1750_FW_VERSION_MINOR ) "." \
+        STR( BH1750_FW_VERSION_PATCH ) 
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -81,7 +81,7 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define BH1750_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define BH1750_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -90,26 +90,13 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define BH1750_FW_VERSION_INT32                                      \
-B       BH1750_FW_VERSION_PARAMS_INT32(BH1750_FW_VERSION_MAJOR,   \
-                                        BH1750_FW_VERSION_MINOR,   \
+#define BH1750_FW_VERSION_INT32                                   \
+        BH1750_FW_VERSION_PARAMS_INT32(BH1750_FW_VERSION_MAJOR,   \
+                                        BH1750_FW_VERSION_MINOR,  \
                                         BH1750_FW_VERSION_PATCH)
 
 
 
-/**
- * @brief Converts BH1750 firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* BH1750 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* bh1750_get_fw_version(void);
-
-/**
- * @brief Converts BH1750 firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t BH1750 firmware version number.
- */
-int32_t bh1750_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

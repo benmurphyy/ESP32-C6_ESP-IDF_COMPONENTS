@@ -52,7 +52,6 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define S12SD_FW_VERSION_PATCH 0
 
-
 /**
  * public macro definitions
  */
@@ -70,10 +69,12 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define S12SD_FW_VERSION_STR                        \
+#define S12SD_FW_VERSION_STR              \
         STR( S12SD_FW_VERSION_MAJOR ) "." \
         STR( S12SD_FW_VERSION_MINOR ) "." \
-        STR( S12SD_FW_VERSION_PATCH )
+        STR( S12SD_FW_VERSION_PATCH ) 
+
+
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -81,8 +82,9 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define S12SD_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define S12SD_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
         ((major << 16) | (minor << 8) | (patch))
+
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
@@ -90,26 +92,12 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define S12SD_FW_VERSION_INT32                                      \
+#define S12SD_FW_VERSION_INT32                                  \
         S12SD_FW_VERSION_PARAMS_INT32(S12SD_FW_VERSION_MAJOR,   \
-                                        S12SD_FW_VERSION_MINOR,   \
+                                        S12SD_FW_VERSION_MINOR, \
                                         S12SD_FW_VERSION_PATCH)
 
 
-
-/**
- * @brief Converts S12SD firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* S12SD firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* s12sd_get_fw_version(void);
-
-/**
- * @brief Converts S12SD firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t S12SD firmware version number.
- */
-int32_t s12sd_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

@@ -1,3 +1,9 @@
+REFERENCES
+https://stackoverflow.com/questions/59692711/auto-increment-fileversion-build-nr-in-visual-studio-2019
+https://stackoverflow.com/questions/638053/how-to-increment-visual-studio-build-number-using-c/31179335
+https://www.zachburlingame.com/2011/02/versioning-a-native-cc-binary-with-visual-studio/
+http://www.zachburlingame.com/2011/03/integrating-the-subversion-revision-into-the-version-automatically-with-native-cc/
+
 PowerShell Command:
 
 powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File update_version.ps1 "./version.h"
@@ -8,17 +14,16 @@ version.h
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 0
 #define VERSION_PATCH 0
-#define VERSION_BUILD 0
 
 
 PowerShell Script:
 
 (Get-Content -path $args[0] -Raw) |
     ForEach-Object {
-        $defstr="#define VERSION_BUILD ";
-        $regex="$defstr(?<BuildVersion>\d*)";
+        $defstr="#define VERSION_PATCH ";
+        $regex="$defstr(?<PatchVersion>\d*)";
         if($_ -match $regex) {
-            $_ = $_ -replace $regex,"$($defstr)$(([int]$matches["BuildVersion"])+1)" 
+            $_ = $_ -replace $regex,"$($defstr)$(([int]$matches["PatchVersion"])+1)" 
         }
         $_
     } |

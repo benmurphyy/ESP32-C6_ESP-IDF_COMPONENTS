@@ -97,19 +97,6 @@ extern "C" {
 
 
 
-/**
- * @brief Converts VEML7700 firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* VEML7700 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* veml7700_get_fw_version(void);
-
-/**
- * @brief Converts VEML7700 firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t VEML7700 firmware version number.
- */
-int32_t veml7700_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

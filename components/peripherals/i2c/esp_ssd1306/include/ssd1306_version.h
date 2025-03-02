@@ -97,19 +97,6 @@ extern "C" {
 
 
 
-/**
- * @brief Converts SSD1306 firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* SSD1306 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* ssd1306_get_fw_version(void);
-
-/**
- * @brief Converts SSD1306 firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t SSD1306 firmware version number.
- */
-int32_t ssd1306_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

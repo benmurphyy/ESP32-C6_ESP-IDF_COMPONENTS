@@ -258,6 +258,20 @@ esp_err_t ahtxx_remove(ahtxx_handle_t handle);
  */
 esp_err_t ahtxx_delete(ahtxx_handle_t handle);
 
+/**
+ * @brief Converts AHTXX firmware version numbers (major, minor, patch, build) into a string.
+ * 
+ * @return char* AHTXX firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* ahtxx_get_fw_version(void);
+
+/**
+ * @brief Converts AHTXX firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t AHTXX firmware version number.
+ */
+int32_t ahtxx_get_fw_version_number(void);
+
 
 #ifdef __cplusplus
 }

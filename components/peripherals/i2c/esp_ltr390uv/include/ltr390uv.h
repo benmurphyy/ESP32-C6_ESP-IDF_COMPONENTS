@@ -555,6 +555,21 @@ esp_err_t ltr390uv_remove(ltr390uv_handle_t handle);
  */
 esp_err_t ltr390uv_delete(ltr390uv_handle_t handle);
 
+/**
+ * @brief Converts LTR390UV firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* LTR390UV firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* ltr390uv_get_fw_version(void);
+
+/**
+ * @brief Converts LTR390UV firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t LTR390UV firmware version number.
+ */
+int32_t ltr390uv_get_fw_version_number(void);
+
+
 
 #ifdef __cplusplus
 }

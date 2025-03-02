@@ -97,19 +97,7 @@ extern "C" {
 
 
 
-/**
- * @brief Converts HDC1080 firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* HDC1080 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* hdc1080_get_fw_version(void);
 
-/**
- * @brief Converts HDC1080 firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t HDC1080 firmware version number.
- */
-int32_t hdc1080_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

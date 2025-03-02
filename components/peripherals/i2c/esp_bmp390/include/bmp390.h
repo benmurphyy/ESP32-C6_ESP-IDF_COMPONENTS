@@ -581,6 +581,20 @@ esp_err_t bmp390_remove(bmp390_handle_t handle);
  */
 esp_err_t bmp390_delete(bmp390_handle_t handle);
 
+/**
+ * @brief Converts BMP390 firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* BMP390 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* bmp390_get_fw_version(void);
+
+/**
+ * @brief Converts BMP390 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t BMP390 firmware version number.
+ */
+int32_t bmp390_get_fw_version_number(void);
+
 
 #ifdef __cplusplus
 }

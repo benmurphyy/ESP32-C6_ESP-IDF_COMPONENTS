@@ -3,7 +3,7 @@
 </a>
 
 # Vishay VEML7700 Sensor
-This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Vishay VEML7700 sensor.  Information on features and functionality are documented and can be found in the `veml7700.h` header file and in the `documentation` folder.
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Vishay VEML7700 I2C sensor.  Information on features and functionality are documented and can be found in the `veml7700.h` header file and in the `documentation` folder.
 
 ## Repository
 The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_veml7700

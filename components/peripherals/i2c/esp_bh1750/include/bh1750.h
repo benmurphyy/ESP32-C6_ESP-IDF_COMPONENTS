@@ -192,6 +192,20 @@ esp_err_t bh1750_remove(bh1750_handle_t handle);
  */
 esp_err_t bh1750_delete(bh1750_handle_t handle);
 
+/**
+ * @brief Converts BH1750 firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* BH1750 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* bh1750_get_fw_version(void);
+
+/**
+ * @brief Converts BH1750 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t BH1750 firmware version number.
+ */
+int32_t bh1750_get_fw_version_number(void);
+
 
 
 #ifdef __cplusplus

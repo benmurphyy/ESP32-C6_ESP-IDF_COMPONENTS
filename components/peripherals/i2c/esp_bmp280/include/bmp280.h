@@ -451,6 +451,19 @@ esp_err_t bmp280_remove(bmp280_handle_t handle);
  */
 esp_err_t bmp280_delete(bmp280_handle_t handle);
 
+/**
+ * @brief Converts BMP280 firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* BMP280 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* bmp280_get_fw_version(void);
+
+/**
+ * @brief Converts BMP280 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t BMP280 firmware version number.
+ */
+int32_t bmp280_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

@@ -135,6 +135,23 @@ esp_err_t s12sd_measure(s12sd_handle_t handle, uint8_t *uv_index);
  */
 esp_err_t s12sd_delete(s12sd_handle_t handle);
 
+/**
+ * @brief Converts S12SD firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* S12SD firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* s12sd_get_fw_version(void);
+
+/**
+ * @brief Converts S12SD firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t S12SD firmware version number.
+ */
+int32_t s12sd_get_fw_version_number(void);
+
+
+
+
 
 #ifdef __cplusplus
 }

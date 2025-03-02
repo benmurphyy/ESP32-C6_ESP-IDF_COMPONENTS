@@ -52,7 +52,6 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define BMP280_FW_VERSION_PATCH 0
 
-
 /**
  * public macro definitions
  */
@@ -70,10 +69,10 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define BMP280_FW_VERSION_STR                        \
+#define BMP280_FW_VERSION_STR              \
         STR( BMP280_FW_VERSION_MAJOR ) "." \
         STR( BMP280_FW_VERSION_MINOR ) "." \
-        STR( BMP280_FW_VERSION_PATCH )
+        STR( BMP280_FW_VERSION_PATCH ) 
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -81,7 +80,7 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define BMP280_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define BMP280_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -90,26 +89,13 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define BMP280_FW_VERSION_INT32                                      \
-        BMP280_FW_VERSION_PARAMS_INT32(BMP280_FW_VERSION_MAJOR,   \
-                                          BMP280_FW_VERSION_MINOR,   \
+#define BMP280_FW_VERSION_INT32                                     \
+        BMP280_FW_VERSION_PARAMS_INT32(BMP280_FW_VERSION_MAJOR,     \
+                                          BMP280_FW_VERSION_MINOR,  \
                                           BMP280_FW_VERSION_PATCH)
 
 
 
-/**
- * @brief Converts BMP280 firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* BMP280 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* bmp280_get_fw_version(void);
-
-/**
- * @brief Converts BMP280 firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t BMP280 firmware version number.
- */
-int32_t bmp280_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

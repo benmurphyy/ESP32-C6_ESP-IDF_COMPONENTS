@@ -211,6 +211,20 @@ esp_err_t sgp4x_remove(sgp4x_handle_t handle);
  */
 esp_err_t sgp4x_delete(sgp4x_handle_t handle);
 
+/**
+ * @brief Converts SGP4X firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* SGP4X firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* sgp4x_get_fw_version(void);
+
+/**
+ * @brief Converts SGP4X firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t SGP4X firmware version number.
+ */
+int32_t sgp4x_get_fw_version_number(void);
+
 
 #ifdef __cplusplus
 }

@@ -68,12 +68,12 @@ extern "C" {
 #define STR( x ) STR_QUOTES( x )
 
 /** 
- * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
+ * Macro to generate current firmware version numbers (major, minor, patch, build) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define AHTXX_FW_VERSION_STR                        \
+#define AHTXX_FW_VERSION_STR              \
         STR( AHTXX_FW_VERSION_MAJOR ) "." \
         STR( AHTXX_FW_VERSION_MINOR ) "." \
-        STR( AHTXX_FW_VERSION_PATCH )
+        STR( AHTXX_FW_VERSION_PATCH ) 
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -81,7 +81,7 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AHTXX_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define AHTXX_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -90,26 +90,14 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AHTXX_FW_VERSION_INT32                                      \
+#define AHTXX_FW_VERSION_INT32                                  \
         AHTXX_FW_VERSION_PARAMS_INT32(AHTXX_FW_VERSION_MAJOR,   \
-                                          AHTXX_FW_VERSION_MINOR,   \
-                                          AHTXX_FW_VERSION_PATCH)
+                                        AHTXX_FW_VERSION_MINOR, \
+                                        AHTXX_FW_VERSION_PATCH)
 
 
 
-/**
- * @brief Converts AHTXX firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* AHTXX firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* ahtxx_get_fw_version(void);
 
-/**
- * @brief Converts AHTXX firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t AHTXX firmware version number.
- */
-int32_t ahtxx_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
