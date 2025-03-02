@@ -23,25 +23,5 @@
 			"format": "c",
 			"app_config.h": "c"
 		},
-		"auto-version-increment.info.notificationBar": true,
-		//"auto-version-increment.update.onSave": "Minor",
-		"auto-version-increment.update.versionDigit": "Patch/Revision",
-		"auto-version-increment.version.file": [
-			{
-				"path": "components\\peripherals\\adc\\esp_s12sd\\library.json",
-				"prefix": "\"version\": \"",
-				"sufix": "\"",
-				"primary": true,
-				"useWorkspacePath": true
-			},
-			{
-				"path": "components\\peripherals\\adc\\esp_s12sd\\include\\s12sd_version.h",
-				"prefix": "#define S12SD_FW_VERSION_PATCH UINT8_C(",
-				"sufix": ")",
-				"useWorkspacePath": true
-			}
-		],
-		"auto-version-increment.git.commit": "A new commit with version: {version}",
-		"auto-version-increment.update.versionRules": true
 	}
 }

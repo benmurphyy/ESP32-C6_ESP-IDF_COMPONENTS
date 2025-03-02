@@ -8,32 +8,32 @@ ESP-IDF peripheral components that are flagged as completed work but they are un
 ## ADC
 ESP-IDF component development status:
 
- - Roithner LaserTechnik GUVA-S12SD: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - Roithner LaserTechnik GUVA-S12SD: component is synchronized with the esp-idf component registry.
 
 ## I2C
 ESP-IDF component development status:
 
- - ASAIR AHTXX: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - ASAIR AHTXX: component is synchronized with the esp-idf component registry.
  - AKM AK8975: initial component implementation completed.
  - OSRAM AS7341: initial component implementation completed.
- - ROHM BH1750FVI: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - ROHM BH1750FVI: component is synchronized with the esp-idf component registry.
  - Bosch BME680: component development is work in progress (WIP), coming soon (waiting for sensor to arrive)!! 
- - Bosch BMP280: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
- - Bosch BMP390: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - Bosch BMP280: component is synchronized with the esp-idf component registry.
+ - Bosch BMP390: component is synchronized with the esp-idf component registry.
  - ScioSense CCS811: initial component implementation completed.
  - ScioSense ENS160: initial component implementation completed.
- - Texas Instruments HDC1080: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - Texas Instruments HDC1080: component was synchronized with the esp-idf component registry.
  - Honeywell HMC5883L: initial component implementation completed.
- - Lite-On LTR390UV: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - Lite-On LTR390UV: component is synchronized with the esp-idf component registry.
  - Maxim-Integrated MAX30105: component development is work in progress (WIP).
  - Melexis MLX90614: initial component implementation completed.
  - Memsic MMC56X3: initial component implementation completed.
  - InvenSense MPU6050: initial component implementation completed.
- - Sensirion SGP4X: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
- - Sensirion SHT4X: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
- - Generic SSD1306 (128x32 and 128x64): component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - Sensirion SGP4X: component is synchronized with the esp-idf component registry.
+ - Sensirion SHT4X: component is synchronized with the esp-idf component registry.
+ - Generic SSD1306 (128x32 and 128x64): component is synchronized with the esp-idf component registry.
  - Infineon TLV493D: component development is work in progress (WIP).
- - Vishay VEML7700: component was reorganized and metadata files added per esp-idf component packaging recommendations (ESP-IDF & Platform IO Component Registry: WIP).
+ - Vishay VEML7700: component is synchronized with the esp-idf component registry.
 
 ## OWB
 ESP-IDF component development status:

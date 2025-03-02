@@ -1,0 +1,83 @@
+variables:
+  CI_GITVERSION_DEBUG:
+    value: "false"
+    description: "Verbose output of GitVersion"
+  CI_SCRIPT_DEBUG:
+    value: "false"
+    description: "Verbose output of CI script."
+
+stages:
+  - .pre
+  - build
+
+# do not trigger the CI/CD pipeline when the CI/CD pipeline pushes Git tags
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: always
+
+determine-version:
+  image:
+    name: gittools/gitversion:5.12.0-alpine.3.14-6.0
+    entrypoint: [""]
+  variables:
+    GIT_CHECKOUT_STRATEGY: fetch
+    GIT_DEPTH: 0 # force a deep/non-shallow fetch required for gitversion
+  cache: [] # caches, before_scripts, and after_scripts can mess things up
+  before_script: []
+  after_script: []
+  stage: .pre
+  script:
+    - |
+      if [[ "${CI_SCRIPT_TRACE}" == "true" ]]; then
+        echo "Debugging enabled"
+        set -xv
+      fi
+
+      if [[ "${CI_GITVERSION_TRACE}" == "true" ]]; then
+        echo "Gitversion tracing is on, showing configuration (including settings from defaults)..."
+        /tools/dotnet-gitversion /showconfig
+        VERBOSITYSETTING='/verbosity Diagnostic'
+      fi
+
+      /tools/dotnet-gitversion /output buildserver ${VERBOSITYSETTING}
+      grep -F "GitVersion_MajorMinorPatch=" gitversion.properties >> this-version.env
+  artifacts:
+    # save new version number for later stages
+    reports:
+      dotenv: this-version.env
+
+show-version:
+  image:
+    name: gittools/gitversion:5.12.0-alpine.3.14-6.0
+    entrypoint: [""]
+  stage: build
+  script:
+    - |
+      if [[ "${CI_SCRIPT_TRACE}" == "true" ]]; then
+        echo "Debugging enabled"
+        set -xv
+      fi
+      printenv | grep -F "GitVersion_MajorMinorPatch"
+
+push-version:
+  image:
+    name: gittools/gitversion:5.12.0-alpine.3.14-6.0
+    entrypoint: [""]
+  # push tags only for main branch
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  stage: build
+  script:
+    - |
+      if [[ "${CI_SCRIPT_TRACE}" == "true" ]]; then
+        echo "Debugging enabled"
+        set -xv
+      fi
+
+      if [[ -z "$(git tag -l ${GitVersion_MajorMinorPatch})" ]]; then
+        git tag ${GitVersion_MajorMinorPatch}
+        git remote add tag-origin "$(sed -E "s#(https?://)#\1git:${PROJECT_ACCESS_TOKEN}@#" <<< "${CI_PROJECT_URL}")"
+        git push tag-origin ${GitVersion_MajorMinorPatch}
+      fi
