@@ -13,7 +13,7 @@
     "repository":
     {
       "type": "git",
-      "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/2f662825bf50c863ff09dd461361724ba9e470f2/components/peripherals/i2c/esp_hdc1080"
+      "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hdc1080"
     },
     "version": "1.1.0",
     "license": "MIT",

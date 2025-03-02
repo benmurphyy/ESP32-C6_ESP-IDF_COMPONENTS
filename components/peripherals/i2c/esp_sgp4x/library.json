@@ -13,7 +13,7 @@
     "repository":
     {
       "type": "git",
-      "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/5f55371c65e467eaee9e8c2ecace31414874a04d/components/peripherals/i2c/esp_sgp4x"
+      "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_sgp4x"
     },
     "version": "1.1.0",
     "license": "MIT",

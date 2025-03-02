@@ -2,7 +2,7 @@
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Roithner LaserTechnik GUVA-S12SD ultraviolet analog sensor.  Information on features and functionality are documented and can be found in the `s12sd.h` header file and in the `documentation` folder.
 
 ## Repository
-The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/b34d78b383ce366b4954c946b7181bafb1c9ebb3/components/peripherals/adc/esp_s12sd
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/adc/esp_s12sd
 
 ## General Usage
 To get started, simply copy the component to your project's `components` folder and reference the `s12sd.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
