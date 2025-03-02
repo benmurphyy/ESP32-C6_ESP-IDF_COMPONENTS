@@ -24,7 +24,7 @@ components
 ```
 
 ## Basic Example
-Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings for the AHT10, AHT20, AHT21, AHT25, AND AHT30 sensor types and makes a measurement request from the sensor at user defined interval and prints the results.
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
 
 ```
 #include <bh1750.h>
