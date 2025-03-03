@@ -23,5 +23,8 @@
 			"format": "c",
 			"app_config.h": "c"
 		},
+		"cSpell.words": [
+			"datasheets"
+		],
 	}
 }
