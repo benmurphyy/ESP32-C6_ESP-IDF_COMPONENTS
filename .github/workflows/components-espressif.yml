@@ -1,13 +1,13 @@
 name: Push components to https://components.espressif.com
 on:
   push:
-    branches:
-      - main
 jobs:
   upload_components:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        env:
+          PRE_BUILD_COMMAND: git config --global --add safe.directory /github/workspace
         with:
           submodules: "recursive"
       - name: Upload components to the component registry
