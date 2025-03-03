@@ -1,0 +1,23 @@
+{
+    "name": "esp_ds18s20",
+    "keywords": "esp32, espressif, espidf, ds18s20, soil, temperature, maxim-integrated",
+    "description": "ESP32 espressif IoT development framework (esp-idf) compatible component for Maxim-Integrated DS18B20 I2C temperature sensor.",
+    "authors":
+    [
+      {
+        "name": "Eric Gionet",
+        "email": "gionet.c.eric@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/owb/esp_ds18b20"
+    },
+    "version": "1.1.0",
+    "license": "MIT",
+    "frameworks": "espidf",
+    "platforms": "*",
+    "headers": "ds18s20.h"
+  }

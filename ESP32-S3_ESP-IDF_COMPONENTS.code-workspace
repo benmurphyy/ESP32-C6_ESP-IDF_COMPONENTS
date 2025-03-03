@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"tlv493d_task.h": "c",
+			"sgp4x_task.h": "c",
+			"ahtxx.h": "c",
+			"esp_log.h": "c",
+			"task.h": "c",
+			"bmp280_task.h": "c",
+			"hmc5883l.h": "c",
+			"freertos.h": "c",
+			"ltr390uv_task.h": "c",
+			"ahtxx_task.h": "c",
+			"hdc1080_task.h": "c",
+			"bh1750_task.h": "c",
+			"timer.h": "c",
+			"ssd1306.h": "c",
+			"format": "c",
+			"app_config.h": "c"
+		},
+		"cSpell.words": [
+			"datasheets"
+		],
+	}
+}
