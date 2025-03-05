@@ -8,6 +8,9 @@ compote registry login --profile "default" --registry-url "https://components.es
 LOGIN to Staging Registry
 compote registry login --profile "staging" --registry-url "https://components-staging.espressif.com" --default-namespace <your-github-username>
 
+Display Downloads (Release Required)
+[![Github All Releases](https://img.shields.io/github/downloads/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/total.svg)]()
+
 COMPONENT CI ACTION (GITHUB)
 https://github.com/espressif/upload-components-ci-action
 

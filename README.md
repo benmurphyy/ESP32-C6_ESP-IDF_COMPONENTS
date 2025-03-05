@@ -1,7 +1,8 @@
+[![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
 [![Push components to https://components.espressif.com](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/components-espressif.yml/badge.svg?branch=main)](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/components-espressif.yml)
 
 # Welcome
-Thanks for visiting and hope you find something useful.  The code base is maintained as well as one person can manage in their spare time. The development environment is under Visual Studio Code with the PlatformIO (6.1.16) and ESP-IDF (v5.3.1) extensions.  There is always room for improvement to optimize the code base and open to suggestions.
+Thanks for visiting and hope you find something useful.  The code base is maintained as well as one person can manage in their spare time. The development environment is under Visual Studio Code with the PlatformIO (6.1.17) and ESP-IDF (v5.4.0) extensions.  There is always room for improvement to optimize the code base and open to suggestions.
 
 # ESP32-S3 Components
 PlatformIO components with examples for the ESP32-S3 chipset.  This is a revised release utilizing esp-idf suggested design patterns through `handles` and using `i2c_master.h` for I2C transactions.  The drivers are organized in the components folder within the Visual Studio Code and PlatformIO environment.
