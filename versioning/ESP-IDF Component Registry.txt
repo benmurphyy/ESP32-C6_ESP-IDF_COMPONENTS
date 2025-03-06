@@ -62,8 +62,8 @@ compote component upload --name esp_ds18b20 --version=git --project-dir "C:\User
 
 
 PRODUCTION - PlatformIO Library Registry
-
-Publish: pio pkg publish [<source directory, tar.gz or zip>] [OPTIONS]
+List packages: pio access list [OPTIONS] [OWNER]
+Publish: pio pkg publish [<source directory, tar.gz or zip>] [OPTIONS]  (use --no-interactive to skip interactive prompt)
 Unpublish: pio pkg unpublish [<organization>/]<pkgname>[@<version>] [OPTIONS] (pio pkg unpublish k0i05/esp_driver_i2c_ext@1.1.0)
 
 

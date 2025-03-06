@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define AHTXX_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define AHTXX_FW_VERSION_PATCH 0
+#define AHTXX_FW_VERSION_PATCH 4
 
 
 /**

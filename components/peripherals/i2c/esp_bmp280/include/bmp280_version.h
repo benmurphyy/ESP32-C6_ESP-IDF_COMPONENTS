@@ -1,3 +1,4 @@
+#define BMP280_FW_VERSION_PATCH 4
 /*
  * The MIT License (MIT)
  *
@@ -50,7 +51,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define BMP280_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define BMP280_FW_VERSION_PATCH 0
+#define BMP280_FW_VERSION_PATCH 4
 
 /**
  * public macro definitions

@@ -49,7 +49,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define TYPE_UTILS_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define TYPE_UTILS_FW_VERSION_PATCH 0
+#define TYPE_UTILS_FW_VERSION_PATCH 4
 
 
 /**
@@ -96,19 +96,6 @@ extern "C" {
 
 
 
-/**
- * @brief Converts `type_utils` firmware version numbers (major, minor, patch) into a string.
- * 
- * @return char* `type_utils` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
- */
-const char* type_utils_get_fw_version(void);
-
-/**
- * @brief Converts `type_utils` firmware version numbers (major, minor, patch) into an integer value.
- * 
- * @return int32_t `type_utils` firmware version number.
- */
-int32_t type_utils_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

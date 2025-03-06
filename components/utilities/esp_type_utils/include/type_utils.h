@@ -352,7 +352,19 @@ void double_to_bytes(const double value, uint8_t* bytes, const bool little_endia
  */
 void copy_bytes(const uint8_t* source, uint8_t* destination, const size_t size);
 
+/**
+ * @brief Converts `type_utils` firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* `type_utils` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* type_utils_get_fw_version(void);
 
+/**
+ * @brief Converts `type_utils` firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t `type_utils` firmware version number.
+ */
+int32_t type_utils_get_fw_version_number(void);
 
 
 #ifdef __cplusplus
