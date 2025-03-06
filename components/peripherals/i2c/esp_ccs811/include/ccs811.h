@@ -529,6 +529,21 @@ const char *ccs811_err_to_code(const ccs811_error_code_register_t error_reg);
  */
 const char *ccs811_measure_mode_description(const ccs811_drive_modes_t mode);
 
+/**
+ * @brief Converts CCS811 firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* CCS811 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* ccs811_get_fw_version(void);
+
+/**
+ * @brief Converts CCS811 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t CCS811 firmware version number.
+ */
+int32_t ccs811_get_fw_version_number(void);
+
+
 
 #ifdef __cplusplus
 }

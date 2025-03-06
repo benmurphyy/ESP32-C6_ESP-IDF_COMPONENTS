@@ -27,7 +27,7 @@ components
     └── ds18b20.c
 ```
 ## Basic Example
-Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at a user defined interval and prints the results.
 
 ```
 #include <ds18b20.h>
