@@ -11,6 +11,7 @@ compote registry login --profile "staging" --registry-url "https://components-st
 Display Downloads (Release Required)
 [![Github All Releases](https://img.shields.io/github/downloads/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/total.svg)]()
 
+
 COMPONENT CI ACTION (GITHUB)
 https://github.com/espressif/upload-components-ci-action
 
@@ -28,7 +29,7 @@ compote component upload --name esp_ahtxx --profile "staging" --project-dir "C:\
 
 
 
-PRODUCTION
+PRODUCTION - ESP Components Registry
 Use git tag to version the commit and components.
 
 compote component upload --name esp_s12d --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\adc\esp_s12sd" --dest-dir "C:\Espressif\component_archive"
@@ -47,6 +48,8 @@ compote component upload --name esp_bmp390 --version=git --project-dir "C:\Users
 
 compote component upload --name esp_hdc1080 --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_hdc1080" --dest-dir "C:\Espressif\component_archive"
 
+compote component upload --name esp_ltr390uv --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ltr390uv" --dest-dir "C:\Espressif\component_archive"
+
 compote component upload --name esp_sgp4x --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_sgp4x" --dest-dir "C:\Espressif\component_archive"
 
 compote component upload --name esp_sht4x --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_sht4x" --dest-dir "C:\Espressif\component_archive"
@@ -54,6 +57,45 @@ compote component upload --name esp_sht4x --version=git --project-dir "C:\Users\
 compote component upload --name esp_ssd1306 --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ssd1306" --dest-dir "C:\Espressif\component_archive"
 
 compote component upload --name esp_veml7700 --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_veml7700" --dest-dir "C:\Espressif\component_archive"
+
+compote component upload --name esp_ds18b20 --version=git --project-dir "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\owb\esp_ds18b20" --dest-dir "C:\Espressif\component_archive"
+
+
+PRODUCTION - PlatformIO Library Registry
+
+Publish: pio pkg publish [<source directory, tar.gz or zip>] [OPTIONS]
+Unpublish: pio pkg unpublish [<organization>/]<pkgname>[@<version>] [OPTIONS] (pio pkg unpublish k0i05/esp_driver_i2c_ext@1.1.0)
+
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\adc\esp_s12sd" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\utilities\esp_type_utils" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_driver_i2c_ext" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ahtxx" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_bh1750" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_bmp280" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_bmp390" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_hdc1080" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ltr390uv" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_sgp4x" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_sht4x" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_ssd1306" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\i2c\esp_veml7700" --owner "k0i05" --type library
+
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\owb\esp_ds18b20" --owner "k0i05" --type library
+
+
 
 
 
