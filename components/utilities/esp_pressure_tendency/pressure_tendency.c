@@ -40,7 +40,7 @@
 
 #include <math.h>
 
-#include <pressure_tendency.h>
+#include "include/pressure_tendency.h"
 
 /*
  * macro definitions
@@ -180,4 +180,12 @@ esp_err_t pressure_tendency_delete(pressure_tendency_handle_t pressure_tendency_
         free(pressure_tendency_handle->samples);
     free(pressure_tendency_handle);
     return ESP_OK;
+}
+
+const char* pressure_tendency_get_fw_version(void) {
+    return PRESSURE_TENDENCY_FW_VERSION_STR;
+}
+
+int32_t pressure_tendency_get_fw_version_number(void) {
+    return PRESSURE_TENDENCY_FW_VERSION_INT32;
 }

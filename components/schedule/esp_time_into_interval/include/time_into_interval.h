@@ -44,6 +44,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/semphr.h>
+#include "time_into_interval_version.h"
 
 #ifdef __cplusplus
 extern "C" {

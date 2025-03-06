@@ -35,6 +35,7 @@
 #ifndef __TYPE_UTILS_VERSION_H__
 #define __TYPE_UTILS_VERSION_H__
 
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,26 +60,26 @@ extern "C" {
 /** 
  * Macro to print x parameter as a string i.e. enclose x in double quotes. 
  */
-#define TYPE_UTILS_STR_QUOTES( x ) #x
+#define STR_QUOTES( x ) #x
 
 /** 
  * Macro to create a string of x parameter with all macros fully expanded. 
  */                 
-#define TYPE_UTILS_STR( x ) TYPE_UTILS_STR_QUOTES( x )
+#define STR( x ) STR_QUOTES( x )
 
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
 #define TYPE_UTILS_FW_VERSION_STR                        \
-        TYPE_UTILS_STR( TYPE_UTILS_FW_VERSION_MAJOR ) "." \
-        TYPE_UTILS_STR( TYPE_UTILS_FW_VERSION_MINOR ) "." \
-        TYPE_UTILS_STR( TYPE_UTILS_FW_VERSION_PATCH )
+        STR( TYPE_UTILS_FW_VERSION_MAJOR ) "." \
+        STR( TYPE_UTILS_FW_VERSION_MINOR ) "." \
+        STR( TYPE_UTILS_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, TYPE_UTILS_FW_VERSION_INT32 >= TYPE_UTILS_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
 #define TYPE_UTILS_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
@@ -87,7 +88,7 @@ extern "C" {
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, TYPE_UTILS_FW_VERSION_INT32 >= TYPE_UTILS_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
 #define TYPE_UTILS_FW_VERSION_INT32                                      \
         TYPE_UTILS_FW_VERSION_PARAMS_INT32(TYPE_UTILS_FW_VERSION_MAJOR,   \

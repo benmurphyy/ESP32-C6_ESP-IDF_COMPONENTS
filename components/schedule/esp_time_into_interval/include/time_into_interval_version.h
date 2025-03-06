@@ -22,8 +22,8 @@
  */
 
 /**
- * @file nvs_ext_version.h
- * @defgroup storage
+ * @file time_into_interval_version.h
+ * @defgroup schedule
  * @{
  *
  *
@@ -31,8 +31,8 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __NVS_EXT_VERSION_H__
-#define __NVS_EXT_VERSION_H__
+#ifndef __TIME_INTO_INTERVAL_VERSION_H__
+#define __TIME_INTO_INTERVAL_VERSION_H__
 
 #include <stdint.h>
 
@@ -45,11 +45,11 @@ extern "C" {
  */
 
 /** Major version number (X.x.x) */
-#define NVS_EXT_FW_VERSION_MAJOR 1
+#define TIME_INTO_INTERVAL_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define NVS_EXT_FW_VERSION_MINOR 1
+#define TIME_INTO_INTERVAL_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define NVS_EXT_FW_VERSION_PATCH 0
+#define TIME_INTO_INTERVAL_FW_VERSION_PATCH 0
 
 
 /**
@@ -69,10 +69,10 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define NVS_EXT_FW_VERSION_STR                        \
-                        STR( NVS_EXT_FW_VERSION_MAJOR ) "." \
-                        STR( NVS_EXT_FW_VERSION_MINOR ) "." \
-                        STR( NVS_EXT_FW_VERSION_PATCH )
+#define TIME_INTO_INTERVAL_FW_VERSION_STR                        \
+                        STR( TIME_INTO_INTERVAL_FW_VERSION_MAJOR ) "." \
+                        STR( TIME_INTO_INTERVAL_FW_VERSION_MINOR ) "." \
+                        STR( TIME_INTO_INTERVAL_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -80,7 +80,7 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define NVS_EXT_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define TIME_INTO_INTERVAL_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -89,10 +89,10 @@ extern "C" {
  * 
  * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define NVS_EXT_FW_VERSION_INT32                                      \
-        NVS_EXT_FW_VERSION_PARAMS_INT32(NVS_EXT_FW_VERSION_MAJOR,   \
-                                        NVS_EXT_FW_VERSION_MINOR,   \
-                                        NVS_EXT_FW_VERSION_PATCH)
+#define TIME_INTO_INTERVAL_FW_VERSION_INT32                                      \
+                TIME_INTO_INTERVAL_FW_VERSION_PARAMS_INT32(TIME_INTO_INTERVAL_FW_VERSION_MAJOR,   \
+                                        TIME_INTO_INTERVAL_FW_VERSION_MINOR,   \
+                                        TIME_INTO_INTERVAL_FW_VERSION_PATCH)
 
 
 
@@ -104,4 +104,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __NVS_EXT_VERSION_H__
+#endif // __TIME_INTO_INTERVAL_VERSION_H__

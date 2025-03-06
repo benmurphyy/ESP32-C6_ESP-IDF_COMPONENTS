@@ -249,7 +249,19 @@ esp_err_t nvs_write_struct(const char *key, void *write_struct, size_t size);
  */
 esp_err_t nvs_read_struct(const char *key, void **read_struct, size_t size);
 
+/**
+ * @brief Converts `nvs_ext` firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* `nvs_ext` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* nvs_ext_get_fw_version(void);
 
+/**
+ * @brief Converts `nvs_ext` firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t `nvs_ext` firmware version number.
+ */
+int32_t nvs_ext_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

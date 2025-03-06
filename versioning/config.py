@@ -12,7 +12,7 @@ component_archive_path = "C:\\Espressif\\component_archive"
 fw_version_seed_filepath = "C:\\Users\\lavco\\OneDrive\\Documents\\PlatformIO\\Projects\\ESP32-S3_ESP-IDF_COMPONENTS\\versioning\\bin\\fw_version_seed.json"
 """Version number seed file path"""
 fw_version_update_type = FWVersionUpdateTypes.FW_VERSION_UPDATE_PATCH
-"""Version number part to be updated (Major, Minor, Patch)"""
+"""Version number part to be updated (Major, Minor or Patch)"""
 
 ### ESP Components Registry ###
 ### PlatformIO Components Registry ###
@@ -48,5 +48,7 @@ component_list = [
                   Component(name="esp_veml7700", header_name="veml7700", relative_path="peripherals\\i2c\\esp_veml7700"),
                   # owb peripherals
                   Component(name="esp_ds18b20", header_name="ds18b20", relative_path="peripherals\\owb\\esp_ds18b20"),
+                  ### Schedule ###
+                  ### Storage ###
                 ]
 """List of components to process"""

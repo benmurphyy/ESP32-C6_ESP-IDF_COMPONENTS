@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "time_into_interval.h"
+#include "include/time_into_interval.h"
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
@@ -54,7 +54,7 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "time_into_interval";
 

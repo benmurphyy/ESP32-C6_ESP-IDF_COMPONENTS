@@ -11,6 +11,7 @@ compote registry login --profile "staging" --registry-url "https://components-st
 Display Downloads (Release Required)
 [![Github All Releases](https://img.shields.io/github/downloads/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/total.svg)]()
 
+https://shields.io/badges/static-badge
 
 COMPONENT CI ACTION (GITHUB)
 https://github.com/espressif/upload-components-ci-action
@@ -62,6 +63,8 @@ compote component upload --name esp_ds18b20 --version=git --project-dir "C:\User
 
 
 PRODUCTION - PlatformIO Library Registry
+https://docs.platformio.org/en/latest/librarymanager/creating.html
+
 List packages: pio access list [OPTIONS] [OWNER]
 Publish: pio pkg publish [<source directory, tar.gz or zip>] [OPTIONS]  (use --no-interactive to skip interactive prompt)
 Unpublish: pio pkg unpublish [<organization>/]<pkgname>[@<version>] [OPTIONS] (pio pkg unpublish k0i05/esp_driver_i2c_ext@1.1.0)

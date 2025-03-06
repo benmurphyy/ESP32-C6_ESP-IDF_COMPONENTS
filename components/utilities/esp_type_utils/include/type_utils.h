@@ -139,12 +139,14 @@ typedef union {
 * function and subroutine declarations
 */
 
+uint32_t get_uint32_chip_id(void);
+
 /**
  * @brief Generates a unique chip identifier from e-fuse mac address.
  * 
- * @return uint32_t Chip identifier.
+ * @return uint64_t Chip identifier.
  */
-uint32_t get_chip_id(void);
+uint64_t get_uint64_chip_id(void);
 
 /**
  * @brief Gets the e-fuse mac address.

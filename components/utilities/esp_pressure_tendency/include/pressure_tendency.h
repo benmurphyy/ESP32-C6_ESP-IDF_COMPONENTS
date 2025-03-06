@@ -38,6 +38,7 @@
 
 #include <stdio.h>
 #include <esp_check.h>
+#include "pressure_tendency_version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -125,6 +126,21 @@ esp_err_t pressure_tendency_reset(pressure_tendency_handle_t pressure_tendency_h
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t pressure_tendency_delete(pressure_tendency_handle_t pressure_tendency_handle);
+
+/**
+ * @brief Converts `pressure_tendency` firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* `pressure_tendency` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* pressure_tendency_get_fw_version(void);
+
+/**
+ * @brief Converts `pressure_tendency` firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t `pressure_tendency` firmware version number.
+ */
+int32_t pressure_tendency_get_fw_version_number(void);
+
 
 
 #ifdef __cplusplus
