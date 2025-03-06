@@ -3,8 +3,28 @@
 [![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_time_into_interval/badge.svg)](https://components.espressif.com/components/k0i05/esp_time_into_interval)
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_time_into_interval.svg)](https://registry.platformio.org/libraries/k0i05/esp_time_into_interval)
 
-# ESP Time-Into-Interval Component
+# ESP Time-Into-Interval Scheduler
 The ESP time-into-interval component synchronizes a FreeRTOS task with the system clock with user-defined time interval for temporal conditional scenarios.
+
+## Repository
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/schedule/esp_time_into_interval
+
+## General Usage
+To get started, simply copy the component to your project's `components` folder and reference the `time_into_interval.h` header file as an include.
+
+```
+components
+└── esp_time_into_interval
+    ├── CMakeLists.txt
+    ├── README.md
+    ├── LICENSE
+    ├── idf_component.yml
+    ├── library.json
+    ├── include
+    │   └── time_into_interval_version.h
+    │   └── time_into_interval.h
+    └── time_into_interval.c
+```
 
 ## Time-Into-Interval Example
 See **Data-Table Example**, declare a time-into-interval handle within the data-table sampling task sub-routine, and create a time-into-interval instance.  The time-into-interval instance interval is every 5-minutes with 0-minutes into the interval.

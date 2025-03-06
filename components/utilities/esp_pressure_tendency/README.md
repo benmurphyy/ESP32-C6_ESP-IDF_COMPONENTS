@@ -4,7 +4,7 @@
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_pressure_tendency.svg)](https://registry.platformio.org/libraries/k0i05/esp_pressure_tendency)
 
 # ESP-IDF Pressure Tendency
-This ESP32 espressif IoT development framework (esp-idf) pressure tendency component observes the 3-hours of atmospheric pressure samples to determine if pressure is steady, rising, or falling.  Information on features and functionality are documented and can be found in the `pressure_tendency.h` header file.
+This ESP32 espressif IoT development framework (esp-idf) pressure tendency component observes the last 3-hours of atmospheric pressure samples to determine if pressure is steady, rising, or falling.  Information on features and functionality are documented and can be found in the `pressure_tendency.h` header file.
 
 ## Repository
 The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/utilities/esp_pressure_tendency

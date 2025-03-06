@@ -139,10 +139,19 @@ typedef union {
 * function and subroutine declarations
 */
 
+/**
+ * @brief Generates a unique `uint32_t` chip identifier from e-fuse mac address.
+ * 
+ * @note (i.e. a 32-bit integer matching the last 3 bytes of the MAC address. This is less 
+ * unique than the MAC address chip ID, but is helpful when you need an identifier that can 
+ * be no more than a 32-bit integer (like for switch...case
+ * 
+ * @return uint32_t 
+ */
 uint32_t get_uint32_chip_id(void);
 
 /**
- * @brief Generates a unique chip identifier from e-fuse mac address.
+ * @brief Generates a unique `uint64_t` chip identifier from e-fuse mac address.
  * 
  * @return uint64_t Chip identifier.
  */

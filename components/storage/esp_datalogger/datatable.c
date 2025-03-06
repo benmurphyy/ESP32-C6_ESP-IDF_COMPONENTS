@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "datatable.h"
+#include "include/datatable.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -51,7 +51,7 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "data-table";
 

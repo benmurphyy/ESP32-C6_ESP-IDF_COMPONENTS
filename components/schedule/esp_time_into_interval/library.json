@@ -1,7 +1,7 @@
 {
   "name": "esp_time_into_interval",
   "keywords": "esp32, espressif, espidf, schedule, time, interval",
-  "description": "ESP32 espressif IoT development framework (esp-idf) time-into-interval component.",
+  "description": "ESP32 espressif IoT development framework (esp-idf) time-into-interval scheduler component.",
   "authors": [
     {
       "name": "Eric Gionet",
