@@ -41,6 +41,7 @@
 #include <esp_event.h>
 #include <esp_err.h>
 #include <i2c_master_ext.h>
+#include <driver/gpio.h>
 
 #ifdef __cplusplus
 extern "C" {
