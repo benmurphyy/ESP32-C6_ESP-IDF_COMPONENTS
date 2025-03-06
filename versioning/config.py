@@ -29,6 +29,8 @@ pio_owner = "k0i05"
 
 component_list = [ 
                   ### Utilities ###
+                  # pressure tendency
+                  Component(name="esp_pressure_tendency", header_name="pressure_tendency", relative_path="utilities\\esp_pressure_tendency"),
                   # type utilities
                   Component(name="esp_type_utils", header_name="type_utils", relative_path="utilities\\esp_type_utils"),
                   ### Peripherals ###
@@ -49,6 +51,10 @@ component_list = [
                   # owb peripherals
                   Component(name="esp_ds18b20", header_name="ds18b20", relative_path="peripherals\\owb\\esp_ds18b20"),
                   ### Schedule ###
+                  # time-into-interval
+                  Component(name="esp_time_into_interval", header_name="time_into_interval", relative_path="schedule\\esp_time_into_interval"),
                   ### Storage ###
+                  # nvs ext
+                  Component(name="esp_nvs_ext", header_name="nvs_ext", relative_path="storage\\esp_nvs_ext"),
                 ]
 """List of components to process"""

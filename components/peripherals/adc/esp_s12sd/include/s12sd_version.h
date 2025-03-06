@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define S12SD_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define S12SD_FW_VERSION_PATCH 4
+#define S12SD_FW_VERSION_PATCH 5
 
 /**
  * public macro definitions

@@ -49,7 +49,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define NVS_EXT_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define NVS_EXT_FW_VERSION_PATCH 0
+#define NVS_EXT_FW_VERSION_PATCH 5
 
 
 /**

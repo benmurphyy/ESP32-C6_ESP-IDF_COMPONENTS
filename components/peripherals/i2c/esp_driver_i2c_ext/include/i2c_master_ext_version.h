@@ -49,7 +49,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define I2C_MASTER_EXT_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define I2C_MASTER_EXT_FW_VERSION_PATCH 4
+#define I2C_MASTER_EXT_FW_VERSION_PATCH 5
 
 
 /**
