@@ -1,3 +1,6 @@
+[![Components Push to ESP Registry](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/components-espressif.yml/badge.svg?branch=main)](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/components-espressif.yml)
+
+
 cmake_minimum_required(VERSION 3.16.0)
 list(APPEND EXTRA_COMPONENT_DIRS
                     "components/peripherals/esp_lorawan"
