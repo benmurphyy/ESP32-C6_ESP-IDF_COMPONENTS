@@ -310,6 +310,7 @@ static inline void i2c0_component_example_start(const i2c_components_t component
     }
 }
 
+
 /**
  * @brief Scans I2C master bus 0 for i2c devices and prints each device address when detected.
  */

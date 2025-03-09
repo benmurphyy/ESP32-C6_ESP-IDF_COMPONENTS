@@ -3,11 +3,11 @@
 [![Component Registry](https://components.espressif.com/components/k0i05/esp_ens160/badge.svg)](https://components.espressif.com/components/k0i05/esp_ens160)
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_ens160.svg)](https://registry.platformio.org/libraries/k0i05/esp_ens160)
 
-# OSRAM AS7341 Sensor
+# ScioSense ENS160 Sensor
 This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the ScioSense ENS160 digital metal-oxide multi-gas sensor.  Information on features and functionality are documented and can be found in the `ens160.h` header file and in the `documentation` folder.
 
 ## Repository
-The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as7341
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ens160
 
 ## General Usage
 To get started, simply copy the component to your project's `components` folder and reference the `ens160.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
