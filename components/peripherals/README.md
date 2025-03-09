@@ -32,7 +32,7 @@ ESP-IDF component development status:
  - Maxim-Integrated MAX30105: component development is work in progress (WIP).
  - Melexis MLX90614: component is synchronized with the esp-idf component registry and platform io library registry.
  - Memsic MMC56X3: initial component implementation completed.
- - InvenSense MPU6050: initial component implementation completed.
+ - InvenSense MPU6050: component is synchronized with the esp-idf component registry and platform io library registry.
  - Sensirion SGP4X: component is synchronized with the esp-idf component registry and platform io library registry.
  - Sensirion SHT4X: component is synchronized with the esp-idf component registry and platform io library registry.
  - Generic SSD1306: component is synchronized with the esp-idf component registry and platform io library registry.
