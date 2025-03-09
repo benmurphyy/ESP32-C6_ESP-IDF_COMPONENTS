@@ -28,7 +28,7 @@ ESP-IDF component development status:
  - ScioSense CCS811: initial component implementation completed.
  - ScioSense ENS160: component is synchronized with the esp-idf component registry and platform io library registry.
  - Texas Instruments HDC1080: component is synchronized with the esp-idf component registry and platform io library registry.
- - Honeywell HMC5883L: initial component implementation completed.
+ - Honeywell HMC5883L: component is synchronized with the esp-idf component registry and platform io library registry.
  - Lite-On LTR390UV: component is synchronized with the esp-idf component registry and platform io library registry.
  - Maxim-Integrated MAX30105: component development is work in progress (WIP).
  - Melexis MLX90614: component is synchronized with the esp-idf component registry and platform io library registry.
