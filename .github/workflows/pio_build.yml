@@ -1,7 +1,10 @@
 name: PlatformIO CI
 
-on: [push]
-
+# on: [push]
+on:
+  push:
+      tags:
+        - v*  # run action when push is tagged with a version number
 jobs:
   build:
     runs-on: ubuntu-latest
