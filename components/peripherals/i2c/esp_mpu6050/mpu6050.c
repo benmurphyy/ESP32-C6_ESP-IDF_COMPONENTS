@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "mpu6050.h"
+#include "include/mpu6050.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>

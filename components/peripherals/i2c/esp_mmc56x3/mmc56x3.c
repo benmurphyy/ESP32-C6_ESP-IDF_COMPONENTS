@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "mmc56x3.h"
+#include "include/mmc56x3.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
