@@ -342,6 +342,7 @@ void app_main( void ) {
     /* scan i2c devices on i2c master bus 0 and print results */
     //ESP_ERROR_CHECK( i2c0_device_scan() );
 
+
     /* delay task before starting component example */
     vTaskDelay( pdMS_TO_TICKS(500) );
 
