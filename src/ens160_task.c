@@ -40,11 +40,11 @@ void i2c0_ens160_task( void *pvParameters ) {
     TickType_t          last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_ens160_config_t dev_cfg          = I2C_ENS160_CONFIG_DEFAULT;
-    i2c_ens160_handle_t dev_hdl;
+    ens160_config_t dev_cfg          = I2C_ENS160_CONFIG_DEFAULT;
+    ens160_handle_t dev_hdl;
     //
     // init device
-    i2c_ens160_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    ens160_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "ens160 handle init failed");
         assert(dev_hdl);
@@ -57,16 +57,16 @@ void i2c0_ens160_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## ENS160 - START #########################");
         //
         // handle sensor
-        i2c_ens160_validity_flags_t dev_flag;
-        if(i2c_ens160_get_validity_status(dev_hdl, &dev_flag) == ESP_OK) {
+        ens160_validity_flags_t dev_flag;
+        if(ens160_get_validity_status(dev_hdl, &dev_flag) == ESP_OK) {
             // validate device status
-            if(dev_flag == I2C_ENS160_VALFLAG_NORMAL) {
-                i2c_ens160_air_quality_data_t aq_data;
-                esp_err_t result = i2c_ens160_get_measurement(dev_hdl, &aq_data);
+            if(dev_flag == ENS160_VALFLAG_NORMAL) {
+                ens160_air_quality_data_t aq_data;
+                esp_err_t result = ens160_get_measurement(dev_hdl, &aq_data);
                 if(result != ESP_OK) {
                     ESP_LOGE(APP_TAG, "ens160 device read failed (%s)", esp_err_to_name(result));
                 } else {
-                    i2c_ens160_aqi_uba_row_t uba_aqi = i2c_ens160_aqi_index_to_definition(aq_data.uba_aqi);
+                    ens160_aqi_uba_row_t uba_aqi = ens160_aqi_index_to_definition(aq_data.uba_aqi);
 
                     ESP_LOGW(APP_TAG, "index    %1x (%s)", aq_data.uba_aqi, uba_aqi.rating);
                     ESP_LOGW(APP_TAG, "tvco     %d (0x%04x)", aq_data.tvoc, aq_data.tvoc);
@@ -74,8 +74,8 @@ void i2c0_ens160_task( void *pvParameters ) {
                     ESP_LOGW(APP_TAG, "eco2     %d (0x%04x)", aq_data.eco2, aq_data.eco2);
                 }
                 //
-                i2c_ens160_air_quality_raw_data_t aq_raw_data;
-                result = i2c_ens160_get_raw_measurement(dev_hdl, &aq_raw_data);
+                ens160_air_quality_raw_data_t aq_raw_data;
+                result = ens160_get_raw_measurement(dev_hdl, &aq_raw_data);
                 if(result != ESP_OK) {
                     ESP_LOGE(APP_TAG, "ens160 device read failed (%s)", esp_err_to_name(result));
                 } else {
@@ -89,13 +89,13 @@ void i2c0_ens160_task( void *pvParameters ) {
                     ESP_LOGW(APP_TAG, "bl-res 2 %lu", aq_raw_data.hp2_bl);
                     ESP_LOGW(APP_TAG, "bl-res 3 %lu", aq_raw_data.hp3_bl);
                 }
-            } else if(dev_flag == I2C_ENS160_VALFLAG_WARMUP) {
+            } else if(dev_flag == ENS160_VALFLAG_WARMUP) {
                 ESP_LOGW(APP_TAG, "ens160 device is warming up (180-sec wait [%u-sec])", startup_time);
                 startup_time = startup_time + I2C0_TASK_SAMPLING_RATE;
-            } else if(dev_flag == I2C_ENS160_VALFLAG_INITIAL_STARTUP) {
+            } else if(dev_flag == ENS160_VALFLAG_INITIAL_STARTUP) {
                 ESP_LOGW(APP_TAG, "ens160 device is undrgoing initial starting up (3600-sec wait [%u-sec])", startup_time);
                 startup_time = startup_time + I2C0_TASK_SAMPLING_RATE;
-            } else if(dev_flag == I2C_ENS160_VALFLAG_INVALID_OUTPUT) {
+            } else if(dev_flag == ENS160_VALFLAG_INVALID_OUTPUT) {
                 ESP_LOGW(APP_TAG, "ens160 device signals are giving unexpected values");
             }
         }
@@ -108,6 +108,6 @@ void i2c0_ens160_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_ens160_delete( dev_hdl );
+    ens160_delete( dev_hdl );
     vTaskDelete( NULL );
 }

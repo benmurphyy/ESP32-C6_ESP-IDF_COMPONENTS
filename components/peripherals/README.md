@@ -24,7 +24,7 @@ ESP-IDF component development status:
  - Bosch BMP280: component is synchronized with the esp-idf component registry and platform io library registry.
  - Bosch BMP390: component is synchronized with the esp-idf component registry and platform io library registry.
  - ScioSense CCS811: initial component implementation completed.
- - ScioSense ENS160: initial component implementation completed.
+ - ScioSense ENS160: component is synchronized with the esp-idf component registry and platform io library registry.
  - Texas Instruments HDC1080: component is synchronized with the esp-idf component registry and platform io library registry.
  - Honeywell HMC5883L: initial component implementation completed.
  - Lite-On LTR390UV: component is synchronized with the esp-idf component registry and platform io library registry.

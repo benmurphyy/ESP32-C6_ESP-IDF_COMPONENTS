@@ -1006,6 +1006,7 @@ const char* as7341_get_fw_version(void);
  */
 int32_t as7341_get_fw_version_number(void);
 
+
 #ifdef __cplusplus
 }
 #endif
