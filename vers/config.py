@@ -9,7 +9,7 @@ from constant import FWVersionUpdateTypes
 component_working_path = "C:\\Users\\lavco\\OneDrive\\Documents\\PlatformIO\\Projects\\ESP32-S3_ESP-IDF_COMPONENTS\\components"
 component_archive_path = "C:\\Espressif\\component_archive"
 """Path to the component archive directory is used for temporary storage to pack components"""
-fw_version_seed_filepath = "C:\\Users\\lavco\\OneDrive\\Documents\\PlatformIO\\Projects\\ESP32-S3_ESP-IDF_COMPONENTS\\versioning\\bin\\fw_version_seed.json"
+fw_version_seed_filepath = "C:\\Users\\lavco\\OneDrive\\Documents\\PlatformIO\\Projects\\ESP32-S3_ESP-IDF_COMPONENTS\\vers\\bin\\fw_version_seed.json"
 """Version number seed file path"""
 fw_version_update_type = FWVersionUpdateTypes.FW_VERSION_UPDATE_PATCH
 """Version number part to be updated (Major, Minor or Patch)"""

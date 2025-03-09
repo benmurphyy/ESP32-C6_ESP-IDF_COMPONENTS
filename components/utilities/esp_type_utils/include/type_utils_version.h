@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define TYPE_UTILS_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define TYPE_UTILS_FW_VERSION_PATCH 5
+#define TYPE_UTILS_FW_VERSION_PATCH 6
 
 
 /**

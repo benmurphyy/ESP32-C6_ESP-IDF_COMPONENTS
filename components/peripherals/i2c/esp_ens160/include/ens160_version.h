@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define ENS160_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define ENS160_FW_VERSION_PATCH 5
+#define ENS160_FW_VERSION_PATCH 6
 
 
 /**

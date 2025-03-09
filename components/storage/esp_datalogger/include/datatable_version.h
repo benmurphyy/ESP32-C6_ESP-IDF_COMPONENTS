@@ -49,7 +49,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define DATATABLE_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define DATATABLE_FW_VERSION_PATCH 5
+#define DATATABLE_FW_VERSION_PATCH 6
 
 
 /**
