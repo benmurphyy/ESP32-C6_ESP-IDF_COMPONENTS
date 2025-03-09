@@ -9,6 +9,7 @@ ESP-IDF I2C device peripheral components supported at this time are listed as fo
  
  - ASAIR AHTXX
  - AKM AK8975
+ - AMS AS3935
  - OSRAM AS7341
  - ROHM BH1750FVI
  - Bosch BME680 - Work in Progress, Coming Soon!! 

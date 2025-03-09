@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "tbi2cxxx.h"
+#include "include/tbi2cxxx.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
