@@ -1,3 +1,5 @@
+# Welcome
+
 [![K0I05](https://img.shields.io/badge/K0I05-a9a9a9?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODgiIGhlaWdodD0iMTg3Ij48cGF0aCBmaWxsPSIjNDU0QjU0IiBkPSJNMTU1LjU1NSAyMS45M2MxOS4yNzMgMTUuOTggMjkuNDcyIDM5LjM0NSAzMi4xNjggNjMuNzg5IDEuOTM3IDIyLjkxOC00LjU1MyA0Ni42Ni0xOC44NDggNjQuNzgxQTUwOS40NzggNTA5LjQ3OCAwIDAgMSAxNjUgMTU1bC0xLjQ4NCAxLjg4M2MtMTMuMTk2IDE2LjUzMS0zNS41NTUgMjcuMjE1LTU2LjMzOSAyOS45MDItMjguMzEyIDIuOC01Mi4yNTUtNC43MzctNzQuNzMyLTIxLjcxNUMxMy4xNzIgMTQ5LjA5IDIuOTczIDEyNS43MjUuMjc3IDEwMS4yODEtMS42NiA3OC4zNjMgNC44MyA1NC42MjEgMTkuMTI1IDM2LjVBNTA5LjQ3OCA1MDkuNDc4IDAgMCAxIDIzIDMybDEuNDg0LTEuODgzQzM3LjY4IDEzLjU4NiA2MC4wNCAyLjkwMiA4MC44MjMuMjE1YzI4LjMxMi0yLjggNTIuMjU1IDQuNzM3IDc0LjczMiAyMS43MTVaIi8+PHBhdGggZmlsbD0iI0ZERkRGRCIgZD0iTTExOS44NjcgNDUuMjdDMTI4LjkzMiA1Mi4yNiAxMzMuODIgNjMgMTM2IDc0Yy42MyA0Ljk3Mi44NDIgOS45NTMuOTUzIDE0Ljk2LjA0NCAxLjkxMS4xMjIgMy44MjIuMjAzIDUuNzMxLjM0IDEyLjIxLjM0IDEyLjIxLTMuMTU2IDE3LjMwOWE5NS42MDQgOTUuNjA0IDAgMCAxLTQuMTg4IDMuNjI1Yy00LjUgMy43MTctNi45NzQgNy42ODgtOS43MTcgMTIuODAzQzEwNi45NCAxNTIuNzkyIDEwNi45NCAxNTIuNzkyIDk3IDE1N2MtMy40MjMuNTkyLTUuODAxLjY4NS04Ljg3OS0xLjA3NC05LjgyNi03Ljg4LTE2LjAzNi0xOS41OS0yMS44NTgtMzAuNTEyLTIuNTM0LTQuNTc1LTUuMDA2LTcuMjEtOS40NjYtMTAuMDItMy43MTQtMi44ODItNS40NS02Ljk4Ni02Ljc5Ny0xMS4zOTQtLjU1LTQuODg5LS41NjEtOS4zMTYgMS0xNCAuMDkzLTEuNzYzLjE4Mi0zLjUyNy4yMzktNS4yOTIuNDkxLTEzLjg4NCAzLjg2Ni0yNy4wNTcgMTQuMTU2LTM3LjAyOCAxNy4yMTgtMTQuMzM2IDM1Ljg1OC0xNS4wNjYgNTQuNDcyLTIuNDFaIi8+PHBhdGggZmlsbD0iI0M2RDVFMCIgZD0iTTEwOSAzOWMxMS43MDMgNS4yNTUgMTkuMjA2IDEzLjE4NiAyNC4yOTMgMjUuMDA0IDIuODU3IDguMjQgMy40NyAxNi4zMTYgMy42NiAyNC45NTYuMDQ0IDEuOTExLjEyMiAzLjgyMi4yMDMgNS43MzEuMzQgMTIuMjEuMzQgMTIuMjEtMy4xNTYgMTcuMzA5YTk1LjYwNCA5NS42MDQgMCAwIDEtNC4xODggMy42MjVjLTQuNSAzLjcxNy02Ljk3NCA3LjY4OC05LjcxNyAxMi44MDNDMTA2LjgwNCAxNTMuMDQxIDEwNi44MDQgMTUzLjA0MSA5NyAxNTdjLTIuMzMyLjA3OC00LjY2OC4wOS03IDBsMi4xMjUtMS44NzVjNS40My01LjQ0NSA4Ljc0NC0xMi41NzcgMTEuNzU0LTE5LjU1OWEzNDkuNzc1IDM0OS43NzUgMCAwIDEgNC40OTYtOS44NzlsMS42NDgtMy41NWMyLjI0LTMuNTU1IDQuNDEtNC45OTYgNy45NzctNy4xMzcgMi4zMjMtMi42MSAyLjMyMy0yLjYxIDQtNWwtMyAxYy0yLjY4LjE0OC01LjMxOS4yMy04IC4yNWwtMi4xOTUuMDYzYy01LjI4Ny4wMzktNS4yODcuMDM5LTcuNzc4LTEuNjUzLTEuNjY2LTIuNjkyLTEuNDUzLTQuNTYtMS4wMjctNy42NiAyLjM5NS00LjM2MiA0LjkyNC04LjA0IDkuODI4LTkuNTcgMi4zNjQtLjQ2OCA0LjUxNC0uNTI4IDYuOTIyLS40OTNsMi40MjIuMDI4TDEyMSA5MmwtMS0yYTkyLjc1OCA5Mi43NTggMCAwIDEtLjM2LTQuNTg2QzExOC42IDY5LjYzMiAxMTYuNTE3IDU2LjA5NCAxMDQgNDVjLTUuOTA0LTQuNjY0LTExLjYtNi4wODgtMTktNyA3LjU5NC00LjI2NCAxNi4yMjMtMS44MSAyNCAxWiIvPjxwYXRoIGZpbGw9IiM0OTUwNTgiIGQ9Ik03NyA5MmM0LjYxMyAxLjY3MSA3LjI2IDMuOTQ1IDEwLjA2MyA3LjkzOCAxLjA3OCAzLjUyMy45NzYgNS41NDYtLjA2MyA5LjA2Mi0yLjk4NCAyLjk4NC02LjI1NiAyLjM2OC0xMC4yNSAyLjM3NWwtMi4yNzcuMDc0Yy01LjI5OC4wMjgtOC4yNTQtLjk4My0xMi40NzMtNC40NDktMi44MjYtMy41OTctMi40MTYtNy42MzQtMi0xMiA0LjUwMi00LjcyOCAxMC45OS0zLjc2IDE3LTNaIi8+PHBhdGggZmlsbD0iIzQ4NEY1NyIgZD0ibTExOCA5MS43NSAzLjEyNS0uMDc4YzMuMjU0LjM3MSA0LjU5NyAxLjAwMiA2Ljg3NSAzLjMyOC42MzkgNC4yMzEuMjkgNi40NDItMS42ODggMTAuMjUtMy40MjggNC4wNzgtNS44MjcgNS41OTgtMTEuMTk1IDYuMTQ4LTEuNDE0LjAwOC0yLjgyOCAwLTQuMjQyLS4wMjNsLTIuMTY4LjAzNWMtMi45OTgtLjAxNy01LjE1Ny0uMDMzLTcuNjcyLTEuNzU4LTEuNjgxLTIuNjg0LTEuNDYtNC41NTItMS4wMzUtNy42NTIgMi4zNzUtNC4zMjUgNC44OTQtOC4wMDkgOS43NS05LjU1OSAyLjc3Ny0uNTQ0IDUuNDItLjY0OSA4LjI1LS42OTFaIi8+PHBhdGggZmlsbD0iIzUyNTg2MCIgZD0iTTg2IDEzNGgxNmwxIDRjLTIgMi0yIDItNS4xODggMi4yNjZMOTQgMTQwLjI1bC0zLjgxMy4wMTZDODcgMTQwIDg3IDE0MCA4NSAxMzhsMS00WiIvPjwvc3ZnPg==)](https://github.com/K0I05)
 [![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
 [![Edited with VS Code](https://badgen.net/badge/icon/VS%20Code?icon=visualstudio&label=edited%20with)](https://visualstudio.microsoft.com)
@@ -5,14 +7,15 @@
 [![PlatformIO CI](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/pio_build.yml/badge.svg)](https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/actions/workflows/pio_build.yml)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/k0i05/ESP32-S3_ESP-IDF_COMPONENTS)
 
-# Welcome
 Thanks for visiting and hope you find something useful.  The code base is maintained as well as one person can manage in their spare time. The development environment is under Visual Studio Code with the PlatformIO (6.1.17) and ESP-IDF (v5.4.0) extensions.  There is always room for improvement to optimize the code base and open to suggestions.
 
 # ESP32-S3 Components
+
 PlatformIO components with examples for the ESP32-S3 chipset.  This is a revised release utilizing esp-idf suggested design patterns through `handles` and using `i2c_master.h` for I2C transactions.  The drivers are organized in the components folder within the Visual Studio Code and PlatformIO environment.
 
 The folder structure for components, and associated example, are outlined as follows:
-```
+
+```c
 |--components
 |  |
 |  |--peripherals
@@ -50,8 +53,10 @@ The folder structure for components, and associated example, are outlined as fol
 |
 |- platformio.ini
 ```
+
 To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src` folder and go to the `void app_main( void )` subroutine to enable the device of interest.  The example code is located in the `[sensor]_task.h` and `[sensor]_task.c` files.
-```
+
+```c
 /**
  * @brief Main application entry point.
  */
@@ -77,42 +82,45 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_VEML7700);
 }
 ```
+
 Once these initial steps are done, compile and upload the program, assuming your development board is equivalent to the `esp32s3box`.  Otherwise, you will have to configure the environment for your development board and recompile before uploading the program.
 
 # ESP Peripheral Components (ADC, I2C, OWB, SPI)
+
 The ESP peripheral components accommodate ADC, I2C, OWB, and SPI device interfacing supported by various device manufacturers.
 
 Supported drivers include the following device peripherals:
- 
- - ADC: Roithner LaserTechnik GUVA-S12SD (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/adc/esp_s12sd)
- - I2C: ASAIR AHTXX (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ahtxx)
- - I2C: AKM AK8975 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ak8975)
- - I2C: AMS AS3935 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as3935)
- - I2C: OSRAM AS7341 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as7341)
- - I2C: ROHM BH1750FVI (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bh1750)
- - I2C: Bosch BME680 - Work in Progress, Coming Soon (waiting for sensor to arrive)!! 
- - I2C: Bosch BMP280 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp280)
- - I2C: Bosch BMP390 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp390)
- - I2C: ScioSense CCS811 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ccs811)
- - I2C: ScioSense ENS160 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ens160)
- - I2C: Texas Instruments HDC1080 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hdc1080)
- - I2C: Honeywell HMC5883L (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hmc5883l)
- - I2C: Lite-On LTR390UV (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ltr390uv)
- - I2C: Maxim-Integrated MAX30105 - Work in Progress
- - I2C: Melexis MLX90614 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mlx90614)
- - I2C: Memsic MMC56X3 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mmc56x3)
- - I2C: InvenSense MPU6050 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mpu6050)
- - I2C: Sensirion SGP4X (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_sgp4x)
- - I2C: Sensirion SHT4X (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_sht4x)
- - I2C: Generic SSD1306 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ssd1306)
- - I2C: Infineon TLV493D - Work in Progress
- - I2C: Vishay VEML7700 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_veml7700)
- - OWB: Maxim-Integrated DS18B20 (https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/owb/esp_ds18b20)
- - SPI: Analog Devices MAX31865 - Work in Progress
- 
+
+- ADC: Roithner LaserTechnik GUVA-S12SD (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/adc/esp_s12sd>)
+- I2C: ASAIR AHTXX (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ahtxx>)
+- I2C: AKM AK8975 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ak8975>)
+- I2C: AMS AS3935 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as3935>)
+- I2C: OSRAM AS7341 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as7341>)
+- I2C: ROHM BH1750FVI (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bh1750>)
+- I2C: Bosch BME680 - Work in Progress, Coming Soon (waiting for sensor to arrive)!!
+- I2C: Bosch BMP280 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp280>)
+- I2C: Bosch BMP390 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp390>)
+- I2C: ScioSense CCS811 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ccs811>)
+- I2C: ScioSense ENS160 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ens160>)
+- I2C: Texas Instruments HDC1080 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hdc1080>)
+- I2C: Honeywell HMC5883L (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hmc5883l>)
+- I2C: Lite-On LTR390UV (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ltr390uv>)
+- I2C: Maxim-Integrated MAX30105 - Work in Progress
+- I2C: Melexis MLX90614 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mlx90614>)
+- I2C: Memsic MMC56X3 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mmc56x3>)
+- I2C: InvenSense MPU6050 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mpu6050>)
+- I2C: Sensirion SGP4X (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_sgp4x>)
+- I2C: Sensirion SHT4X (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_sht4x>)
+- I2C: Generic SSD1306 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ssd1306>)
+- I2C: Infineon TLV493D - Work in Progress
+- I2C: Vishay VEML7700 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_veml7700>)
+- OWB: Maxim-Integrated DS18B20 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/owb/esp_ds18b20>)
+- SPI: Analog Devices MAX31865 - Work in Progress
+
 The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and the above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 
 # ESP Utilities Components
+
 The ESP Utilities components are generally used in conjunction with peripheral components for data processing.
 
 Supported components include the following:
@@ -126,9 +134,11 @@ Supported components include the following:
 See the Sensirion SGP4X example on how the gas index algorithm is utilized with this sensor.
 
 # ESP Schedule Components
+
 The ESP `time-into-interval` component synchronizes a FreeRTOS task with the system clock and user-defined time interval for temporal conditional scenarios.
 
 # ESP Storage Components (WORK IN PROGRESS)
+
 The ESP storage components can be used for use-cases that require volatile and/or non-volatile storage.
 
 Supported components include the following:
@@ -136,5 +146,4 @@ Supported components include the following:
 - `Data-Logger`: A user friendly table based data logging component for measurement and control use-cases.  See Data-Logger examples for more details, see readme file in the component folder.
 - `NVS Ext`: A component extension that simplifies the process of reading and writing information to non-volatile storage (NVS).  See readme file in the component folder.
 
-
-Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+Copyright (c) 2024 Eric Gionet (<gionet.c.eric@gmail.com>)
