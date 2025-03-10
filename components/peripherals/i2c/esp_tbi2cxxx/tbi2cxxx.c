@@ -46,15 +46,15 @@
  * TBI2CXXX definitions
  */
 
-#define I2C_TBI2CXXX_CMD_AMB_TEMP_R        UINT8_C(0x06)
-#define I2C_TBI2CXXX_CMD_OBJ_TEMP_R        UINT8_C(0x07)
-#define I2C_TBI2CXXX_CMD_EMIS_COEF_RW      UINT8_C(0x24)
-#define I2C_TBI2CXXX_CMD_SLV_ADDR_RW       UINT8_C(0x2e)
+#define TBI2CXXX_CMD_AMB_TEMP_R        UINT8_C(0x06)
+#define TBI2CXXX_CMD_OBJ_TEMP_R        UINT8_C(0x07)
+#define TBI2CXXX_CMD_EMIS_COEF_RW      UINT8_C(0x24)
+#define TBI2CXXX_CMD_SLV_ADDR_RW       UINT8_C(0x2e)
 
-#define I2C_TBI2CXXX_DATA_READY_DELAY_MS   UINT16_C(105)
-#define I2C_TBI2CXXX_POWERUP_DELAY_MS      UINT16_C(205)
-#define I2C_TBI2CXXX_APPSTART_DELAY_MS     UINT16_C(10)    /*!< tbi2cxxx delay after initialization before application start-up */
-#define I2C_TBI2CXXX_CMD_DELAY_MS          UINT16_C(5)     /*!< tbi2cxxx delay before attempting I2C transactions after a command is issued */
+#define TBI2CXXX_DATA_READY_DELAY_MS   UINT16_C(105)
+#define TBI2CXXX_POWERUP_DELAY_MS      UINT16_C(205)
+#define TBI2CXXX_APPSTART_DELAY_MS     UINT16_C(10)    /*!< tbi2cxxx delay after initialization before application start-up */
+#define TBI2CXXX_CMD_DELAY_MS          UINT16_C(5)     /*!< tbi2cxxx delay before attempting I2C transactions after a command is issued */
 
 
 /*
@@ -64,7 +64,7 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "tbi2cxxx";
 
@@ -96,7 +96,7 @@ static const uint8_t crc8_table[256]= { // CRC table
  * @param size Size of data buffer.
  * @return uint8_t Calculated PEC.
  */
-static inline uint8_t i2c_tbi2cxxx_calculate_pec(uint8_t *crc, uint8_t size) {
+static inline uint8_t tbi2cxxx_calculate_pec(uint8_t *crc, uint8_t size) {
   uint8_t data, count;
   uint16_t remainder = 0;
   for(count=0; count<size; ++count) {
@@ -112,7 +112,7 @@ static inline uint8_t i2c_tbi2cxxx_calculate_pec(uint8_t *crc, uint8_t size) {
  * @param encoded_temperature Raw `uint16_t` temperature to decode.
  * @return float Decoded floating point temperature in degrees celsius.
  */
-static inline float i2c_tbi2cxxx_decode_temperature(uint16_t encoded_temperature) {
+static inline float tbi2cxxx_decode_temperature(uint16_t encoded_temperature) {
     float decoded_temperature = (float)encoded_temperature * 0.02f;
     decoded_temperature -= 273.15f;
     return decoded_temperature;
@@ -121,38 +121,38 @@ static inline float i2c_tbi2cxxx_decode_temperature(uint16_t encoded_temperature
 /**
  * @brief Reads a word (2-bytes) from TBI2CXXX.
  * 
- * @param tbi2cxxx_handle TBI2CXXX device handle.
+ * @param handle TBI2CXXX device handle.
  * @param reg_addr TBI2CXXX device register address (1-byte).
  * @param data `uint16_t` (2-byte) word read from TBI2CXXX.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t i2c_tbi2cxxx_read_word(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, const uint8_t reg_addr, uint16_t *const data) {
+static inline esp_err_t tbi2cxxx_read_word(tbi2cxxx_handle_t handle, const uint8_t reg_addr, uint16_t *const data) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit24_uint8_buffer_t      rx = { };
 
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write and read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(tbi2cxxx_handle->i2c_dev_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit and receive, read word failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit and receive, read word failed" );
 
     /* set buffer data for pec validation */
     const bit40_uint8_buffer_t pec_buf = { 
-        tbi2cxxx_handle->i2c_dev_address << 1,          /*<! i2c device write address */
+        handle->dev_config.i2c_address << 1,          /*<! i2c device write address */
         reg_addr,                                       /*!< i2c eeprom address */
-        (tbi2cxxx_handle->i2c_dev_address << 1) | 0x01, /*<! i2c device read address */
+        (handle->dev_config.i2c_address << 1) | 0x01, /*<! i2c device read address */
         rx[0],                                          /*!< low-byte */
         rx[1]                                           /*!< high-bye */
     };
 
     /* calculate and validate pec from rx data */
-    ESP_RETURN_ON_FALSE((rx[2] == i2c_tbi2cxxx_calculate_pec(pec_buf, BIT40_UINT8_BUFFER_SIZE)), ESP_ERR_INVALID_CRC, TAG, "invalid pec received, read word failed" );
+    ESP_RETURN_ON_FALSE((rx[2] == tbi2cxxx_calculate_pec(pec_buf, BIT40_UINT8_BUFFER_SIZE)), ESP_ERR_INVALID_CRC, TAG, "invalid pec received, read word failed" );
 
     /* set output parameter */
     *data = (rx[1] << 8) | rx[0]; // high-byte | low-byte
 
     /* delay task before i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_TBI2CXXX_CMD_DELAY_MS));
+    vTaskDelay(pdMS_TO_TICKS(TBI2CXXX_CMD_DELAY_MS));
 
     return ESP_OK;
 }
@@ -160,23 +160,23 @@ static inline esp_err_t i2c_tbi2cxxx_read_word(i2c_tbi2cxxx_handle_t tbi2cxxx_ha
 /**
  * @brief Writes a word (2-bytes) to TBI2CXXX.
  * 
- * @param tbi2cxxx_handle TBI2CXXX device handle.
+ * @param handle TBI2CXXX device handle.
  * @param reg_addr TBI2CXXX device register address (1-byte).
  * @param data `uint16_t` (2-byte) word to write to TBI2CXXX.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t i2c_tbi2cxxx_write_word(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, const uint8_t reg_addr, const uint16_t data) {
+static inline esp_err_t tbi2cxxx_write_word(tbi2cxxx_handle_t handle, const uint8_t reg_addr, const uint16_t data) {
     bit32_uint8_buffer_t tx = { 0 };
 
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* set buffer data and calculate pec */
-    tx[0] = tbi2cxxx_handle->i2c_dev_address << 1;  /*<! i2c device write address */
+    tx[0] = handle->dev_config.i2c_address << 1;  /*<! i2c device write address */
     tx[1] = reg_addr;                               /*!< i2c eeprom address */
     tx[2] = data & 0xff;                            /*!< low-byte */
     tx[3] = (data >> 8) & 0xff;                     /*!< high-bye */
-    uint8_t pec = i2c_tbi2cxxx_calculate_pec(tx, 4);/*!< pec */
+    uint8_t pec = tbi2cxxx_calculate_pec(tx, 4);/*!< pec */
 
     /* shift buffer data index up by one and set tx data */
     tx[0] = tx[1]; /*!< i2c eeprom address */
@@ -185,10 +185,10 @@ static inline esp_err_t i2c_tbi2cxxx_write_word(i2c_tbi2cxxx_handle_t tbi2cxxx_h
     tx[3] = pec;   /*!< pec */
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(tbi2cxxx_handle->i2c_dev_handle, tx, BIT32_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit, write word failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT32_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to transmit, write word failed" );
 
     /* delay task before i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_TBI2CXXX_CMD_DELAY_MS));
+    vTaskDelay(pdMS_TO_TICKS(TBI2CXXX_CMD_DELAY_MS));
 
     return ESP_OK;
 }
@@ -196,108 +196,108 @@ static inline esp_err_t i2c_tbi2cxxx_write_word(i2c_tbi2cxxx_handle_t tbi2cxxx_h
 /**
  * @brief Erases a register on TBI2CXXX.
  * 
- * @param tbi2cxxx_handle TBI2CXXX device handle.
+ * @param handle TBI2CXXX device handle.
  * @param reg_addr TBI2CXXX device register address (1-byte).
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t i2c_tbi2cxxx_erase_register(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, const uint8_t reg_addr) {
+static inline esp_err_t tbi2cxxx_erase_register(tbi2cxxx_handle_t handle, const uint8_t reg_addr) {
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_write_word(tbi2cxxx_handle, reg_addr, 0x0000), TAG, "unable to transmit, erase register failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_write_word(handle, reg_addr, 0x0000), TAG, "unable to transmit, erase register failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_tbi2cxxx_init(i2c_master_bus_handle_t bus_handle, const i2c_tbi2cxxx_config_t *tbi2cxxx_config, i2c_tbi2cxxx_handle_t *tbi2cxxx_handle) {
+esp_err_t tbi2cxxx_init(i2c_master_bus_handle_t master_handle, const tbi2cxxx_config_t *tbi2cxxx_config, tbi2cxxx_handle_t *tbi2cxxx_handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( bus_handle && tbi2cxxx_config );
+    ESP_ARG_CHECK( master_handle && tbi2cxxx_config );
 
     /* delay task before i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_TBI2CXXX_POWERUP_DELAY_MS));
+    vTaskDelay(pdMS_TO_TICKS(TBI2CXXX_POWERUP_DELAY_MS));
 
     /* validate device exists on the master bus */
-    esp_err_t ret = i2c_master_probe(bus_handle, tbi2cxxx_config->dev_config.device_address, I2C_XFR_TIMEOUT_MS);
-    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, tbi2cxxx device handle initialization failed", tbi2cxxx_config->dev_config.device_address);
+    esp_err_t ret = i2c_master_probe(master_handle, tbi2cxxx_config->i2c_address, I2C_XFR_TIMEOUT_MS);
+    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, tbi2cxxx device handle initialization failed", tbi2cxxx_config->i2c_address);
 
     /* validate memory availability for handle */
-    i2c_tbi2cxxx_handle_t out_handle = (i2c_tbi2cxxx_handle_t)calloc(1, sizeof(i2c_tbi2cxxx_t));
+    tbi2cxxx_handle_t out_handle;
+    out_handle = (tbi2cxxx_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c tbi2cxxx device, init failed");
+
+    /* copy configuration */
+    out_handle->dev_config = *tbi2cxxx_config;
 
     /* set i2c device configuration */
     const i2c_device_config_t i2c_dev_conf = {
         .dev_addr_length    = I2C_ADDR_BIT_LEN_7,
-        .device_address     = tbi2cxxx_config->dev_config.device_address,
-        .scl_speed_hz       = tbi2cxxx_config->dev_config.scl_speed_hz,
+        .device_address     = out_handle->dev_config.i2c_address,
+        .scl_speed_hz       = out_handle->dev_config.i2c_clock_speed,
     };
 
     /* validate device handle */
-    if (out_handle->i2c_dev_handle == NULL) {
-        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->i2c_dev_handle), err_handle, TAG, "i2c new bus for init failed");
+    if (out_handle->i2c_handle == NULL) {
+        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus for init failed");
     }
-
-    /* copy configuration */
-    out_handle->i2c_dev_address = tbi2cxxx_config->dev_config.device_address;
-    out_handle->tb_type         = tbi2cxxx_config->tb_type;
 
     /* set device handle */
     *tbi2cxxx_handle = out_handle;
 
     /* delay task before i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(I2C_TBI2CXXX_APPSTART_DELAY_MS));
+    vTaskDelay(pdMS_TO_TICKS(TBI2CXXX_APPSTART_DELAY_MS));
 
     return ESP_OK;
 
     err_handle:
         /* clean up handle instance */
-        if (out_handle && out_handle->i2c_dev_handle) {
-            i2c_master_bus_rm_device(out_handle->i2c_dev_handle);
+        if (out_handle && out_handle->i2c_handle) {
+            i2c_master_bus_rm_device(out_handle->i2c_handle);
         }
         free(out_handle);
     err:
         return ret;
 }
 
-esp_err_t i2c_tbi2cxxx_get_temperatures(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, float *const ambient_temperature, float *const object_temperature) {
+esp_err_t tbi2cxxx_get_temperatures(tbi2cxxx_handle_t handle, float *const ambient_temperature, float *const object_temperature) {
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_get_ambient_temperature(tbi2cxxx_handle, ambient_temperature), TAG, "unable to read ambient temperature from device, get temperatures failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_get_ambient_temperature(handle, ambient_temperature), TAG, "unable to read ambient temperature from device, get temperatures failed" );
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_get_object_temperature(tbi2cxxx_handle, object_temperature), TAG, "unable to read object temperature from device, get temperatures failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_get_object_temperature(handle, object_temperature), TAG, "unable to read object temperature from device, get temperatures failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_tbi2cxxx_get_ambient_temperature(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, float *const temperature) {
+esp_err_t tbi2cxxx_get_ambient_temperature(tbi2cxxx_handle_t handle, float *const temperature) {
     uint16_t encoded_temperature;
 
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_read_word(tbi2cxxx_handle, I2C_TBI2CXXX_CMD_AMB_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get ambient temperature failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_read_word(handle, TBI2CXXX_CMD_AMB_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get ambient temperature failed" );
 
     /* validate maximum range */
     ESP_RETURN_ON_FALSE((encoded_temperature < 0x7fff), ESP_ERR_INVALID_SIZE, TAG, "received word from device is out of range, get ambient temperature failed");
 
     /* set output parameter */
-    *temperature = i2c_tbi2cxxx_decode_temperature(encoded_temperature);
+    *temperature = tbi2cxxx_decode_temperature(encoded_temperature);
 
     return ESP_OK;
 }
 
-esp_err_t i2c_tbi2cxxx_get_object_temperature(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, float *const temperature) {
+esp_err_t tbi2cxxx_get_object_temperature(tbi2cxxx_handle_t handle, float *const temperature) {
     uint16_t encoded_temperature;
 
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_read_word(tbi2cxxx_handle, I2C_TBI2CXXX_CMD_OBJ_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get object temperature failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_read_word(handle, TBI2CXXX_CMD_OBJ_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get object temperature failed" );
 
     /* validate maximum range */
     ESP_RETURN_ON_FALSE((encoded_temperature < 0x7fff), ESP_ERR_INVALID_SIZE, TAG, "received word from device is out of range, get object temperature failed");
@@ -306,19 +306,19 @@ esp_err_t i2c_tbi2cxxx_get_object_temperature(i2c_tbi2cxxx_handle_t tbi2cxxx_han
     ESP_RETURN_ON_FALSE(!(encoded_temperature & 0x8000), ESP_ERR_INVALID_RESPONSE, TAG, "error detected with received word from device, get object temperature failed");
 
     /* set output parameter */
-    *temperature = i2c_tbi2cxxx_decode_temperature(encoded_temperature);
+    *temperature = tbi2cxxx_decode_temperature(encoded_temperature);
 
     return ESP_OK;
 }
 
-esp_err_t i2c_tbi2cxxx_get_emissivity(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, float *const coefficient) {
+esp_err_t tbi2cxxx_get_emissivity(tbi2cxxx_handle_t handle, float *const coefficient) {
     uint16_t coefficient_e;
 
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_read_word(tbi2cxxx_handle, I2C_TBI2CXXX_CMD_EMIS_COEF_RW, &coefficient_e), TAG, "unable to read word from device, get emissivity failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_read_word(handle, TBI2CXXX_CMD_EMIS_COEF_RW, &coefficient_e), TAG, "unable to read word from device, get emissivity failed" );
 
     /* set output parameter */
     *coefficient = ((float)coefficient_e + 1.0f) / 65536.0f;
@@ -326,11 +326,11 @@ esp_err_t i2c_tbi2cxxx_get_emissivity(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, flo
     return ESP_OK;
 }
 
-esp_err_t i2c_tbi2cxxx_set_emissivity(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, const float coefficient) {
+esp_err_t tbi2cxxx_set_emissivity(tbi2cxxx_handle_t handle, const float coefficient) {
     uint16_t coefficient_e;
 
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* validate emissivity coefficient range is between 0.1 and 1.0 */
     ESP_RETURN_ON_FALSE((coefficient <= 1.0f), ESP_ERR_INVALID_ARG, TAG, "emissivity coefficient range must be between 0.1 and 1.0, set emissivity failed");
@@ -340,34 +340,42 @@ esp_err_t i2c_tbi2cxxx_set_emissivity(i2c_tbi2cxxx_handle_t tbi2cxxx_handle, con
     coefficient_e = (uint16_t)floorf(((coefficient * 65536.0f) - 1.0f));
 
     /* attempt i2c write transaction to erase register */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_erase_register(tbi2cxxx_handle, I2C_TBI2CXXX_CMD_EMIS_COEF_RW), TAG, "unable to erase register on device, set emissivity failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_erase_register(handle, TBI2CXXX_CMD_EMIS_COEF_RW), TAG, "unable to erase register on device, set emissivity failed" );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_write_word(tbi2cxxx_handle, I2C_TBI2CXXX_CMD_EMIS_COEF_RW, coefficient_e), TAG, "unable to write word from device, set emissivity failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_write_word(handle, TBI2CXXX_CMD_EMIS_COEF_RW, coefficient_e), TAG, "unable to write word from device, set emissivity failed" );
 
     return ESP_OK;
 }
 
-esp_err_t i2c_tbi2cxxx_remove(i2c_tbi2cxxx_handle_t tbi2cxxx_handle) {
+esp_err_t tbi2cxxx_remove(tbi2cxxx_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* remove device from i2c master bus */
-    return i2c_master_bus_rm_device(tbi2cxxx_handle->i2c_dev_handle);
+    return i2c_master_bus_rm_device(handle->i2c_handle);
 }
 
-esp_err_t i2c_tbi2cxxx_delete(i2c_tbi2cxxx_handle_t tbi2cxxx_handle) {
+esp_err_t tbi2cxxx_delete(tbi2cxxx_handle_t handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( tbi2cxxx_handle );
+    ESP_ARG_CHECK( handle );
 
     /* remove device from master bus */
-    ESP_RETURN_ON_ERROR( i2c_tbi2cxxx_remove(tbi2cxxx_handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_remove(handle), TAG, "unable to remove device from i2c master bus, delete handle failed" );
 
     /* validate handle instance and free handles */
-    if(tbi2cxxx_handle->i2c_dev_handle) {
-        free(tbi2cxxx_handle->i2c_dev_handle);
-        free(tbi2cxxx_handle);
+    if(handle->i2c_handle) {
+        free(handle->i2c_handle);
+        free(handle);
     }
 
     return ESP_OK;
+}
+
+const char* tbi2cxxx_get_fw_version(void) {
+    return TBI2CXXX_FW_VERSION_STR;
+}
+
+int32_t tbi2cxxx_get_fw_version_number(void) {
+    return TBI2CXXX_FW_VERSION_INT32;
 }

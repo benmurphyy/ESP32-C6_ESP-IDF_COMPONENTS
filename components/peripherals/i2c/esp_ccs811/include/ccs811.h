@@ -100,7 +100,7 @@ typedef enum ccs811_firmware_modes_e {
 /**
  * @brief CCS811 status register structure.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) ccs811_status_register_u {
     struct STS_REG_BITS_TAG {
         bool                            error:1;                /*!< error when true                        (bit:0)   */
         uint8_t                         reserved:2;             /*!< reserved and set to 0                  (bit:2-1) */
@@ -116,7 +116,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief CCS811 measure mode and condition register structure.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) ccs811_measure_mode_register_u {
     struct MODE_REG_BITS_TAG {
         uint8_t                                  reserved1:2;            /*!< reserved and set to 0                     (bit:1-0) */
         bool                                     irq_threshold_enabled:1;/*!< threshold interrupt enabled when true     (bit:2)   */
@@ -130,7 +130,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief CCS811 raw data register structure (review - not correct).
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) ccs811_raw_data_register_u {
     struct RDAT_REG_BITS_TAG {
         uint16_t    raw_adc:10;    /*!< raw adc        (bit:) */
         uint16_t    current:6;     /*!< current        (bit:7)   */
@@ -141,7 +141,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief CCS811 threshold value structure (big endien).
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) ccs811_threshold_value_u {
     struct THRVAL_REG_BITS_TAG {
         uint8_t    hi_byte:8;  /*!< low to medium threshold (1500ppm = 0x05DC default)  (bit:7-0)    */
         uint8_t    lo_byte:8;  /*!< low to medium threshold (1500ppm = 0x05DC default)  (bit:8-15)   */
@@ -152,7 +152,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief CCS811 thresholds register structure.
  */
-typedef struct {
+typedef struct ccs811_thresholds_register_s {
     ccs811_threshold_value_t    low_to_med;  /*!< low to medium threshold (1500ppm = 0x05DC default)   */
     ccs811_threshold_value_t    med_to_high; /*!< medium to high threshold (2500ppm = 0x09C4 default)  */
     uint8_t                     hysteresis;  /*!< threshold hysteresis value (50ppm = 0x default)*/
@@ -161,7 +161,7 @@ typedef struct {
 /**
  * @brief CCS811 environmental data register structure.
  */
-typedef struct {
+typedef struct ccs811_environmental_data_register_s {
     float temperature;  /*!< temperature (25 C = 0x64, 0x00 default)   */
     float humidity;     /*!< humidity (50% = 0x64, 0x00 default)  */
 } ccs811_environmental_data_register_t;
@@ -169,7 +169,7 @@ typedef struct {
 /**
  * @brief CCS811 firmware version format (bootloader 0x23 and application 0x24) structure (review).
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) ccs811_firmware_version_format_u {
     struct FWVF_PARTS_TAG {
         uint16_t    major:4;      /*!< major         (bit:3-0)  */
         uint16_t    minor:4;      /*!< minor         (bit:4-7)  */
@@ -181,7 +181,7 @@ typedef union __attribute__((packed)) {
 /**
  * @brief CCS811 error codes `ERROR_ID` register structure.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) ccs811_error_code_register_u {
     struct ERRC_REG_BITS_TAG {
         bool            write_register_invalid:1;   /*!< write register invalid when tru            (bit:0) */
         bool            read_register_invalid:1;    /*!< read register invalid when true            (bit:1) */
@@ -241,18 +241,6 @@ struct ccs811_context_t {
     uint8_t                                 hardware_version;       /*!< ccs811 hardware version (0x1X) */
     ccs811_firmware_version_format_t        bootloader_version;     /*!< ccs811 firmware bootloader version */
     ccs811_firmware_version_format_t        application_version;    /*!< ccs811 firmware application version */
-    ccs811_status_register_t                status_reg;             /*!< ccs811 status register */
-    ccs811_measure_mode_register_t          measure_mode_reg;       /*!< ccs811 measure mode register */
-    ccs811_error_code_register_t            error_reg;              /*!< ccs811 error identifier regiser */
-    ccs811_environmental_data_register_t    enviromental_data_reg; /*!< ccs811 environmental data register */
-    ccs811_thresholds_register_t            thresholds_reg;         /*!< ccs811 thresholds register */
-    uint16_t                                baseline_reg;           /*!< ccs811 baseline register */
-    bool                                    irq_data_ready_io_enabled; /*!< ccs811 flag to enable hardware interrupt */
-    gpio_num_t                              irq_data_ready_io_num;     /*!< mcu interrupt gpio number for ccs811 device */
-    bool                                    wake_io_enabled;        /*!< ccs811 flag to enable hardware wake */
-    gpio_num_t                              wake_io_num;            /*!< mcu wake gpio number for ccs811 device */
-    bool                                    reset_io_enabled;       /*!< ccs811 flag to enable hardware reset */
-    gpio_num_t                              reset_io_num;           /*!< mcu reset gpio number for ccs811 device */
 };
 
 /**
@@ -270,34 +258,37 @@ typedef struct ccs811_context_t *ccs811_handle_t;
  * @brief Reads status register from CCS811.
  * 
  * @param[in] handle CCS811 device handle.
+ * @param[out] reg CCS811 status register structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_get_status_register(ccs811_handle_t handle);
+esp_err_t ccs811_get_status_register(ccs811_handle_t handle, ccs811_status_register_t *const reg);
 
 /**
  * @brief Reads measure mode register from CCS811.
  * 
  * @param[in] handle CCS811 device handle.
+ * @param[out] reg CCS811 measure mode register structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_get_measure_mode_register(ccs811_handle_t handle);
+esp_err_t ccs811_get_measure_mode_register(ccs811_handle_t handle, ccs811_measure_mode_register_t *const reg);
 
 /**
  * @brief Writes measure mode register to CCS811.
  * 
  * @param[in] handle CCS811 device handle.
- * @param[in] mode_reg measure mode register structure.
+ * @param[in] reg CCS811 measure mode register structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_set_measure_mode_register(ccs811_handle_t handle, const ccs811_measure_mode_register_t mode_reg);
+esp_err_t ccs811_set_measure_mode_register(ccs811_handle_t handle, const ccs811_measure_mode_register_t reg);
 
 /**
  * @brief Reads error register from CCS811.
  * 
  * @param[in] handle CCS811 device handle.
+ * @param[out] reg CCS811 error register structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_get_error_register(ccs811_handle_t handle);
+esp_err_t ccs811_get_error_register(ccs811_handle_t handle, ccs811_error_code_register_t *const reg);
 
 /**
  * @brief Writes environmental compensation factors data to CCS811 register.
@@ -324,34 +315,37 @@ esp_err_t ccs811_set_thresholds_register(ccs811_handle_t handle, const uint16_t 
  * @brief Reads encoded version of the current baseline register from CCS811.
  * 
  * @param[in] handle CCS811 device handle.
+ * @param[out] reg CCS811 encoded version of the baseline register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_get_baseline_register(ccs811_handle_t handle);
+esp_err_t ccs811_get_baseline_register(ccs811_handle_t handle, uint16_t *const reg);
 
 /**
  * @brief Writes encoded version to the CCS811 baseline register.
  * 
  * @param[in] handle CCS811 device handle.
- * @param[in] baseline Encoded version of the baseline.
+ * @param[in] reg CCS811 encoded version of the baseline register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_set_baseline_register(ccs811_handle_t handle, const uint16_t baseline);
+esp_err_t ccs811_set_baseline_register(ccs811_handle_t handle, const uint16_t reg);
 
 /**
  * @brief Reads hardware identifier register from CCS811.
  * 
  * @param[in] handle CCS811 device handle.
+ * @param[out] reg CCS811 hardware identifier register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_get_hardware_identifier_register(ccs811_handle_t handle);
+esp_err_t ccs811_get_hardware_identifier_register(ccs811_handle_t handle, uint8_t *const reg);
 
 /**
  * @brief Reads hardware version register from CCS811.
  * 
  * @param[in] handle CCS811 device handle.
+ * @param[out] reg CCS811 hardware version register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ccs811_get_hardware_version_register(ccs811_handle_t handle);
+esp_err_t ccs811_get_hardware_version_register(ccs811_handle_t handle, uint8_t *const reg);
 
 /**
  * @brief Starts the CCS811 application.

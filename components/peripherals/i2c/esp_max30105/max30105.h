@@ -62,7 +62,7 @@ extern "C"
 
 
 /*
-* MAX30105 enumerator and sructure declerations
+* MAX30105 enumerator and structure declarations
 */
 
 /**
