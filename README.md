@@ -15,7 +15,7 @@ PlatformIO components with examples for the ESP32-S3 chipset.  This is a revised
 
 The folder structure for components, and associated example, are outlined as follows:
 
-```c
+```text
 |--components
 |  |
 |  |--peripherals

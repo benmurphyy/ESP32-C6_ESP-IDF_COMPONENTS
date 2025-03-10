@@ -16,7 +16,7 @@ The component is hosted on github and is located here: <https://github.com/K0I05
 
 To get started, simply copy the component to your project's `components` folder and reference the `ahtxx.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
 
-```c
+```text
 components
 └── esp_ahtxx
     ├── CMakeLists.txt
