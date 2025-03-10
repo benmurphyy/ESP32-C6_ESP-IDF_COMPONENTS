@@ -117,81 +117,81 @@ static inline uint8_t as3935_convert_lightning_distance_km(as3935_lightning_dist
 }
 
 static inline void IRAM_ATTR as3935_monitor_gpio_isr_handler( void *pvParameters ) {
-    esp_as3935_device_t *esp_as3935_device = (esp_as3935_device_t *)pvParameters;
-    xQueueSendFromISR(esp_as3935_device->event_queue_handle, &esp_as3935_device->irq_io_num, NULL);
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)pvParameters;
+    xQueueSendFromISR(as3935_monitor_context->event_queue_handle, &as3935_monitor_context->irq_io_num, NULL);
 }
 
 static inline void as3935_monitor_task_entry( void *pvParameters ) {
-    esp_as3935_device_t *esp_as3935_device = (esp_as3935_device_t *)pvParameters;
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)pvParameters;
     uint32_t io_num;
 
     for (;;) {
-        if (xQueueReceive(esp_as3935_device->event_queue_handle, &io_num, portMAX_DELAY)) {
+        if (xQueueReceive(as3935_monitor_context->event_queue_handle, &io_num, portMAX_DELAY)) {
             
             /* wait at least 2ms before reading the interrupt register */
             vTaskDelay(pdMS_TO_TICKS(AS3935_INTERRUPT_DELAY_MS));
             
             /* ensure i2c master bus mutex is available before reading as3935 registers */
-            ENSURE_TRUE( xSemaphoreTake(esp_as3935_device->i2c_mutex_handle, AS3935_MUTEX_WAIT_TIME) );
+            ENSURE_TRUE( xSemaphoreTake(as3935_monitor_context->i2c_mutex_handle, AS3935_MUTEX_WAIT_TIME) );
             
             as3935_interrupt_states_t irq_state;
-            if(as3935_get_interrupt_state(esp_as3935_device->as3935_handle, &irq_state) != 0) {
+            if(as3935_get_interrupt_state(as3935_monitor_context->as3935_handle, &irq_state) != 0) {
                 ESP_LOGE(TAG, "as3935 device read interrupt state (register 0x03) failed");
             } else {
                 if(irq_state == AS3935_INT_NOISE) {
                     /* set parent device fields to defaults */
-                    esp_as3935_device->device.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
-                    esp_as3935_device->device.lightning_energy   = 0;
+                    as3935_monitor_context->base.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
+                    as3935_monitor_context->base.lightning_energy   = 0;
 
                     /* send signal to notify that one unknown statement has been met */
-                    esp_event_post_to(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_NOISE,
-                                  &(esp_as3935_device->device), sizeof(as3935_device_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
+                    esp_event_post_to(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_NOISE,
+                                  &(as3935_monitor_context->base), sizeof(as3935_monitor_base_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
                 } else if(irq_state == AS3935_INT_DISTURBER) {
                     /* set parent device fields to defaults */
-                    esp_as3935_device->device.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
-                    esp_as3935_device->device.lightning_energy   = 0;
+                    as3935_monitor_context->base.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
+                    as3935_monitor_context->base.lightning_energy   = 0;
 
                     /* send signal to notify that one unknown statement has been met */
-                    esp_event_post_to(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_DISTURBER,
-                                  &(esp_as3935_device->device), sizeof(as3935_device_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
+                    esp_event_post_to(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_DISTURBER,
+                                  &(as3935_monitor_context->base), sizeof(as3935_monitor_base_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
                 } else if(irq_state == AS3935_INT_LIGHTNING) {
                     uint32_t lightning_energy;
                     as3935_lightning_distances_t lightning_distance;
 
-                    if(as3935_get_lightning_event(esp_as3935_device->as3935_handle, &lightning_distance, &lightning_energy) != 0) {
+                    if(as3935_get_lightning_event(as3935_monitor_context->as3935_handle, &lightning_distance, &lightning_energy) != 0) {
                         ESP_LOGE(TAG, "as3935 device read lightning distance and energy failed");
                     } else {
                         /* set parent device fields to defaults */
-                        esp_as3935_device->device.lightning_distance = lightning_distance;
-                        esp_as3935_device->device.lightning_energy   = lightning_energy;
+                        as3935_monitor_context->base.lightning_distance = lightning_distance;
+                        as3935_monitor_context->base.lightning_energy   = lightning_energy;
 
                         /* send signal to notify that one unknown statement has been met */
-                        esp_event_post_to(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_LIGHTNING,
-                                  &(esp_as3935_device->device), sizeof(as3935_device_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
+                        esp_event_post_to(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_LIGHTNING,
+                                  &(as3935_monitor_context->base), sizeof(as3935_monitor_base_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
                     }
                 } else if(irq_state == AS3935_INT_NONE) {
                     /* set parent device fields to defaults */
-                    esp_as3935_device->device.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
-                    esp_as3935_device->device.lightning_energy   = 0;
+                    as3935_monitor_context->base.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
+                    as3935_monitor_context->base.lightning_energy   = 0;
 
                     /* send signal to notify that one unknown statement has been met */
-                    esp_event_post_to(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_NONE,
-                                  &(esp_as3935_device->device), sizeof(as3935_device_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
+                    esp_event_post_to(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, AS3935_INT_NONE,
+                                  &(as3935_monitor_context->base), sizeof(as3935_monitor_base_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
                 } else {
                     /* set parent device fields to defaults */
-                    esp_as3935_device->device.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
-                    esp_as3935_device->device.lightning_energy   = 0;
+                    as3935_monitor_context->base.lightning_distance = AS3935_L_DISTANCE_OO_RANGE;
+                    as3935_monitor_context->base.lightning_energy   = 0;
 
                     /* send signal to notify that one unknown statement has been met */
-                    esp_event_post_to(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, 200,
-                                  &(esp_as3935_device->device), sizeof(as3935_device_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
+                    esp_event_post_to(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, 200,
+                                  &(as3935_monitor_context->base), sizeof(as3935_monitor_base_t), pdMS_TO_TICKS(AS3935_EVENT_LOOP_POST_DELAY_MS));
                 }
             }
             /* ensure i2c master bus mutex is released */
-            ENSURE_TRUE( xSemaphoreGive(esp_as3935_device->i2c_mutex_handle) );
+            ENSURE_TRUE( xSemaphoreGive(as3935_monitor_context->i2c_mutex_handle) );
         }
         /* drive the event loop */
-        esp_event_loop_run(esp_as3935_device->event_loop_handle, pdMS_TO_TICKS(AS3935_EVENT_LOOP_POOL_DELAY_MS));
+        esp_event_loop_run(as3935_monitor_context->event_loop_handle, pdMS_TO_TICKS(AS3935_EVENT_LOOP_POOL_DELAY_MS));
     }
     vTaskDelete( NULL );
 }
@@ -214,41 +214,41 @@ esp_err_t as3935_monitor_init(i2c_master_bus_handle_t master_handle, const as393
     gpio_config(&io_conf);
 
     /* create as3935 device state object */
-    esp_as3935_device_t *esp_as3935_device = calloc(1, sizeof(esp_as3935_device_t));
-    if (!esp_as3935_device) {
+    as3935_monitor_context_t *as3935_monitor_context = calloc(1, sizeof(as3935_monitor_context_t));
+    if (!as3935_monitor_context) {
         ESP_LOGE(TAG, "calloc memory for esp_as3935_device_t failed");
         goto err_device;
     }
 
     /* create i2c mutex handle */
-    esp_as3935_device->i2c_mutex_handle = xSemaphoreCreateMutex();
-    if(esp_as3935_device->i2c_mutex_handle == NULL) {
+    as3935_monitor_context->i2c_mutex_handle = xSemaphoreCreateMutex();
+    if(as3935_monitor_context->i2c_mutex_handle == NULL) {
         ESP_LOGE(TAG, "create i2c mutex failed");
         goto err_emutex;
     }
 
     /* copy config to as3935 state object */
-    esp_as3935_device->irq_io_num = as3935_config->irq_io_num;
+    as3935_monitor_context->irq_io_num = as3935_config->irq_io_num;
 
     /* create event loop handle */
     esp_event_loop_args_t loop_args = {
         .queue_size = AS3935_EVENT_LOOP_QUEUE_SIZE,
         .task_name = NULL
     };
-    if (esp_event_loop_create(&loop_args, &esp_as3935_device->event_loop_handle) != ESP_OK) {
+    if (esp_event_loop_create(&loop_args, &as3935_monitor_context->event_loop_handle) != ESP_OK) {
         ESP_LOGE(TAG, "create event loop failed");
         goto err_eloop;
     }
 
     /* create a event queue to handle gpio event from isr */
-    esp_as3935_device->event_queue_handle = xQueueCreate(10, sizeof(uint32_t));
-    if (!esp_as3935_device->event_queue_handle) {
+    as3935_monitor_context->event_queue_handle = xQueueCreate(10, sizeof(uint32_t));
+    if (!as3935_monitor_context->event_queue_handle) {
         ESP_LOGE(TAG, "create event queue handle failed");
         goto err_equeue;
     }
 
     /* create i2c as3935 handle */
-    esp_err_t dev_err = as3935_init(master_handle, as3935_config, &esp_as3935_device->as3935_handle);
+    esp_err_t dev_err = as3935_init(master_handle, as3935_config, &as3935_monitor_context->as3935_handle);
     if(dev_err != ESP_OK) {
         ESP_LOGE(TAG, "i2c_bus_device_create as3935 handle initialization failed %s", esp_err_to_name(dev_err));
         goto err_i2c_as3935_init;
@@ -259,9 +259,9 @@ esp_err_t as3935_monitor_init(i2c_master_bus_handle_t master_handle, const as393
         as3935_monitor_task_entry, 
         AS3935_EVENT_TASK_NAME, 
         AS3935_EVENT_TASK_STACK_SIZE, 
-        esp_as3935_device, 
+        as3935_monitor_context, 
         AS3935_EVENT_TASK_PRIORITY,
-        &esp_as3935_device->task_monitor_handle, 
+        &as3935_monitor_context->task_monitor_handle, 
         APP_CPU_NUM );
     if (err != pdTRUE) {
         ESP_LOGE(TAG, "create as3935 monitor task on CPU(1) failed");
@@ -270,23 +270,23 @@ esp_err_t as3935_monitor_init(i2c_master_bus_handle_t master_handle, const as393
     
     
     ESP_LOGI(TAG, "as3935 device init OK");
-    *monitor_handle = esp_as3935_device;
+    *monitor_handle = as3935_monitor_context;
 
     return ESP_OK;
 
     /* error handling */
     err_task_create:
-        vTaskDelete(esp_as3935_device->task_monitor_handle);
+        vTaskDelete(as3935_monitor_context->task_monitor_handle);
     err_i2c_as3935_init:
-        as3935_remove(esp_as3935_device->as3935_handle);
+        as3935_remove(as3935_monitor_context->as3935_handle);
     err_equeue:
-        vQueueDelete(esp_as3935_device->event_queue_handle);
+        vQueueDelete(as3935_monitor_context->event_queue_handle);
     err_eloop:
-        esp_event_loop_delete(esp_as3935_device->event_loop_handle);
+        esp_event_loop_delete(as3935_monitor_context->event_loop_handle);
     err_emutex:
-        vSemaphoreDelete(esp_as3935_device->i2c_mutex_handle);
+        vSemaphoreDelete(as3935_monitor_context->i2c_mutex_handle);
     err_device:
-        free(esp_as3935_device);
+        free(as3935_monitor_context);
         return ESP_ERR_INVALID_STATE;
 }
 
@@ -308,41 +308,41 @@ as3935_monitor_handle_t as3935_monitor_init___(i2c_master_bus_handle_t bus_handl
     gpio_config(&io_conf);
 
     /* create as3935 device state object */
-    esp_as3935_device_t *esp_as3935_device = calloc(1, sizeof(esp_as3935_device_t));
-    if (!esp_as3935_device) {
+    as3935_monitor_context_t *as3935_monitor_context = calloc(1, sizeof(as3935_monitor_context_t));
+    if (!as3935_monitor_context) {
         ESP_LOGE(TAG, "calloc memory for esp_as3935_device_t failed");
         goto err_device;
     }
 
     /* create i2c mutex handle */
-    esp_as3935_device->i2c_mutex_handle = xSemaphoreCreateMutex();
-    if(esp_as3935_device->i2c_mutex_handle == NULL) {
+    as3935_monitor_context->i2c_mutex_handle = xSemaphoreCreateMutex();
+    if(as3935_monitor_context->i2c_mutex_handle == NULL) {
         ESP_LOGE(TAG, "create i2c mutex failed");
         goto err_emutex;
     }
 
     /* copy config to as3935 state object */
-    esp_as3935_device->irq_io_num = as3935_config->irq_io_num;
+    as3935_monitor_context->irq_io_num = as3935_config->irq_io_num;
 
     /* create event loop handle */
     esp_event_loop_args_t loop_args = {
         .queue_size = AS3935_EVENT_LOOP_QUEUE_SIZE,
         .task_name = NULL
     };
-    if (esp_event_loop_create(&loop_args, &esp_as3935_device->event_loop_handle) != ESP_OK) {
+    if (esp_event_loop_create(&loop_args, &as3935_monitor_context->event_loop_handle) != ESP_OK) {
         ESP_LOGE(TAG, "create event loop failed");
         goto err_eloop;
     }
 
     /* create a event queue to handle gpio event from isr */
-    esp_as3935_device->event_queue_handle = xQueueCreate(10, sizeof(uint32_t));
-    if (!esp_as3935_device->event_queue_handle) {
+    as3935_monitor_context->event_queue_handle = xQueueCreate(10, sizeof(uint32_t));
+    if (!as3935_monitor_context->event_queue_handle) {
         ESP_LOGE(TAG, "create event queue handle failed");
         goto err_equeue;
     }
 
     /* create i2c as3935 handle */
-    esp_err_t dev_err = as3935_init(bus_handle, as3935_config, &esp_as3935_device->as3935_handle);
+    esp_err_t dev_err = as3935_init(bus_handle, as3935_config, &as3935_monitor_context->as3935_handle);
     if(dev_err != ESP_OK) {
         ESP_LOGE(TAG, "i2c_bus_device_create as3935 handle initialization failed %s", esp_err_to_name(dev_err));
         goto err_i2c_as3935_init;
@@ -353,9 +353,9 @@ as3935_monitor_handle_t as3935_monitor_init___(i2c_master_bus_handle_t bus_handl
         as3935_monitor_task_entry, 
         AS3935_EVENT_TASK_NAME, 
         AS3935_EVENT_TASK_STACK_SIZE, 
-        esp_as3935_device, 
+        as3935_monitor_context, 
         AS3935_EVENT_TASK_PRIORITY,
-        &esp_as3935_device->task_monitor_handle, 
+        &as3935_monitor_context->task_monitor_handle, 
         APP_CPU_NUM );
     if (err != pdTRUE) {
         ESP_LOGE(TAG, "create as3935 monitor task on CPU(1) failed");
@@ -364,60 +364,60 @@ as3935_monitor_handle_t as3935_monitor_init___(i2c_master_bus_handle_t bus_handl
     
     
     ESP_LOGI(TAG, "as3935 device init OK");
-    return esp_as3935_device;
+    return as3935_monitor_context;
 
     /* error handling */
     err_task_create:
-        vTaskDelete(esp_as3935_device->task_monitor_handle);
+        vTaskDelete(as3935_monitor_context->task_monitor_handle);
     err_i2c_as3935_init:
-        as3935_remove(esp_as3935_device->as3935_handle);
+        as3935_remove(as3935_monitor_context->as3935_handle);
     err_equeue:
-        vQueueDelete(esp_as3935_device->event_queue_handle);
+        vQueueDelete(as3935_monitor_context->event_queue_handle);
     err_eloop:
-        esp_event_loop_delete(esp_as3935_device->event_loop_handle);
+        esp_event_loop_delete(as3935_monitor_context->event_loop_handle);
     err_emutex:
-        vSemaphoreDelete(esp_as3935_device->i2c_mutex_handle);
+        vSemaphoreDelete(as3935_monitor_context->i2c_mutex_handle);
     err_device:
-        free(esp_as3935_device);
+        free(as3935_monitor_context);
         return NULL;
 }
 
 esp_err_t as3935_monitor_deinit(as3935_monitor_handle_t monitor_handle) {
-    esp_as3935_device_t *esp_as3935_device = (esp_as3935_device_t *)monitor_handle;
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)monitor_handle;
 
     /* free-up resources */
-    vTaskDelete(esp_as3935_device->task_monitor_handle);
-    esp_event_loop_delete(esp_as3935_device->event_loop_handle);
-    vQueueDelete(esp_as3935_device->event_queue_handle);
-    vSemaphoreDelete(esp_as3935_device->i2c_mutex_handle);
-    esp_err_t err = as3935_remove(esp_as3935_device->as3935_handle);
-    free(esp_as3935_device);
+    vTaskDelete(as3935_monitor_context->task_monitor_handle);
+    esp_event_loop_delete(as3935_monitor_context->event_loop_handle);
+    vQueueDelete(as3935_monitor_context->event_queue_handle);
+    vSemaphoreDelete(as3935_monitor_context->i2c_mutex_handle);
+    esp_err_t err = as3935_remove(as3935_monitor_context->as3935_handle);
+    free(as3935_monitor_context);
 
     return err;
 }
 
 esp_err_t as3935_monitor_add_handler(as3935_monitor_handle_t monitor_handle, esp_event_handler_t event_handler, void *handler_args) {
-    esp_as3935_device_t *esp_as3935_device = (esp_as3935_device_t *)monitor_handle;
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)monitor_handle;
 
     /* install as3935 monitor gpio isr service */
     gpio_install_isr_service(AS3935_IRQ_FLAG_DEFAULT);
 
     /* hook as3935 monitor isr handler for specific gpio pin and as3935 state object */
-    gpio_isr_handler_add(esp_as3935_device->irq_io_num, as3935_monitor_gpio_isr_handler, (void *)esp_as3935_device);
+    gpio_isr_handler_add(as3935_monitor_context->irq_io_num, as3935_monitor_gpio_isr_handler, (void *)as3935_monitor_context);
 
     /* hook esp event handler for caller */
-    return esp_event_handler_register_with(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, ESP_EVENT_ANY_ID,
+    return esp_event_handler_register_with(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, ESP_EVENT_ANY_ID,
                                            event_handler, handler_args);
 }
 
 esp_err_t as3935_monitor_remove_handler(as3935_monitor_handle_t monitor_handle, esp_event_handler_t event_handler) {
-    esp_as3935_device_t *esp_as3935_device = (esp_as3935_device_t *)monitor_handle;
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)monitor_handle;
 
     /* remove isr handler for gpio number */
-    gpio_isr_handler_remove(esp_as3935_device->irq_io_num);
+    gpio_isr_handler_remove(as3935_monitor_context->irq_io_num);
 
     /* remove esp event handler from caller */
-    return esp_event_handler_unregister_with(esp_as3935_device->event_loop_handle, ESP_AS3935_EVENT, ESP_EVENT_ANY_ID, event_handler);
+    return esp_event_handler_unregister_with(as3935_monitor_context->event_loop_handle, ESP_AS3935_EVENT, ESP_EVENT_ANY_ID, event_handler);
 }
 
 esp_err_t as3935_get_0x00_register(as3935_handle_t handle, as3935_0x00_register_t *const reg) {

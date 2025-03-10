@@ -378,23 +378,23 @@ typedef gpio_isr_t as3935_isr_t;
 /**
  * @brief AS3935 device event object structure.
  */
-typedef struct as3935_device_s {
+typedef struct as3935_monitor_base_s {
     as3935_lightning_distances_t    lightning_distance;
     uint32_t                        lightning_energy; 
-} as3935_device_t;
+} as3935_monitor_base_t;
 
 /**
  * @brief esp AS3935 device state machine structure.
 */
-typedef struct esp_as3935_device_s {
+typedef struct as3935_monitor_context_s {
     uint32_t                irq_io_num;          /*!< as3935 interrupt pin to mcu */
-    as3935_device_t         device;              /*!< as3935 device parent class */     
+    as3935_monitor_base_t   base;                /*!< as3935 device parent class */     
     esp_event_loop_handle_t event_loop_handle;   /*!< as3935 event loop handle */
     QueueHandle_t           event_queue_handle;  /*!< as3935 event queue handle */ 
     TaskHandle_t            task_monitor_handle; /*!< as3935 task monitor handle */ 
     as3935_handle_t         as3935_handle;       /*!< as3935 handle */
     SemaphoreHandle_t       i2c_mutex_handle;    /*!< I2C master bus mutex handle */
-} esp_as3935_device_t;
+} as3935_monitor_context_t;
 
 
 

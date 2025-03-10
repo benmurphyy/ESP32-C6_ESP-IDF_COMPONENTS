@@ -36,7 +36,7 @@ Once a driver instance is instantiated the sensor is ready for usage as shown in
 #include <as3935.h>
 
 static void as3935_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
-    esp_as3935_device_t *esp_as3935_device = (esp_as3935_device_t *)event_data;
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)event_data;
 
     switch (event_id) {
         case AS3935_INT_NOISE:
@@ -47,7 +47,7 @@ static void as3935_event_handler(void *event_handler_arg, esp_event_base_t event
             break;
         case AS3935_INT_LIGHTNING:
             ESP_LOGW(APP_TAG, "as3935 device interrupt was lightning related");
-            ESP_LOGW(APP_TAG, "Lightning distance: %d", esp_as3935_device->device.lightning_distance);
+            ESP_LOGW(APP_TAG, "Lightning distance: %d", as3935_monitor_context->base.lightning_distance);
             break;
         case AS3935_INT_NONE:
             ESP_LOGW(APP_TAG, "as3935 device interrupt was related to nothing");
