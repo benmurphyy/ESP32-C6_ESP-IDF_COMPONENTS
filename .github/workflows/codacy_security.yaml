@@ -24,6 +24,8 @@ jobs:
           # Force 0 exit code to allow SARIF file generation
           # This will hand over control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
+          tools: trivy
+          patterns: '**/*.h,**/*.c' # Add the patterns to be analyzed
       
       # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file

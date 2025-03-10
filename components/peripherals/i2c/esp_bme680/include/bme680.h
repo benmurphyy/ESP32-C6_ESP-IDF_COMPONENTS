@@ -517,6 +517,21 @@ esp_err_t i2c_bme680_remove(i2c_bme680_handle_t bme680_handle);
  */
 esp_err_t i2c_bme680_delete(i2c_bme680_handle_t bme680_handle);
 
+/**
+ * @brief Converts BME680 firmware version numbers (major, minor, patch, build) into a string.
+ * 
+ * @return char* BME680 firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* bme680_get_fw_version(void);
+
+/**
+ * @brief Converts BME680 firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t BME680 firmware version number.
+ */
+int32_t bme680_get_fw_version_number(void);
+
+
 
 #ifdef __cplusplus
 }
