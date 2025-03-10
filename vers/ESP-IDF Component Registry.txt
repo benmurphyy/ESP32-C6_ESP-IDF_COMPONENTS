@@ -98,6 +98,8 @@ pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_
 
 pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals\owb\esp_ds18b20" --owner "k0i05" --type library
 
+pio pkg publish "C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\storage\esp_datalogger" --owner "k0i05" --type library
+
 
 
 

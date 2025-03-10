@@ -1,5 +1,5 @@
 {
-  "name": "esp_datatable",
+  "name": "esp_datalogger",
   "keywords": "esp32, espressif, espidf, datalogger, datatable, storage",
   "description": "ESP32 espressif IoT development framework (esp-idf) compatible datalogger datatable component.",
   "authors": [
