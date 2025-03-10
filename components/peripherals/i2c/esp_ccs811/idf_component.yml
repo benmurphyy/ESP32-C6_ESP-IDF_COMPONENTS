@@ -1,18 +1,27 @@
 version: "0.0.1"
-description: "ESP-IDF CCS811 I2C device driver component."
+description: "ESP32 espressif IoT development framework (esp-idf) compatible component for ScioSense CCS811 digital metal-oxide multi-gas I2C sensor."
 license: "MIT"
 url: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ccs811"
 repository: "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS.git"
 registry_url: "https://components.espressif.com"
 tags:
-  - CCS811
-  - I2C
-  - ESP-IDF
-  - ESP32
+  - volatile
+  - organic
+  - compounds
+  - voc
+  - carbon
+  - dioxide
+  - air
+  - quality
+  - ccs811
+  - sciosense
+  - i2c
+  - espidf
+  - esp32
 dependencies:
   idf: 
     version: ">5.3.0"
-  esp_driver_i2c_ext: 
+  k0i05/esp_driver_i2c_ext:
     version: ">=0.0.1"
     override_path: "../../" # use component in a local directory, not from registry
 maintainers:

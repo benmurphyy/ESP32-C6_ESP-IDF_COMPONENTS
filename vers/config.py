@@ -45,6 +45,7 @@ component_list = [
                   Component(name="esp_bh1750", header_name="bh1750", relative_path="peripherals\\i2c\\esp_bh1750"),
                   Component(name="esp_bmp280", header_name="bmp280", relative_path="peripherals\\i2c\\esp_bmp280"),
                   Component(name="esp_bmp390", header_name="bmp390", relative_path="peripherals\\i2c\\esp_bmp390"),
+                  Component(name="esp_ccs811", header_name="ccs811", relative_path="peripherals\\i2c\\esp_ccs811"),
                   Component(name="esp_ens160", header_name="ens160", relative_path="peripherals\\i2c\\esp_ens160"),
                   Component(name="esp_hdc1080", header_name="hdc1080", relative_path="peripherals\\i2c\\esp_hdc1080"),
                   Component(name="esp_ltr390uv", header_name="ltr390uv", relative_path="peripherals\\i2c\\esp_ltr390uv"),
