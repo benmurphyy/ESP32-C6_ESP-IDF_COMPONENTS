@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define BH1750_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define BH1750_FW_VERSION_PATCH 6
+#define BH1750_FW_VERSION_PATCH 7
 
 
 /**

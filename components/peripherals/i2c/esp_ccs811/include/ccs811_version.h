@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define CCS811_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define CCS811_FW_VERSION_PATCH 0
+#define CCS811_FW_VERSION_PATCH 7
 
 
 /**
