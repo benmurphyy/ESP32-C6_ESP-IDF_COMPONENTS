@@ -41,6 +41,7 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <i2c_master_ext.h>
+#include "bme680_version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -70,12 +71,12 @@ extern "C" {
         .humidity_oversampling      = I2C_BME680_HUMIDITY_OVERSAMPLING_4X }
 
 /*
- * BME680 enumerator and sructure declerations
+ * BME680 enumerator and structure declarations
 */
 
 
 /**
- * @brief BME680 I2C heater set-points enumerator.
+ * @brief BME680 heater set-points enumerator.
  */
 typedef enum {
     I2C_BME680_HEATER_SETPOINT_0  = (0b0000),
@@ -92,7 +93,7 @@ typedef enum {
 
 
 /**
- * @brief BME680 I2C gas wait multipliers enumerator.
+ * @brief BME680 gas wait multipliers enumerator.
  */
 typedef enum {
     I2C_BME680_GAS_WAIT_MULT_1  = (0b00),
@@ -102,7 +103,7 @@ typedef enum {
 } i2c_bme680_gas_wait_multipliers_t;
 
 /**
- * @brief BME680 I2C IIR filters coefficient enumerator.
+ * @brief BME680 IIR filters coefficient enumerator.
  */
 typedef enum {
     I2C_BME680_IIR_FILTER_OFF = (0b000),
@@ -116,7 +117,7 @@ typedef enum {
 } i2c_bme680_iir_filters_t;
 
 /**
- * @brief BME680 I2C power modes enumerator.
+ * @brief BME680 power modes enumerator.
  */
 typedef enum {
     I2C_BME680_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
@@ -124,7 +125,7 @@ typedef enum {
 } i2c_bme680_power_modes_t;
 
 /**
- * @brief BME680 I2C pressure oversampling enumerator.
+ * @brief BME680 pressure oversampling enumerator.
  */
 typedef enum {
     I2C_BME680_PRESSURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
@@ -136,7 +137,7 @@ typedef enum {
 } i2c_bme680_pressure_oversampling_t;
 
 /**
- * @brief BME680 I2C temperature oversampling enumerator.
+ * @brief BME680 temperature oversampling enumerator.
  */
 typedef enum {
     I2C_BME680_TEMPERATURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
@@ -148,7 +149,7 @@ typedef enum {
 } i2c_bme680_temperature_oversampling_t;
 
 /**
- * @brief BME680 I2C humidity oversampling enumerator.
+ * @brief BME680 humidity oversampling enumerator.
  */
 typedef enum {
     I2C_BME680_HUMIDITY_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
@@ -160,7 +161,7 @@ typedef enum {
 } i2c_bme680_humidity_oversampling_t;
 
 /**
- * @brief BME680 I2C status 0 register (0x1d) structure.  The reset state is 0x00 for this register.
+ * @brief BME680 status 0 register (0x1d) structure.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) {
     struct {
@@ -174,7 +175,7 @@ typedef union __attribute__((packed)) {
 } i2c_bme680_status0_register_t;
 
 /**
- * @brief BME680 I2C control measurement register (0x74) structure.  The reset state is 0x00 for this register.
+ * @brief BME680 control measurement register (0x74) structure.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) {
     struct {
@@ -186,7 +187,7 @@ typedef union __attribute__((packed)) {
 } i2c_bme680_control_measurement_register_t;
 
 /**
- * @brief BME680 I2C control measurement register (0x72) structure.  The reset state is 0x00 for this register.
+ * @brief BME680 control measurement register (0x72) structure.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) {
     struct {
@@ -199,7 +200,7 @@ typedef union __attribute__((packed)) {
 } i2c_bme680_control_humidity_register_t;
 
 /**
- * @brief BME680 I2C control gas 0 register (0x71) structure.  The reset state is 0x00 for this register.
+ * @brief BME680 control gas 0 register (0x71) structure.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) {
     struct {
@@ -211,7 +212,7 @@ typedef union __attribute__((packed)) {
 } i2c_bme680_control_gas0_register_t;
 
 /**
- * @brief BME680 I2C control gas 1 register (0x70) structure.  The reset state is 0x00 for this register.
+ * @brief BME680 control gas 1 register (0x70) structure.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) {
     struct {
@@ -223,7 +224,7 @@ typedef union __attribute__((packed)) {
 } i2c_bme680_control_gas1_register_t;
 
 /**
- * @brief BME680 I2C configuration register (0x75) structure.  The reset state is 0x00 for this register.
+ * @brief BME680 configuration register (0x75) structure.  The reset state is 0x00 for this register.
  */
 typedef union __attribute__((packed)) {
     struct {
@@ -277,7 +278,7 @@ typedef struct {
 } i2c_bme680_cal_factors_t;
 
 /**
- * @brief BME680 I2C device configuration structure.
+ * @brief BME680 device configuration structure.
  */
 typedef struct {
     i2c_device_config_t                         dev_config;                 /*!< I2C configuration for bmp280 device */
@@ -296,7 +297,7 @@ typedef struct {
 } i2c_bme680_config_t;
 
 /**
- * @brief BME680 I2C device structure.
+ * @brief BME680 device structure.
  */
 struct i2c_bme680_t {
     i2c_master_dev_handle_t                     i2c_dev_handle;     /*!< I2C device handle */
@@ -312,19 +313,19 @@ struct i2c_bme680_t {
 };
 
 /**
- * @brief BME680 I2C device definition.
+ * @brief BME680 device definition.
  */
 typedef struct i2c_bme680_t i2c_bme680_t;
 
 /**
- * @brief BME680 I2C device handle definition.
+ * @brief BME680 device handle definition.
  */
 typedef struct i2c_bme680_t *i2c_bme680_handle_t;
 
 
 
 /**
- * @brief Reads chip indentification register from BME680.
+ * @brief Reads chip identification register from BME680.
  * 
  * @param[in] bme680_handle BME680 device handle.
  * @return esp_err_t ESP_OK on success.
