@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "bme680.h"
+#include "include/bme680.h"
 #include <string.h>
 #include <stdio.h>
 #include <sdkconfig.h>

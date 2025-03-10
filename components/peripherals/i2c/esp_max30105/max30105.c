@@ -32,7 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
-#include "max30105.h"
+#include "include/max30105.h"
 #include <string.h>
 #include <stdio.h>
 #include <math.h>

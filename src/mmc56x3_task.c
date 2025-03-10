@@ -40,11 +40,11 @@ void i2c0_mmc56x3_task( void *pvParameters ) {
     TickType_t         last_wake_time  = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_mmc56x3_config_t dev_cfg       = I2C_MMC56X3_CONFIG_DEFAULT;
-    i2c_mmc56x3_handle_t dev_hdl;
+    mmc56x3_config_t dev_cfg       = I2C_MMC56X3_CONFIG_DEFAULT;
+    mmc56x3_handle_t dev_hdl;
     //
     // init device
-    i2c_mmc56x3_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    mmc56x3_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "mmc56x3 handle init failed");
         assert(dev_hdl);
@@ -56,16 +56,16 @@ void i2c0_mmc56x3_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## MMC56X3 - START #########################");
         //
         // handle sensor
-        i2c_mmc56x3_magnetic_axes_data_t magnetic_axes;
-        esp_err_t result = i2c_mmc56x3_get_magnetic_axes(dev_hdl, &magnetic_axes);
+        mmc56x3_magnetic_axes_data_t magnetic_axes;
+        esp_err_t result = mmc56x3_get_magnetic_axes(dev_hdl, &magnetic_axes);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "mmc56x3 device read failed (%s)", esp_err_to_name(result));
         } else {
             ESP_LOGI(APP_TAG, "Compass X-Axis:  %f mG", magnetic_axes.x_axis);
             ESP_LOGI(APP_TAG, "Compass Y-Axis:  %f mG", magnetic_axes.y_axis);
             ESP_LOGI(APP_TAG, "Compass Z-Axis:  %f mG", magnetic_axes.z_axis);
-            ESP_LOGI(APP_TAG, "Compass Heading: %f °", i2c_mmc56x3_convert_to_heading(magnetic_axes));
-            ESP_LOGI(APP_TAG, "True Heading:    %f °", i2c_mmc56x3_convert_to_true_heading(dev_hdl->declination, magnetic_axes));
+            ESP_LOGI(APP_TAG, "Compass Heading: %f °", mmc56x3_convert_to_heading(magnetic_axes));
+            ESP_LOGI(APP_TAG, "True Heading:    %f °", mmc56x3_convert_to_true_heading(dev_hdl->dev_config.declination, magnetic_axes));
         }
         //
         ESP_LOGI(APP_TAG, "######################## MMC56X3 - END ###########################");
@@ -76,6 +76,6 @@ void i2c0_mmc56x3_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_mmc56x3_delete( dev_hdl );
+    mmc56x3_delete( dev_hdl );
     vTaskDelete( NULL );
 }
