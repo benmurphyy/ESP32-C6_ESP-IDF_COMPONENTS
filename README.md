@@ -9,7 +9,7 @@
 
 Thanks for visiting and hope you find something useful.  The code base is maintained as well as one person can manage in their spare time. The development environment is under Visual Studio Code with the PlatformIO (6.1.17) and ESP-IDF (v5.4.0) extensions.  There is always room for improvement to optimize the code base and open to suggestions.
 
-# ESP32-S3 Components
+## ESP32-S3 Components
 
 PlatformIO components with examples for the ESP32-S3 chipset.  This is a revised release utilizing esp-idf suggested design patterns through `handles` and using `i2c_master.h` for I2C transactions.  The drivers are organized in the components folder within the Visual Studio Code and PlatformIO environment.
 
@@ -85,7 +85,7 @@ void app_main( void ) {
 
 Once these initial steps are done, compile and upload the program, assuming your development board is equivalent to the `esp32s3box`.  Otherwise, you will have to configure the environment for your development board and recompile before uploading the program.
 
-# ESP Peripheral Components (ADC, I2C, OWB, SPI)
+## ESP Peripheral Components (ADC, I2C, OWB, SPI)
 
 The ESP peripheral components accommodate ADC, I2C, OWB, and SPI device interfacing supported by various device manufacturers.
 
@@ -119,7 +119,7 @@ Supported drivers include the following device peripherals:
 
 The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and the above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 
-# ESP Utilities Components
+## ESP Utilities Components
 
 The ESP Utilities components are generally used in conjunction with peripheral components for data processing.
 
@@ -133,11 +133,11 @@ Supported components include the following:
 
 See the Sensirion SGP4X example on how the gas index algorithm is utilized with this sensor.
 
-# ESP Schedule Components
+## ESP Schedule Components
 
 The ESP `time-into-interval` component synchronizes a FreeRTOS task with the system clock and user-defined time interval for temporal conditional scenarios.
 
-# ESP Storage Components (WORK IN PROGRESS)
+## ESP Storage Components (WORK IN PROGRESS)
 
 The ESP storage components can be used for use-cases that require volatile and/or non-volatile storage.
 
