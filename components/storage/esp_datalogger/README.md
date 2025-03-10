@@ -1,10 +1,11 @@
+# ESP Data-Logger Component
+
 [![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
 [![Edited with VS Code](https://badgen.net/badge/icon/VS%20Code?icon=visualstudio&label=edited%20with)](https://visualstudio.microsoft.com)
 [![Build with PlatformIO](https://img.shields.io/badge/build%20with-PlatformIO-orange?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMjUwMCIgaGVpZ2h0PSIyNTAwIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCI+PHBhdGggZD0iTTEyOCAwQzkzLjgxIDAgNjEuNjY2IDEzLjMxNCAzNy40OSAzNy40OSAxMy4zMTQgNjEuNjY2IDAgOTMuODEgMCAxMjhjMCAzNC4xOSAxMy4zMTQgNjYuMzM0IDM3LjQ5IDkwLjUxQzYxLjY2NiAyNDIuNjg2IDkzLjgxIDI1NiAxMjggMjU2YzM0LjE5IDAgNjYuMzM0LTEzLjMxNCA5MC41MS0zNy40OUMyNDIuNjg2IDE5NC4zMzQgMjU2IDE2Mi4xOSAyNTYgMTI4YzAtMzQuMTktMTMuMzE0LTY2LjMzNC0zNy40OS05MC41MUMxOTQuMzM0IDEzLjMxNCAxNjIuMTkgMCAxMjggMCIgZmlsbD0iI0ZGN0YwMCIvPjxwYXRoIGQ9Ik0yNDkuMzg2IDEyOGMwIDY3LjA0LTU0LjM0NyAxMjEuMzg2LTEyMS4zODYgMTIxLjM4NkM2MC45NiAyNDkuMzg2IDYuNjEzIDE5NS4wNCA2LjYxMyAxMjggNi42MTMgNjAuOTYgNjAuOTYgNi42MTQgMTI4IDYuNjE0YzY3LjA0IDAgMTIxLjM4NiA1NC4zNDYgMTIxLjM4NiAxMjEuMzg2IiBmaWxsPSIjRkZGIi8+PHBhdGggZD0iTTE2MC44NjkgNzQuMDYybDUuMTQ1LTE4LjUzN2M1LjI2NC0uNDcgOS4zOTItNC44ODYgOS4zOTItMTAuMjczIDAtNS43LTQuNjItMTAuMzItMTAuMzItMTAuMzJzLTEwLjMyIDQuNjItMTAuMzIgMTAuMzJjMCAzLjc1NSAyLjAxMyA3LjAzIDUuMDEgOC44MzdsLTUuMDUgMTguMTk1Yy0xNC40MzctMy42Ny0yNi42MjUtMy4zOS0yNi42MjUtMy4zOWwtMi4yNTggMS4wMXYxNDAuODcybDIuMjU4Ljc1M2MxMy42MTQgMCA3My4xNzctNDEuMTMzIDczLjMyMy04NS4yNyAwLTMxLjYyNC0yMS4wMjMtNDUuODI1LTQwLjU1NS01Mi4xOTd6TTE0Ni41MyAxNjQuOGMtMTEuNjE3LTE4LjU1Ny02LjcwNi02MS43NTEgMjMuNjQzLTY3LjkyNSA4LjMyLTEuMzMzIDE4LjUwOSA0LjEzNCAyMS41MSAxNi4yNzkgNy41ODIgMjUuNzY2LTM3LjAxNSA2MS44NDUtNDUuMTUzIDUxLjY0NnptMTguMjE2LTM5Ljc1MmE5LjM5OSA5LjM5OSAwIDAgMC05LjM5OSA5LjM5OSA5LjM5OSA5LjM5OSAwIDAgMCA5LjQgOS4zOTkgOS4zOTkgOS4zOTkgMCAwIDAgOS4zOTgtOS40IDkuMzk5IDkuMzk5IDAgMCAwLTkuMzk5LTkuMzk4em0yLjgxIDguNjcyYTIuMzc0IDIuMzc0IDAgMSAxIDAtNC43NDkgMi4zNzQgMi4zNzQgMCAwIDEgMCA0Ljc0OXoiIGZpbGw9IiNFNTcyMDAiLz48cGF0aCBkPSJNMTAxLjM3MSA3Mi43MDlsLTUuMDIzLTE4LjkwMWMyLjg3NC0xLjgzMiA0Ljc4Ni01LjA0IDQuNzg2LTguNzAxIDAtNS43LTQuNjItMTAuMzItMTAuMzItMTAuMzItNS42OTkgMC0xMC4zMTkgNC42Mi0xMC4zMTkgMTAuMzIgMCA1LjY4MiA0LjU5MiAxMC4yODkgMTAuMjY3IDEwLjMxN0w5NS44IDc0LjM3OGMtMTkuNjA5IDYuNTEtNDAuODg1IDIwLjc0Mi00MC44ODUgNTEuODguNDM2IDQ1LjAxIDU5LjU3MiA4NS4yNjcgNzMuMTg2IDg1LjI2N1Y2OC44OTJzLTEyLjI1Mi0uMDYyLTI2LjcyOSAzLjgxN3ptMTAuMzk1IDkyLjA5Yy04LjEzOCAxMC4yLTUyLjczNS0yNS44OC00NS4xNTQtNTEuNjQ1IDMuMDAyLTEyLjE0NSAxMy4xOS0xNy42MTIgMjEuNTExLTE2LjI4IDMwLjM1IDYuMTc1IDM1LjI2IDQ5LjM2OSAyMy42NDMgNjcuOTI2em0tMTguODItMzkuNDZhOS4zOTkgOS4zOTkgMCAwIDAtOS4zOTkgOS4zOTggOS4zOTkgOS4zOTkgMCAwIDAgOS40IDkuNCA5LjM5OSA5LjM5OSAwIDAgMCA5LjM5OC05LjQgOS4zOTkgOS4zOTkgMCAwIDAtOS4zOTktOS4zOTl6bS0yLjgxIDguNjcxYTIuMzc0IDIuMzc0IDAgMSAxIDAtNC43NDggMi4zNzQgMi4zNzQgMCAwIDEgMCA0Ljc0OHoiIGZpbGw9IiNGRjdGMDAiLz48L3N2Zz4=)](https://platformio.org/)
-[![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_datatable/badge.svg)](https://components.espressif.com/components/k0i05/esp_datatable)
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_datatable.svg)](https://registry.platformio.org/libraries/k0i05/esp_datatable)
+[![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_datatable/badge.svg)](https://components.espressif.com/components/k0i05/esp_datatable)
 
-# ESP Data-Logger Component
 The ESP data-logger component simplifies in-situ data processing and recording for measurement and control use-cases.  The ESP data-logger component integrates with FreeRTOS and synchronizes tasks with the system clock for temporal based task execution with a typical resolution of approximately +/- 50 micro-seconds.  If you have applied experience (i.e. systems design, systems integrations, instrumentation, etc.) with commercial measurement and control products for use-cases that require on-board real-time analytics for in-situ processing, then you are most likely familiar with the terms used in the ESP data-logger component and know how it can be applied.
 
 The ESP data-logger component includes the following common helper components:
@@ -17,12 +18,14 @@ The working example included was developed in Visual Studio Code and requires an
 > Please keep in mind that this is still under development but if you have any suggestions or would like to contribute please contact me.
 
 ## Repository
-The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/storage/esp_datalogger
+
+The component is hosted on github and is located here: <https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/storage/esp_datalogger>
 
 ## General Usage
+
 To get started, simply copy the component to your project's `components` folder and reference the `datatable.h` header file as an include.
 
-```
+```text
 components
 └── esp_datatable
     ├── CMakeLists.txt
@@ -35,10 +38,12 @@ components
     │   └── datatable.h
     └── datatable.c
 ```
+
 ## Data-Table Example
+
 Declare the data-table's handle, data-table configuration, and column indexes for columns that will be added.  A data-table will have one task-schedule handle declared for sampling purposes and one time-into-interval handle declared for processing purpose and referenced internally to manage temporal based sampling and processing within the data-table.
 
-```
+```c
 // data-table variables for the example
 static datatable_handle_t       dt_1min_hdl;          /* example data-table handle */
 static datatable_config_t       dt_1min_cfg = {       /* example data-table configuration */
@@ -67,12 +72,10 @@ static uint8_t              dt_1min_td_avg_col_index;     /* data-table average 
 The textual name of the data-table cannot exceed 15-characters, a data-table can have a maximum of 255 columns and a maximum of 65535 rows, size of columns and rows must be larger than 0.  The data-table sampling interval must be smaller than the data-table processing interval.  For this example, the data-table data storage type is configured to ring memory, first-in-first-out (FIFO), which will pop the oldest record in the data-table for the next record when the data-table becomes full.
 
 > In this case, the data-table sampling task will execute once every 10-seconds with 0-seconds into the interval (i.e. 12:00:00, 12:00:10, 12:00:20, etc.), and the data-table will process samples in the data-table column data buffer once every minute.  
-
 > The example averages, and determines the minimum and maximum, from the samples in data-table column data buffer over a one minute period.
-
 > The first column added to the data-table will return an index of 2 because the record identifier and timestamp columns are automatically added when the data-table is created.
 
-```
+```c
 // create a new data-table handle for the example
 datatable_new(&dt_1min_cfg, &dt_1min_hdl);   
 if (dt_1min_hdl == NULL) {
@@ -98,7 +101,7 @@ The task execution time is accounted for in the data-table sampling task delay s
 
 The final step is to push samples into the data-table's data buffer stack, process the samples, and store the record.  In this example, i.e. 10-second sampling and a 1-min storage interval is configured, a total of 6 samples must be pushed onto the data-table's buffer stack for a processing period to be valid.  Otherwise, the data-table's data buffer stack is purged, record is skipped, and the next sampling period will restart based on the data-table's configured processing interval.
 
-```
+```c
 static void dt_1min_smp_task( void *pvParameters ) {
     for ( ;; ) {
         /* delay data-table sampling task until sampling interval has elapsed */
@@ -124,7 +127,7 @@ static void dt_1min_smp_task( void *pvParameters ) {
 
 The data-table records can be extracted by row index or the entire data-table can be rendered to json format.  
 
-```
+```c
 // print data-table as a string in json format
 //
 // create root object for data-table
@@ -138,8 +141,10 @@ ESP_LOGI(APP_TAG, "JSON Data-Table:\n%s",dt_1min_json_str);
 cJSON_free(dt_1min_json_str);
 cJSON_Delete(dt_1min_json);
 ```
+
 Sample data-table in json format:
-```
+
+```c
 {
         "name": "1min_tbl",
         "process-interval":     "minute",
@@ -148,21 +153,22 @@ Sample data-table in json format:
         "types":        ["id", "ts", "float", "float", "float", "float", "int16", "float", "float", "float"],
         "processes":    ["sample", "sample", "average", "average", "minimum", "maximum", "average", "average", "average", "average"],
         "rows": [
-		[1, 61684380120, 1001.3500366210938, 22.350000381469727, 22.340000152587891, 22.360000610351562, 51, 20.350000381469727, 210, 1.4500000476837158], 
-		[2, 61684380180, 1001.3533325195312, 22.35333251953125, 22.340000152587891, 22.360000610351562, 53, 20.353334426879883, 210, 1.4500000476837158], 
-		[3, 61684380240, 1001.3583374023438, 22.358335494995117, 22.350000381469727, 22.3700008392334, 55, 20.358333587646484, 210, 1.4500000476837158], 
-		[4, 61684380300, 1001.3417358398438, 22.341667175292969, 22.329999923706055, 22.350000381469727, 57, 20.341667175292969, 210, 1.4500000476837158]]
+        [1, 61684380120, 1001.3500366210938, 22.350000381469727, 22.340000152587891, 22.360000610351562, 51, 20.350000381469727, 210, 1.4500000476837158], 
+        [2, 61684380180, 1001.3533325195312, 22.35333251953125, 22.340000152587891, 22.360000610351562, 53, 20.353334426879883, 210, 1.4500000476837158], 
+        [3, 61684380240, 1001.3583374023438, 22.358335494995117, 22.350000381469727, 22.3700008392334, 55, 20.358333587646484, 210, 1.4500000476837158], 
+        [4, 61684380300, 1001.3417358398438, 22.341667175292969, 22.329999923706055, 22.350000381469727, 57, 20.341667175292969, 210, 1.4500000476837158]]
 }
 ```
 
 See data-table component and review documentation on features implemented to date.
 
 ## Time-Into-Interval Example
+
 Let's extend the **Data-Table Example**, declare a time-into-interval handle within the data-table sampling task sub-routine, and create a time-into-interval instance.  The time-into-interval instance interval is every 5-minutes with 0-minutes into the interval.
 
 The next step is declaring a conditional statement leveraging the `time_into_interval` function.  This function returns true when the configured interval condition is valid, otherwise, it returns false.  In this example, the time-into-interval function will output the data-table in json format every 5-minutes with a 10-second offset into the interval (i.e. 12:00:10, 12:05:10, 12:10:10, etc.).
 
-```
+```c
 static void dt_1min_smp_task( void *pvParameters ) {
     time_into_interval_handle_t dt_1min_tii_5min_hdl;
     time_into_interval_config_t dt_1min_tii_5min_cfg = {
@@ -218,6 +224,5 @@ static void dt_1min_smp_task( void *pvParameters ) {
 
 You can declare as many time-into-interval handles as needed, or as memory permits, to sychronize real-time events with the system clock.  See time-into-interval component and review documentation on features implemented to date.
 
+Copyright (c) 2024 Eric Gionet (<gionet.c.eric@gmail.com>)
 
-
-Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
