@@ -377,9 +377,9 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_MPU6050);
     //i2c0_component_example_start(I2C_COMPONENT_SGP4X);
     //i2c0_component_example_start(I2C_COMPONENT_SHT4X);
-    i2c0_component_example_start(I2C_COMPONENT_SSD1306);
+    //i2c0_component_example_start(I2C_COMPONENT_SSD1306);
     //i2c0_component_example_start(I2C_COMPONENT_TLV493D);
-    //i2c0_component_example_start(I2C_COMPONENT_VEML6040);
+    i2c0_component_example_start(I2C_COMPONENT_VEML6040);
     //i2c0_component_example_start(I2C_COMPONENT_VEML7700);
 
     //owb0_component_example_start(OWB_COMPONENT_DS18B20);
