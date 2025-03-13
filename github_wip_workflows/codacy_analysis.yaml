@@ -2,8 +2,6 @@ name: Codacy Analysis CLI
 
 on: ["push"]
 
-permissions: write-all
-
 jobs:
   codacy-analysis-cli:
     name: Codacy Analysis CLI
