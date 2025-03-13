@@ -76,7 +76,7 @@ void i2c0_sgp4x_task( void *pvParameters ) {
             }
             dev_self_tested = true;
         }
-        // 
+        /* conditioning validation */
         if(dev_conditioned == false) {
             for(int i = 0; i < 10; i++) {
                 uint16_t sraw_voc; 

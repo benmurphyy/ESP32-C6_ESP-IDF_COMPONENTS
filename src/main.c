@@ -255,66 +255,87 @@ static inline void i2c0_component_example_start(const i2c_components_t component
      */
     switch(component) {
         case I2C_COMPONENT_AHTXX:
+            /* starts ahtxx task */
             i2c0_task_create(i2c0_ahtxx_task, I2C0_AHTXX_TASK_NAME);
             break;
         case I2C_COMPONENT_AK8975:
+            /* starts ak8975 task */
             i2c0_task_create(i2c0_ak8975_task, I2C0_AK8975_TASK_NAME);
             break;
         case I2C_COMPONENT_AS7341:
+            /* starts as7341 task */
             i2c0_task_create(i2c0_as7341_task, I2C0_AS7341_TASK_NAME);
             break;
         case I2C_COMPONENT_AS3935:
+            /* starts as3935 task */
             i2c0_task_create(i2c0_as3935_task, I2C0_AS3935_TASK_NAME);
             break;
         case I2C_COMPONENT_BH1750:
+            /* starts bh1750 task */
             i2c0_task_create(i2c0_bh1750_task, I2C0_BH1750_TASK_NAME);
             break;
         case I2C_COMPONENT_BMP280:
+            /* starts bmp280 task */
             i2c0_task_create(i2c0_bmp280_task, I2C0_BMP280_TASK_NAME);
             break;
         case I2C_COMPONENT_BMP390:
+            /* starts bmp390 task */
             i2c0_task_create(i2c0_bmp390_task, I2C0_BMP390_TASK_NAME);
             break;
         case I2C_COMPONENT_CCS811:
+            /* starts ccs811 task */
             i2c0_task_create(i2c0_ccs811_task, I2C0_CCS811_TASK_NAME);
             break;
         case I2C_COMPONENT_ENS160:
+            /* starts ens160 task */
             i2c0_task_create(i2c0_ens160_task, I2C0_ENS160_TASK_NAME);
             break;
         case I2C_COMPONENT_HDC1080:
+            /* starts hdc1080 task */
             i2c0_task_create(i2c0_hdc1080_task, I2C0_HDC1080_TASK_NAME);
             break;
         case I2C_COMPONENT_HMC5883L:
+            /* starts hmc5883l task */
             i2c0_task_create(i2c0_hmc5883l_task, I2C0_HMC5883L_TASK_NAME);
             break;
         case I2C_COMPONENT_LTR390UV:
+            /* starts ltr390uv task */
             i2c0_task_create(i2c0_ltr390uv_task, I2C0_LTR390UV_TASK_NAME);
             break;
         case I2C_COMPONENT_MLX90614:
+            /* starts mlx90614 task */
             i2c0_task_create(i2c0_mlx90614_task, I2C0_MLX90614_TASK_NAME);
             break;
         case I2C_COMPONENT_MMC56X3:
+            /* starts mmc56x3 task */
             i2c0_task_create(i2c0_mmc56x3_task, I2C0_MMC56X3_TASK_NAME);
             break;
         case I2C_COMPONENT_MPU6050:
+            /* starts mpu6050 task */
             i2c0_task_create(i2c0_mpu6050_task, I2C0_MPU6050_TASK_NAME);
             break;
         case I2C_COMPONENT_SGP4X:
+            /* starts sgp4x task */
             i2c0_task_create(i2c0_sgp4x_task, I2C0_SGP4X_TASK_NAME);
             break;
         case I2C_COMPONENT_SHT4X:
+            /* starts sht4x task */
             i2c0_task_create(i2c0_sht4x_task, I2C0_SHT4X_TASK_NAME);
             break;
         case I2C_COMPONENT_SSD1306:
+            /* starts ssd1306 task */
             i2c0_task_create(i2c0_ssd1306_task, I2C0_SSD1306_TASK_NAME);
             break;
         case I2C_COMPONENT_TLV493D:
+            /* starts tlv493d task */
             i2c0_task_create(i2c0_tlv493d_task, I2C0_TLV493D_TASK_NAME);
             break;
         case I2C_COMPONENT_VEML6040:
+            /* starts veml6040 task */
             i2c0_task_create(i2c0_veml6040_task, I2C0_VEML6040_TASK_NAME);
             break;
         case I2C_COMPONENT_VEML7700:
+            /* starts veml7700 task */
             i2c0_task_create(i2c0_veml7700_task, I2C0_VEML7700_TASK_NAME);
             break;
     }
