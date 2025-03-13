@@ -69,7 +69,7 @@ uint32_t get_uint32_chip_id(void) {
 uint64_t get_uint64_chip_id(void) {
     uint64_t chipid = 0LL;
     for (int i = 0; i < 63; i = i + 8) {
-        chipid |= ((get_efuse_mac() >> (64 - i)) & 0xff) << i;
+        chipid |= ((get_efuse_mac() >> (56 - i)) & 0xff) << i;
     }
     return chipid;
 }
