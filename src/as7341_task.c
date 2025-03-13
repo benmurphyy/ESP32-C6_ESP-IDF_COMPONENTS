@@ -52,9 +52,9 @@ void i2c0_as7341_task( void *pvParameters ) {
         ESP_LOGE(APP_TAG, "as7341 handle init failed");
         assert(dev_hdl);
     }
-    //
+    
     //as7341_disable_led(dev_hdl);
-    //
+    
     // task loop entry point
     for ( ;; ) {
         ESP_LOGI(APP_TAG, "######################## AS7341 - START #########################");
@@ -106,6 +106,7 @@ void i2c0_as7341_task( void *pvParameters ) {
                 if(result != ESP_OK) {
                     ESP_LOGE(APP_TAG, "flicker detection failed (%s)", esp_err_to_name(result));
                 } else {
+                    /* handle flicker state */
                     switch(flicker_state) {
                         case AS7341_FLICKER_DETECTION_INVALID:
                             ESP_LOGW(APP_TAG, "Flicker Detection: Invalid");
