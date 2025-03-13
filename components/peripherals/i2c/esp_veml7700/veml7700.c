@@ -375,9 +375,9 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle) {
             /* validate als between 100 and 65535 count */
             if(als_counts > 10000) {
                 /* validate index is within range */
-                if(it_index > -1) {
+                if(--it_index > -1) {
                     /* decrease integration time */
-                    ESP_RETURN_ON_ERROR(veml7700_set_integration_time(handle, veml7700_integration_times[--it_index]), TAG, "write integration time failed" );
+                    ESP_RETURN_ON_ERROR(veml7700_set_integration_time(handle, veml7700_integration_times[it_index]), TAG, "write integration time failed" );
                 }
 
                 /* validate als counts if integration time is I2C_VEML7700_INTEGRATION_TIME_25MS */
