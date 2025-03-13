@@ -338,10 +338,138 @@ esp_err_t ccs811_start_application(ccs811_handle_t handle) {
     return ESP_OK;
 }
 
-esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t *ccs811_config, ccs811_handle_t *ccs811_handle) {
-    gpio_config_t       io_conf         = {};
-    uint64_t            gpio_pin_sel;
+/**
+ * @brief Initializes CCS811 wake and reset GPIO.
+ * 
+ * @param handle 
+ * @return esp_err_t 
+ */
+static inline esp_err_t ccs811_init_io(ccs811_handle_t handle) {
+    gpio_config_t io_conf = {};
+    uint64_t      gpio_pin_sel;
 
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* validate and init gpio for reset and/or wake pins */
+    if(handle->dev_config.reset_io_enabled == true && handle->dev_config.wake_io_enabled == true) {
+        // validate reset io num
+        ESP_RETURN_ON_ERROR(GPIO_IS_VALID_GPIO(handle->dev_config.reset_io_num), TAG, "reset gpio number is invalid, ccs811 device handle initialization failed");
+        // validate wake io num
+        ESP_RETURN_ON_ERROR(GPIO_IS_VALID_GPIO(handle->dev_config.wake_io_num), TAG, "wake gpio number is invalid, ccs811 device handle initialization failed");
+        // set gpio pin bit mask
+        gpio_pin_sel = ((1ULL<<handle->dev_config.reset_io_num) | (1ULL<<handle->dev_config.wake_io_num));
+        // interrupt disabled
+        io_conf.intr_type = GPIO_INTR_DISABLE; 
+        // bit mask of the pins
+        io_conf.pin_bit_mask = gpio_pin_sel;
+        // set as output mode
+        io_conf.mode = GPIO_MODE_OUTPUT;
+        // disable pull-down mode
+        io_conf.pull_down_en = 0;
+        // enable pull-up mode
+        io_conf.pull_up_en = 1; 
+        // configure gpio with the given settings
+        ESP_RETURN_ON_ERROR( gpio_config(&io_conf), TAG, "set gpio configuration for reset and wake failed" );
+    } else if(handle->dev_config.reset_io_enabled == true && handle->dev_config.wake_io_enabled == false) {
+        // validate reset io num
+        ESP_RETURN_ON_ERROR(GPIO_IS_VALID_GPIO(handle->dev_config.reset_io_num),  TAG, "reset gpio number is invalid, ccs811 device handle initialization failed");
+        // set gpio pin bit mask
+        gpio_pin_sel = (1ULL<<handle->dev_config.reset_io_num);
+        // interrupt disabled
+        io_conf.intr_type = GPIO_INTR_DISABLE; 
+        // bit mask of the pins
+        io_conf.pin_bit_mask = gpio_pin_sel;
+        // set as output mode
+        io_conf.mode = GPIO_MODE_OUTPUT;
+        // disable pull-down mode
+        io_conf.pull_down_en = 0;
+        // enable pull-up mode
+        io_conf.pull_up_en = 1; 
+        // configure gpio with the given settings
+        ESP_RETURN_ON_ERROR( gpio_config(&io_conf), TAG, "set gpio configuration for reset failed" );
+    } else if(handle->dev_config.reset_io_enabled == false && handle->dev_config.wake_io_enabled == true) {
+        // validate wake io num
+        ESP_RETURN_ON_ERROR(GPIO_IS_VALID_GPIO(handle->dev_config.wake_io_num), TAG, "wake gpio number is invalid, ccs811 device handle initialization failed");
+        // set gpio pin bit mask
+        gpio_pin_sel = (1ULL<<handle->dev_config.wake_io_num);
+        // interrupt disabled
+        io_conf.intr_type = GPIO_INTR_DISABLE;
+        // bit mask of the pins
+        io_conf.pin_bit_mask = gpio_pin_sel;
+        // set as output mode
+        io_conf.mode = GPIO_MODE_OUTPUT;
+        // disable pull-down mode
+        io_conf.pull_down_en = 0;
+        // enable pull-up mode 
+        io_conf.pull_up_en = 1;
+        // configure gpio with the given settings
+        ESP_RETURN_ON_ERROR( gpio_config(&io_conf), TAG, "set gpio configuration for wake failed" );
+    }
+
+    /* validate reset gpio to set io state */
+    if(handle->dev_config.reset_io_enabled == true) {
+        /* active low for reset gpio */
+        ESP_RETURN_ON_ERROR( gpio_set_level(handle->dev_config.reset_io_num, 1), TAG, "set reset gpio level high failed (gpio: %i)", handle->dev_config.reset_io_num );
+    }
+
+    /* validate wake gpio to wake the device for i2c transactions */
+    if(handle->dev_config.wake_io_enabled == true) {
+        /* active low for wake gpio */
+        ESP_RETURN_ON_ERROR( gpio_set_level(handle->dev_config.wake_io_num, 0), TAG, "set wake gpio level low failed (gpio: %i)", handle->dev_config.wake_io_num );
+    }
+
+    return ESP_OK;
+}
+
+static inline esp_err_t ccs811_setup(ccs811_handle_t handle) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read status register */
+    ccs811_status_register_t status_reg;
+    ESP_RETURN_ON_ERROR(ccs811_get_status_register(handle, &status_reg), TAG, "read status register failed");
+
+    /* validate application firmware mode */
+    if(status_reg.bits.firmware_mode != CCS811_FW_MODE_APP) {
+        /* validate bootloader mode */
+        ESP_RETURN_ON_FALSE(status_reg.bits.app_valid, ESP_ERR_INVALID_STATE, TAG, "no valid application for i2c ccs811 device");
+
+        /* attempt tp switch to application mode - start application */
+        ESP_RETURN_ON_ERROR(ccs811_start_application(handle), TAG, "application start failed");
+
+        /* delay task before next i2c transaction */
+        vTaskDelay(pdMS_TO_TICKS(CCS811_RESET_DELAY_MS));
+
+        /* attempt to read status register */
+        ESP_RETURN_ON_ERROR(ccs811_get_status_register(handle, &status_reg), TAG, "read status register failed");
+
+        /* validate application firmware mode switch */
+        ESP_RETURN_ON_FALSE(status_reg.bits.firmware_mode == CCS811_FW_MODE_APP, ESP_ERR_INVALID_STATE, TAG, "unable to start application for i2c ccs811 device");
+    }
+
+    /* attempt to read hardware identifier */
+    ESP_RETURN_ON_ERROR(ccs811_get_hardware_identifier_register(handle, &handle->hardware_id), TAG, "read hardware identifier failed");
+
+    /* attempt to read hardware version */
+    ESP_RETURN_ON_ERROR(ccs811_get_hardware_version_register(handle, &handle->hardware_version), TAG, "read hardware version failed");
+
+    ccs811_measure_mode_register_t measure_mode_reg;
+
+    /* attempt to read measure mode register */
+    ESP_RETURN_ON_ERROR(ccs811_get_measure_mode_register(handle, &measure_mode_reg), TAG, "read measure mode register failed");
+
+    measure_mode_reg.bits.drive_mode             = handle->dev_config.drive_mode;
+    measure_mode_reg.bits.irq_data_ready_enabled = handle->dev_config.irq_data_ready_enabled;
+    measure_mode_reg.bits.irq_threshold_enabled  = handle->dev_config.irq_threshold_enabled;
+
+    /* attempt to write measure mode register */
+    ESP_RETURN_ON_ERROR(ccs811_set_measure_mode_register(handle, measure_mode_reg), TAG, "write measure mode register failed");
+
+    return ESP_OK;
+}
+
+esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t *ccs811_config, ccs811_handle_t *ccs811_handle) {
     /* validate arguments */
     ESP_ARG_CHECK( bus_handle && ccs811_config );
 
@@ -372,73 +500,8 @@ esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t 
         ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus failed");
     }
 
-    /* validate and init gpio for reset and/or wake pins */
-    if(ccs811_config->reset_io_enabled == true && ccs811_config->wake_io_enabled == true) {
-        // validate reset io num
-        ESP_GOTO_ON_FALSE(GPIO_IS_VALID_GPIO(ccs811_config->reset_io_num), ESP_ERR_INVALID_ARG, err_handle, TAG, "reset gpio number is invalid, ccs811 device handle initialization failed");
-        // validate wake io num
-        ESP_GOTO_ON_FALSE(GPIO_IS_VALID_GPIO(ccs811_config->wake_io_num), ESP_ERR_INVALID_ARG, err_handle, TAG, "wake gpio number is invalid, ccs811 device handle initialization failed");
-        // set gpio pin bit mask
-        gpio_pin_sel = ((1ULL<<ccs811_config->reset_io_num) | (1ULL<<ccs811_config->wake_io_num));
-        // interrupt disabled
-        io_conf.intr_type = GPIO_INTR_DISABLE; 
-        // bit mask of the pins
-        io_conf.pin_bit_mask = gpio_pin_sel;
-        // set as output mode
-        io_conf.mode = GPIO_MODE_OUTPUT;
-        // disable pull-down mode
-        io_conf.pull_down_en = 0;
-        // enable pull-up mode
-        io_conf.pull_up_en = 1; 
-        // configure gpio with the given settings
-        ESP_GOTO_ON_ERROR( gpio_config(&io_conf), err_handle, TAG, "set gpio configuration for reset and wake failed" );
-    } else if(ccs811_config->reset_io_enabled == true && ccs811_config->wake_io_enabled == false) {
-        // validate reset io num
-        ESP_GOTO_ON_FALSE(GPIO_IS_VALID_GPIO(ccs811_config->reset_io_num), ESP_ERR_INVALID_ARG, err_handle, TAG, "reset gpio number is invalid, ccs811 device handle initialization failed");
-        // set gpio pin bit mask
-        gpio_pin_sel = (1ULL<<ccs811_config->reset_io_num);
-        // interrupt disabled
-        io_conf.intr_type = GPIO_INTR_DISABLE; 
-        // bit mask of the pins
-        io_conf.pin_bit_mask = gpio_pin_sel;
-        // set as output mode
-        io_conf.mode = GPIO_MODE_OUTPUT;
-        // disable pull-down mode
-        io_conf.pull_down_en = 0;
-        // enable pull-up mode
-        io_conf.pull_up_en = 1; 
-        // configure gpio with the given settings
-        ESP_GOTO_ON_ERROR( gpio_config(&io_conf), err_handle, TAG, "set gpio configuration for reset failed" );
-    } else if(ccs811_config->reset_io_enabled == false && ccs811_config->wake_io_enabled == true) {
-        // validate wake io num
-        ESP_GOTO_ON_FALSE(GPIO_IS_VALID_GPIO(ccs811_config->wake_io_num), ESP_ERR_INVALID_ARG, err_handle, TAG, "wake gpio number is invalid, ccs811 device handle initialization failed");
-        // set gpio pin bit mask
-        gpio_pin_sel = (1ULL<<ccs811_config->wake_io_num);
-        // interrupt disabled
-        io_conf.intr_type = GPIO_INTR_DISABLE;
-        // bit mask of the pins
-        io_conf.pin_bit_mask = gpio_pin_sel;
-        // set as output mode
-        io_conf.mode = GPIO_MODE_OUTPUT;
-        // disable pull-down mode
-        io_conf.pull_down_en = 0;
-        // enable pull-up mode 
-        io_conf.pull_up_en = 1;
-        // configure gpio with the given settings
-        ESP_GOTO_ON_ERROR( gpio_config(&io_conf), err_handle, TAG, "set gpio configuration for wake failed" );
-    }
-
-    /* validate reset gpio to set io state */
-    if(ccs811_config->reset_io_enabled == true) {
-        /* active low for reset gpio */
-        ESP_GOTO_ON_ERROR( gpio_set_level(ccs811_config->reset_io_num, 1), err_handle, TAG, "set reset gpio level high failed (gpio: %i)", ccs811_config->reset_io_num );
-    }
-
-    /* validate wake gpio to wake the device for i2c transactions */
-    if(ccs811_config->wake_io_enabled == true) {
-        /* active low for wake gpio */
-        ESP_GOTO_ON_ERROR( gpio_set_level(ccs811_config->wake_io_num, 0), err_handle, TAG, "set wake gpio level low failed (gpio: %i)", ccs811_config->wake_io_num );
-    }
+    /* attempt to init gpio wake and reset */
+    ESP_GOTO_ON_ERROR(ccs811_init_io(out_handle), err_handle, TAG, "init wake and reset GPIO failed");
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(100));
@@ -448,46 +511,9 @@ esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t 
 
     vTaskDelay(pdMS_TO_TICKS(100));
 
-    /* attempt to read status register */
-    ccs811_status_register_t status_reg;
-    ESP_GOTO_ON_ERROR(ccs811_get_status_register(out_handle, &status_reg), err_handle, TAG, "read status register failed");
-
-    /* validate application firmware mode */
-    if(status_reg.bits.firmware_mode != CCS811_FW_MODE_APP) {
-        /* validate bootloader mode */
-        ESP_GOTO_ON_FALSE(status_reg.bits.app_valid, ESP_ERR_INVALID_STATE, err_handle, TAG, "no valid application for i2c ccs811 device");
-
-        /* attempt tp switch to application mode - start application */
-        ESP_GOTO_ON_ERROR(ccs811_start_application(out_handle), err_handle, TAG, "application start failed");
-
-        /* delay task before next i2c transaction */
-        vTaskDelay(pdMS_TO_TICKS(CCS811_RESET_DELAY_MS));
-
-        /* attempt to read status register */
-        ESP_GOTO_ON_ERROR(ccs811_get_status_register(out_handle, &status_reg), err_handle, TAG, "read status register failed");
-
-        /* validate application firmware mode switch */
-        ESP_GOTO_ON_FALSE(status_reg.bits.firmware_mode == CCS811_FW_MODE_APP, ESP_ERR_INVALID_STATE, err_handle, TAG, "unable to start application for i2c ccs811 device");
-    }
-
-    /* attempt to read hardware identifier */
-    ESP_GOTO_ON_ERROR(ccs811_get_hardware_identifier_register(out_handle, &out_handle->hardware_id), err_handle, TAG, "read hardware identifier failed");
-
-    /* attempt to read hardware version */
-    ESP_GOTO_ON_ERROR(ccs811_get_hardware_version_register(out_handle, &out_handle->hardware_version), err_handle, TAG, "read hardware version failed");
-
-    ccs811_measure_mode_register_t measure_mode_reg;
-
-    /* attempt to read measure mode register */
-    ESP_GOTO_ON_ERROR(ccs811_get_measure_mode_register(out_handle, &measure_mode_reg), err_handle, TAG, "read measure mode register failed");
-
-    measure_mode_reg.bits.drive_mode             = ccs811_config->drive_mode;
-    measure_mode_reg.bits.irq_data_ready_enabled = ccs811_config->irq_data_ready_enabled;
-    measure_mode_reg.bits.irq_threshold_enabled  = ccs811_config->irq_threshold_enabled;
-
-    /* attempt to write measure mode register */
-    ESP_GOTO_ON_ERROR(ccs811_set_measure_mode_register(out_handle, measure_mode_reg), err_handle, TAG, "write measure mode register failed");
-
+    /* attempt setup */
+    ESP_GOTO_ON_ERROR(ccs811_setup(out_handle), err_handle, TAG, "setup device failed");
+    
     /* set device handle */
     *ccs811_handle = out_handle;
 
