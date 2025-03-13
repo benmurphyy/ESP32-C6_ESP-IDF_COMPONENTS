@@ -170,6 +170,11 @@ esp_err_t ssd1306_load_bitmap_font(const uint8_t *font, int encoding, uint8_t *b
 }
 
 esp_err_t ssd1306_display_bdf_text(ssd1306_handle_t handle, const uint8_t *font, const char *text, int xpos, int ypos) {
+	/* validate parameters */
+	ESP_ARG_CHECK( handle );
+
+	if (strnlen(text, SSD1306_TEXT_DISPLAY_MAX_LEN + 1) > SSD1306_TEXT_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
+
 	int fontboundingbox_width = font[0];
 	int fontboundingbox_height = font[1];
 	size_t bitmap_size = ((fontboundingbox_width + 7) / 8) * fontboundingbox_height;
@@ -182,7 +187,7 @@ esp_err_t ssd1306_display_bdf_text(ssd1306_handle_t handle, const uint8_t *font,
 	}
 	ssd1306_bdf_font_t bdf_font;
 	int _xpos = xpos;
-	for (int i=0;i<strlen(text);i++) {
+	for (int i=0;i<strnlen(text, SSD1306_TEXT_DISPLAY_MAX_LEN);i++) {
 		memset(bitmap, 0, bitmap_size);
 		int ch = text[i];
 		esp_err_t err = ssd1306_load_bitmap_font(font, ch, bitmap, &bdf_font);
@@ -206,6 +211,9 @@ esp_err_t ssd1306_display_bdf_text(ssd1306_handle_t handle, const uint8_t *font,
 }
 
 esp_err_t ssd1306_display_bdf_code(ssd1306_handle_t handle, const uint8_t *font, int code, int xpos, int ypos) {
+	/* validate parameters */
+	ESP_ARG_CHECK( handle );
+
 	int fontboundingbox_width = font[0];
 	int fontboundingbox_height = font[1];
 	size_t bitmap_size = ((fontboundingbox_width + 7) / 8) * fontboundingbox_height;
@@ -1009,7 +1017,7 @@ esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const ch
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	if (strlen(text) > 18) return ESP_ERR_INVALID_SIZE;
+	if (strnlen(text, SSD1306_TEXT_DISPLAY_MAX_LEN + 1) > SSD1306_TEXT_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
 
 	ESP_LOGD(TAG, "ssd1306_handle->dev_params->scroll_enabled=%d", handle->scroll_enabled);
 	if (handle->scroll_enabled == false) return ESP_ERR_INVALID_ARG;

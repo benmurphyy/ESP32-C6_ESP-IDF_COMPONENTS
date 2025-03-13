@@ -46,7 +46,7 @@
 #include <freertos/task.h>
 #include <freertos/semphr.h>
 
-#define TIME_INTO_INTERVAL_NAME_MAX_SIZE         (25)        //!< 25-characters for user-defined time-into-interval name
+#define TIME_INTO_INTERVAL_NAME_MAX_LEN         (25)        //!< 25-characters for user-defined time-into-interval name
 
 /*
  * macro definitions
@@ -259,7 +259,7 @@ esp_err_t time_into_interval_init(const time_into_interval_config_t *time_into_i
     time_into_interval_handle_t out_handle;
     
     /* validate task-schedule arguments */
-    ESP_GOTO_ON_FALSE( (strlen(time_into_interval_config->name) <= TIME_INTO_INTERVAL_NAME_MAX_SIZE), ESP_ERR_INVALID_ARG, err, TAG, "time-into-interval name cannot exceed 20-characters, time-into-interval handle initialization failed" );
+    ESP_GOTO_ON_FALSE( (strnlen(time_into_interval_config->name, TIME_INTO_INTERVAL_NAME_MAX_LEN + 1) < TIME_INTO_INTERVAL_NAME_MAX_LEN), ESP_ERR_INVALID_ARG, err, TAG, "time-into-interval name cannot exceed 20-characters, time-into-interval handle initialization failed" );
     ESP_GOTO_ON_FALSE( (time_into_interval_config->interval_period > 0), ESP_ERR_INVALID_ARG, err, TAG, "time-into-interval interval period cannot be 0, time-into-interval handle initialization failed" );
 
     /* validate period and offset intervals */
