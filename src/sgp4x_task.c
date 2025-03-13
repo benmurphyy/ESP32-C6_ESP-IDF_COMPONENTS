@@ -46,8 +46,8 @@ void i2c0_sgp4x_task( void *pvParameters ) {
     sgp4x_handle_t dev_hdl;
     bool               dev_self_tested  = false;
     bool               dev_conditioned  = false;
-    //
-    // initialize gas index parameters
+    
+    /* initialize gas index parameters */
     GasIndexAlgorithmParams voc_params;
     GasIndexAlgorithm_init(&voc_params, GasIndexAlgorithm_ALGORITHM_TYPE_VOC);
     GasIndexAlgorithmParams nox_params;
@@ -63,8 +63,8 @@ void i2c0_sgp4x_task( void *pvParameters ) {
     // task loop entry point
     for ( ;; ) {
         ESP_LOGI(APP_TAG, "######################## SGP4X - START #########################");
-        //
-        // handle sensor
+        
+        /* handle sensor */
         if(dev_self_tested == false) {
             sgp4x_self_test_result_t self_test_result;
             esp_err_t result = sgp4x_execute_self_test(dev_hdl, &self_test_result);
@@ -90,6 +90,7 @@ void i2c0_sgp4x_task( void *pvParameters ) {
             }
             dev_conditioned = true;
         } else {
+            /* measure signals and process gas algorithm */
             uint16_t sraw_voc; uint16_t sraw_nox;
             int32_t voc_index; int32_t nox_index;
             esp_err_t result = sgp4x_measure_signals(dev_hdl, &sraw_voc, &sraw_nox);

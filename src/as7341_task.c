@@ -60,7 +60,9 @@ void i2c0_as7341_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## AS7341 - START #########################");
         //
         if(flicker_completed == true) {
-            // handle sensor
+            /*handle sensor */
+
+            /* get spectral measurements */
             as7341_channels_spectral_data_t adc_data;
             esp_err_t result = as7341_get_spectral_measurements(dev_hdl, &adc_data);
             if(result != ESP_OK) {
@@ -78,6 +80,7 @@ void i2c0_as7341_task( void *pvParameters ) {
                 ESP_LOGW(APP_TAG, "CLEAR %d", adc_data.clear);
             }
 
+            /* get basic counts */
             as7341_channels_basic_counts_data_t basic_counts_data;
             result = as7341_get_basic_counts(dev_hdl, adc_data, &basic_counts_data);
             if(result != ESP_OK) {
@@ -95,7 +98,9 @@ void i2c0_as7341_task( void *pvParameters ) {
                 ESP_LOGW(APP_TAG, "CLEAR %f", basic_counts_data.clear);
             }
         } else {
+            /* handle flicker detection */
             if(flicker_cycles < 5) {
+                /* get flicker detection status */
                 as7341_flicker_detection_states_t flicker_state;
                 esp_err_t result = as7341_get_flicker_detection_status(dev_hdl, &flicker_state);
                 if(result != ESP_OK) {
