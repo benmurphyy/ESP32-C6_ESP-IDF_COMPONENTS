@@ -176,27 +176,29 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 	ssd1306_clear_display_software_scroll(handle);
 
-	// Horizontal Scroll
-	ESP_LOGI(APP_TAG, "Display Horizontal Scroll");
-	ssd1306_clear_display(handle, false);
-	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, center, "Horizontal", false);
-	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_RIGHT, SSD1306_SCROLL_2_FRAMES);
-	vTaskDelay(2000 / portTICK_PERIOD_MS);
-	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_LEFT, SSD1306_SCROLL_2_FRAMES);
-	vTaskDelay(2000 / portTICK_PERIOD_MS);
-	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_STOP, SSD1306_SCROLL_2_FRAMES);
-	
-	// Vertical Scroll
-	ESP_LOGI(APP_TAG, "Display Vertical Scroll");
-	ssd1306_clear_display(handle, false);
-	ssd1306_set_contrast(handle, 0xff);
-	ssd1306_display_text(handle, center, "Vertical", false);
-	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_DOWN, SSD1306_SCROLL_2_FRAMES);
-	vTaskDelay(2000 / portTICK_PERIOD_MS);
-	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_UP, SSD1306_SCROLL_2_FRAMES);
-	vTaskDelay(2000 / portTICK_PERIOD_MS);
-	ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_STOP, SSD1306_SCROLL_2_FRAMES);
+	if(handle->dev_config.panel_size != SSD1306_PAGE_128x128_SIZE) {
+		// Horizontal Scroll
+		ESP_LOGI(APP_TAG, "Display Horizontal Scroll");
+		ssd1306_clear_display(handle, false);
+		ssd1306_set_contrast(handle, 0xff);
+		ssd1306_display_text(handle, center, "Horizontal", false);
+		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_RIGHT, SSD1306_SCROLL_2_FRAMES);
+		vTaskDelay(2000 / portTICK_PERIOD_MS);
+		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_LEFT, SSD1306_SCROLL_2_FRAMES);
+		vTaskDelay(2000 / portTICK_PERIOD_MS);
+		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_STOP, SSD1306_SCROLL_2_FRAMES);
+		
+		// Vertical Scroll
+		ESP_LOGI(APP_TAG, "Display Vertical Scroll");
+		ssd1306_clear_display(handle, false);
+		ssd1306_set_contrast(handle, 0xff);
+		ssd1306_display_text(handle, center, "Vertical", false);
+		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_DOWN, SSD1306_SCROLL_2_FRAMES);
+		vTaskDelay(2000 / portTICK_PERIOD_MS);
+		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_UP, SSD1306_SCROLL_2_FRAMES);
+		vTaskDelay(2000 / portTICK_PERIOD_MS);
+		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_STOP, SSD1306_SCROLL_2_FRAMES);
+	}
 
 	// Bitmaps
 	ESP_LOGI(APP_TAG, "Display Batman Bitmap");
@@ -335,7 +337,9 @@ void i2c0_ssd1306_task( void *pvParameters ) {
     TickType_t          last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    ssd1306_config_t dev_cfg         = I2C_SSD1306_128x64_CONFIG_DEFAULT;
+	//ssd1306_config_t dev_cfg         = I2C_SSD1306_128x32_CONFIG_DEFAULT;
+    //ssd1306_config_t dev_cfg         = I2C_SSD1306_128x64_CONFIG_DEFAULT;
+	ssd1306_config_t dev_cfg         = I2C_SSD1306_128x128_CONFIG_DEFAULT;
     ssd1306_handle_t dev_hdl;
     //
     // init device

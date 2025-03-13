@@ -40,6 +40,7 @@ ESP-IDF component development status:
 - Sensirion SHT4X: component is synchronized with the esp-idf component registry and platform io library registry.
 - Generic SSD1306: component is synchronized with the esp-idf component registry and platform io library registry.
 - Infineon TLV493D: component development is work in progress (WIP).
+- Vishay VEML6040: component is synchronized with the esp-idf component registry and platform io library registry.
 - Vishay VEML7700: component is synchronized with the esp-idf component registry and platform io library registry.
 
 ## OWB

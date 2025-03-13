@@ -390,6 +390,20 @@ void copy_bytes(const uint8_t* source, uint8_t* destination, const size_t size) 
     memcpy(destination, source, size);
 }
 
+/*
+bool is_null_terminated(const char *str) { 
+    if (str == NULL) return false; // Check for NULL pointer
+    //
+    // Iterate through the string 
+    while (*str) { 
+        str++; 
+    } 
+    //
+    // If we reached the end, it is null-terminated 
+    return true; // True 
+}
+*/
+
 const char* type_utils_get_fw_version(void) {
     return TYPE_UTILS_FW_VERSION_STR;
 }

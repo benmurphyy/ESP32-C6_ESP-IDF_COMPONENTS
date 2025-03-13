@@ -55,6 +55,7 @@ component_list = [
                   Component(name="esp_sgp4x", header_name="sgp4x", relative_path="peripherals\i2c\\esp_sgp4x"),
                   Component(name="esp_sht4x", header_name="sht4x", relative_path="peripherals\\i2c\\esp_sht4x"),
                   Component(name="esp_ssd1306", header_name="ssd1306", relative_path="peripherals\\i2c\\esp_ssd1306"),
+                  Component(name="esp_veml6040", header_name="veml6040", relative_path="peripherals\\i2c\\esp_veml6040"),
                   Component(name="esp_veml7700", header_name="veml7700", relative_path="peripherals\\i2c\\esp_veml7700"),
                   # owb peripherals
                   Component(name="esp_ds18b20", header_name="ds18b20", relative_path="peripherals\\owb\\esp_ds18b20"),

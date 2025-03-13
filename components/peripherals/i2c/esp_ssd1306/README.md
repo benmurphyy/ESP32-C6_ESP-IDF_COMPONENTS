@@ -1,4 +1,4 @@
-# Generic SSD1306 (128x32 and 128x64) OLED Display
+# Generic SSD1306 (128x32 | 128x64 | 128x128) OLED Display
 
 [![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
 [![Edited with VS Code](https://badgen.net/badge/icon/VS%20Code?icon=visualstudio&label=edited%20with)](https://visualstudio.microsoft.com)
@@ -6,7 +6,7 @@
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_ssd1306.svg)](https://registry.platformio.org/libraries/k0i05/esp_ssd1306)
 [![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_ssd1306/badge.svg)](https://components.espressif.com/components/k0i05/esp_ssd1306)
 
-This esp-idf driver was developed for generic SSD1306 OLED displays.  Information on features and functionality are documented and can be found in the `ssd1306.h` header file.  The SSD1306 component is a compact and simplified driver compatible with 128x64 and 128x32 OLED displays.  There are three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more.  This component has one font implemented now (i.e. 8x8 basic Latin + control + extended Latin) but is ideal for most use cases.
+This esp-idf driver was developed for generic SSD1306 OLED displays.  Information on features and functionality are documented and can be found in the `ssd1306.h` header file.  The SSD1306 component is a compact and simplified driver compatible with 128x64, 128x32, 128x128 OLED displays.  There are three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more.  This component has one font implemented now (i.e. 8x8 basic Latin + control + extended Latin) but is ideal for most use cases.
 
 ## Repository
 
@@ -84,7 +84,7 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Display x3 Text");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text_x3(dev_hdl, 0, "Hello", 5, false);
+        ssd1306_display_text_x3(dev_hdl, 0, "Hello", false);
         vTaskDelay(3000 / portTICK_PERIOD_MS);
 
         // Display bitmap icons
@@ -100,18 +100,18 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Display x2 Text");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text_x2(dev_hdl, 0, "{xTEXTx}", 8, false);
-        ssd1306_display_text_x2(dev_hdl, 2, " X2-X2", 6, false);
+        ssd1306_display_text_x2(dev_hdl, 0, "{xTEXTx}", false);
+        ssd1306_display_text_x2(dev_hdl, 2, " X2-X2", false);
         vTaskDelay(3000 / portTICK_PERIOD_MS);
 
         // Display text
         ESP_LOGI(APP_TAG, "Display Text");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, 0, "SSD1306 128x64", 14, false);
-        ssd1306_display_text(dev_hdl, 1, "Hello World!!", 13, false);
-        ssd1306_display_text(dev_hdl, 2, "SSD1306 128x64", 14, true);
-        ssd1306_display_text(dev_hdl, 3, "Hello World!!", 13, true);
+        ssd1306_display_text(dev_hdl, 0, "SSD1306 128x64", false);
+        ssd1306_display_text(dev_hdl, 1, "Hello World!!", false);
+        ssd1306_display_text(dev_hdl, 2, "SSD1306 128x64", true);
+        ssd1306_display_text(dev_hdl, 3, "Hello World!!", true);
         vTaskDelay(3000 / portTICK_PERIOD_MS);
         
         // Display Count Down
@@ -133,12 +133,12 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Scroll Up");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, 0, "---Scroll  UP---", 16, true);
+        ssd1306_display_text(dev_hdl, 0, "---Scroll  UP---", true);
         ssd1306_set_software_scroll(dev_hdl, (dev_hdl->pages - 1), 1);
         for (int line = 0; line < bottom+10; line++) {
             lineChar[0] = 0x01;
             sprintf(&lineChar[1], " Line %02d", line);
-            ssd1306_display_scroll_text(dev_hdl, lineChar, strlen(lineChar), false);
+            ssd1306_display_scroll_text(dev_hdl, lineChar, false);
             vTaskDelay(500 / portTICK_PERIOD_MS);
         }
         vTaskDelay(3000 / portTICK_PERIOD_MS);
@@ -147,12 +147,12 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Scroll Down");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, 0, "--Scroll  DOWN--", 16, true);
+        ssd1306_display_text(dev_hdl, 0, "--Scroll  DOWN--", true);
         ssd1306_set_software_scroll(dev_hdl, 1, (dev_hdl->pages - 1) );
         for (int page = 0; page < bottom+10; page++) {
             lineChar[0] = 0x02;
             sprintf(&lineChar[1], " Line %02d", page);
-            ssd1306_display_scroll_text(dev_hdl, lineChar, strlen(lineChar), false);
+            ssd1306_display_scroll_text(dev_hdl, lineChar, false);
             vTaskDelay(500 / portTICK_PERIOD_MS);
         }
         vTaskDelay(3000 / portTICK_PERIOD_MS);
@@ -161,13 +161,13 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Page Down");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, 0, "---Page   DOWN---", 16, true);
+        ssd1306_display_text(dev_hdl, 0, "---Page   DOWN---", true);
         ssd1306_set_software_scroll(dev_hdl, 1, (dev_hdl->pages-1) );
         for (int page = 0; page < bottom+10; page++) {
             if ( (page % (dev_hdl->pages-1)) == 0) ssd1306_clear_scroll_display(dev_hdl);
             lineChar[0] = 0x02;
             sprintf(&lineChar[1], " Line %02d", page);
-            ssd1306_display_scroll_text(dev_hdl, lineChar, strlen(lineChar), false);
+            ssd1306_display_scroll_text(dev_hdl, lineChar, false);
             vTaskDelay(500 / portTICK_PERIOD_MS);
         }
         vTaskDelay(3000 / portTICK_PERIOD_MS);
@@ -176,7 +176,7 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Horizontal Scroll");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, center, "Horizontal", 10, false);
+        ssd1306_display_text(dev_hdl, center, "Horizontal", false);
         ssd1306_set_hardware_scroll(dev_hdl, SSD1306_SCROLL_RIGHT, SSD1306_SCROLL_2_FRAMES);
         vTaskDelay(5000 / portTICK_PERIOD_MS);
         ssd1306_set_hardware_scroll(dev_hdl, SSD1306_SCROLL_LEFT, SSD1306_SCROLL_2_FRAMES);
@@ -187,7 +187,7 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Vertical Scroll");
         ssd1306_clear_display(dev_hdl, false);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, center, "Vertical", 8, false);
+        ssd1306_display_text(dev_hdl, center, "Vertical", false);
         ssd1306_set_hardware_scroll(dev_hdl, SSD1306_SCROLL_DOWN, SSD1306_SCROLL_2_FRAMES);
         vTaskDelay(5000 / portTICK_PERIOD_MS);
         ssd1306_set_hardware_scroll(dev_hdl, SSD1306_SCROLL_UP, SSD1306_SCROLL_2_FRAMES);
@@ -196,7 +196,7 @@ void i2c0_ssd1306_task( void *pvParameters ) {
 
         // Bitmaps
         ESP_LOGI(APP_TAG, "Bitmaps");
-        ssd1306_display_text(dev_hdl, 1, "BATMAN", 6, false);
+        ssd1306_display_text(dev_hdl, 1, "BATMAN", false);
         int bitmapWidth = 4*8;
         int width = dev_hdl->width;
         int xpos = width / 2; // center of width
@@ -225,7 +225,7 @@ void i2c0_ssd1306_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "Invert");
         ssd1306_clear_display(dev_hdl, true);
         ssd1306_set_display_contrast(dev_hdl, 0xff);
-        ssd1306_display_text(dev_hdl, center, "  Good Bye!!", 12, true);
+        ssd1306_display_text(dev_hdl, center, "  Good Bye!!", true);
         vTaskDelay(5000 / portTICK_PERIOD_MS);
 
         // Fade Out

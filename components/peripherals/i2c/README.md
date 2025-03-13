@@ -29,6 +29,7 @@ ESP-IDF I2C device peripheral components supported at this time are listed as fo
 - Sensirion SHT4X
 - Generic SSD1306 (128x32 and 128x64)
 - Infineon TLV493D - Work in Progress
+- Vishay VEML6040
 - Vishay VEML7700
 
 The above components have a dependency on the `esp_driver_i2c_ext` component that must be included in your project.  This component extends I2C master bus functionality to simplify common I2C transactions, it includes transmit and receive buffers of various sizes, and byte manipulation features.

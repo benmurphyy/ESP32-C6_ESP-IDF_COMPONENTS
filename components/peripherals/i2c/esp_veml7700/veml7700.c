@@ -318,7 +318,7 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* enable power */
-    ESP_RETURN_ON_ERROR( veml7700_enable_power(handle), TAG, "enable power failed" );
+    ESP_RETURN_ON_ERROR( veml7700_enable(handle), TAG, "enable power failed" );
 
     /* set baseline integration time and gain */
     veml7700_configuration_register_t config_reg;
@@ -338,7 +338,7 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle) {
         /* validate als counts <= 100 */
         if(als_counts <= 100) {
             /* disable power */
-            ESP_RETURN_ON_ERROR( veml7700_disable_power(handle), TAG, "disable power failed" );
+            ESP_RETURN_ON_ERROR( veml7700_disable(handle), TAG, "disable power failed" );
 
             /* validate index is within range */
             if(gain_index < VEML7700_GAIN_OPTIONS_COUNT - 1) {
@@ -355,7 +355,7 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle) {
                 }
             } else {
                 /* enable power */
-                ESP_RETURN_ON_ERROR( veml7700_enable_power(handle), TAG, "enable power failed" );
+                ESP_RETURN_ON_ERROR( veml7700_enable(handle), TAG, "enable power failed" );
             }
 
             /* sensor is optimize when integration time is I2C_VEML7700_INTEGRATION_TIME_800MS */
@@ -369,7 +369,7 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle) {
                 break;
             } else {
                 /* enable power */
-                ESP_RETURN_ON_ERROR( veml7700_enable_power(handle), TAG, "enable power failed" );
+                ESP_RETURN_ON_ERROR( veml7700_enable(handle), TAG, "enable power failed" );
             }
         } else {
             /* validate als between 100 and 65535 count */
@@ -409,7 +409,7 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle) {
     } while (optimized == false);
 
     /* enable power */
-    ESP_RETURN_ON_ERROR( veml7700_enable_power(handle), TAG, "enable power failed" );
+    ESP_RETURN_ON_ERROR( veml7700_enable(handle), TAG, "enable power failed" );
 
     return ESP_OK;
 }
@@ -422,7 +422,7 @@ esp_err_t veml7700_optimize_configuration(veml7700_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* enable power */
-    ESP_RETURN_ON_ERROR( veml7700_enable_power(handle), TAG, "enable power failed" );
+    ESP_RETURN_ON_ERROR( veml7700_enable(handle), TAG, "enable power failed" );
 
     /* set baseline integration time and gain values */
     veml7700_configuration_register_t config_reg;
@@ -771,7 +771,7 @@ esp_err_t veml7700_get_ambient_light_auto(veml7700_handle_t handle, float *const
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( veml7700_get_ambient_light(handle, ambient_light), TAG, "read ambient light auto failed" );
 
-	//ESP_LOGD(TAG, "Configured maximum luminocity: %" PRIu32 "", veml7700_handle->maximum_lux);
+	//ESP_LOGD(TAG, "Configured maximum luminosity: %" PRIu32 "", veml7700_handle->maximum_lux);
 	//ESP_LOGD(TAG, "Configured resolution: %0.4f", veml7700_handle->resolution);
 
 	return ESP_OK;
@@ -1075,7 +1075,7 @@ esp_err_t veml7700_disable_irq(veml7700_handle_t handle) {
     return ESP_OK;
 }
 
-esp_err_t veml7700_disable_power(veml7700_handle_t handle) {
+esp_err_t veml7700_disable(veml7700_handle_t handle) {
     veml7700_configuration_register_t config;
 
     /* validate arguments */
@@ -1096,7 +1096,7 @@ esp_err_t veml7700_disable_power(veml7700_handle_t handle) {
     return ESP_OK;
 }
 
-esp_err_t veml7700_enable_power(veml7700_handle_t handle) {
+esp_err_t veml7700_enable(veml7700_handle_t handle) {
     veml7700_configuration_register_t config;
 
     /* validate arguments */

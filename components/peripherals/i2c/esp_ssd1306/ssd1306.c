@@ -108,6 +108,10 @@ Usage:
 #define SSD1306_CMD_ACTIVE_SCROLL          0x2F
 #define SSD1306_CMD_VERTICAL               0xA3
 
+#define SSD1306_TEXTBOX_DISPLAY_MAX_LEN	   50
+#define SSD1306_TEXT_DISPLAY_MAX_LEN	   18
+#define SSD1306_TEXT_X2_DISPLAY_MAX_LEN	   8
+#define SSD1306_TEXT_X3_DISPLAY_MAX_LEN	   5
 
 /*
  * macro definitions
@@ -129,10 +133,10 @@ static const ssd1306_panel_t ssd1306_panel_properties[] = {
 	{ .panel_size = SSD1306_PANEL_128x128, .width = SSD1306_PANEL_128x128_WIDTH, .height = SSD1306_PANEL_128x128_HEIGHT, .pages = SSD1306_PAGE_128x128_SIZE }
 };
 
-typedef union i2c_ssd1306_out_column_t {
+typedef union ssd1306_out_column_t {
 	uint32_t u32;
 	uint8_t  u8[4];
-} PACK8 i2c_ssd1306_out_column_t;
+} PACK8 ssd1306_out_column_t;
 
 
 
@@ -734,12 +738,12 @@ esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char
 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 
-	if (strlen(text) > 18) return ESP_ERR_INVALID_SIZE;
+	if (strnlen(text, SSD1306_TEXT_DISPLAY_MAX_LEN + 1) > SSD1306_TEXT_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t seg = 0;
 	uint8_t image[8];
 
-	for (uint8_t i = 0; i < strlen(text); i++) {
+	for (uint8_t i = 0; i < strnlen(text, SSD1306_TEXT_DISPLAY_MAX_LEN); i++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[i]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -756,16 +760,18 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const c
 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 
-	if (strlen(text) > 8) return ESP_ERR_INVALID_SIZE;
+	if (strnlen(text, SSD1306_TEXT_X2_DISPLAY_MAX_LEN + 1) > SSD1306_TEXT_X2_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t seg = 0;
 
-	for (uint8_t nn = 0; nn < strlen(text); nn++) {
+	for (uint8_t nn = 0; nn < strnlen(text, SSD1306_TEXT_X2_DISPLAY_MAX_LEN); nn++) {
 		uint8_t const * const in_columns = font_latin_8x8_tr[(uint8_t)text[nn]];
 
 		// make the character 2x as high
-		i2c_ssd1306_out_column_t out_columns[8];
+		ssd1306_out_column_t out_columns[8];
 		memset(out_columns, 0, sizeof(out_columns));
+		//ssd1306_out_column_t *out_columns = (ssd1306_out_column_t*)calloc(8, sizeof(ssd1306_out_column_t));
+		
 
 		for (uint8_t xx = 0; xx < 8; xx++) { // for each column (x-direction)
 			uint32_t in_bitmask = 0b1;
@@ -806,15 +812,15 @@ esp_err_t ssd1306_display_text_x3(ssd1306_handle_t handle, uint8_t page, const c
 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 
-	if (strlen(text) > 5) return ESP_ERR_INVALID_SIZE;
+	if (strnlen(text, SSD1306_TEXT_X3_DISPLAY_MAX_LEN + 1) > SSD1306_TEXT_X3_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t seg = 0;
 
-	for (uint8_t nn = 0; nn < strlen(text); nn++) {
+	for (uint8_t nn = 0; nn < strnlen(text, SSD1306_TEXT_X3_DISPLAY_MAX_LEN); nn++) {
 		uint8_t const * const in_columns = font_latin_8x8_tr[(uint8_t)text[nn]];
 
 		// make the character 3x as high
-		i2c_ssd1306_out_column_t out_columns[8];
+		ssd1306_out_column_t out_columns[8];
 		memset(out_columns, 0, sizeof(out_columns));
 
 		for (uint8_t xx = 0; xx < 8; xx++) { // for each column (x-direction)
@@ -855,7 +861,7 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 	uint8_t text_box_pixel = box_width * 8;
 	if (segment + text_box_pixel > handle->width) return ESP_ERR_INVALID_SIZE;
-    if (strlen(text) > 100) return ESP_ERR_INVALID_SIZE;
+	if (strnlen(text, SSD1306_TEXTBOX_DISPLAY_MAX_LEN + 1) > SSD1306_TEXTBOX_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t _seg = segment;
 	uint8_t image[8];
@@ -870,7 +876,7 @@ esp_err_t ssd1306_display_textbox_banner(ssd1306_handle_t handle, uint8_t page, 
 	vTaskDelay(delay / portTICK_PERIOD_MS);
 
 	// Horizontally scroll inside the box
-	for (uint8_t _text=box_width; _text<strlen(text); _text++) {
+	for (uint8_t _text=box_width; _text < strnlen(text, SSD1306_TEXTBOX_DISPLAY_MAX_LEN); _text++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -892,7 +898,7 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 	if (page >= handle->pages) return ESP_ERR_INVALID_SIZE;
 	uint8_t text_box_pixel = box_width * 8;
 	if (segment + text_box_pixel > handle->width) return ESP_ERR_INVALID_SIZE;
-    if (strlen(text) > 100) return ESP_ERR_INVALID_SIZE;
+    if (strnlen(text, SSD1306_TEXTBOX_DISPLAY_MAX_LEN + 1) > SSD1306_TEXTBOX_DISPLAY_MAX_LEN) return ESP_ERR_INVALID_SIZE;
 
 	uint8_t _seg = segment;
 	uint8_t image[8];
@@ -908,7 +914,7 @@ esp_err_t ssd1306_display_textbox_ticker(ssd1306_handle_t handle, uint8_t page, 
 	vTaskDelay(delay / portTICK_PERIOD_MS);
 
 	// Horizontally scroll inside the box
-	for (uint8_t _text=0; _text<strlen(text); _text++) {
+	for (uint8_t _text=0; _text<strnlen(text, SSD1306_TEXTBOX_DISPLAY_MAX_LEN); _text++) {
 		memcpy(image, font_latin_8x8_tr[(uint8_t)text[_text]], 8);
 		if (invert) ssd1306_invert_buffer(image, 8);
 		if (handle->dev_config.flip_enabled) ssd1306_flip_buffer(image, 8);
@@ -1048,6 +1054,10 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
+
+	if(handle->dev_config.panel_size == SSD1306_PAGE_128x128_SIZE) {
+		return ESP_ERR_NOT_SUPPORTED;
+	}
 
 	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
 

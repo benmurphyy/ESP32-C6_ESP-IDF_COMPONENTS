@@ -86,6 +86,7 @@
 #include <sht4x_task.h>
 #include <ssd1306_task.h>
 #include <tlv493d_task.h>
+#include <veml6040_task.h>
 #include <veml7700_task.h>
 
 /* owb component tasks */
@@ -118,6 +119,7 @@ typedef enum i2c_components_tag {
     I2C_COMPONENT_SHT4X,
     I2C_COMPONENT_SSD1306,
     I2C_COMPONENT_TLV493D,
+    I2C_COMPONENT_VEML6040,
     I2C_COMPONENT_VEML7700,
 } i2c_components_t;
 
@@ -309,6 +311,9 @@ static inline void i2c0_component_example_start(const i2c_components_t component
         case I2C_COMPONENT_TLV493D:
             i2c0_task_create(i2c0_tlv493d_task, I2C0_TLV493D_TASK_NAME);
             break;
+        case I2C_COMPONENT_VEML6040:
+            i2c0_task_create(i2c0_veml6040_task, I2C0_VEML6040_TASK_NAME);
+            break;
         case I2C_COMPONENT_VEML7700:
             i2c0_task_create(i2c0_veml7700_task, I2C0_VEML7700_TASK_NAME);
             break;
@@ -358,7 +363,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_AHTXX);
     //i2c0_component_example_start(I2C_COMPONENT_AK8975);
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
-    i2c0_component_example_start(I2C_COMPONENT_AS3935);
+    //i2c0_component_example_start(I2C_COMPONENT_AS3935);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
     //i2c0_component_example_start(I2C_COMPONENT_BMP280);
     //i2c0_component_example_start(I2C_COMPONENT_BMP390);
@@ -372,8 +377,9 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_MPU6050);
     //i2c0_component_example_start(I2C_COMPONENT_SGP4X);
     //i2c0_component_example_start(I2C_COMPONENT_SHT4X);
-    //i2c0_component_example_start(I2C_COMPONENT_SSD1306);
+    i2c0_component_example_start(I2C_COMPONENT_SSD1306);
     //i2c0_component_example_start(I2C_COMPONENT_TLV493D);
+    //i2c0_component_example_start(I2C_COMPONENT_VEML6040);
     //i2c0_component_example_start(I2C_COMPONENT_VEML7700);
 
     //owb0_component_example_start(OWB_COMPONENT_DS18B20);

@@ -319,7 +319,7 @@ esp_err_t veml7700_optimize_configuration___(veml7700_handle_t handle);
  * @brief Initializes an VEML7700 device onto the I2C master bus.
  *
  * @param[in] master_handle I2C master bus handle.
- * @param[in] veml7700_config configuration of VEML7700 device.
+ * @param[in] veml7700_config VEML7700 device configuration.
  * @param[out] veml7700_handle VEML7700 device handle.
  * @return esp_err_t ESP_OK on success.
  */
@@ -517,7 +517,7 @@ esp_err_t veml7700_get_interrupt_status(veml7700_handle_t handle, bool *const hi
  * @param[in] handle VEML7700 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t veml7700_disable_power(veml7700_handle_t handle);
+esp_err_t veml7700_disable(veml7700_handle_t handle);
 
 /**
  * @brief Wakes up VEML7700 from shut-down.
@@ -525,7 +525,7 @@ esp_err_t veml7700_disable_power(veml7700_handle_t handle);
  * @param[in] handle VEML7700 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t veml7700_enable_power(veml7700_handle_t handle);
+esp_err_t veml7700_enable(veml7700_handle_t handle);
 
 /**
  * @brief Removes an VEML7700 device from master bus.
