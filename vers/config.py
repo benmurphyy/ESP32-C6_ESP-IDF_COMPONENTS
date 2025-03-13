@@ -3,7 +3,7 @@
 # Released under the MIT License (MIT) - see LICENSE file
 
 from component import Component
-from constant import FWVersionUpdateTypes
+from constant import FWVersionUpdateParts
 
 ### Local Configuration ###
 component_working_path = "C:\\Users\\lavco\\OneDrive\\Documents\\PlatformIO\\Projects\\ESP32-S3_ESP-IDF_COMPONENTS\\components"
@@ -11,7 +11,7 @@ component_archive_path = "C:\\Espressif\\component_archive"
 """Path to the component archive directory is used for temporary storage to pack components"""
 fw_version_seed_filepath = "C:\\Users\\lavco\\OneDrive\\Documents\\PlatformIO\\Projects\\ESP32-S3_ESP-IDF_COMPONENTS\\vers\\bin\\fw_version_seed.json"
 """Version number seed file path"""
-fw_version_update_type = FWVersionUpdateTypes.FW_VERSION_UPDATE_PATCH
+fw_version_update_type = FWVersionUpdateParts.FW_VERSION_UPDATE_PATCH
 """Version number part to be updated (Major, Minor or Patch)"""
 
 ### ESP Components Registry ###
@@ -27,6 +27,7 @@ pio_owner = "k0i05"
 # storage/[component_name]
 # utilities/[component_name]
 
+# instantiate component list to configure which components will be processed.
 component_list = [ 
                   ### Utilities ###
                   # pressure tendency

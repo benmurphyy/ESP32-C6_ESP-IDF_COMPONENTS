@@ -273,7 +273,7 @@ struct datatable_t {
     uint16_t                            sampling_count;             /*!< data-table data sampling count seed number */
     time_into_interval_handle_t         sampling_tii_handle;        /*!< data-table sampling time-into-interval handle */
     time_into_interval_handle_t         processing_tii_handle;      /*!< data-table processing time-into-interval handle */
-    uint16_t                            record_id;                  /*!< data-table record identifer seed number */
+    uint16_t                            record_id;                  /*!< data-table record identifier seed number */
     uint8_t                             columns_count;              /*!< data-table column count seed number, this number should not exceed the column size*/
     uint8_t                             columns_size;               /*!< data-table column array size, static, set when data-table is created */
     datatable_column_t**                columns;                    /*!< array of data-table columns */
@@ -316,7 +316,7 @@ typedef struct datatable_t *datatable_handle_t;
  * for the first user-defined column always starts at 2 given  the record identifier and timestamp columns  
  * are created by default and consume column indexes 0 and 1 respectively.
  * 
- * Use the `datatable_sampling_task_delay` function wihtin the sampling task to sample measurements 
+ * Use the `datatable_sampling_task_delay` function within the sampling task to sample measurements 
  * at the data-table's configured sampling interval.
  * 
  * Use the `datatable_push_[data-type]_sample` functions within the sampling task to push samples 

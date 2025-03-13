@@ -69,7 +69,7 @@ uint32_t get_uint32_chip_id(void) {
 uint64_t get_uint64_chip_id(void) {
     uint64_t chipid = 0LL;
     for (int i = 0; i < 63; i = i + 8) {
-        chipid |= ((get_efuse_mac() >> (40 - i)) & 0xff) << i;
+        chipid |= ((get_efuse_mac() >> (80 - i)) & 0xff) << i;
     }
     return chipid;
 }
@@ -389,20 +389,6 @@ void double_to_bytes(const double value, uint8_t* bytes, const bool little_endia
 void copy_bytes(const uint8_t* source, uint8_t* destination, const size_t size) {
     memcpy(destination, source, size);
 }
-
-/*
-bool is_null_terminated(const char *str) { 
-    if (str == NULL) return false; // Check for NULL pointer
-    //
-    // Iterate through the string 
-    while (*str) { 
-        str++; 
-    } 
-    //
-    // If we reached the end, it is null-terminated 
-    return true; // True 
-}
-*/
 
 const char* type_utils_get_fw_version(void) {
     return TYPE_UTILS_FW_VERSION_STR;

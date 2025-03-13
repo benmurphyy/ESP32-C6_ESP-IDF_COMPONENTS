@@ -382,7 +382,7 @@ static inline esp_err_t datatable_invoke_event(datatable_handle_t datatable_hand
  * As an example, if the data-table sampling task schedule event occurs every 10-seconds and the data-table 
  * processing event occurs every minute, data-table column data buffer created for analytical processing will be
  * sized to store a maximum of 6 samples.  If the data-table column data buffer created for analytical processing 
- * is proccesed with less than 6 samples, the data-table record is skipped, and logged as a skipped record  
+ * is processed with less than 6 samples, the data-table record is skipped, and logged as a skipped record  
  * processing event for the data-table.
  * 
  * @param datatable_handle Data-table handle.
@@ -981,7 +981,7 @@ static inline esp_err_t datatable_fifo_data_buffers(datatable_handle_t datatable
 }
 
 /**
- * @brief Processes data-table vector data-type data buffer samples on the stack by column based on the colunm index provided.
+ * @brief Processes data-table vector data-type data buffer samples on the stack by column based on the column index provided.
  * 
  * @param[in] datatable_handle Data-table handle.
  * @param[in] index Data-table column index to process.
@@ -1050,7 +1050,7 @@ static inline esp_err_t datatable_process_vector_data_buffer(datatable_handle_t 
             tmp_atan2_uc = atan2(tmp_ew_avg, tmp_ns_avg);
             tmp_uc_avg = datatable_radians_to_degrees(tmp_atan2_uc);
 
-            // apply correction as specified in webmet.com webpage http://www.webmet.com/met_monitoring/622.html
+            // apply correction as specified: http://www.webmet.com/met_monitoring/622.html
             if(tmp_uc_avg > 180.0) {
                 tmp_uc_avg -= 180.0;
             } else if(tmp_uc_avg < 180.0) {
@@ -1137,7 +1137,7 @@ static inline esp_err_t datatable_process_vector_data_buffer(datatable_handle_t 
 }
 
 /**
- * @brief Processes data-table boolean data-type data buffer samples on the stack by column based on the colunm index provided.
+ * @brief Processes data-table boolean data-type data buffer samples on the stack by column based on the column index provided.
  * 
  * @param[in] datatable_handle Data-table handle.
  * @param[in] index Data-table column index to process.
@@ -1173,7 +1173,7 @@ static inline esp_err_t datatable_process_bool_data_buffer(datatable_handle_t da
 }
 
 /**
- * @brief Processes data-table float data-type data buffer samples on the stack by column based on the colunm index provided.
+ * @brief Processes data-table float data-type data buffer samples on the stack by column based on the column index provided.
  * 
  * @param[in] datatable_handle Data-table handle.
  * @param[in] index Data-table column index to process.
@@ -1283,7 +1283,7 @@ static inline esp_err_t datatable_process_float_data_buffer(datatable_handle_t d
 }
 
 /**
- * @brief Processes data-table int16 data-type data buffer samples on the stack by column based on the colunm index provided.
+ * @brief Processes data-table int16 data-type data buffer samples on the stack by column based on the column index provided.
  * 
  * @param[in] datatable_handle Data-table handle.
  * @param[in] index Data-table column index to process.
@@ -1485,7 +1485,7 @@ esp_err_t datatable_init(const datatable_config_t *datatable_config, datatable_h
 
     // initialize a time-into-interval handle - data-table sampling task system clock synchronization
     ESP_GOTO_ON_ERROR( time_into_interval_init(&dt_sampling_tii_cfg, &out_handle->sampling_tii_handle), 
-                        err_out_handle, TAG, "unabled to initialize sampling time-into-interval handle, data-table handle initialization failed" );
+                        err_out_handle, TAG, "unable to initialize sampling time-into-interval handle, data-table handle initialization failed" );
 
     // initialize time-into-interval configuration - data-table column data buffer processing task system clock synchronization
     const time_into_interval_config_t dt_processing_tii_cfg = {
@@ -1497,11 +1497,11 @@ esp_err_t datatable_init(const datatable_config_t *datatable_config, datatable_h
 
     // initialize a time-into-interval handle - data-table column data buffer processing task system clock synchronization
     ESP_GOTO_ON_ERROR( time_into_interval_init(&dt_processing_tii_cfg, &out_handle->processing_tii_handle), 
-                        err_out_handle, TAG, "unabled to initialize processing time-into-interval handle, data-table handle initialization failed" );
+                        err_out_handle, TAG, "unable to initialize processing time-into-interval handle, data-table handle initialization failed" );
 
     /* set maximum size of data-table column data buffer */
     ESP_GOTO_ON_ERROR( datatable_get_column_samples_maximum_size(out_handle, &out_handle->samples_maximum_size),
-                        err_out_handle, TAG, "unabled to get column sample size maximum, data-table handle initialization failed" );
+                        err_out_handle, TAG, "unable to get column sample size maximum, data-table handle initialization failed" );
 
     /* validate memory availability for default data-table columns */
     out_handle->columns = (datatable_column_t**)calloc(out_handle->columns_size, sizeof(datatable_column_t*));
@@ -2248,7 +2248,7 @@ esp_err_t datatable_push_vector_sample(datatable_handle_t datatable_handle, cons
 
     /* invoke event handler */
     if(datatable_handle->event_handler) {
-        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "vector sample push onto the buffer samples stack successfull");
+        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "vector sample push onto the buffer samples stack successful");
     }
 
     return ESP_OK;
@@ -2281,7 +2281,7 @@ esp_err_t datatable_push_bool_sample(datatable_handle_t datatable_handle, const 
 
     /* invoke event handler */
     if(datatable_handle->event_handler) {
-        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "bool sample push onto the buffer samples stack successfull");
+        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "bool sample push onto the buffer samples stack successful");
     }
 
     return ESP_OK;
@@ -2328,7 +2328,7 @@ esp_err_t datatable_push_float_sample(datatable_handle_t datatable_handle, const
 
     /* invoke event handler */
     if(datatable_handle->event_handler) {
-        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "float sample push onto the buffer samples stack was successfull");
+        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "float sample push onto the buffer samples stack was successful");
     }
 
     return ESP_OK;
@@ -2375,7 +2375,7 @@ esp_err_t datatable_push_int16_sample(datatable_handle_t datatable_handle, const
 
     /* invoke event handler */
     if(datatable_handle->event_handler) {
-        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "int16 sample push onto the buffer samples stack successfull");
+        datatable_invoke_event(datatable_handle, DATATABLE_EVENT_SAMPLE_PUSHED, "int16 sample push onto the buffer samples stack successful");
     }
 
     return ESP_OK;
@@ -2414,7 +2414,7 @@ esp_err_t datatable_process_samples(datatable_handle_t datatable_handle) {
         /* reset sampling count */
         datatable_handle->sampling_count = 0;
     } else if(datatable_handle->sampling_count < datatable_handle->samples_maximum_size) {
-        /* insuficient number of data buffer samples at processing interval event, reset column data buffers */
+        /* insufficient number of data buffer samples at processing interval event, reset column data buffers */
         ESP_RETURN_ON_ERROR( datatable_reset_data_buffers(datatable_handle), TAG, "reset column data buffer for data-table process samples failed" );
 
         /* exit the function */

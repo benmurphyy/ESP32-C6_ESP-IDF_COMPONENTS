@@ -6,7 +6,9 @@ The PlatformIO versioning tool is a Python script that increments the last versi
 - library.json
 - include/[component_name]_version.h
 
-Once the version number is incremented, the script attempts to upload each component to the `ESP Component Registry` and `PlatformIO Library Registry`.  The version number part to increment (i.g. major, minor, patch) is specified in the `config.py` file.
+Once the version number is incremented, the script attempts to upload each component to the `ESP Component Registry` and `PlatformIO Library Registry`.  
+
+The version number part to increment (i.g. major, minor, patch) is specified in the `config.py` file.  File paths and paths defined in the `config.py` file are absolute and will have to be updated if the development environment changes.
 
 ## Python Script Files
 

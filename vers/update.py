@@ -4,7 +4,7 @@
 import config, json, re, subprocess
 import constant as const
 from component import Component
-from constant import FWVersionUpdateTypes
+from constant import FWVersionUpdateParts
 from ruamel.yaml import YAML
 
 
@@ -73,13 +73,13 @@ def update_version_number() -> str:
     patch = version_info['version_patch']
     
     # update fw version part by update type
-    if config.fw_version_update_type == FWVersionUpdateTypes.FW_VERSION_UPDATE_MAJOR:
+    if config.fw_version_update_type == FWVersionUpdateParts.FW_VERSION_UPDATE_MAJOR:
         major += 1
         version_info['version_major'] = major
-    elif config.fw_version_update_type == FWVersionUpdateTypes.FW_VERSION_UPDATE_MINOR:
+    elif config.fw_version_update_type == FWVersionUpdateParts.FW_VERSION_UPDATE_MINOR:
         minor += 1
         version_info['version_minor'] = minor
-    elif config.fw_version_update_type == FWVersionUpdateTypes.FW_VERSION_UPDATE_PATCH:
+    elif config.fw_version_update_type == FWVersionUpdateParts.FW_VERSION_UPDATE_PATCH:
         patch += 1
         version_info['version_patch'] = patch
     
@@ -232,9 +232,13 @@ for component in config.component_list:
     version_tpl = version_number_parts()
     update_version(component, version_tpl[0], version_tpl[1], version_tpl[2])
     print(component.name + " version (" + current_version + ") -> " + version_number())
-    subprocess.run(["powershell", "compote component upload --name " + component.name + " --project-dir '" + component.path + "' --dest-dir '" + config.component_archive_path + "'"], shell=True)
-    subprocess.run(["powershell", "pio pkg publish '" + component.path +"' --owner '" + config.pio_owner + "' --type library --no-interactive"], shell=True)
+    subprocess.run(["powershell", "compote component upload --name " + component.name + " --project-dir '" + component.path + "' --dest-dir '" + config.component_archive_path + "'"])
+    subprocess.run(["powershell", "pio pkg publish '" + component.path +"' --owner '" + config.pio_owner + "' --type library --no-interactive"])
 
+
+# Shell=True should not be used, security venerability
+#subprocess.run(["powershell", "compote component upload --name " + component.name + " --project-dir '" + component.path + "' --dest-dir '" + config.component_archive_path + "'"], shell=True)
+#subprocess.run(["powershell", "pio pkg publish '" + component.path +"' --owner '" + config.pio_owner + "' --type library --no-interactive"], shell=True)
 
 #component = config.component_list[5]
 #version_tpl = version_number_parts()

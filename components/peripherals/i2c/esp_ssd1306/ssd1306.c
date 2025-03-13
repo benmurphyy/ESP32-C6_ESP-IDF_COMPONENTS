@@ -32,6 +32,7 @@
  *
  * MIT Licensed as described in the file LICENSE
  */
+
 #include "include/ssd1306.h"
 #include "include/font_latin_8x8.h"
 #include <string.h>
@@ -717,6 +718,7 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	out_buf[0] = SSD1306_CONTROL_BYTE_DATA_STREAM;
 
 	memcpy(&out_buf[1], image, width);
+
 
 	ESP_GOTO_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, width + 1, I2C_XFR_TIMEOUT_MS), err, TAG, "write image for image display failed");
 

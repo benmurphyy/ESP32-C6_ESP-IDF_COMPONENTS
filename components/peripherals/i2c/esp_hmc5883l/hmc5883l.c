@@ -410,13 +410,13 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
     hmc5883l_configuration1_register_t config1;
     hmc5883l_configuration2_register_t config2;
     hmc5883l_axes_data_t            raw_axes;
-    hmc5883l_magnetic_axes_data_t   scalled_axes;
+    hmc5883l_magnetic_axes_data_t   scaled_axes;
     hmc5883l_gain_error_axes_data_t gain_error_axes;
-    hmc5883l_offset_axes_data_t     offset_axes;
-    hmc5883l_offset_axes_data_t     max_offset_axes;
-    hmc5883l_offset_axes_data_t     min_offset_axes;
-    uint16_t x_count = 0, y_count = 0, z_count = 0;
-    bool x_zero = false, y_zero = false, z_zero = false;
+    //hmc5883l_offset_axes_data_t     offset_axes;
+    //hmc5883l_offset_axes_data_t     max_offset_axes;
+    //hmc5883l_offset_axes_data_t     min_offset_axes;
+    //uint16_t x_count = 0, y_count = 0, z_count = 0;
+    //bool x_zero = false, y_zero = false, z_zero = false;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
@@ -452,14 +452,14 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
             ESP_ERROR_CHECK( hmc5883l_get_fixed_magnetic_axes(handle, &raw_axes) );
         }
 
-        scalled_axes.x_axis  = (float)raw_axes.x_axis * gain_sensitivity;
-        scalled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
-        scalled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
+        scaled_axes.x_axis  = (float)raw_axes.x_axis * gain_sensitivity;
+        scaled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
+        scaled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
 
         // offset = 1160 - data positive
-        gain_error_axes.x_axis = (float)HMC5883L_XY_EXCITATION/scalled_axes.x_axis;
-        gain_error_axes.y_axis = (float)HMC5883L_XY_EXCITATION/scalled_axes.y_axis;
-        gain_error_axes.z_axis = (float)HMC5883L_Z_EXCITATION/scalled_axes.z_axis;
+        gain_error_axes.x_axis = (float)HMC5883L_XY_EXCITATION/scaled_axes.x_axis;
+        gain_error_axes.y_axis = (float)HMC5883L_XY_EXCITATION/scaled_axes.y_axis;
+        gain_error_axes.z_axis = (float)HMC5883L_Z_EXCITATION/scaled_axes.z_axis;
 
         // configuring the control register for negative bias mode
         config1.bits.sample_avg = HMC5883L_SAMPLE_8;
@@ -476,14 +476,14 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
             ESP_ERROR_CHECK( hmc5883l_get_fixed_magnetic_axes(handle, &raw_axes) );
         }
 
-        scalled_axes.x_axis  = (float)raw_axes.x_axis * gain_sensitivity;
-        scalled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
-        scalled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
+        scaled_axes.x_axis  = (float)raw_axes.x_axis * gain_sensitivity;
+        scaled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
+        scaled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
 
         // taking the average of the offsets
-        gain_error_axes.x_axis = (float)((HMC5883L_XY_EXCITATION/fabs(scalled_axes.x_axis))+gain_error_axes.x_axis)/2;
-        gain_error_axes.y_axis = (float)((HMC5883L_XY_EXCITATION/fabs(scalled_axes.y_axis))+gain_error_axes.y_axis)/2;
-        gain_error_axes.z_axis = (float)((HMC5883L_Z_EXCITATION/fabs(scalled_axes.z_axis))+gain_error_axes.z_axis)/2;
+        gain_error_axes.x_axis = (float)((HMC5883L_XY_EXCITATION/fabs(scaled_axes.x_axis))+gain_error_axes.x_axis)/2;
+        gain_error_axes.y_axis = (float)((HMC5883L_XY_EXCITATION/fabs(scaled_axes.y_axis))+gain_error_axes.y_axis)/2;
+        gain_error_axes.z_axis = (float)((HMC5883L_Z_EXCITATION/fabs(scaled_axes.z_axis))+gain_error_axes.z_axis)/2;
 
         handle->gain_calibrated = true;
         handle->gain_error_axes = gain_error_axes;
@@ -500,67 +500,73 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
     ESP_RETURN_ON_ERROR(hmc5883l_set_configuration1_register(handle, config1), TAG, "write configuration 1 register failed");
 
     if(option == HMC5883L_CAL_AXES_MEAN || option == HMC5883L_CAL_BOTH) {
+        hmc5883l_offset_axes_data_t     offset_axes = { .x_axis = NAN, .y_axis = NAN, .z_axis = NAN };
+        hmc5883l_offset_axes_data_t     max_offset_axes = { .x_axis = NAN, .y_axis = NAN, .z_axis = NAN };
+        hmc5883l_offset_axes_data_t     min_offset_axes = { .x_axis = NAN, .y_axis = NAN, .z_axis = NAN };
+        uint16_t x_count = 0, y_count = 0, z_count = 0;
+        bool x_zero = false, y_zero = false, z_zero = false;
+
         ESP_LOGW(TAG, "Calibrating the Magnetometer ....... Offset");
-        ESP_LOGW(TAG, "Please rotate the magnetometer 2 or 3 times in complete circules with in one minute .............");
+        ESP_LOGW(TAG, "Please rotate the magnetometer 2 or 3 times in complete circles within one minute .............");
 
         while (x_count < 3 || y_count < 3 || z_count < 3) {
             ESP_ERROR_CHECK( hmc5883l_get_fixed_magnetic_axes(handle, &raw_axes) );
-            scalled_axes.x_axis  = (float)raw_axes.x_axis * gain_sensitivity;
-            scalled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
-            scalled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
+            scaled_axes.x_axis  = (float)raw_axes.x_axis * gain_sensitivity;
+            scaled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
+            scaled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
 
             //if ((fabs(scalled_axes.x_axis) > 600) || (fabs(scalled_axes.y_axis) > 600) || (fabs(scalled_axes.z_axis) > 600)) {
-            if ((fabs(scalled_axes.x_axis) > 100) || (fabs(scalled_axes.y_axis) > 100) || (fabs(scalled_axes.z_axis) > 100)) {
+            if ((fabs(scaled_axes.x_axis) > 100) || (fabs(scaled_axes.y_axis) > 100) || (fabs(scaled_axes.z_axis) > 100)) {
                 continue;
             }
 
-            if (min_offset_axes.x_axis > scalled_axes.x_axis) {
-                min_offset_axes.x_axis = scalled_axes.x_axis;
-            } else if (max_offset_axes.x_axis < scalled_axes.x_axis) {
-                max_offset_axes.x_axis = scalled_axes.x_axis;
+            if (min_offset_axes.x_axis > scaled_axes.x_axis) {
+                min_offset_axes.x_axis = scaled_axes.x_axis;
+            } else if (max_offset_axes.x_axis < scaled_axes.x_axis) {
+                max_offset_axes.x_axis = scaled_axes.x_axis;
             }
 
-            if (min_offset_axes.y_axis > scalled_axes.y_axis) {
-                min_offset_axes.y_axis = scalled_axes.y_axis;
-            } else if (max_offset_axes.y_axis < scalled_axes.y_axis) {
-                max_offset_axes.y_axis = scalled_axes.y_axis;
+            if (min_offset_axes.y_axis > scaled_axes.y_axis) {
+                min_offset_axes.y_axis = scaled_axes.y_axis;
+            } else if (max_offset_axes.y_axis < scaled_axes.y_axis) {
+                max_offset_axes.y_axis = scaled_axes.y_axis;
             }
 
-            if (min_offset_axes.z_axis > scalled_axes.z_axis) {
-                min_offset_axes.z_axis = scalled_axes.z_axis;
-            } else if (max_offset_axes.z_axis < scalled_axes.z_axis) {
-                max_offset_axes.z_axis = scalled_axes.z_axis;
+            if (min_offset_axes.z_axis > scaled_axes.z_axis) {
+                min_offset_axes.z_axis = scaled_axes.z_axis;
+            } else if (max_offset_axes.z_axis < scaled_axes.z_axis) {
+                max_offset_axes.z_axis = scaled_axes.z_axis;
             }
 
             if (x_zero) {
-                if (fabs(scalled_axes.x_axis) > 50) {
+                if (fabs(scaled_axes.x_axis) > 50) {
                     x_zero = false;
                     x_count++;
                 }
             } else {
-                if (fabs(scalled_axes.x_axis) < 40) {
+                if (fabs(scaled_axes.x_axis) < 40) {
                     x_zero = true;
                 }
             }
 
             if (y_zero) {
-                if (fabs(scalled_axes.y_axis) > 50) {
+                if (fabs(scaled_axes.y_axis) > 50) {
                     y_zero = false;
                     y_count++;
                 }
             } else {
-                if (fabs(scalled_axes.y_axis) < 40) {
+                if (fabs(scaled_axes.y_axis) < 40) {
                     y_zero = true;
                 }
             }
 
             if (z_zero) {
-                if (fabs(scalled_axes.z_axis) > 50) {
+                if (fabs(scaled_axes.z_axis) > 50) {
                     z_zero = false;
                     z_count++;
                 }
             } else {
-                if (fabs(scalled_axes.z_axis) < 40) {
+                if (fabs(scaled_axes.z_axis) < 40) {
                     z_zero = true;
                 }
             }

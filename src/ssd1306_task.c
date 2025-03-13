@@ -138,7 +138,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_set_software_scroll(handle, (handle->pages - 1), 1);
 	for (int line = 0; line < bottom+10; line++) {
 		lineChar[0] = 0x01;
-		sprintf(&lineChar[1], " Line %02d", line);
+		snprintf(&lineChar[1], 11, " Line %02d", line);
 		ssd1306_display_software_scroll_text(handle, lineChar, false);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
@@ -153,7 +153,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_set_software_scroll(handle, 1, (handle->pages - 1) );
 	for (int page = 0; page < bottom+10; page++) {
 		lineChar[0] = 0x02;
-		sprintf(&lineChar[1], " Line %02d", page);
+		snprintf(&lineChar[1], 11, " Line %02d", page);
 		ssd1306_display_software_scroll_text(handle, lineChar, false);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
@@ -169,7 +169,7 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	for (int page = 0; page < bottom+10; page++) {
 		if ( (page % (handle->pages-1)) == 0) ssd1306_clear_display_software_scroll(handle);
 		lineChar[0] = 0x02;
-		sprintf(&lineChar[1], " Line %02d", page);
+		snprintf(&lineChar[1], 11, " Line %02d", page);
 		ssd1306_display_software_scroll_text(handle, lineChar, false);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
@@ -314,7 +314,7 @@ static void ssd1306_contrast_demo(ssd1306_handle_t handle) {
 	for(uint8_t i = 0; i < iterations; i+=5) {
 		ssd1306_set_contrast(handle, contrast);
 
-		sprintf(lineChar, "Contrast %02d", i);
+		snprintf(lineChar, 14, "Contrast %02d", i);
 		ssd1306_display_text(handle, 1, lineChar, true);
 
 		if (contrast == 0xff) direction = -1;
