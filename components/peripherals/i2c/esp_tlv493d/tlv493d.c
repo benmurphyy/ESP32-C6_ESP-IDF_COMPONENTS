@@ -282,6 +282,9 @@ static inline esp_err_t i2c_tlv493d_get_fixed_magnetic_axes(i2c_tlv493d_handle_t
     out_data.y_axis = i2c_tlv493d_concat_12bit_data(rx_buffer[1], bx_by_lsb_reg.bits.by_lsb);
     out_data.z_axis = i2c_tlv493d_concat_12bit_data(rx_buffer[2], bz_lsb_reg.bits.bz_lsb);
     out_data.temperature = i2c_tlv493d_concat_12bit_data(temperature_msb_reg.bits.temperature_msb, rx_buffer[6]);
+    out_data.temperature_enabled = true;
+
+
 
     //out_data.x_axis = i2c_tlv493d_concat_12bit_data(tx_buffer[0], tx_buffer[4]);
     //out_data.y_axis = i2c_tlv493d_concat_12bit_data(tx_buffer[1], tx_buffer[4]);
