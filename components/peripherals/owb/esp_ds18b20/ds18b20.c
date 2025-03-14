@@ -192,7 +192,9 @@ esp_err_t ds18b20_init(onewire_device_t *device, const ds18b20_config_t *ds18b20
     ESP_RETURN_ON_FALSE( out_handle, ESP_ERR_NO_MEM, TAG, "no memory for device, ds18b20 device handle initialization failed" );
 
     /* copy configuration */
-    out_handle->dev_config = *ds18b20_config;
+	out_handle->owb_handle  = device->bus;
+    out_handle->owb_address = device->address;
+    out_handle->dev_config  = *ds18b20_config;
 
     /* set temperature resolution */
     ESP_RETURN_ON_ERROR( ds18b20_set_resolution(out_handle, out_handle->dev_config.resolution), TAG, "unable to write temperature resolution, ds18b20 device handle initialization failed" );

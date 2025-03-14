@@ -52,7 +52,7 @@
 #define ESP_ARG_CHECK(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 #define SQR(x) ((x) * (x))
 /*
-* static constant declerations
+* static constant declarations
 */
 static const char *TAG = "scalar_trend";
 
@@ -162,7 +162,7 @@ esp_err_t scalar_trend_init(const uint16_t samples_size, scalar_trend_handle_t *
     scalar_trend_handle_t out_handle = (scalar_trend_handle_t)calloc(1, sizeof(scalar_trend_t)); 
     ESP_GOTO_ON_FALSE( out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for scalar trend handle, scalar trend handle initialization failed" );
 
-    /* validate memory availability for sampples array */
+    /* validate memory availability for samples array */
     out_handle->samples = (float*)calloc(samples_size, sizeof(float));
     ESP_GOTO_ON_FALSE( out_handle->samples, ESP_ERR_NO_MEM, err_out_handle, TAG, "no memory for scalar trend handle samples, scalar trend handle initialization failed" );
 
@@ -323,7 +323,7 @@ esp_err_t scalar_trend_analysis(scalar_trend_handle_t scalar_trend_handle,
 
     /*    
      *          Finally, make the decision and return a string
-     *          summarising the conclusion.
+     *          summarizing the conclusion.
      */
 
     // is tObserved further to the left or right than tCritical?
