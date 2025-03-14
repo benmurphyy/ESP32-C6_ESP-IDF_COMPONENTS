@@ -87,14 +87,14 @@ static const char *TAG = "hmc5883l";
 
 /* Gain sensitivity values for HMC5883L */
 static const float hmc5883l_gain_values [] = {
-    [HMC5883L_GAIN_1370] = 0.73,
-    [HMC5883L_GAIN_1090] = 0.92,
-    [HMC5883L_GAIN_820]  = 1.22,
-    [HMC5883L_GAIN_660]  = 1.52,
-    [HMC5883L_GAIN_440]  = 2.27,
-    [HMC5883L_GAIN_390]  = 2.56,
-    [HMC5883L_GAIN_330]  = 3.03,
-    [HMC5883L_GAIN_230]  = 4.35
+    [HMC5883L_GAIN_1370] = 0.73f,
+    [HMC5883L_GAIN_1090] = 0.92f,
+    [HMC5883L_GAIN_820]  = 1.22f,
+    [HMC5883L_GAIN_660]  = 1.52f,
+    [HMC5883L_GAIN_440]  = 2.27f,
+    [HMC5883L_GAIN_390]  = 2.56f,
+    [HMC5883L_GAIN_330]  = 3.03f,
+    [HMC5883L_GAIN_230]  = 4.35f
 };
 
 /*
@@ -391,7 +391,7 @@ esp_err_t hmc5883l_get_magnetic_axes(hmc5883l_handle_t handle, hmc5883l_magnetic
         axes_data->z_axis  = (float)raw.z_axis * gain_sensitivity;
     }
 
-    axes_data->heading = atan2f(0.0f - axes_data->y_axis, axes_data->x_axis) * 180.0f / M_PI;
+    axes_data->heading = atan2f(0.0f - axes_data->y_axis, axes_data->x_axis) * 180.0f / (float)M_PI;
     //compass_axes_data->heading = atan2(compass_axes_data->y_axis, compass_axes_data->x_axis);
     //compass_axes_data->heading += (hmc5883l_handle->declination * 180/M_PI);
      // Correct for when signs are reversed.
@@ -412,11 +412,6 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
     hmc5883l_axes_data_t            raw_axes;
     hmc5883l_magnetic_axes_data_t   scaled_axes;
     hmc5883l_gain_error_axes_data_t gain_error_axes;
-    //hmc5883l_offset_axes_data_t     offset_axes;
-    //hmc5883l_offset_axes_data_t     max_offset_axes;
-    //hmc5883l_offset_axes_data_t     min_offset_axes;
-    //uint16_t x_count = 0, y_count = 0, z_count = 0;
-    //bool x_zero = false, y_zero = false, z_zero = false;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
@@ -503,8 +498,12 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
         hmc5883l_offset_axes_data_t     offset_axes = { .x_axis = NAN, .y_axis = NAN, .z_axis = NAN };
         hmc5883l_offset_axes_data_t     max_offset_axes = { .x_axis = NAN, .y_axis = NAN, .z_axis = NAN };
         hmc5883l_offset_axes_data_t     min_offset_axes = { .x_axis = NAN, .y_axis = NAN, .z_axis = NAN };
-        uint16_t x_count = 0, y_count = 0, z_count = 0;
-        bool x_zero = false, y_zero = false, z_zero = false;
+        uint16_t x_count = 0;
+        uint16_t y_count = 0;
+        uint16_t z_count = 0;
+        bool x_zero = false;
+        bool y_zero = false;
+        bool z_zero = false;
 
         ESP_LOGW(TAG, "Calibrating the Magnetometer ....... Offset");
         ESP_LOGW(TAG, "Please rotate the magnetometer 2 or 3 times in complete circles within one minute .............");
@@ -515,7 +514,6 @@ esp_err_t hmc5883l_get_calibrated_offsets(hmc5883l_handle_t handle, const hmc588
             scaled_axes.y_axis  = (float)raw_axes.y_axis * gain_sensitivity;
             scaled_axes.z_axis  = (float)raw_axes.z_axis * gain_sensitivity;
 
-            //if ((fabs(scalled_axes.x_axis) > 600) || (fabs(scalled_axes.y_axis) > 600) || (fabs(scalled_axes.z_axis) > 600)) {
             if ((fabs(scaled_axes.x_axis) > 100) || (fabs(scaled_axes.y_axis) > 100) || (fabs(scaled_axes.z_axis) > 100)) {
                 continue;
             }

@@ -51,8 +51,6 @@ extern "C" {
 #endif
 
 
-// TODO? - add multi-thread synch (i.e. mutex)??
-
 /**
  * @brief Time into interval types enumerator.
  */

@@ -446,11 +446,11 @@ esp_err_t ssd1306_display_filled_circle(ssd1306_handle_t handle, uint8_t x0, uin
         ddF_x += 2;
         f += ddF_x;
 
-        ssd1306_set_line(handle, x0 - x, y0 + y, x0 + x, y0 + y, invert);
-        ssd1306_set_line(handle, x0 + x, y0 - y, x0 - x, y0 - y, invert);
+        ssd1306_set_line(handle, x0 - (uint8_t)x, y0 + (uint8_t)y, x0 + (uint8_t)x, y0 + (uint8_t)y, invert);
+        ssd1306_set_line(handle, x0 + (uint8_t)x, y0 - (uint8_t)y, x0 - (uint8_t)x, y0 - (uint8_t)y, invert);
 
-        ssd1306_set_line(handle, x0 + y, y0 + x, x0 - y, y0 + x, invert);
-        ssd1306_set_line(handle, x0 + y, y0 - x, x0 - y, y0 - x, invert);
+        ssd1306_set_line(handle, x0 + (uint8_t)y, y0 + (uint8_t)x, x0 - (uint8_t)y, y0 + (uint8_t)x, invert);
+        ssd1306_set_line(handle, x0 + (uint8_t)y, y0 - (uint8_t)x, x0 - (uint8_t)y, y0 - (uint8_t)x, invert);
     }
 
     ESP_RETURN_ON_ERROR(ssd1306_display_pages(handle), TAG, "display pages for filled circle failed");
@@ -607,15 +607,15 @@ esp_err_t ssd1306_get_pages(ssd1306_handle_t handle, uint8_t *buffer) {
 }
 
 esp_err_t ssd1306_set_bitmap(ssd1306_handle_t handle, uint8_t xpos, uint8_t ypos, const uint8_t *bitmap, uint8_t width, uint8_t height, bool invert) {
-	uint8_t i, j, byte_width = (width + 7) / 8;
+	uint8_t byte_width = (width + 7) / 8;
 
 	/* validate parameters */
 	ESP_ARG_CHECK( handle );
 
-	for (j = 0; j < height; j++) {
-        for (i = 0; i < width; i++) {
+	for (uint8_t j = 0; j < height; j++) {
+        for (uint8_t i = 0; i < width; i++) {
             if (*(bitmap + j * byte_width + i / 8) & (128 >> (i & 7))) {
-                ssd1306_set_pixel(handle, xpos + i, ypos + j, 0);
+                ssd1306_set_pixel(handle, xpos + i, ypos + j, invert);
             }
         }
     }
@@ -659,13 +659,19 @@ esp_err_t ssd1306_display_bitmap__(ssd1306_handle_t handle, uint8_t xpos, uint8_
 		for (uint8_t index = 0; index < _width; index++) {
 			for (int8_t srcBits=7; srcBits>=0; srcBits--) {
 				wk0 = handle->page[page].segment[_seg];
-				if (handle->dev_config.flip_enabled) wk0 = ssd1306_rotate_byte(wk0);
+				if (handle->dev_config.flip_enabled) {
+					wk0 = ssd1306_rotate_byte(wk0);
+				}
 
 				wk1 = bitmap[index+offset];
-				if (invert) wk1 = ~wk1;
+				if (invert) {
+					wk1 = ~wk1; 
+				}
 
 				wk2 = ssd1306_copy_bit(wk1, srcBits, wk0, dstBits);
-				if (handle->dev_config.flip_enabled) wk2 = ssd1306_rotate_byte(wk2);
+				if (handle->dev_config.flip_enabled) {
+					wk2 = ssd1306_rotate_byte(wk2);
+				}
 
 				ESP_LOGD(TAG, "index=%d offset=%d page=%d _seg=%d, wk2=%02x", index, offset, page, _seg, wk2);
 				handle->page[page].segment[_seg] = wk2;
@@ -738,8 +744,8 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	return ESP_OK;
 
 	err:
-	free(out_buf);
-	return ret;
+		free(out_buf);
+		return ret;
 }
 
 esp_err_t ssd1306_display_text(ssd1306_handle_t handle, uint8_t page, const char *text, bool invert) {
@@ -780,8 +786,6 @@ esp_err_t ssd1306_display_text_x2(ssd1306_handle_t handle, uint8_t page, const c
 		// make the character 2x as high
 		ssd1306_out_column_t out_columns[8];
 		memset(out_columns, 0, sizeof(out_columns));
-		//ssd1306_out_column_t *out_columns = (ssd1306_out_column_t*)calloc(8, sizeof(ssd1306_out_column_t));
-		
 
 		for (uint8_t xx = 0; xx < 8; xx++) { // for each column (x-direction)
 			uint32_t in_bitmask = 0b1;
@@ -1025,7 +1029,7 @@ esp_err_t ssd1306_display_software_scroll_text(ssd1306_handle_t handle, const ch
 	uint16_t srcIndex = handle->scroll_end - handle->scroll_direction;
 	while(1) {
 		uint16_t dstIndex = srcIndex + handle->scroll_direction;
-		ESP_LOGD(TAG, "srcIndex=%d dstIndex=%d", srcIndex,dstIndex);
+		ESP_LOGD(TAG, "srcIndex=%u dstIndex=%u", srcIndex,dstIndex);
 		for(uint16_t seg = 0; seg < handle->width; seg++) {
 			handle->page[dstIndex].segment[seg] = handle->page[srcIndex].segment[seg];
 		}
@@ -1044,12 +1048,12 @@ esp_err_t ssd1306_clear_display_software_scroll(ssd1306_handle_t handle) {
 	ESP_ARG_CHECK( handle );
 
 	ESP_LOGD(TAG, "ssd1306_handle->dev_params->scroll_enabled=%d", handle->scroll_enabled);
-	if (handle->scroll_enabled == false) return ESP_ERR_INVALID_ARG;
+	ESP_RETURN_ON_FALSE(handle->scroll_enabled, ESP_ERR_INVALID_ARG, TAG, "software scroll not enabled");
 
 	uint16_t srcIndex = handle->scroll_end - handle->scroll_direction;
 	while(1) {
 		uint16_t dstIndex = srcIndex + handle->scroll_direction;
-		ESP_LOGD(TAG, "srcIndex=%d dstIndex=%d", srcIndex,dstIndex);
+		ESP_LOGD(TAG, "srcIndex=%u dstIndex=%u", srcIndex,dstIndex);
 		ESP_RETURN_ON_ERROR(ssd1306_clear_display_page(handle, dstIndex, false), TAG, "clear display page for scroll clear failed");
 		if (dstIndex == handle->scroll_start) break;
 		srcIndex = srcIndex - handle->scroll_direction;
@@ -1075,7 +1079,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = SSD1306_CMD_HORIZONTAL_RIGHT; // 26
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
-		out_buf[out_index++] = frame_frequency; // Frame frequency
+		out_buf[out_index++] = (uint8_t)frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x01; // Define end page address
 		out_buf[out_index++] = 0x00; // Dummy byte 0x00
 		out_buf[out_index++] = 0xFF; // Dummy byte 0xFF
@@ -1086,7 +1090,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = SSD1306_CMD_HORIZONTAL_LEFT; // 27
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
-		out_buf[out_index++] = frame_frequency; // Frame frequency
+		out_buf[out_index++] = (uint8_t)frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x01; // Define end page address
 		out_buf[out_index++] = 0x00; //
 		out_buf[out_index++] = 0xFF; //
@@ -1097,7 +1101,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = SSD1306_CMD_CONTINUOUS_SCROLL; // 29
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
-		out_buf[out_index++] = frame_frequency; // Frame frequency
+		out_buf[out_index++] = (uint8_t)frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x00; // Define end page address
 		out_buf[out_index++] = 0x3F; // Vertical scrolling offset
 
@@ -1116,7 +1120,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = SSD1306_CMD_CONTINUOUS_SCROLL; // 29
 		out_buf[out_index++] = 0x00; // Dummy byte
 		out_buf[out_index++] = 0x00; // Define start page address
-		out_buf[out_index++] = frame_frequency; // Frame frequency
+		out_buf[out_index++] = (uint8_t)frame_frequency; // Frame frequency
 		out_buf[out_index++] = 0x00; // Define end page address
 		out_buf[out_index++] = 0x01; // Vertical scrolling offset
 

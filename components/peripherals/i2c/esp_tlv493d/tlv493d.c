@@ -329,9 +329,6 @@ static inline esp_err_t i2c_tlv493d_configure_power_mode1_register(i2c_tlv493d_h
             mode1_reg->bits.low_power_mode_enabled = false;
             break;
         case I2C_TLV493D_LOW_POWER_MODE:
-            mode1_reg->bits.fast_mode_enabled      = false;
-            mode1_reg->bits.low_power_mode_enabled = true;
-            break;
         case I2C_TLV493D_ULTRA_LOW_POWER_MODE:
             mode1_reg->bits.fast_mode_enabled      = false;
             mode1_reg->bits.low_power_mode_enabled = true;

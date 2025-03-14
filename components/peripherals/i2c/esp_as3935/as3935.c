@@ -484,8 +484,6 @@ esp_err_t as3935_get_0x03_register(as3935_handle_t handle, as3935_0x03_register_
 
     ESP_ARG_CHECK( handle );
 
-    //ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_03, &reg->reg) );
-
     // retry to overcome unexpected nack
     do {
         /* attempt i2c read transaction */
@@ -493,7 +491,7 @@ esp_err_t as3935_get_0x03_register(as3935_handle_t handle, as3935_0x03_register_
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(1));
-    } while (ret != ESP_OK && ++rx_retry_count <= rx_retry_max);
+    } while (++rx_retry_count <= rx_retry_max && ret != ESP_OK);
     //
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ret, TAG, "unable to read to i2c device handle, get register 0x03 failed" );

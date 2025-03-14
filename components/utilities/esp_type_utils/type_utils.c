@@ -186,11 +186,11 @@ const char* int64_to_binary(const int64_t value) {
 
 uint16_t bytes_to_uint16(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
-        return  (uint16_t)bytes[0] | 
-                ((uint16_t)bytes[1] << 8);
+        return  (uint16_t)(bytes[0] | 
+                ((uint16_t)bytes[1] << 8));
     } else {
-        return  ((uint16_t)bytes[0] << 8) | 
-                (uint16_t)bytes[1];
+        return  (uint16_t)(((uint16_t)bytes[0] << 8) | 
+                bytes[1]);
     }
 }
 
@@ -232,11 +232,10 @@ uint64_t bytes_to_uint64(const uint8_t* bytes, const bool little_endian) {
 
 int16_t bytes_to_int16(const uint8_t* bytes, const bool little_endian) {
     if(little_endian == true) {
-        return  (int16_t)bytes[0] | 
-                ((int16_t)bytes[1] << 8);
+        return  (int16_t)(bytes[0] | 
+                ((int16_t)bytes[1] << 8));
     } else {
-        return  ((int16_t)bytes[0] << 8) | 
-                (int16_t)bytes[1];
+        return  (int16_t)(((int16_t)bytes[0] << 8) | bytes[1]);
     }
 }
 

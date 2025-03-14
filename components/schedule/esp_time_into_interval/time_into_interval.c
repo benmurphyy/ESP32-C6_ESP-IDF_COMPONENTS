@@ -66,7 +66,7 @@ static const char *TAG = "time_into_interval";
  */
 static inline uint16_t time_into_interval_get_hash_code(void) {
     uint16_t seed_hash = (uint16_t)time_into_interval_get_epoch_timestamp();
-    return ((seed_hash>>16) ^ (seed_hash)) & 0xFFFF;
+    return ((seed_hash>>16) ^ seed_hash) & 0xFFFF;
 }
 
 uint64_t time_into_interval_normalize_interval_to_sec(const time_into_interval_types_t interval_type, const uint16_t interval) {
@@ -361,14 +361,11 @@ esp_err_t time_into_interval_delay(time_into_interval_handle_t time_into_interva
         delta_msec = time_into_interval_handle->epoch_timestamp - now_unix_msec;
     }
 
-    // compute ticks delay from time delta
-    TickType_t delay = (delta_msec / portTICK_PERIOD_MS);
-
     /* unlock the mutex */
     xSemaphoreGive(time_into_interval_handle->mutex_handle);
 
     // delay the task per ticks delay
-    vTaskDelay( delay );
+    vTaskDelay( delta_msec / portTICK_PERIOD_MS );
 
     /* lock the mutex */
     xSemaphoreTake(time_into_interval_handle->mutex_handle, portMAX_DELAY);

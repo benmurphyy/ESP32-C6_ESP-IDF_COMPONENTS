@@ -112,7 +112,7 @@ static inline uint8_t ahtxx_calculate_crc8(const uint8_t buffer[], const uint8_t
     for (uint8_t byte = 0; byte < len; byte++) {
         crc ^= buffer[byte];
         for (uint8_t i = 0; i < 8; i++) {
-            crc = crc & AHTXX_CRC8_MASK ? (crc << 1) ^ AHTXX_CRC8_POLYNOM : crc << 1;
+            crc = crc & AHTXX_CRC8_MASK ? (uint8_t)(crc << 1) ^ AHTXX_CRC8_POLYNOM : (uint8_t)(crc << 1);
         }
     }
     return crc;
@@ -134,8 +134,8 @@ static inline esp_err_t ahtxx_calculate_dewpoint(const float temperature, const 
     if(humidity > 100 || humidity < 0) return ESP_ERR_INVALID_ARG;
     
     // calculate dew-point temperature
-    double H = (log10(humidity)-2)/0.4343 + (17.62*temperature)/(243.12+temperature);
-    *dewpoint = 243.12*H/(17.62-H);
+    float H = (log10f(humidity)-2)/0.4343f + (17.62f*temperature)/(243.12f+temperature);
+    *dewpoint = 243.12f*H/(17.62f-H);
     
     return ESP_OK;
 }
@@ -157,9 +157,11 @@ static inline esp_err_t ahtxx_convert_signals(ahtxx_handle_t handle, const bit56
     /* handle aht crc validation by sensor type */
     if(handle->dev_config.sensor_type != AHTXX_AHT10) {
         /* validate crc byte - 7th byte for aht20, aht21, aht25, and aht30 sensor type */
-        //if (buffer[6] != i2c_ahtxx_calculate_crc8(buffer, BIT56_UINT8_BUFFER_SIZE - 1)) {
-        //    return ESP_ERR_INVALID_CRC;
-        //}
+        /*
+        if (buffer[6] != i2c_ahtxx_calculate_crc8(buffer, BIT56_UINT8_BUFFER_SIZE - 1)) {
+            return ESP_ERR_INVALID_CRC;
+        }
+        */
     }
 
     /* concat humidity signal */
@@ -308,7 +310,6 @@ esp_err_t ahtxx_init(const i2c_master_bus_handle_t master_handle, const ahtxx_co
     ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ahtxx device handle initialization failed", ahtxx_config->i2c_address);
 
     /* validate memory availability for handle */
-    //i2c_ahtxx_handle_t out_handle = (i2c_ahtxx_handle_t)calloc(1, sizeof(i2c_ahtxx_context_t));
     ahtxx_handle_t out_handle;
     out_handle = (ahtxx_handle_t)calloc(1, sizeof(*out_handle));
     ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c ahtxx device, init failed");

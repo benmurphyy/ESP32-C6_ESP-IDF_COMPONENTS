@@ -190,7 +190,7 @@ static inline float as7341_get_spectral_gain_sensitivity(as7341_spectral_gains_t
  * @param time Integration time in milli-seconds
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t as7341_get_integration_time(as7341_handle_t handle, double *time) {
+static inline esp_err_t as7341_get_integration_time(as7341_handle_t handle, float *time) {
     uint8_t atime;
     uint16_t astep;
 
@@ -202,7 +202,7 @@ static inline esp_err_t as7341_get_integration_time(as7341_handle_t handle, doub
     ESP_RETURN_ON_ERROR( as7341_get_atime_register(handle, &atime), TAG, "read atime register for get integration time failed" );
 
     /* compute integration time */
-    *time = (atime + 1) * (astep + 1) * 2.78 / 1000;
+    *time = (float)(atime + 1) * (astep + 1) * 2.78f / 1000.0f;
 
     return ESP_OK;
 }
@@ -863,7 +863,7 @@ esp_err_t as7341_init(i2c_master_bus_handle_t master_handle, const as7341_config
 
 esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channels_spectral_data_t *spectral_data) {
     esp_err_t   ret              = ESP_OK;
-    double      integration_time = 0;
+    float       integration_time = 0;
     uint64_t    start_time       = esp_timer_get_time();
     bool        data_is_ready    = false;
     const bit8_uint8_buffer_t tx = { AS7341_CH0_ADC_DATA_L };
@@ -900,12 +900,10 @@ esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channe
     ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), err, TAG, "read low channel measurements for get adc measurements failed" );
 
     /* set adc data for low channels */
-    spectral_data->f1 = rx[0]  | (rx[1] << 8);
-    spectral_data->f2 = rx[2]  | (rx[3] << 8);
-    spectral_data->f3 = rx[4]  | (rx[5] << 8);
-    spectral_data->f4 = rx[6]  | (rx[7] << 8);
-    //adc_spectral_data->clear_0  = rx[8]  | (rx[9] << 8);
-    //adc_spectral_data->nir_0    = rx[10] | (rx[11] << 8);
+    spectral_data->f1 = (uint16_t)rx[0]  | (uint16_t)(rx[1] << 8);
+    spectral_data->f2 = (uint16_t)rx[2]  | (uint16_t)(rx[3] << 8);
+    spectral_data->f3 = (uint16_t)rx[4]  | (uint16_t)(rx[5] << 8);
+    spectral_data->f4 = (uint16_t)rx[6]  | (uint16_t)(rx[7] << 8);
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AS7341_CMD_DELAY_MS));
@@ -940,12 +938,12 @@ esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channe
     ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, 12, I2C_XFR_TIMEOUT_MS), err, TAG, "read high channel measurements for get adc measurements failed" );
 
     /* set adc data for high channels */
-    spectral_data->f5    = rx[0]  | (rx[1] << 8);
-    spectral_data->f6    = rx[2]  | (rx[3] << 8);
-    spectral_data->f7    = rx[4]  | (rx[5] << 8);
-    spectral_data->f8    = rx[6]  | (rx[7] << 8);
-    spectral_data->clear = rx[8]  | (rx[9] << 8);
-    spectral_data->nir   = rx[10] | (rx[11] << 8);
+    spectral_data->f5    = (uint16_t)rx[0]  | (uint16_t)(rx[1] << 8);
+    spectral_data->f6    = (uint16_t)rx[2]  | (uint16_t)(rx[3] << 8);
+    spectral_data->f7    = (uint16_t)rx[4]  | (uint16_t)(rx[5] << 8);
+    spectral_data->f8    = (uint16_t)rx[6]  | (uint16_t)(rx[7] << 8);
+    spectral_data->clear = (uint16_t)rx[8]  | (uint16_t)(rx[9] << 8);
+    spectral_data->nir   = (uint16_t)rx[10] | (uint16_t)(rx[11] << 8);
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AS7341_CMD_DELAY_MS));
@@ -969,7 +967,7 @@ esp_err_t as7341_get_basic_counts(as7341_handle_t handle, as7341_channels_spectr
     float gain = as7341_get_spectral_gain_sensitivity(config1.bits.spectral_gain);
 
     /* compute integration time */
-    double integration_time = 0;
+    float integration_time = 0;
     ESP_RETURN_ON_ERROR( as7341_get_integration_time(handle, &integration_time), TAG, "read integration time failed" );
 
     /* convert adc value to basic counts value */

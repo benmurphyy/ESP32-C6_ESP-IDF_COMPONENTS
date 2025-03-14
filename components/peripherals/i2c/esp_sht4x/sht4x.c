@@ -101,7 +101,7 @@ static inline uint8_t sht4x_calculate_crc8(const uint8_t data[], const uint8_t l
     for (uint8_t byte = 0; byte < len; byte++) {
         crc ^= data[byte];
         for (uint8_t i = 0; i < 8; i++) {
-            crc = crc & SHT4X_CRC8_MASK ? (crc << 1) ^ SHT4X_CRC8_POLYNOM : crc << 1;
+            crc = crc & SHT4X_CRC8_MASK ? (uint8_t)(crc << 1) ^ SHT4X_CRC8_POLYNOM : (uint8_t)(crc << 1);
         }
     }
     return crc;
@@ -207,8 +207,8 @@ static inline esp_err_t sht4x_calculate_dewpoint(const float temperature, const 
     }
     
     // calculate dew-point temperature
-    double H = (log10(humidity)-2)/0.4343 + (17.62*temperature)/(243.12+temperature);
-    *dewpoint = 243.12*H/(17.62-H);
+    float H = (log10f(humidity)-2)/0.4343f + (17.62f*temperature)/(243.12f+temperature);
+    *dewpoint = 243.12f*H/(17.62f-H);
     
     return ESP_OK;
 }
@@ -327,7 +327,7 @@ esp_err_t sht4x_get_measurement(sht4x_handle_t handle, float *const temperature,
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(SHT4X_RETRY_DELAY_MS));
-    } while (ret != ESP_OK && ++rx_retry_count <= rx_retry_max);
+    } while (++rx_retry_count <= rx_retry_max && ret != ESP_OK );
 
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ret, TAG, "unable to read to i2c device handle, get measurement failed" );
@@ -338,8 +338,8 @@ esp_err_t sht4x_get_measurement(sht4x_handle_t handle, float *const temperature,
     }
 
 	// convert sht4x results to engineering units of measure (C and %)
-    *temperature = ((uint16_t)rx[0] << 8 | rx[1]) * 175.0 / 65535.0 - 45.0;
-    *humidity    = ((uint16_t)rx[3] << 8 | rx[4]) * 125.0 / 65535.0 - 6.0;
+    *temperature = (float)((uint16_t)rx[0] << 8 | rx[1]) * 175.0f / 65535.0f - 45.0f;
+    *humidity    = (float)((uint16_t)rx[3] << 8 | rx[4]) * 125.0f / 65535.0f - 6.0f;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(SHT4X_CMD_DELAY_MS));

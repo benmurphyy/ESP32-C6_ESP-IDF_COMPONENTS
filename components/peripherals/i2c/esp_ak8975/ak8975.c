@@ -356,8 +356,8 @@ float ak8975_convert_to_heading(ak8975_magnetic_axes_data_t axes_data) {
     float heading = 0;
 
     /* honeywell application note AN-203 */
-    if(axes_data.y_axis > 0.0f) heading = 90.0f - atanf(axes_data.x_axis/axes_data.y_axis * 180.0f / M_PI);
-    if(axes_data.y_axis < 0.0f) heading = 270.0f - atanf(axes_data.x_axis/axes_data.y_axis * 180.0f / M_PI);
+    if(axes_data.y_axis > 0.0f) heading = 90.0f - atanf(axes_data.x_axis/axes_data.y_axis * 180.0f / (float)M_PI);
+    if(axes_data.y_axis < 0.0f) heading = 270.0f - atanf(axes_data.x_axis/axes_data.y_axis * 180.0f / (float)M_PI);
     if(axes_data.y_axis == 0.0f && axes_data.x_axis < 0.0f) heading = 180.0f;
     if(axes_data.y_axis == 0.0f && axes_data.x_axis > 0.0f) heading = 180.0f;
 
