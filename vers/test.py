@@ -3,4 +3,4 @@
 # Released under the MIT License (MIT) - see LICENSE file
 import subprocess
 
-subprocess.run(["powershell", "compote component --help"], shell=True)
+subprocess.run(["powershell", "compote component --help"])
