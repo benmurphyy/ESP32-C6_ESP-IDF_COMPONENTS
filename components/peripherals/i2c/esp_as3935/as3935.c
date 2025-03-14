@@ -197,7 +197,6 @@ static inline void as3935_monitor_task_entry( void *pvParameters ) {
 }
 
 esp_err_t as3935_monitor_init(i2c_master_bus_handle_t master_handle, const as3935_config_t *as3935_config, as3935_monitor_handle_t *monitor_handle) {
-    
     //zero-initialize the config structure.
     gpio_config_t io_conf = {};
     //interrupt of rising edge
@@ -288,98 +287,6 @@ esp_err_t as3935_monitor_init(i2c_master_bus_handle_t master_handle, const as393
     err_device:
         free(as3935_monitor_context);
         return ESP_ERR_INVALID_STATE;
-}
-
-
-as3935_monitor_handle_t as3935_monitor_init___(i2c_master_bus_handle_t bus_handle, const as3935_config_t *as3935_config) {
-    //zero-initialize the config structure.
-    gpio_config_t io_conf = {};
-    //interrupt of rising edge
-    io_conf.intr_type = GPIO_INTR_POSEDGE; 
-    //bit mask of the pins
-    io_conf.pin_bit_mask = (1ULL<<as3935_config->irq_io_num);
-    //set as input mode
-    io_conf.mode = GPIO_MODE_INPUT;
-    //enable pull-down mode
-    io_conf.pull_down_en = 1;
-    //disable pull-up mode
-    io_conf.pull_up_en = 0;
-    //configure gpio with the given settings
-    gpio_config(&io_conf);
-
-    /* create as3935 device state object */
-    as3935_monitor_context_t *as3935_monitor_context = calloc(1, sizeof(as3935_monitor_context_t));
-    if (!as3935_monitor_context) {
-        ESP_LOGE(TAG, "calloc memory for esp_as3935_device_t failed");
-        goto err_device;
-    }
-
-    /* create i2c mutex handle */
-    as3935_monitor_context->i2c_mutex_handle = xSemaphoreCreateMutex();
-    if(as3935_monitor_context->i2c_mutex_handle == NULL) {
-        ESP_LOGE(TAG, "create i2c mutex failed");
-        goto err_emutex;
-    }
-
-    /* copy config to as3935 state object */
-    as3935_monitor_context->irq_io_num = as3935_config->irq_io_num;
-
-    /* create event loop handle */
-    esp_event_loop_args_t loop_args = {
-        .queue_size = AS3935_EVENT_LOOP_QUEUE_SIZE,
-        .task_name = NULL
-    };
-    if (esp_event_loop_create(&loop_args, &as3935_monitor_context->event_loop_handle) != ESP_OK) {
-        ESP_LOGE(TAG, "create event loop failed");
-        goto err_eloop;
-    }
-
-    /* create a event queue to handle gpio event from isr */
-    as3935_monitor_context->event_queue_handle = xQueueCreate(10, sizeof(uint32_t));
-    if (!as3935_monitor_context->event_queue_handle) {
-        ESP_LOGE(TAG, "create event queue handle failed");
-        goto err_equeue;
-    }
-
-    /* create i2c as3935 handle */
-    esp_err_t dev_err = as3935_init(bus_handle, as3935_config, &as3935_monitor_context->as3935_handle);
-    if(dev_err != ESP_OK) {
-        ESP_LOGE(TAG, "i2c_bus_device_create as3935 handle initialization failed %s", esp_err_to_name(dev_err));
-        goto err_i2c_as3935_init;
-    }
-
-    /* create as3935 monitor task handle */
-    BaseType_t err = xTaskCreatePinnedToCore( 
-        as3935_monitor_task_entry, 
-        AS3935_EVENT_TASK_NAME, 
-        AS3935_EVENT_TASK_STACK_SIZE, 
-        as3935_monitor_context, 
-        AS3935_EVENT_TASK_PRIORITY,
-        &as3935_monitor_context->task_monitor_handle, 
-        APP_CPU_NUM );
-    if (err != pdTRUE) {
-        ESP_LOGE(TAG, "create as3935 monitor task on CPU(1) failed");
-        goto err_task_create;
-    }
-    
-    
-    ESP_LOGI(TAG, "as3935 device init OK");
-    return as3935_monitor_context;
-
-    /* error handling */
-    err_task_create:
-        vTaskDelete(as3935_monitor_context->task_monitor_handle);
-    err_i2c_as3935_init:
-        as3935_remove(as3935_monitor_context->as3935_handle);
-    err_equeue:
-        vQueueDelete(as3935_monitor_context->event_queue_handle);
-    err_eloop:
-        esp_event_loop_delete(as3935_monitor_context->event_loop_handle);
-    err_emutex:
-        vSemaphoreDelete(as3935_monitor_context->i2c_mutex_handle);
-    err_device:
-        free(as3935_monitor_context);
-        return NULL;
 }
 
 esp_err_t as3935_monitor_deinit(as3935_monitor_handle_t monitor_handle) {

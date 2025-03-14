@@ -78,14 +78,6 @@ void owb0_ds18b20_task( void *pvParameters ) {
     /* free device iter handle */
     ESP_ERROR_CHECK( onewire_del_device_iter(dev_iter_hdl) );
     
-    /* get/set/get resolution */
-    ds18b20_resolutions_t dev_reso;
-    ESP_ERROR_CHECK( ds18b20_get_resolution(dev_hdl, &dev_reso) );
-    ESP_LOGW(APP_TAG, "ds18b20 get resolution: %d", dev_reso);
-    ESP_ERROR_CHECK( ds18b20_set_resolution(dev_hdl, DS18B20_RESOLUTION_11BIT) );
-    ESP_ERROR_CHECK( ds18b20_get_resolution(dev_hdl, &dev_reso) );
-    ESP_LOGW(APP_TAG, "ds18b20 get resolution: %d", dev_reso);
-    
     // validate device handle
     if(dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "ds18b20 handle init failed");
