@@ -219,6 +219,20 @@ esp_err_t time_into_interval_get_last_event(time_into_interval_handle_t time_int
 esp_err_t time_into_interval_delete(time_into_interval_handle_t time_into_interval_handle);
 
 
+/**
+ * @brief Converts time-into-interval firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* time-into-interval firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* time_into_interval_get_fw_version(void);
+
+/**
+ * @brief Converts time-into-interval firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t time-into-interval firmware version number.
+ */
+int32_t time_into_interval_get_fw_version_number(void);
+
 
 #ifdef __cplusplus
 }

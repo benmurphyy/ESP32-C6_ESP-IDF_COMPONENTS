@@ -35,7 +35,7 @@
 
 #include <mpu6050_task.h>
 
-void mpu6050_print_registers( mpu6050_handle_t handle ) {
+static inline void print_registers( mpu6050_handle_t handle ) {
     uint8_t                                 sample_rate_divider_reg;
     mpu6050_config_register_t               config_reg;
     mpu6050_gyro_config_register_t          gyro_config_reg;
@@ -97,7 +97,7 @@ void i2c0_mpu6050_task( void *pvParameters ) {
     }
 
     /* print registers */
-    mpu6050_print_registers( dev_hdl );
+    print_registers( dev_hdl );
 
     // task loop entry point
     for ( ;; ) {

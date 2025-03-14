@@ -235,13 +235,27 @@ esp_err_t time_into_interval_set_epoch_timestamp_event(const time_into_interval_
     // initialize next tm structure time-parts localtime based on interval-type
     time_into_interval_init_next_tm(interval_type, interval_period_msec, now_tm, &next_tm);
     
-    // validate if the next task event was computed
-    if(*epoch_timestamp != 0) {
+    // initialize next epoch time event
+    uint64_t next_unix_time_msec = 0;
+
+    // validate last event
+    if(*epoch_timestamp > 0) {
         // add task interval to next task event epoch to compute next task event epoch
-        *epoch_timestamp = *epoch_timestamp + interval_period_msec;
-    } else {
+        next_unix_time_msec = *epoch_timestamp + interval_period_msec;
+
+        // compute the delta between now and next unix times
+        int64_t delta_time_msec = next_unix_time_msec - now_unix_time_msec;
+
+        // ensure next task event is ahead in time
+        if(delta_time_msec <= 0) {
+            next_unix_time_msec = 0;
+        }
+    }
+    
+    // validate next event
+    if(next_unix_time_msec == 0) {
         // convert unix time to milli-seconds
-        uint64_t next_unix_time_msec = mktime(&next_tm) * 1000U;
+        next_unix_time_msec = mktime(&next_tm) * 1000U;
 
         // initialize next unix time by adding the task event interval period and offset
         next_unix_time_msec = next_unix_time_msec + interval_period_msec + interval_offset_msec;
@@ -258,12 +272,12 @@ esp_err_t time_into_interval_set_epoch_timestamp_event(const time_into_interval_
                 
                 // compute the delta between now and next unix times
                 delta_time_msec = next_unix_time_msec - now_unix_time_msec;
-            } while(delta_time_msec <= 0);
+            } while(delta_time_msec < 0);
         }
-
-        // set next task event epoch time
-        *epoch_timestamp = next_unix_time_msec;
     }
+
+    // set next task event epoch time
+    *epoch_timestamp = next_unix_time_msec;
 
     return ESP_OK;
 }
@@ -423,4 +437,12 @@ esp_err_t time_into_interval_delete(time_into_interval_handle_t time_into_interv
     }
 
     return ESP_OK;
+}
+
+const char* time_into_interval_get_fw_version(void) {
+    return TIME_INTO_INTERVAL_FW_VERSION_STR;
+}
+
+int32_t time_into_interval_get_fw_version_number(void) {
+    return TIME_INTO_INTERVAL_FW_VERSION_INT32;
 }

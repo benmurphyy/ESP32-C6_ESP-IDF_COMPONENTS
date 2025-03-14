@@ -509,9 +509,6 @@ esp_err_t i2c_veml7700_get_identifier_register(veml7700_handle_t handle, veml770
     return ESP_OK;
 }
 
-
-
-
 esp_err_t veml7700_init(i2c_master_bus_handle_t master_handle, const veml7700_config_t *veml7700_config, veml7700_handle_t *veml7700_handle) {
     /* validate arguments */
     ESP_ARG_CHECK( master_handle && veml7700_config );
@@ -555,12 +552,6 @@ esp_err_t veml7700_init(i2c_master_bus_handle_t master_handle, const veml7700_co
 
     /* attempt to read power saving mode register */
     ESP_GOTO_ON_ERROR(veml7700_get_power_saving_mode_register(out_handle, &psm_reg), err_handle, TAG, "read power saving mode register failed");
-
-
-    // set the resolution on the configuration struct
-	//out_handle->resolution  = i2c_veml7700_get_resolution(out_handle);
-	// set the current maximum value on the configuration struct
-	//out_handle->maximum_lux = i2c_veml7700_get_current_maximum_lux(out_handle);
 
     /* set configuration register */
     cfg_reg.bits.gain                   = out_handle->dev_config.gain;
