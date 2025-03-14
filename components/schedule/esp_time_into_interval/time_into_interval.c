@@ -69,6 +69,67 @@ static inline uint16_t time_into_interval_get_hash_code(void) {
     return ((seed_hash>>16) ^ seed_hash) & 0xFFFF;
 }
 
+/**
+ * @brief Initializes the next tm structure time-parts based on interval-type.
+ * 
+ * @param[in] interval_type Time into interval type (seconds, minutes, hours, etc.).
+ * @param[in] interval_period_msec Time into interval period in milliseconds.
+ * @param[in] now_tm Current time tm structure.
+ * @param[out] next_tm Next time tm structure.
+ */
+static inline void time_into_interval_init_next_tm(const time_into_interval_types_t interval_type, const uint64_t interval_period_msec, const struct tm now_tm, struct tm *next_tm) {
+    struct tm out_tm;
+
+    // initialize next tm structure time-parts localtime based on interval-type
+    switch(interval_type) {
+        case TIME_INTO_INTERVAL_SEC:
+            out_tm.tm_year = now_tm.tm_year;
+            out_tm.tm_mon  = now_tm.tm_mon;
+            out_tm.tm_mday = now_tm.tm_mday;
+            out_tm.tm_hour = now_tm.tm_hour;
+            out_tm.tm_min  = now_tm.tm_min;
+            out_tm.tm_sec  = 0;
+            break;
+        case TIME_INTO_INTERVAL_MIN:
+            out_tm.tm_year = now_tm.tm_year;
+            out_tm.tm_mon  = now_tm.tm_mon;
+            out_tm.tm_mday = now_tm.tm_mday;
+            out_tm.tm_hour = now_tm.tm_hour;
+            out_tm.tm_min  = 0;
+            out_tm.tm_sec  = 0;
+            break;
+        case TIME_INTO_INTERVAL_HR:
+            out_tm.tm_year = now_tm.tm_year;
+            out_tm.tm_mon  = now_tm.tm_mon;
+            out_tm.tm_mday = now_tm.tm_mday;
+            out_tm.tm_hour = 0;
+            out_tm.tm_min  = 0;
+            out_tm.tm_sec  = 0;
+            break;
+    }
+
+    /* handle interval period by tm structure time-part timespan exceedance */
+    if(interval_period_msec > (60U * 1000U)) {
+        /* over 60-seconds, set minute time-part to 0 */
+        out_tm.tm_min  = 0;
+        out_tm.tm_sec  = 0;
+    } else if(interval_period_msec > (60U * 60U * 1000U)) {
+        /* over 60-minutes, set hour time-part to 0 */
+        out_tm.tm_hour = 0;
+        out_tm.tm_min  = 0;
+        out_tm.tm_sec  = 0;
+    } else if(interval_period_msec > (24U * 60U * 60U * 1000U)) {
+        /* over 24-hours, set day time-part to 0 */
+        out_tm.tm_mday = 0;
+        out_tm.tm_hour = 0;
+        out_tm.tm_min  = 0;
+        out_tm.tm_sec  = 0;
+    }
+
+    /* set output parameter */
+    *next_tm = out_tm;
+}
+
 uint64_t time_into_interval_normalize_interval_to_sec(const time_into_interval_types_t interval_type, const uint16_t interval) {
     uint64_t interval_sec = 0;
 
@@ -172,61 +233,15 @@ esp_err_t time_into_interval_set_epoch_timestamp_event(const time_into_interval_
     localtime_r(&now_unix_time, &now_tm);
 
     // initialize next tm structure time-parts localtime based on interval-type
-    switch(interval_type) {
-        case TIME_INTO_INTERVAL_SEC:
-            next_tm.tm_year = now_tm.tm_year;
-            next_tm.tm_mon  = now_tm.tm_mon;
-            next_tm.tm_mday = now_tm.tm_mday;
-            next_tm.tm_hour = now_tm.tm_hour;
-            next_tm.tm_min  = now_tm.tm_min;
-            next_tm.tm_sec  = 0;
-            break;
-        case TIME_INTO_INTERVAL_MIN:
-            next_tm.tm_year = now_tm.tm_year;
-            next_tm.tm_mon  = now_tm.tm_mon;
-            next_tm.tm_mday = now_tm.tm_mday;
-            next_tm.tm_hour = now_tm.tm_hour;
-            next_tm.tm_min  = 0;
-            next_tm.tm_sec  = 0;
-            break;
-        case TIME_INTO_INTERVAL_HR:
-            next_tm.tm_year = now_tm.tm_year;
-            next_tm.tm_mon  = now_tm.tm_mon;
-            next_tm.tm_mday = now_tm.tm_mday;
-            next_tm.tm_hour = 0;
-            next_tm.tm_min  = 0;
-            next_tm.tm_sec  = 0;
-            break;
-    }
-
-    /* handle interval period by tm structure time-part timespan exceedance */
-    if(interval_period_msec > (60U * 1000U)) {
-        /* over 60-seconds, set minute time-part to 0 */
-        next_tm.tm_min  = 0;
-        next_tm.tm_sec  = 0;
-    } else if(interval_period_msec > (60U * 60U * 1000U)) {
-        /* over 60-minutes, set hour time-part to 0 */
-        next_tm.tm_hour = 0;
-        next_tm.tm_min  = 0;
-        next_tm.tm_sec  = 0;
-    } else if(interval_period_msec > (24U * 60U * 60U * 1000U)) {
-        /* over 24-hours, set day time-part to 0 */
-        next_tm.tm_mday = 0;
-        next_tm.tm_hour = 0;
-        next_tm.tm_min  = 0;
-        next_tm.tm_sec  = 0;
-    }
+    time_into_interval_init_next_tm(interval_type, interval_period_msec, now_tm, &next_tm);
     
     // validate if the next task event was computed
     if(*epoch_timestamp != 0) {
         // add task interval to next task event epoch to compute next task event epoch
         *epoch_timestamp = *epoch_timestamp + interval_period_msec;
     } else {
-        // convert to unix time (seconds)
-        time_t next_unix_time = mktime(&next_tm);
-
         // convert unix time to milli-seconds
-        uint64_t next_unix_time_msec = next_unix_time * 1000U;
+        uint64_t next_unix_time_msec = mktime(&next_tm) * 1000U;
 
         // initialize next unix time by adding the task event interval period and offset
         next_unix_time_msec = next_unix_time_msec + interval_period_msec + interval_offset_msec;
@@ -263,8 +278,8 @@ esp_err_t time_into_interval_init(const time_into_interval_config_t *time_into_i
     ESP_GOTO_ON_FALSE( (time_into_interval_config->interval_period > 0), ESP_ERR_INVALID_ARG, err, TAG, "time-into-interval interval period cannot be 0, time-into-interval handle initialization failed" );
 
     /* validate period and offset intervals */
-    int64_t interval_delta = time_into_interval_normalize_interval_to_sec(time_into_interval_config->interval_type, time_into_interval_config->interval_period) - 
-                             time_into_interval_normalize_interval_to_sec(time_into_interval_config->interval_type, time_into_interval_config->interval_offset); 
+    int64_t interval_delta = time_into_interval_normalize_interval_to_msec(time_into_interval_config->interval_type, time_into_interval_config->interval_period) - 
+                             time_into_interval_normalize_interval_to_msec(time_into_interval_config->interval_type, time_into_interval_config->interval_offset); 
     ESP_GOTO_ON_FALSE( (interval_delta > 0), ESP_ERR_INVALID_ARG, err, TAG, "time-into-interval interval period must be larger than the interval offset, time-into-interval handle initialization failed" );
     
     /* validate memory availability for time into interval handle */

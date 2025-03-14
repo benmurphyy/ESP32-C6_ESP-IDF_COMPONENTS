@@ -34,7 +34,7 @@
 
 #include <ltr390uv_task.h>
 
-void print_registers( ltr390uv_handle_t handle ) {
+void ltr390uv_print_registers( ltr390uv_handle_t handle ) {
     ltr390uv_control_register_t c_reg;
     ltr390uv_interrupt_config_register_t ic_reg;
     ltr390uv_measure_register_t m_reg;
@@ -67,7 +67,7 @@ void i2c0_ltr390uv_task( void *pvParameters ) {
         assert(dev_hdl);
     }
     //
-    print_registers( dev_hdl );
+    ltr390uv_print_registers( dev_hdl );
     //
     // task loop entry point
     for ( ;; ) {
