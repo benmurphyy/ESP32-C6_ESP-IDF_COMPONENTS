@@ -158,15 +158,15 @@ def update_c_version(path: str, header_name: str, version_major: int, version_mi
         version_patch (int): Patch version number part.
         
     """
-    major = "#define " + header_name.upper() + "_" + const.C_HEADER_VERSION_MAJOR
-    minor = "#define " + header_name.upper() + "_" + const.C_HEADER_VERSION_MINOR
-    patch = "#define " + header_name.upper() + "_" + const.C_HEADER_VERSION_PATCH
+    major = const.C_DEFINITION_PREFIX + header_name.upper() + const.C_HEADER_VERSION_MAJOR
+    minor = const.C_DEFINITION_PREFIX + header_name.upper() + const.C_HEADER_VERSION_MINOR
+    patch = const.C_DEFINITION_PREFIX + header_name.upper() + const.C_HEADER_VERSION_PATCH
     
-    major_reg_ex = "^#define " + header_name.upper() + "_" + const.C_HEADER_VERSION_MAJOR + " +[0-9]"
-    minor_reg_ex = "^#define " + header_name.upper() + "_" + const.C_HEADER_VERSION_MINOR + " +[0-9]"
-    patch_reg_ex = "^#define " + header_name.upper() + "_" + const.C_HEADER_VERSION_PATCH + " +[0-9]"
+    major_reg_ex = const.REGEXP_C_DEFINITION_PREFIX + header_name.upper() + const.C_HEADER_VERSION_MAJOR + const.REGEXP_VERSION_NUMBER
+    minor_reg_ex = const.REGEXP_C_DEFINITION_PREFIX + header_name.upper() + const.C_HEADER_VERSION_MINOR + const.REGEXP_VERSION_NUMBER
+    patch_reg_ex = const.REGEXP_C_DEFINITION_PREFIX + header_name.upper() + const.C_HEADER_VERSION_PATCH + const.REGEXP_VERSION_NUMBER
     
-    header_fp = path + "\\include\\" + header_name + "_version.h"
+    header_fp = path + "\\include\\" + header_name.lower() + const.C_HEADER_SUFFIX
     
     with open(header_fp, 'r') as fp:
         header_lines = fp.readlines()

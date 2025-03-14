@@ -79,15 +79,10 @@ void i2c0_ens160_task( void *pvParameters ) {
                 if(result != ESP_OK) {
                     ESP_LOGE(APP_TAG, "ens160 device read failed (%s)", esp_err_to_name(result));
                 } else {
-                    ESP_LOGW(APP_TAG, "ri-res 0 %lu", aq_raw_data.hp0_ri);
-                    ESP_LOGW(APP_TAG, "ri-res 1 %lu", aq_raw_data.hp1_ri);
-                    ESP_LOGW(APP_TAG, "ri-res 2 %lu", aq_raw_data.hp2_ri);
-                    ESP_LOGW(APP_TAG, "ri-res 3 %lu", aq_raw_data.hp3_ri);
-
-                    ESP_LOGW(APP_TAG, "bl-res 0 %lu", aq_raw_data.hp0_bl);
-                    ESP_LOGW(APP_TAG, "bl-res 1 %lu", aq_raw_data.hp1_bl);
-                    ESP_LOGW(APP_TAG, "bl-res 2 %lu", aq_raw_data.hp2_bl);
-                    ESP_LOGW(APP_TAG, "bl-res 3 %lu", aq_raw_data.hp3_bl);
+                    ESP_LOGW(APP_TAG, "ri-res 0 %lu | bl-res 0 %lu", aq_raw_data.hp0_ri, aq_raw_data.hp0_bl);
+                    ESP_LOGW(APP_TAG, "ri-res 1 %lu | bl-res 1 %lu", aq_raw_data.hp1_ri, aq_raw_data.hp1_bl);
+                    ESP_LOGW(APP_TAG, "ri-res 2 %lu | bl-res 2 %lu", aq_raw_data.hp2_ri, aq_raw_data.hp2_bl);
+                    ESP_LOGW(APP_TAG, "ri-res 3 %lu | bl-res 3 %lu", aq_raw_data.hp3_ri, aq_raw_data.hp3_bl);
                 }
             } else if(dev_flag == ENS160_VALFLAG_WARMUP) {
                 ESP_LOGW(APP_TAG, "ens160 device is warming up (180-sec wait [%u-sec])", startup_time);

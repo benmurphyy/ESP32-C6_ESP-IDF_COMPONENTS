@@ -8,12 +8,18 @@ COMPONENT_YAML_FILENAME = "idf_component.yml"
 """Component YAML file name"""
 
 # [Component-Name]_FW_VERSION_MAJOR
-C_HEADER_VERSION_MAJOR = "FW_VERSION_MAJOR"
+C_HEADER_VERSION_MAJOR = "_FW_VERSION_MAJOR"
 """C header file definition for major version: [Component-Name]_FW_VERSION_MAJOR"""
-C_HEADER_VERSION_MINOR = "FW_VERSION_MINOR"
+C_HEADER_VERSION_MINOR = "_FW_VERSION_MINOR"
 """C header file definition for minor version: [Component-Name]_FW_VERSION_MINOR"""
-C_HEADER_VERSION_PATCH = "FW_VERSION_PATCH"
+C_HEADER_VERSION_PATCH = "_FW_VERSION_PATCH"
 """C header file definition for patch version: [Component-Name]_FW_VERSION_PATCH"""
+
+C_HEADER_SUFFIX = "_version.h"
+
+C_DEFINITION_PREFIX = "#define "
+REGEXP_C_DEFINITION_PREFIX = "^#define "
+REGEXP_VERSION_NUMBER = " +[0-9]"
 
 class FWVersionUpdateParts:
     """
