@@ -49,15 +49,7 @@
 #include <bdf_font_nenr12_21x26.h>
 #include <bdf_font_emoticon_22x21.h>
 
-
-
-static void ssd1306_full_demo(ssd1306_handle_t handle) {
-	int center = 1, top = 1, bottom = 4;
-	char lineChar[16];
-	uint8_t image[24];
-
-	ESP_LOGI(APP_TAG, "Full Demo");
-
+static inline void display_text(ssd1306_handle_t handle) {
 	// Display x3 text
 	ESP_LOGI(APP_TAG, "Display x3 Text");
 	ssd1306_clear_display(handle, false);
@@ -92,7 +84,9 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_display_text(handle, 2, "SSD1306 128x64", true);
 	ssd1306_display_text(handle, 3, "Hello World!!", true);
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
+}
 
+static inline void display_textbox(ssd1306_handle_t handle) {
 	// Display TextBox
 	ESP_LOGI(APP_TAG, "Display TextBox Banner");
 	ssd1306_clear_display(handle, false);
@@ -112,7 +106,12 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_display_textbox_ticker(handle, 6, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",12, false, 25);
 	ssd1306_display_textbox_ticker(handle, 7,  0, "ABCDEFGHIJKLMNOPQRSTUVWXYZ",16, false, 15);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
-	
+}
+
+static inline void display_countdown(ssd1306_handle_t handle) {
+	int top = 1; 
+	uint8_t image[24];
+
 	// Display Count Down
 	ESP_LOGI(APP_TAG, "Display Count Down");
 	memset(image, 0, sizeof(image));
@@ -129,7 +128,12 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 		ssd1306_display_image(handle, top+1, (7*8-1), image, 8);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
-	
+}
+
+static inline void display_scroll_up_and_down(ssd1306_handle_t handle) {
+	int bottom = 4;
+	char lineChar[16];
+
 	// Scroll Up
 	ESP_LOGI(APP_TAG, "Display Scroll Up");
 	ssd1306_clear_display(handle, false);
@@ -159,6 +163,11 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	}
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 	ssd1306_clear_display_software_scroll(handle);
+}
+
+static inline void display_page_up_and_down(ssd1306_handle_t handle) {
+	int bottom = 4;
+	char lineChar[16];
 
 	// Page Down
 	ESP_LOGI(APP_TAG, "Display Page Down");
@@ -175,6 +184,10 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	}
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 	ssd1306_clear_display_software_scroll(handle);
+}
+
+static inline void display_scroll_vert_and_horiz(ssd1306_handle_t handle) {
+	int center = 1;
 
 	if(handle->dev_config.panel_size != SSD1306_PAGE_128x128_SIZE) {
 		// Horizontal Scroll
@@ -199,7 +212,9 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 		vTaskDelay(2000 / portTICK_PERIOD_MS);
 		ssd1306_set_hardware_scroll(handle, SSD1306_SCROLL_STOP, SSD1306_SCROLL_2_FRAMES);
 	}
+}
 
+static inline void display_bitmaps(ssd1306_handle_t handle) {
 	// Bitmaps
 	ESP_LOGI(APP_TAG, "Display Batman Bitmap");
 	ssd1306_clear_display(handle, false);
@@ -240,7 +255,9 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_clear_display(handle, false);
 	ssd1306_display_bitmap(handle, ((handle->width/2)-(64/2)), 0, molecule_icon_64x64, 64, 64, false);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
+}
 
+static inline void display_shapes(ssd1306_handle_t handle) {
 	// Display circle
 	ESP_LOGI(APP_TAG, "Display Circle");
 	ssd1306_clear_display(handle, true);
@@ -258,6 +275,10 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	ssd1306_display_rectangle(handle, 10, 10, 50, 70, true);
 	ssd1306_display_filled_rectangle(handle, 40, 30, 30, 50, true);
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
+}
+
+static inline void display_invert_and_fadeout(ssd1306_handle_t handle) {
+	int center = 1;
 
 	// Invert
 	ESP_LOGI(APP_TAG, "Invert Display");
@@ -269,6 +290,30 @@ static void ssd1306_full_demo(ssd1306_handle_t handle) {
 	// Fade Out
 	ESP_LOGI(APP_TAG, "Display Fade Out");
 	ssd1306_display_fadeout(handle);
+}
+
+
+static void ssd1306_full_demo(ssd1306_handle_t handle) {
+	ESP_LOGI(APP_TAG, "Full Demo");
+
+	// display text
+	display_text(handle);
+
+	display_textbox(handle);
+
+	display_countdown(handle);
+
+	display_scroll_up_and_down(handle);
+
+	display_page_up_and_down(handle);
+
+	display_scroll_vert_and_horiz(handle);
+
+	display_bitmaps(handle);
+
+	display_shapes(handle);
+
+	display_invert_and_fadeout(handle);
 }
 
 static void ssd1306_bdf_font_demo(ssd1306_handle_t handle) {

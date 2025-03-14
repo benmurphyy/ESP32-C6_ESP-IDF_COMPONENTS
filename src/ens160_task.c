@@ -93,7 +93,7 @@ void i2c0_ens160_task( void *pvParameters ) {
                 ESP_LOGW(APP_TAG, "ens160 device is warming up (180-sec wait [%u-sec])", startup_time);
                 startup_time = startup_time + I2C0_TASK_SAMPLING_RATE;
             } else if(dev_flag == ENS160_VALFLAG_INITIAL_STARTUP) {
-                ESP_LOGW(APP_TAG, "ens160 device is undrgoing initial starting up (3600-sec wait [%u-sec])", startup_time);
+                ESP_LOGW(APP_TAG, "ens160 device is undergoing initial starting up (3600-sec wait [%u-sec])", startup_time);
                 startup_time = startup_time + I2C0_TASK_SAMPLING_RATE;
             } else if(dev_flag == ENS160_VALFLAG_INVALID_OUTPUT) {
                 ESP_LOGW(APP_TAG, "ens160 device signals are giving unexpected values");
