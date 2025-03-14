@@ -109,8 +109,9 @@ static inline esp_err_t ltr390uv_get_resolution_factor(ltr390uv_handle_t handle,
 
     ltr390uv_sensor_resolutions_t resolution = handle->dev_config.uvs_sensor_resolution;;
 
-    if(handle->dev_config.operation_mode == LTR390UV_OM_ALS)
+    if(handle->dev_config.operation_mode == LTR390UV_OM_ALS) {
         resolution = handle->dev_config.als_sensor_resolution;
+    }
 
     /* determine resolution */
     switch(resolution) {
@@ -152,8 +153,9 @@ static inline esp_err_t ltr390uv_get_resolution_it(ltr390uv_handle_t handle, flo
 
     ltr390uv_sensor_resolutions_t resolution = handle->dev_config.uvs_sensor_resolution;;
 
-    if(handle->dev_config.operation_mode == LTR390UV_OM_ALS)
+    if(handle->dev_config.operation_mode == LTR390UV_OM_ALS) {
         resolution = handle->dev_config.als_sensor_resolution;
+    }
 
     /* determine resolution integration time */
     switch(resolution) {
