@@ -87,16 +87,19 @@ void i2c0_bme680_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## BME680 - START #########################");
         //
         // handle sensor
+
         bme680_data_t data;
         esp_err_t result = bme680_get_measurements(dev_hdl, &data);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "bme680 device read failed (%s)", esp_err_to_name(result));
         } else {
-            data.pressure = data.pressure / 100;
-            ESP_LOGI(APP_TAG, "air temperature:     %.2f °C", data.temperature);
-            ESP_LOGI(APP_TAG, "relative humidity:   %.2f %%", data.humidity);
-            ESP_LOGI(APP_TAG, "barometric pressure: %.2f hPa", data.pressure);
-            ESP_LOGI(APP_TAG, "gas resistance:      %u Ohms", data.gas_resistance);
+            data.barometric_pressure = data.barometric_pressure / 100;
+            ESP_LOGI(APP_TAG, "air temperature:     %.2f °C", data.air_temperature);
+            ESP_LOGI(APP_TAG, "dewpoint temperature:%.2f °C", data.dewpoint_temperature);
+            ESP_LOGI(APP_TAG, "relative humidity:   %.2f %%", data.relative_humidity);
+            ESP_LOGI(APP_TAG, "barometric pressure: %.2f hPa", data.barometric_pressure);
+            ESP_LOGI(APP_TAG, "gas resistance:      %.2f kOhms", data.gas_resistance/1000);
+            ESP_LOGI(APP_TAG, "iaq score:           %u (%s)", data.iaq_score, bme680_iaq_air_quality_to_string(data.iaq_score));
         }
         //
         ESP_LOGI(APP_TAG, "######################## BME680 - END ###########################");

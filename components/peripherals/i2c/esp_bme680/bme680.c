@@ -37,6 +37,7 @@
 #include "include/bme680.h"
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 #include <sdkconfig.h>
 #include <esp_types.h>
 #include <esp_log.h>
@@ -94,6 +95,10 @@
 
 #define BME680_CHIP_ID              UINT8_C(0x61)
 
+#define BME680_AQI_TEMP_CORR               (-3) // Calibration offset - calibrate yourself the temp reading --> humidity will 
+                                                // be automatically adjusted using the August-Roche-Magnus approximation
+                                                // http://bmcnoldy.rsmas.miami.edu/Humidity.html
+
 
 #define BME680_DATA_POLL_TIMEOUT_MS UINT16_C(250) // ? see datasheet tables 13 and 14, standby-time could be 2-seconds (2000ms)
 #define BME680_DATA_READY_DELAY_MS  UINT16_C(1)
@@ -120,11 +125,11 @@ static const char *TAG = "bme680";
  * 
  * @param handle BME680 device handle.
  * @param reg_addr BME680 register address to read from.
- * @param buffer Buffer to store results from read transaction.
+ * @param buffer BME680 read transaction return buffer.
  * @param size Length of buffer to store results from read transaction.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ahtxx_i2c_read_from(bme680_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+static inline esp_err_t bme680_i2c_read_from(bme680_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
     const bit8_uint8_buffer_t tx = { reg_addr };
 
     /* validate arguments */
@@ -142,6 +147,14 @@ static inline esp_err_t ahtxx_i2c_read_from(bme680_handle_t handle, const uint8_
     return ESP_OK;
 }
 
+/**
+ * @brief BME680 I2C read halfword from register address transaction.
+ * 
+ * @param handle BME680 device handle.
+ * @param reg_addr BME680 register address to read from.
+ * @param halfword BME680 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
 static inline esp_err_t bme680_i2c_read_halfword_from(bme680_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
@@ -164,6 +177,14 @@ static inline esp_err_t bme680_i2c_read_halfword_from(bme680_handle_t handle, co
     return ESP_OK;
 }
 
+/**
+ * @brief BME680 I2C read byte from register address transaction.
+ * 
+ * @param handle BME680 device handle.
+ * @param reg_addr BME680 register address to read from.
+ * @param byte BME680 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
 static inline esp_err_t bme680_i2c_read_byte_from(bme680_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit8_uint8_buffer_t rx = { 0 };
@@ -187,10 +208,10 @@ static inline esp_err_t bme680_i2c_read_byte_from(bme680_handle_t handle, const 
 }
 
 /**
- * @brief I2C write transaction.
+ * @brief BME680 I2C write transaction.
  * 
  * @param handle BME680 device handle.
- * @param buffer Buffer to write for write transaction.
+ * @param buffer BME680 write transaction input buffer.
  * @param size Length of buffer to write for write transaction.
  * @return esp_err_t ESP_OK on success.
  */
@@ -204,6 +225,14 @@ static inline esp_err_t bme680_i2c_write(bme680_handle_t handle, const uint8_t *
     return ESP_OK;
 }
 
+/**
+ * @brief BME680 I2C write byte to register address transaction.
+ * 
+ * @param handle BME680 device handle.
+ * @param reg_addr BME680 register address to write to.
+ * @param byte BME680 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
 static inline esp_err_t bme680_i2c_write_byte_to(bme680_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
@@ -216,6 +245,21 @@ static inline esp_err_t bme680_i2c_write_byte_to(bme680_handle_t handle, uint8_t
     return ESP_OK;
 }
 
+/**
+ * @brief Calculates dew-point temperature from air temperature and relative humidity.
+ *
+ * @param[in] temperature air temperature in degrees Celsius.
+ * @param[in] humidity relative humidity in percent.
+ * @return float calculated dew-point temperature in degrees Celsius.
+ */
+static inline float bme680_calculate_dewpoint(const float temperature, const float humidity) {
+    // validate parameters
+    if(temperature > 80 || temperature < -40) return ESP_ERR_INVALID_ARG;
+    if(humidity > 100 || humidity < 0) return ESP_ERR_INVALID_ARG;
+    // calculate dew-point temperature
+    float H = (log10f(humidity)-2)/0.4343f + (17.62f*temperature)/(243.12f+temperature);
+    return 243.12f*H/(17.62f-H);
+}
 
 /**
  * @brief temperature compensation algorithm is taken from datasheet.  see datasheet for details.
@@ -361,40 +405,40 @@ static inline uint8_t bme680_compensate_heater_resistance(bme680_handle_t handle
  * @param duration 
  * @return uint8_t Gas wait time duration.
  */
-static inline uint8_t bme680_compute_gas_wait(uint16_t duration) {
+static inline uint8_t bme680_compute_gas_wait(const uint16_t duration) {
     uint8_t factor = 0;
     uint8_t durval;
+    uint16_t dura = duration;
 
-    if (duration >= 0xfc0) {
+    if (dura >= 0xfc0) {
         durval = 0xff; /* Max duration*/
-    }
-    else {
-        while (duration > 0x3F) {
-            duration = duration / 4;
+    } else {
+        while (dura > 0x3F) {
+            dura = dura / 4;
             factor += 1;
         }
-
-        durval = (uint8_t)(duration + (factor * 64));
+        durval = (uint8_t)(dura + (factor * 64));
     }
 
     return durval;
 }
 
-static inline uint8_t bme680_compute_heater_shared_duration(uint16_t duration) {
+static inline uint8_t bme680_compute_heater_shared_duration(const uint16_t duration) {
     uint8_t factor = 0;
     uint8_t heatdurval;
+    uint16_t dura = duration;
 
-    if (duration >= 0x783) {
+    if (dura >= 0x783) {
         heatdurval = 0xff; /* Max duration */
     } else {
         /* Step size of 0.477ms */
-        duration = (uint16_t)(((uint32_t)duration * 1000) / 477);
-        while (duration > 0x3F) {
-            duration = duration >> 2;
+        dura = (uint16_t)(((uint32_t)dura * 1000) / 477);
+        while (dura > 0x3F) {
+            dura = dura >> 2;
             factor += 1;
         }
 
-        heatdurval = (uint8_t)(duration + (factor * 64));
+        heatdurval = (uint8_t)(dura + (factor * 64));
     }
 
     return heatdurval;
@@ -407,9 +451,9 @@ static inline uint8_t bme680_compute_heater_shared_duration(uint16_t duration) {
  * @return uint32_t Estimated measurement duration in milliseconds.
  */
 static inline uint32_t bme680_get_measurement_duration(bme680_handle_t handle) {
+    const uint8_t os_to_meas_cycles[6] = { 0, 1, 2, 4, 8, 16 };
     uint32_t meas_dur = 0; /* Calculate in us */
     uint32_t meas_cycles;
-    const uint8_t os_to_meas_cycles[6] = { 0, 1, 2, 4, 8, 16 };
 
     /* validate arguments */
     if((handle) != NULL) {
@@ -438,48 +482,47 @@ static inline uint32_t bme680_get_measurement_duration(bme680_handle_t handle) {
  */
 static inline esp_err_t bme680_get_cal_factors(bme680_handle_t handle) {
     bit16_uint8_buffer_t rx;
-    //uint8_t rhrange;
-    //int8_t rangeswe;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* bme680 attempt to request T1-T3 calibration values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0xe9, &handle->dev_cal_factors->par_T1) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x8a, (uint16_t *)&handle->dev_cal_factors->par_T2) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x8c, (uint8_t *)&handle->dev_cal_factors->par_T3) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0xe9, &handle->dev_cal_factors->par_T1) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x8a, (uint16_t *)&handle->dev_cal_factors->par_T2) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x8c, (uint8_t *)&handle->dev_cal_factors->par_T3) );
     /* bme680 attempt to request H1-H7 calibration values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_byte16(handle->i2c_handle, 0xe2, &rx) );
+    ESP_ERROR_CHECK( bme680_i2c_read_from(handle, 0xe2, rx, BIT16_UINT8_BUFFER_SIZE) );
     handle->dev_cal_factors->par_H1 = (uint16_t)(((uint16_t)rx[1] << 4) | (rx[0] & 0x0F));
-    ESP_ERROR_CHECK( i2c_master_bus_read_byte16(handle->i2c_handle, 0xe1, &rx) );
+    ESP_ERROR_CHECK( bme680_i2c_read_from(handle, 0xe1, rx, BIT16_UINT8_BUFFER_SIZE) );
     handle->dev_cal_factors->par_H2 = (uint16_t)(((uint16_t)rx[0] << 4) | (rx[1] >> 4));
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xe4, (uint8_t *)&handle->dev_cal_factors->par_H3) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xe5, (uint8_t *)&handle->dev_cal_factors->par_H4) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xe6, (uint8_t *)&handle->dev_cal_factors->par_H5) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xe7, &handle->dev_cal_factors->par_H6) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xe8, (uint8_t *)&handle->dev_cal_factors->par_H7) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe4, (uint8_t *)&handle->dev_cal_factors->par_H3) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe5, (uint8_t *)&handle->dev_cal_factors->par_H4) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe6, (uint8_t *)&handle->dev_cal_factors->par_H5) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe7, &handle->dev_cal_factors->par_H6) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe8, (uint8_t *)&handle->dev_cal_factors->par_H7) );
     /* bme680 attempt to request P1-P10 calibration values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x8e, &handle->dev_cal_factors->par_P1) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x90, (uint16_t *)&handle->dev_cal_factors->par_P2) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x92, (uint8_t *)&handle->dev_cal_factors->par_P3) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x94, (uint16_t *)&handle->dev_cal_factors->par_P4) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x96, (uint16_t *)&handle->dev_cal_factors->par_P5) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x99, (uint8_t *)&handle->dev_cal_factors->par_P6) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x98, (uint8_t *)&handle->dev_cal_factors->par_P7) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x9c, (uint16_t *)&handle->dev_cal_factors->par_P8) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x9e, (uint16_t *)&handle->dev_cal_factors->par_P9) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xa0, &handle->dev_cal_factors->par_P10) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x8e, &handle->dev_cal_factors->par_P1) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x90, (uint16_t *)&handle->dev_cal_factors->par_P2) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x92, (uint8_t *)&handle->dev_cal_factors->par_P3) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x94, (uint16_t *)&handle->dev_cal_factors->par_P4) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x96, (uint16_t *)&handle->dev_cal_factors->par_P5) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x99, (uint8_t *)&handle->dev_cal_factors->par_P6) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x98, (uint8_t *)&handle->dev_cal_factors->par_P7) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x9c, (uint16_t *)&handle->dev_cal_factors->par_P8) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x9e, (uint16_t *)&handle->dev_cal_factors->par_P9) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xa0, &handle->dev_cal_factors->par_P10) );
     /* bme680 attempt to request G1-G3 calibration values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xed, (uint8_t *)&handle->dev_cal_factors->par_G1) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0xeb, (uint16_t *)&handle->dev_cal_factors->par_G2) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0xee, (uint8_t *)&handle->dev_cal_factors->par_G3) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xed, (uint8_t *)&handle->dev_cal_factors->par_G1) );
+    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0xeb, (uint16_t *)&handle->dev_cal_factors->par_G2) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xee, (uint8_t *)&handle->dev_cal_factors->par_G3) );
     /* bme680 attempt to request gas range and switching error values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x02, &handle->dev_cal_factors->res_heat_range) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x02, &handle->dev_cal_factors->res_heat_range) );
     handle->dev_cal_factors->res_heat_range = (handle->dev_cal_factors->res_heat_range & 0x30) / 16;
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x00, (uint8_t *)&handle->dev_cal_factors->res_heat_val) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x04, (uint8_t *)&handle->dev_cal_factors->range_switching_error) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x00, (uint8_t *)&handle->dev_cal_factors->res_heat_val) );
+    ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x04, (uint8_t *)&handle->dev_cal_factors->range_switching_error) );
     handle->dev_cal_factors->range_switching_error = (handle->dev_cal_factors->range_switching_error & 0xf0) / 16;
 
+    /*
     ESP_LOGD(TAG, "Calibration data received:");
     //
     ESP_LOGD(TAG, "par_T1=%u", handle->dev_cal_factors->par_T1);
@@ -496,6 +539,7 @@ static inline esp_err_t bme680_get_cal_factors(bme680_handle_t handle) {
     ESP_LOGD(TAG, "par_P8=%d", handle->dev_cal_factors->par_P8);
     ESP_LOGD(TAG, "par_P9=%d", handle->dev_cal_factors->par_P9);
     ESP_LOGD(TAG, "par_P10=%d", handle->dev_cal_factors->par_P10);
+    */
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BME680_CMD_DELAY_MS));
@@ -629,12 +673,12 @@ static inline esp_err_t bme680_setup(bme680_handle_t handle) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    // set ambient temperature of sensor to default value (25 degree C)
-    handle->ambient_temperature = 25;
-
     bme680_control_measurement_register_t ctrl_meas_reg;
     bme680_control_humidity_register_t    ctrl_humi_reg;
     bme680_config_register_t              config_reg;
+
+    /* set ambient temperature of sensor to default value (25 degree C) */
+    handle->ambient_temperature = 25;
 
     /* attempt to read calibration factors from device */
     ESP_RETURN_ON_ERROR(bme680_get_cal_factors(handle), TAG, "read calibration factors for setup failed" );
@@ -953,7 +997,64 @@ esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config
         return ret;
 }
 
-esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const data) {
+char *bme680_iaq_air_quality_to_string(float iaq_score) {
+    if      (iaq_score < 25)                     return "Hazardous";
+    else if (iaq_score >= 25 && iaq_score <= 38) return "Unhealthy";
+    else if (iaq_score  > 38 && iaq_score <= 51) return "Moderate";
+    else if (iaq_score  > 51 && iaq_score <= 60) return "Good";
+    else if (iaq_score  > 60 && iaq_score <= 65) return "Excellent";
+    else                                         return "Unknown";
+}
+
+/**
+ * @brief IAQ calculations following Dr. Julie Riggs, The IAQ Rating Index, www.iaquk.org.uk.
+ * 
+ * - Weighting: Temperature, Humidity each one tenth of the rating ==> 6.5 points max each 
+ * giving gas resistance readings 8 tenths of the rating ==> 52 points max
+ * 
+ * @param handle BME680 device handle.
+ * @param data BME680 data structure, air temperature, dew-point temperature, and 
+ * relative humidity parameters must be initialized as a minimum.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline void bme680_compute_iaq(bme680_data_t *const data) {
+    float adjusted_temp = data->air_temperature + BME680_AQI_TEMP_CORR;
+
+    // August-Roche-Magnus approximation (http://bmcnoldy.rsmas.miami.edu/Humidity.html)
+    float adjusted_humi = 100 * (exp((17.625 * data->dewpoint_temperature) / (243.04 + data->dewpoint_temperature)) / exp((17.625 * adjusted_temp) / (243.04 + adjusted_temp)));
+
+    uint32_t gas = data->gas_resistance;
+
+    // Calculate humidity score
+    if (adjusted_humi >= 40 && adjusted_humi <= 60) data->humidity_score = 6.5;  //ideal condition, full points
+    else if ((adjusted_humi >= 30 && adjusted_humi < 40) || (adjusted_humi > 60 && adjusted_humi <= 70)) data->humidity_score = 5.2;  //20% less
+    else if ((adjusted_humi >= 20 && adjusted_humi < 30) || (adjusted_humi > 70 && adjusted_humi <= 80)) data->humidity_score = 3.9;  //40% less
+    else if ((adjusted_humi >= 10 && adjusted_humi < 20) || (adjusted_humi > 80 && adjusted_humi <= 90)) data->humidity_score = 2.6;  //60% less
+    else if (adjusted_humi < 10 && adjusted_humi > 90) data->humidity_score = 1.3;  //80% less
+
+    // Calculate temperature score
+    int compare_temp = adjusted_temp;     // round to full degree
+    if (compare_temp >= 18 && compare_temp <= 22) data->temperature_score = 6.5;  //ideal condition, full points
+    else if (compare_temp == 17 || compare_temp == 23) data->temperature_score = 5.2;  //20% less
+    else if (compare_temp == 16 || compare_temp == 24) data->temperature_score = 3.9;  //40% less
+    else if (compare_temp == 15 || compare_temp == 25) data->temperature_score = 2.6;  //60% less
+    else if (compare_temp == 14 || compare_temp == 26) data->temperature_score = 1.3;  //80% less
+    else if (compare_temp  < 15 || compare_temp  > 26) data->temperature_score = 0;    //100% less
+
+    // Calculate gas score on resistance values - best practices
+    if (gas >= 430000) data->gas_score = 52;  //ideal condition, full points
+    else if (gas >= 210000 && gas < 430000) data->gas_score = 43;
+    else if (gas >= 100000 && gas < 210000) data->gas_score = 35;
+    else if (gas >=  55000 && gas < 100000) data->gas_score = 26;
+    else if (gas >=  27000 && gas <  55000) data->gas_score = 18;
+    else if (gas >=  13500 && gas >   9000) data->gas_score = 9;
+    else if (gas < 9000) data->gas_score = 0;
+
+    // calculate iaq score
+    data->iaq_score = data->humidity_score + data->temperature_score + data->gas_score;
+}
+
+esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *const data) {
     esp_err_t       ret             = ESP_OK;
     uint64_t        start_time      = 0;
     bool            data_is_ready   = false;
@@ -966,13 +1067,18 @@ esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const d
     /* validate arguments */
     ESP_ARG_CHECK( handle && data );
 
+    /* trigger measurement when in forced mode */
+    if(handle->dev_config.power_mode == BME680_POWER_MODE_FORCED) {
+        bme680_set_power_mode(handle, BME680_POWER_MODE_FORCED);
+    }
+
     /* set start time for timeout monitoring */
     start_time = esp_timer_get_time();
 
     /* attempt to poll until data is available or timeout */
     do {
         /* attempt to check if data is ready */
-        ESP_GOTO_ON_ERROR( bme680_get_data_status(handle, &data_is_ready), err, TAG, "data ready ready for get fixed measurement failed." );
+        ESP_GOTO_ON_ERROR( bme680_get_data_status(handle, &data_is_ready), err, TAG, "data ready for get adc signals failed." );
 
         /* delay task before next i2c transaction */
         vTaskDelay(pdMS_TO_TICKS(BME680_DATA_READY_DELAY_MS));
@@ -983,24 +1089,27 @@ esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const d
     } while (data_is_ready == false);
 
     // need to read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte80(handle->i2c_handle, BME680_REG_PRESS, &rx), err, TAG, "read temperature and pressure data failed" );
+    ESP_GOTO_ON_ERROR( bme680_i2c_read_from(handle, BME680_REG_PRESS, rx, BIT80_UINT8_BUFFER_SIZE), err, TAG, "read adc data failed" );
 
+    /* instantiate gas lsb register */
     bme680_gas_lsb_register_t gas_lsb_reg = { .reg = rx[9] };
 
+    /* concat parameters */
     adc_press = rx[0] << 12 | rx[1] << 4 | rx[2] >> 4;
     adc_temp  = rx[3] << 12 | rx[4] << 4 | rx[5] >> 4;
     adc_humi  = ((uint16_t)rx[6] << 8) | rx[7];
     adc_gas_r = ((uint16_t)rx[8] << 2) | rx[9] >> 6;
 
-    ESP_LOGW(TAG, "ADC humidity: %" PRIu16, adc_humi);
-    ESP_LOGW(TAG, "ADC temperature: %" PRIu32, adc_temp);
-    ESP_LOGW(TAG, "ADC pressure: %" PRIu32, adc_press);
-    ESP_LOGW(TAG, "ADC gas resistance: %" PRIu16, adc_gas_r);
+    ESP_LOGD(TAG, "ADC humidity:    %" PRIu16, adc_humi);
+    ESP_LOGD(TAG, "ADC temperature: %" PRIu32, adc_temp);
+    ESP_LOGD(TAG, "ADC pressure:    %" PRIu32, adc_press);
+    ESP_LOGD(TAG, "ADC gas:         %" PRIu16, adc_gas_r);
 
-    data->temperature    = bme680_compensate_temperature(handle, adc_temp);
-    data->humidity       = bme680_compensate_humidity(handle, adc_humi);
-    data->pressure       = bme680_compensate_pressure(handle, adc_press);
-    data->gas_resistance = bme680_compensate_gas_resistance(handle, adc_gas_r, gas_lsb_reg.bits.gas_range);
+    /* initialize data structure */
+    data->temperature    = adc_temp;
+    data->humidity       = adc_humi;
+    data->pressure       = adc_press;
+    data->gas            = adc_gas_r;
     data->gas_range      = gas_lsb_reg.bits.gas_range;
     data->heater_stable  = gas_lsb_reg.bits.heater_stable;
     data->gas_valid      = gas_lsb_reg.bits.gas_valid;
@@ -1012,6 +1121,34 @@ esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const d
 
     err:
         return ret;
+}
+
+esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const data) {
+    bme680_adc_data_t adc_data;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle && data );
+
+    /* attempt to read adc signals */
+    ESP_RETURN_ON_ERROR( bme680_get_adc_signals(handle, &adc_data), TAG, "read adc signals failed" );
+
+    /* initialize data structure */
+    data->air_temperature       = bme680_compensate_temperature(handle, adc_data.temperature);
+    data->relative_humidity     = bme680_compensate_humidity(handle, adc_data.humidity);
+    data->dewpoint_temperature  = bme680_calculate_dewpoint(data->air_temperature, data->relative_humidity);
+    data->barometric_pressure   = bme680_compensate_pressure(handle, adc_data.pressure);
+    data->gas_resistance        = bme680_compensate_gas_resistance(handle, adc_data.gas, adc_data.gas_range);
+    data->gas_range             = adc_data.gas_range;
+    data->heater_stable         = adc_data.heater_stable;
+    data->gas_valid             = adc_data.gas_valid;
+
+    /* compute scores */
+    bme680_compute_iaq(data);
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(BME680_CMD_DELAY_MS));
+
+    return ESP_OK;
 }
 
 esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready) {

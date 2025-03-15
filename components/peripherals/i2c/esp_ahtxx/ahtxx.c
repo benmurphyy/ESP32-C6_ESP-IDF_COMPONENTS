@@ -125,25 +125,19 @@ static inline uint8_t ahtxx_calculate_crc8(const uint8_t buffer[], const uint8_t
 }
 
 /**
- * @brief Calculates dewpoint temperature from air temperature and relative humidity.
+ * @brief Calculates dew-point temperature from air temperature and relative humidity.
  *
  * @param[in] temperature air temperature in degrees Celsius.
  * @param[in] humidity relative humidity in percent.
- * @param[out] dewpoint calculated dewpoint temperature in degrees Celsius.
- * @return esp_err_t ESP_OK on success.
+ * @return float calculated dew-point temperature in degrees Celsius.
  */
-static inline esp_err_t ahtxx_calculate_dewpoint(const float temperature, const float humidity, float *const dewpoint) {
-    ESP_ARG_CHECK( dewpoint );
-
+static inline float ahtxx_calculate_dewpoint(const float temperature, const float humidity) {
     // validate parameters
     if(temperature > 80 || temperature < -40) return ESP_ERR_INVALID_ARG;
     if(humidity > 100 || humidity < 0) return ESP_ERR_INVALID_ARG;
-    
     // calculate dew-point temperature
     float H = (log10f(humidity)-2)/0.4343f + (17.62f*temperature)/(243.12f+temperature);
-    *dewpoint = 243.12f*H/(17.62f-H);
-    
-    return ESP_OK;
+    return 243.12f*H/(17.62f-H);
 }
 
 /**
@@ -167,7 +161,7 @@ static inline float ahtxx_convert_humidity_signal(uint32_t humidity_sig) {
 }
 
 /**
- * @brief I2C read from register address transaction.  This is a write and then read process.
+ * @brief AHTXX I2C read from register address transaction.  This is a write and then read process.
  * 
  * @param handle AHTXX device handle.
  * @param reg_addr AHTXX register address to read from.
@@ -194,7 +188,7 @@ static inline esp_err_t ahtxx_i2c_read_from(ahtxx_handle_t handle, const uint8_t
 }
 
 /**
- * @brief I2C read transaction.
+ * @brief AHTXX I2C read transaction.
  * 
  * @param handle AHTXX device handle.
  * @param buffer Buffer to store results from read transaction.
@@ -212,7 +206,7 @@ static inline esp_err_t ahtxx_i2c_read(ahtxx_handle_t handle, uint8_t *buffer, c
 }
 
 /**
- * @brief I2C write transaction.
+ * @brief AHTXX I2C write transaction.
  * 
  * @param handle AHTXX device handle.
  * @param buffer Buffer to write for write transaction.
@@ -458,8 +452,8 @@ esp_err_t ahtxx_get_measurements(ahtxx_handle_t handle, float *const temperature
     /* attempt to get temperature and humidity measurements */
     ESP_RETURN_ON_ERROR( ahtxx_get_measurement(handle, temperature, humidity), TAG, "read measurement for get measurements failed" );
 
-    /* compute dewpoint from temperature and humidity */
-    ESP_RETURN_ON_ERROR( ahtxx_calculate_dewpoint(*temperature, *humidity, dewpoint), TAG, "calculate dew-point for get measurements failed" );
+    /* compute dew-point from temperature and humidity */
+    *dewpoint = ahtxx_calculate_dewpoint(*temperature, *humidity);
 
     return ESP_OK;
 }

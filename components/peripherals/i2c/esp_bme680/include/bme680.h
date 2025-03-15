@@ -309,16 +309,34 @@ typedef struct bme680_cal_factors_s {
  * @brief BME680 data structure definition.
  */
 typedef struct bme680_data_s {
-    float    temperature;    /*!< temperature in degrees celsius */
-    float    humidity;       /*!< relative humidity in percent */
-    float    pressure;       /*!< barometric pressure in hectopascal */
-    uint16_t aqi;            /*!< air quality index (0..500)*/
-    bool     heater_stable;  /*!< indicates that the heater temperature was stable */
-    bool     gas_valid;      /*!< indicates that the gas measurement results are valid  */
-    uint16_t gas_resistance; /*!< gas resistance in ohms */
-    uint8_t  gas_range;      /*!< gas resistance range */
-    uint8_t  gas_index;      /*!< heater profile used (0..9) */
+    float    dewpoint_temperature;  /*!< dew-point temperature in degrees celsius */
+    float    air_temperature;       /*!< air temperature in degrees celsius */
+    float    relative_humidity;     /*!< relative humidity in percent */
+    float    barometric_pressure;   /*!< barometric pressure in hectopascal */
+    bool     gas_valid;             /*!< indicates that the gas measurement results are valid  */
+    float    gas_resistance;        /*!< gas resistance in ohms */
+    uint8_t  gas_range;             /*!< gas resistance range */
+    uint8_t  gas_index;             /*!< heater profile used (0..9) */
+    bool     heater_stable;         /*!< indicates that the heater temperature was stable */
+    uint16_t iaq_score;             /*!< air quality index (0..500) */
+    float    temperature_score;
+    float    humidity_score;
+    float    gas_score;
 } bme680_data_t;
+
+/**
+ * @brief BME680 ADC data structure definition.
+ */
+typedef struct bme680_adc_data_s {
+    uint32_t temperature;
+    uint16_t humidity;
+    uint32_t pressure;
+    uint16_t gas;
+    bool     gas_valid;
+    uint8_t  gas_range;
+    uint8_t  gas_index;
+    bool     heater_stable;
+} bme680_adc_data_t;
 
 /**
  * @brief BME680 configuration structure definition.
@@ -510,6 +528,15 @@ esp_err_t bme680_set_configuration_register(bme680_handle_t handle, const bme680
 esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config_t *bme680_config, bme680_handle_t *bme680_handle);
 
 /**
+ * @brief Reads humidity, temperature, and pressure ADC signals from BME680
+ *
+ * @param[in] handle BME680 device handle.
+ * @param[out] data BME680 ADC data structure.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *const data);
+
+/**
  * @brief Reads humidity, temperature, and pressure measurements from BME680
  *
  * @param[in] handle BME680 device handle.
@@ -624,6 +651,14 @@ esp_err_t bme680_set_iir_filter(bme680_handle_t handle, const bme680_iir_filters
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t bme680_reset(bme680_handle_t handle);
+
+/**
+ * @brief Air quality as a string based on the IAQ score.
+ * 
+ * @param iaq_score Index of air quality score.
+ * @return char* Air quality as a string.
+ */
+char *bme680_iaq_air_quality_to_string(float iaq_score);
 
 /**
  * @brief Removes an BME680 device from master bus.

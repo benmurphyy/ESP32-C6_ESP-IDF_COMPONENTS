@@ -89,7 +89,6 @@ void i2c0_bmp390_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## BMP390 - START #########################");
         //
         // handle sensor
-        //bmp390_set_power_mode(dev_hdl, BMP390_POWER_MODE_FORCED);
 
         float temperature, pressure;
         esp_err_t result = bmp390_get_measurements(dev_hdl, &temperature, &pressure);

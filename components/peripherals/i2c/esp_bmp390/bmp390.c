@@ -542,6 +542,11 @@ esp_err_t bmp390_get_measurements(bmp390_handle_t handle, float *const temperatu
     bool         temperature_is_ready = false;
     bit48_uint8_buffer_t rx                   = {};
 
+    /* trigger measurement when in forced mode */
+    if(handle->dev_config.power_mode == BMP390_POWER_MODE_FORCED) {
+        bmp390_set_power_mode(handle, BMP390_POWER_MODE_FORCED);
+    }
+
     /* attempt to poll until data is available or timeout */
     do {
         /* attempt to check if data is ready */
