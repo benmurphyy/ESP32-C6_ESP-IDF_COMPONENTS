@@ -58,6 +58,10 @@ extern "C" {
 #define I2C_BME680_DEV_ADDR_LO      UINT8_C(0x76) //!< bme680 I2C address when ADDR pin floating/low
 #define I2C_BME680_DEV_ADDR_HI      UINT8_C(0x77) //!< bme680 I2C address when ADDR pin high
 
+#define BME680_HEATER_TEMP_MIN      UINT8_C(200)  // min. 200 degree Celsius
+#define BME680_HEATER_TEMP_MAX      UINT8_C(400)  // max. 200 degree Celsius
+#define BME680_HEATER_PROFILE_SIZE  UINT8_C(10)   // max. 10 heater profiles (0..9)
+
 /*
  * BME680 macros
 */
@@ -69,8 +73,11 @@ extern "C" {
         .pressure_oversampling      = BME680_PRESSURE_OVERSAMPLING_4X,          \
         .temperature_oversampling   = BME680_TEMPERATURE_OVERSAMPLING_4X,       \
         .humidity_oversampling      = BME680_HUMIDITY_OVERSAMPLING_4X,          \
-        .heater_setpoint            = BME680_HEATER_SETPOINT_0,                 \
+        .gas_enabled                = true,                                     \
+        .heater_temperature         = 300,                                      \
+        .heater_duration            = 100,                                      \
     }
+      
 
 /*
  * BME680 enumerator and structure declarations
@@ -121,8 +128,10 @@ typedef enum bme680_iir_filters_e {
  * @brief BME680 power modes enumerator.
  */
 typedef enum bme680_power_modes_e {
-    BME680_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
-    BME680_POWER_MODE_FORCED  = (0b01), //!< measurement is initiated by user
+    BME680_POWER_MODE_SLEEP      = (0b00), //!< sleep mode, default after power-up
+    BME680_POWER_MODE_FORCED     = (0b01), //!< measurement is initiated by user
+    BME680_POWER_MODE_PARALLEL   = (0b10),
+    BME680_POWER_MODE_SEQUENTIAL = (0b11)
 } bme680_power_modes_t;
 
 /**
@@ -208,27 +217,27 @@ typedef union __attribute__((packed)) bme680_control_humidity_register_u {
  * @brief BME680 control gas 0 register (0x71) structure.  The reset state is 0x00 for this register.
  * This register contains the heater set-point and gas conversion settings.
  */
-typedef union __attribute__((packed)) bme680_control_gas0_register_u {
+typedef union __attribute__((packed)) bme680_control_gas1_register_u {
     struct {
         bme680_heater_setpoints_t   heater_setpoint:4;   /*!< bme680           (bit:0-3)  */
         bool                        gas_conversion_enabled:1;/*!< bme680 gas conversions are started only appropriate mode when true (bit:4)  */
         uint8_t                     reserved:3;          /*!< bme680 reserved                               (bit:5-7) */
     } bits;
     uint8_t reg;
-} bme680_control_gas0_register_t;
+} bme680_control_gas1_register_t;
 
 /**
  * @brief BME680 control gas 1 register (0x70) structure.  The reset state is 0x00 for this register.
  * This register contains heater setting.
  */
-typedef union __attribute__((packed)) bme680_control_gas1_register_u {
+typedef union __attribute__((packed)) bme680_control_gas0_register_u {
     struct {
         uint8_t                 reserved1:3;    /*!< bme680           (bit:0-2)  */
         bool                    heater_disabled:1; /*!< bme680 heater is off when true (bit:3)  */
         uint8_t                 reserved2:4;    /*!< bme680 reserved   (bit:4-7) */
     } bits;
     uint8_t reg;
-} bme680_control_gas1_register_t;
+} bme680_control_gas0_register_t;
 
 /**
  * @brief BME680 control gas_r_lsb register (0x2b) structure.  The reset state is 0x00 for this register.
@@ -258,10 +267,8 @@ typedef union __attribute__((packed)) bme680_configuration_register_u {
     uint8_t reg;
 } bme680_config_register_t;
 
-
-
 /**
- * @brief BME680 calibration factors structure.
+ * @brief BME680 calibration factors structure definition.
  */
 typedef struct bme680_cal_factors_s {
     /* temperature compensation */
@@ -292,32 +299,45 @@ typedef struct bme680_cal_factors_s {
     int8_t                  par_G1;
     int16_t                 par_G2;
     int8_t                  par_G3;
+    /* other */
     uint8_t                 res_heat_range;
     int8_t                  res_heat_val;
-    /* gas resistance compensation */
-    int8_t                  gas_range;
     int8_t                  range_switching_error;
 } bme680_cal_factors_t;
 
 /**
- * @brief BME680 configuration structure.
+ * @brief BME680 data structure definition.
+ */
+typedef struct bme680_data_s {
+    float    temperature;    /*!< temperature in degrees celsius */
+    float    humidity;       /*!< relative humidity in percent */
+    float    pressure;       /*!< barometric pressure in hectopascal */
+    uint16_t aqi;            /*!< air quality index (0..500)*/
+    bool     heater_stable;  /*!< indicates that the heater temperature was stable */
+    bool     gas_valid;      /*!< indicates that the gas measurement results are valid  */
+    uint16_t gas_resistance; /*!< gas resistance in ohms */
+    uint8_t  gas_range;      /*!< gas resistance range */
+    uint8_t  gas_index;      /*!< heater profile used (0..9) */
+} bme680_data_t;
+
+/**
+ * @brief BME680 configuration structure definition.
  */
 typedef struct bme680_config_s {
-    uint16_t                                i2c_address;                /*!< bme680 i2c device address */
-    uint32_t                                i2c_clock_speed;            /*!< bme680 i2c device scl clock speed  */
-    bme680_power_modes_t                    power_mode;                 /*!< bme680 power mode */
+    uint16_t                                i2c_address;                    /*!< bme680 i2c device address */
+    uint32_t                                i2c_clock_speed;                /*!< bme680 i2c device scl clock speed  */
+    bme680_power_modes_t                    power_mode;                     /*!< bme680 power mode */
     bme680_iir_filters_t                    iir_filter;
     bme680_pressure_oversampling_t          pressure_oversampling;
     bme680_temperature_oversampling_t       temperature_oversampling;
     bme680_humidity_oversampling_t          humidity_oversampling;
-    bme680_heater_setpoints_t               heater_setpoint;
-    bool                                    gas_enabled;                /*!< bme680 enable gas measurement */
-    uint16_t                                heater_temperature;         /*!< bme680 heater temperature for forced mode in degrees celsius */
-    uint16_t                                heater_duration;            /*!< bme680 heating duration for forced mode in milliseconds */
-    uint16_t                               *heater_temperature_profile; /*!< bme680 heater temperature profile in degrees celsius */
-    uint16_t                               *heater_duration_profile;    /*!< bme680 heating duration profile in milliseconds */
-    uint8_t                                 heater_profile_size;        /*!< bme680 size of the heating profile */
-    uint16_t                                heater_shared_duration;     /*!< bme680 heating duration for parallel mode in milliseconds */
+    bool                                    gas_enabled;                    /*!< bme680 gas measurements enabled when true */
+    uint16_t                                heater_temperature;             /*!< bme680 heater temperature for forced mode in degrees celsius */
+    uint16_t                                heater_duration;                /*!< bme680 heating duration for forced mode in milliseconds */
+    uint16_t                                heater_temperature_profile[BME680_HEATER_PROFILE_SIZE]; /*!< bme680 heater temperature profile in degrees celsius */
+    uint16_t                                heater_duration_profile[BME680_HEATER_PROFILE_SIZE];    /*!< bme680 heating duration profile in milliseconds */
+    uint8_t                                 heater_profile_size;            /*!< bme680 size of the heating profile */
+    uint16_t                                heater_shared_duration;         /*!< bme680 heating duration for parallel mode in milliseconds */
 } bme680_config_t;
 
 /**
@@ -329,6 +349,7 @@ struct bme680_context_t {
     bme680_cal_factors_t                   *dev_cal_factors;    /*!< bme680 device calibration factors */
     uint8_t                                 chip_id;            /*!< bme680 chip identification register */
     uint16_t                                ambient_temperature;
+    uint8_t                                 variant_id;
 };
 
 /**
@@ -347,9 +368,19 @@ typedef struct bme680_context_t *bme680_handle_t;
  * @brief Reads chip identification register from BME680.
  * 
  * @param[in] handle BME680 device handle.
+ * @param[out] reg BME680 chip identifier.
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t bme680_get_chip_id_register(bme680_handle_t handle, uint8_t *const reg);
+
+/**
+ * @brief Reads variant identification register from BME680.
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg BME680 variant identifier.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_variant_id_register(bme680_handle_t handle, uint8_t *const reg);
 
 /**
  * @brief Reads status register from BME680.
@@ -482,13 +513,10 @@ esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config
  * @brief Reads humidity, temperature, and pressure measurements from BME680
  *
  * @param[in] handle BME680 device handle.
- * @param[out] humidity Humidity in percentage.
- * @param[out] temperature Temperature in degree Celsius.
- * @param[out] pressure Pressure in pascal.
- * @param[out] gas_resistance Gas resistance.
+ * @param[out] data BME680 data structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t bme680_get_measurements(bme680_handle_t handle, float *const humidity, float *const temperature, float *const pressure, float *const gas_resistance);
+esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const data);
 
 /**
  * @brief Reads data status of the BME680.

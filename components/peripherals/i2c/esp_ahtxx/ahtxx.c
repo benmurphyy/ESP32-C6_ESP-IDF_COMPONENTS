@@ -103,6 +103,10 @@ static const char* TAG = "ahtxx";
  */
 
 /**
+ * function and subroutine declarations
+ */
+
+/**
  * @brief Calculates AHTXX sensor types with CRC8 value.  See datasheet for details.
  *
  * @param[in] buffer[] Data buffer to perform CRC8 calculation against.
@@ -124,7 +128,7 @@ static inline uint8_t ahtxx_calculate_crc8(const uint8_t buffer[], const uint8_t
  * @brief Calculates dewpoint temperature from air temperature and relative humidity.
  *
  * @param[in] temperature air temperature in degrees Celsius.
- * @param[in] humidity relative humiity in percent.
+ * @param[in] humidity relative humidity in percent.
  * @param[out] dewpoint calculated dewpoint temperature in degrees Celsius.
  * @return esp_err_t ESP_OK on success.
  */
@@ -142,50 +146,86 @@ static inline esp_err_t ahtxx_calculate_dewpoint(const float temperature, const 
     return ESP_OK;
 }
 
+/**
+ * @brief Converts temperature signal to engineering units of measure.
+ * 
+ * @param temperature_sig ADC temperature signal from AHTXX.
+ * @return float Converted temperature measurement from AHTXX in degrees Celsius.
+ */
 static inline float ahtxx_convert_temperature_signal(const uint32_t temperature_sig) {
     return ((float)temperature_sig / powf(2, 20)) * 200.0f - 50.0f;
 }
 
+/**
+ * @brief Converts humidity signal to engineering units of measure.
+ * 
+ * @param humidity_sig ADC humidity signal from AHTXX.
+ * @return float Converted humidity measurement from AHTXX in percent.
+ */
 static inline float ahtxx_convert_humidity_signal(uint32_t humidity_sig) {
     return ((float)humidity_sig / powf(2, 20)) * 100.0f;
 }
 
 /**
- * @brief Converts temperature and humidity signals to engineering units of measure.
+ * @brief I2C read from register address transaction.  This is a write and then read process.
  * 
  * @param handle AHTXX device handle.
- * @param buffer AHTXX measurement trigger command response data buffer.
- * @param temperature Converted temperature measurement from AHTXX in degrees Celsius.
- * @param humidity Converted humidity measurement from AHTXX in percent.
+ * @param reg_addr AHTXX register address to read from.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ahtxx_convert_signals(ahtxx_handle_t handle, const bit56_uint8_buffer_t buffer, 
-                                                    float *const temperature, float *const humidity) {
+static inline esp_err_t ahtxx_i2c_read_from(ahtxx_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
     /* validate arguments */
-    ESP_ARG_CHECK( handle && buffer && temperature && humidity );
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(AHTXX_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief I2C read transaction.
+ * 
+ * @param handle AHTXX device handle.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ahtxx_i2c_read(ahtxx_handle_t handle, uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief I2C write transaction.
+ * 
+ * @param handle AHTXX device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ahtxx_i2c_write(ahtxx_handle_t handle, const uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
                         
-    /* handle aht crc validation by sensor type */
-    //if(handle->dev_config.sensor_type != AHTXX_AHT10) {
-        /* validate crc byte - 7th byte for aht20, aht21, aht25, and aht30 sensor type */
-        /*
-        if (buffer[6] != i2c_ahtxx_calculate_crc8(buffer, BIT56_UINT8_BUFFER_SIZE - 1)) {
-            return ESP_ERR_INVALID_CRC;
-        }
-        */
-    //}
-
-    /* concat humidity signal */
-    const uint32_t humidity_sig = ((uint32_t)buffer[1] << 12) | ((uint32_t)buffer[2] << 4) | (buffer[3] >> 4);
-
-    /* convert humidity signal */
-    *humidity = ((float)humidity_sig / powf(2, 20)) * 100.0f;
-
-    /* concat temperature signal */
-    const uint32_t temperature_sig = ((uint32_t)(buffer[3] & 0x0f) << 16) | ((uint32_t)buffer[4] << 8) | buffer[5];
-
-    /* convert temperature signal */
-    *temperature = ((float)temperature_sig / powf(2, 20)) * 200.0f - 50.0f;
-
     return ESP_OK;
 }
 
@@ -214,13 +254,13 @@ static inline esp_err_t ahtxx_reset_init_register(ahtxx_handle_t handle, const u
     tx[2] = 0x00;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write command to register 0x%02x for reset initialization register failed", reg_addr );
+    ESP_RETURN_ON_ERROR( ahtxx_i2c_write(handle, tx, BIT24_UINT8_BUFFER_SIZE ), TAG, "write command to register 0x%02x for reset initialization register failed", reg_addr );
     
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AHTXX_CMD_DELAY_MS));
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read from register 0x%02x for reset initialization register failed", reg_addr );
+    ESP_RETURN_ON_ERROR( ahtxx_i2c_read(handle, rx, BIT24_UINT8_BUFFER_SIZE ), TAG, "read from register 0x%02x for reset initialization register failed", reg_addr );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AHTXX_CMD_DELAY_MS));
@@ -232,7 +272,7 @@ static inline esp_err_t ahtxx_reset_init_register(ahtxx_handle_t handle, const u
     tx[2] = rx[2];
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write data to register 0x%02x for reset initialization register failed", reg_addr );
+    ESP_RETURN_ON_ERROR( ahtxx_i2c_write(handle, tx, BIT24_UINT8_BUFFER_SIZE ), TAG, "write data to register 0x%02x for reset initialization register failed", reg_addr );
     
     return ESP_OK;
 }
@@ -254,11 +294,11 @@ static inline esp_err_t ahtxx_setup(ahtxx_handle_t handle) {
     switch(handle->dev_config.sensor_type) {
         case AHTXX_AHT10:
             /* attempt i2c write transaction for aht10 sensor type initialization */
-            ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, aht10_tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initialization register 0xe1 failed" );
+            ESP_RETURN_ON_ERROR( ahtxx_i2c_write(handle, aht10_tx, BIT24_UINT8_BUFFER_SIZE ), TAG, "write initialization register 0xe1 failed" );
             break;
         case AHTXX_AHT20:
             /* attempt i2c write transaction for aht20 sensor type initialization */
-            ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, aht20_tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write initialization register 0xbe failed" );
+            ESP_RETURN_ON_ERROR( ahtxx_i2c_write(handle, aht20_tx, BIT24_UINT8_BUFFER_SIZE ), TAG, "write initialization register 0xbe failed" );
             break;
         case AHTXX_AHT21:
         case AHTXX_AHT25:
@@ -278,29 +318,12 @@ static inline esp_err_t ahtxx_setup(ahtxx_handle_t handle) {
     return ESP_OK;
 }
 
-/**
- * function and subroutine declarations
- */
-
-
 esp_err_t ahtxx_get_status_register(ahtxx_handle_t handle, ahtxx_status_register_t *const reg) {
-    const bit8_uint8_buffer_t tx = { AHTXX_CMD_STATUS };
-    ahtxx_status_register_t out_reg;
-
     /* validate arguments */
     ESP_ARG_CHECK( handle && reg );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, read status register failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AHTXX_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, &out_reg.reg, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, read status register failed" );
-
-    /* set output parameter */
-    *reg = out_reg;
+    /* attempt i2c write/read transaction */
+    ESP_RETURN_ON_ERROR( ahtxx_i2c_read_from(handle, AHTXX_CMD_STATUS, &reg->reg, BIT8_UINT8_BUFFER_SIZE), TAG, "read status register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AHTXX_CMD_DELAY_MS));
@@ -374,7 +397,7 @@ esp_err_t ahtxx_get_measurement(ahtxx_handle_t handle, float *const temperature,
     ESP_ARG_CHECK( handle && (temperature || humidity) );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write measurement trigger command for get measurement failed" );
+    ESP_RETURN_ON_ERROR( ahtxx_i2c_write(handle, tx, BIT24_UINT8_BUFFER_SIZE ), TAG, "write measurement trigger command for get measurement failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AHTXX_MEAS_PROC_DELAY_MS));
@@ -397,12 +420,12 @@ esp_err_t ahtxx_get_measurement(ahtxx_handle_t handle, float *const temperature,
         /* aht10 returns 6 bytes */
 
         /* attempt i2c read transaction for aht10 sensor type */
-        ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+        ESP_RETURN_ON_ERROR( ahtxx_i2c_read(handle, rx, BIT48_UINT8_BUFFER_SIZE), TAG, "read measurement data for get measurement failed" );
     } else {
         /* aht20, aht21, aht25, and aht30 return 7 bytes */
 
         /* attempt i2c read transaction for aht20, aht21, aht25, and aht30 sensor types */
-        ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT56_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+        ESP_RETURN_ON_ERROR( ahtxx_i2c_read(handle, rx, BIT56_UINT8_BUFFER_SIZE), TAG, "read measurement data for get measurement failed" );
 
         /* validate crc ? */
     }
@@ -490,13 +513,14 @@ esp_err_t ahtxx_get_status(ahtxx_handle_t handle, bool *const busy, bool *const 
 }
 
 esp_err_t ahtxx_reset(ahtxx_handle_t handle) {
+    const bit8_uint8_buffer_t tx = { AHTXX_CMD_RESET };
     ahtxx_status_register_t status_reg;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, AHTXX_CMD_RESET), TAG, "write reset command for reset failed" );
+    ESP_RETURN_ON_ERROR( ahtxx_i2c_write(handle, tx, BIT8_UINT8_BUFFER_SIZE), TAG, "write reset command for reset failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AHTXX_RESET_DELAY_MS));
