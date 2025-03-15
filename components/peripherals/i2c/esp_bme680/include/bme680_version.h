@@ -1,4 +1,3 @@
-#define BMP280_FW_VERSION_PATCH 7
 /*
  * The MIT License (MIT)
  *
