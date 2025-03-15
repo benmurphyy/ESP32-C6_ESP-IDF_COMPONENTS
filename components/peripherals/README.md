@@ -24,7 +24,7 @@ ESP-IDF component development status:
 - AMS AS3935: component is synchronized with the esp-idf component registry and platform io library registry.
 - OSRAM AS7341: component is synchronized with the esp-idf component registry and platform io library registry.
 - ROHM BH1750FVI: component is synchronized with the esp-idf component registry and platform io library registry.
-- Bosch BME680: component development is work in progress (WIP), coming soon (waiting for sensor to arrive)!! 
+- Bosch BME680: component is synchronized with the esp-idf component registry and platform io library registry.
 - Bosch BMP280: component is synchronized with the esp-idf component registry and platform io library registry.
 - Bosch BMP390: component is synchronized with the esp-idf component registry and platform io library registry.
 - ScioSense CCS811: component is synchronized with the esp-idf component registry and platform io library registry.
