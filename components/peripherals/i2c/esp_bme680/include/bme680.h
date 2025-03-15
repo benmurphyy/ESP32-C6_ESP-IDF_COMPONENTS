@@ -50,7 +50,7 @@ extern "C" {
 /*
  * BME680 definitions
 */
-#define I2C_BME680_SCL_SPEED_HZ     UINT32_C(100000)   //!< bme680 I2C default clock frequency (100KHz)
+#define I2C_BME680_DEV_CLK_SPD      UINT32_C(100000)   //!< bme680 I2C default clock frequency (100KHz)
 
 /*
  * supported device addresses
@@ -61,14 +61,16 @@ extern "C" {
 /*
  * BME680 macros
 */
-#define I2C_BME680_CONFIG_DEFAULT {                                              \
-        .dev_config.device_address  = I2C_BME680_DEV_ADDR_HI,                    \
-        .dev_config.scl_speed_hz    = I2C_BME680_SCL_SPEED_HZ,                   \
-        .power_mode                 = I2C_BME680_POWER_MODE_NORMAL,              \
-        .iir_filter                 = I2C_BME680_IIR_FILTER_OFF,                 \
-        .pressure_oversampling      = I2C_BME680_PRESSURE_OVERSAMPLING_4X,       \
-        .temperature_oversampling   = I2C_BME680_TEMPERATURE_OVERSAMPLING_4X,    \
-        .humidity_oversampling      = I2C_BME680_HUMIDITY_OVERSAMPLING_4X }
+#define I2C_BME680_CONFIG_DEFAULT {                                             \
+        .i2c_address                = I2C_BME680_DEV_ADDR_HI,                   \
+        .i2c_clock_speed            = I2C_BME680_DEV_CLK_SPD,                   \
+        .power_mode                 = BME680_POWER_MODE_FORCED,                 \
+        .iir_filter                 = BME680_IIR_FILTER_OFF,                    \
+        .pressure_oversampling      = BME680_PRESSURE_OVERSAMPLING_4X,          \
+        .temperature_oversampling   = BME680_TEMPERATURE_OVERSAMPLING_4X,       \
+        .humidity_oversampling      = BME680_HUMIDITY_OVERSAMPLING_4X,          \
+        .heater_setpoint            = BME680_HEATER_SETPOINT_0,                 \
+    }
 
 /*
  * BME680 enumerator and structure declarations
@@ -78,170 +80,190 @@ extern "C" {
 /**
  * @brief BME680 heater set-points enumerator.
  */
-typedef enum {
-    I2C_BME680_HEATER_SETPOINT_0  = (0b0000),
-    I2C_BME680_HEATER_SETPOINT_1  = (0b0001),
-    I2C_BME680_HEATER_SETPOINT_2  = (0b0010),
-    I2C_BME680_HEATER_SETPOINT_3  = (0b0011),
-    I2C_BME680_HEATER_SETPOINT_4  = (0b0100),
-    I2C_BME680_HEATER_SETPOINT_5  = (0b0101),
-    I2C_BME680_HEATER_SETPOINT_6  = (0b0110),
-    I2C_BME680_HEATER_SETPOINT_7  = (0b0111),
-    I2C_BME680_HEATER_SETPOINT_8  = (0b1000),
-    I2C_BME680_HEATER_SETPOINT_9  = (0b1001)
-} i2c_bme680_heater_setpoints_t;
-
+typedef enum bme680_heater_setpoints_e {
+    BME680_HEATER_SETPOINT_0  = (0b0000),
+    BME680_HEATER_SETPOINT_1  = (0b0001),
+    BME680_HEATER_SETPOINT_2  = (0b0010),
+    BME680_HEATER_SETPOINT_3  = (0b0011),
+    BME680_HEATER_SETPOINT_4  = (0b0100),
+    BME680_HEATER_SETPOINT_5  = (0b0101),
+    BME680_HEATER_SETPOINT_6  = (0b0110),
+    BME680_HEATER_SETPOINT_7  = (0b0111),
+    BME680_HEATER_SETPOINT_8  = (0b1000),
+    BME680_HEATER_SETPOINT_9  = (0b1001)
+} bme680_heater_setpoints_t;
 
 /**
  * @brief BME680 gas wait multipliers enumerator.
  */
-typedef enum {
-    I2C_BME680_GAS_WAIT_MULT_1  = (0b00),
-    I2C_BME680_GAS_WAIT_MULT_4  = (0b01),
-    I2C_BME680_GAS_WAIT_MULT_16 = (0b10),
-    I2C_BME680_GAS_WAIT_MULT_64 = (0b11)
-} i2c_bme680_gas_wait_multipliers_t;
+typedef enum bme680_gas_wait_multipliers_e {
+    BME680_GAS_WAIT_MULT_1  = (0b00),
+    BME680_GAS_WAIT_MULT_4  = (0b01),
+    BME680_GAS_WAIT_MULT_16 = (0b10),
+    BME680_GAS_WAIT_MULT_64 = (0b11)
+} bme680_gas_wait_multipliers_t;
 
 /**
  * @brief BME680 IIR filters coefficient enumerator.
  */
-typedef enum {
-    I2C_BME680_IIR_FILTER_OFF = (0b000),
-    I2C_BME680_IIR_FILTER_1   = (0b001),
-    I2C_BME680_IIR_FILTER_3   = (0b010),
-    I2C_BME680_IIR_FILTER_7   = (0b011),
-    I2C_BME680_IIR_FILTER_15  = (0b100),
-    I2C_BME680_IIR_FILTER_31  = (0b101),
-    I2C_BME680_IIR_FILTER_63  = (0b110),
-    I2C_BME680_IIR_FILTER_127 = (0b111),
-} i2c_bme680_iir_filters_t;
+typedef enum bme680_iir_filters_e {
+    BME680_IIR_FILTER_OFF = (0b000),
+    BME680_IIR_FILTER_1   = (0b001),
+    BME680_IIR_FILTER_3   = (0b010),
+    BME680_IIR_FILTER_7   = (0b011),
+    BME680_IIR_FILTER_15  = (0b100),
+    BME680_IIR_FILTER_31  = (0b101),
+    BME680_IIR_FILTER_63  = (0b110),
+    BME680_IIR_FILTER_127 = (0b111),
+} bme680_iir_filters_t;
 
 /**
  * @brief BME680 power modes enumerator.
  */
-typedef enum {
-    I2C_BME680_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
-    I2C_BME680_POWER_MODE_FORCED  = (0b01), //!< measurement is initiated by user
-} i2c_bme680_power_modes_t;
+typedef enum bme680_power_modes_e {
+    BME680_POWER_MODE_SLEEP   = (0b00), //!< sleep mode, default after power-up
+    BME680_POWER_MODE_FORCED  = (0b01), //!< measurement is initiated by user
+} bme680_power_modes_t;
 
 /**
  * @brief BME680 pressure oversampling enumerator.
  */
-typedef enum {
-    I2C_BME680_PRESSURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
-    I2C_BME680_PRESSURE_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
-    I2C_BME680_PRESSURE_OVERSAMPLING_2X         = (0b010),  //!< low power
-    I2C_BME680_PRESSURE_OVERSAMPLING_4X         = (0b011),  //!< standard
-    I2C_BME680_PRESSURE_OVERSAMPLING_8X         = (0b100),  //!< high resolution
-    I2C_BME680_PRESSURE_OVERSAMPLING_16X        = (0b101)   //!< ultra high resolution
-} i2c_bme680_pressure_oversampling_t;
+typedef enum bme680_pressure_oversampling_e {
+    BME680_PRESSURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
+    BME680_PRESSURE_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
+    BME680_PRESSURE_OVERSAMPLING_2X         = (0b010),  //!< low power
+    BME680_PRESSURE_OVERSAMPLING_4X         = (0b011),  //!< standard
+    BME680_PRESSURE_OVERSAMPLING_8X         = (0b100),  //!< high resolution
+    BME680_PRESSURE_OVERSAMPLING_16X        = (0b101)   //!< ultra high resolution
+} bme680_pressure_oversampling_t;
 
 /**
  * @brief BME680 temperature oversampling enumerator.
  */
-typedef enum {
-    I2C_BME680_TEMPERATURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
-    I2C_BME680_TEMPERATURE_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
-    I2C_BME680_TEMPERATURE_OVERSAMPLING_2X         = (0b010),  //!< low power
-    I2C_BME680_TEMPERATURE_OVERSAMPLING_4X         = (0b011),  //!< standard
-    I2C_BME680_TEMPERATURE_OVERSAMPLING_8X         = (0b100),  //!< high resolution
-    I2C_BME680_TEMPERATURE_OVERSAMPLING_16X        = (0b101),  //!< ultra high resolution
-} i2c_bme680_temperature_oversampling_t;
+typedef enum bme680_temperature_oversampling_e {
+    BME680_TEMPERATURE_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
+    BME680_TEMPERATURE_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
+    BME680_TEMPERATURE_OVERSAMPLING_2X         = (0b010),  //!< low power
+    BME680_TEMPERATURE_OVERSAMPLING_4X         = (0b011),  //!< standard
+    BME680_TEMPERATURE_OVERSAMPLING_8X         = (0b100),  //!< high resolution
+    BME680_TEMPERATURE_OVERSAMPLING_16X        = (0b101),  //!< ultra high resolution
+} bme680_temperature_oversampling_t;
 
 /**
  * @brief BME680 humidity oversampling enumerator.
  */
-typedef enum {
-    I2C_BME680_HUMIDITY_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
-    I2C_BME680_HUMIDITY_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
-    I2C_BME680_HUMIDITY_OVERSAMPLING_2X         = (0b010),  //!< low power
-    I2C_BME680_HUMIDITY_OVERSAMPLING_4X         = (0b011),  //!< standard
-    I2C_BME680_HUMIDITY_OVERSAMPLING_8X         = (0b100),  //!< high resolution
-    I2C_BME680_HUMIDITY_OVERSAMPLING_16X        = (0b101),  //!< ultra high resolution
-} i2c_bme680_humidity_oversampling_t;
+typedef enum bme680_humidity_oversampling_e {
+    BME680_HUMIDITY_OVERSAMPLING_SKIPPED    = (0b000),  //!< skipped, no measurement, output set to 0x80000
+    BME680_HUMIDITY_OVERSAMPLING_1X         = (0b001),  //!< ultra low power
+    BME680_HUMIDITY_OVERSAMPLING_2X         = (0b010),  //!< low power
+    BME680_HUMIDITY_OVERSAMPLING_4X         = (0b011),  //!< standard
+    BME680_HUMIDITY_OVERSAMPLING_8X         = (0b100),  //!< high resolution
+    BME680_HUMIDITY_OVERSAMPLING_16X        = (0b101),  //!< ultra high resolution
+} bme680_humidity_oversampling_t;
 
 /**
  * @brief BME680 status 0 register (0x1d) structure.  The reset state is 0x00 for this register.
+ * This register contains the gas measurement index, measuring status, gas measuring status, and
+ * new data status.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) bme680_status0_register_u {
     struct {
         uint8_t gas_measurement_index:4; /*!< bme680 user can program sequence of up to 10 conversions by setting nb_conv<3:0> (bit:0-3) */
         uint8_t reserved:1;              /*!< reserved (bit:4) */
         bool    measuring:1;             /*!< bmp680 automatically set to 1 whenever a conversion is running and back to 0 when results transferred to data registers (bit:5) */
         bool    gas_measuring:1;         /*!< bme680 automatically set to 1 during gas measurement and back to 0 when results transferred to data registers (bit:6) */
-        bool    new_data:1;              /*!< bme680 measured data are stored into the data registers (bit:7) */
+        bool    new_data:1;              /*!< bme680 measured data are stored into the data registers when true (bit:7) */
     } bits;
     uint8_t reg;
-} i2c_bme680_status0_register_t;
+} bme680_status0_register_t;
 
 /**
  * @brief BME680 control measurement register (0x74) structure.  The reset state is 0x00 for this register.
+ * This register contains the power mode, pressure and temperature oversampling settings.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) bme680_control_measurement_register_u {
     struct {
-        i2c_bme680_power_modes_t                power_mode:2;               /*!< bme680 power mode of the device            (bit:0-1)  */
-        i2c_bme680_pressure_oversampling_t      pressure_oversampling:3;    /*!< bme680 oversampling of pressure data       (bit:2-4) */
-        i2c_bme680_temperature_oversampling_t   temperature_oversampling:3; /*!< bme680 oversampling of temperature data    (bit:5-7) */
+        bme680_power_modes_t                power_mode:2;               /*!< bme680 power mode of the device            (bit:0-1)  */
+        bme680_pressure_oversampling_t      pressure_oversampling:3;    /*!< bme680 oversampling of pressure data       (bit:2-4) */
+        bme680_temperature_oversampling_t   temperature_oversampling:3; /*!< bme680 oversampling of temperature data    (bit:5-7) */
     } bits;
     uint8_t reg;
-} i2c_bme680_control_measurement_register_t;
+} bme680_control_measurement_register_t;
 
 /**
  * @brief BME680 control measurement register (0x72) structure.  The reset state is 0x00 for this register.
+ * This register contains humidity oversampling and SPI interrupt settings.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) bme680_control_humidity_register_u {
     struct {
-        i2c_bme680_humidity_oversampling_t      humidity_oversampling:3;    /*!< bme680 oversampling of humidity data          (bit:0-2)  */
-        uint8_t                                 reserved1:3;                /*!< bme680 reserved                               (bit:3-5) */
-        bool                                    spi_irq_enabled:1;          /*!< bme680 3-wire SPI interrupt enabled when true (bit:6)  */
-        uint8_t                                 reserved2:1;                /*!< bme680 reserved                               (bit:7) */
+        bme680_humidity_oversampling_t      humidity_oversampling:3;    /*!< bme680 oversampling of humidity data          (bit:0-2)  */
+        uint8_t                             reserved1:3;                /*!< bme680 reserved                               (bit:3-5) */
+        bool                                spi_irq_enabled:1;          /*!< bme680 3-wire SPI interrupt enabled when true (bit:6)  */
+        uint8_t                             reserved2:1;                /*!< bme680 reserved                               (bit:7) */
     } bits;
     uint8_t reg;
-} i2c_bme680_control_humidity_register_t;
+} bme680_control_humidity_register_t;
 
 /**
  * @brief BME680 control gas 0 register (0x71) structure.  The reset state is 0x00 for this register.
+ * This register contains the heater set-point and gas conversion settings.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) bme680_control_gas0_register_u {
     struct {
-        i2c_bme680_heater_setpoints_t           heater_setpoint:4;   /*!< bme680           (bit:0-3)  */
-        bool                                    run_gas:1;           /*!< bme680 gas conversions are started only appropriate mode when true (bit:4)  */
-        uint8_t                                 reserved:3;          /*!< bme680 reserved                               (bit:5-7) */
+        bme680_heater_setpoints_t   heater_setpoint:4;   /*!< bme680           (bit:0-3)  */
+        bool                        gas_conversion_enabled:1;/*!< bme680 gas conversions are started only appropriate mode when true (bit:4)  */
+        uint8_t                     reserved:3;          /*!< bme680 reserved                               (bit:5-7) */
     } bits;
     uint8_t reg;
-} i2c_bme680_control_gas0_register_t;
+} bme680_control_gas0_register_t;
 
 /**
  * @brief BME680 control gas 1 register (0x70) structure.  The reset state is 0x00 for this register.
+ * This register contains heater setting.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) bme680_control_gas1_register_u {
     struct {
-        uint8_t                                 reserved1:3;    /*!< bme680           (bit:0-2)  */
-        bool                                    heater_off:1;   /*!< bme680 heater is off when true (bit:3)  */
-        uint8_t                                 reserved2:4;    /*!< bme680 reserved   (bit:4-7) */
+        uint8_t                 reserved1:3;    /*!< bme680           (bit:0-2)  */
+        bool                    heater_disabled:1; /*!< bme680 heater is off when true (bit:3)  */
+        uint8_t                 reserved2:4;    /*!< bme680 reserved   (bit:4-7) */
     } bits;
     uint8_t reg;
-} i2c_bme680_control_gas1_register_t;
+} bme680_control_gas1_register_t;
+
+/**
+ * @brief BME680 control gas_r_lsb register (0x2b) structure.  The reset state is 0x00 for this register.
+ * This register contains the gas resistance lsb, gas validation flag, heater stab, and gas range settings.
+ */
+typedef union __attribute__((packed)) bme680_gas_r_lsb_register_u {
+    struct {
+        uint8_t             gas_range:4;        /*!< bme680 adc range of measure gas sensor resistance (bit:0-3)  */
+        bool                heater_stable:1;    /*!< bme680 heater temperature stability for target heater resistance (bit:4)  */
+        bool                gas_valid:1;        /*!< bme680 gas conversion is valid when true (bit:5)  */
+        uint8_t             gas_lsb:2;          /*!< bme680 gas resistance lsb  (bit:6-7) */
+    } bits;
+    uint8_t reg;
+} bme680_gas_lsb_register_t;
 
 /**
  * @brief BME680 configuration register (0x75) structure.  The reset state is 0x00 for this register.
+ * This register contains SPI and IIR filter settings.
  */
-typedef union __attribute__((packed)) {
+typedef union __attribute__((packed)) bme680_configuration_register_u {
     struct {
-        bool                        spi_enabled:1;  /*!< bme680 3-wire SPI interface enabled when true  (bit:0)  */
-        uint8_t                     reserved1:1;    /*!< bme680 reserved                                (bit:1) */
-        i2c_bme680_iir_filters_t    iir_filter:3;   /*!< bme680 time constant of the IIR filter         (bit:2-4) */
-        uint8_t                     reserved2:3;    /*!< bme680 reserved                                (bit:5-7) */
+        bool                    spi_enabled:1;  /*!< bme680 3-wire SPI interface enabled when true  (bit:0)  */
+        uint8_t                 reserved1:1;    /*!< bme680 reserved                                (bit:1) */
+        bme680_iir_filters_t    iir_filter:3;   /*!< bme680 time constant of the IIR filter         (bit:2-4) */
+        uint8_t                 reserved2:3;    /*!< bme680 reserved                                (bit:5-7) */
     } bits;
     uint8_t reg;
-} i2c_bme680_configuration_register_t;
+} bme680_config_register_t;
 
 
 
 /**
  * @brief BME680 calibration factors structure.
  */
-typedef struct {
+typedef struct bme680_cal_factors_s {
     /* temperature compensation */
     uint16_t                par_T1;
     int16_t                 par_T2;
@@ -275,247 +297,321 @@ typedef struct {
     /* gas resistance compensation */
     int8_t                  gas_range;
     int8_t                  range_switching_error;
-} i2c_bme680_cal_factors_t;
+} bme680_cal_factors_t;
 
 /**
- * @brief BME680 device configuration structure.
+ * @brief BME680 configuration structure.
  */
-typedef struct {
-    i2c_device_config_t                         dev_config;                 /*!< I2C configuration for bmp280 device */
-    i2c_bme680_power_modes_t                    power_mode;                 /*!< bme680 power mode */
-    i2c_bme680_iir_filters_t                    iir_filter;
-    i2c_bme680_pressure_oversampling_t          pressure_oversampling;
-    i2c_bme680_temperature_oversampling_t       temperature_oversampling;
-    i2c_bme680_humidity_oversampling_t          humidity_oversampling;
-    bool                                        gas_enabled;                /*!< bme680 enable gas measurement */
-    uint16_t                                    heater_temperature;         /*!< bme680 heater temperature for forced mode in degrees celsius */
-    uint16_t                                    heater_duration;            /*!< bme680 heating duration for forced mode in milli-seconds */
-    uint16_t                                   *heater_temperature_profile; /*!< bme680 heater temperature profile in degrees celsius */
-    uint16_t                                   *heater_duration_profile;    /*!< bme680 heating duration profile in milli-seconds */
-    uint8_t                                     heater_profile_size;        /*!< bme680 size of the heating profile */
-    uint16_t                                    heater_shared_duration;     /*!< bme680 heating duration for parallel mode in milli-seconds */
-} i2c_bme680_config_t;
+typedef struct bme680_config_s {
+    uint16_t                                i2c_address;                /*!< bme680 i2c device address */
+    uint32_t                                i2c_clock_speed;            /*!< bme680 i2c device scl clock speed  */
+    bme680_power_modes_t                    power_mode;                 /*!< bme680 power mode */
+    bme680_iir_filters_t                    iir_filter;
+    bme680_pressure_oversampling_t          pressure_oversampling;
+    bme680_temperature_oversampling_t       temperature_oversampling;
+    bme680_humidity_oversampling_t          humidity_oversampling;
+    bme680_heater_setpoints_t               heater_setpoint;
+    bool                                    gas_enabled;                /*!< bme680 enable gas measurement */
+    uint16_t                                heater_temperature;         /*!< bme680 heater temperature for forced mode in degrees celsius */
+    uint16_t                                heater_duration;            /*!< bme680 heating duration for forced mode in milliseconds */
+    uint16_t                               *heater_temperature_profile; /*!< bme680 heater temperature profile in degrees celsius */
+    uint16_t                               *heater_duration_profile;    /*!< bme680 heating duration profile in milliseconds */
+    uint8_t                                 heater_profile_size;        /*!< bme680 size of the heating profile */
+    uint16_t                                heater_shared_duration;     /*!< bme680 heating duration for parallel mode in milliseconds */
+} bme680_config_t;
 
 /**
- * @brief BME680 device structure.
+ * @brief BME680 context structure.
  */
-struct i2c_bme680_t {
-    i2c_master_dev_handle_t                     i2c_dev_handle;     /*!< I2C device handle */
-    i2c_bme680_cal_factors_t                   *dev_cal_factors;    /*!< bme680 device calibration factors */
-    i2c_bme680_status0_register_t               status0_reg;        /*!< bme680 status 0 register */
-    i2c_bme680_control_measurement_register_t   ctrl_meas_reg;      /*!< bme680 control measurement register */
-    i2c_bme680_control_humidity_register_t      ctrl_hum_reg;       /*!< bme680 control humidity register */
-    i2c_bme680_control_gas0_register_t          ctrl_gas0_reg;      /*!< bme680 control gas 0 register */
-    i2c_bme680_control_gas1_register_t          ctrl_gas1_reg;      /*!< bme680 control gas 1 register */
-    i2c_bme680_configuration_register_t         config_reg;         /*!< bme680 configuration register */
-    uint8_t                                     chip_id;            /*!< bme680 chip identification register */
-    uint16_t                                    ambient_temperature;
+struct bme680_context_t {
+    bme680_config_t                         dev_config;         /*!< bme680 device configuration */
+    i2c_master_dev_handle_t                 i2c_handle;         /*!< bme680 I2C device handle */
+    bme680_cal_factors_t                   *dev_cal_factors;    /*!< bme680 device calibration factors */
+    uint8_t                                 chip_id;            /*!< bme680 chip identification register */
+    uint16_t                                ambient_temperature;
 };
 
 /**
- * @brief BME680 device definition.
+ * @brief BME680 context structure definition.
  */
-typedef struct i2c_bme680_t i2c_bme680_t;
+typedef struct bme680_context_t bme680_context_t;
 
 /**
- * @brief BME680 device handle definition.
+ * @brief BME680 handle structure definition.
  */
-typedef struct i2c_bme680_t *i2c_bme680_handle_t;
+typedef struct bme680_context_t *bme680_handle_t;
 
 
 
 /**
  * @brief Reads chip identification register from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_chip_id_register(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_get_chip_id_register(bme680_handle_t handle, uint8_t *const reg);
 
 /**
  * @brief Reads status register from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Status 0 register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_status0_register(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_get_status0_register(bme680_handle_t handle, bme680_status0_register_t *const reg);
+
+/**
+ * @brief Reads gas resistance LSB register from BME680.
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Gas LSB register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_gas_lsb_register(bme680_handle_t handle, bme680_gas_lsb_register_t *const reg);
+
+/**
+ * @brief Writes gas resistance LSB register to BME680.
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[in] reg Gas LSB register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_set_gas_lsb_register(bme680_handle_t handle, const bme680_gas_lsb_register_t reg);
 
 /**
  * @brief Reads control measurement register from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Control measurement register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_control_measurement_register(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_get_control_measurement_register(bme680_handle_t handle, bme680_control_measurement_register_t *const reg);
 
 /**
  * @brief Writes control measurement register to BME680. 
  * 
- * @param[in] bme680_handle BME680 device handle.
- * @param[in] ctrl_meas_reg Control measurement register.
+ * @param[in] handle BME680 device handle.
+ * @param[in] reg Control measurement register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_control_measurement_register(i2c_bme680_handle_t bme680_handle, const i2c_bme680_control_measurement_register_t ctrl_meas_reg);
+esp_err_t bme680_set_control_measurement_register(bme680_handle_t handle, const bme680_control_measurement_register_t reg);
+
+/**
+ * @brief Reads control humidity register from BME680.
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Control humidity register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_control_humidity_register(bme680_handle_t handle, bme680_control_humidity_register_t *const reg);
+
+/**
+ * @brief Writes control humidity register to BME680. 
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[in] reg Control humidity register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_set_control_humidity_register(bme680_handle_t handle, const bme680_control_humidity_register_t reg);
+
+/**
+ * @brief Reads control gas 0 register from BME680.
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Control gas 0 register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_control_gas0_register(bme680_handle_t handle, bme680_control_gas0_register_t *const reg);
+
+/**
+ * @brief Writes control gas 0 register to BME680. 
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[in] reg Control gas 0 register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_set_control_gas0_register(bme680_handle_t handle, const bme680_control_gas0_register_t reg);
+
+/**
+ * @brief Reads control gas 1 register from BME680.
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Control gas 1 register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_control_gas1_register(bme680_handle_t handle, bme680_control_gas1_register_t *const reg);
+
+/**
+ * @brief Writes control gas 1 register to BME680. 
+ * 
+ * @param[in] handle BME680 device handle.
+ * @param[in] reg Control gas 1 register.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_set_control_gas1_register(bme680_handle_t handle, const bme680_control_gas1_register_t reg);
 
 /**
  * @brief Reads configuration register from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
+ * @param[out] reg Configuration register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_configuration_register(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_get_configuration_register(bme680_handle_t handle, bme680_config_register_t *const reg);
 
 /**
  * @brief Writes configuration register to BME680. 
  * 
- * @param[in] bme680_handle BME680 device handle.
- * @param[in] config_reg Configuration register.
+ * @param[in] handle BME680 device handle.
+ * @param[in] reg Configuration register.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_configuration_register(i2c_bme680_handle_t bme680_handle, const i2c_bme680_configuration_register_t config_reg);
+esp_err_t bme680_set_configuration_register(bme680_handle_t handle, const bme680_config_register_t reg);
 
 /**
  * @brief Initializes an BME680 device onto the master bus.
  *
- * @param[in] bus_handle I2C master bus handle.
- * @param[in] bme680_config Configuration of BME680 device.
+ * @param[in] master_handle I2C master bus handle.
+ * @param[in] bme680_config BME680 device configuration.
  * @param[out] bme680_handle BME680 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_init(i2c_master_bus_handle_t bus_handle, const i2c_bme680_config_t *bme680_config, i2c_bme680_handle_t *bme680_handle);
+esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config_t *bme680_config, bme680_handle_t *bme680_handle);
 
 /**
- * @brief Reads temperature and pressure measurements from BME680
+ * @brief Reads humidity, temperature, and pressure measurements from BME680
  *
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
+ * @param[out] humidity Humidity in percentage.
  * @param[out] temperature Temperature in degree Celsius.
  * @param[out] pressure Pressure in pascal.
+ * @param[out] gas_resistance Gas resistance.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_measurements(i2c_bme680_handle_t bme680_handle, float *const temperature, float *const pressure);
+esp_err_t bme680_get_measurements(bme680_handle_t handle, float *const humidity, float *const temperature, float *const pressure, float *const gas_resistance);
 
 /**
  * @brief Reads data status of the BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[out] ready Data is ready when asserted to true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_data_status(i2c_bme680_handle_t bme680_handle, bool *const ready);
+esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready);
 
 /**
  * @brief Reads power mode setting from the BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[out] power_mode BME680 power mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_power_mode(i2c_bme680_handle_t bme680_handle, i2c_bme680_power_modes_t *const power_mode);
+esp_err_t bme680_get_power_mode(bme680_handle_t handle, bme680_power_modes_t *const power_mode);
 
 /**
  * @brief Writes power mode setting to BME680.  See datasheet, section 3.6, table 10.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[in] power_mode BME680 power mode setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_power_mode(i2c_bme680_handle_t bme680_handle, const i2c_bme680_power_modes_t power_mode);
+esp_err_t bme680_set_power_mode(bme680_handle_t handle, const bme680_power_modes_t power_mode);
 
 /**
  * @brief Reads pressure oversampling setting from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[out] oversampling BME680 pressure oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_pressure_oversampling(i2c_bme680_handle_t bme680_handle, i2c_bme680_pressure_oversampling_t *const oversampling);
+esp_err_t bme680_get_pressure_oversampling(bme680_handle_t handle, bme680_pressure_oversampling_t *const oversampling);
 
 /**
  * @brief Writes pressure oversampling setting to BME680.  See datasheet, section 3.3.1, table 4.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[in] oversampling BME680 pressure oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_pressure_oversampling(i2c_bme680_handle_t bme680_handle, const i2c_bme680_pressure_oversampling_t oversampling);
+esp_err_t bme680_set_pressure_oversampling(bme680_handle_t handle, const bme680_pressure_oversampling_t oversampling);
 
 /**
  * @brief Reads temperature oversampling setting from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[out] oversampling BME680 temperature oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_temperature_oversampling(i2c_bme680_handle_t bme680_handle, i2c_bme680_temperature_oversampling_t *const oversampling);
+esp_err_t bme680_get_temperature_oversampling(bme680_handle_t handle, bme680_temperature_oversampling_t *const oversampling);
 
 /**
  * @brief Writes temperature oversampling setting to BME680.  See datasheet, section 3.3.1, table 4.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[in] oversampling BME680 temperature oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_temperature_oversampling(i2c_bme680_handle_t bme680_handle, const i2c_bme680_temperature_oversampling_t oversampling);
+esp_err_t bme680_set_temperature_oversampling(bme680_handle_t handle, const bme680_temperature_oversampling_t oversampling);
 
 /**
  * @brief Reads humidity oversampling setting from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[out] oversampling BME680 humidity oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_humidity_oversampling(i2c_bme680_handle_t bme680_handle, i2c_bme680_humidity_oversampling_t *const oversampling);
+esp_err_t bme680_get_humidity_oversampling(bme680_handle_t handle, bme680_humidity_oversampling_t *const oversampling);
 
 /**
  * @brief Writes humidity oversampling setting to BME680.  See datasheet, section 3.3.1, table 4.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[in] oversampling BME680 humidity oversampling setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_humidity_oversampling(i2c_bme680_handle_t bme680_handle, const i2c_bme680_humidity_oversampling_t oversampling);
+esp_err_t bme680_set_humidity_oversampling(bme680_handle_t handle, const bme680_humidity_oversampling_t oversampling);
 
 /**
  * @brief Reads IIR filter setting from BME680.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[out] iir_filter BME680 IIR filter setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_get_iir_filter(i2c_bme680_handle_t bme680_handle, i2c_bme680_iir_filters_t *const iir_filter);
+esp_err_t bme680_get_iir_filter(bme680_handle_t handle, bme680_iir_filters_t *const iir_filter);
 
 /**
  * @brief Writes IIR filter setting to BME680.  See datasheet, section 3.4, table 7.
  * 
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @param[in] iir_filter BME680 IIR filter setting.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_set_iir_filter(i2c_bme680_handle_t bme680_handle, const i2c_bme680_iir_filters_t iir_filter);
+esp_err_t bme680_set_iir_filter(bme680_handle_t handle, const bme680_iir_filters_t iir_filter);
 
 /**
  * @brief Issues soft-reset sensor and initializes registers for BME680.
  *
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_reset(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_reset(bme680_handle_t handle);
 
 /**
  * @brief Removes an BME680 device from master bus.
  *
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_remove(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_remove(bme680_handle_t handle);
 
 /**
  * @brief Removes an BME680 device from master bus and frees handle.
  *
- * @param[in] bme680_handle BME680 device handle.
+ * @param[in] handle BME680 device handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t i2c_bme680_delete(i2c_bme680_handle_t bme680_handle);
+esp_err_t bme680_delete(bme680_handle_t handle);
 
 /**
  * @brief Converts BME680 firmware version numbers (major, minor, patch, build) into a string.

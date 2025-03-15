@@ -39,7 +39,7 @@ The folder structure for components, and associated example, are outlined as fol
 |  |  |--owb
 |  |  |--spi
 |  |
-|  |--engineering
+|  |--utilities
 |  |--schedule
 |  |--storage
 |

@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define VEML7700_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define VEML7700_FW_VERSION_PATCH 7
+#define VEML7700_FW_VERSION_PATCH 8
 
 
 /**

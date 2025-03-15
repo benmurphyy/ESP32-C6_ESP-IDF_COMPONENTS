@@ -25,6 +25,8 @@
  * @file ahtxx.c
  *
  * ESP-IDF driver for AHTXX temperature and humidity sensor
+ * 
+ * https://github.com/libdriver/aht30/blob/main/src/driver_aht30.c
  *
  * Ported from esp-open-rtos
  *
@@ -140,6 +142,14 @@ static inline esp_err_t ahtxx_calculate_dewpoint(const float temperature, const 
     return ESP_OK;
 }
 
+static inline float ahtxx_convert_temperature_signal(const uint32_t temperature_sig) {
+    return ((float)temperature_sig / powf(2, 20)) * 200.0f - 50.0f;
+}
+
+static inline float ahtxx_convert_humidity_signal(uint32_t humidity_sig) {
+    return ((float)humidity_sig / powf(2, 20)) * 100.0f;
+}
+
 /**
  * @brief Converts temperature and humidity signals to engineering units of measure.
  * 
@@ -155,14 +165,14 @@ static inline esp_err_t ahtxx_convert_signals(ahtxx_handle_t handle, const bit56
     ESP_ARG_CHECK( handle && buffer && temperature && humidity );
                         
     /* handle aht crc validation by sensor type */
-    if(handle->dev_config.sensor_type != AHTXX_AHT10) {
+    //if(handle->dev_config.sensor_type != AHTXX_AHT10) {
         /* validate crc byte - 7th byte for aht20, aht21, aht25, and aht30 sensor type */
         /*
         if (buffer[6] != i2c_ahtxx_calculate_crc8(buffer, BIT56_UINT8_BUFFER_SIZE - 1)) {
             return ESP_ERR_INVALID_CRC;
         }
         */
-    }
+    //}
 
     /* concat humidity signal */
     const uint32_t humidity_sig = ((uint32_t)buffer[1] << 12) | ((uint32_t)buffer[2] << 4) | (buffer[3] >> 4);
@@ -393,10 +403,21 @@ esp_err_t ahtxx_get_measurement(ahtxx_handle_t handle, float *const temperature,
 
         /* attempt i2c read transaction for aht20, aht21, aht25, and aht30 sensor types */
         ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT56_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read measurement data for get measurement failed" );
+
+        /* validate crc ? */
     }
 
-    /* compute and set temperature and humidity */
-    ESP_RETURN_ON_ERROR( ahtxx_convert_signals(handle, rx, temperature, humidity), TAG, "convert signals for get measurement failed" );
+    /* concat humidity signal */
+    const uint32_t humidity_sig = ((uint32_t)rx[1] << 12) | ((uint32_t)rx[2] << 4) | (rx[3] >> 4);
+
+    /* concat temperature signal */
+    const uint32_t temperature_sig = ((uint32_t)(rx[3] & 0x0f) << 16) | ((uint32_t)rx[4] << 8) | rx[5];
+
+    /* compute and set temperature */
+    *temperature = ahtxx_convert_temperature_signal(temperature_sig);
+
+    /* compute and set humidity */
+    *humidity = ahtxx_convert_humidity_signal(humidity_sig);
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AHTXX_CMD_DELAY_MS));

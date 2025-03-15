@@ -15,6 +15,7 @@ list(APPEND EXTRA_COMPONENT_DIRS
                     "components/peripherals/i2c/esp_as3935"
                     "components/peripherals/i2c/esp_as7341"
                     "components/peripherals/i2c/esp_bh1750"
+                    "components/peripherals/i2c/esp_bme680"
                     "components/peripherals/i2c/esp_bmp280"
                     "components/peripherals/i2c/esp_bmp390"
                     "components/peripherals/i2c/esp_ccs811"

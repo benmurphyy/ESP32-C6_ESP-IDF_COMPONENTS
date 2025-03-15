@@ -6,7 +6,7 @@
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_bmp280.svg)](https://registry.platformio.org/libraries/k0i05/esp_bmp280)
 [![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_bmp280/badge.svg)](https://components.espressif.com/components/k0i05/esp_bmp280)
 
-This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Bosch BMP280 sensor.  Information on features and functionality are documented and can be found in the `bmp280.h` header file and in the `documentation` folder.
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Bosch BMP280 pressure and temperature sensor.  Information on features and functionality are documented and can be found in the `bmp280.h` header file and in the `documentation` folder.
 
 ## Repository
 

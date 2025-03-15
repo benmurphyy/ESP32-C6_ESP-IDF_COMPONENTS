@@ -10,7 +10,8 @@
         "functional": "c",
         "tuple": "c",
         "type_traits": "c",
-        "utility": "c"
+        "utility": "c",
+        "bmp280_task.h": "c"
     },
     "sonarlint.pathToCompileCommands": "${workspaceFolder}\\.pio\\build\\esp32s3box\\compile_commands.json",
     "idf.customExtraVars": {

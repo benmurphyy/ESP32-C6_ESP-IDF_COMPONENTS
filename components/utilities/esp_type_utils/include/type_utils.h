@@ -57,6 +57,7 @@ extern "C" {
 #define BIT56_UINT8_BUFFER_SIZE     (7)
 #define BIT64_UINT8_BUFFER_SIZE	    (8)
 #define BIT72_UINT8_BUFFER_SIZE     (9)
+#define BIT80_UINT8_BUFFER_SIZE     (10)
 
 #define BIN8_CHAR_BUFFER_SIZE       (8 + 1)     // 8 bytes + 1 byte for null terminator
 #define BIN16_CHAR_BUFFER_SIZE      (16 + 1)    // 16 bytes + 1 byte for null terminator
@@ -77,6 +78,7 @@ typedef uint8_t bit48_uint8_buffer_t[BIT48_UINT8_BUFFER_SIZE];  // 6 uint8 sized
 typedef uint8_t bit56_uint8_buffer_t[BIT56_UINT8_BUFFER_SIZE];  // 7 uint8 sized buffer
 typedef uint8_t bit64_uint8_buffer_t[BIT64_UINT8_BUFFER_SIZE];  // 8 uint8 sized buffer
 typedef uint8_t bit72_uint8_buffer_t[BIT72_UINT8_BUFFER_SIZE];  // 9 uint8 sized buffer
+typedef uint8_t bit80_uint8_buffer_t[BIT80_UINT8_BUFFER_SIZE];  // 10 uint8 sized buffer
 
 typedef char bin8_char_buffer_t[BIN8_CHAR_BUFFER_SIZE];         // 9 char sized buffer (8 bytes + 1 byte for null terminator)
 typedef char bin16_char_buffer_t[BIN16_CHAR_BUFFER_SIZE];       // 17 char sized buffer (16 bytes + 1 byte for null terminator)

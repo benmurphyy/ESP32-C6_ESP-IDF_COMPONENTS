@@ -22,7 +22,7 @@
  */
 
 /**
- * @file ahtxx_task.c
+ * @file bme680_task.c
  * @defgroup 
  * @{
  *
@@ -32,43 +32,42 @@
  * MIT Licensed as described in the file LICENSE
  */
 
-#include <ahtxx_task.h>
+#include <bme680_task.h>
 
 
-void i2c0_ahtxx_task( void *pvParameters ) {
+void i2c0_bme680_task( void *pvParameters ) {
     // initialize the xLastWakeTime variable with the current time.
-    TickType_t         last_wake_time   = xTaskGetTickCount ();
+    TickType_t          last_wake_time  = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    //ahtxx_config_t dev_cfg          = I2C_AHT10_CONFIG_DEFAULT;
-    ahtxx_config_t dev_cfg          = I2C_AHT20_CONFIG_DEFAULT;
-    //ahtxx_config_t dev_cfg          = I2C_AHT21_CONFIG_DEFAULT;
-    //ahtxx_config_t dev_cfg          = I2C_AHT25_CONFIG_DEFAULT;
-    //ahtxx_config_t dev_cfg          = I2C_AHT30_CONFIG_DEFAULT;
-    ahtxx_handle_t dev_hdl;
+    bme680_config_t dev_cfg         = I2C_BME680_CONFIG_DEFAULT;
+    bme680_handle_t dev_hdl;
     //
     // init device
-    ahtxx_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    bme680_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
-        ESP_LOGE(APP_TAG, "ahtxx handle init failed");
+        ESP_LOGE(APP_TAG, "bme680 handle init failed");
         assert(dev_hdl);
     }
     //
     // task loop entry point
     for ( ;; ) {
-        ESP_LOGI(APP_TAG, "######################## AHTXX - START #########################");
+        ESP_LOGI(APP_TAG, "######################## BME680 - START #########################");
         //
         // handle sensor
-        float temperature, humidity;
-        esp_err_t result = ahtxx_get_measurement(dev_hdl, &temperature, &humidity);
+        /*
+        float temperature, pressure;
+        esp_err_t result = bme680_get_measurements(dev_hdl, &temperature, &pressure);
         if(result != ESP_OK) {
-            ESP_LOGE(APP_TAG, "ahtxx device read failed (%s)", esp_err_to_name(result));
+            ESP_LOGE(APP_TAG, "bme680 device read failed (%s)", esp_err_to_name(result));
         } else {
+            pressure = pressure / 100;
             ESP_LOGI(APP_TAG, "air temperature:     %.2f °C", temperature);
-            ESP_LOGI(APP_TAG, "relative humidity:   %.2f %c", humidity, '%');
+            ESP_LOGI(APP_TAG, "barometric pressure: %.2f hPa", pressure);
         }
+        */
         //
-        ESP_LOGI(APP_TAG, "######################## AHTXX - END ###########################");
+        ESP_LOGI(APP_TAG, "######################## BME680 - END ###########################");
         //
         //
         // pause the task per defined wait period
@@ -76,6 +75,6 @@ void i2c0_ahtxx_task( void *pvParameters ) {
     }
     //
     // free resources
-    ahtxx_delete( dev_hdl );
+    bme680_delete( dev_hdl );
     vTaskDelete( NULL );
 }

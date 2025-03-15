@@ -177,6 +177,25 @@ esp_err_t i2c_master_bus_read_byte64(i2c_master_dev_handle_t handle, const uint8
  */
 esp_err_t i2c_master_bus_read16_byte64(i2c_master_dev_handle_t handle, const uint16_t reg_addr, bit64_uint8_buffer_t *const data);
 
+/**
+ * @brief I2C device `i2c_uint72_t` data (8-byte array little endian) read from command (2-byte little endian).  This is a write-read I2C transaction.
+ *
+ * @param[in] handle device handle
+ * @param[in] reg_addr device register address (1-byte)
+ * @param[out] data `bit72_uint8_buffer_t` (8-byte array little endian) data read from device
+ * @return esp_err_t ESP_OK: I2C master transmit-receive success - ESP_ERR_INVALID_ARG: I2C master transmit parameter invalid. - ESP_ERR_TIMEOUT: Operation timeout(larger than xfer_timeout_ms) because the bus is busy or hardware crash.
+ */
+esp_err_t i2c_master_bus_read_byte72(i2c_master_dev_handle_t handle, const uint8_t reg_addr, bit72_uint8_buffer_t *const data);
+
+/**
+ * @brief I2C device `i2c_uint80_t` data (8-byte array little endian) read from command (2-byte little endian).  This is a write-read I2C transaction.
+ *
+ * @param[in] handle device handle
+ * @param[in] reg_addr device register address (1-byte)
+ * @param[out] data `bit80_uint8_buffer_t` (8-byte array little endian) data read from device
+ * @return esp_err_t ESP_OK: I2C master transmit-receive success - ESP_ERR_INVALID_ARG: I2C master transmit parameter invalid. - ESP_ERR_TIMEOUT: Operation timeout(larger than xfer_timeout_ms) because the bus is busy or hardware crash.
+ */
+esp_err_t i2c_master_bus_read_byte80(i2c_master_dev_handle_t handle, const uint8_t reg_addr, bit80_uint8_buffer_t *const data);
 
 /**
  * @brief I2C device write command (1-byte).  This is a write I2C transaction only.

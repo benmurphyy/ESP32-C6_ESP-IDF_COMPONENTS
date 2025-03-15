@@ -73,7 +73,7 @@
 #define BMP390_REG_CMD                  UINT8_C(0x7E)
 #define BMP390_SFTRESET_CMD             UINT8_C(0xB6)
 
-#define BMPBMP390_CHIP_ID_DFLT          UINT8_C(0x60)  //!< BMP390 default
+#define BMP390_CHIP_ID_DFLT             UINT8_C(0x60)  //!< BMP390 default
 
 #define BMP390_DATA_POLL_TIMEOUT_MS     UINT16_C(1000) // ? see datasheet tables 13 and 14, standby-time could be 2-seconds (2000ms)
 #define BMP390_DATA_READY_DELAY_MS      UINT16_C(1)
@@ -201,25 +201,6 @@ static inline esp_err_t bmp390_get_cal_factors(bmp390_handle_t handle) {
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
     
-    return ESP_OK;
-}
-
-/**
- * @brief Reads calibration factor, control measurement, and configuration registers from BMP390 and initializes handle registers.
- * 
- * @param handle BMP390 device handle.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t bmp390_get_registers(bmp390_handle_t handle) {
-    /* validate arguments */
-    ESP_ARG_CHECK( handle );
-
-    /* attempt read chip identifier register */
-    ESP_RETURN_ON_ERROR(bmp390_get_chip_id_register(handle, &handle->dev_type), TAG, "read chip identifier for get registers failed");
-
-    /* attempt to read calibration factors from device */
-    ESP_RETURN_ON_ERROR( bmp390_get_cal_factors(handle), TAG, "read calibration factors for get registers failed" );
-
     return ESP_OK;
 }
 
@@ -435,6 +416,9 @@ static inline esp_err_t bmp390_setup(bmp390_handle_t handle) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
+    /* attempt to read calibration factors from device */
+    ESP_RETURN_ON_ERROR(bmp390_get_cal_factors(handle), TAG, "read calibration factors for get registers failed" );
+
     /* attempt to read configuration register */
     ESP_RETURN_ON_ERROR(bmp390_get_configuration_register(handle, &config_reg), TAG, "read configuration register for init failed");
 
@@ -522,7 +506,7 @@ esp_err_t bmp390_init(i2c_master_bus_handle_t master_handle, const bmp390_config
 
     /* read and validate device type */
     ESP_GOTO_ON_ERROR(bmp390_get_chip_id_register(out_handle, &out_handle->dev_type), err_handle, TAG, "read chip identifier for init failed");
-    if(out_handle->dev_type != BMPBMP390_CHIP_ID_DFLT) {
+    if(out_handle->dev_type != BMP390_CHIP_ID_DFLT) {
         ESP_GOTO_ON_FALSE(false, ESP_ERR_INVALID_VERSION, err_handle, TAG, "detected an invalid chip type for init, got: %02x", out_handle->dev_type);
     }
 
@@ -823,9 +807,6 @@ esp_err_t bmp390_reset(bmp390_handle_t handle) {
     /* wait until finished copying NVP data */
     // forced delay before next transaction - see datasheet for details
     vTaskDelay(pdMS_TO_TICKS(BMP390_RESET_DELAY_MS)); // check is busy in timeout loop...
-
-    /* attempt to read registers  */
-    ESP_RETURN_ON_ERROR( bmp390_get_registers(handle), TAG, "read registers for reset failed" );
 
     /* attempt to setup device  */
     ESP_RETURN_ON_ERROR( bmp390_setup(handle), TAG, "setup for reset failed" );

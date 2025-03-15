@@ -49,7 +49,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define TIME_INTO_INTERVAL_FW_VERSION_MINOR 1
 /** Patch version number (x.x.X) */
-#define TIME_INTO_INTERVAL_FW_VERSION_PATCH 7
+#define TIME_INTO_INTERVAL_FW_VERSION_PATCH 8
 
 
 /**

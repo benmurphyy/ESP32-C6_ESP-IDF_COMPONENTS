@@ -62,7 +62,7 @@ extern "C" {
 #define I2C_BMP390_CONFIG_DEFAULT {                                          \
         .i2c_address                = I2C_BMP390_DEV_ADDR_HI,                \
         .i2c_clock_speed            = I2C_BMP390_DEV_CLK_SPD,                \
-        .power_mode                 = BMP390_POWER_MODE_NORMAL,              \
+        .power_mode                 = BMP390_POWER_MODE_FORCED,              \
         .iir_filter                 = BMP390_IIR_FILTER_OFF,                 \
         .pressure_oversampling      = BMP390_PRESSURE_OVERSAMPLING_8X,       \
         .temperature_oversampling   = BMP390_TEMPERATURE_OVERSAMPLING_8X,    \
