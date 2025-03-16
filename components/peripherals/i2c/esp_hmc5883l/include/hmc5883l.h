@@ -38,7 +38,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include "hmc5883l_version.h"
 
 #ifdef __cplusplus
@@ -52,6 +53,7 @@ extern "C" {
 
 #define I2C_HMC5883L_DEV_ADDR                   UINT8_C(0x1e)           //!< hmc5883l I2C address when ADDR pin floating/low
 
+#define I2C_XFR_TIMEOUT_MS              (500)          //!< I2C transaction timeout in milliseconds
 
 /*
  * macro definitions

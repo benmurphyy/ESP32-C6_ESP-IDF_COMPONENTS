@@ -96,6 +96,102 @@
 */
 static const char *TAG = "ltr390uv";
 
+
+/**
+ * @brief LTR390UV I2C write byte to register address transaction.
+ * 
+ * @param handle LTR390UV device handle.
+ * @param reg_addr LTR390UV register address to write to.
+ * @param byte LTR390UV write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ltr390uv_i2c_write_byte_to(ltr390uv_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief LTR390UV I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle LTR390UV device handle.
+ * @param reg_addr LTR390UV register address to read from.
+ * @param buffer LTR390UV read transaction return buffer.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ltr390uv_i2c_read_from(ltr390uv_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(LTR390UV_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief LTR390UV I2C read byte from register address transaction.
+ * 
+ * @param handle LTR390UV device handle.
+ * @param reg_addr LTR390UV register address to read from.
+ * @param byte LTR390UV read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ltr390uv_i2c_read_byte_from(ltr390uv_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(LTR390UV_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+/**
+ * @brief LTR390UV I2C write transaction.
+ * 
+ * @param handle LTR390UV device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ltr390uv_i2c_write(ltr390uv_handle_t handle, const uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
 /**
  * @brief Determines resolution factor for LTR390UV from configuration settings.
  * 
@@ -285,11 +381,11 @@ static inline esp_err_t ltr390uv_get_sensor_counts(ltr390uv_handle_t handle, uin
     switch (handle->dev_config.operation_mode) {
         case LTR390UV_OM_ALS:
             /* attempt i2c read transaction */
-            ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte24(handle->i2c_handle, LTR390UV_REG_ALS_DATA_0_R, &rx), err, TAG, "read als counts failed" );
+            ESP_GOTO_ON_ERROR( ltr390uv_i2c_read_from(handle, LTR390UV_REG_ALS_DATA_0_R, rx, BIT24_UINT8_BUFFER_SIZE), err, TAG, "read als counts failed" );
             break;
         case LTR390UV_OM_UVS:
             /* attempt i2c read transaction */
-            ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte24(handle->i2c_handle, LTR390UV_REG_UVS_DATA_0_R, &rx), err, TAG, "read uvs counts failed" );
+            ESP_GOTO_ON_ERROR( ltr390uv_i2c_read_from(handle, LTR390UV_REG_UVS_DATA_0_R, rx, BIT24_UINT8_BUFFER_SIZE), err, TAG, "read uvs counts failed" );
             break;
         default:
             ESP_LOGE(TAG, "Invalid operation mode");
@@ -310,7 +406,7 @@ esp_err_t ltr390uv_get_control_register(ltr390uv_handle_t handle, ltr390uv_contr
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, LTR390UV_REG_MAIN_CTRL_RW, &reg->reg), TAG, "read control register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_byte_from(handle, LTR390UV_REG_MAIN_CTRL_RW, &reg->reg), TAG, "read control register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -329,7 +425,7 @@ esp_err_t ltr390uv_set_control_register(ltr390uv_handle_t handle, const ltr390uv
     ctrl.bits.reserved3 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, LTR390UV_REG_MAIN_CTRL_RW, ctrl.reg), TAG, "write control register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_write_byte_to(handle, LTR390UV_REG_MAIN_CTRL_RW, ctrl.reg), TAG, "write control register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -342,7 +438,7 @@ esp_err_t ltr390uv_get_measure_register(ltr390uv_handle_t handle, ltr390uv_measu
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, LTR390UV_REG_ALS_UVS_MEAS_RW, &reg->reg), TAG, "read measure register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_byte_from(handle, LTR390UV_REG_ALS_UVS_MEAS_RW, &reg->reg), TAG, "read measure register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -360,7 +456,7 @@ esp_err_t ltr390uv_set_measure_register(ltr390uv_handle_t handle, const ltr390uv
     msr.bits.reserved2 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, LTR390UV_REG_ALS_UVS_MEAS_RW, msr.reg), TAG, "write measure register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_write_byte_to(handle, LTR390UV_REG_ALS_UVS_MEAS_RW, msr.reg), TAG, "write measure register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -373,7 +469,7 @@ esp_err_t ltr390uv_get_gain_register(ltr390uv_handle_t handle, ltr390uv_gain_reg
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, LTR390UV_REG_ALS_UVS_GAIN_RW, &reg->reg), TAG, "read gain register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_byte_from(handle, LTR390UV_REG_ALS_UVS_GAIN_RW, &reg->reg), TAG, "read gain register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -390,7 +486,7 @@ esp_err_t ltr390uv_set_gain_register(ltr390uv_handle_t handle, const ltr390uv_ga
     gain.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, LTR390UV_REG_ALS_UVS_GAIN_RW, gain.reg), TAG, "write gain register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_write_byte_to(handle, LTR390UV_REG_ALS_UVS_GAIN_RW, gain.reg), TAG, "write gain register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -403,7 +499,7 @@ esp_err_t ltr390uv_get_interrupt_config_register(ltr390uv_handle_t handle, ltr39
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, LTR390UV_REG_INT_CFG_RW, &reg->reg), TAG, "read interrupt configuration register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_byte_from(handle, LTR390UV_REG_INT_CFG_RW, &reg->reg), TAG, "read interrupt configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -422,7 +518,7 @@ esp_err_t ltr390uv_set_interrupt_config_register(ltr390uv_handle_t handle, const
     irq.bits.reserved3 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, LTR390UV_REG_INT_CFG_RW, irq.reg), TAG, "write interrupt configuration register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_write_byte_to(handle, LTR390UV_REG_INT_CFG_RW, irq.reg), TAG, "write interrupt configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -435,7 +531,7 @@ esp_err_t ltr390uv_get_status_register(ltr390uv_handle_t handle, ltr390uv_status
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, LTR390UV_REG_MAIN_STS_R, &reg->reg), TAG, "read status register failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_byte_from(handle, LTR390UV_REG_MAIN_STS_R, &reg->reg), TAG, "read status register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(LTR390UV_CMD_DELAY_MS));
@@ -662,8 +758,8 @@ esp_err_t ltr390uv_get_thresholds(ltr390uv_handle_t handle, uint32_t *const lowe
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transactions */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_byte24(handle->i2c_handle, LTR390UV_REG_ALS_THRES_LO_0_RW, &lower), TAG, "read lower threshold failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_byte24(handle->i2c_handle, LTR390UV_REG_ALS_THRES_UP_0_RW, &upper), TAG, "read upper threshold failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_from(handle, LTR390UV_REG_ALS_THRES_LO_0_RW, lower, BIT24_UINT8_BUFFER_SIZE), TAG, "read lower threshold failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_read_from(handle, LTR390UV_REG_ALS_THRES_UP_0_RW, upper, BIT24_UINT8_BUFFER_SIZE), TAG, "read upper threshold failed" );
 
     /* set output parameters */  
     *lower_threshold = (lower[2] << 16) | (lower[1] << 8) | lower[0];
@@ -688,8 +784,8 @@ esp_err_t ltr390uv_set_thresholds(ltr390uv_handle_t handle, const uint32_t lower
     upper[2] = upper_threshold >> 8;
     upper[3] = upper_threshold >> 16;
 
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, lower, BIT32_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write lower threshold failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, upper, BIT32_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write upper threshold failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_write(handle, lower, BIT32_UINT8_BUFFER_SIZE), TAG, "write lower threshold failed" );
+    ESP_RETURN_ON_ERROR( ltr390uv_i2c_write(handle, upper, BIT32_UINT8_BUFFER_SIZE), TAG, "write upper threshold failed" );
 
     return ESP_OK;
 }

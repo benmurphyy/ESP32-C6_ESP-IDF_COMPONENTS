@@ -89,6 +89,7 @@
 #define ENS160_CLEAR_GPR_DELAY_MS       UINT16_C(10)            //!< ens160 10ms delay when clearing general purpose registers
 #define ENS160_DATA_READY_DELAY_MS      UINT16_C(1)             //!< ens160 1ms delay when checking data ready in a loop
 #define ENS160_DATA_POLL_TIMEOUT_MS     UINT16_C(1500)          //!< ens160 1.5s timeout when making a measurement
+#define ENS160_TX_RX_DELAY_MS           UINT16_C(10)
 
 /*
  * macro definitions
@@ -132,6 +133,133 @@ static inline ens160_aqi_uba_indexes_t ens160_get_aqi_uba_index(const ens160_caq
         default:
             return ENS160_AQI_UBA_INDEX_UNKNOWN;
     }
+}
+
+/**
+ * @brief ENS160 I2C write byte to register address transaction.
+ * 
+ * @param handle ENS160 device handle.
+ * @param reg_addr ENS160 register address to write to.
+ * @param byte ENS160 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ens160_i2c_write_byte_to(ens160_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief ENS160 I2C write halfword to register address transaction.
+ * 
+ * @param handle ENS160 device handle.
+ * @param reg_addr ENS160 register address to write to.
+ * @param halfword ENS160 write transaction input halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ens160_i2c_write_halfword_to(ens160_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief ENS160 I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle ENS160 device handle.
+ * @param reg_addr ENS160 register address to read from.
+ * @param buffer ENS160 read transaction return buffer.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ens160_i2c_read_from(ens160_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(ENS160_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief ENS160 I2C read halfword from register address transaction.
+ * 
+ * @param handle ENS160 device handle.
+ * @param reg_addr ENS160 register address to read from.
+ * @param halfword ENS160 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ens160_i2c_read_halfword_from(ens160_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit16_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(ENS160_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+
+    return ESP_OK;
+}
+
+/**
+ * @brief ENS160 I2C read byte from register address transaction.
+ * 
+ * @param handle ENS160 device handle.
+ * @param reg_addr ENS160 register address to read from.
+ * @param byte ENS160 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ens160_i2c_read_byte_from(ens160_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(ENS160_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
 }
 
 /**
@@ -186,7 +314,7 @@ static inline esp_err_t ens160_get_command(ens160_handle_t handle, ens160_comman
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, ENS160_REG_COMMAND_RW, (uint8_t*)command), TAG, "read command register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_byte_from(handle, ENS160_REG_COMMAND_RW, (uint8_t*)command), TAG, "read command register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -206,7 +334,7 @@ static inline esp_err_t ens160_set_command(ens160_handle_t handle, const ens160_
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, ENS160_REG_COMMAND_RW, command), TAG, "write command register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_byte_to(handle, ENS160_REG_COMMAND_RW, command), TAG, "write command register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -225,7 +353,7 @@ static inline esp_err_t ens160_get_mode_register(ens160_handle_t handle, ens160_
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, ENS160_REG_OPMODE_RW, (uint8_t*)mode), TAG, "read operating mode register for get mode failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_byte_from(handle, ENS160_REG_OPMODE_RW, (uint8_t*)mode), TAG, "read operating mode register for get mode failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_MODE_DELAY_MS));
@@ -245,7 +373,7 @@ static inline esp_err_t ens160_set_mode_register(ens160_handle_t handle, const e
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, ENS160_REG_OPMODE_RW, mode), TAG, "write operating mode register for set mode failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_byte_to(handle, ENS160_REG_OPMODE_RW, mode), TAG, "write operating mode register for set mode failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_MODE_DELAY_MS));
@@ -258,7 +386,7 @@ esp_err_t ens160_get_interrupt_config_register(ens160_handle_t handle, ens160_in
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, ENS160_REG_INT_CONFIG_RW, &reg->reg), TAG, "read interrupt configuration register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_byte_from(handle, ENS160_REG_INT_CONFIG_RW, &reg->reg), TAG, "read interrupt configuration register failed" );
     
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -277,7 +405,7 @@ esp_err_t ens160_set_interrupt_config_register(ens160_handle_t handle, const ens
     irq_config.bits.reserved3 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, ENS160_REG_INT_CONFIG_RW, irq_config.reg), TAG, "write interrupt configuration register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_byte_to(handle, ENS160_REG_INT_CONFIG_RW, irq_config.reg), TAG, "write interrupt configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -290,7 +418,7 @@ esp_err_t ens160_get_status_register(ens160_handle_t handle, ens160_status_regis
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, ENS160_REG_DEVICE_STATUS_R, &reg->reg), TAG, "read device status register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_byte_from(handle, ENS160_REG_DEVICE_STATUS_R, &reg->reg), TAG, "read device status register failed" );
     
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -324,8 +452,8 @@ esp_err_t ens160_get_compensation_registers(ens160_handle_t handle, float *const
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c temperature & humidity compensation read transactions */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, ENS160_REG_TEMP_IN_RW, &t), TAG, "read temperature compensation register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, ENS160_REG_RH_IN_RW, &h), TAG, "read humidity compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_TEMP_IN_RW, &t), TAG, "read temperature compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_RH_IN_RW, &h), TAG, "read humidity compensation register failed" );
 
     /* decode temperature & humidity compensation and set handle parameters */
     *temperature = ens160_decode_temperature(t);
@@ -356,8 +484,8 @@ esp_err_t ens160_set_compensation_registers(ens160_handle_t handle, const float 
     uint16_t h = ens160_encode_humidity(humidity);
 
     /* attempt i2c temperature & humidity compensation write transactions */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, ENS160_REG_TEMP_IN_RW, t), TAG, "write temperature compensation register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, ENS160_REG_RH_IN_RW, h), TAG, "write humidity compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_halfword_to(handle, ENS160_REG_TEMP_IN_RW, t), TAG, "write temperature compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_halfword_to(handle, ENS160_REG_RH_IN_RW, h), TAG, "write humidity compensation register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -370,14 +498,13 @@ esp_err_t ens160_get_part_id_register(ens160_handle_t handle, uint16_t *const re
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, ENS160_REG_PART_ID_R, reg), TAG, "read part identifier register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_PART_ID_R, reg), TAG, "read part identifier register failed" );
     
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
 
     return ESP_OK;
 }
-
 
 esp_err_t ens160_init(i2c_master_bus_handle_t master_handle, const ens160_config_t *ens160_config, ens160_handle_t *ens160_handle) {
     /* validate arguments */
@@ -465,10 +592,10 @@ esp_err_t ens160_get_measurement(ens160_handle_t handle, ens160_air_quality_data
     } while (data_is_ready == false);
 
     /* attempt i2c data read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, ENS160_REG_DATA_AQI_R, &caqi_reg.value), err, TAG, "read calculated air quality index data register for measurement failed" );
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, ENS160_REG_DATA_TVOC_R, &tvoc_data), err, TAG, "read tvoc data register for measurement failed" );
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, ENS160_REG_DATA_ETOH_R, &etoh_data), err, TAG, "read etoh data register for measurement failed" );
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, ENS160_REG_DATA_ECO2_R, &eco2_data), err, TAG, "read eco2 data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_byte_from(handle, ENS160_REG_DATA_AQI_R, &caqi_reg.value), err, TAG, "read calculated air quality index data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_DATA_TVOC_R, &tvoc_data), err, TAG, "read tvoc data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_DATA_ETOH_R, &etoh_data), err, TAG, "read etoh data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_DATA_ECO2_R, &eco2_data), err, TAG, "read eco2 data register for measurement failed" );
 
     /* set air quality fields */
     data->uba_aqi = ens160_get_aqi_uba_index(caqi_reg);
@@ -511,7 +638,7 @@ esp_err_t ens160_get_raw_measurement(ens160_handle_t handle, ens160_air_quality_
     } while (gpr_data_is_ready == false);
 
     /* attempt i2c gpr data read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte64(handle->i2c_handle, ENS160_REG_GPR_READ0_R, &rx), err, TAG, "read resistance signal gpr data registers for raw measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_from(handle, ENS160_REG_GPR_READ0_R, rx, BIT64_UINT8_BUFFER_SIZE), err, TAG, "read resistance signal gpr data registers for raw measurement failed" );
 
     /* convert gpr raw resistance and set resistance signals */
     data->hp0_ri = ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[0] | ((uint16_t)rx[1] << 8)));
@@ -523,7 +650,7 @@ esp_err_t ens160_get_raw_measurement(ens160_handle_t handle, ens160_air_quality_
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
 
     /* attempt i2c baseline data read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte64(handle->i2c_handle, ENS160_REG_DATA_BL_R, &rx), err, TAG, "read baseline resistance data registers for raw measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_from(handle, ENS160_REG_DATA_BL_R, rx, BIT64_UINT8_BUFFER_SIZE), err, TAG, "read baseline resistance data registers for raw measurement failed" );
 
     /* convert baseline raw resistance and set resistance signals */
     data->hp0_bl = ENS160_CONVERT_RS_RAW2OHMS_F((uint32_t)(rx[0] | ((uint16_t)rx[1] << 8)));
