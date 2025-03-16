@@ -59,6 +59,8 @@ extern "C" {
 #define I2C_BME680_DEV_ADDR_LO      UINT8_C(0x76) //!< bme680 I2C address when ADDR pin floating/low
 #define I2C_BME680_DEV_ADDR_HI      UINT8_C(0x77) //!< bme680 I2C address when ADDR pin high
 
+#define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
+
 #define BME680_HEATER_TEMP_MIN      UINT8_C(200)  // min. 200 degree Celsius
 #define BME680_HEATER_TEMP_MAX      UINT8_C(400)  // max. 200 degree Celsius
 #define BME680_HEATER_PROFILE_SIZE  UINT8_C(10)   // max. 10 heater profiles (0..9)
@@ -659,7 +661,7 @@ esp_err_t bme680_reset(bme680_handle_t handle);
  * @param iaq_score Index of air quality score.
  * @return char* Air quality as a string.
  */
-char *bme680_iaq_air_quality_to_string(float iaq_score);
+char *bme680_air_quality_to_string(float iaq_score);
 
 /**
  * @brief Removes an BME680 device from master bus.

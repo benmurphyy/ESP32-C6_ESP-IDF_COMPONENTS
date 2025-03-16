@@ -38,7 +38,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include "bh1750_version.h"
 
 #ifdef __cplusplus
@@ -53,6 +54,7 @@ extern "C" {
 #define I2C_BH1750_DEV_ADDR_LO          UINT8_C(0x23)       //!< bh1750 I2C address when ADDR pin floating/low
 #define I2C_BH1750_DEV_ADDR_HI          UINT8_C(0x5C)       //!< bh1750 I2C address when ADDR pin high
 
+#define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
 
 
 /*

@@ -45,7 +45,6 @@
 #include <esp_log.h>
 #include <esp_check.h>
 #include <esp_timer.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -206,24 +205,6 @@ static inline esp_err_t bme680_i2c_read_byte_from(bme680_handle_t handle, const 
     /* set output parameter */
     *byte = rx[0];
 
-    return ESP_OK;
-}
-
-/**
- * @brief BME680 I2C write transaction.
- * 
- * @param handle BME680 device handle.
- * @param buffer BME680 write transaction input buffer.
- * @param size Length of buffer to write for write transaction.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t bme680_i2c_write(bme680_handle_t handle, const uint8_t *buffer, const uint8_t size) {
-    /* validate arguments */
-    ESP_ARG_CHECK( handle );
-
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
-                        
     return ESP_OK;
 }
 
@@ -999,7 +980,7 @@ esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config
         return ret;
 }
 
-char *bme680_iaq_air_quality_to_string(float iaq_score) {
+char *bme680_air_quality_to_string(float iaq_score) {
     if      (iaq_score < 25)                     return "Hazardous";
     else if (iaq_score >= 25 && iaq_score <= 38) return "Unhealthy";
     else if (iaq_score  > 38 && iaq_score <= 51) return "Moderate";

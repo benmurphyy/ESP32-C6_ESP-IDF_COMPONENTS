@@ -82,6 +82,7 @@
 #define CCS811_DATA_POLL_TIMEOUT_MS     UINT16_C(100)
 #define CCS811_ERASE_DELAY_MS           UINT16_C(500)   //!< ccs811 I2C erase delay before device accepts transactions
 #define CCS811_VERIFY_DELAY_MS          UINT16_C(70)    //!< ccs811 I2C verification delay before device accepts transactions
+#define CCS811_TX_RX_DELAY_MS           UINT16_C(10)
 
 /*
  * macro definitions
@@ -144,6 +145,171 @@ static const struct ccs811_measure_mode_row_s ccs811_measure_mode_definition_tab
 */
 
 /**
+ * @brief CCS811 I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle CCS811 device handle.
+ * @param reg_addr CCS811 register address to read from.
+ * @param buffer CCS811 read transaction return buffer.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_read_from(ccs811_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(CCS811_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief CCS811 I2C read halfword from register address transaction.
+ * 
+ * @param handle CCS811 device handle.
+ * @param reg_addr CCS811 register address to read from.
+ * @param halfword CCS811 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_read_halfword_from(ccs811_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit16_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(CCS811_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+
+    return ESP_OK;
+}
+
+/**
+ * @brief CCS811 I2C read byte from register address transaction.
+ * 
+ * @param handle CCS811 device handle.
+ * @param reg_addr CCS811 register address to read from.
+ * @param byte CCS811 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_read_byte_from(ccs811_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(CCS811_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+/**
+ * @brief CCS811 I2C write command to register address transaction.
+ * 
+ * @param handle CCS811 device handle.
+ * @param reg_addr CCS811 command register address to write to.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_write_command(ccs811_handle_t handle, uint8_t reg_addr) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief CCS811 I2C write transaction.
+ * 
+ * @param handle CCS811 device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_write(ccs811_handle_t handle, const uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief CCS811 I2C write halfword to register address transaction.
+ * 
+ * @param handle CCS811 device handle.
+ * @param reg_addr CCS811 register address to write to.
+ * @param halfword CCS811 write transaction input halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_write_halfword_to(ccs811_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) }; // register, lsb, msb
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief CCS811 I2C write byte to register address transaction.
+ * 
+ * @param handle CCS811 device handle.
+ * @param reg_addr CCS811 register address to write to.
+ * @param byte CCS811 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ccs811_i2c_write_byte_to(ccs811_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+
+/**
  * @brief Gets CCS811 microsecond duration from device handle.  See datasheet for details.
  *
  * @param[in] ccs811_handle CCS811 device handle.
@@ -179,7 +345,7 @@ esp_err_t ccs811_get_status_register(ccs811_handle_t handle, ccs811_status_regis
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, CCS811_REG_STATUS_R, &reg->reg), TAG, "read status register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_byte_from(handle, CCS811_REG_STATUS_R, &reg->reg), TAG, "read status register failed" );
     
     return ESP_OK;
 }
@@ -189,7 +355,7 @@ esp_err_t ccs811_get_measure_mode_register(ccs811_handle_t handle, ccs811_measur
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, CCS811_REG_MEAS_MODE_RW, &reg->reg), TAG, "read measure mode register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_byte_from(handle, CCS811_REG_MEAS_MODE_RW, &reg->reg), TAG, "read measure mode register failed" );
     
     return ESP_OK;
 }
@@ -204,7 +370,7 @@ esp_err_t ccs811_set_measure_mode_register(ccs811_handle_t handle, const ccs811_
     measure_mode.bits.reserved2 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, CCS811_REG_MEAS_MODE_RW, measure_mode.reg), TAG, "write measure mode register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write_byte_to(handle, CCS811_REG_MEAS_MODE_RW, measure_mode.reg), TAG, "write measure mode register failed" );
 
     return ESP_OK;
 }
@@ -214,7 +380,7 @@ esp_err_t ccs811_get_error_register(ccs811_handle_t handle, ccs811_error_code_re
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, CCS811_REG_ERROR_ID_R, &reg->reg), TAG, "read error identifier register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_byte_from(handle, CCS811_REG_ERROR_ID_R, &reg->reg), TAG, "read error identifier register failed" );
     
     return ESP_OK;
 }
@@ -250,7 +416,7 @@ esp_err_t ccs811_set_environmental_data_register(ccs811_handle_t handle, const f
 	tx[4] = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT40_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write environmental data failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write(handle, tx, BIT40_UINT8_BUFFER_SIZE), TAG, "write environmental data failed" );
 
     /* set handle environmental data parameters */
     handle->dev_config.humidity = humidity;
@@ -283,7 +449,7 @@ esp_err_t ccs811_set_thresholds_register(ccs811_handle_t handle, const uint16_t 
     tx[5] = hysteresis;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write thresholds failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write(handle, tx, BIT48_UINT8_BUFFER_SIZE), TAG, "write thresholds failed" );
 
     return ESP_OK;
 }
@@ -293,7 +459,7 @@ esp_err_t ccs811_get_baseline_register(ccs811_handle_t handle, uint16_t *const r
     ESP_ARG_CHECK( handle );
 
      /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, CCS811_REG_BASELINE_RW, reg), TAG, "read baseline register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_halfword_from(handle, CCS811_REG_BASELINE_RW, reg), TAG, "read baseline register failed" );
 
     return ESP_OK;
 }
@@ -303,7 +469,7 @@ esp_err_t ccs811_set_baseline_register(ccs811_handle_t handle, const uint16_t ba
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, CCS811_REG_BASELINE_RW, baseline), TAG, "write baseline register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write_halfword_to(handle, CCS811_REG_BASELINE_RW, baseline), TAG, "write baseline register failed" );
 
     return ESP_OK;
 }
@@ -313,7 +479,7 @@ esp_err_t ccs811_get_hardware_identifier_register(ccs811_handle_t handle, uint8_
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, CCS811_REG_HW_ID_R, reg), TAG, "read hardware identifier register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_byte_from(handle, CCS811_REG_HW_ID_R, reg), TAG, "read hardware identifier register failed" );
     
     return ESP_OK;
 }
@@ -323,7 +489,7 @@ esp_err_t ccs811_get_hardware_version_register(ccs811_handle_t handle, uint8_t *
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, CCS811_REG_HW_VERSION_R, reg), TAG, "read hardware version register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_byte_from(handle, CCS811_REG_HW_VERSION_R, reg), TAG, "read hardware version register failed" );
     
     return ESP_OK;
 }
@@ -333,7 +499,7 @@ esp_err_t ccs811_start_application(ccs811_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, CCS811_REG_APP_START_W), TAG, "write application start register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write_command(handle, CCS811_REG_APP_START_W), TAG, "write application start register failed" );
 
     return ESP_OK;
 }
@@ -536,7 +702,6 @@ esp_err_t ccs811_get_measurement(ccs811_handle_t handle, uint16_t *eco2, uint16_
     uint64_t        start_time      = 0;
     bool            data_is_ready   = false;
     bool            has_error       = false;
-    const bit8_uint8_buffer_t tx    = { CCS811_REG_ALG_RESULT_DATA_R };
     bit64_uint8_buffer_t   rx              = { };
 
     /* validate arguments */
@@ -573,7 +738,7 @@ esp_err_t ccs811_get_measurement(ccs811_handle_t handle, uint16_t *eco2, uint16_
     }
 
     /* attempt i2c write and then read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT64_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "read alg result data failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_from(handle, CCS811_REG_ALG_RESULT_DATA_R, rx, BIT64_UINT8_BUFFER_SIZE), TAG, "read alg result data failed" );
 
     /* set eco2 and etvoc values */
     *eco2  = rx[1] | (rx[0] << 8);  // big endian order (msb | lsb)
@@ -665,7 +830,7 @@ esp_err_t ccs811_get_ntc_resistance(ccs811_handle_t handle, const uint32_t r_ref
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_byte32(handle->i2c_handle, CCS811_REG_NTC_R, &rx), TAG, "read ntc register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_from(handle, CCS811_REG_NTC_R, rx, BIT32_UINT8_BUFFER_SIZE), TAG, "read ntc register failed" );
 
     uint16_t v_ref = (uint16_t)(rx[0] << 8) | rx[1];
     uint16_t v_ntc = (uint16_t)(rx[2] << 8) | rx[3];
@@ -721,7 +886,7 @@ esp_err_t ccs811_reset(ccs811_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT40_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "write soft-reset data failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write(handle, tx, BIT40_UINT8_BUFFER_SIZE), TAG, "write soft-reset data failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(CCS811_RESET_DELAY_MS));

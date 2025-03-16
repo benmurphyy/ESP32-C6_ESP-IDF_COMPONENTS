@@ -20,6 +20,6 @@
   "platforms": "espressif32",
   "headers": "as7341.h",
   "dependencies": {
-    "k0i05/esp_driver_i2c_ext": ">=1.0.0"
+    "k0i05/esp_type_utils": ">=1.0.0"
   }
 }

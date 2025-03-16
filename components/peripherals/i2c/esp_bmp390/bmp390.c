@@ -41,7 +41,6 @@
 #include <esp_log.h>
 #include <esp_check.h>
 #include <esp_timer.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -96,6 +95,113 @@ static const char *TAG = "bmp390";
 
 
 /**
+ * @brief BMP390 I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle BMP390 device handle.
+ * @param reg_addr BMP390 register address to read from.
+ * @param buffer BMP390 read transaction return buffer.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t bmp390_i2c_read_from(bmp390_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(BMP390_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief BMP390 I2C read halfword from register address transaction.
+ * 
+ * @param handle BMP390 device handle.
+ * @param reg_addr BMP390 register address to read from.
+ * @param halfword BMP390 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t bmp390_i2c_read_halfword_from(bmp390_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit16_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(BMP390_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+
+    return ESP_OK;
+}
+
+/**
+ * @brief BMP390 I2C read byte from register address transaction.
+ * 
+ * @param handle BMP390 device handle.
+ * @param reg_addr BMP390 register address to read from.
+ * @param byte BMP390 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t bmp390_i2c_read_byte_from(bmp390_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(BMP390_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+/**
+ * @brief BMP390 I2C write byte to register address transaction.
+ * 
+ * @param handle BMP390 device handle.
+ * @param reg_addr BMP390 register address to write to.
+ * @param byte BMP390 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t bmp390_i2c_write_byte_to(bmp390_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
  * @brief Temperature compensation algorithm is taken from BMP390 datasheet.  See datasheet for details.
  *
  * @param[in] handle BMP390 device handle.
@@ -148,21 +254,21 @@ static inline esp_err_t bmp390_get_cal_factors(bmp390_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* bmp280 attempt to request T1-T3 calibration values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x31, &handle->dev_cal_factors->dig_T1) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x33, &handle->dev_cal_factors->dig_T2) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x35, (uint8_t *)&handle->dev_cal_factors->dig_T3) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x31, &handle->dev_cal_factors->dig_T1) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x33, &handle->dev_cal_factors->dig_T2) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x35, (uint8_t *)&handle->dev_cal_factors->dig_T3) );
     /* bmp280 attempt to request P1-P10 calibration values from device */
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x36, (uint16_t *)&handle->dev_cal_factors->dig_P1) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x38, (uint16_t *)&handle->dev_cal_factors->dig_P2) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x3a, (uint8_t *)&handle->dev_cal_factors->dig_P3) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x3b, (uint8_t *)&handle->dev_cal_factors->dig_P4) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x3c, &handle->dev_cal_factors->dig_P5) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x3e, &handle->dev_cal_factors->dig_P6) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x40, (uint8_t *)&handle->dev_cal_factors->dig_P7) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x41, (uint8_t *)&handle->dev_cal_factors->dig_P8) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint16(handle->i2c_handle, 0x42, (uint16_t *)&handle->dev_cal_factors->dig_P9) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x44, (uint8_t *)&handle->dev_cal_factors->dig_P10) );
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, 0x45, (uint8_t *)&handle->dev_cal_factors->dig_P11) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x36, (uint16_t *)&handle->dev_cal_factors->dig_P1) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x38, (uint16_t *)&handle->dev_cal_factors->dig_P2) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x3a, (uint8_t *)&handle->dev_cal_factors->dig_P3) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x3b, (uint8_t *)&handle->dev_cal_factors->dig_P4) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x3c, &handle->dev_cal_factors->dig_P5) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x3e, &handle->dev_cal_factors->dig_P6) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x40, (uint8_t *)&handle->dev_cal_factors->dig_P7) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x41, (uint8_t *)&handle->dev_cal_factors->dig_P8) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x42, (uint16_t *)&handle->dev_cal_factors->dig_P9) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x44, (uint8_t *)&handle->dev_cal_factors->dig_P10) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x45, (uint8_t *)&handle->dev_cal_factors->dig_P11) );
 
     /*
     ESP_LOGW(TAG, "Calibration data received:");
@@ -209,7 +315,7 @@ esp_err_t bmp390_get_chip_id_register(bmp390_handle_t handle, uint8_t *const reg
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_CHIP_ID, reg), TAG, "read chip identifier register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_CHIP_ID, reg), TAG, "read chip identifier register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -222,7 +328,7 @@ esp_err_t bmp390_get_status_register(bmp390_handle_t handle, bmp390_status_regis
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_STATUS, &reg->reg), TAG, "read status register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_STATUS, &reg->reg), TAG, "read status register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -235,7 +341,7 @@ esp_err_t bmp390_get_interrupt_status_register(bmp390_handle_t handle, bmp390_in
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_INT_STATUS, &reg->reg), TAG, "read interrupt status register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_INT_STATUS, &reg->reg), TAG, "read interrupt status register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -248,7 +354,7 @@ esp_err_t bmp390_get_interrupt_control_register(bmp390_handle_t handle, bmp390_i
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_INT_CNTRL, &reg->reg), TAG, "read interrupt control register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_INT_CNTRL, &reg->reg), TAG, "read interrupt control register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -267,7 +373,7 @@ esp_err_t bmp390_set_interrupt_control_register(bmp390_handle_t handle, const bm
     interrupt_control.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, BMP390_REG_INT_CNTRL, interrupt_control.reg), TAG, "write power control register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_write_byte_to(handle, BMP390_REG_INT_CNTRL, interrupt_control.reg), TAG, "write power control register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -280,7 +386,7 @@ esp_err_t bmp390_get_power_control_register(bmp390_handle_t handle, bmp390_power
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_PWRCTRL, &reg->reg), TAG, "read power control register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_PWRCTRL, &reg->reg), TAG, "read power control register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -300,7 +406,7 @@ esp_err_t bmp390_set_power_control_register(bmp390_handle_t handle, const bmp390
     power_control.bits.reserved2 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, BMP390_REG_PWRCTRL, power_control.reg), TAG, "write power control register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_write_byte_to(handle, BMP390_REG_PWRCTRL, power_control.reg), TAG, "write power control register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -313,7 +419,7 @@ esp_err_t bmp390_get_output_data_rate_register(bmp390_handle_t handle, bmp390_ou
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_ODR, &reg->reg), TAG, "read output data rate register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_ODR, &reg->reg), TAG, "read output data rate register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -332,7 +438,7 @@ esp_err_t bmp390_set_output_data_rate_register(bmp390_handle_t handle, const bmp
     output_data_rate.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, BMP390_REG_ODR, output_data_rate.reg), TAG, "write output data rate register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_write_byte_to(handle, BMP390_REG_ODR, output_data_rate.reg), TAG, "write output data rate register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -345,7 +451,7 @@ esp_err_t bmp390_get_oversampling_register(bmp390_handle_t handle, bmp390_oversa
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_OSR, &reg->reg), TAG, "read oversampling register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_OSR, &reg->reg), TAG, "read oversampling register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -364,7 +470,7 @@ esp_err_t bmp390_set_oversampling_register(bmp390_handle_t handle, const bmp390_
     oversampling.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, BMP390_REG_OSR, oversampling.reg), TAG, "write oversampling register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_write_byte_to(handle, BMP390_REG_OSR, oversampling.reg), TAG, "write oversampling register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -377,7 +483,7 @@ esp_err_t bmp390_get_configuration_register(bmp390_handle_t handle, bmp390_confi
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, BMP390_REG_CONFIG, &reg->reg), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_read_byte_from(handle, BMP390_REG_CONFIG, &reg->reg), TAG, "read configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -397,7 +503,7 @@ esp_err_t bmp390_set_configuration_register(bmp390_handle_t handle, const bmp390
     config.bits.reserved2 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, BMP390_REG_CONFIG, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_write_byte_to(handle, BMP390_REG_CONFIG, config.reg), TAG, "write configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(BMP390_CMD_DELAY_MS));
@@ -561,7 +667,7 @@ esp_err_t bmp390_get_measurements(bmp390_handle_t handle, float *const temperatu
     } while (pressure_is_ready == false && temperature_is_ready == false);
 
     // read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_byte48(handle->i2c_handle, BMP390_REG_PRESSURE, &rx), err, TAG, "read temperature and pressure data failed" );
+    ESP_GOTO_ON_ERROR( bmp390_i2c_read_from(handle, BMP390_REG_PRESSURE, rx, BIT48_UINT8_BUFFER_SIZE), err, TAG, "read temperature and pressure data failed" );
     
     // concat pressure and temperature adc values
     uint32_t adc_press, adc_temp;
@@ -729,7 +835,6 @@ esp_err_t bmp390_set_temperature_oversampling(bmp390_handle_t handle, const bmp3
     return ESP_OK;
 }
 
-
 esp_err_t bmp280_get_output_data_rate(bmp390_handle_t handle, bmp390_output_data_rates_t *const output_data_rate) {
     bmp390_output_data_rate_register_t odr;
 
@@ -807,7 +912,7 @@ esp_err_t bmp390_reset(bmp390_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, BMP390_REG_CMD, BMP390_SFTRESET_CMD), TAG, "write reset register for reset failed" );
+    ESP_RETURN_ON_ERROR( bmp390_i2c_write_byte_to(handle, BMP390_REG_CMD, BMP390_SFTRESET_CMD), TAG, "write reset register for reset failed" );
 
     /* wait until finished copying NVP data */
     // forced delay before next transaction - see datasheet for details
