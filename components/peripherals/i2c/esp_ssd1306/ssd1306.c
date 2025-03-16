@@ -140,6 +140,23 @@ typedef union ssd1306_out_column_t {
 } PACK8 ssd1306_out_column_t;
 
 
+/**
+ * @brief SSD1306 I2C write transaction.
+ * 
+ * @param handle SSD1306 device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t ssd1306_i2c_write(ssd1306_handle_t handle, const uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
 
 
 esp_err_t ssd1306_load_bitmap_font(const uint8_t *font, int encoding, uint8_t *bitmap, ssd1306_bdf_font_t *const bdf_font) {
@@ -541,7 +558,7 @@ esp_err_t ssd1306_enable_display(ssd1306_handle_t handle) {
 	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
 	out_buf[out_index++] = SSD1306_CMD_DISPLAY_ON; // AF
 
-	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write contrast configuration failed");
+	ESP_RETURN_ON_ERROR(ssd1306_i2c_write(handle, out_buf, out_index), TAG, "write contrast configuration failed");
 
 	/* set handle parameter */
 	handle->dev_config.display_enabled = true;
@@ -559,7 +576,7 @@ esp_err_t ssd1306_disable_display(ssd1306_handle_t handle) {
 	out_buf[out_index++] = SSD1306_CONTROL_BYTE_CMD_STREAM; // 00
 	out_buf[out_index++] = SSD1306_CMD_DISPLAY_OFF; // AE
 
-	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write contrast configuration failed");
+	ESP_RETURN_ON_ERROR(ssd1306_i2c_write(handle, out_buf, out_index), TAG, "write contrast configuration failed");
 
 	/* set handle parameter */
 	handle->dev_config.display_enabled = false;
@@ -727,14 +744,14 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	// Set Page Start Address for Page Addressing Mode
 	out_buf[out_index++] = 0xB0 | _page;
 
-	ESP_GOTO_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), err, TAG, "write page addressing mode for image display failed");
+	ESP_GOTO_ON_ERROR(ssd1306_i2c_write(handle, out_buf, out_index), err, TAG, "write page addressing mode for image display failed");
 
 	out_buf[0] = SSD1306_CONTROL_BYTE_DATA_STREAM;
 
 	memcpy(&out_buf[1], image, width);
 
 
-	ESP_GOTO_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, width + 1, I2C_XFR_TIMEOUT_MS), err, TAG, "write image for image display failed");
+	ESP_GOTO_ON_ERROR(ssd1306_i2c_write(handle, out_buf, width + 1), err, TAG, "write image for image display failed");
 
 	free(out_buf);
 
@@ -993,7 +1010,7 @@ esp_err_t ssd1306_set_contrast(ssd1306_handle_t handle, uint8_t contrast) {
 	out_buf[out_index++] = SSD1306_CMD_SET_CONTRAST; // 81
 	out_buf[out_index++] = contrast;
 
-	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write contrast configuration failed");
+	ESP_RETURN_ON_ERROR(ssd1306_i2c_write(handle, out_buf, out_index), TAG, "write contrast configuration failed");
 
 	return ESP_OK;
 }
@@ -1139,7 +1156,7 @@ esp_err_t ssd1306_set_hardware_scroll(ssd1306_handle_t handle, ssd1306_scroll_ty
 		out_buf[out_index++] = SSD1306_CMD_DEACTIVE_SCROLL; // 2E
 	}
 
-	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write hardware scroll configuration failed");
+	ESP_RETURN_ON_ERROR(ssd1306_i2c_write(handle, out_buf, out_index), TAG, "write hardware scroll configuration failed");
 
 	return ESP_OK;
 }
@@ -1397,7 +1414,7 @@ static inline esp_err_t ssd1306_setup(ssd1306_handle_t handle) {
 	out_buf[out_index++] = SSD1306_CMD_DISPLAY_NORMAL;			// A6
 	out_buf[out_index++] = SSD1306_CMD_DISPLAY_ON;				// AF
 
-	ESP_RETURN_ON_ERROR(i2c_master_transmit(handle->i2c_handle, out_buf, out_index, I2C_XFR_TIMEOUT_MS), TAG, "write setup configuration failed");
+	ESP_RETURN_ON_ERROR(ssd1306_i2c_write(handle, out_buf, out_index), TAG, "write setup configuration failed");
 
 	handle->dev_config.display_enabled = true;
 
