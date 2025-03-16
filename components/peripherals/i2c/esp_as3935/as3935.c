@@ -39,7 +39,6 @@
 #include <esp_log.h>
 #include <esp_check.h>
 #include <driver/gpio.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -76,6 +75,33 @@ static const char *TAG = "as3935";
 /** 
  * functions and subroutines
 */
+
+/**
+ * @brief AS3935 I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle AS3935 device handle.
+ * @param reg_addr AS3935 register address to read from.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t as3935_i2c_read_from(as3935_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(AS3935_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
 
 
 /**
@@ -582,7 +608,7 @@ esp_err_t as3935_register_isr(as3935_handle_t handle, const as3935_isr_t isr) {
 esp_err_t as3935_reset_to_defaults(as3935_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_CMD_PRESET_DEFAULT, AS3935_REG_RST) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_CMD_PRESET_DEFAULT, AS3935_REG_RST) );
 
     return ESP_OK;
 }
@@ -591,7 +617,7 @@ esp_err_t as3935_calibrate_rco(as3935_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     ESP_ERROR_CHECK( as3935_disable_power(handle) );
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_CMD_CALIB_RCO, AS3935_REG_RST) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_CMD_CALIB_RCO, AS3935_REG_RST) );
 
     ESP_ERROR_CHECK( as3935_set_display_oscillator_on_irq(handle, AS3935_OSCILLATOR_SYSTEM_RC, true));
     vTaskDelay(pdMS_TO_TICKS(AS3935_CALIBRATION_DELAY_MS));
@@ -968,7 +994,7 @@ esp_err_t as3935_get_lightning_distance(as3935_handle_t handle, as3935_lightning
 
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_07, &reg_0x07.reg) );
+    ESP_ERROR_CHECK( as3935_i2c_read_byte_from(handle, AS3935_REG_07, &reg_0x07.reg) );
 
     *distance = reg_0x07.bits.lightning_distance;
 
@@ -990,7 +1016,7 @@ esp_err_t as3935_get_lightning_energy(as3935_handle_t handle, uint32_t *const en
 
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_read_byte24(handle->i2c_handle, AS3935_REG_04, &data) );
+    ESP_ERROR_CHECK( as3935_i2c_read_from(handle, AS3935_REG_04, data, BIT24_UINT8_BUFFER_SIZE) );
 
     data[2] &= 0b11111;
 
