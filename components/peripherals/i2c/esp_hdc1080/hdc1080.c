@@ -92,14 +92,14 @@ static const char *TAG = "hdc1080";
  * @param reg_addr HDC1080 command register address to write to.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t hdc1080_i2c_write_command(hdc1080_handle_t handle, uint16_t reg_addr) {
-    const bit16_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff) }; // lsb, msb
+static inline esp_err_t hdc1080_i2c_write_command(hdc1080_handle_t handle, uint8_t reg_addr) {
+    const bit8_uint8_buffer_t tx = { reg_addr }; // lsb, msb
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -112,15 +112,14 @@ static inline esp_err_t hdc1080_i2c_write_command(hdc1080_handle_t handle, uint1
  * @param size Length of buffer to write for write transaction.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t hdc1080_i2c_write_halfword_to(hdc1080_handle_t handle, const uint16_t reg_addr, const uint16_t halfword) {
-    const bit32_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff),
-                                    (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) };
+static inline esp_err_t hdc1080_i2c_write_halfword_to(hdc1080_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT32_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -133,8 +132,8 @@ static inline esp_err_t hdc1080_i2c_write_halfword_to(hdc1080_handle_t handle, c
  * @param halfword HDC1080 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t hdc1080_i2c_read_halfword_from(hdc1080_handle_t handle, const uint16_t reg_addr, uint16_t *const halfword) {
-    const bit16_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff) };
+static inline esp_err_t hdc1080_i2c_read_halfword_from(hdc1080_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
     /* validate arguments */
