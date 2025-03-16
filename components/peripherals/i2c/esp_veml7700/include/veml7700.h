@@ -38,7 +38,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include "veml7700_version.h"
 
 #ifdef __cplusplus
@@ -51,6 +52,8 @@ extern "C" {
 #define I2C_VEML7700_DEV_CLK_SPD            UINT32_C(100000)    //!< veml7700 I2C default clock frequency (100KHz)
 
 #define I2C_VEML7700_DEV_ADDR               UINT8_C(0x10)       //!< veml7700 I2C address
+
+#define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
 
 
 /*

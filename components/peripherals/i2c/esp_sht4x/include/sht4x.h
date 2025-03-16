@@ -42,7 +42,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include "sht4x_version.h"
 
 #ifdef __cplusplus
@@ -58,6 +59,7 @@ extern "C" {
 #define I2C_SHT4X_DEV_ADDR_LO           UINT8_C(0x44)       //!< sht4x i2c address when ADDR pin floating/low
 #define I2C_SHT4X_DEV_ADDR_HI           UINT8_C(0x45)       //!< sht4x i2c address when ADDR pin high
 
+#define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
 
 /**
  * public macro definitions

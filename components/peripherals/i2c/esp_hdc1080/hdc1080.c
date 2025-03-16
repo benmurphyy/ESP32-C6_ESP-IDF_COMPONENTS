@@ -82,6 +82,97 @@ static const char *TAG = "hdc1080";
 * functions and subroutines
 */
 
+
+
+/**
+ * @brief HDC1080 I2C write command to register address transaction.
+ * 
+ * @param handle HDC1080 device handle.
+ * @param reg_addr HDC1080 command register address to write to.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t hdc1080_i2c_write_command(hdc1080_handle_t handle, uint16_t reg_addr) {
+    const bit16_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff) }; // lsb, msb
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief HDC1080 I2C write transaction.
+ * 
+ * @param handle HDC1080 device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t hdc1080_i2c_write_halfword_to(hdc1080_handle_t handle, const uint16_t reg_addr, uint16_t *const halfword) {
+    const bit32_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff),
+                                    (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT32_UINT8_BUFFER_SIZE), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief HDC1080 I2C read halfword from register address transaction.
+ * 
+ * @param handle HDC1080 device handle.
+ * @param reg_addr HDC1080 register address to read from.
+ * @param halfword HDC1080 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t hdc1080_i2c_read_halfword_from(hdc1080_handle_t handle, const uint16_t reg_addr, uint16_t *const halfword) {
+    const bit16_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff) };
+    bit16_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(HDC1080_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+
+    return ESP_OK;
+}
+
+/**
+ * @brief HDC1080 I2C read transaction.
+ * 
+ * @param handle HDC1080 device handle.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t hdc1080_i2c_read(hdc1080_handle_t handle, uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read failed" );
+
+    return ESP_OK;
+}
+
+
 /**
  * @brief Gets HDC1080 millisecond duration from humidity measurement resolution.  See datasheet for details.
  *
@@ -228,7 +319,7 @@ esp_err_t hdc1080_get_manufacturer_id_register(hdc1080_handle_t handle, uint16_t
     ESP_ARG_CHECK( handle );
 
     /* attempt to read manufacturer identifier */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, HDC1080_REG_MANUFACTURER_ID, reg), TAG, "read manufacturer identifier failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_halfword_from(handle, HDC1080_REG_MANUFACTURER_ID, reg), TAG, "read manufacturer identifier failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(HDC1080_CMD_DELAY_MS) );
@@ -241,7 +332,7 @@ esp_err_t hdc1080_get_device_id_register(hdc1080_handle_t handle, uint16_t *cons
     ESP_ARG_CHECK( handle );
 
     /* attempt to read device identifier */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, HDC1080_REG_DEVICE_ID, reg), TAG, "read device identifier failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_halfword_from(handle, HDC1080_REG_DEVICE_ID, reg), TAG, "read device identifier failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(HDC1080_CMD_DELAY_MS) );
@@ -255,7 +346,7 @@ esp_err_t hdc1080_get_configuration_register(hdc1080_handle_t handle, hdc1080_co
 
     /* attempt to read configuration register */
     uint16_t config;
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, HDC1080_REG_CONFIGURATION, &config), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_halfword_from(handle, HDC1080_REG_CONFIGURATION, &config), TAG, "read configuration register failed" );
 
     /* set output parameter */
     reg->reg = config;
@@ -278,7 +369,7 @@ esp_err_t hdc1080_set_configuration_register(hdc1080_handle_t handle, const hdc1
     config.bits.reserved2 = 0;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, HDC1080_REG_CONFIGURATION, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_write_halfword_to(handle, HDC1080_REG_CONFIGURATION, config.reg), TAG, "write configuration register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(HDC1080_CMD_DELAY_MS) );
@@ -355,7 +446,7 @@ esp_err_t hdc1080_get_measurement(hdc1080_handle_t handle, float *const temperat
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, HDC1080_REG_TEMPERATURE), TAG, "unable to write to i2c device handle, write to trigger temperature measurement failed");
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_write_command(handle, HDC1080_REG_TEMPERATURE), TAG, "unable to write to i2c device handle, write to trigger temperature measurement failed");
 
     /* delay before next i2c transaction */
     vTaskDelay(hdc1080_get_temperature_tick_duration(handle->dev_config.temperature_resolution));
@@ -363,7 +454,7 @@ esp_err_t hdc1080_get_measurement(hdc1080_handle_t handle, float *const temperat
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = hdc1080_i2c_read(handle, rx, BIT16_UINT8_BUFFER_SIZE);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(HDC1080_RETRY_DELAY_MS));
@@ -379,7 +470,7 @@ esp_err_t hdc1080_get_measurement(hdc1080_handle_t handle, float *const temperat
     *temperature = hdc1080_convert_temperature_signal(t_raw);
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, HDC1080_REG_HUMIDITY), TAG, "unable to write to i2c device handle, write to trigger humidity measurement failed");
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_write_command(handle, HDC1080_REG_HUMIDITY), TAG, "unable to write to i2c device handle, write to trigger humidity measurement failed");
 
     /* delay before next i2c transaction */
     vTaskDelay(hdc1080_get_humidity_tick_duration(handle->dev_config.humidity_resolution));
@@ -388,7 +479,7 @@ esp_err_t hdc1080_get_measurement(hdc1080_handle_t handle, float *const temperat
     rx_retry_count = 0;
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = hdc1080_i2c_read(handle, rx, BIT16_UINT8_BUFFER_SIZE);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(HDC1080_RETRY_DELAY_MS));

@@ -89,6 +89,63 @@ static const char *TAG = "sht4x";
 * functions and subroutines
 */
 
+
+
+/**
+ * @brief SHT4X I2C read transaction.
+ * 
+ * @param handle SHT4X device handle.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t sht4x_i2c_read(sht4x_handle_t handle, uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief SHT4X I2C write transaction.
+ * 
+ * @param handle SHT4X device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t sht4x_i2c_write(sht4x_handle_t handle, const uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief SHT4X I2C write command to register address transaction.
+ * 
+ * @param handle SHT4X device handle.
+ * @param reg_addr SHT4X command register address to write to.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t sht4x_i2c_write_command(sht4x_handle_t handle, uint8_t reg_addr) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
 /**
  * @brief Calculates SHT4X CRC8 value.  See datasheet for details.
  *
@@ -228,13 +285,13 @@ static inline esp_err_t sht4x_get_serial_number(sht4x_handle_t handle, uint32_t 
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, get serial number failed");
+    ESP_RETURN_ON_ERROR( sht4x_i2c_write(handle, tx, BIT8_UINT8_BUFFER_SIZE), TAG, "unable to write to i2c device handle, get serial number failed");
 	
     /* delay before attempting i2c read transaction */
     vTaskDelay(pdMS_TO_TICKS(SHT4X_TX_RX_DELAY_MS));
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to read to i2c device handle, get serial number failed");
+    ESP_RETURN_ON_ERROR( sht4x_i2c_read(handle, rx, BIT48_UINT8_BUFFER_SIZE), TAG, "unable to read to i2c device handle, get serial number failed");
 	
     /* set serial number */
     *serial_number = ((uint32_t)rx[0] << 24) | ((uint32_t)rx[1] << 16) | ((uint32_t)rx[3] << 8) | rx[4];
@@ -315,7 +372,7 @@ esp_err_t sht4x_get_measurement(sht4x_handle_t handle, float *const temperature,
     delay_ticks = sht4x_get_tick_duration(handle);
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, get measurement failed");
+    ESP_RETURN_ON_ERROR( sht4x_i2c_write(handle, tx, BIT8_UINT8_BUFFER_SIZE), TAG, "unable to write to i2c device handle, get measurement failed");
 	
 	/* delay task - allow time for the sensor to process measurement request */
     if(delay_ticks) vTaskDelay(delay_ticks);
@@ -323,7 +380,7 @@ esp_err_t sht4x_get_measurement(sht4x_handle_t handle, float *const temperature,
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(handle->i2c_handle, rx, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = sht4x_i2c_read(handle, rx, BIT48_UINT8_BUFFER_SIZE);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(SHT4X_RETRY_DELAY_MS));
@@ -402,7 +459,7 @@ esp_err_t sht4x_reset(sht4x_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt to reset device */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_cmd(handle->i2c_handle, SHT4X_CMD_RESET), TAG, "unable to write to device handle, device reset failed");
+    ESP_RETURN_ON_ERROR( sht4x_i2c_write_command(handle, SHT4X_CMD_RESET), TAG, "unable to write to device handle, device reset failed");
 
     /* delay before next command - soft-reset */
     vTaskDelay(pdMS_TO_TICKS(SHT4X_RESET_DELAY_MS));

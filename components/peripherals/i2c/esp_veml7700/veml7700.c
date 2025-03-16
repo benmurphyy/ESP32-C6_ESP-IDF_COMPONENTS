@@ -38,7 +38,6 @@
 #include <math.h>
 #include <esp_log.h>
 #include <esp_check.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -365,6 +364,57 @@ esp_err_t veml7700_optimize_configuration(veml7700_handle_t handle) {
     return ESP_OK;
 }
 
+/**
+ * @brief VEML7700 I2C read halfword from register address transaction.
+ * 
+ * @param handle VEML7700 device handle.
+ * @param reg_addr VEML7700 register address to read from.
+ * @param halfword VEML7700 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t veml7700_i2c_read_halfword_from(veml7700_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit16_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(VEML7700_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+
+    return ESP_OK;
+}
+
+/**
+ * @brief VEML7700 I2C write halfword to register address transaction.
+ * 
+ * @param handle VEML7700 device handle.
+ * @param reg_addr VEML7700 register address to write to.
+ * @param halfword VEML7700 write transaction input halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t veml7700_i2c_write_halfword_to(veml7700_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) }; // register, lsb, msb
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+
 esp_err_t veml7700_get_configuration_register(veml7700_handle_t handle, veml7700_configuration_register_t *const reg) {
     uint16_t config = 0;
 
@@ -372,7 +422,7 @@ esp_err_t veml7700_get_configuration_register(veml7700_handle_t handle, veml7700
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_ALS_CONF, &config), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_ALS_CONF, &config), TAG, "read configuration register failed" );
 
     /* set output parameter */
     reg->reg = config;
@@ -396,7 +446,7 @@ esp_err_t veml7700_set_configuration_register(veml7700_handle_t handle, const ve
     config.bits.reserved3 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, VEML7700_CMD_ALS_CONF, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_write_halfword_to(handle, VEML7700_CMD_ALS_CONF, config.reg), TAG, "write configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(VEML7700_CMD_DELAY_MS));
@@ -409,10 +459,10 @@ esp_err_t veml7700_get_threshold_registers(veml7700_handle_t handle, uint16_t *c
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_ALS_WH, hi_threshold), TAG, "read high threshold register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_ALS_WH, hi_threshold), TAG, "read high threshold register failed" );
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_ALS_WL, lo_threshold), TAG, "read low threshold register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_ALS_WL, lo_threshold), TAG, "read low threshold register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(VEML7700_CMD_DELAY_MS));
@@ -425,10 +475,10 @@ esp_err_t veml7700_set_threshold_registers(veml7700_handle_t handle, const uint1
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, VEML7700_CMD_ALS_WH, hi_threshold), TAG, "write high threshold register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_write_halfword_to(handle, VEML7700_CMD_ALS_WH, hi_threshold), TAG, "write high threshold register failed" );
     
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, VEML7700_CMD_ALS_WL, lo_threshold), TAG, "write low threshold register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_write_halfword_to(handle, VEML7700_CMD_ALS_WL, lo_threshold), TAG, "write low threshold register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(VEML7700_CMD_DELAY_MS));
@@ -443,7 +493,7 @@ esp_err_t veml7700_get_power_saving_mode_register(veml7700_handle_t handle, veml
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_POWER_SAVING, &psm), TAG, "read power saving mode register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_POWER_SAVING, &psm), TAG, "read power saving mode register failed" );
 
     /* set output parameter */
     reg->reg = psm;
@@ -465,7 +515,7 @@ esp_err_t veml7700_set_power_saving_mode_register(veml7700_handle_t handle, cons
     power_saving_mode.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, VEML7700_CMD_POWER_SAVING, power_saving_mode.reg), TAG, "write power saving mode register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_write_halfword_to(handle, VEML7700_CMD_POWER_SAVING, power_saving_mode.reg), TAG, "write power saving mode register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(VEML7700_CMD_DELAY_MS));
@@ -480,7 +530,7 @@ esp_err_t veml7700_get_interrupt_status_register(veml7700_handle_t handle, veml7
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_ALS_INT, &irq), TAG, "read interrupt status register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_ALS_INT, &irq), TAG, "read interrupt status register failed" );
 
     /* set handle register */
     reg->reg = irq;
@@ -498,7 +548,7 @@ esp_err_t i2c_veml7700_get_identifier_register(veml7700_handle_t handle, veml770
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_ID, &ident), TAG, "read identifier register failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_ID, &ident), TAG, "read identifier register failed" );
 
     /* set handle register */
     reg->reg = ident;
@@ -609,7 +659,7 @@ esp_err_t veml7700_get_ambient_light_counts(veml7700_handle_t handle, uint16_t *
     }
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_ALS, &als_counts), TAG, "read ambient light counts failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_ALS, &als_counts), TAG, "read ambient light counts failed" );
 
     /* set output parameter */
     *counts = als_counts;
@@ -679,7 +729,7 @@ esp_err_t veml7700_get_white_channel_counts(veml7700_handle_t handle, uint16_t *
     }
     
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML7700_CMD_WHITE, &als_counts), TAG, "read white channel counts failed" );
+    ESP_RETURN_ON_ERROR( veml7700_i2c_read_halfword_from(handle, VEML7700_CMD_WHITE, &als_counts), TAG, "read white channel counts failed" );
 
     /* set output parameter */
     *counts = als_counts;

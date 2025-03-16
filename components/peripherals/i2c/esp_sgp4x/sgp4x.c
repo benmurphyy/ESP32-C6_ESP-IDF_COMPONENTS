@@ -39,7 +39,6 @@
 #include <esp_log.h>
 #include <esp_check.h>
 #include <esp_timer.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -84,6 +83,64 @@ static const char *TAG = "sgp4x";
 /*
 * functions and subroutines
 */
+
+
+/**
+ * @brief SGP4X I2C read transaction.
+ * 
+ * @param handle SGP4X device handle.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t sgp4x_i2c_read(sgp4x_handle_t handle, uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief SGP4X I2C write transaction.
+ * 
+ * @param handle SGP4X device handle.
+ * @param buffer Buffer to write for write transaction.
+ * @param size Length of buffer to write for write transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t sgp4x_i2c_write(sgp4x_handle_t handle, const uint8_t *buffer, const uint8_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief SGP4X I2C write command to register address transaction.
+ * 
+ * @param handle SGP4X device handle.
+ * @param reg_addr SGP4X command register address to write to.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t sgp4x_i2c_write_command(sgp4x_handle_t handle, uint16_t reg_addr) {
+    const bit16_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff) }; // lsb, msb
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+
 
 /**
  * @brief Calculates SGP4X crc8 value for 2-byte data packet.  See datasheet for details.
@@ -161,25 +218,6 @@ static inline bytes_to_uint16_t sgp4x_humidity_to_ticks(const float humidity) {
 }
 
 /**
- * @brief Writes 2-byte I2C command to SGP4X in big-endian order.
- * 
- * @param[in] handle SGP4X device handle.
- * @param[in] command I2C command to write.
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t sgp4x_write_command(sgp4x_handle_t handle, const uint16_t command) {
-    const bytes_to_uint16_t    cmd_bytes = { .value = command };
-    const bit16_uint8_buffer_t tx_buffer = { cmd_bytes.bytes[1], cmd_bytes.bytes[0] };
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle );
-
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx_buffer, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, write command failed" );
-
-    return ESP_OK;
-}
-
-/**
  * @brief Reads serial number register from SGP4X.
  * 
  * @param[in] handle SGP4X device handle.
@@ -190,14 +228,14 @@ static inline esp_err_t sgp4x_get_serial_number_register(sgp4x_handle_t handle, 
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( sgp4x_write_command(handle, SGP4X_CMD_SERIAL_NUMBER), TAG, "unable to write to i2c device handle, read serial number failed");
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_write_command(handle, SGP4X_CMD_SERIAL_NUMBER), TAG, "unable to write to i2c device handle, read serial number failed");
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(sgp4x_get_command_duration_ms(SGP4X_CMD_SERIAL_NUMBER)));
 
     /* attempt i2c read transaction */
     bit72_uint8_buffer_t rx_buffer = { 0 };
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx_buffer, BIT72_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to read to i2c device handle, read serial number failed");
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_read(handle, rx_buffer, BIT72_UINT8_BUFFER_SIZE), TAG, "unable to read to i2c device handle, read serial number failed");
 
     /* set 2-byte serial number parts */
     const bytes_to_uint16_t sn_1 = {
@@ -331,7 +369,7 @@ esp_err_t sgp4x_execute_compensated_conditioning(sgp4x_handle_t handle, const fl
     tx_buffer[7] = temperature_ticks_crc8;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx_buffer, BIT64_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, execute compensated conditioning failed" );
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_write(handle, tx_buffer, BIT64_UINT8_BUFFER_SIZE), TAG, "unable to write to i2c device handle, execute compensated conditioning failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(sgp4x_get_command_duration_ms(SGP4X_CMD_EXEC_CONDITIONING)));
@@ -339,7 +377,7 @@ esp_err_t sgp4x_execute_compensated_conditioning(sgp4x_handle_t handle, const fl
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(handle->i2c_handle, rx_buffer, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = sgp4x_i2c_read(handle, rx_buffer, BIT24_UINT8_BUFFER_SIZE);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(SGP4X_RETRY_DELAY_MS));
@@ -412,7 +450,7 @@ esp_err_t sgp4x_measure_compensated_signals(sgp4x_handle_t handle, const float t
     tx_buffer[7] = temperature_ticks_crc8;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx_buffer, BIT64_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "unable to write to i2c device handle, measure compensated raw signals failed" );
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_write(handle, tx_buffer, BIT64_UINT8_BUFFER_SIZE), TAG, "unable to write to i2c device handle, measure compensated raw signals failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(sgp4x_get_command_duration_ms(SGP4X_CMD_MEAS_RAW_SIGNALS)));
@@ -420,7 +458,7 @@ esp_err_t sgp4x_measure_compensated_signals(sgp4x_handle_t handle, const float t
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(handle->i2c_handle, rx_buffer, BIT48_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = sgp4x_i2c_read(handle, rx_buffer, BIT48_UINT8_BUFFER_SIZE);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(SGP4X_RETRY_DELAY_MS));
@@ -464,7 +502,7 @@ esp_err_t sgp4x_execute_self_test(sgp4x_handle_t handle, sgp4x_self_test_result_
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( sgp4x_write_command(handle, SGP4X_CMD_EXEC_SELF_TEST), TAG, "unable to write to i2c device handle, execute self-test failed");
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_write_command(handle, SGP4X_CMD_EXEC_SELF_TEST), TAG, "unable to write to i2c device handle, execute self-test failed");
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(sgp4x_get_command_duration_ms(SGP4X_CMD_EXEC_SELF_TEST)));
@@ -472,7 +510,7 @@ esp_err_t sgp4x_execute_self_test(sgp4x_handle_t handle, sgp4x_self_test_result_
     /* retry needed - unexpected nack indicates that the sensor is still busy */
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_receive(handle->i2c_handle, rx_buffer, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS);
+        ret = sgp4x_i2c_read(handle, rx_buffer, BIT24_UINT8_BUFFER_SIZE);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(SGP4X_RETRY_DELAY_MS));
@@ -498,7 +536,7 @@ esp_err_t sgp4x_turn_heater_off(sgp4x_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( sgp4x_write_command(handle, SGP4X_CMD_TURN_HEATER_OFF), TAG, "unable to write to i2c device handle, turn off heater failed");
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_write_command(handle, SGP4X_CMD_TURN_HEATER_OFF), TAG, "unable to write to i2c device handle, turn off heater failed");
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(sgp4x_get_command_duration_ms(SGP4X_CMD_TURN_HEATER_OFF)));
@@ -511,7 +549,7 @@ esp_err_t sgp4x_reset(sgp4x_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( sgp4x_write_command(handle, SGP4X_CMD_RESET), TAG, "unable to write to i2c device handle, soft-reset failed");
+    ESP_RETURN_ON_ERROR( sgp4x_i2c_write_command(handle, SGP4X_CMD_RESET), TAG, "unable to write to i2c device handle, soft-reset failed");
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(sgp4x_get_command_duration_ms(SGP4X_CMD_RESET)));

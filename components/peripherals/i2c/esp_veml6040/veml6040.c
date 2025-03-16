@@ -38,7 +38,6 @@
 #include <math.h>
 #include <esp_log.h>
 #include <esp_check.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -100,9 +99,9 @@ static const float veml6040_integration_time_map[VEML6040_IT_TIMES_COUNT][VEML60
 /**
  * @brief Converts VEML6040 channel signal to illuminance (lux).
  * 
- * @param handle VEML6050 device handle.
- * @param signal VEML6050 channel signal to convert
- * @param lux Converted VEML6050 channel signal to illuminance (lux).
+ * @param handle VEML6040 device handle.
+ * @param signal VEML6040 channel signal to convert
+ * @param lux Converted VEML6040 channel signal to illuminance (lux).
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t veml6040_convert_signal(veml6040_handle_t handle, const uint16_t signal, float *const lux) {
@@ -119,11 +118,62 @@ static inline esp_err_t veml6040_convert_signal(veml6040_handle_t handle, const 
 }
 
 /**
+ * @brief VEML7700 I2C read halfword from register address transaction.
+ * 
+ * @param handle VEML7700 device handle.
+ * @param reg_addr VEML7700 register address to read from.
+ * @param halfword VEML7700 read transaction return halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t veml6040_i2c_read_halfword_from(veml6040_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit16_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(VEML6040_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+
+    return ESP_OK;
+}
+
+/**
+ * @brief VEML7700 I2C write halfword to register address transaction.
+ * 
+ * @param handle VEML7700 device handle.
+ * @param reg_addr VEML7700 register address to write to.
+ * @param halfword VEML7700 write transaction input halfword.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t veml6040_i2c_write_halfword_to(veml6040_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) }; // register, lsb, msb
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+
+/**
  * @brief Reads signal from VEML6050 by channel.
  * 
- * @param handle VEML6050 device handle.
- * @param channel VEML6050 signal channel to read.
- * @param signal VEML6050 signal from channel.
+ * @param handle VEML6040 device handle.
+ * @param channel VEML6040 signal channel to read.
+ * @param signal VEML6040 signal from channel.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t veml6040_get_signal(veml6040_handle_t handle, const veml6040_channels_t channel, uint16_t *const signal) {
@@ -139,19 +189,19 @@ static inline esp_err_t veml6040_get_signal(veml6040_handle_t handle, const veml
     switch(channel) {
         case VEML6040_CHANNEL_RED:
             /* attempt i2c read transaction */
-            ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML6040_CMD_R_DATA, signal), TAG, "read red signal for get signal failed" );
+            ESP_RETURN_ON_ERROR( veml6040_i2c_read_halfword_from(handle, VEML6040_CMD_R_DATA, signal), TAG, "read red signal for get signal failed" );
             break;
         case VEML6040_CHANNEL_GREEN:
             /* attempt i2c read transaction */
-            ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML6040_CMD_G_DATA, signal), TAG, "read green signal for get signal failed" );
+            ESP_RETURN_ON_ERROR( veml6040_i2c_read_halfword_from(handle, VEML6040_CMD_G_DATA, signal), TAG, "read green signal for get signal failed" );
             break;
         case VEML6040_CHANNEL_BLUE:
             /* attempt i2c read transaction */
-            ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML6040_CMD_B_DATA, signal), TAG, "read blue signal for get signal failed" );
+            ESP_RETURN_ON_ERROR( veml6040_i2c_read_halfword_from(handle, VEML6040_CMD_B_DATA, signal), TAG, "read blue signal for get signal failed" );
             break;
         case VEML6040_CHANNEL_WHITE:
             /* attempt i2c read transaction */
-            ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML6040_CMD_W_DATA, signal), TAG, "read white signal for get signal failed" );
+            ESP_RETURN_ON_ERROR( veml6040_i2c_read_halfword_from(handle, VEML6040_CMD_W_DATA, signal), TAG, "read white signal for get signal failed" );
             break;
         default:
             ESP_RETURN_ON_FALSE( false, ESP_ERR_INVALID_ARG, TAG, "invalid channel (red, gree, blue or white), get signal failed" );
@@ -168,7 +218,7 @@ esp_err_t veml6040_get_configuration_register(veml6040_handle_t handle, veml6040
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint16(handle->i2c_handle, VEML6040_CMD_CONF, &config), TAG, "read configuration register for get configuration register failed" );
+    ESP_RETURN_ON_ERROR( veml6040_i2c_read_halfword_from(handle, VEML6040_CMD_CONF, &config), TAG, "read configuration register for get configuration register failed" );
 
     /* set output parameter */
     reg->reg = config;
@@ -192,7 +242,7 @@ esp_err_t veml6040_set_configuration_register(veml6040_handle_t handle, const ve
     config.bits.reserved3 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint16(handle->i2c_handle, VEML6040_CMD_CONF, config.reg), TAG, "write configuration register for set configuration register failed" );
+    ESP_RETURN_ON_ERROR( veml6040_i2c_write_halfword_to(handle, VEML6040_CMD_CONF, config.reg), TAG, "write configuration register for set configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(VEML6040_CMD_DELAY_MS));
