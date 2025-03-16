@@ -202,7 +202,7 @@ static inline esp_err_t as7341_i2c_read_from(as7341_handle_t handle, const uint8
  * @param halfword AS7341 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t as7341_i2c_read_halfword_from(as7341_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t as7341_i2c_read_word_from(as7341_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -770,7 +770,7 @@ esp_err_t as7341_get_astep_register(as7341_handle_t handle, uint16_t *const reg)
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( as7341_i2c_read_halfword_from(handle, AS7341_ASTEP_L, reg), TAG, "read astep register failed" );
+    ESP_RETURN_ON_ERROR( as7341_i2c_read_word_from(handle, AS7341_ASTEP_L, reg), TAG, "read astep register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AS7341_CMD_DELAY_MS));

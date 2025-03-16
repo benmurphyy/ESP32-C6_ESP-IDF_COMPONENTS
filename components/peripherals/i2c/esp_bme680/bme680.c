@@ -156,7 +156,7 @@ static inline esp_err_t bme680_i2c_read_from(bme680_handle_t handle, const uint8
  * @param halfword BME680 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t bme680_i2c_read_halfword_from(bme680_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t bme680_i2c_read_word_from(bme680_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -470,8 +470,8 @@ static inline esp_err_t bme680_get_cal_factors(bme680_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* bme680 attempt to request T1-T3 calibration values from device */
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0xe9, &handle->dev_cal_factors->par_T1) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x8a, (uint16_t *)&handle->dev_cal_factors->par_T2) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0xe9, &handle->dev_cal_factors->par_T1) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x8a, (uint16_t *)&handle->dev_cal_factors->par_T2) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x8c, (uint8_t *)&handle->dev_cal_factors->par_T3) );
     /* bme680 attempt to request H1-H7 calibration values from device */
     ESP_ERROR_CHECK( bme680_i2c_read_from(handle, 0xe2, rx, BIT16_UINT8_BUFFER_SIZE) );
@@ -484,19 +484,19 @@ static inline esp_err_t bme680_get_cal_factors(bme680_handle_t handle) {
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe7, &handle->dev_cal_factors->par_H6) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xe8, (uint8_t *)&handle->dev_cal_factors->par_H7) );
     /* bme680 attempt to request P1-P10 calibration values from device */
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x8e, &handle->dev_cal_factors->par_P1) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x90, (uint16_t *)&handle->dev_cal_factors->par_P2) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x8e, &handle->dev_cal_factors->par_P1) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x90, (uint16_t *)&handle->dev_cal_factors->par_P2) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x92, (uint8_t *)&handle->dev_cal_factors->par_P3) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x94, (uint16_t *)&handle->dev_cal_factors->par_P4) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x96, (uint16_t *)&handle->dev_cal_factors->par_P5) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x94, (uint16_t *)&handle->dev_cal_factors->par_P4) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x96, (uint16_t *)&handle->dev_cal_factors->par_P5) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x99, (uint8_t *)&handle->dev_cal_factors->par_P6) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x98, (uint8_t *)&handle->dev_cal_factors->par_P7) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x9c, (uint16_t *)&handle->dev_cal_factors->par_P8) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0x9e, (uint16_t *)&handle->dev_cal_factors->par_P9) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x9c, (uint16_t *)&handle->dev_cal_factors->par_P8) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0x9e, (uint16_t *)&handle->dev_cal_factors->par_P9) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xa0, &handle->dev_cal_factors->par_P10) );
     /* bme680 attempt to request G1-G3 calibration values from device */
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xed, (uint8_t *)&handle->dev_cal_factors->par_G1) );
-    ESP_ERROR_CHECK( bme680_i2c_read_halfword_from(handle, 0xeb, (uint16_t *)&handle->dev_cal_factors->par_G2) );
+    ESP_ERROR_CHECK( bme680_i2c_read_word_from(handle, 0xeb, (uint16_t *)&handle->dev_cal_factors->par_G2) );
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0xee, (uint8_t *)&handle->dev_cal_factors->par_G3) );
     /* bme680 attempt to request gas range and switching error values from device */
     ESP_ERROR_CHECK( bme680_i2c_read_byte_from(handle, 0x02, &handle->dev_cal_factors->res_heat_range) );

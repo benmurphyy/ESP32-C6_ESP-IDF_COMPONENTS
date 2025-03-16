@@ -124,7 +124,7 @@ static inline esp_err_t bmp280_i2c_read_from(bmp280_handle_t handle, const uint8
  * @param halfword BMP280 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t bmp280_i2c_read_halfword_from(bmp280_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t bmp280_i2c_read_word_from(bmp280_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -257,19 +257,19 @@ static inline esp_err_t bmp280_get_cal_factors(bmp280_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* bmp280 attempt to request T1-T3 calibration values from device */
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x88, &handle->dev_cal_factors->dig_T1) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x8a, (uint16_t *)&handle->dev_cal_factors->dig_T2) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x8c, (uint16_t *)&handle->dev_cal_factors->dig_T3) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x88, &handle->dev_cal_factors->dig_T1) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x8a, (uint16_t *)&handle->dev_cal_factors->dig_T2) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x8c, (uint16_t *)&handle->dev_cal_factors->dig_T3) );
     /* bmp280 attempt to request P1-P9 calibration values from device */
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x8e, &handle->dev_cal_factors->dig_P1) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x90, (uint16_t *)&handle->dev_cal_factors->dig_P2) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x92, (uint16_t *)&handle->dev_cal_factors->dig_P3) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x94, (uint16_t *)&handle->dev_cal_factors->dig_P4) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x96, (uint16_t *)&handle->dev_cal_factors->dig_P5) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x98, (uint16_t *)&handle->dev_cal_factors->dig_P6) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x9a, (uint16_t *)&handle->dev_cal_factors->dig_P7) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x9c, (uint16_t *)&handle->dev_cal_factors->dig_P8) );
-    ESP_ERROR_CHECK( bmp280_i2c_read_halfword_from(handle, 0x9e, (uint16_t *)&handle->dev_cal_factors->dig_P9) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x8e, &handle->dev_cal_factors->dig_P1) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x90, (uint16_t *)&handle->dev_cal_factors->dig_P2) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x92, (uint16_t *)&handle->dev_cal_factors->dig_P3) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x94, (uint16_t *)&handle->dev_cal_factors->dig_P4) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x96, (uint16_t *)&handle->dev_cal_factors->dig_P5) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x98, (uint16_t *)&handle->dev_cal_factors->dig_P6) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x9a, (uint16_t *)&handle->dev_cal_factors->dig_P7) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x9c, (uint16_t *)&handle->dev_cal_factors->dig_P8) );
+    ESP_ERROR_CHECK( bmp280_i2c_read_word_from(handle, 0x9e, (uint16_t *)&handle->dev_cal_factors->dig_P9) );
 
     /*
     ESP_LOGD(TAG, "Calibration data received:");

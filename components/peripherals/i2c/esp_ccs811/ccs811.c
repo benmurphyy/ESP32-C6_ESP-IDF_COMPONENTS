@@ -179,7 +179,7 @@ static inline esp_err_t ccs811_i2c_read_from(ccs811_handle_t handle, const uint8
  * @param halfword CCS811 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ccs811_i2c_read_halfword_from(ccs811_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t ccs811_i2c_read_word_from(ccs811_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -276,7 +276,7 @@ static inline esp_err_t ccs811_i2c_write(ccs811_handle_t handle, const uint8_t *
  * @param halfword CCS811 write transaction input halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ccs811_i2c_write_halfword_to(ccs811_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+static inline esp_err_t ccs811_i2c_write_word_to(ccs811_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
     const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) }; // register, lsb, msb
 
     /* validate arguments */
@@ -459,7 +459,7 @@ esp_err_t ccs811_get_baseline_register(ccs811_handle_t handle, uint16_t *const r
     ESP_ARG_CHECK( handle );
 
      /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ccs811_i2c_read_halfword_from(handle, CCS811_REG_BASELINE_RW, reg), TAG, "read baseline register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_read_word_from(handle, CCS811_REG_BASELINE_RW, reg), TAG, "read baseline register failed" );
 
     return ESP_OK;
 }
@@ -469,7 +469,7 @@ esp_err_t ccs811_set_baseline_register(ccs811_handle_t handle, const uint16_t ba
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( ccs811_i2c_write_halfword_to(handle, CCS811_REG_BASELINE_RW, baseline), TAG, "write baseline register failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write_word_to(handle, CCS811_REG_BASELINE_RW, baseline), TAG, "write baseline register failed" );
 
     return ESP_OK;
 }

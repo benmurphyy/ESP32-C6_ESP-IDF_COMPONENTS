@@ -140,8 +140,6 @@ static inline esp_err_t sgp4x_i2c_write_command(sgp4x_handle_t handle, uint16_t 
     return ESP_OK;
 }
 
-
-
 /**
  * @brief Calculates SGP4X crc8 value for 2-byte data packet.  See datasheet for details.
  *

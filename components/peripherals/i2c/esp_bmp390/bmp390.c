@@ -129,7 +129,7 @@ static inline esp_err_t bmp390_i2c_read_from(bmp390_handle_t handle, const uint8
  * @param halfword BMP390 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t bmp390_i2c_read_halfword_from(bmp390_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t bmp390_i2c_read_word_from(bmp390_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -254,19 +254,19 @@ static inline esp_err_t bmp390_get_cal_factors(bmp390_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* bmp280 attempt to request T1-T3 calibration values from device */
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x31, &handle->dev_cal_factors->dig_T1) );
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x33, &handle->dev_cal_factors->dig_T2) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x31, &handle->dev_cal_factors->dig_T1) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x33, &handle->dev_cal_factors->dig_T2) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x35, (uint8_t *)&handle->dev_cal_factors->dig_T3) );
     /* bmp280 attempt to request P1-P10 calibration values from device */
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x36, (uint16_t *)&handle->dev_cal_factors->dig_P1) );
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x38, (uint16_t *)&handle->dev_cal_factors->dig_P2) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x36, (uint16_t *)&handle->dev_cal_factors->dig_P1) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x38, (uint16_t *)&handle->dev_cal_factors->dig_P2) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x3a, (uint8_t *)&handle->dev_cal_factors->dig_P3) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x3b, (uint8_t *)&handle->dev_cal_factors->dig_P4) );
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x3c, &handle->dev_cal_factors->dig_P5) );
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x3e, &handle->dev_cal_factors->dig_P6) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x3c, &handle->dev_cal_factors->dig_P5) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x3e, &handle->dev_cal_factors->dig_P6) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x40, (uint8_t *)&handle->dev_cal_factors->dig_P7) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x41, (uint8_t *)&handle->dev_cal_factors->dig_P8) );
-    ESP_ERROR_CHECK( bmp390_i2c_read_halfword_from(handle, 0x42, (uint16_t *)&handle->dev_cal_factors->dig_P9) );
+    ESP_ERROR_CHECK( bmp390_i2c_read_word_from(handle, 0x42, (uint16_t *)&handle->dev_cal_factors->dig_P9) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x44, (uint8_t *)&handle->dev_cal_factors->dig_P10) );
     ESP_ERROR_CHECK( bmp390_i2c_read_byte_from(handle, 0x45, (uint8_t *)&handle->dev_cal_factors->dig_P11) );
 

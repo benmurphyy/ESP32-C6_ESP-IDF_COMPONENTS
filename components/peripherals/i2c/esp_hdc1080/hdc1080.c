@@ -112,7 +112,7 @@ static inline esp_err_t hdc1080_i2c_write_command(hdc1080_handle_t handle, uint8
  * @param halfword HDC1080 write transaction input halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t hdc1080_i2c_write_halfword_to(hdc1080_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+static inline esp_err_t hdc1080_i2c_write_word_to(hdc1080_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
     const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) };
 
     /* validate arguments */
@@ -132,7 +132,7 @@ static inline esp_err_t hdc1080_i2c_write_halfword_to(hdc1080_handle_t handle, c
  * @param halfword HDC1080 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t hdc1080_i2c_read_halfword_from(hdc1080_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t hdc1080_i2c_read_word_from(hdc1080_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -319,7 +319,7 @@ esp_err_t hdc1080_get_manufacturer_id_register(hdc1080_handle_t handle, uint16_t
     ESP_ARG_CHECK( handle );
 
     /* attempt to read manufacturer identifier */
-    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_halfword_from(handle, HDC1080_REG_MANUFACTURER_ID, reg), TAG, "read manufacturer identifier failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_word_from(handle, HDC1080_REG_MANUFACTURER_ID, reg), TAG, "read manufacturer identifier failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(HDC1080_CMD_DELAY_MS) );
@@ -332,7 +332,7 @@ esp_err_t hdc1080_get_device_id_register(hdc1080_handle_t handle, uint16_t *cons
     ESP_ARG_CHECK( handle );
 
     /* attempt to read device identifier */
-    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_halfword_from(handle, HDC1080_REG_DEVICE_ID, reg), TAG, "read device identifier failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_word_from(handle, HDC1080_REG_DEVICE_ID, reg), TAG, "read device identifier failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(HDC1080_CMD_DELAY_MS) );
@@ -346,7 +346,7 @@ esp_err_t hdc1080_get_configuration_register(hdc1080_handle_t handle, hdc1080_co
 
     /* attempt to read configuration register */
     uint16_t config;
-    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_halfword_from(handle, HDC1080_REG_CONFIGURATION, &config), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_read_word_from(handle, HDC1080_REG_CONFIGURATION, &config), TAG, "read configuration register failed" );
 
     /* set output parameter */
     reg->reg = config;
@@ -369,7 +369,7 @@ esp_err_t hdc1080_set_configuration_register(hdc1080_handle_t handle, const hdc1
     config.bits.reserved2 = 0;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( hdc1080_i2c_write_halfword_to(handle, HDC1080_REG_CONFIGURATION, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( hdc1080_i2c_write_word_to(handle, HDC1080_REG_CONFIGURATION, config.reg), TAG, "write configuration register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay( pdMS_TO_TICKS(HDC1080_CMD_DELAY_MS) );

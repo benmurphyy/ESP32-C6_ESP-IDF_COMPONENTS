@@ -163,7 +163,7 @@ static inline esp_err_t ens160_i2c_write_byte_to(ens160_handle_t handle, uint8_t
  * @param halfword ENS160 write transaction input halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ens160_i2c_write_halfword_to(ens160_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
+static inline esp_err_t ens160_i2c_write_word_to(ens160_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
     const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) };
 
     /* validate arguments */
@@ -210,7 +210,7 @@ static inline esp_err_t ens160_i2c_read_from(ens160_handle_t handle, const uint8
  * @param halfword ENS160 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ens160_i2c_read_halfword_from(ens160_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t ens160_i2c_read_word_from(ens160_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
@@ -452,8 +452,8 @@ esp_err_t ens160_get_compensation_registers(ens160_handle_t handle, float *const
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c temperature & humidity compensation read transactions */
-    ESP_RETURN_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_TEMP_IN_RW, &t), TAG, "read temperature compensation register failed" );
-    ESP_RETURN_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_RH_IN_RW, &h), TAG, "read humidity compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_word_from(handle, ENS160_REG_TEMP_IN_RW, &t), TAG, "read temperature compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_word_from(handle, ENS160_REG_RH_IN_RW, &h), TAG, "read humidity compensation register failed" );
 
     /* decode temperature & humidity compensation and set handle parameters */
     *temperature = ens160_decode_temperature(t);
@@ -484,8 +484,8 @@ esp_err_t ens160_set_compensation_registers(ens160_handle_t handle, const float 
     uint16_t h = ens160_encode_humidity(humidity);
 
     /* attempt i2c temperature & humidity compensation write transactions */
-    ESP_RETURN_ON_ERROR( ens160_i2c_write_halfword_to(handle, ENS160_REG_TEMP_IN_RW, t), TAG, "write temperature compensation register failed" );
-    ESP_RETURN_ON_ERROR( ens160_i2c_write_halfword_to(handle, ENS160_REG_RH_IN_RW, h), TAG, "write humidity compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_word_to(handle, ENS160_REG_TEMP_IN_RW, t), TAG, "write temperature compensation register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_write_word_to(handle, ENS160_REG_RH_IN_RW, h), TAG, "write humidity compensation register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -498,7 +498,7 @@ esp_err_t ens160_get_part_id_register(ens160_handle_t handle, uint16_t *const re
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_PART_ID_R, reg), TAG, "read part identifier register failed" );
+    ESP_RETURN_ON_ERROR( ens160_i2c_read_word_from(handle, ENS160_REG_PART_ID_R, reg), TAG, "read part identifier register failed" );
     
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(ENS160_CMD_DELAY_MS));
@@ -593,9 +593,9 @@ esp_err_t ens160_get_measurement(ens160_handle_t handle, ens160_air_quality_data
 
     /* attempt i2c data read transactions */
     ESP_GOTO_ON_ERROR( ens160_i2c_read_byte_from(handle, ENS160_REG_DATA_AQI_R, &caqi_reg.value), err, TAG, "read calculated air quality index data register for measurement failed" );
-    ESP_GOTO_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_DATA_TVOC_R, &tvoc_data), err, TAG, "read tvoc data register for measurement failed" );
-    ESP_GOTO_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_DATA_ETOH_R, &etoh_data), err, TAG, "read etoh data register for measurement failed" );
-    ESP_GOTO_ON_ERROR( ens160_i2c_read_halfword_from(handle, ENS160_REG_DATA_ECO2_R, &eco2_data), err, TAG, "read eco2 data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_word_from(handle, ENS160_REG_DATA_TVOC_R, &tvoc_data), err, TAG, "read tvoc data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_word_from(handle, ENS160_REG_DATA_ETOH_R, &etoh_data), err, TAG, "read etoh data register for measurement failed" );
+    ESP_GOTO_ON_ERROR( ens160_i2c_read_word_from(handle, ENS160_REG_DATA_ECO2_R, &eco2_data), err, TAG, "read eco2 data register for measurement failed" );
 
     /* set air quality fields */
     data->uba_aqi = ens160_get_aqi_uba_index(caqi_reg);
