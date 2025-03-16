@@ -39,7 +39,8 @@
 #include <stdbool.h>
 #include <esp_err.h>
 #include <driver/gpio.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include "mpu6050_version.h"
 
 #ifdef __cplusplus
@@ -54,6 +55,7 @@ extern "C" {
 #define I2C_MPU6050_DEV_ADDR_H                  UINT8_C(0x69)   //!< mpu6050 I2C address when AD0 = 1 or to vcc
 #define I2C_MPU6050_DEV_ADDR_L                  UINT8_C(0x68)   //!< mpu6050 I2C address when AD0 = 0 or to gnd
 
+#define I2C_XFR_TIMEOUT_MS              (500)          //!< I2C transaction timeout in milliseconds
 
 
 /*

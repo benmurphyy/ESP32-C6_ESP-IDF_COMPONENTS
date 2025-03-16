@@ -91,7 +91,7 @@
 #define MPU6050_APPSTART_DELAY_MS           UINT16_C(20)
 #define MPU6050_RESET_DELAY_MS              UINT16_C(50)
 #define MPU6050_CMD_DELAY_MS                UINT16_C(5)
-
+#define MPU6050_TX_RX_DELAY_MS              UINT16_C(10)
 /*
  * macro definitions
 */
@@ -102,6 +102,84 @@
 * static constant declarations
 */
 static const char *TAG = "mpu6050";
+
+
+/**
+ * @brief MPU6050 I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle MPU6050 device handle.
+ * @param reg_addr MPU6050 register address to read from.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mpu6050_i2c_read_from(mpu6050_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(MPU6050_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief MPU6050 I2C read byte from register address transaction.
+ * 
+ * @param handle MPU6050 device handle.
+ * @param reg_addr MPU6050 register address to read from.
+ * @param byte MPU6050 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mpu6050_i2c_read_byte_from(mpu6050_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(MPU6050_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+/**
+ * @brief MPU6050 I2C write byte to register address transaction.
+ * 
+ * @param handle MPU6050 device handle.
+ * @param reg_addr MPU6050 register address to write to.
+ * @param byte MPU6050 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mpu6050_i2c_write_byte_to(mpu6050_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
 
 static inline esp_err_t mpu6050_get_accel_sensitivity(mpu6050_handle_t handle) {
     /* validate arguments */
@@ -159,7 +237,7 @@ esp_err_t mpu6050_get_sample_rate_divider_register(mpu6050_handle_t handle, uint
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_SMPLRT_DIV_RW, reg), TAG, "read sample rate divider register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_SMPLRT_DIV_RW, reg), TAG, "read sample rate divider register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -176,7 +254,7 @@ esp_err_t mpu6050_set_sample_rate_divider_register(mpu6050_handle_t handle, cons
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_SMPLRT_DIV_RW, reg), TAG, "write sample rate divider register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_SMPLRT_DIV_RW, reg), TAG, "write sample rate divider register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -189,7 +267,7 @@ esp_err_t mpu6050_get_config_register(mpu6050_handle_t handle, mpu6050_config_re
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_CONFIG_RW, &reg->reg), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_CONFIG_RW, &reg->reg), TAG, "read configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -206,7 +284,7 @@ esp_err_t mpu6050_set_config_register(mpu6050_handle_t handle, const mpu6050_con
     config.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_CONFIG_RW, config.reg), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_CONFIG_RW, config.reg), TAG, "write configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -219,7 +297,7 @@ esp_err_t mpu6050_get_gyro_config_register(mpu6050_handle_t handle, mpu6050_gyro
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_GYRO_CONFIG_RW, &reg->reg), TAG, "read gyroscope configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_GYRO_CONFIG_RW, &reg->reg), TAG, "read gyroscope configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -236,7 +314,7 @@ esp_err_t mpu6050_set_gyro_config_register(mpu6050_handle_t handle, const mpu605
     gyro_config.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_GYRO_CONFIG_RW, gyro_config.reg), TAG, "write gyroscope configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_GYRO_CONFIG_RW, gyro_config.reg), TAG, "write gyroscope configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -252,7 +330,7 @@ esp_err_t mpu6050_get_accel_config_register(mpu6050_handle_t handle, mpu6050_acc
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_ACCEL_CONFIG_RW, &reg->reg), TAG, "read accelerometer configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_ACCEL_CONFIG_RW, &reg->reg), TAG, "read accelerometer configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -269,7 +347,7 @@ esp_err_t mpu6050_set_accel_config_register(mpu6050_handle_t handle, const mpu60
     accel_config.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_ACCEL_CONFIG_RW, accel_config.reg), TAG, "write accelerometer configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_ACCEL_CONFIG_RW, accel_config.reg), TAG, "write accelerometer configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -285,7 +363,7 @@ esp_err_t mpu6050_get_interrupt_enable_register(mpu6050_handle_t handle, mpu6050
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_INT_ENABLE_RW, &reg->reg), TAG, "read interrupt enable register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_INT_ENABLE_RW, &reg->reg), TAG, "read interrupt enable register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -302,7 +380,7 @@ esp_err_t mpu6050_set_interrupt_enable_register(mpu6050_handle_t handle, const m
     irq_enable.bits.reserved2 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_INT_ENABLE_RW, irq_enable.reg), TAG, "write interrupt enable register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_INT_ENABLE_RW, irq_enable.reg), TAG, "write interrupt enable register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -315,7 +393,7 @@ esp_err_t mpu6050_get_interrupt_pin_config_register(mpu6050_handle_t handle, mpu
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_INT_PIN_CFG_RW, &reg->reg), TAG, "read interrupt pin configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_INT_PIN_CFG_RW, &reg->reg), TAG, "read interrupt pin configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -333,7 +411,7 @@ esp_err_t mpu6050_set_interrupt_pin_config_register(mpu6050_handle_t handle, con
     irq_pin_config.bits.reserved1 = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_INT_PIN_CFG_RW, irq_pin_config.reg), TAG, "write interrupt pin configuration register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_INT_PIN_CFG_RW, irq_pin_config.reg), TAG, "write interrupt pin configuration register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -346,7 +424,7 @@ esp_err_t mpu6050_get_interrupt_status_register(mpu6050_handle_t handle, mpu6050
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_INT_STATUS_R, &reg->reg), TAG, "read interrupt status register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_INT_STATUS_R, &reg->reg), TAG, "read interrupt status register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -359,7 +437,7 @@ esp_err_t mpu6050_get_power_management1_register(mpu6050_handle_t handle, mpu605
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_PWR_MGMT_1_RW, &reg->reg), TAG, "read power management 1 register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_PWR_MGMT_1_RW, &reg->reg), TAG, "read power management 1 register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -376,7 +454,7 @@ esp_err_t mpu6050_set_power_management1_register(mpu6050_handle_t handle, const 
     power_management1.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_PWR_MGMT_1_RW, power_management1.reg), TAG, "write power management 1 register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_PWR_MGMT_1_RW, power_management1.reg), TAG, "write power management 1 register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -389,7 +467,7 @@ esp_err_t mpu6050_get_power_management2_register(mpu6050_handle_t handle, mpu605
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_PWR_MGMT_2_RW, &reg->reg), TAG, "read power management 2 register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_PWR_MGMT_2_RW, &reg->reg), TAG, "read power management 2 register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -402,7 +480,7 @@ esp_err_t mpu6050_set_power_management2_register(mpu6050_handle_t handle, const 
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_PWR_MGMT_2_RW, reg.reg), TAG, "write power management 2 register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_PWR_MGMT_2_RW, reg.reg), TAG, "write power management 2 register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -415,7 +493,7 @@ esp_err_t mpu6050_get_who_am_i_register(mpu6050_handle_t handle, mpu6050_who_am_
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MPU6050_REG_WHO_AM_I_R, &reg->reg), TAG, "read who am i register failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_byte_from(handle, MPU6050_REG_WHO_AM_I_R, &reg->reg), TAG, "read who am i register failed" );
 
     /* delay task before i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_CMD_DELAY_MS));
@@ -643,7 +721,6 @@ static inline esp_err_t mpu6050_get_raw_motion(mpu6050_handle_t handle, mpu6050_
     esp_err_t   ret             = ESP_OK;
     uint64_t    start_time      = 0;
     bool        data_is_ready   = false;
-    const bit8_uint8_buffer_t tx = { MPU6050_REG_ACCEL_XOUT_H_R };
     uint8_t     rx[14]          = { 0 };
     
     /* validate arguments */
@@ -666,7 +743,7 @@ static inline esp_err_t mpu6050_get_raw_motion(mpu6050_handle_t handle, mpu6050_
     } while (data_is_ready == false);
 
     /* attempt i2c accelerometer, temperature, and gyroscope data read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, sizeof(rx), I2C_XFR_TIMEOUT_MS), TAG, "read accelerometer, temperature, and gyroscope data registers failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_read_from(handle, MPU6050_REG_ACCEL_XOUT_H_R, rx, sizeof(rx)), TAG, "read accelerometer, temperature, and gyroscope data registers failed" );
     
     /* set accelerometer raw data parameter */
     accel_data->x_axis = (int16_t)((rx[0] << 8) | (rx[1]));
@@ -740,7 +817,7 @@ esp_err_t mpu6050_reset(mpu6050_handle_t handle) {
     pwr_mgmnt.bits.reset_enabled = true;
 
     /* attempt to write power management 1 register */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MPU6050_REG_PWR_MGMT_1_RW, pwr_mgmnt.reg), TAG, "write power management 1 register for reset failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_PWR_MGMT_1_RW, pwr_mgmnt.reg), TAG, "write power management 1 register for reset failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_RESET_DELAY_MS));
