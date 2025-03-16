@@ -38,7 +38,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <esp_err.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include "ak8975_version.h"
 
 #ifdef __cplusplus
@@ -55,6 +56,7 @@ extern "C" {
 #define I2C_AK8975_DEV_ADDR_CAD1_1_CAD0_0   UINT8_C(0x0e)   //!< ak8975 I2C address when CAD1 is high and CAD0 is low
 #define I2C_AK8975_DEV_ADDR_CAD1_1_CAD0_1   UINT8_C(0x0f)   //!< ak8975 I2C address when CAD1 and CAD0 are high
 
+#define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
 
 /*
  * AK8975 macro definitions

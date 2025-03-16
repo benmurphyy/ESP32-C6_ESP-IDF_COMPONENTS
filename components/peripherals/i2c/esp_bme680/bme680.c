@@ -29,6 +29,8 @@
  * Ported from esp-open-rtos
  * 
  * https://github.com/boschsensortec/BME68x_SensorAPI/blob/master/bme68x.c
+ * 
+ * iaq: https://github.com/3KUdelta/heltec_wifi_kit_32_BME680/blob/master/Wifi_Kit_32_BME680.ino
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -121,7 +123,7 @@ static const char *TAG = "bme680";
 
 
 /**
- * @brief I2C read from register address transaction.  This is a write and then read process.
+ * @brief BME680 I2C read from register address transaction.  This is a write and then read process.
  * 
  * @param handle BME680 device handle.
  * @param reg_addr BME680 register address to read from.

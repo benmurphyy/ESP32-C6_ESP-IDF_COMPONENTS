@@ -40,7 +40,8 @@
 #include <esp_types.h>
 #include <esp_event.h>
 #include <esp_err.h>
-#include <i2c_master_ext.h>
+#include <driver/i2c_master.h>
+#include <type_utils.h>
 #include <driver/gpio.h>
 #include "as3935_version.h"
 
@@ -58,6 +59,8 @@ extern "C" {
 #define I2C_AS3935_DEV_ADDR_1            UINT8_C(0x01)   //!< as3935 I2C address when ADD1 pin floating/low and ADD0 pin high
 #define I2C_AS3935_DEV_ADDR_2            UINT8_C(0x02)   //!< as3935 I2C address when ADD0 pin floating/low and ADD1 pin high
 #define I2C_AS3935_DEV_ADDR_3            UINT8_C(0x03)   //!< as3935 I2C address when ADD0 and ADD1 pins high
+
+#define I2C_XFR_TIMEOUT_MS              (500)          //!< I2C transaction timeout in milliseconds
 
 /* AS3935 registers */
 #define AS3935_REG_00                UINT8_C(0x00)   //!< as3935 I2C register to access AFE gain boost and power-down
@@ -79,6 +82,7 @@ extern "C" {
 #define AS3935_STARTUP_DELAY_MS      (2)            //!< as3935 I2C LCO start-up delay in milliseconds
 #define AS3935_INTERRUPT_DELAY_MS    (2)            //!< as3935 I2C interrupt delay in milliseconds
 #define AS3935_CALIBRATION_DELAY_MS  (2)            //!< as3935 I2C calibration delay in milliseconds for RC oscillators
+#define AS3935_TX_RX_DELAY_MS           UINT16_C(10)
 
 /**
  * @brief declare of AS3935 monitor event base.

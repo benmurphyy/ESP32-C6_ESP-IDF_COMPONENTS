@@ -77,7 +77,64 @@ static const char *TAG = "as3935";
  * functions and subroutines
 */
 
-static inline uint8_t as3935_convert_lightning_distance_km(as3935_lightning_distances_t distance) {
+
+/**
+ * @brief AS3935 I2C read byte from register address transaction.
+ * 
+ * @param handle AS3935 device handle.
+ * @param reg_addr AS3935 register address to read from.
+ * @param byte AS3935 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t as3935_i2c_read_byte_from(as3935_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(AS3935_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+/**
+ * @brief AS3935 I2C write byte to register address transaction.
+ * 
+ * @param handle AS3935 device handle.
+ * @param reg_addr AS3935 register address to write to.
+ * @param byte AS3935 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t as3935_i2c_write_byte_to(as3935_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
+/**
+ * @brief Converts lightning distance enumerator to a distance in kilometers.
+ * 
+ * @param distance AS3935 lightning distance enumerator.
+ * @return uint8_t Lightning distance in kilometers.
+ */
+static inline uint8_t as3935_convert_distance_km(as3935_lightning_distances_t distance) {
     switch(distance) {
         case AS3935_L_DISTANCE_OVERHEAD:
             return 0;
@@ -330,7 +387,7 @@ esp_err_t as3935_monitor_remove_handler(as3935_monitor_handle_t monitor_handle, 
 esp_err_t as3935_get_0x00_register(as3935_handle_t handle, as3935_0x00_register_t *const reg) {
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_00, &reg->reg) );
+    ESP_ERROR_CHECK( as3935_i2c_read_byte_from(handle, AS3935_REG_00, &reg->reg) );
 
     return ESP_OK;
 }
@@ -341,7 +398,7 @@ esp_err_t as3935_set_0x00_register(as3935_handle_t handle, const as3935_0x00_reg
     as3935_0x00_register_t reg_0x00 = { .reg = reg.reg };
     reg_0x00.bits.reserved = 0;
 
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_REG_00, reg_0x00.reg) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_REG_00, reg_0x00.reg) );
 
     return ESP_OK;
 }
@@ -349,7 +406,7 @@ esp_err_t as3935_set_0x00_register(as3935_handle_t handle, const as3935_0x00_reg
 esp_err_t as3935_get_0x01_register(as3935_handle_t handle, as3935_0x01_register_t *const reg) {
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_01, &reg->reg) );
+    ESP_ERROR_CHECK( as3935_i2c_read_byte_from(handle, AS3935_REG_01, &reg->reg) );
 
     return ESP_OK;
 }
@@ -360,7 +417,7 @@ esp_err_t as3935_set_0x01_register(as3935_handle_t handle, const as3935_0x01_reg
     as3935_0x01_register_t reg_0x01 = { .reg = reg.reg };
     reg_0x01.bits.reserved = 0;
 
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_REG_01, reg_0x01.reg) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_REG_01, reg_0x01.reg) );
 
     return ESP_OK;
 }
@@ -368,7 +425,7 @@ esp_err_t as3935_set_0x01_register(as3935_handle_t handle, const as3935_0x01_reg
 esp_err_t as3935_get_0x02_register(as3935_handle_t handle, as3935_0x02_register_t *const reg) {
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_02, &reg->reg) );
+    ESP_ERROR_CHECK( as3935_i2c_read_byte_from(handle, AS3935_REG_02, &reg->reg) );
 
     return ESP_OK;
 }
@@ -379,7 +436,7 @@ esp_err_t as3935_set_0x02_register(as3935_handle_t handle, const as3935_0x02_reg
     as3935_0x02_register_t reg_0x02 = { .reg = reg.reg };
     reg_0x02.bits.reserved = 0;
 
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_REG_02, reg_0x02.reg) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_REG_02, reg_0x02.reg) );
 
     return ESP_OK;
 }
@@ -394,7 +451,7 @@ esp_err_t as3935_get_0x03_register(as3935_handle_t handle, as3935_0x03_register_
     // retry to overcome unexpected nack
     do {
         /* attempt i2c read transaction */
-        ret = i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_03, &reg->reg);
+        ret = as3935_i2c_read_byte_from(handle, AS3935_REG_03, &reg->reg);
 
         /* delay before next retry attempt */
         vTaskDelay(pdMS_TO_TICKS(1));
@@ -412,7 +469,7 @@ esp_err_t as3935_set_0x03_register(as3935_handle_t handle, const as3935_0x03_reg
     as3935_0x03_register_t reg_0x03 = { .reg = reg.reg };
     reg_0x03.bits.reserved = 0;
 
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_REG_03, reg_0x03.reg) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_REG_03, reg_0x03.reg) );
 
     return ESP_OK;
 }
@@ -420,7 +477,7 @@ esp_err_t as3935_set_0x03_register(as3935_handle_t handle, const as3935_0x03_reg
 esp_err_t as3935_get_0x08_register(as3935_handle_t handle, as3935_0x08_register_t *const reg) {
     ESP_ARG_CHECK( handle );
 
-    ESP_ERROR_CHECK( i2c_master_bus_read_uint8(handle->i2c_handle, AS3935_REG_08, &reg->reg) );
+    ESP_ERROR_CHECK( as3935_i2c_read_byte_from(handle, AS3935_REG_08, &reg->reg) );
 
     return ESP_OK;
 }
@@ -431,7 +488,7 @@ esp_err_t as3935_set_0x08_register(as3935_handle_t handle, const as3935_0x08_reg
     as3935_0x08_register_t reg_0x08 = { .reg = reg.reg };
     reg_0x08.bits.reserved = 0;
 
-    ESP_ERROR_CHECK( i2c_master_bus_write_uint8(handle->i2c_handle, AS3935_REG_08, reg_0x08.reg) );
+    ESP_ERROR_CHECK( as3935_i2c_write_byte_to(handle, AS3935_REG_08, reg_0x08.reg) );
 
     return ESP_OK;
 }
@@ -923,7 +980,7 @@ esp_err_t as3935_get_lightning_distance_km(as3935_handle_t handle, uint8_t *cons
 
     ESP_ERROR_CHECK( as3935_get_lightning_distance(handle, &val) );
 
-    *distance = as3935_convert_lightning_distance_km(val);
+    *distance = as3935_convert_distance_km(val);
 
     return ESP_OK;
 }
