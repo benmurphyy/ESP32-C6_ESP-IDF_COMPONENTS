@@ -39,7 +39,6 @@
 #include <esp_log.h>
 #include <esp_check.h>
 #include <esp_timer.h>
-#include <i2c_master_ext.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
@@ -79,6 +78,7 @@
 #define MMC56X3_DATA_READY_DELAY_MS     UINT16_C(1)            //!< mmc56x3 1ms when checking data ready in a loop
 #define MMC56X3_DATA_POLL_TIMEOUT_MS    UINT16_C(100)          //!< mmc56x3 100ms timeout when making a measurement
 #define MMC56X3_CMD_DELAY_MS            UINT16_C(5)
+#define MMC56X3_TX_RX_DELAY_MS          UINT16_C(10)
 
 /*
  * macro definitions
@@ -95,12 +95,91 @@ static const char *TAG = "mmc56x3";
 * functions and subroutines
 */
 
+
+
+/**
+ * @brief MMC56X3 I2C read from register address transaction.  This is a write and then read process.
+ * 
+ * @param handle MMC56X3 device handle.
+ * @param reg_addr MMC56X3 register address to read from.
+ * @param buffer Buffer to store results from read transaction.
+ * @param size Length of buffer to store results from read transaction.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mmc56x3_i2c_read_from(mmc56x3_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(MMC56X3_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    return ESP_OK;
+}
+
+/**
+ * @brief MMC56X3 I2C read byte from register address transaction.
+ * 
+ * @param handle MMC56X3 device handle.
+ * @param reg_addr MMC56X3 register address to read from.
+ * @param byte MMC56X3 read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mmc56x3_i2c_read_byte_from(mmc56x3_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(MMC56X3_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+/**
+ * @brief MMC56X3 I2C write byte to register address transaction.
+ * 
+ * @param handle MMC56X3 device handle.
+ * @param reg_addr MMC56X3 register address to write to.
+ * @param byte MMC56X3 write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mmc56x3_i2c_write_byte_to(mmc56x3_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+                        
+    return ESP_OK;
+}
+
 esp_err_t mmc56x3_get_status_register(mmc56x3_handle_t handle, mmc56x3_status_register_t *const reg) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MMC56X3_REG_STATUS_1_R, &reg->reg), TAG, "mmc56x3 read status register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_read_byte_from(handle, MMC56X3_REG_STATUS_1_R, &reg->reg), TAG, "mmc56x3 read status register failed" );
     
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -117,7 +196,7 @@ esp_err_t mmc56x3_set_control0_register(mmc56x3_handle_t handle, const mmc56x3_c
     control0.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_CONTROL_0_W, control0.reg), TAG, "write control 0 register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_CONTROL_0_W, control0.reg), TAG, "write control 0 register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -132,7 +211,7 @@ esp_err_t mmc56x3_set_control1_register(mmc56x3_handle_t handle, const mmc56x3_c
     mmc56x3_control1_register_t control1 = { .reg = reg.reg };
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_CONTROL_1_W, control1.reg), TAG, "write control 1 register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_CONTROL_1_W, control1.reg), TAG, "write control 1 register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -149,7 +228,7 @@ esp_err_t mmc56x3_set_control2_register(mmc56x3_handle_t handle, const mmc56x3_c
     control2.bits.reserved = 0;
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_CONTROL_2_W, control2.reg), TAG, "write control 2 register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_CONTROL_2_W, control2.reg), TAG, "write control 2 register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -162,7 +241,7 @@ esp_err_t mmc56x3_get_product_id_register(mmc56x3_handle_t handle, uint8_t *cons
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MMC56X3_REG_PRODUCT_ID_R, reg), TAG, "mmc56x3 read product identifier register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_read_byte_from(handle, MMC56X3_REG_PRODUCT_ID_R, reg), TAG, "mmc56x3 read product identifier register failed" );
     
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -272,7 +351,7 @@ esp_err_t mmc56x3_get_temperature(mmc56x3_handle_t handle, float *const temperat
     } while (data_is_ready == false);
 
     /* attempt i2c data read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MMC56X3_REG_TOUT_R, &temp_reg), err, TAG, "read temperature failed" );
+    ESP_GOTO_ON_ERROR( mmc56x3_i2c_read_byte_from(handle, MMC56X3_REG_TOUT_R, &temp_reg), err, TAG, "read temperature failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -292,7 +371,6 @@ esp_err_t mmc56x3_get_magnetic_axes(mmc56x3_handle_t handle, mmc56x3_magnetic_ax
     uint64_t                        start_time      = 0;
     bool                            data_is_ready   = false;
     mmc56x3_control0_register_t     ctrl0;
-    const bit8_uint8_buffer_t       tx = { MMC56X3_REG_XOUT_0_R };
     bit72_uint8_buffer_t            rx = { 0 };
 
     /* validate arguments */
@@ -324,7 +402,7 @@ esp_err_t mmc56x3_get_magnetic_axes(mmc56x3_handle_t handle, mmc56x3_magnetic_ax
     } while (data_is_ready == false);
 
     /* attempt i2c data write-read transactions */
-    ESP_GOTO_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT72_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), err, TAG, "read magnetic axes failed" );
+    ESP_GOTO_ON_ERROR( mmc56x3_i2c_read_from(handle, MMC56X3_REG_XOUT_0_R, rx, BIT72_UINT8_BUFFER_SIZE), err, TAG, "read magnetic axes failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -438,7 +516,7 @@ esp_err_t mmc56x3_set_data_rate(mmc56x3_handle_t handle, const uint16_t rate) {
         uint8_t odr = 255;
 
         /* attempt i2c write transaction */
-        ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ODR_W, odr), TAG, "write odr register failed" );
+        ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ODR_W, odr), TAG, "write odr register failed" );
 
         /* delay task before next i2c transaction */
         vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -453,7 +531,7 @@ esp_err_t mmc56x3_set_data_rate(mmc56x3_handle_t handle, const uint16_t rate) {
         uint8_t odr = (uint8_t)rate;
 
         /* attempt i2c write transaction */
-        ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ODR_W, odr), TAG, "write odr register failed" );
+        ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ODR_W, odr), TAG, "write odr register failed" );
 
         /* delay task before next i2c transaction */
         vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -555,9 +633,9 @@ esp_err_t mmc56x3_set_selftest_thresholds(mmc56x3_handle_t handle, const mmc56x3
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transactions for each axis */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ST_X_TH_W, axes_data.x_axis), TAG, "write self-test x-axis threshold register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ST_Y_TH_W, axes_data.y_axis), TAG, "write self-test y-axis threshold register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ST_Z_TH_W, axes_data.z_axis), TAG, "write self-test z-axis threshold register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ST_X_TH_W, axes_data.x_axis), TAG, "write self-test x-axis threshold register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ST_Y_TH_W, axes_data.y_axis), TAG, "write self-test y-axis threshold register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ST_Z_TH_W, axes_data.z_axis), TAG, "write self-test z-axis threshold register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -570,9 +648,9 @@ esp_err_t mmc56x3_get_selftest_set_values(mmc56x3_handle_t handle, mmc56x3_selft
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transactions for each axis */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MMC56X3_REG_ST_X_SV_RW, &axes_data->x_axis), TAG, "read self-test x-axis set value register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MMC56X3_REG_ST_Y_SV_RW, &axes_data->y_axis), TAG, "read self-test y-axis set value register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_read_uint8(handle->i2c_handle, MMC56X3_REG_ST_Z_SV_RW, &axes_data->z_axis), TAG, "read self-test z-axis set value register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_read_byte_from(handle, MMC56X3_REG_ST_X_SV_RW, &axes_data->x_axis), TAG, "read self-test x-axis set value register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_read_byte_from(handle, MMC56X3_REG_ST_Y_SV_RW, &axes_data->y_axis), TAG, "read self-test y-axis set value register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_read_byte_from(handle, MMC56X3_REG_ST_Z_SV_RW, &axes_data->z_axis), TAG, "read self-test z-axis set value register failed" );
     
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));
@@ -585,9 +663,9 @@ esp_err_t mmc56x3_set_selftest_set_values(mmc56x3_handle_t handle, const mmc56x3
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transactions for each axis */
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ST_X_SV_RW, axes_data.x_axis), TAG, "write self-test x-axis set value register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ST_Y_SV_RW, axes_data.y_axis), TAG, "write self-test y-axis set value register failed" );
-    ESP_RETURN_ON_ERROR( i2c_master_bus_write_uint8(handle->i2c_handle, MMC56X3_REG_ST_Z_SV_RW, axes_data.z_axis), TAG, "write self-test z-axis set value register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ST_X_SV_RW, axes_data.x_axis), TAG, "write self-test x-axis set value register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ST_Y_SV_RW, axes_data.y_axis), TAG, "write self-test y-axis set value register failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_i2c_write_byte_to(handle, MMC56X3_REG_ST_Z_SV_RW, axes_data.z_axis), TAG, "write self-test z-axis set value register failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MMC56X3_CMD_DELAY_MS));

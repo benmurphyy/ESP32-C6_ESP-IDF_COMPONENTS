@@ -97,13 +97,13 @@ static const uint8_t crc8_table[256]= { // CRC table
  * @return uint8_t Calculated PEC.
  */
 static inline uint8_t tbi2cxxx_calculate_pec(uint8_t *crc, uint8_t size) {
-  uint8_t data, count;
-  uint16_t remainder = 0;
-  for(count=0; count<size; ++count) {
-     data = *(crc++) ^ remainder;
-     remainder = crc8_table[data] ^ (remainder >> 8);
-  }
-  return remainder;
+    uint8_t data, count;
+    uint16_t remainder = 0;
+    for(count=0; count<size; ++count) {
+        data = *(crc++) ^ remainder;
+        remainder = crc8_table[data] ^ (remainder >> 8);
+    }
+    return remainder;
 }
 
 /**
@@ -126,7 +126,7 @@ static inline float tbi2cxxx_decode_temperature(uint16_t encoded_temperature) {
  * @param data `uint16_t` (2-byte) word read from TBI2CXXX.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t tbi2cxxx_read_word(tbi2cxxx_handle_t handle, const uint8_t reg_addr, uint16_t *const data) {
+static inline esp_err_t tbi2cxxx_i2c_read_word_from(tbi2cxxx_handle_t handle, const uint8_t reg_addr, uint16_t *const data) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit24_uint8_buffer_t      rx = { };
 
@@ -165,7 +165,7 @@ static inline esp_err_t tbi2cxxx_read_word(tbi2cxxx_handle_t handle, const uint8
  * @param data `uint16_t` (2-byte) word to write to TBI2CXXX.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t tbi2cxxx_write_word(tbi2cxxx_handle_t handle, const uint8_t reg_addr, const uint16_t data) {
+static inline esp_err_t tbi2cxxx_i2c_write_word_to(tbi2cxxx_handle_t handle, const uint8_t reg_addr, const uint16_t data) {
     bit32_uint8_buffer_t tx = { 0 };
 
     /* validate arguments */
@@ -205,7 +205,7 @@ static inline esp_err_t tbi2cxxx_erase_register(tbi2cxxx_handle_t handle, const 
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( tbi2cxxx_write_word(handle, reg_addr, 0x0000), TAG, "unable to transmit, erase register failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_i2c_write_word_to(handle, reg_addr, 0x0000), TAG, "unable to transmit, erase register failed" );
 
     return ESP_OK;
 }
@@ -279,7 +279,7 @@ esp_err_t tbi2cxxx_get_ambient_temperature(tbi2cxxx_handle_t handle, float *cons
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( tbi2cxxx_read_word(handle, TBI2CXXX_CMD_AMB_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get ambient temperature failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_i2c_read_word_from(handle, TBI2CXXX_CMD_AMB_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get ambient temperature failed" );
 
     /* validate maximum range */
     ESP_RETURN_ON_FALSE((encoded_temperature < 0x7fff), ESP_ERR_INVALID_SIZE, TAG, "received word from device is out of range, get ambient temperature failed");
@@ -297,7 +297,7 @@ esp_err_t tbi2cxxx_get_object_temperature(tbi2cxxx_handle_t handle, float *const
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( tbi2cxxx_read_word(handle, TBI2CXXX_CMD_OBJ_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get object temperature failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_i2c_read_word_from(handle, TBI2CXXX_CMD_OBJ_TEMP_R, &encoded_temperature), TAG, "unable to read word from device, get object temperature failed" );
 
     /* validate maximum range */
     ESP_RETURN_ON_FALSE((encoded_temperature < 0x7fff), ESP_ERR_INVALID_SIZE, TAG, "received word from device is out of range, get object temperature failed");
@@ -318,7 +318,7 @@ esp_err_t tbi2cxxx_get_emissivity(tbi2cxxx_handle_t handle, float *const coeffic
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( tbi2cxxx_read_word(handle, TBI2CXXX_CMD_EMIS_COEF_RW, &coefficient_e), TAG, "unable to read word from device, get emissivity failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_i2c_read_word_from(handle, TBI2CXXX_CMD_EMIS_COEF_RW, &coefficient_e), TAG, "unable to read word from device, get emissivity failed" );
 
     /* set output parameter */
     *coefficient = ((float)coefficient_e + 1.0f) / 65536.0f;
@@ -343,7 +343,7 @@ esp_err_t tbi2cxxx_set_emissivity(tbi2cxxx_handle_t handle, const float coeffici
     ESP_RETURN_ON_ERROR( tbi2cxxx_erase_register(handle, TBI2CXXX_CMD_EMIS_COEF_RW), TAG, "unable to erase register on device, set emissivity failed" );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( tbi2cxxx_write_word(handle, TBI2CXXX_CMD_EMIS_COEF_RW, coefficient_e), TAG, "unable to write word from device, set emissivity failed" );
+    ESP_RETURN_ON_ERROR( tbi2cxxx_i2c_write_word_to(handle, TBI2CXXX_CMD_EMIS_COEF_RW, coefficient_e), TAG, "unable to write word from device, set emissivity failed" );
 
     return ESP_OK;
 }
