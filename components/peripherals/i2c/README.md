@@ -32,7 +32,7 @@ ESP-IDF I2C device peripheral components supported at this time are listed as fo
 - Vishay VEML6040
 - Vishay VEML7700
 
-The above components have a dependency on the `esp_driver_i2c_ext` component that must be included in your project.  This component extends I2C master bus functionality to simplify common I2C transactions, it includes transmit and receive buffers of various sizes, and byte manipulation features.
+The above components have a dependency on the `esp_type_utils` component that must be included in your project.  This component includes transmit and receive buffers of various sizes, and byte manipulation features.
 
 Components are developed when needed for product development and/or prototyping purposes, and shared with the ESP32 community for ESP-IDF developers.  Custom component development is available upon request, please contact me directly, and I would be happy to discuss the details of your component needs.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 

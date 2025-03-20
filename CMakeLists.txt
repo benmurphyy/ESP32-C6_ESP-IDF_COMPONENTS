@@ -9,7 +9,7 @@ list(APPEND EXTRA_COMPONENT_DIRS
 
                     "components/peripherals/adc/esp_s12sd"
 
-                    "components/peripherals/i2c/esp_driver_i2c_ext"
+                    #"components/peripherals/i2c/esp_driver_i2c_ext"
                     "components/peripherals/i2c/esp_ahtxx"
                     "components/peripherals/i2c/esp_ak8975"
                     "components/peripherals/i2c/esp_as3935"

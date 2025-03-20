@@ -63,7 +63,7 @@
 #include <freertos/task.h>
 
 /* components */
-#include <i2c_master_ext.h>
+//#include <i2c_master_ext.h>
 #include <nvs_ext.h>
 
 /* i2c component tasks */
@@ -351,10 +351,10 @@ static inline void i2c0_component_example_start(const i2c_components_t component
 /**
  * @brief Scans I2C master bus 0 for i2c devices and prints each device address when detected.
  */
-static inline esp_err_t i2c0_device_scan(void) {
-    ESP_LOGI(APP_TAG, "Scanning I2C master bus 0 for I2C devices..");
-    return i2c_master_bus_detect_devices(i2c0_bus_hdl);
-}
+//static inline esp_err_t i2c0_device_scan(void) {
+//    ESP_LOGI(APP_TAG, "Scanning I2C master bus 0 for I2C devices..");
+//    return i2c_master_bus_detect_devices(i2c0_bus_hdl);
+//}
 
 /**
  * @brief Main application entry point.

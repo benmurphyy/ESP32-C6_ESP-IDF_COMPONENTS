@@ -38,12 +38,13 @@ component_list = [
                   # adc peripherals 
                   Component(name="esp_s12sd", header_name="s12sd", relative_path="peripherals\\adc\\esp_s12sd"),
                   # i2c peripherals
-                  Component(name="esp_driver_i2c_ext", header_name="i2c_master_ext", relative_path="peripherals\\i2c\\esp_driver_i2c_ext"),
+                  #Component(name="esp_driver_i2c_ext", header_name="i2c_master_ext", relative_path="peripherals\\i2c\\esp_driver_i2c_ext"),
                   Component(name="esp_ahtxx", header_name="ahtxx", relative_path="peripherals\\i2c\\esp_ahtxx"),
                   Component(name="esp_ak8975", header_name="ak8975", relative_path="peripherals\\i2c\\esp_ak8975"),
                   Component(name="esp_as3935", header_name="as3935", relative_path="peripherals\\i2c\\esp_as3935"),
                   Component(name="esp_as7341", header_name="as7341", relative_path="peripherals\\i2c\\esp_as7341"),
                   Component(name="esp_bh1750", header_name="bh1750", relative_path="peripherals\\i2c\\esp_bh1750"),
+                  Component(name="esp_bme680", header_name="bme680", relative_path="peripherals\\i2c\\esp_bme680"),
                   Component(name="esp_bmp280", header_name="bmp280", relative_path="peripherals\\i2c\\esp_bmp280"),
                   Component(name="esp_bmp390", header_name="bmp390", relative_path="peripherals\\i2c\\esp_bmp390"),
                   Component(name="esp_ccs811", header_name="ccs811", relative_path="peripherals\\i2c\\esp_ccs811"),
