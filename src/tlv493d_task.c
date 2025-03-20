@@ -41,11 +41,11 @@ void i2c0_tlv493d_task( void *pvParameters ) {
     TickType_t           last_wake_time   = xTaskGetTickCount ();
     //
     // initialize i2c device configuration
-    i2c_tlv493d_config_t dev_cfg          = I2C_TLV493D_CONFIG_DEFAULT;
-    i2c_tlv493d_handle_t dev_hdl;
+    tlv493d_config_t dev_cfg          = I2C_TLV493D_CONFIG_DEFAULT;
+    tlv493d_handle_t dev_hdl;
     //
     // init device
-    i2c_tlv493d_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    tlv493d_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
         ESP_LOGE(APP_TAG, "tlv493d handle init failed");
         assert(dev_hdl);
@@ -56,8 +56,8 @@ void i2c0_tlv493d_task( void *pvParameters ) {
         ESP_LOGI(APP_TAG, "######################## TLV493D - START #########################");
         //
         // handle sensor
-        i2c_tlv493d_data_t data;
-        esp_err_t result = i2c_tlv493d_get_data(dev_hdl, &data);
+        tlv493d_data_t data;
+        esp_err_t result = tlv493d_get_data(dev_hdl, &data);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "tlv493d device read failed (%s)", esp_err_to_name(result));
         } else {
@@ -73,6 +73,6 @@ void i2c0_tlv493d_task( void *pvParameters ) {
     }
     //
     // free resources
-    i2c_tlv493d_delete( dev_hdl );
+    tlv493d_delete( dev_hdl );
     vTaskDelete( NULL );
 }

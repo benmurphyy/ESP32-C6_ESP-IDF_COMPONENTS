@@ -303,6 +303,40 @@ esp_err_t i2c_master_bus_write_uint16(i2c_master_dev_handle_t handle, const uint
     return ESP_OK;
 }
 
+esp_err_t i2c_master_read_byte_from(i2c_master_dev_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit8_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
+
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(I2C_TX_RX_DELAY_MS));
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+
+    /* set output parameter */
+    *byte = rx[0];
+
+    return ESP_OK;
+}
+
+esp_err_t i2c_master_write_byte_to(i2c_master_dev_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
+    const bit16_uint8_buffer_t tx = { reg_addr, byte };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write to failed" );
+                        
+    return ESP_OK;
+}
+
 const char* i2c_master_ext_get_fw_version(void) {
     return I2C_MASTER_EXT_FW_VERSION_STR;
 }

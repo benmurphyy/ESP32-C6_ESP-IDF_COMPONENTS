@@ -139,14 +139,14 @@ static inline esp_err_t max30105_i2c_read_byte_from(max30105_handle_t handle, co
  * @param byte MAX30105 write transaction input byte.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t max30105_i2c_write_byte_to(max30105_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+static inline esp_err_t max30105_i2c_write_byte_to(max30105_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write to failed" );
                         
     return ESP_OK;
 }

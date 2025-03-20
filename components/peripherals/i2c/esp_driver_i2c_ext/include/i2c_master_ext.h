@@ -54,6 +54,7 @@ extern "C" {
 
 #define I2C_XFR_TIMEOUT_MS  (500)          //!< I2C transaction timeout in milliseconds
 
+#define I2C_TX_RX_DELAY_MS  (10)          //!< delay after I2C write transaction in milliseconds
 
 /*
 * I2C master extension function and subroutine declarations
@@ -235,6 +236,27 @@ esp_err_t i2c_master_bus_write_uint8(i2c_master_dev_handle_t handle, const uint8
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t i2c_master_bus_write_uint16(i2c_master_dev_handle_t handle, const uint8_t reg_addr, const uint16_t data);
+
+
+/**
+ * @brief I2C read byte from register address transaction.
+ * 
+ * @param handle device handle.
+ * @param reg_addr register address to read from.
+ * @param byte read transaction return byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t i2c_master_read_byte_from(i2c_master_dev_handle_t handle, const uint8_t reg_addr, uint8_t *const byte);
+
+/**
+ * @brief I2C write byte to register address transaction.
+ * 
+ * @param handle device handle.
+ * @param reg_addr register address to write to.
+ * @param byte write transaction input byte.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t i2c_master_write_byte_to(i2c_master_dev_handle_t handle, const uint8_t reg_addr, const uint8_t byte);
 
 /**
  * @brief Converts `i2c_master_ext` firmware version numbers (major, minor, patch) into a string.
