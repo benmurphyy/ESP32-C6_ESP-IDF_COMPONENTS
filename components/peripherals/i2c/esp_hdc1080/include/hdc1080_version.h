@@ -48,9 +48,9 @@ extern "C" {
 /** Major version number (X.x.x) */
 #define HDC1080_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define HDC1080_FW_VERSION_MINOR 1
+#define HDC1080_FW_VERSION_MINOR 2
 /** Patch version number (x.x.X) */
-#define HDC1080_FW_VERSION_PATCH 8
+#define HDC1080_FW_VERSION_PATCH 0
 
 
 /**

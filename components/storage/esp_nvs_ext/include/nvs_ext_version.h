@@ -47,9 +47,9 @@ extern "C" {
 /** Major version number (X.x.x) */
 #define NVS_EXT_FW_VERSION_MAJOR 1
 /** Minor version number (x.X.x) */
-#define NVS_EXT_FW_VERSION_MINOR 1
+#define NVS_EXT_FW_VERSION_MINOR 2
 /** Patch version number (x.x.X) */
-#define NVS_EXT_FW_VERSION_PATCH 8
+#define NVS_EXT_FW_VERSION_PATCH 0
 
 
 /**
