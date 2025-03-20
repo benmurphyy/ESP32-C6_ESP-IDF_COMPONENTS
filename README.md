@@ -23,7 +23,7 @@ The folder structure for components, and associated example, are outlined as fol
 |  |  |--adc
 |  |  |--i2c
 |  |  |  |
-|  |  |  |--esp_bmp_280
+|  |  |  |--esp_bmp280
 |  |  |  |  |--documentation
 |  |  |  |      |- BMP280 Datasheet.pdf
 |  |  |  |  |--include
@@ -97,7 +97,7 @@ Supported drivers include the following device peripherals:
 - I2C: AMS AS3935 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as3935>)
 - I2C: OSRAM AS7341 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as7341>)
 - I2C: ROHM BH1750FVI (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bh1750>)
-- I2C: Bosch BME680 - Work in Progress, Coming Soon (waiting for sensor to arrive)!!
+- I2C: Bosch BME680 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bme680>)
 - I2C: Bosch BMP280 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp280>)
 - I2C: Bosch BMP390 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp390>)
 - I2C: ScioSense CCS811 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ccs811>)
