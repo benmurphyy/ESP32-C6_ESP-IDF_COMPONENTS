@@ -98,7 +98,7 @@
 
 
 /**
- * @brief I2C component examples enumerator.
+ * @brief I2C components examples enumerator.
  */
 typedef enum i2c_components_tag {
     I2C_COMPONENT_AHTXX,
@@ -126,14 +126,14 @@ typedef enum i2c_components_tag {
 } i2c_components_t;
 
 /**
- * @brief OWB component examples enumerator.
+ * @brief OWB components examples enumerator.
  */
 typedef enum owb_components_tag {
     OWB_COMPONENT_DS18B20,
 } owb_components_t;
 
 /**
- * @brief SPI component examples enumerator.
+ * @brief SPI components examples enumerator.
  */
 typedef enum spi_components_tag {
     SPI_COMPONENT_MAX31865,
@@ -155,6 +155,36 @@ bool                     owb0_component_tasked = false;
 spi_bus_config_t         spi1_bus_cfg = SPI1_MASTER_CONFIG_DEFAULT;
 spi_device_handle_t      spi1_dev_hdl;
 bool                     spi1_component_tasked = false;
+
+esp_err_t i2c_master_bus_detect_devices(i2c_master_bus_handle_t handle) {
+    const uint16_t probe_timeout_ms = 50; // timeout in milliseconds
+    uint8_t address;
+
+    printf("     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f\r\n");
+
+    for (int i = 0; i < 128; i += 16) {
+        printf("%02x: ", i);
+
+        for (int j = 0; j < 16; j++) {
+            fflush(stdout);
+            
+            address = i + j;
+
+            esp_err_t ret = i2c_master_probe(handle, address, probe_timeout_ms);
+
+            if (ret == ESP_OK) {
+                printf("%02x ", address);
+            } else if (ret == ESP_ERR_TIMEOUT) {
+                printf("UU ");
+            } else {
+                printf("-- ");
+            }
+        }
+        printf("\r\n");
+    }
+
+    return ESP_OK; 
+}
 
 /**
  * @brief Creates a task pinned to the application core (1) by task function
@@ -351,10 +381,10 @@ static inline void i2c0_component_example_start(const i2c_components_t component
 /**
  * @brief Scans I2C master bus 0 for i2c devices and prints each device address when detected.
  */
-//static inline esp_err_t i2c0_device_scan(void) {
-//    ESP_LOGI(APP_TAG, "Scanning I2C master bus 0 for I2C devices..");
-//    return i2c_master_bus_detect_devices(i2c0_bus_hdl);
-//}
+static inline esp_err_t i2c0_device_scan(void) {
+    ESP_LOGI(APP_TAG, "Scanning I2C master bus 0 for I2C devices..");
+    return i2c_master_bus_detect_devices(i2c0_bus_hdl);
+}
 
 /**
  * @brief Main application entry point.
@@ -392,7 +422,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
     //i2c0_component_example_start(I2C_COMPONENT_AS3935);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
-    i2c0_component_example_start(I2C_COMPONENT_BME680);
+    //i2c0_component_example_start(I2C_COMPONENT_BME680);
     //i2c0_component_example_start(I2C_COMPONENT_BMP280);
     //i2c0_component_example_start(I2C_COMPONENT_BMP390);
     //i2c0_component_example_start(I2C_COMPONENT_CCS811);
@@ -403,7 +433,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_MLX90614);
     //i2c0_component_example_start(I2C_COMPONENT_MMC56X3);
     //i2c0_component_example_start(I2C_COMPONENT_MPU6050);
-    //i2c0_component_example_start(I2C_COMPONENT_SGP4X);
+    i2c0_component_example_start(I2C_COMPONENT_SGP4X);
     //i2c0_component_example_start(I2C_COMPONENT_SHT4X);
     //i2c0_component_example_start(I2C_COMPONENT_SSD1306);
     //i2c0_component_example_start(I2C_COMPONENT_TLV493D);

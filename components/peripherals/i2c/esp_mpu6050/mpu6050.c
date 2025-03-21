@@ -86,7 +86,7 @@
 
 
 #define MPU6050_DATA_READY_DELAY_MS         UINT16_C(1)
-#define MPU6050_DATA_POLL_TIMEOUT_MS        UINT16_C(50)
+#define MPU6050_DATA_POLL_TIMEOUT_MS        UINT16_C(500)
 #define MPU6050_POWERUP_DELAY_MS            UINT16_C(100)
 #define MPU6050_APPSTART_DELAY_MS           UINT16_C(20)
 #define MPU6050_RESET_DELAY_MS              UINT16_C(50)
@@ -119,14 +119,7 @@ static inline esp_err_t mpu6050_i2c_read_from(mpu6050_handle_t handle, const uin
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(MPU6050_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "mpu6050_i2c_read_from failed" );
 
     return ESP_OK;
 }
@@ -146,14 +139,7 @@ static inline esp_err_t mpu6050_i2c_read_byte_from(mpu6050_handle_t handle, cons
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(MPU6050_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "mpu6050_i2c_read_byte_from failed" );
 
     /* set output parameter */
     *byte = rx[0];
@@ -169,14 +155,14 @@ static inline esp_err_t mpu6050_i2c_read_byte_from(mpu6050_handle_t handle, cons
  * @param byte MPU6050 write transaction input byte.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t mpu6050_i2c_write_byte_to(mpu6050_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+static inline esp_err_t mpu6050_i2c_write_byte_to(mpu6050_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "mpu6050_i2c_write_byte_to, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -811,13 +797,13 @@ esp_err_t mpu6050_reset(mpu6050_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt to read power management 1 register */
-    ESP_RETURN_ON_ERROR( mpu6050_get_power_management1_register(handle, &pwr_mgmnt), TAG, "unable to remove device from i2c master bus, reset failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_get_power_management1_register(handle, &pwr_mgmnt), TAG, "unable to get power management 1 register, reset failed" );
 
     /* set power management 1 register to reset device */
     pwr_mgmnt.bits.reset_enabled = true;
 
     /* attempt to write power management 1 register */
-    ESP_RETURN_ON_ERROR( mpu6050_i2c_write_byte_to(handle, MPU6050_REG_PWR_MGMT_1_RW, pwr_mgmnt.reg), TAG, "write power management 1 register for reset failed" );
+    ESP_RETURN_ON_ERROR( mpu6050_set_power_management1_register(handle, pwr_mgmnt), TAG, "unable to set power management 1 register, reset failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(MPU6050_RESET_DELAY_MS));

@@ -128,8 +128,9 @@ static inline esp_err_t sgp4x_i2c_write(sgp4x_handle_t handle, const uint8_t *bu
  * @param reg_addr SGP4X command register address to write to.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t sgp4x_i2c_write_command(sgp4x_handle_t handle, uint16_t reg_addr) {
-    const bit16_uint8_buffer_t tx = { (uint8_t)(reg_addr & 0xff), (uint8_t)((reg_addr >> 8) & 0xff) }; // lsb, msb
+static inline esp_err_t sgp4x_i2c_write_command(sgp4x_handle_t handle, const uint16_t reg_addr) {
+    const bytes_to_uint16_t   cmd = { .value = reg_addr };
+    const bit16_uint8_buffer_t tx = { cmd.bytes[1], cmd.bytes[0] };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
@@ -297,7 +298,7 @@ esp_err_t sgp4x_init(i2c_master_bus_handle_t master_handle, const sgp4x_config_t
     /* copy configuration */
 
     /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(20));
+    vTaskDelay(pdMS_TO_TICKS(100));
 
     /* attempt to reset the device */
     //ESP_GOTO_ON_ERROR(i2c_sgp4x_reset(out_handle), err_handle, TAG, "unable to soft-reset device, sgp4x device handle initialization failed");

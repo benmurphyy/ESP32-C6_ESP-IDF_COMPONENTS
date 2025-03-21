@@ -369,27 +369,20 @@ esp_err_t veml7700_optimize_configuration(veml7700_handle_t handle) {
  * 
  * @param handle VEML7700 device handle.
  * @param reg_addr VEML7700 register address to read from.
- * @param halfword VEML7700 read transaction return halfword.
+ * @param word VEML7700 read transaction return word.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t veml7700_i2c_read_word_from(veml7700_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t veml7700_i2c_read_word_from(veml7700_handle_t handle, const uint8_t reg_addr, uint16_t *const word) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(VEML7700_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "veml7700_i2c_read_word_from failed" );
 
     /* set output parameter */
-    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+    *word = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
 
     return ESP_OK;
 }
@@ -399,11 +392,11 @@ static inline esp_err_t veml7700_i2c_read_word_from(veml7700_handle_t handle, co
  * 
  * @param handle VEML7700 device handle.
  * @param reg_addr VEML7700 register address to write to.
- * @param halfword VEML7700 write transaction input halfword.
+ * @param word VEML7700 write transaction input word.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t veml7700_i2c_write_word_to(veml7700_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
-    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) }; // register, lsb, msb
+static inline esp_err_t veml7700_i2c_write_word_to(veml7700_handle_t handle, const uint8_t reg_addr, const uint16_t word) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(word & 0xff), (uint8_t)((word >> 8) & 0xff) }; // register, lsb, msb
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
@@ -413,7 +406,6 @@ static inline esp_err_t veml7700_i2c_write_word_to(veml7700_handle_t handle, con
                         
     return ESP_OK;
 }
-
 
 esp_err_t veml7700_get_configuration_register(veml7700_handle_t handle, veml7700_configuration_register_t *const reg) {
     uint16_t config = 0;
@@ -608,7 +600,7 @@ esp_err_t veml7700_init(i2c_master_bus_handle_t master_handle, const veml7700_co
     cfg_reg.bits.integration_time       = out_handle->dev_config.integration_time;
     cfg_reg.bits.persistence_protect    = out_handle->dev_config.persistence_protect;
     cfg_reg.bits.irq_enabled            = out_handle->dev_config.irq_enabled;
-    cfg_reg.bits.shutdown               = out_handle->dev_config.power_enabled;
+    cfg_reg.bits.shutdown               = out_handle->dev_config.power_disabled;
 
     /* set power saving register */
     psm_reg.bits.power_saving_enabled   = veml7700_config->power_saving_enabled;
@@ -1027,7 +1019,7 @@ esp_err_t veml7700_disable(veml7700_handle_t handle) {
     ESP_RETURN_ON_ERROR( veml7700_set_configuration_register(handle, config), TAG, "write configuration register for shutdown failed" );
 
     /* set config parameter */
-    handle->dev_config.power_enabled = false;
+    handle->dev_config.power_disabled = true;
 
     return ESP_OK;
 }
@@ -1048,7 +1040,7 @@ esp_err_t veml7700_enable(veml7700_handle_t handle) {
     ESP_RETURN_ON_ERROR( veml7700_set_configuration_register(handle, config), TAG, "write configuration register for wake-up failed" );
 
     /* set config parameter */
-    handle->dev_config.power_enabled = false;
+    handle->dev_config.power_disabled = false;
 
     return ESP_OK;
 }

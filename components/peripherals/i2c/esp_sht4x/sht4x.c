@@ -134,7 +134,7 @@ static inline esp_err_t sht4x_i2c_write(sht4x_handle_t handle, const uint8_t *bu
  * @param reg_addr SHT4X command register address to write to.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t sht4x_i2c_write_command(sht4x_handle_t handle, uint8_t reg_addr) {
+static inline esp_err_t sht4x_i2c_write_command(sht4x_handle_t handle, const uint8_t reg_addr) {
     const bit8_uint8_buffer_t tx = { reg_addr };
 
     /* validate arguments */

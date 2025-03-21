@@ -122,27 +122,20 @@ static inline esp_err_t veml6040_convert_signal(veml6040_handle_t handle, const 
  * 
  * @param handle VEML7700 device handle.
  * @param reg_addr VEML7700 register address to read from.
- * @param halfword VEML7700 read transaction return halfword.
+ * @param word VEML7700 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t veml6040_i2c_read_word_from(veml6040_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t veml6040_i2c_read_word_from(veml6040_handle_t handle, const uint8_t reg_addr, uint16_t *const word) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(VEML6040_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "hdc1080_i2c_read_word_from failed" );
 
     /* set output parameter */
-    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+    *word = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
 
     return ESP_OK;
 }
@@ -152,11 +145,11 @@ static inline esp_err_t veml6040_i2c_read_word_from(veml6040_handle_t handle, co
  * 
  * @param handle VEML7700 device handle.
  * @param reg_addr VEML7700 register address to write to.
- * @param halfword VEML7700 write transaction input halfword.
+ * @param word VEML7700 write transaction input halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t veml6040_i2c_write_word_to(veml6040_handle_t handle, const uint8_t reg_addr, const uint16_t halfword) {
-    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(halfword & 0xff), (uint8_t)((halfword >> 8) & 0xff) }; // register, lsb, msb
+static inline esp_err_t veml6040_i2c_write_word_to(veml6040_handle_t handle, const uint8_t reg_addr, const uint16_t word) {
+    const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(word & 0xff), (uint8_t)((word >> 8) & 0xff) }; // register, lsb, msb
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );

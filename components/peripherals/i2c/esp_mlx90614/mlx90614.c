@@ -163,6 +163,44 @@ static inline int16_t mlx90614_decode_ir(const uint16_t raw_data) {
     return ir;
 }
 
+/**
+ * @brief Reads a word (2-bytes) with CRC validation from MLX90614.
+ * 
+ * @param handle MLX90614 device handle.
+ * @param reg_addr MLX90614 read register (1-byte).
+ * @param data MLX90614 register data (2-bytes).
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline esp_err_t mlx90614_i2c_read_word_from(mlx90614_handle_t handle, const uint8_t reg_addr, uint16_t *const data) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit24_uint8_buffer_t rx;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit_receive, i2c read from failed" );
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(MLX90614_CMD_DELAY_MS));
+
+    /* compute and validate crc */
+    uint8_t crc = mlx90614_calculate_crc8(0, (handle->dev_config.i2c_address << 1));
+
+    crc = mlx90614_calculate_crc8(crc, reg_addr);
+	crc = mlx90614_calculate_crc8(crc, (handle->dev_config.i2c_address << 1) + 1);
+	crc = mlx90614_calculate_crc8(crc, rx[0]); // lsb
+	crc = mlx90614_calculate_crc8(crc, rx[1]); // msb
+
+    // validate calculated crc vs pec received
+    if (crc == rx[2]) {
+        *data = rx[0] | (rx[1] << 8);
+	} else {
+		return ESP_ERR_INVALID_CRC;
+	}
+
+    return ESP_OK;
+}
+
 static inline esp_err_t mlx90614_i2c_write_command(mlx90614_handle_t handle, const uint8_t command) {
     bit16_uint8_buffer_t tx = { 0, 0 };
     uint8_t crc;
@@ -187,59 +225,14 @@ static inline esp_err_t mlx90614_i2c_write_command(mlx90614_handle_t handle, con
 }
 
 /**
- * @brief Reads a word (2-bytes) with CRC validation from MLX90614.
- * 
- * @param handle MLX90614 device handle.
- * @param reg_addr MLX90614 read register (1-byte).
- * @param data MLX90614 register data (2-bytes).
- * @return esp_err_t ESP_OK on success.
- */
-static inline esp_err_t mlx90614_i2c_read_word_from(mlx90614_handle_t handle, const uint8_t reg_addr, uint16_t *const data) {
-    const bit8_uint8_buffer_t tx = { reg_addr };
-    bit24_uint8_buffer_t rx;
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle );
-
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(MLX90614_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
-
-    /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(MLX90614_CMD_DELAY_MS));
-
-    /* compute and validate crc */
-    uint8_t crc = mlx90614_calculate_crc8(0, (handle->dev_config.i2c_address << 1));
-
-    crc = mlx90614_calculate_crc8(crc, reg_addr);
-	crc = mlx90614_calculate_crc8(crc, (handle->dev_config.i2c_address << 1) + 1);
-	crc = mlx90614_calculate_crc8(crc, rx[0]); // lsb
-	crc = mlx90614_calculate_crc8(crc, rx[1]); // msb
-
-    // validate calculated crc vs pec received
-    if (crc == rx[2]) {
-        *data = rx[0] | (rx[1] << 8);
-	} else {
-		return ESP_ERR_INVALID_CRC;
-	}
-
-    return ESP_OK;
-}
-
-/**
  * @brief Writes a word (2-bytes) with CRC to MLX90614.
  * 
  * @param handle MLX90614 device handle.
  * @param reg_addr MLX90614 write register (1-byte).
- * @param data MLX90614 data (2-bytes) to write.
+ * @param word MLX90614 data (2-bytes) to write.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t mlx90614_i2c_write_word_to(mlx90614_handle_t handle, const uint8_t reg_addr, const uint16_t data) {
+static inline esp_err_t mlx90614_i2c_write_word_to(mlx90614_handle_t handle, const uint8_t reg_addr, const uint16_t word) {
     bit32_uint8_buffer_t tx = { 0 };
     uint8_t crc; 
 
@@ -247,8 +240,8 @@ static inline esp_err_t mlx90614_i2c_write_word_to(mlx90614_handle_t handle, con
     ESP_ARG_CHECK( handle );
 
     tx[0] = reg_addr;       // register
-    tx[1] = data & 0x00FF;  // lsb
-    tx[2] = data >> 8;      // msb
+    tx[1] = word & 0x00FF;  // lsb
+    tx[2] = word >> 8;      // msb
 
     crc = mlx90614_calculate_crc8(0, (handle->dev_config.i2c_address << 1));
 	crc = mlx90614_calculate_crc8(crc, tx[0]); // register
@@ -414,7 +407,7 @@ esp_err_t mlx90614_init(i2c_master_bus_handle_t master_handle, const mlx90614_co
     vTaskDelay(pdMS_TO_TICKS(MLX90614_CMD_DELAY_MS));
 
     /* mlx90614 attempt to read configured identification numbers */
-    ESP_GOTO_ON_ERROR(mlx90614_get_ident_numbers(out_handle, &out_handle->ident_number_hi, &out_handle->ident_number_lo), err_handle, TAG, "i2c mlx90614 read identification numbers failed");
+    //ESP_GOTO_ON_ERROR(mlx90614_get_ident_numbers(out_handle, &out_handle->ident_number_hi, &out_handle->ident_number_lo), err_handle, TAG, "i2c mlx90614 read identification numbers failed");
 
     /* set device handle */
     *mlx90614_handle = out_handle;
@@ -452,7 +445,7 @@ esp_err_t mlx90614_get_ambient_temperature(mlx90614_handle_t handle, float *cons
 
     ESP_ERROR_CHECK( mlx90614_i2c_read_word_from(handle, MLX90614_CMD_RAM_READ_TA, &raw_data) );
 
-    if (raw_data > 0x7FFF) return ESP_ERR_INVALID_RESPONSE;
+    //if (raw_data > 0x7FFF) return ESP_ERR_INVALID_RESPONSE;
 
     *ambient_temperature = mlx90614_decode_temperature(raw_data);
 
@@ -467,7 +460,7 @@ esp_err_t mlx90614_get_object1_temperature(mlx90614_handle_t handle, float *cons
 
     ESP_ERROR_CHECK( mlx90614_i2c_read_word_from(handle, MLX90614_CMD_RAM_READ_TOBJ1, &raw_data) );
 
-    if (raw_data > 0x7FFF) return ESP_ERR_INVALID_RESPONSE;
+    //if (raw_data > 0x7FFF) return ESP_ERR_INVALID_RESPONSE;
 
     *object1_temperature = mlx90614_decode_temperature(raw_data);
 
@@ -482,7 +475,7 @@ esp_err_t mlx90614_get_object2_temperature(mlx90614_handle_t handle, float *cons
 
     ESP_ERROR_CHECK( mlx90614_i2c_read_word_from(handle, MLX90614_CMD_RAM_READ_TOBJ2, &raw_data) );
 
-    if (raw_data > 0x7FFF) return ESP_ERR_INVALID_RESPONSE;
+    //if (raw_data > 0x7FFF) return ESP_ERR_INVALID_RESPONSE;
 
     *object2_temperature = mlx90614_decode_temperature(raw_data);
 

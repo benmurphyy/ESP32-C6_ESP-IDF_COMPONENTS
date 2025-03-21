@@ -127,21 +127,14 @@ static inline esp_err_t ak8975_get_sensitivity_adjusted_axes(ak8975_handle_t han
  * @param size Length of buffer to store results from read transaction.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t bme680_i2c_read_from(ak8975_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
+static inline esp_err_t ak8975_i2c_read_from(ak8975_handle_t handle, const uint8_t reg_addr, uint8_t *buffer, const uint8_t size) {
     const bit8_uint8_buffer_t tx = { reg_addr };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AK8975_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
-
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "ak8975_i2c_read_byte_from failed" );
+    
     return ESP_OK;
 }
 
@@ -160,14 +153,7 @@ static inline esp_err_t ak8975_i2c_read_byte_from(ak8975_handle_t handle, const 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AK8975_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ak8975_i2c_read_byte_from failed" );
 
     /* set output parameter */
     *byte = rx[0];
@@ -183,7 +169,7 @@ static inline esp_err_t ak8975_i2c_read_byte_from(ak8975_handle_t handle, const 
  * @param byte AK8975 write transaction input byte.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t ak8975_i2c_write_byte_to(ak8975_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+static inline esp_err_t ak8975_i2c_write_byte_to(ak8975_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
     /* validate arguments */
@@ -307,7 +293,7 @@ static inline esp_err_t ak8975_get_fixed_magnetic_axes(ak8975_handle_t handle, a
     bit48_uint8_buffer_t rx = { 0 };
 
     /* 6-byte i2c read transaction */
-    ESP_GOTO_ON_ERROR( bme680_i2c_read_from(handle, AK8975_REG_HXL_DATA_R, rx, BIT48_UINT8_BUFFER_SIZE), err, TAG, "read axes (x, y, z) bytes failed" );
+    ESP_GOTO_ON_ERROR( ak8975_i2c_read_from(handle, AK8975_REG_HXL_DATA_R, rx, BIT48_UINT8_BUFFER_SIZE), err, TAG, "read axes (x, y, z) bytes failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(AK8975_CMD_DELAY_MS));

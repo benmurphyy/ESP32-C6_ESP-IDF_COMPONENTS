@@ -111,7 +111,7 @@ static const float hmc5883l_gain_values [] = {
  * @param byte HMC5883L write transaction input byte.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t hmc5883l_i2c_write_byte_to(hmc5883l_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+static inline esp_err_t hmc5883l_i2c_write_byte_to(hmc5883l_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
     /* validate arguments */
@@ -138,14 +138,7 @@ static inline esp_err_t hmc5883l_i2c_read_byte_from(hmc5883l_handle_t handle, co
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(HMC5883L_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "hmc5883l_i2c_read_byte_from failed" );
 
     /* set output parameter */
     *byte = rx[0];
@@ -168,14 +161,7 @@ static inline esp_err_t hmc5883l_i2c_read_from(hmc5883l_handle_t handle, const u
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(HMC5883L_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "hmc5883l_i2c_read_from failed" );
 
     return ESP_OK;
 }

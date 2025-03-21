@@ -70,7 +70,7 @@ extern "C" {
             .integration_time           = VEML7700_INTEGRATION_TIME_400MS,          \
             .persistence_protect        = VEML7700_PERSISTENCE_PROTECTION_4,        \
             .irq_enabled                = true,                                     \
-            .power_enabled              = true,                                     \
+            .power_disabled             = false,                                    \
             .power_saving_enabled       = false,                                    \
             .power_saving_mode          = VEML7700_POWER_SAVING_MODE_1 }
 
@@ -206,7 +206,7 @@ typedef struct veml7700_config_s {
     veml7700_integration_times_t        integration_time;       /*!< veml7700 integration time to measure */
     veml7700_persistence_protections_t  persistence_protect;    /*!< veml7700 persistence protection */
     bool                                irq_enabled;            /*!< veml7700 interrupt enabled when true */
-    bool                                power_enabled;          /*!< veml7700 power enabled when true */
+    bool                                power_disabled;         /*!< veml7700 power disabled when true */
     bool                                power_saving_enabled;   /*!< veml7700 power saving enabled when true */
     veml7700_power_saving_modes_t       power_saving_mode;      /*!< veml7700 power mode register */
     bool                                set_thresholds;         /*!< veml7700 configures interrupt thresholds */

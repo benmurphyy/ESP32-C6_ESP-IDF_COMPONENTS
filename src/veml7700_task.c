@@ -35,6 +35,19 @@
 #include <veml7700_task.h>
 
 
+static inline void print_registers( veml7700_handle_t handle ) {
+    veml7700_configuration_register_t       cfg_reg;
+    veml7700_power_saving_mode_register_t   psm_reg;
+
+    /* attempt to read configuration register */
+    veml7700_get_configuration_register(handle, &cfg_reg);
+
+    /* attempt to read power saving mode register */
+    veml7700_get_power_saving_mode_register(handle, &psm_reg);
+
+    ESP_LOGI(APP_TAG, "Configuration Register:               0x%04x (%s)", cfg_reg.reg, uint16_to_binary(cfg_reg.reg));
+    ESP_LOGI(APP_TAG, "Power Saving Mode Register:           0x%04x (%s)", psm_reg.reg, uint16_to_binary(psm_reg.reg));
+}
 
 void i2c0_veml7700_task( void *pvParameters ) {
     // initialize the xLastWakeTime variable with the current time.
@@ -51,23 +64,30 @@ void i2c0_veml7700_task( void *pvParameters ) {
         assert(dev_hdl);
     }
     //
-    // optimize sensor
-    //veml7700_optimize_configuration(dev_hdl);
+    //
+    print_registers( dev_hdl );
     //
     // task loop entry point
     for ( ;; ) {
         ESP_LOGI(APP_TAG, "######################## VEML7700 - START #########################");
         //
         // handle sensor
-        float ambient_light;
-        //uint16_t als_counts;
-        esp_err_t result = veml7700_get_ambient_light(dev_hdl, &ambient_light);
-        //esp_err_t result = veml7700_get_ambient_light_counts(dev_hdl, &als_counts);
+        //float ambient_light;
+        uint16_t als_counts, wcs_counts;
+        //esp_err_t result = veml7700_get_ambient_light(dev_hdl, &ambient_light);
+        esp_err_t result = veml7700_get_ambient_light_counts(dev_hdl, &als_counts);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "veml7700 device read failed (%s)", esp_err_to_name(result));
         } else {
-            ESP_LOGI(APP_TAG, "ambient light:     %.2f lux", ambient_light);
-            //ESP_LOGI(APP_TAG, "ambient light:     %u counts", als_counts);
+            //ESP_LOGI(APP_TAG, "ambient light:     %.2f lux", ambient_light);
+            ESP_LOGI(APP_TAG, "ambient light:     %u counts", als_counts);
+        }
+        result = veml7700_get_white_channel_counts(dev_hdl, &wcs_counts);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "veml7700 device read failed (%s)", esp_err_to_name(result));
+        } else {
+            //ESP_LOGI(APP_TAG, "white channel:     %.2f lux", ambient_light);
+            ESP_LOGI(APP_TAG, "white channel:     %u counts", wcs_counts);
         }
         //
         ESP_LOGI(APP_TAG, "######################## VEML7700 - END ###########################");

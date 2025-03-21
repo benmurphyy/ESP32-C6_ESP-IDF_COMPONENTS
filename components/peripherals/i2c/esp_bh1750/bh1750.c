@@ -116,7 +116,7 @@ static inline esp_err_t bh1750_i2c_write(bh1750_handle_t handle, const uint8_t *
  * @param reg_addr BH1750 command register address to write to.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t bh1750_i2c_write_command(bh1750_handle_t handle, uint8_t reg_addr) {
+static inline esp_err_t bh1750_i2c_write_command(bh1750_handle_t handle, const uint8_t reg_addr) {
     const bit8_uint8_buffer_t tx = { reg_addr };
 
     /* validate arguments */

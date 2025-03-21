@@ -155,7 +155,7 @@ static const char *TAG = "as7341";
  * @param byte AS7341 write transaction input byte.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t as7341_i2c_write_byte_to(as7341_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+static inline esp_err_t as7341_i2c_write_byte_to(as7341_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
     /* validate arguments */
@@ -182,14 +182,7 @@ static inline esp_err_t as7341_i2c_read_from(as7341_handle_t handle, const uint8
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AS7341_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "as7341_i2c_read_from failed" );
 
     return ESP_OK;
 }
@@ -199,27 +192,20 @@ static inline esp_err_t as7341_i2c_read_from(as7341_handle_t handle, const uint8
  * 
  * @param handle AS7341 device handle.
  * @param reg_addr AS7341 register address to read from.
- * @param halfword AS7341 read transaction return halfword.
+ * @param word AS7341 read transaction return halfword.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t as7341_i2c_read_word_from(as7341_handle_t handle, const uint8_t reg_addr, uint16_t *const halfword) {
+static inline esp_err_t as7341_i2c_read_word_from(as7341_handle_t handle, const uint8_t reg_addr, uint16_t *const word) {
     const bit8_uint8_buffer_t tx = { reg_addr };
     bit16_uint8_buffer_t rx = { 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AS7341_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "as7341_i2c_read_word_from failed" );
 
     /* set output parameter */
-    *halfword = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
+    *word = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
 
     return ESP_OK;
 }
@@ -239,14 +225,7 @@ static inline esp_err_t as7341_i2c_read_byte_from(as7341_handle_t handle, const 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AS7341_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "as7341_i2c_read_byte_from failed" );
 
     /* set output parameter */
     *byte = rx[0];
@@ -968,7 +947,7 @@ esp_err_t as7341_init(i2c_master_bus_handle_t master_handle, const as7341_config
         return ret;
 }
 
-esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channels_spectral_data_t *spectral_data) {
+esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channels_spectral_data_t *const spectral_data) {
     esp_err_t   ret              = ESP_OK;
     float       integration_time = 0;
     uint64_t    start_time       = esp_timer_get_time();
@@ -998,7 +977,7 @@ esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channe
         vTaskDelay(pdMS_TO_TICKS(AS7341_DATA_READY_DELAY_MS));
 
         /* validate timeout condition */
-        if (ESP_TIMEOUT_CHECK(start_time, (integration_time + 20) * 1000))
+        if (ESP_TIMEOUT_CHECK(start_time, (integration_time + 50) * 1000))
             return ESP_ERR_TIMEOUT;
     } while (data_is_ready == false);
 
@@ -1036,7 +1015,7 @@ esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channe
         vTaskDelay(pdMS_TO_TICKS(AS7341_DATA_READY_DELAY_MS));
 
         /* validate timeout condition */
-        if (ESP_TIMEOUT_CHECK(start_time, (integration_time + 20) * 1000))
+        if (ESP_TIMEOUT_CHECK(start_time, (integration_time + 50) * 1000))
             return ESP_ERR_TIMEOUT;
     } while (data_is_ready == false);
 
@@ -1060,7 +1039,7 @@ esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channe
         return ret;
 }
 
-esp_err_t as7341_get_basic_counts(as7341_handle_t handle, as7341_channels_spectral_data_t spectral_data, as7341_channels_basic_counts_data_t *basic_counts_data) {
+esp_err_t as7341_get_basic_counts(as7341_handle_t handle, const as7341_channels_spectral_data_t spectral_data, as7341_channels_basic_counts_data_t *const basic_counts_data) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
@@ -1091,7 +1070,7 @@ esp_err_t as7341_get_basic_counts(as7341_handle_t handle, as7341_channels_spectr
     return ESP_OK;
 }
 
-esp_err_t as7341_get_flicker_detection_status(as7341_handle_t handle, as7341_flicker_detection_states_t *state) {
+esp_err_t as7341_get_flicker_detection_status(as7341_handle_t handle, as7341_flicker_detection_states_t *const state) {
     as7341_flicker_detection_status_register_t fd_status;
     esp_err_t ret           = ESP_OK;
     uint64_t  start_time    = 0;
@@ -1173,7 +1152,7 @@ esp_err_t as7341_get_flicker_detection_status(as7341_handle_t handle, as7341_fli
         return ret;
 }
 
-esp_err_t as7341_get_data_status(as7341_handle_t handle, bool *ready) {
+esp_err_t as7341_get_data_status(as7341_handle_t handle, bool *const ready) {
     as7341_status2_register_t status2;
 
     /* validate arguments */

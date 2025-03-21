@@ -70,9 +70,9 @@
 #define MMC56X3_REG_PRODUCT_ID_R        UINT8_C(0x39)   //!< mmc56x3 I2C product identifier
 
 
-#define MMC56X3_POWERUP_DELAY_MS        UINT16_C(25)
+#define MMC56X3_POWERUP_DELAY_MS        UINT16_C(50)
 #define MMC56X3_APPSTART_DELAY_MS       UINT16_C(10)           //!< mmc56x3 I2C delay in milliseconds app-start
-#define MMC56X3_RESET_DELAY_MS          UINT16_C(20)           //!< mmc56x3 I2C delay in milliseconds after reset
+#define MMC56X3_RESET_DELAY_MS          UINT16_C(50)           //!< mmc56x3 I2C delay in milliseconds after reset
 #define MMC56X3_SETRESET_DELAY_MS       UINT16_C(1)            //!< mmc56x3 I2C delay in milliseconds after set-reset transaction
 #define MMC56X3_WRITE_DELAY_MS          UINT16_C(1)            //!< mmc56x3 I2C delay in milliseconds after write transaction
 #define MMC56X3_DATA_READY_DELAY_MS     UINT16_C(1)            //!< mmc56x3 1ms when checking data ready in a loop
@@ -112,14 +112,7 @@ static inline esp_err_t mmc56x3_i2c_read_from(mmc56x3_handle_t handle, const uin
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(MMC56X3_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "mmc56x3_i2c_read_from failed" );
 
     return ESP_OK;
 }
@@ -139,14 +132,7 @@ static inline esp_err_t mmc56x3_i2c_read_byte_from(mmc56x3_handle_t handle, cons
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c read from failed" );
-
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(MMC56X3_TX_RX_DELAY_MS));
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_receive, i2c read from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "mmc56x3_i2c_read_byte_from failed" );
 
     /* set output parameter */
     *byte = rx[0];
@@ -162,7 +148,7 @@ static inline esp_err_t mmc56x3_i2c_read_byte_from(mmc56x3_handle_t handle, cons
  * @param byte MMC56X3 write transaction input byte.
  * @return esp_err_t ESP_OK on success.
  */
-static inline esp_err_t mmc56x3_i2c_write_byte_to(mmc56x3_handle_t handle, uint8_t reg_addr, const uint8_t byte) {
+static inline esp_err_t mmc56x3_i2c_write_byte_to(mmc56x3_handle_t handle, const uint8_t reg_addr, const uint8_t byte) {
     const bit16_uint8_buffer_t tx = { reg_addr, byte };
 
     /* validate arguments */
@@ -290,11 +276,6 @@ esp_err_t mmc56x3_init(i2c_master_bus_handle_t master_handle, const mmc56x3_conf
 
     /* attempt to reset the device */
     ESP_GOTO_ON_ERROR( mmc56x3_reset(out_handle), err_handle, TAG, "unable to issue soft-reset, init failed" );
-
-    /* configure the device */
-    ESP_GOTO_ON_ERROR( mmc56x3_set_measure_bandwidth(out_handle, out_handle->dev_config.measurement_bandwidth), err_handle, TAG, "unable to set measure bandwidth, init failed" );
-    ESP_GOTO_ON_ERROR( mmc56x3_set_data_rate(out_handle, out_handle->dev_config.data_rate), err_handle, TAG, "unable to issue soft-reset, init failed" );
-    ESP_GOTO_ON_ERROR( mmc56x3_set_measure_mode(out_handle, out_handle->dev_config.continuous_mode_enabled), err_handle, TAG, "unable to set measure mode, init failed" );
 
     /* set device handle */
     *mmc56x3_handle = out_handle;
@@ -691,6 +672,11 @@ esp_err_t mmc56x3_reset(mmc56x3_handle_t handle) {
 
     /* attempt to set mode */
     ESP_RETURN_ON_ERROR( mmc56x3_set_measure_mode(handle, false), TAG, "disable continuous mode set failed" );
+
+    /* configure the device */
+    ESP_RETURN_ON_ERROR( mmc56x3_set_measure_bandwidth(handle, handle->dev_config.measurement_bandwidth), TAG, "unable to set measure bandwidth, init failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_set_data_rate(handle, handle->dev_config.data_rate), TAG, "unable to issue soft-reset, init failed" );
+    ESP_RETURN_ON_ERROR( mmc56x3_set_measure_mode(handle, handle->dev_config.continuous_mode_enabled), TAG, "unable to set measure mode, init failed" );
 
     return ESP_OK;
 }

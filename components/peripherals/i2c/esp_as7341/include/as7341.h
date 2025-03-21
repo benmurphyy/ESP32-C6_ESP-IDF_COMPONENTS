@@ -789,7 +789,7 @@ esp_err_t as7341_init(i2c_master_bus_handle_t master_handle, const as7341_config
  * @param[out] spectral_data Spectral sensors data from AS7341.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channels_spectral_data_t *spectral_data);
+esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channels_spectral_data_t *const spectral_data);
 
 /**
  * @brief Converts AS7341 spectral sensors measurements to basic counts.
@@ -799,7 +799,7 @@ esp_err_t as7341_get_spectral_measurements(as7341_handle_t handle, as7341_channe
  * @param[out] basic_counts_data Converted basic counts data from spectral sensors data.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t as7341_get_basic_counts(as7341_handle_t handle, as7341_channels_spectral_data_t spectral_data, as7341_channels_basic_counts_data_t *basic_counts_data);
+esp_err_t as7341_get_basic_counts(as7341_handle_t handle, const as7341_channels_spectral_data_t spectral_data, as7341_channels_basic_counts_data_t *const basic_counts_data);
 
 /**
  * @brief Reads flicker detection status from AS7341.
@@ -808,7 +808,7 @@ esp_err_t as7341_get_basic_counts(as7341_handle_t handle, as7341_channels_spectr
  * @param[out] state Flicker detection state, 100Hz, 120Hz or flicker saturation was detected.
  * @return esp_err_t ESP_OK on success, ESP_ERR_TIMEOUT if operation timed out.
  */
-esp_err_t as7341_get_flicker_detection_status(as7341_handle_t handle, as7341_flicker_detection_states_t *state);
+esp_err_t as7341_get_flicker_detection_status(as7341_handle_t handle, as7341_flicker_detection_states_t *const state);
 
 /**
  * @brief Reads data status from AS7341.
@@ -817,7 +817,7 @@ esp_err_t as7341_get_flicker_detection_status(as7341_handle_t handle, as7341_fli
  * @param[out] ready Data is ready when asserted to true.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t as7341_get_data_status(as7341_handle_t handle, bool *ready);
+esp_err_t as7341_get_data_status(as7341_handle_t handle, bool *const ready);
 
 /**
  * @brief Reads the number of integration steps for the ADC integration time from AS7341.
