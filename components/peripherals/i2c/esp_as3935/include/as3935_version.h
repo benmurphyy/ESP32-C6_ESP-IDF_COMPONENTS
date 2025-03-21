@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define AS3935_FW_VERSION_MINOR 2
 /** Patch version number (x.x.X) */
-#define AS3935_FW_VERSION_PATCH 0
+#define AS3935_FW_VERSION_PATCH 1
 
 
 /**

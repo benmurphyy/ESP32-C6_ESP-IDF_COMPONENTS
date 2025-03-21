@@ -50,7 +50,7 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define HDC1080_FW_VERSION_MINOR 2
 /** Patch version number (x.x.X) */
-#define HDC1080_FW_VERSION_PATCH 0
+#define HDC1080_FW_VERSION_PATCH 1
 
 
 /**
