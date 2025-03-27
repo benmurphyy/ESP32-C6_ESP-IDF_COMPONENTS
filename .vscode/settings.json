@@ -14,7 +14,8 @@
         "bmp280_task.h": "c",
         "string_view": "c",
         "initializer_list": "c",
-        "span": "c"
+        "span": "c",
+        "string": "c"
     },
     "sonarlint.pathToCompileCommands": "${workspaceFolder}\\.pio\\build\\esp32s3box\\compile_commands.json",
     "idf.customExtraVars": {

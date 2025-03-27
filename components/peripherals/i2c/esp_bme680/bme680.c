@@ -62,7 +62,7 @@
 #define BME680_REG_CTRL_GAS0        UINT8_C(0x70)
 #define BME680_REG_GAS_WAIT         UINT8_C(0x64) /*!< gas_wait_x:  0x64 to 0x6D */
 #define BME680_REG_RES_HEAT         UINT8_C(0x5A) /*!< res_heat_x:  0x5A to 0x63 */
-#define BME680_REG_IDAC_HEAT        UINT8_C(0x50) /*!< idac_head_x: 0x50 to 0x59 */
+#define BME680_REG_IDAC_HEAT        UINT8_C(0x50) /*!< idac_heat_x: 0x50 to 0x59 */
 #define BME680_REG_GAS_R_LSB        UINT8_C(0x2B)
 #define BME680_REG_GAS_R_MSB        UINT8_C(0x2A)
 #define BME680_REG_GAS_R            UINT8_C(BME680_REG_GAS_R_MSB)
@@ -79,7 +79,9 @@
 #define BME680_REG_PRESS            UINT8_C(BME680_REG_PRESS_MSB)
 #define BME680_RESET_VALUE          UINT8_C(0xB6)
 #define BME680_REG_SHD_HEATR_DUR    UINT8_C(0x6E)  /* Shared heating duration address */
+
 #define BME680_REG_VARIANT_ID       UINT8_C(0xF0)
+
 #define BME680_VARIANT_GAS_LOW      UINT8_C(0x00)  /* Low Gas variant */
 #define BME680_VARIANT_GAS_HIGH     UINT8_C(0x01)  /* High Gas variant */
 
@@ -304,28 +306,6 @@ static inline float bme680_compensate_pressure(bme680_handle_t handle, const uin
     return calc_pres;
 }
 
-static inline float bme680_compensate_gas_resistance_low(bme680_handle_t handle, uint16_t adc_gas_res, uint8_t gas_range) {
-    float calc_gas_res;
-    float var1;
-    float var2;
-    float var3;
-    float gas_res_f = adc_gas_res;
-    float gas_range_f = (1U << gas_range); /*lint !e790 / Suspicious truncation, integral to float */
-    const float lookup_k1_range[16] = {
-        0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, -0.8f, 0.0f, 0.0f, -0.2f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f
-    };
-    const float lookup_k2_range[16] = {
-        0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.7f, 0.0f, -0.8f, -0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
-    };
-
-    var1 = (1340.0f + (5.0f * handle->dev_cal_factors->range_switching_error));
-    var2 = (var1) * (1.0f + lookup_k1_range[gas_range] / 100.0f);
-    var3 = 1.0f + (lookup_k2_range[gas_range] / 100.0f);
-    calc_gas_res = 1.0f / (float)(var3 * (0.000000125f) * gas_range_f * (((gas_res_f - 512.0f) / var2) + 1.0f));
-
-    return calc_gas_res;
-}
-
 static inline float bme680_compensate_gas_resistance(bme680_handle_t handle, uint16_t adc_gas_res, uint8_t gas_range) {
     const float lookup_k1_range[16] = {
         1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.99f, 1.0f, 0.992f, 1.0f, 1.0f, 0.998f, 0.995f, 1.0f, 0.99f, 1.0f, 1.0f
@@ -336,16 +316,6 @@ static inline float bme680_compensate_gas_resistance(bme680_handle_t handle, uin
     };
     float var1 = (1340.0 + 5.0 * handle->dev_cal_factors->range_switching_error) * lookup_k1_range[gas_range];
     return var1 * lookup_k2_range[gas_range] / (adc_gas_res - 512.0 + var1);
-}
-
-static inline float bme680_compensate_gas_resistance_high(uint16_t adc_gas_res, uint8_t gas_range) {
-    uint32_t var1 = (uint32_t)(262144) >> gas_range;
-    int32_t var2 = (int32_t)adc_gas_res - (int32_t)(512);
-
-    var2 *= (int32_t)(3);
-    var2 = (int32_t)(4096) + var2;
-
-    return 1000000.0f * (float)var1 / (float)var2;
 }
 
 static inline uint8_t bme680_compensate_heater_resistance(bme680_handle_t handle, uint16_t temperature) {
@@ -526,10 +496,10 @@ static inline esp_err_t bme680_setup_heater_profiles(bme680_handle_t handle, bme
     uint8_t i;
     uint8_t shared_dur;
     uint8_t write_len = 0;
-    uint8_t rh_reg_addr[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    uint8_t rh_reg_data[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    uint8_t gw_reg_addr[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    uint8_t gw_reg_data[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t rh_reg_addr[BME680_HEATER_PROFILE_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t rh_reg_data[BME680_HEATER_PROFILE_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t gw_reg_addr[BME680_HEATER_PROFILE_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t gw_reg_data[BME680_HEATER_PROFILE_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
@@ -540,8 +510,9 @@ static inline esp_err_t bme680_setup_heater_profiles(bme680_handle_t handle, bme
             rh_reg_data[0] = bme680_compensate_heater_resistance(handle, handle->dev_config.heater_temperature);
             gw_reg_addr[0] = BME680_REG_GAS_WAIT;
             gw_reg_data[0] = bme680_compute_gas_wait(handle->dev_config.heater_duration);
-            (*heater_setpoint) = 0;
-            write_len = 1;
+
+            (*heater_setpoint) = handle->dev_config.heater_profile_size - 1;
+            write_len = handle->dev_config.heater_profile_size;;
             break;
         case BME680_POWER_MODE_SEQUENTIAL:
             if ((handle->dev_config.heater_profile_size == 0) || (handle->dev_config.heater_profile_size > 10)) {
@@ -583,9 +554,12 @@ static inline esp_err_t bme680_setup_heater_profiles(bme680_handle_t handle, bme
             return ESP_ERR_INVALID_ARG;
     };
 
+    /* attempt to write resistance heater and gas wait profile */
     for (i = 0; i < write_len; i++) {
         ESP_RETURN_ON_ERROR(bme680_i2c_write_byte_to(handle, rh_reg_addr[i], rh_reg_data[i]), TAG, "unable to write resistance heater profile, setup heater setpoints failed");
         ESP_RETURN_ON_ERROR(bme680_i2c_write_byte_to(handle, gw_reg_addr[i], gw_reg_data[i]), TAG, "unable to write gas wait profile, setup heater setpoints failed");
+
+        ESP_LOGI(TAG, "bme680_setup_heater_profiles: rh_reg_data %d | gw_reg_data %d", rh_reg_data[i], gw_reg_data[i]);
     }
 
     return ESP_OK;
@@ -687,6 +661,54 @@ static inline esp_err_t bme680_setup(bme680_handle_t handle) {
     ESP_RETURN_ON_ERROR(bme680_set_configuration_register(handle, config_reg), TAG, "write configuration register for setup failed");
 
     return ESP_OK;
+}
+
+/**
+ * @brief IAQ calculations following Dr. Julie Riggs, The IAQ Rating Index, www.iaquk.org.uk.
+ * 
+ * - Weighting: Temperature, Humidity each one tenth of the rating ==> 6.5 points max each 
+ * giving gas resistance readings 8 tenths of the rating ==> 52 points max
+ * 
+ * @param handle BME680 device handle.
+ * @param data BME680 data structure, air temperature, dew-point temperature, and 
+ * relative humidity parameters must be initialized as a minimum.
+ * @return esp_err_t ESP_OK on success.
+ */
+static inline void bme680_compute_iaq(bme680_data_t *const data) {
+    float adjusted_temp = data->air_temperature + BME680_AQI_TEMP_CORR;
+
+    // August-Roche-Magnus approximation (http://bmcnoldy.rsmas.miami.edu/Humidity.html)
+    float adjusted_humi = 100 * (exp((17.625 * data->dewpoint_temperature) / (243.04 + data->dewpoint_temperature)) / exp((17.625 * adjusted_temp) / (243.04 + adjusted_temp)));
+
+    uint32_t gas = data->gas_resistance;
+
+    // Calculate humidity score
+    if (adjusted_humi >= 40 && adjusted_humi <= 60) data->humidity_score = 6.5;  //ideal condition, full points
+    else if ((adjusted_humi >= 30 && adjusted_humi < 40) || (adjusted_humi > 60 && adjusted_humi <= 70)) data->humidity_score = 5.2;  //20% less
+    else if ((adjusted_humi >= 20 && adjusted_humi < 30) || (adjusted_humi > 70 && adjusted_humi <= 80)) data->humidity_score = 3.9;  //40% less
+    else if ((adjusted_humi >= 10 && adjusted_humi < 20) || (adjusted_humi > 80 && adjusted_humi <= 90)) data->humidity_score = 2.6;  //60% less
+    else if (adjusted_humi < 10 && adjusted_humi > 90) data->humidity_score = 1.3;  //80% less
+
+    // Calculate temperature score
+    int compare_temp = adjusted_temp;     // round to full degree
+    if (compare_temp >= 18 && compare_temp <= 22) data->temperature_score = 6.5;  //ideal condition, full points
+    else if (compare_temp == 17 || compare_temp == 23) data->temperature_score = 5.2;  //20% less
+    else if (compare_temp == 16 || compare_temp == 24) data->temperature_score = 3.9;  //40% less
+    else if (compare_temp == 15 || compare_temp == 25) data->temperature_score = 2.6;  //60% less
+    else if (compare_temp == 14 || compare_temp == 26) data->temperature_score = 1.3;  //80% less
+    else if (compare_temp  < 15 || compare_temp  > 26) data->temperature_score = 0;    //100% less
+
+    // Calculate gas score on resistance values - best practices
+    if (gas >= 430000) data->gas_score = 52;  //ideal condition, full points
+    else if (gas >= 210000 && gas < 430000) data->gas_score = 43;
+    else if (gas >= 100000 && gas < 210000) data->gas_score = 35;
+    else if (gas >=  55000 && gas < 100000) data->gas_score = 26;
+    else if (gas >=  27000 && gas <  55000) data->gas_score = 18;
+    else if (gas >=  13500 && gas >   9000) data->gas_score = 9;
+    else if (gas < 9000) data->gas_score = 0;
+
+    // calculate iaq score
+    data->iaq_score = data->humidity_score + data->temperature_score + data->gas_score;
 }
 
 esp_err_t bme680_get_chip_id_register(bme680_handle_t handle, uint8_t *const reg) {
@@ -975,54 +997,6 @@ char *bme680_air_quality_to_string(float iaq_score) {
     else                                         return "Unknown";
 }
 
-/**
- * @brief IAQ calculations following Dr. Julie Riggs, The IAQ Rating Index, www.iaquk.org.uk.
- * 
- * - Weighting: Temperature, Humidity each one tenth of the rating ==> 6.5 points max each 
- * giving gas resistance readings 8 tenths of the rating ==> 52 points max
- * 
- * @param handle BME680 device handle.
- * @param data BME680 data structure, air temperature, dew-point temperature, and 
- * relative humidity parameters must be initialized as a minimum.
- * @return esp_err_t ESP_OK on success.
- */
-static inline void bme680_compute_iaq(bme680_data_t *const data) {
-    float adjusted_temp = data->air_temperature + BME680_AQI_TEMP_CORR;
-
-    // August-Roche-Magnus approximation (http://bmcnoldy.rsmas.miami.edu/Humidity.html)
-    float adjusted_humi = 100 * (exp((17.625 * data->dewpoint_temperature) / (243.04 + data->dewpoint_temperature)) / exp((17.625 * adjusted_temp) / (243.04 + adjusted_temp)));
-
-    uint32_t gas = data->gas_resistance;
-
-    // Calculate humidity score
-    if (adjusted_humi >= 40 && adjusted_humi <= 60) data->humidity_score = 6.5;  //ideal condition, full points
-    else if ((adjusted_humi >= 30 && adjusted_humi < 40) || (adjusted_humi > 60 && adjusted_humi <= 70)) data->humidity_score = 5.2;  //20% less
-    else if ((adjusted_humi >= 20 && adjusted_humi < 30) || (adjusted_humi > 70 && adjusted_humi <= 80)) data->humidity_score = 3.9;  //40% less
-    else if ((adjusted_humi >= 10 && adjusted_humi < 20) || (adjusted_humi > 80 && adjusted_humi <= 90)) data->humidity_score = 2.6;  //60% less
-    else if (adjusted_humi < 10 && adjusted_humi > 90) data->humidity_score = 1.3;  //80% less
-
-    // Calculate temperature score
-    int compare_temp = adjusted_temp;     // round to full degree
-    if (compare_temp >= 18 && compare_temp <= 22) data->temperature_score = 6.5;  //ideal condition, full points
-    else if (compare_temp == 17 || compare_temp == 23) data->temperature_score = 5.2;  //20% less
-    else if (compare_temp == 16 || compare_temp == 24) data->temperature_score = 3.9;  //40% less
-    else if (compare_temp == 15 || compare_temp == 25) data->temperature_score = 2.6;  //60% less
-    else if (compare_temp == 14 || compare_temp == 26) data->temperature_score = 1.3;  //80% less
-    else if (compare_temp  < 15 || compare_temp  > 26) data->temperature_score = 0;    //100% less
-
-    // Calculate gas score on resistance values - best practices
-    if (gas >= 430000) data->gas_score = 52;  //ideal condition, full points
-    else if (gas >= 210000 && gas < 430000) data->gas_score = 43;
-    else if (gas >= 100000 && gas < 210000) data->gas_score = 35;
-    else if (gas >=  55000 && gas < 100000) data->gas_score = 26;
-    else if (gas >=  27000 && gas <  55000) data->gas_score = 18;
-    else if (gas >=  13500 && gas >   9000) data->gas_score = 9;
-    else if (gas < 9000) data->gas_score = 0;
-
-    // calculate iaq score
-    data->iaq_score = data->humidity_score + data->temperature_score + data->gas_score;
-}
-
 esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *const data) {
     esp_err_t       ret             = ESP_OK;
     uint64_t        start_time      = 0;
@@ -1064,10 +1038,11 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     bme680_gas_lsb_register_t gas_lsb_reg = { .reg = rx[9] };
 
     /* concat parameters */
-    adc_press = rx[0] << 12 | rx[1] << 4 | rx[2] >> 4;
-    adc_temp  = rx[3] << 12 | rx[4] << 4 | rx[5] >> 4;
-    adc_humi  = ((uint16_t)rx[6] << 8) | rx[7];
-    adc_gas_r = ((uint16_t)rx[8] << 2) | rx[9] >> 6;
+    adc_press = ((uint32_t)rx[0] << 12) | ((uint32_t)rx[1] << 4) | ((uint32_t)rx[2] >> 4);
+    adc_temp  = ((uint32_t)rx[3] << 12) | ((uint32_t)rx[4] << 4) | ((uint32_t)rx[5] >> 4);
+    adc_humi  = ((uint16_t)rx[6] << 8) | (uint16_t)rx[7];
+    adc_gas_r = ((uint16_t)rx[8] << 2) | ((uint16_t)rx[9] >> 6);
+    //adc_gas_r = (uint16_t) ((uint32_t) rx[8] * 4 | (((uint32_t) rx[9]) / 64));
 
     ESP_LOGD(TAG, "ADC humidity:    %" PRIu16, adc_humi);
     ESP_LOGD(TAG, "ADC temperature: %" PRIu32, adc_temp);
@@ -1135,7 +1110,14 @@ esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready) {
     } else {
         *ready = true;
     }
-
+    
+    /*
+    if(status0_reg.bits.new_data == true) {
+        *ready = true;
+    } else {
+        *ready = false;
+    }
+    */
     return ESP_OK;
 }
 

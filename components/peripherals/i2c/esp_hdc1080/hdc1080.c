@@ -109,7 +109,7 @@ static inline esp_err_t hdc1080_i2c_write_command(hdc1080_handle_t handle, const
  * 
  * @param handle HDC1080 device handle.
  * @param reg_addr HDC1080 register address to write to.
- * @param halfword HDC1080 write transaction input halfword.
+ * @param word HDC1080 write transaction input halfword.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t hdc1080_i2c_write_word_to(hdc1080_handle_t handle, const uint8_t reg_addr, const uint16_t word) {

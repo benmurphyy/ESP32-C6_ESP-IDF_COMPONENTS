@@ -79,8 +79,9 @@ extern "C" {
         .gas_enabled                = true,                                     \
         .heater_temperature         = 300,                                      \
         .heater_duration            = 100,                                      \
+        .heater_profile_size        = 1                                         \
     }
-      
+    
 
 /*
  * BME680 enumerator and structure declarations
@@ -315,7 +316,7 @@ typedef struct bme680_data_s {
     float    dewpoint_temperature;  /*!< dew-point temperature in degrees celsius */
     float    air_temperature;       /*!< air temperature in degrees celsius */
     float    relative_humidity;     /*!< relative humidity in percent */
-    float    barometric_pressure;   /*!< barometric pressure in hectopascal */
+    float    barometric_pressure;   /*!< barometric pressure in hecto-pascal */
     bool     gas_valid;             /*!< indicates that the gas measurement results are valid  */
     float    gas_resistance;        /*!< gas resistance in ohms */
     uint8_t  gas_range;             /*!< gas resistance range */
