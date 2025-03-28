@@ -6,7 +6,7 @@
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_uuid.svg)](https://registry.platformio.org/libraries/k0i05/esp_uuid)
 [![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_uuid/badge.svg)](https://components.espressif.com/components/k0i05/esp_uuid)
 
-This ESP32 espressif IoT development framework (esp-idf) type utilities component was developed as a helper for byte manipulation and string functionality.  Information on features and functionality are documented and can be found in the `uuid.h` header file.
+This ESP32 espressif IoT development framework (esp-idf) RFC-4122 UUID generator component.  Information on features and functionality are documented and can be found in the `uuid.h` header file.
 
 ## Repository
 
@@ -99,5 +99,12 @@ I (31647) ESP-IDF COMPONENTS [APP]: Seed Time: 1-us
 I (31647) ESP-IDF COMPONENTS [APP]: Variant4 UUID (5-us): 3d9d78de-071d-4901-bde4-ded767d8deb8
 I (31657) ESP-IDF COMPONENTS [APP]: ######################## UUID - END ###########################
 ```
+
+## References
+
+Information referenced for this component are outlined as follows:
+
+- RFC-4122 specification: <https://datatracker.ietf.org/doc/html/rfc4122>
+- C++ UUID generator (original source): <https://github.com/RobTillaart/UUID/blob/master/README.md>
 
 Copyright (c) 2024 Eric Gionet (<gionet.c.eric@gmail.com>)

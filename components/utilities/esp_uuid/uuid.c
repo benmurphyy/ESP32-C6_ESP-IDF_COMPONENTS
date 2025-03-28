@@ -106,7 +106,7 @@ const char* uuid_generate(void) {
     }
 
     /*
-        Conforming to RFC 4122 Specification:
+        Conforming to RFC-4122 Specification:
 
             - byte 7: four most significant bits ==> 0100  --> always 4
             - byte 9: two  most significant bits ==> 10    --> always {8, 9, A, B}.
