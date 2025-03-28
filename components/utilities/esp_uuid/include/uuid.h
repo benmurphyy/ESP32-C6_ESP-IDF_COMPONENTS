@@ -48,7 +48,7 @@ extern "C" {
  * @brief UUID modes enumerator.
  */
 typedef enum uuid_modes_e {
-    UUID_MODE_VARIANT4 = 0,  /*!< Variant 4 UUID */
+    UUID_MODE_VARIANT4 = 0,  /*!< Variant-4 UUID */
     UUID_MODE_RANDOM   = 1,  /*!< Random UUID */
 } uuid_modes_t;
 

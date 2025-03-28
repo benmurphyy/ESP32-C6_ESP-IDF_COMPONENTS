@@ -20,8 +20,15 @@ include($ENV{IDF_PATH}/tools/cmake/version.cmake)
 # check if JSONParser is available
 find_package(JSONParser)
 
+# test
+if(JSONPARSER_FOUND)
+    message("JSON Parser Found")
+else()
+    message("JSON Parser Not Found")
+endif()
+
 # validate JSONParser and version.h.in file are available
-if(JSONParser_FOUND AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in")
+if(JSONPARSER_FOUND AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in")
     # Get latest versioning information from git repository
     execute_process(
         COMMAND dotnet-gitversion
@@ -68,11 +75,15 @@ if(JSONParser_FOUND AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in")
 
     # Update YAML & JSON files with versioning information
     execute_process(
-        COMMAND python3 cmake_build.py "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
-        WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/vers"
-        ERROR_VARIABLE ERROR_CODE
+        COMMAND python3 "${CMAKE_SOURCE_DIR}/vers/cmake_build.py" "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        ERROR_VARIABLE ERROR
+        OUTPUT_VARIABLE  OUTPUT
         COMMAND_ERROR_IS_FATAL ANY
     )
+
+    message("Output Var: " ${OUTPUT})
+    message("Error Var:  " ${ERROR})
 endif()
 
 # Register the component

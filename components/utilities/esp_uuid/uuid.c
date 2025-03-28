@@ -96,7 +96,7 @@ void uuid_seed(uint8_t size, ... ) {
 }
 
 const char* uuid_generate(void) {
-    char uuid_buffer[UUID_BUFFER_SIZE];
+    static char uuid_buffer[UUID_BUFFER_SIZE];
     uint32_t ar[UUID_RANDOM_SIZE];
 
     /* generate 4 random numbers */
