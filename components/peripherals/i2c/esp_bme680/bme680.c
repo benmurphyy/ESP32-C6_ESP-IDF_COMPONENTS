@@ -1028,7 +1028,7 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     uint32_t        adc_press;
     uint16_t        adc_humi;
     uint32_t        adc_temp;
-    bit80_uint8_buffer_t rx;
+    bit104_uint8_buffer_t rx;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle && data );
@@ -1055,21 +1055,21 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     } while (data_is_ready == false);
 
     // need to read in one sequence to ensure they match.
-    ESP_GOTO_ON_ERROR( bme680_i2c_read_from(handle, BME680_REG_PRESS, rx, BIT80_UINT8_BUFFER_SIZE), err, TAG, "read adc data failed" );
+    ESP_GOTO_ON_ERROR( bme680_i2c_read_from(handle, BME680_REG_PRESS, rx, BIT104_UINT8_BUFFER_SIZE), err, TAG, "read adc data failed" );
 
     /* instantiate gas lsb register */
-    bme680_gas_lsb_register_t gas_lsb_reg = { .reg = rx[9] };
+    bme680_gas_lsb_register_t gas_lsb_reg = { .reg = rx[12] };
 
     /* concat parameters */
     adc_press = ((uint32_t)rx[0] << 12) | ((uint32_t)rx[1] << 4) | ((uint32_t)rx[2] >> 4);
     adc_temp  = ((uint32_t)rx[3] << 12) | ((uint32_t)rx[4] << 4) | ((uint32_t)rx[5] >> 4);
     adc_humi  = ((uint16_t)rx[6] << 8) | (uint16_t)rx[7];
-    adc_gas_r = ((uint16_t)rx[8] << 2) | ((uint16_t)rx[9] >> 6);
+    adc_gas_r = ((uint16_t)rx[11] << 2) | ((uint16_t)rx[12] >> 6);
 
     ESP_LOGD(TAG, "ADC humidity:    %" PRIu16, adc_humi);
     ESP_LOGD(TAG, "ADC temperature: %" PRIu32, adc_temp);
     ESP_LOGD(TAG, "ADC pressure:    %" PRIu32, adc_press);
-    ESP_LOGW(TAG, "ADC gas:         %" PRIu16, adc_gas_r);
+    ESP_LOGD(TAG, "ADC gas:         %" PRIu16, adc_gas_r);
 
     /* initialize data structure */
     data->temperature    = adc_temp;

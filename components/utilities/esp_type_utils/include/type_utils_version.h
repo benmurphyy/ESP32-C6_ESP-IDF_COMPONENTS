@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define TYPE_UTILS_FW_VERSION_PATCH            2
 /** Semantic version number (X.X.X-X) */
-#define TYPE_UTILS_FW_SEMANTIC_VERSION         "1.2.2-2"
+#define TYPE_UTILS_FW_SEMANTIC_VERSION         "1.2.2-8"
 /** Git version hash */
-#define TYPE_UTILS_FW_GIT_SHORT_SHA            "1a6e42f"
+#define TYPE_UTILS_FW_GIT_SHORT_SHA            "972f307"
 
 
 /**

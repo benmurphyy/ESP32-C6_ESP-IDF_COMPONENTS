@@ -159,7 +159,7 @@ uuid_modes_t uuid_get_mode(void) {
 }
 
 const char* uuid_get_fw_version(void) {
-    return UUID_FW_VERSION_STR;
+    return (const char*)UUID_FW_VERSION_STR;
 }
 
 int32_t uuid_get_fw_version_number(void) {

@@ -16,20 +16,16 @@
 # i.e. C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
 #
 include($ENV{IDF_PATH}/tools/cmake/version.cmake)
+include($ENV{IDF_PATH}/tools/cmake/JSONParser.cmake RESULT_VARIABLE JSONPARSER_FOUND)
 
-# check if JSONParser is available
-find_package(JSONParser)
+# string compare JSONParser library availability
+string(COMPARE NOTEQUAL "${JSONPARSER_FOUND}" "NOTFOUND" STR_CMP_RESULT)
 
-# test
-if(JSONPARSER_FOUND)
-    message("JSON Parser Found")
-else()
-    message("JSON Parser Not Found")
-endif()
-
-# validate JSONParser and version.h.in file are available
-if(JSONPARSER_FOUND AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in")
-    # Get latest versioning information from git repository
+# validate JSONParser library, version.h.in, cmake_build.py, library.json, 
+# and idf_component.yml files are available for preprocessing
+if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/cmake_build.py" 
+   AND EXISTS "${COMPONENT_DIR}/library.json" AND EXISTS "${COMPONENT_DIR}/idf_component.yml")
+    # Get latest versioning information from git repository with GitVersion
     execute_process(
         COMMAND dotnet-gitversion
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -73,17 +69,12 @@ if(JSONPARSER_FOUND AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in")
     # Generate header file with versioning information
     configure_file( "${CMAKE_SOURCE_DIR}/vers/version.h.in" "${COMPONENT_DIR}/include/${COMPONENT_FILE_NAME}_version.h" @ONLY )
 
-    # Update YAML & JSON files with versioning information
+    # Update versioning in the component's yaml and json files
     execute_process(
-        COMMAND python3 "${CMAKE_SOURCE_DIR}/vers/cmake_build.py" "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
+        COMMAND python "${CMAKE_SOURCE_DIR}/vers/cmake_build.py" "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        ERROR_VARIABLE ERROR
-        OUTPUT_VARIABLE  OUTPUT
-        COMMAND_ERROR_IS_FATAL ANY
+        RESULT_VARIABLE PY_RESULT
     )
-
-    message("Output Var: " ${OUTPUT})
-    message("Error Var:  " ${ERROR})
 endif()
 
 # Register the component
