@@ -1133,13 +1133,6 @@ esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready) {
         *ready = true;
     }
     
-    /*
-    if(status0_reg.bits.new_data == true) {
-        *ready = true;
-    } else {
-        *ready = false;
-    }
-    */
     return ESP_OK;
 }
 
