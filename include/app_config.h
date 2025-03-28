@@ -74,6 +74,10 @@ extern "C" {
 #define SPI1_TASK_STACK_SIZE           (TSK_MINIMAL_STACK_SIZE * 8)
 #define SPI1_TASK_PRIORITY             (tskIDLE_PRIORITY + 2)
 
+#define UTILS_TASK_SAMPLING_RATE       (30) // seconds
+#define UTILS_TASK_STACK_SIZE          (TSK_MINIMAL_STACK_SIZE * 8)
+#define UTILS_TASK_PRIORITY            (tskIDLE_PRIORITY + 2)
+
 #define APP_TAG                         "ESP-IDF COMPONENTS [APP]"
 
 // macros

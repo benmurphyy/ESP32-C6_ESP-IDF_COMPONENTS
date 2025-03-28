@@ -141,6 +141,7 @@ typedef union {
 * function and subroutine declarations
 */
 
+
 /**
  * @brief Generates a unique `uint32_t` chip identifier from e-fuse mac address.
  * 

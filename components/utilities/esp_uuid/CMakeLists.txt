@@ -60,6 +60,6 @@ configure_file( "${CMAKE_SOURCE_DIR}/vers/version.h.in" "${COMPONENT_DIR}/includ
 
 # Register the component
 idf_component_register(
-    SRCS type_utils.c
+    SRCS uuid.c
     INCLUDE_DIRS include
 )

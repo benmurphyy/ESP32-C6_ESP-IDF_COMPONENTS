@@ -95,6 +95,8 @@
 
 /* spi component tasks */
 
+/* utilities tasks */
+#include <uuid_task.h>
 
 
 /**
@@ -139,6 +141,13 @@ typedef enum spi_components_tag {
     SPI_COMPONENT_MAX31865,
 } spi_components_t;
 
+/**
+ * @brief Utilities components examples enumerator.
+ */
+typedef enum utils_components_tag {
+    UTILS_COMPONENT_UUID,
+} utils_components_t;
+
 
 // initialize master i2c 0 bus configuration
 i2c_master_bus_config_t  i2c0_bus_cfg = I2C0_MASTER_CONFIG_DEFAULT;
@@ -155,6 +164,8 @@ bool                     owb0_component_tasked = false;
 spi_bus_config_t         spi1_bus_cfg = SPI1_MASTER_CONFIG_DEFAULT;
 spi_device_handle_t      spi1_dev_hdl;
 bool                     spi1_component_tasked = false;
+
+bool                     utils_component_tasked = false;
 
 esp_err_t i2c_master_bus_detect_devices(i2c_master_bus_handle_t handle) {
     const uint16_t probe_timeout_ms = 50; // timeout in milliseconds
@@ -184,6 +195,36 @@ esp_err_t i2c_master_bus_detect_devices(i2c_master_bus_handle_t handle) {
     }
 
     return ESP_OK; 
+}
+
+/**
+ * @brief Creates a task pinned to the application core (1) by task function
+ * and task name to run an utilities component example.
+ * 
+ * @param task Task function reference.
+ * @param name Task reference name.
+ */
+static inline void utils_task_create(TaskFunction_t task, const char* name) {
+    /*  
+        note: only one task on the one wire master bus 0 can run at a time
+    */
+
+    /* validate utilities component flag */
+    if(utils_component_tasked == true) {
+        ESP_LOGE(APP_TAG, "A utilities component sample is already running on one wire master bus 0, failed to create owb0 task");
+        return;
+    }
+    /* create task pinned to the app core */
+    xTaskCreatePinnedToCore( 
+        task,
+        name, 
+        UTILS_TASK_STACK_SIZE, 
+        NULL, 
+        UTILS_TASK_PRIORITY, 
+        NULL, 
+        APP_CPU_NUM );
+    /* set utilities component flag */
+    utils_component_tasked = true;
 }
 
 /**
@@ -248,6 +289,25 @@ static inline void i2c0_task_create(TaskFunction_t task, const char* name) {
         APP_CPU_NUM );
     /* set i2c0 component flag */
     i2c0_component_tasked = true;
+}
+
+/**
+ * @brief UTILS example to run in the application by component name.
+ * 
+ * @param component UTILS component example to run in the application
+ */
+static inline void utils_component_example_start(const utils_components_t component) {
+    /*  
+        device task functions use a common naming nomenclature
+        for owb, i2c and adc peripherals, as an example: utils_[device]_task
+
+        note: only one utilities 0 task can run at a time
+     */
+    switch(component) {
+        case UTILS_COMPONENT_UUID:
+            utils_task_create(utils_uuid_task, UTILS_UUID_TASK_NAME);
+            break;
+    }
 }
 
 /**
@@ -422,7 +482,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
     //i2c0_component_example_start(I2C_COMPONENT_AS3935);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
-    i2c0_component_example_start(I2C_COMPONENT_BME680);
+    //i2c0_component_example_start(I2C_COMPONENT_BME680);
     //i2c0_component_example_start(I2C_COMPONENT_BMP280);
     //i2c0_component_example_start(I2C_COMPONENT_BMP390);
     //i2c0_component_example_start(I2C_COMPONENT_CCS811);
@@ -441,4 +501,6 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_VEML7700);
 
     //owb0_component_example_start(OWB_COMPONENT_DS18B20);
+
+    utils_component_example_start(UTILS_COMPONENT_UUID);
 }

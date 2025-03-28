@@ -2,11 +2,12 @@ cmake_minimum_required(VERSION 3.16.0)
 
 list(APPEND EXTRA_COMPONENT_DIRS
 
+    "components/utilities/sensirion_gas_index_algorithm"
     "components/utilities/esp_kalman_motion" 
     "components/utilities/esp_pressure_tendency" 
     "components/utilities/esp_scalar_trend" 
-    "components/utilities/sensirion_gas_index_algorithm"
-    "components/utilities/esp_type_utils" 
+    "components/utilities/esp_type_utils"
+    "components/utilities/esp_uuid" 
 
     "components/peripherals/adc/esp_s12sd"
 

@@ -68,11 +68,11 @@ static inline void print_registers(bme680_handle_t handle) {
 void i2c0_bme680_task( void *pvParameters ) {
     // initialize the xLastWakeTime variable with the current time.
     TickType_t          last_wake_time  = xTaskGetTickCount ();
-    //
+    
     // initialize i2c device configuration
     bme680_config_t dev_cfg         = I2C_BME680_CONFIG_DEFAULT;
     bme680_handle_t dev_hdl;
-    //
+    
     // init device
     bme680_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
     if (dev_hdl == NULL) {
@@ -85,7 +85,7 @@ void i2c0_bme680_task( void *pvParameters ) {
     // task loop entry point
     for ( ;; ) {
         ESP_LOGI(APP_TAG, "######################## BME680 - START #########################");
-        //
+        
         // handle sensor
 
         bme680_data_t data;
@@ -103,10 +103,9 @@ void i2c0_bme680_task( void *pvParameters ) {
             ESP_LOGI(APP_TAG, "gas range:           %u", data.gas_range);
             ESP_LOGI(APP_TAG, "gas valid:           %s", data.gas_valid ? "yes" : "no");
         }
-        //
+        
         ESP_LOGI(APP_TAG, "######################## BME680 - END ###########################");
-        //
-        //
+
         // pause the task per defined wait period
         vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
     }

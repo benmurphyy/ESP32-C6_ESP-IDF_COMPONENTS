@@ -27,8 +27,8 @@
  * MIT Licensed as described in the file LICENSE
  */
 
-#ifndef __FW_VERSION_H__
-#define __FW_VERSION_H__
+#ifndef __UUID_FW_VERSION_H__
+#define __UUID_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,18 +41,19 @@ extern "C" {
  * public constant definitions
  */
 
+#define UUID_COMPONENT_NAME              "esp_uuid"
 /** Version release date  */
-#define FW_VERSION_DATE        ""
+#define UUID_FW_VERSION_DATE             "2025-03-28"
 /** Major version number (X.x.x) */
-#define FW_VERSION_MAJOR       ""
+#define UUID_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define FW_VERSION_MINOR       ""
+#define UUID_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define FW_VERSION_PATCH       ""
+#define UUID_FW_VERSION_PATCH            2
 /** Semantic version number (X.X.X-X) */
-#define FW_SEMANTIC_VERSION    ""
+#define UUID_FW_SEMANTIC_VERSION         "1.2.2-2"
 /** Git version hash */
-#define FW_GIT_SHORT_SHA       ""
+#define UUID_FW_GIT_SHORT_SHA            "1a6e42f"
 
 
 /**
@@ -72,10 +73,10 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define FW_VERSION_STR                        \
-        STR( FW_VERSION_MAJOR ) "." \
-        STR( FW_VERSION_MINOR ) "." \
-        STR( FW_VERSION_PATCH )
+#define UUID_FW_VERSION_STR                        \
+        STR( UUID_FW_VERSION_MAJOR ) "." \
+        STR( UUID_FW_VERSION_MINOR ) "." \
+        STR( UUID_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -83,7 +84,7 @@ extern "C" {
  * 
  * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define UUID_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -92,10 +93,11 @@ extern "C" {
  * 
  * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define FW_VERSION_INT32                            \
-        FW_VERSION_PARAMS_INT32(FW_VERSION_MAJOR,   \
-                                FW_VERSION_MINOR,   \
-                                FW_VERSION_PATCH)
+#define UUID_FW_VERSION_INT32            \
+        UUID_FW_VERSION_PARAMS_INT32(    \
+                UUID_FW_VERSION_MAJOR,   \
+                UUID_FW_VERSION_MINOR,   \
+                UUID_FW_VERSION_PATCH)
 
 #ifdef __cplusplus
 }
@@ -103,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif //__FW_VERSION_H__
+#endif //__UUID_FW_VERSION_H__
