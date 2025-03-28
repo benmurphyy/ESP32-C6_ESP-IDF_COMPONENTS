@@ -46,7 +46,7 @@
 static uint32_t     uuid_m_w = 1;
 static uint32_t     uuid_m_z = 2;
 /* uuid mode */
-static uuid_modes_t uuid_mode;
+static uuid_modes_t uuid_mode = UUID_MODE_VARIANT4;
 
 
 /**
@@ -66,7 +66,6 @@ static inline uint32_t uuid_random(void) {
 void uuid_init(void) {
     uuid_seed(2, 1, 2);
     uuid_set_mode(UUID_MODE_VARIANT4);
-    uuid_generate();
 }
 
 void uuid_seed(uint8_t size, ... ) {
