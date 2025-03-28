@@ -1,0 +1,47 @@
+# This file was automatically generated for projects
+# without default 'CMakeLists.txt' file.
+
+FILE(GLOB_RECURSE app_sources ${CMAKE_SOURCE_DIR}/src/*.*)
+
+set(app_components
+    esp_kalman_motion
+    esp_pressure_tendency
+    esp_scalar_trend
+    sensirion_gas_index_algorithm
+    esp_type_utils
+    esp_s12sd
+    esp_ahtxx
+    esp_ak8975
+    esp_as7341
+    esp_bh1750
+    esp_bme680
+    esp_bmp280
+    esp_bmp390
+    esp_ccs811
+    esp_ens160
+    esp_hdc1080
+    esp_hmc5883l
+    esp_ltr390uv
+    #esp_max30105
+    esp_mlx90614
+    esp_mmc56x3
+    esp_mpu6050
+    esp_sgp4x
+    esp_sht4x
+    esp_ssd1306
+    esp_tlv493d
+    esp_veml7700
+    onewire_bus
+    esp_ds18b20
+    esp_max31865
+    esp_time_into_interval
+    esp_datalogger
+    esp_nvs_ext
+)
+
+idf_component_register(
+    SRCS ${app_sources}
+    INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/include
+    REQUIRES ${app_components}
+)
+

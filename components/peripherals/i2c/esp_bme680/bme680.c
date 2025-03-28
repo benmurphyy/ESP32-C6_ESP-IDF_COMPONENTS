@@ -318,6 +318,30 @@ static inline float bme680_compensate_gas_resistance(bme680_handle_t handle, uin
     return var1 * lookup_k2_range[gas_range] / (adc_gas_res - 512.0 + var1);
 }
 
+/*
+static inline float bme680_compensate_gas_resistance(bme680_handle_t handle, uint16_t adc_gas_res, uint8_t gas_range) {
+    float calc_gas_res;
+    float var1;
+    float var2;
+    float var3;
+    float gas_res_f = adc_gas_res;
+    float gas_range_f = (1U << gas_range); //lint !e790 / Suspicious truncation, integral to float 
+    const float lookup_k1_range[16] = {
+        0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, -0.8f, 0.0f, 0.0f, -0.2f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f
+    };
+    const float lookup_k2_range[16] = {
+        0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.7f, 0.0f, -0.8f, -0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+    };
+
+    var1 = (1340.0f + (5.0f * handle->dev_cal_factors->range_switching_error));
+    var2 = (var1) * (1.0f + lookup_k1_range[gas_range] / 100.0f);
+    var3 = 1.0f + (lookup_k2_range[gas_range] / 100.0f);
+    calc_gas_res = 1.0f / (float)(var3 * (0.000000125f) * gas_range_f * (((gas_res_f - 512.0f) / var2) + 1.0f));
+
+    return calc_gas_res;
+}
+*/
+
 static inline uint8_t bme680_compensate_heater_resistance(bme680_handle_t handle, uint16_t temperature) {
     /* Cap temperature */
     if (temperature > 400) {
@@ -999,7 +1023,6 @@ char *bme680_air_quality_to_string(float iaq_score) {
 
 esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *const data) {
     esp_err_t       ret             = ESP_OK;
-    uint64_t        start_time      = 0;
     bool            data_is_ready   = false;
     uint16_t        adc_gas_r;
     uint32_t        adc_press;
@@ -1016,7 +1039,7 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     }
 
     /* set start time for timeout monitoring */
-    start_time = esp_timer_get_time();
+    uint64_t start_time = esp_timer_get_time();
 
     /* attempt to poll until data is available or timeout */
     do {
@@ -1042,12 +1065,11 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     adc_temp  = ((uint32_t)rx[3] << 12) | ((uint32_t)rx[4] << 4) | ((uint32_t)rx[5] >> 4);
     adc_humi  = ((uint16_t)rx[6] << 8) | (uint16_t)rx[7];
     adc_gas_r = ((uint16_t)rx[8] << 2) | ((uint16_t)rx[9] >> 6);
-    //adc_gas_r = (uint16_t) ((uint32_t) rx[8] * 4 | (((uint32_t) rx[9]) / 64));
 
     ESP_LOGD(TAG, "ADC humidity:    %" PRIu16, adc_humi);
     ESP_LOGD(TAG, "ADC temperature: %" PRIu32, adc_temp);
     ESP_LOGD(TAG, "ADC pressure:    %" PRIu32, adc_press);
-    ESP_LOGD(TAG, "ADC gas:         %" PRIu16, adc_gas_r);
+    ESP_LOGW(TAG, "ADC gas:         %" PRIu16, adc_gas_r);
 
     /* initialize data structure */
     data->temperature    = adc_temp;
