@@ -45,8 +45,7 @@
 /* Marsaglia initializer 'constants' */
 static uint32_t     uuid_m_w = 1;
 static uint32_t     uuid_m_z = 2;
-/* uuid buffer & mode */
-static char         uuid_buffer[UUID_BUFFER_SIZE];
+/* uuid mode */
 static uuid_modes_t uuid_mode;
 
 
@@ -98,6 +97,7 @@ void uuid_seed(uint8_t size, ... ) {
 }
 
 const char* uuid_generate(void) {
+    char uuid_buffer[UUID_BUFFER_SIZE];
     uint32_t ar[UUID_RANDOM_SIZE];
 
     /* generate 4 random numbers */
@@ -146,7 +146,7 @@ const char* uuid_generate(void) {
     }
   
     /* null terminator - string */
-    uuid_buffer[36] = 0;
+    uuid_buffer[UUID_BUFFER_SIZE-1] = 0;
 
     return (const char*)uuid_buffer;
 }
