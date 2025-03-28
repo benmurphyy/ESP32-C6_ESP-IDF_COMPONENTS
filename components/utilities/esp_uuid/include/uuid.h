@@ -26,7 +26,7 @@
  * @defgroup utilities
  * @{
  *
- * 
+ * Motivated by: https://github.com/RobTillaart/UUID/blob/master/README.md
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -68,16 +68,9 @@ void uuid_seed(uint8_t size, ... );
 /**
  * @brief Generate a UUID.
  * 
- * @note The UUID is stored in a static buffer and can be retrieved using uuid_get().
- */
-void uuid_generate(void);
-
-/**
- * @brief Get the generated UUID.
- * 
  * @return const char* Pointer to the UUID string.
  */
-const char* uuid_get(void);
+const char* uuid_generate(void);
 
 /**
  * @brief Set the UUID mode.
@@ -93,6 +86,19 @@ void uuid_set_mode(const uuid_modes_t mode);
  */
 uuid_modes_t uuid_get_mode(void);
 
+/**
+ * @brief Converts `uuid` firmware version numbers (major, minor, patch) into a string.
+ * 
+ * @return char* `uuid` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
+ */
+const char* uuid_get_fw_version(void);
+
+/**
+ * @brief Converts `uuid` firmware version numbers (major, minor, patch) into an integer value.
+ * 
+ * @return int32_t `uuid` firmware version number.
+ */
+int32_t uuid_get_fw_version_number(void);
 
 
 #ifdef __cplusplus

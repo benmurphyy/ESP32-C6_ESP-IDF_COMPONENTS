@@ -34,7 +34,7 @@ components
 
 ## Basic Example
 
-Once the component is referenced as an include, the functions should be visible and available for usage.  The below example demonstrates variant-4 and random UUID generation with timespan results printed to the console.
+Once the component is referenced as an include, the functions should be visible and available for usage.  The below example demonstrates variant-4 and random UUID generation with processing time-span results printed to the serial console.
 
 ```c
 #include <uuid.h>
@@ -50,16 +50,14 @@ void utils_uuid_task( void *pvParameters ) {
         
         uint64_t start_time = esp_timer_get_time();
         uuid_set_mode(UUID_MODE_VARIANT4);
-        uuid_generate();
-        const char* uuid_var = uuid_get();
+        const char* uuid_var = uuid_generate();
         uint64_t stop_time = esp_timer_get_time();
         uint32_t time_diff = stop_time - start_time;
         ESP_LOGI(APP_TAG, "Variant4 UUID (%lu-us): %s", time_diff, uuid_var);
 
         start_time = esp_timer_get_time();
         uuid_set_mode(UUID_MODE_RANDOM);
-        uuid_generate();
-        const char* uuid_ran = uuid_get();
+        const char* uuid_ran = uuid_generate();
         stop_time = esp_timer_get_time();
         time_diff = stop_time - start_time;
         ESP_LOGI(APP_TAG, "Random UUID   (%lu-us): %s", time_diff, uuid_ran);
@@ -75,8 +73,7 @@ void utils_uuid_task( void *pvParameters ) {
 
         start_time = esp_timer_get_time();
         uuid_set_mode(UUID_MODE_VARIANT4);
-        uuid_generate();
-        const char* uuid_seed = uuid_get();
+        const char* uuid_seed = uuid_generate();
         stop_time = esp_timer_get_time();
         time_diff = stop_time - start_time;
         ESP_LOGI(APP_TAG, "Variant4 UUID (%lu-us): %s", time_diff, uuid_seed);
@@ -90,6 +87,17 @@ void utils_uuid_task( void *pvParameters ) {
     // free resources
     vTaskDelete( NULL );
 }
+```
+
+The results of the UUID generation printed to the serial console are shown below.
+
+```text
+I (31627) ESP-IDF COMPONENTS [APP]: ######################## UUID - START #########################
+I (31627) ESP-IDF COMPONENTS [APP]: Variant4 UUID (5-us): 053031da-e5cf-4de1-8429-285b0dba59d5
+I (31637) ESP-IDF COMPONENTS [APP]: Random UUID   (5-us): d29b226d-04b5-e3ae-cd63-e6ec0d5611ab
+I (31647) ESP-IDF COMPONENTS [APP]: Seed Time: 1-us
+I (31647) ESP-IDF COMPONENTS [APP]: Variant4 UUID (5-us): 3d9d78de-071d-4901-bde4-ded767d8deb8
+I (31657) ESP-IDF COMPONENTS [APP]: ######################## UUID - END ###########################
 ```
 
 Copyright (c) 2024 Eric Gionet (<gionet.c.eric@gmail.com>)

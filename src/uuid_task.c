@@ -49,16 +49,14 @@ void utils_uuid_task( void *pvParameters ) {
         
         uint64_t start_time = esp_timer_get_time();
         uuid_set_mode(UUID_MODE_VARIANT4);
-        uuid_generate();
-        const char* uuid_var = uuid_get();
+        const char* uuid_var = uuid_generate();
         uint64_t stop_time = esp_timer_get_time();
         uint32_t time_diff = stop_time - start_time;
         ESP_LOGI(APP_TAG, "Variant4 UUID (%lu-us): %s", time_diff, uuid_var);
 
         start_time = esp_timer_get_time();
         uuid_set_mode(UUID_MODE_RANDOM);
-        uuid_generate();
-        const char* uuid_ran = uuid_get();
+        const char* uuid_ran = uuid_generate();
         stop_time = esp_timer_get_time();
         time_diff = stop_time - start_time;
         ESP_LOGI(APP_TAG, "Random UUID   (%lu-us): %s", time_diff, uuid_ran);
@@ -74,8 +72,7 @@ void utils_uuid_task( void *pvParameters ) {
 
         start_time = esp_timer_get_time();
         uuid_set_mode(UUID_MODE_VARIANT4);
-        uuid_generate();
-        const char* uuid_seed = uuid_get();
+        const char* uuid_seed = uuid_generate();
         stop_time = esp_timer_get_time();
         time_diff = stop_time - start_time;
         ESP_LOGI(APP_TAG, "Variant4 UUID (%lu-us): %s", time_diff, uuid_seed);

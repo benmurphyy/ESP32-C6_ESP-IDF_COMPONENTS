@@ -89,15 +89,15 @@ void uuid_seed(uint8_t size, ... ) {
     va_end(valist);
 
     /* prevent 0 as value */
-    if(s[1] == 0) s[1] = 1;
-    if(s[2] == 0) s[2] = 2;
+    if(s[0] == 0) s[0] = 1;
+    if(s[1] == 0) s[1] = 2;
 
     /* set Marsaglia constants */
-    uuid_m_w = s[1];
-    uuid_m_z = s[2];
+    uuid_m_w = s[0];
+    uuid_m_z = s[1];
 }
 
-void uuid_generate(void) {
+const char* uuid_generate(void) {
     uint32_t ar[UUID_RANDOM_SIZE];
 
     /* generate 4 random numbers */
@@ -147,9 +147,7 @@ void uuid_generate(void) {
   
     /* null terminator - string */
     uuid_buffer[36] = 0;
-}
 
-const char* uuid_get(void) {
     return (const char*)uuid_buffer;
 }
 
@@ -159,4 +157,12 @@ void uuid_set_mode(const uuid_modes_t mode) {
 
 uuid_modes_t uuid_get_mode(void) {
     return uuid_mode;
+}
+
+const char* uuid_get_fw_version(void) {
+    return UUID_FW_VERSION_STR;
+}
+
+int32_t uuid_get_fw_version_number(void) {
+    return UUID_FW_VERSION_INT32;
 }
