@@ -21,10 +21,12 @@ include($ENV{IDF_PATH}/tools/cmake/JSONParser.cmake RESULT_VARIABLE JSONPARSER_F
 # string compare JSONParser library availability
 string(COMPARE NOTEQUAL "${JSONPARSER_FOUND}" "NOTFOUND" STR_CMP_RESULT)
 
-# validate JSONParser library, version.h.in, cmake_build.py, library.json, 
-# and idf_component.yml files are available for preprocessing
-if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/cmake_build.py" 
-   AND EXISTS "${COMPONENT_DIR}/library.json" AND EXISTS "${COMPONENT_DIR}/idf_component.yml")
+# validate JSONParser library, version.h.in, pio_lib_sync.py, esp_cmp_sync.py, 
+# library.json.in, and idf_component.yml.in files are available for preprocessing
+if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/stg/version.h.in" 
+    AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/stg/pio_lib_sync.py" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/stg/esp_cmp_sync.py"
+    AND EXISTS "${COMPONENT_DIR}/include/library.json.in" AND EXISTS "${COMPONENT_DIR}/include/idf_component.yml.in")
+    
     # Get latest versioning information from git repository with GitVersion
     execute_process(
         COMMAND dotnet-gitversion
@@ -66,15 +68,22 @@ if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h
     # Set the component file name to upper case
     string(TOUPPER "${COMPONENT_FILE_NAME}" COMPONENT_FILE_NAME_UPPER)
 
-    # Generate header file with versioning information
-    configure_file( "${CMAKE_SOURCE_DIR}/vers/version.h.in" "${COMPONENT_DIR}/include/${COMPONENT_FILE_NAME}_version.h" @ONLY )
+    # Generate C header file from template with versioning information
+    configure_file( "${CMAKE_SOURCE_DIR}/stg/version.h.in" "${COMPONENT_DIR}/include/${COMPONENT_FILE_NAME}_version.h" @ONLY )
 
-    # Update versioning in the component's yaml and json files
-    execute_process(
-        COMMAND python "${CMAKE_SOURCE_DIR}/vers/cmake_build.py" "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        RESULT_VARIABLE PY_RESULT
-    )
+    # Generate json library file from template with versioning information
+    configure_file( "${COMPONENT_DIR}/include/library.json.in" "${COMPONENT_DIR}/library.json" @ONLY )
+
+    # Generate yml idf component file from template with versioning information
+    configure_file( "${COMPONENT_DIR}/include/idf_component.yml.in" "${COMPONENT_DIR}/idf_component.yml" @ONLY )
+
+    # Package components and upload to ESP-IDF component and platformio 
+    # library registries when the version is tagged with a release version
+    #execute_process(
+    #    COMMAND python "${CMAKE_SOURCE_DIR}/vers/cmake_build.py" "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
+    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    #    RESULT_VARIABLE PY_RESULT
+    #)
 endif()
 
 # Register the component

@@ -79,6 +79,6 @@ endif()
 
 # Register the component
 idf_component_register(
-    SRCS uuid.c
+    SRCS type_utils.c
     INCLUDE_DIRS include
 )
