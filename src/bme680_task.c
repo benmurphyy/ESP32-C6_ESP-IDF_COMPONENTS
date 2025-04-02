@@ -89,7 +89,7 @@ void i2c0_bme680_task( void *pvParameters ) {
         // handle sensor
 
         bme680_data_t data;
-        esp_err_t result = bme680_get_measurement(dev_hdl, &data);
+        esp_err_t result = bme680_get_data(dev_hdl, &data);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "bme680 device read failed (%s)", esp_err_to_name(result));
         } else {

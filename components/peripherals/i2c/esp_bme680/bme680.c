@@ -1072,7 +1072,7 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
         return ret;
 }
 
-esp_err_t bme680_get_measurement(bme680_handle_t handle, bme680_data_t *const data) {
+esp_err_t bme680_get_data(bme680_handle_t handle, bme680_data_t *const data) {
     bme680_adc_data_t adc_data;
 
     /* validate arguments */
@@ -1098,13 +1098,6 @@ esp_err_t bme680_get_measurement(bme680_handle_t handle, bme680_data_t *const da
     vTaskDelay(pdMS_TO_TICKS(BME680_CMD_DELAY_MS));
 
     return ESP_OK;
-}
-
-esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t **const data, uint8_t *const count) {
-    /* validate arguments */
-    ESP_ARG_CHECK( handle && data && count );
-
-    return ESP_ERR_NOT_FINISHED;
 }
 
 esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready) {
