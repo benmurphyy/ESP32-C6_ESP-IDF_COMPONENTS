@@ -761,7 +761,6 @@ esp_err_t ssd1306_display_image(ssd1306_handle_t handle, uint8_t page, uint8_t s
 	return ESP_OK;
 
 	err:
-		free(out_buf);
 		return ret;
 }
 

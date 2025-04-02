@@ -78,7 +78,7 @@ extern "C" {
         .humidity_oversampling      = BME680_HUMIDITY_OVERSAMPLING_4X,          \
         .gas_enabled                = true,                                     \
         .heater_temperature         = 300,                                      \
-        .heater_duration            = 100,                                      \
+        .heater_duration            = 300,                                      \
         .heater_profile_size        = 1                                         \
     }
     
