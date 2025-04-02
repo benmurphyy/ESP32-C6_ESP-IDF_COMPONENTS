@@ -134,8 +134,8 @@ typedef enum bme680_iir_filters_e {
 typedef enum bme680_power_modes_e {
     BME680_POWER_MODE_SLEEP      = (0b00), //!< sleep mode, default after power-up
     BME680_POWER_MODE_FORCED     = (0b01), //!< measurement is initiated by user
-    BME680_POWER_MODE_PARALLEL   = (0b10),
-    BME680_POWER_MODE_SEQUENTIAL = (0b11)
+    BME680_POWER_MODE_PARALLEL   = (0b10), //!< parallel mode, gas and TPH measurements are done in parallel
+    BME680_POWER_MODE_SEQUENTIAL = (0b11)  //!< sequential mode, gas and TPH measurements are done in sequence
 } bme680_power_modes_t;
 
 /**
