@@ -1,0 +1,27 @@
+dependencies:
+  espressif/onewire_bus:
+    component_hash: null
+    source:
+      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals
+      type: local
+    version: '*'
+  idf:
+    component_hash: null
+    source:
+      type: idf
+    version: 5.4.0
+  k0i05/esp_time_into_interval:
+    component_hash: null
+    source:
+      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\schedule\esp_time_into_interval
+      type: local
+    version: 1.2.1
+  k0i05/esp_type_utils:
+    component_hash: null
+    source:
+      path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals
+      type: local
+    version: '*'
+manifest_hash: 63802c11e95f8b96a2eea668320bf3a62297fef82855b3325c929b9226288bc0
+target: esp32s3
+version: 1.0.0
