@@ -475,6 +475,7 @@ void app_main( void ) {
     vTaskDelay( pdMS_TO_TICKS(500) );
 
     /* start a component example */
+    /* dotnet-gitversion */
     /* note: only one component example can run at a time */
     
     //i2c0_component_example_start(I2C_COMPONENT_AHTXX);

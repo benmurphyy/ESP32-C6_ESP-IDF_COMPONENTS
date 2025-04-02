@@ -49,11 +49,11 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define AS7341_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define AS7341_FW_VERSION_PATCH            4
+#define AS7341_FW_VERSION_PATCH            5
 /** Semantic version number (X.X.X-X) */
-#define AS7341_FW_SEMANTIC_VERSION         "1.2.4-1"
+#define AS7341_FW_SEMANTIC_VERSION         "1.2.5-1"
 /** Git version hash */
-#define AS7341_FW_GIT_SHORT_SHA            "830deba"
+#define AS7341_FW_GIT_SHORT_SHA            "82602db"
 
 
 /**
