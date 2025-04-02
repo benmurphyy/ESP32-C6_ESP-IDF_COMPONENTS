@@ -49,11 +49,11 @@ extern "C" {
 /** Minor version number (x.X.x) */
 #define BMP390_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define BMP390_FW_VERSION_PATCH            3
+#define BMP390_FW_VERSION_PATCH            4
 /** Semantic version number (X.X.X-X) */
-#define BMP390_FW_SEMANTIC_VERSION         "1.2.3"
+#define BMP390_FW_SEMANTIC_VERSION         "1.2.4-1"
 /** Git version hash */
-#define BMP390_FW_GIT_SHORT_SHA            "9961759"
+#define BMP390_FW_GIT_SHORT_SHA            "830deba"
 
 
 /**
