@@ -15,16 +15,18 @@
 # Copy the CMake JSONParser.cmake file to the tools/cmake directory of your ESP-IDF installation.
 # i.e. C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
 #
-include($ENV{IDF_PATH}/tools/cmake/version.cmake)
-include($ENV{IDF_PATH}/tools/cmake/JSONParser.cmake RESULT_VARIABLE JSONPARSER_FOUND)
+include( $ENV{IDF_PATH}/tools/cmake/version.cmake )
+include( $ENV{IDF_PATH}/tools/cmake/JSONParser.cmake RESULT_VARIABLE JSONPARSER_FOUND )
 
 # string compare JSONParser library availability
-string(COMPARE NOTEQUAL "${JSONPARSER_FOUND}" "NOTFOUND" STR_CMP_RESULT)
+string( COMPARE NOTEQUAL "${JSONPARSER_FOUND}" "NOTFOUND" STR_CMP_RESULT )
 
-# validate JSONParser library, version.h.in, cmake_build.py, library.json, 
-# and idf_component.yml files are available for preprocessing
-if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h.in" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/cmake_build.py" 
-   AND EXISTS "${COMPONENT_DIR}/library.json" AND EXISTS "${COMPONENT_DIR}/idf_component.yml")
+# validate JSONParser library, version.h.in, pio_lib_sync.py, esp_cmp_sync.py, 
+# library.json.in, and idf_component.yml.in files are available for preprocessing
+if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/include/version.h.in" 
+    AND EXISTS "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/library.json.in" 
+    AND EXISTS "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/idf_component.yml.in")
+
     # Get latest versioning information from git repository with GitVersion
     execute_process(
         COMMAND dotnet-gitversion
@@ -34,51 +36,62 @@ if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vers/version.h
     )
 
     # Instantiate json variable
-    sbeParseJson(GIT_VERSION_JSON GIT_VERSION_OUTPUT)
+    sbeParseJson( GIT_VERSION_JSON GIT_VERSION_OUTPUT )
 
     # Parse versioning variables from json output
-    set(GIT_VERSION_DATE  ${GIT_VERSION_JSON.CommitDate})
-    set(GIT_SEM_VERSION   ${GIT_VERSION_JSON.MajorMinorPatch})
-    set(GIT_VERSION_MAJOR ${GIT_VERSION_JSON.Major})
-    set(GIT_VERSION_MINOR ${GIT_VERSION_JSON.Minor})
-    set(GIT_VERSION_PATCH ${GIT_VERSION_JSON.Patch})
-    set(GIT_FULL_SEM_VER  ${GIT_VERSION_JSON.FullSemVer})
-    set(GIT_SHORT_SHA     ${GIT_VERSION_JSON.ShortSha})
+    set( GIT_VERSION_DATE  ${GIT_VERSION_JSON.CommitDate} )
+    set( GIT_SEM_VERSION   ${GIT_VERSION_JSON.MajorMinorPatch} )
+    set( GIT_VERSION_MAJOR ${GIT_VERSION_JSON.Major} )
+    set( GIT_VERSION_MINOR ${GIT_VERSION_JSON.Minor} )
+    set( GIT_VERSION_PATCH ${GIT_VERSION_JSON.Patch} )
+    set( GIT_FULL_SEM_VER  ${GIT_VERSION_JSON.FullSemVer} )
+    set( GIT_SHORT_SHA     ${GIT_VERSION_JSON.ShortSha} )
 
     # Release json variable
-    sbeClearJson(GIT_VERSION_JSON)
-
-    # Parse component name from component path
-    get_filename_component(COMPONENT_NAME "${COMPONENT_DIR}" NAME)
+    sbeClearJson( GIT_VERSION_JSON )
 
     # Components should be named as "esp_<component_name>"
-    string(FIND "${COMPONENT_NAME}" "esp_" ESP_PREFIX)
+    string( FIND "${COMPONENT_NAME}" "esp_" ESP_PREFIX )
 
     # Check if the component name starts with "esp_"
     if(ESP_PREFIX EQUAL -1)
         # Use the component name as is
-        string(CONCAT COMPONENT_FILE_NAME "" "${COMPONENT_NAME}")
+        string( CONCAT COMPONENT_HEADER_NAME "" "${COMPONENT_NAME}" )
     else()
         # Parse component file name from component name
-        string(REPLACE "esp_" "" COMPONENT_FILE_NAME "${COMPONENT_NAME}")
+        string( REPLACE "esp_" "" COMPONENT_HEADER_NAME "${COMPONENT_NAME}" )
     endif()
 
-    # Set the component file name to upper case
-    string(TOUPPER "${COMPONENT_FILE_NAME}" COMPONENT_FILE_NAME_UPPER)
+    # Set the component header name to upper case
+    string( TOUPPER "${COMPONENT_HEADER_NAME}" COMPONENT_HEADER_NAME_UPPER )
 
-    # Generate header file with versioning information
-    configure_file( "${CMAKE_SOURCE_DIR}/vers/version.h.in" "${COMPONENT_DIR}/include/${COMPONENT_FILE_NAME}_version.h" @ONLY )
 
-    # Update versioning in the component's yaml and json files
-    execute_process(
-        COMMAND python "${CMAKE_SOURCE_DIR}/vers/cmake_build.py" "${COMPONENT_DIR}" "${GIT_SEM_VERSION}"
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        RESULT_VARIABLE PY_RESULT
-    )
+    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY
+
+    # Remove C header versioning file from component directory
+    file( REMOVE "${COMPONENT_DIR}/include/${COMPONENT_HEADER_NAME}_version.h" )
+
+    # Remove json library file from component directory
+    file( REMOVE "${COMPONENT_DIR}/library.json" )
+
+    # Remove yml idf component file from component directory
+    file( REMOVE "${COMPONENT_DIR}/idf_component.yml" )
+
+
+    # GENERATE FILES FROM TEMPLATES FOR COMPONENT DIRECTORY
+
+    # Generate C header file from template with versioning information
+    configure_file( "${CMAKE_SOURCE_DIR}/templates/component/include/version.h.in" "${COMPONENT_DIR}/include/${COMPONENT_HEADER_NAME}_version.h" @ONLY )
+
+    # Generate json library file from template with versioning information
+    configure_file( "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/library.json.in" "${COMPONENT_DIR}/library.json" @ONLY )
+
+    # Generate yml idf component file from template with versioning information
+    configure_file( "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/idf_component.yml.in" "${COMPONENT_DIR}/idf_component.yml" @ONLY )
 endif()
 
 # Register the component
 idf_component_register(
-    SRCS uuid.c
+    SRCS type_utils.c
     INCLUDE_DIRS include
 )

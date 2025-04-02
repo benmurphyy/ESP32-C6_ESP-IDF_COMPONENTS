@@ -491,9 +491,9 @@ esp_err_t ds18b20_delete(ds18b20_handle_t handle) {
 }
 
 const char* ds18b20_get_fw_version(void) {
-    return DS18S20_FW_VERSION_STR;
+    return DS18B20_FW_VERSION_STR;
 }
 
 int32_t ds18b20_get_fw_version_number(void) {
-    return DS18S20_FW_VERSION_INT32;
+    return DS18B20_FW_VERSION_INT32;
 }

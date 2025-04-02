@@ -22,18 +22,13 @@
  */
 
 /**
- * @file ahtxx_version.h
- * @defgroup drivers ahtxx
- * @{
- *
- * ESP-IDF driver for ahtxx sensor
- *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __AHTXX_VERSION_H__
-#define __AHTXX_VERSION_H__
+
+#ifndef __AHTXX_FW_VERSION_H__
+#define __AHTXX_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,16 +36,24 @@
 extern "C" {
 #endif
 
+
 /**
  * public constant definitions
  */
 
+#define AHTXX_COMPONENT_NAME              "esp_ahtxx"
+/** Version release date  */
+#define AHTXX_FW_VERSION_DATE             "2025-04-02"
 /** Major version number (X.x.x) */
-#define AHTXX_FW_VERSION_MAJOR 1
+#define AHTXX_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define AHTXX_FW_VERSION_MINOR 2
+#define AHTXX_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define AHTXX_FW_VERSION_PATCH 1
+#define AHTXX_FW_VERSION_PATCH            2
+/** Semantic version number (X.X.X-X) */
+#define AHTXX_FW_SEMANTIC_VERSION         "1.2.2-feat.1+14"
+/** Git version hash */
+#define AHTXX_FW_GIT_SHORT_SHA            "0adba88"
 
 
 /**
@@ -68,37 +71,33 @@ extern "C" {
 #define STR( x ) STR_QUOTES( x )
 
 /** 
- * Macro to generate current firmware version numbers (major, minor, patch, build) into a string that is formatted as X.X.X (e.g. 4.0.0). 
+ * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define AHTXX_FW_VERSION_STR              \
+#define AHTXX_FW_VERSION_STR                        \
         STR( AHTXX_FW_VERSION_MAJOR ) "." \
         STR( AHTXX_FW_VERSION_MINOR ) "." \
-        STR( AHTXX_FW_VERSION_PATCH ) 
+        STR( AHTXX_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AHTXX_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
+#define AHTXX_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AHTXX_FW_VERSION_INT32                                  \
-        AHTXX_FW_VERSION_PARAMS_INT32(AHTXX_FW_VERSION_MAJOR,   \
-                                        AHTXX_FW_VERSION_MINOR, \
-                                        AHTXX_FW_VERSION_PATCH)
-
-
-
-
-
+#define AHTXX_FW_VERSION_INT32            \
+        AHTXX_FW_VERSION_PARAMS_INT32(    \
+                AHTXX_FW_VERSION_MAJOR,   \
+                AHTXX_FW_VERSION_MINOR,   \
+                AHTXX_FW_VERSION_PATCH)
 
 #ifdef __cplusplus
 }
@@ -106,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __AHTXX_VERSION_H__
+#endif //__AHTXX_FW_VERSION_H__

@@ -547,7 +547,9 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
  * @param[out] data BME680 data structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const data);
+esp_err_t bme680_get_measurement(bme680_handle_t handle, bme680_data_t *const data);
+
+esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t **const data, uint8_t *const count);
 
 /**
  * @brief Reads data status of the BME680.
@@ -557,6 +559,15 @@ esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const d
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready);
+
+/**
+ * @brief Reads gas measurement index from the BME680.
+ * 
+ * @param handle BME680 device handle.
+ * @param index Gas measurement index (0..9).
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_gas_measurement_index(bme680_handle_t handle, uint8_t *const index);
 
 /**
  * @brief Reads power mode setting from the BME680.

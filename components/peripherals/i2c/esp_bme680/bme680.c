@@ -314,33 +314,9 @@ static inline float bme680_compensate_gas_resistance(bme680_handle_t handle, uin
         8000000.0f, 4000000.0f, 2000000.0f, 1000000.0f, 499500.4995f, 248262.1648f, 125000.0f, 63004.03226f, 
         31281.28128f, 15625.0f, 7812.5f, 3906.25f, 1953.125f, 976.5625f, 488.28125f, 244.140625f
     };
-    float var1 = (1340.0 + 5.0 * handle->dev_cal_factors->range_switching_error) * lookup_k1_range[gas_range];
-    return var1 * lookup_k2_range[gas_range] / (adc_gas_res - 512.0 + var1);
+    float var1 = (1340.0f + 5.0f * handle->dev_cal_factors->range_switching_error) * lookup_k1_range[gas_range];
+    return var1 * lookup_k2_range[gas_range] / (adc_gas_res - 512.0f + var1);
 }
-
-/*
-static inline float bme680_compensate_gas_resistance(bme680_handle_t handle, uint16_t adc_gas_res, uint8_t gas_range) {
-    float calc_gas_res;
-    float var1;
-    float var2;
-    float var3;
-    float gas_res_f = adc_gas_res;
-    float gas_range_f = (1U << gas_range); //lint !e790 / Suspicious truncation, integral to float 
-    const float lookup_k1_range[16] = {
-        0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, -0.8f, 0.0f, 0.0f, -0.2f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f
-    };
-    const float lookup_k2_range[16] = {
-        0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.7f, 0.0f, -0.8f, -0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
-    };
-
-    var1 = (1340.0f + (5.0f * handle->dev_cal_factors->range_switching_error));
-    var2 = (var1) * (1.0f + lookup_k1_range[gas_range] / 100.0f);
-    var3 = 1.0f + (lookup_k2_range[gas_range] / 100.0f);
-    calc_gas_res = 1.0f / (float)(var3 * (0.000000125f) * gas_range_f * (((gas_res_f - 512.0f) / var2) + 1.0f));
-
-    return calc_gas_res;
-}
-*/
 
 static inline uint8_t bme680_compensate_heater_resistance(bme680_handle_t handle, uint16_t temperature) {
     /* Cap temperature */
@@ -720,7 +696,7 @@ static inline void bme680_compute_iaq(bme680_data_t *const data) {
     else if (compare_temp == 16 || compare_temp == 24) data->temperature_score = 3.9;  //40% less
     else if (compare_temp == 15 || compare_temp == 25) data->temperature_score = 2.6;  //60% less
     else if (compare_temp == 14 || compare_temp == 26) data->temperature_score = 1.3;  //80% less
-    else if (compare_temp  < 15 || compare_temp  > 26) data->temperature_score = 0;    //100% less
+    else if (compare_temp  < 14 || compare_temp  > 26) data->temperature_score = 0;    //100% less
 
     // Calculate gas score on resistance values - best practices
     if (gas >= 430000) data->gas_score = 52;  //ideal condition, full points
@@ -1024,11 +1000,13 @@ char *bme680_air_quality_to_string(float iaq_score) {
 esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *const data) {
     esp_err_t       ret             = ESP_OK;
     bool            data_is_ready   = false;
+    uint8_t         gas_index       = 0;
     uint16_t        adc_gas_r;
     uint32_t        adc_press;
     uint16_t        adc_humi;
     uint32_t        adc_temp;
     bit104_uint8_buffer_t rx;
+    bme680_status0_register_t status0_reg;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle && data );
@@ -1044,7 +1022,11 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     /* attempt to poll until data is available or timeout */
     do {
         /* attempt to check if data is ready */
-        ESP_GOTO_ON_ERROR( bme680_get_data_status(handle, &data_is_ready), err, TAG, "data ready for get adc signals failed." );
+        //ESP_GOTO_ON_ERROR( bme680_get_data_status(handle, &data_is_ready), err, TAG, "data ready for get adc signals failed." );
+        ESP_GOTO_ON_ERROR( bme680_get_status0_register(handle, &status0_reg), err, TAG, "status 0 register for get adc signals failed." );
+
+        data_is_ready = status0_reg.bits.new_data;
+        gas_index = status0_reg.bits.gas_measurement_index;
 
         /* delay task before next i2c transaction */
         vTaskDelay(pdMS_TO_TICKS(BME680_DATA_READY_DELAY_MS));
@@ -1076,6 +1058,7 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     data->humidity       = adc_humi;
     data->pressure       = adc_press;
     data->gas            = adc_gas_r;
+    data->gas_index      = gas_index;
     data->gas_range      = gas_lsb_reg.bits.gas_range;
     data->heater_stable  = gas_lsb_reg.bits.heater_stable;
     data->gas_valid      = gas_lsb_reg.bits.gas_valid;
@@ -1089,7 +1072,7 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
         return ret;
 }
 
-esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const data) {
+esp_err_t bme680_get_measurement(bme680_handle_t handle, bme680_data_t *const data) {
     bme680_adc_data_t adc_data;
 
     /* validate arguments */
@@ -1117,6 +1100,13 @@ esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const d
     return ESP_OK;
 }
 
+esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t **const data, uint8_t *const count) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle && data && count );
+
+    return ESP_ERR_NOT_FINISHED;
+}
+
 esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready) {
     bme680_status0_register_t   status0_reg;
 
@@ -1127,12 +1117,23 @@ esp_err_t bme680_get_data_status(bme680_handle_t handle, bool *const ready) {
     ESP_RETURN_ON_ERROR( bme680_get_status0_register(handle, &status0_reg), TAG, "read status register (data ready state) failed" );
 
     /* set ready state */
-    if(status0_reg.bits.measuring == true) {
-        *ready = false;
-    } else {
-        *ready = true;
-    }
+    *ready = status0_reg.bits.new_data;
     
+    return ESP_OK;
+}
+
+esp_err_t bme680_get_gas_measurement_index(bme680_handle_t handle, uint8_t *const index) {
+    bme680_status0_register_t   status0_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read device status register */
+    ESP_RETURN_ON_ERROR( bme680_get_status0_register(handle, &status0_reg), TAG, "read status register (gas measurement index) failed" );
+
+    /* set gas measurement index */
+    *index = status0_reg.bits.gas_measurement_index;
+
     return ESP_OK;
 }
 
@@ -1345,7 +1346,7 @@ esp_err_t bme680_delete(bme680_handle_t handle){
 }
 
 const char* bme680_get_fw_version(void) {
-    return BME680_FW_VERSION_STR;
+    return (const char*)BME680_FW_VERSION_STR;
 }
 
 int32_t bme680_get_fw_version_number(void) {

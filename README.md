@@ -43,6 +43,16 @@ The folder structure for components, and associated example, are outlined as fol
 |  |--schedule
 |  |--storage
 |
+|--templates
+|  |--component
+|  |  |--include
+|  |  |  |- version.h.in
+|  |
+|  |--components
+|  |  |--esp_bmp280
+|  |  |  |- library.json.in
+|  |  |  |- idf_componet.yml.in
+|
 |--include
 |  |- app_config.h
 |  |- bmp280_task.h
@@ -53,6 +63,14 @@ The folder structure for components, and associated example, are outlined as fol
 |
 |- platformio.ini
 ```
+
+The component C header version, yml, and json files are automically generated from templates.  The templates utilized to generate these files are located as follows;
+
+- C header version template file: `templates/component/include/version.h.in`.  
+- yml template file: `templates/components/[component]/idf_component.yml.in`.  
+- json template file: `templates/components/[component]/library.json.in`.  
+
+If information must be updated, be sure to update the template and not the generated file.  Otherwise, files are overwritten when the version is updated.  See the component's `CMakeLists.txt` file for more details.
 
 To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src` folder and go to the `void app_main( void )` subroutine to enable the device of interest.  The example code is located in the `[sensor]_task.h` and `[sensor]_task.c` files.
 

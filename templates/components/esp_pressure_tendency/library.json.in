@@ -1,0 +1,22 @@
+{
+  "name": "esp_pressure_tendency",
+  "keywords": "esp32, espressif, espidf, pressure, tendency",
+  "description": "ESP32 espressif IoT development framework (esp-idf) pressure tendency component.",
+  "authors": [
+    {
+      "name": "Eric Gionet",
+      "email": "gionet.c.eric@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/utilities/esp_pressure_tendency"
+  },
+  "homepage": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS",
+  "version": "1.2.1",
+  "license": "MIT",
+  "frameworks": "espidf",
+  "platforms": "espressif32",
+  "headers": "pressure_tendency.h"
+}

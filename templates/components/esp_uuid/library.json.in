@@ -1,0 +1,22 @@
+{
+  "name": "esp_uuid",
+  "keywords": "esp32, espressif, espidf, uuid, rfc-4122, generator",
+  "description": "ESP32 espressif IoT development framework (esp-idf) RFC-4122 UUID generator component.",
+  "authors": [
+    {
+      "name": "Eric Gionet",
+      "email": "gionet.c.eric@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/utilities/esp_uuid"
+  },
+  "homepage": "https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS",
+  "version": "@GIT_SEM_VERSION@",
+  "license": "MIT",
+  "frameworks": "espidf",
+  "platforms": "espressif32",
+  "headers": "uuid.h"
+}

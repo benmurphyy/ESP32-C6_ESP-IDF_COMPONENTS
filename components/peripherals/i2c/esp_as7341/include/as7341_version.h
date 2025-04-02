@@ -22,18 +22,13 @@
  */
 
 /**
- * @file as7341_version.h
- * @defgroup drivers as7341
- * @{
- *
- * ESP-IDF driver for as7341 sensor
- *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __AS7341_VERSION_H__
-#define __AS7341_VERSION_H__
+
+#ifndef __AS7341_FW_VERSION_H__
+#define __AS7341_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,16 +36,24 @@
 extern "C" {
 #endif
 
+
 /**
  * public constant definitions
  */
 
+#define AS7341_COMPONENT_NAME              "esp_as7341"
+/** Version release date  */
+#define AS7341_FW_VERSION_DATE             "2025-04-02"
 /** Major version number (X.x.x) */
-#define AS7341_FW_VERSION_MAJOR 1
+#define AS7341_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define AS7341_FW_VERSION_MINOR 2
+#define AS7341_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define AS7341_FW_VERSION_PATCH 1
+#define AS7341_FW_VERSION_PATCH            2
+/** Semantic version number (X.X.X-X) */
+#define AS7341_FW_SEMANTIC_VERSION         "1.2.2-feat.1+14"
+/** Git version hash */
+#define AS7341_FW_GIT_SHORT_SHA            "0adba88"
 
 
 /**
@@ -68,37 +71,33 @@ extern "C" {
 #define STR( x ) STR_QUOTES( x )
 
 /** 
- * Macro to generate current firmware version numbers (major, minor, patch, build) into a string that is formatted as X.X.X (e.g. 4.0.0). 
+ * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define AS7341_FW_VERSION_STR              \
+#define AS7341_FW_VERSION_STR                        \
         STR( AS7341_FW_VERSION_MAJOR ) "." \
         STR( AS7341_FW_VERSION_MINOR ) "." \
-        STR( AS7341_FW_VERSION_PATCH ) 
+        STR( AS7341_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AS7341_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
+#define AS7341_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AS7341_FW_VERSION_INT32                                  \
-        AS7341_FW_VERSION_PARAMS_INT32(AS7341_FW_VERSION_MAJOR,   \
-                AS7341_FW_VERSION_MINOR, \
+#define AS7341_FW_VERSION_INT32            \
+        AS7341_FW_VERSION_PARAMS_INT32(    \
+                AS7341_FW_VERSION_MAJOR,   \
+                AS7341_FW_VERSION_MINOR,   \
                 AS7341_FW_VERSION_PATCH)
-
-
-
-
-
 
 #ifdef __cplusplus
 }
@@ -106,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __AS7341_VERSION_H__
+#endif //__AS7341_FW_VERSION_H__

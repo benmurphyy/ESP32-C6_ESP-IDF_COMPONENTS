@@ -22,18 +22,13 @@
  */
 
 /**
- * @file ak8975_version.h
- * @defgroup drivers ak8975
- * @{
- *
- * ESP-IDF driver for ak8975 sensor
- *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __AK8975_VERSION_H__
-#define __AK8975_VERSION_H__
+
+#ifndef __AK8975_FW_VERSION_H__
+#define __AK8975_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,16 +36,24 @@
 extern "C" {
 #endif
 
+
 /**
  * public constant definitions
  */
 
+#define AK8975_COMPONENT_NAME              "esp_ak8975"
+/** Version release date  */
+#define AK8975_FW_VERSION_DATE             "2025-04-02"
 /** Major version number (X.x.x) */
-#define AK8975_FW_VERSION_MAJOR 1
+#define AK8975_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define AK8975_FW_VERSION_MINOR 2
+#define AK8975_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define AK8975_FW_VERSION_PATCH 1
+#define AK8975_FW_VERSION_PATCH            2
+/** Semantic version number (X.X.X-X) */
+#define AK8975_FW_SEMANTIC_VERSION         "1.2.2-feat.1+14"
+/** Git version hash */
+#define AK8975_FW_GIT_SHORT_SHA            "0adba88"
 
 
 /**
@@ -68,37 +71,33 @@ extern "C" {
 #define STR( x ) STR_QUOTES( x )
 
 /** 
- * Macro to generate current firmware version numbers (major, minor, patch, build) into a string that is formatted as X.X.X (e.g. 4.0.0). 
+ * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define AK8975_FW_VERSION_STR              \
+#define AK8975_FW_VERSION_STR                        \
         STR( AK8975_FW_VERSION_MAJOR ) "." \
         STR( AK8975_FW_VERSION_MINOR ) "." \
-        STR( AK8975_FW_VERSION_PATCH ) 
+        STR( AK8975_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AK8975_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
+#define AK8975_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AK8975_FW_VERSION_INT32                                  \
-        AK8975_FW_VERSION_PARAMS_INT32(AK8975_FW_VERSION_MAJOR,   \
-                                        AK8975_FW_VERSION_MINOR, \
-                                        AK8975_FW_VERSION_PATCH)
-
-
-
-
-
+#define AK8975_FW_VERSION_INT32            \
+        AK8975_FW_VERSION_PARAMS_INT32(    \
+                AK8975_FW_VERSION_MAJOR,   \
+                AK8975_FW_VERSION_MINOR,   \
+                AK8975_FW_VERSION_PATCH)
 
 #ifdef __cplusplus
 }
@@ -106,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __AK8975_VERSION_H__
+#endif //__AK8975_FW_VERSION_H__
