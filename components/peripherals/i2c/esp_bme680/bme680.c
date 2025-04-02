@@ -1090,6 +1090,7 @@ esp_err_t bme680_get_data(bme680_handle_t handle, bme680_data_t *const data) {
     data->gas_range             = adc_data.gas_range;
     data->heater_stable         = adc_data.heater_stable;
     data->gas_valid             = adc_data.gas_valid;
+    data->gas_index             = adc_data.gas_index;
 
     /* compute scores */
     bme680_compute_iaq(data);

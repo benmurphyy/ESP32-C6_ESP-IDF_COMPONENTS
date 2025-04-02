@@ -15,13 +15,13 @@ dependencies:
     source:
       path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\schedule\esp_time_into_interval
       type: local
-    version: 1.2.4
+    version: 1.2.5
   k0i05/esp_type_utils:
     component_hash: null
     source:
       path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals
       type: local
     version: '*'
-manifest_hash: 1df13aa197f8b1348e93d8fa88aacfb78bc71f1e2ae75bbed0a6d020577f8296
+manifest_hash: 8a35b5848a15b24bc6a129750ef13acc5d4bc0e291b74e0d7a6847a992098248
 target: esp32s3
 version: 1.0.0

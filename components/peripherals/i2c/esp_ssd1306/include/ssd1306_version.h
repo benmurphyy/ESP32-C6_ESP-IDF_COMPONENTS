@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define SSD1306_FW_VERSION_PATCH            5
 /** Semantic version number (X.X.X-X) */
-#define SSD1306_FW_SEMANTIC_VERSION         "1.2.5-1"
+#define SSD1306_FW_SEMANTIC_VERSION         "1.2.5"
 /** Git version hash */
-#define SSD1306_FW_GIT_SHORT_SHA            "82602db"
+#define SSD1306_FW_GIT_SHORT_SHA            "27cb447"
 
 
 /**

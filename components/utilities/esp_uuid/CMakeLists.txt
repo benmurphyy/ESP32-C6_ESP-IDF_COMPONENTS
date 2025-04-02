@@ -115,13 +115,13 @@ string( COMPARE EQUAL "${cmp_reg_sync}" "ENABLED" STR_CMP_RESULT )
 
 
 
-    #add_custom_command(
-    #    TARGET ${COMPONENT_LIB}
-    #    POST_BUILD
-    #    COMMAND python ${CMAKE_SOURCE_DIR}/stg/pio_lib_sync.py OK
-    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    #    COMMENT "python testing with add_custom_command..."
-    #)
+    add_custom_command(
+        TARGET ${COMPONENT_HEADER_NAME}.c.o
+        POST_BUILD
+        COMMAND python ${CMAKE_SOURCE_DIR}/stg/pio_lib_sync.py OK
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "python testing with add_custom_command..."
+    )
 
     # Package the component and upload it to the ESP-IDF component registry
     #add_custom_command(
