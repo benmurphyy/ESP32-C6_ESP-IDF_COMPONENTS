@@ -29,6 +29,9 @@ component_list = [
                   Component(name="esp_pressure_tendency", header_name="pressure_tendency", relative_path="utilities\\esp_pressure_tendency"),
                   # type utilities
                   Component(name="esp_type_utils", header_name="type_utils", relative_path="utilities\\esp_type_utils"),
+                  # uuid
+                  Component(name="esp_uuid", header_name="uuid", relative_path="utilities\\esp_uuid"),
+                  
                   ### Peripherals ###
                   # adc peripherals 
                   Component(name="esp_s12sd", header_name="s12sd", relative_path="peripherals\\adc\\esp_s12sd"),
@@ -56,9 +59,11 @@ component_list = [
                   Component(name="esp_veml7700", header_name="veml7700", relative_path="peripherals\\i2c\\esp_veml7700"),
                   # owb peripherals
                   Component(name="esp_ds18b20", header_name="ds18b20", relative_path="peripherals\\owb\\esp_ds18b20"),
+                  
                   ### Schedule ###
                   # time-into-interval
                   Component(name="esp_time_into_interval", header_name="time_into_interval", relative_path="schedule\\esp_time_into_interval"),
+                  
                   ### Storage ###
                   # nvs ext
                   Component(name="esp_nvs_ext", header_name="nvs_ext", relative_path="storage\\esp_nvs_ext"),

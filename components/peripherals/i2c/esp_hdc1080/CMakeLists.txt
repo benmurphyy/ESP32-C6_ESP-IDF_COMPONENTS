@@ -16,16 +16,15 @@
 # i.e. C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
 #
 include( $ENV{IDF_PATH}/tools/cmake/version.cmake )
-include( $ENV{IDF_PATH}/tools/cmake/JSONParser.cmake RESULT_VARIABLE JSONPARSER_FOUND )
-
-# string compare JSONParser library availability
-string( COMPARE NOTEQUAL "${JSONPARSER_FOUND}" "NOTFOUND" STR_CMP_RESULT )
 
 # validate JSONParser library, version.h.in, pio_lib_sync.py, esp_cmp_sync.py, 
 # library.json.in, and idf_component.yml.in files are available for preprocessing
-if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/include/version.h.in" 
+if( EXISTS "$ENV{IDF_PATH}/tools/cmake/JSONParser.cmake"
+    AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/include/version.h.in" 
     AND EXISTS "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/library.json.in" 
     AND EXISTS "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/idf_component.yml.in")
+
+    include( $ENV{IDF_PATH}/tools/cmake/JSONParser.cmake )
 
     # Get latest versioning information from git repository with GitVersion
     execute_process(
@@ -66,7 +65,7 @@ if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/in
     string( TOUPPER "${COMPONENT_HEADER_NAME}" COMPONENT_HEADER_NAME_UPPER )
 
 
-    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY
+    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY (FORCED REGENERATION)
 
     # Remove C header versioning file from component directory
     file( REMOVE "${COMPONENT_DIR}/include/${COMPONENT_HEADER_NAME}_version.h" )
@@ -89,6 +88,7 @@ if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/in
     # Generate yml idf component file from template with versioning information
     configure_file( "${CMAKE_SOURCE_DIR}/templates/components/${COMPONENT_NAME}/idf_component.yml.in" "${COMPONENT_DIR}/idf_component.yml" @ONLY )
 endif()
+
 
 idf_component_register(
     SRCS hdc1080.c
