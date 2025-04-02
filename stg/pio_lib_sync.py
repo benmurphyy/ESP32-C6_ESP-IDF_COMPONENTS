@@ -22,6 +22,6 @@ if sys.argv[1] != "OK":
     sys.exit(1)
 
 with open("test1.txt", "a") as myfile:
-    myfile.write("appended text")
+    myfile.write("appended text\n\r")
 
 sys.exit(0)

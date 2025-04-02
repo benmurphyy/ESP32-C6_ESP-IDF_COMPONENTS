@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define PRESSURE_TENDENCY_FW_VERSION_PATCH            2
 /** Semantic version number (X.X.X-X) */
-#define PRESSURE_TENDENCY_FW_SEMANTIC_VERSION         "1.2.2-feat.1+13"
+#define PRESSURE_TENDENCY_FW_SEMANTIC_VERSION         "1.2.2-feat.1+14"
 /** Git version hash */
-#define PRESSURE_TENDENCY_FW_GIT_SHORT_SHA            "55fd6f7"
+#define PRESSURE_TENDENCY_FW_GIT_SHORT_SHA            "0adba88"
 
 
 /**

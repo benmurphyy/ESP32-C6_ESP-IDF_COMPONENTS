@@ -547,7 +547,9 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
  * @param[out] data BME680 data structure.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t *const data);
+esp_err_t bme680_get_measurement(bme680_handle_t handle, bme680_data_t *const data);
+
+esp_err_t bme680_get_measurements(bme680_handle_t handle, bme680_data_t **const data, uint8_t *const count);
 
 /**
  * @brief Reads data status of the BME680.

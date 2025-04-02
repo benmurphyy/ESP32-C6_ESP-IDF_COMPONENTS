@@ -66,7 +66,7 @@ if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/in
     string( TOUPPER "${COMPONENT_HEADER_NAME}" COMPONENT_HEADER_NAME_UPPER )
 
 
-    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY
+    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY (FORCED REGENERATION)
 
     # Remove C header versioning file from component directory
     file( REMOVE "${COMPONENT_DIR}/include/${COMPONENT_HEADER_NAME}_version.h" )
@@ -95,3 +95,4 @@ idf_component_register(
     INCLUDE_DIRS include
     REQUIRES esp_driver_i2c esp_type_utils esp_timer
 )
+

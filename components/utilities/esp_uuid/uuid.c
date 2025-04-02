@@ -38,13 +38,10 @@
 #include <stdarg.h>
 
 
-
-
 /* constant definitions */
 #define UUID_ARGS_SIZE   2
 #define UUID_RANDOM_SIZE 4
 #define UUID_BUFFER_SIZE 37
-
 
 
 /* Marsaglia initializer 'constants' */

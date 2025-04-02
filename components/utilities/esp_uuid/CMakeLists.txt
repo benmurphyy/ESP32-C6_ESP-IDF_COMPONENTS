@@ -66,7 +66,7 @@ if(STR_CMP_RESULT EQUAL 1 AND EXISTS "${CMAKE_SOURCE_DIR}/templates/component/in
     string( TOUPPER "${COMPONENT_HEADER_NAME}" COMPONENT_HEADER_NAME_UPPER )
 
 
-    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY
+    # REMOVE TEMPLATE GENERATED FILES FROM COMPONENT DIRECTORY (FORCED REGENERATION)
 
     # Remove C header versioning file from component directory
     file( REMOVE "${COMPONENT_DIR}/include/${COMPONENT_HEADER_NAME}_version.h" )
@@ -115,13 +115,14 @@ string( COMPARE EQUAL "${cmp_reg_sync}" "ENABLED" STR_CMP_RESULT )
     #add_dependencies( ${PROJECT_NAME}.elf my_component_sync )
 
 
-    add_custom_command(
-        TARGET ${COMPONENT_LIB}
-        POST_BUILD
-        COMMAND python ${CMAKE_SOURCE_DIR}/stg/pio_lib_sync.py OK
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "python testing with add_custom_command..."
-    )
+
+    #add_custom_command(
+    #    TARGET ${COMPONENT_LIB}
+    #    POST_BUILD
+    #    COMMAND python ${CMAKE_SOURCE_DIR}/stg/pio_lib_sync.py OK
+    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    #    COMMENT "python testing with add_custom_command..."
+    #)
 
     # Package the component and upload it to the ESP-IDF component registry
     #add_custom_command(
@@ -156,4 +157,3 @@ string( COMPARE EQUAL "${cmp_reg_sync}" "ENABLED" STR_CMP_RESULT )
     #    OUTPUT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/log/pio_lib_sync.log"
     #)
 #endif()
-
