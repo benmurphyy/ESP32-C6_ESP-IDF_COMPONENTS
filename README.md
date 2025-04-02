@@ -136,7 +136,7 @@ Supported drivers include the following device peripherals:
 - OWB: Maxim-Integrated DS18B20 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/owb/esp_ds18b20>)
 - SPI: Analog Devices MAX31865 - Work in Progress
 
-The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base, a major one was with the release of ESP-IDF (v5.3.1), the i2c_master.h introduced timing issues and the above drivers did require some maintenance.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
+The above peripheral drivers have been tested, and validated with a logic analyzer where applicable, and are still under development. With every ESP-IDF release there are bound to be quirks with the code base.  If any problems arise please feel free to log an issue and if you would to contribute please contact me.
 
 ## ESP Utilities Components
 
@@ -149,6 +149,7 @@ Supported components include the following:
 - `Pressure Tendency`: A pressure tendency algorithm that monitors if pressure is rising, falling, or steady over the past 3-hours.
 - `Scalar Trend`: A scalar trend algorithm that monitors if a scalar variable is rising, falling, or steady over the past hour.
 - `Type Utilities`: Type definitions common for i2c transactions, byte manipulation, and other tools.
+- `UUID Generator`: An RFC-4122 Universally Unique Identifier (UUID) generator.
 
 See the Sensirion SGP4X example on how the gas index algorithm is utilized with this sensor.
 
@@ -156,7 +157,7 @@ See the Sensirion SGP4X example on how the gas index algorithm is utilized with 
 
 The ESP `time-into-interval` component synchronizes a FreeRTOS task with the system clock and user-defined time interval for temporal conditional scenarios.
 
-## ESP Storage Components (WORK IN PROGRESS)
+## ESP Storage Components
 
 The ESP storage components can be used for use-cases that require volatile and/or non-volatile storage.
 

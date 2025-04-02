@@ -218,10 +218,10 @@ static inline esp_err_t bme680_i2c_write_byte_to(bme680_handle_t handle, const u
  */
 static inline float bme680_calculate_dewpoint(const float temperature, const float humidity) {
     // validate parameters
-    if(temperature > 80 || temperature < -40) return ESP_ERR_INVALID_ARG;
-    if(humidity > 100 || humidity < 0) return ESP_ERR_INVALID_ARG;
+    if(temperature > 80.0f || temperature < -40.0f) return ESP_ERR_INVALID_ARG;
+    if(humidity > 100.0f || humidity < 0.0f) return ESP_ERR_INVALID_ARG;
     // calculate dew-point temperature
-    float H = (log10f(humidity)-2)/0.4343f + (17.62f*temperature)/(243.12f+temperature);
+    float H = (log10f(humidity)-2.0f)/0.4343f + (17.62f*temperature)/(243.12f+temperature);
     return 243.12f*H/(17.62f-H);
 }
 
@@ -333,7 +333,7 @@ static inline uint8_t bme680_compensate_heater_resistance(bme680_handle_t handle
         (uint8_t)(3.4f *
                   ((var5 * (4 / (4 + (float)handle->dev_cal_factors->res_heat_range)) *
                     (1 / (1 + ((float)handle->dev_cal_factors->res_heat_val * 0.002f)))) -
-                   25));
+                   25.0f));
 
     return res_heat;
 }
