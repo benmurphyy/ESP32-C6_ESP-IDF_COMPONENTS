@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define UUID_FW_VERSION_PATCH            2
 /** Semantic version number (X.X.X-X) */
-#define UUID_FW_SEMANTIC_VERSION         "1.2.2-8"
+#define UUID_FW_SEMANTIC_VERSION         "1.2.2-11"
 /** Git version hash */
-#define UUID_FW_GIT_SHORT_SHA            "972f307"
+#define UUID_FW_GIT_SHORT_SHA            "d097cd6"
 
 
 /**
