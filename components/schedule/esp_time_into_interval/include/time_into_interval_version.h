@@ -43,7 +43,7 @@ extern "C" {
 
 #define TIME_INTO_INTERVAL_COMPONENT_NAME              "esp_time_into_interval"
 /** Version release date  */
-#define TIME_INTO_INTERVAL_FW_VERSION_DATE             "2025-03-29"
+#define TIME_INTO_INTERVAL_FW_VERSION_DATE             "2025-04-02"
 /** Major version number (X.x.x) */
 #define TIME_INTO_INTERVAL_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define TIME_INTO_INTERVAL_FW_VERSION_PATCH            2
 /** Semantic version number (X.X.X-X) */
-#define TIME_INTO_INTERVAL_FW_SEMANTIC_VERSION         "1.2.2-feat.1+12"
+#define TIME_INTO_INTERVAL_FW_SEMANTIC_VERSION         "1.2.2-feat.1+13"
 /** Git version hash */
-#define TIME_INTO_INTERVAL_FW_GIT_SHORT_SHA            "a1bbc2f"
+#define TIME_INTO_INTERVAL_FW_GIT_SHORT_SHA            "55fd6f7"
 
 
 /**
