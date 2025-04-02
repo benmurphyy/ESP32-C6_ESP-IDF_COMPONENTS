@@ -45,7 +45,7 @@
 
 #include <cJSON.h>
 #include <time_into_interval.h>
-#include "datatable_version.h"
+#include "datalogger_version.h"
 
 #ifdef __cplusplus
 extern "C"

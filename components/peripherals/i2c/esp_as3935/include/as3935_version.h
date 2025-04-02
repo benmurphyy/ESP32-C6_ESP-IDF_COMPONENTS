@@ -22,18 +22,13 @@
  */
 
 /**
- * @file as3935_version.h
- * @defgroup drivers as3935
- * @{
- *
- * ESP-IDF driver for as3935 sensor
- *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __AS3935_VERSION_H__
-#define __AS3935_VERSION_H__
+
+#ifndef __AS3935_FW_VERSION_H__
+#define __AS3935_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,16 +36,24 @@
 extern "C" {
 #endif
 
+
 /**
  * public constant definitions
  */
 
+#define AS3935_COMPONENT_NAME              "esp_as3935"
+/** Version release date  */
+#define AS3935_FW_VERSION_DATE             "2025-03-29"
 /** Major version number (X.x.x) */
-#define AS3935_FW_VERSION_MAJOR 1
+#define AS3935_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define AS3935_FW_VERSION_MINOR 2
+#define AS3935_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define AS3935_FW_VERSION_PATCH 1
+#define AS3935_FW_VERSION_PATCH            2
+/** Semantic version number (X.X.X-X) */
+#define AS3935_FW_SEMANTIC_VERSION         "1.2.2-feat.1+12"
+/** Git version hash */
+#define AS3935_FW_GIT_SHORT_SHA            "a1bbc2f"
 
 
 /**
@@ -68,37 +71,33 @@ extern "C" {
 #define STR( x ) STR_QUOTES( x )
 
 /** 
- * Macro to generate current firmware version numbers (major, minor, patch, build) into a string that is formatted as X.X.X (e.g. 4.0.0). 
+ * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define AS3935_FW_VERSION_STR              \
+#define AS3935_FW_VERSION_STR                        \
         STR( AS3935_FW_VERSION_MAJOR ) "." \
         STR( AS3935_FW_VERSION_MINOR ) "." \
-        STR( AS3935_FW_VERSION_PATCH ) 
+        STR( AS3935_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AS3935_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
+#define AS3935_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define AS3935_FW_VERSION_INT32                                  \
-        AS3935_FW_VERSION_PARAMS_INT32(AS3935_FW_VERSION_MAJOR,   \
-                AS3935_FW_VERSION_MINOR, \
+#define AS3935_FW_VERSION_INT32            \
+        AS3935_FW_VERSION_PARAMS_INT32(    \
+                AS3935_FW_VERSION_MAJOR,   \
+                AS3935_FW_VERSION_MINOR,   \
                 AS3935_FW_VERSION_PATCH)
-
-
-
-
-
 
 #ifdef __cplusplus
 }
@@ -106,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __AS3935_VERSION_H__
+#endif //__AS3935_FW_VERSION_H__

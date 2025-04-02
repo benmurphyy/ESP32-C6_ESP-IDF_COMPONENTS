@@ -22,18 +22,13 @@
  */
 
 /**
- * @file bme680_version.h
- * @defgroup drivers bme680
- * @{
- *
- * ESP-IDF driver for bme680 sensor
- *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __BME680_VERSION_H__
-#define __BME680_VERSION_H__
+
+#ifndef __BME680_FW_VERSION_H__
+#define __BME680_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,16 +36,25 @@
 extern "C" {
 #endif
 
+
 /**
  * public constant definitions
  */
 
+#define BME680_COMPONENT_NAME              "esp_bme680"
+/** Version release date  */
+#define BME680_FW_VERSION_DATE             "2025-03-29"
 /** Major version number (X.x.x) */
-#define BME680_FW_VERSION_MAJOR 1
+#define BME680_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define BME680_FW_VERSION_MINOR 2
+#define BME680_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define BME680_FW_VERSION_PATCH 1
+#define BME680_FW_VERSION_PATCH            2
+/** Semantic version number (X.X.X-X) */
+#define BME680_FW_SEMANTIC_VERSION         "1.2.2-feat.1+12"
+/** Git version hash */
+#define BME680_FW_GIT_SHORT_SHA            "a1bbc2f"
+
 
 /**
  * public macro definitions
@@ -69,34 +73,31 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define BME680_FW_VERSION_STR              \
+#define BME680_FW_VERSION_STR                        \
         STR( BME680_FW_VERSION_MAJOR ) "." \
         STR( BME680_FW_VERSION_MINOR ) "." \
-        STR( BME680_FW_VERSION_PATCH ) 
+        STR( BME680_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define BME680_FW_VERSION_PARAMS_INT32( major, minor, patch )  \
+#define BME680_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define BME680_FW_VERSION_INT32                                     \
-        BME680_FW_VERSION_PARAMS_INT32(BME680_FW_VERSION_MAJOR,     \
-                BME680_FW_VERSION_MINOR,  \
+#define BME680_FW_VERSION_INT32            \
+        BME680_FW_VERSION_PARAMS_INT32(    \
+                BME680_FW_VERSION_MAJOR,   \
+                BME680_FW_VERSION_MINOR,   \
                 BME680_FW_VERSION_PATCH)
-
-
-
-
 
 #ifdef __cplusplus
 }
@@ -104,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __BME680_VERSION_H__
+#endif //__BME680_FW_VERSION_H__

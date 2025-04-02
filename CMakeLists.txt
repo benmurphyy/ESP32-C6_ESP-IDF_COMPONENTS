@@ -48,4 +48,8 @@ list(APPEND EXTRA_COMPONENT_DIRS
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
+# Enable if components should be synchronized with platformio and esp-idf registries
+idf_build_set_property(COMPONENT_REGISTRY_SYNC "ENABLED") # ENABLED OR DISABLED
+idf_build_set_property(COMPONENT_REGISTRY_OWNER "k0i05")  # PlatformIO owner name
+
 project(ESP32-S3_ESP-IDF_COMPONENTS)

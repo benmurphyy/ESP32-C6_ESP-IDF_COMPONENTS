@@ -22,18 +22,13 @@
  */
 
 /**
- * @file sht4x_version.h
- * @defgroup drivers sht4x
- * @{
- *
- * ESP-IDF driver for sht4x sensor
- *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
  * MIT Licensed as described in the file LICENSE
  */
-#ifndef __SHT4X_VERSION_H__
-#define __SHT4X_VERSION_H__
+
+#ifndef __SHT4X_FW_VERSION_H__
+#define __SHT4X_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,16 +36,24 @@
 extern "C" {
 #endif
 
+
 /**
  * public constant definitions
  */
 
+#define SHT4X_COMPONENT_NAME              "esp_sht4x"
+/** Version release date  */
+#define SHT4X_FW_VERSION_DATE             "2025-03-29"
 /** Major version number (X.x.x) */
-#define SHT4X_FW_VERSION_MAJOR 1
+#define SHT4X_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define SHT4X_FW_VERSION_MINOR 2
+#define SHT4X_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define SHT4X_FW_VERSION_PATCH 1
+#define SHT4X_FW_VERSION_PATCH            2
+/** Semantic version number (X.X.X-X) */
+#define SHT4X_FW_SEMANTIC_VERSION         "1.2.2-feat.1+12"
+/** Git version hash */
+#define SHT4X_FW_GIT_SHORT_SHA            "a1bbc2f"
 
 
 /**
@@ -79,7 +82,7 @@ extern "C" {
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
  * value that can be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
 #define SHT4X_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
@@ -88,18 +91,13 @@ extern "C" {
  * Macro to generate current firmware version numbers (major, minor, patch) as an integer (`int32_t`) value that can 
  * be used for comparison purposes.
  * 
- * As an example, [COMPONENT]_FW_VERSION_INT32 >= [COMPONENT]_FW_VERSION_PARAMS_INT32(4, 0, 0).
+ * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define SHT4X_FW_VERSION_INT32                                      \
-        SHT4X_FW_VERSION_PARAMS_INT32(SHT4X_FW_VERSION_MAJOR,   \
-                                        SHT4X_FW_VERSION_MINOR,   \
-                                        SHT4X_FW_VERSION_PATCH)
-
-
-
-
-
-
+#define SHT4X_FW_VERSION_INT32            \
+        SHT4X_FW_VERSION_PARAMS_INT32(    \
+                SHT4X_FW_VERSION_MAJOR,   \
+                SHT4X_FW_VERSION_MINOR,   \
+                SHT4X_FW_VERSION_PATCH)
 
 #ifdef __cplusplus
 }
@@ -107,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif // __SHT4X_VERSION_H__
+#endif //__SHT4X_FW_VERSION_H__

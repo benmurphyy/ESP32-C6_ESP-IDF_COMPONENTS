@@ -26,7 +26,6 @@
  *
  * ESP-IDF UUID generator
  *
- * Ported from esp-open-rtos
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -38,24 +37,32 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+
+
+
+/* constant definitions */
 #define UUID_ARGS_SIZE   2
 #define UUID_RANDOM_SIZE 4
 #define UUID_BUFFER_SIZE 37
 
+
+
 /* Marsaglia initializer 'constants' */
 static uint32_t     uuid_m_w = 1;
 static uint32_t     uuid_m_z = 2;
-/* uuid mode */
+/* uuid mode - variant-4 (default) */
 static uuid_modes_t uuid_mode = UUID_MODE_VARIANT4;
+
+
 
 
 /**
  * @brief An example of a simple pseudo-random number generator is the 
  * multiply-with-carry method invented by George Marsaglia.
  * 
- * @note Two initializers (not null).
+ * @note Two initializers (not null), see `uuid_seed` function.
  * 
- * @return uint32_t Random number.
+ * @return uint32_t Random generated number.
  */
 static inline uint32_t uuid_random(void) {
     uuid_m_z = 36969L * (uuid_m_z & 65535L) + (uuid_m_z >> 16);

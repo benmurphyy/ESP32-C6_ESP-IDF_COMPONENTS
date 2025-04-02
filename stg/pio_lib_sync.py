@@ -21,6 +21,7 @@ if sys.argv[1] != "OK":
     print("Usage: python pio_lib_sync.py OK")
     sys.exit(1)
 
-
+with open("test1.txt", "a") as myfile:
+    myfile.write("appended text")
 
 sys.exit(0)

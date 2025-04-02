@@ -35,6 +35,7 @@
 #ifndef __UUID_H__
 #define __UUID_H__
 
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "uuid_version.h"
@@ -44,8 +45,10 @@ extern "C" {
 #endif
 
 
+
+
 /**
- * @brief UUID modes enumerator.
+ * @brief UUID modes enumerator definition.
  */
 typedef enum uuid_modes_e {
     UUID_MODE_VARIANT4 = 0,  /*!< Variant-4 UUID */
@@ -58,7 +61,9 @@ typedef enum uuid_modes_e {
 void uuid_init(void);
 
 /**
- * @brief Seed the UUID generator with a variable number of arguments.
+ * @brief Seed the UUID generator with a variable number of arguments. 
+ * The total number of arguments must be between 1 and 2.  Otherwise, 
+ * the generator will be seeded with default values (1 and 2).
  * 
  * @param size Number of arguments to seed the generator.
  * @param ... Variable number of arguments (1 to 2, 2 seedlings is ideal).
@@ -66,14 +71,14 @@ void uuid_init(void);
 void uuid_seed(uint8_t size, ... );
 
 /**
- * @brief Generate a UUID.
+ * @brief Generate a UUID (i.e. d29b226d-04b5-e3ae-cd63-e6ec0d5611ab).
  * 
  * @return const char* Pointer to the UUID string.
  */
 const char* uuid_generate(void);
 
 /**
- * @brief Set the UUID mode.
+ * @brief Set the UUID mode to either variant-4 or random.
  * 
  * @param mode The UUID mode to set.
  */
@@ -99,6 +104,8 @@ const char* uuid_get_fw_version(void);
  * @return int32_t `uuid` firmware version number.
  */
 int32_t uuid_get_fw_version_number(void);
+
+
 
 
 #ifdef __cplusplus
