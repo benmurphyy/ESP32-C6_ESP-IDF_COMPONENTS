@@ -79,6 +79,7 @@
 #include <ens160_task.h>
 #include <hdc1080_task.h>
 #include <hmc5883l_task.h>
+#include <ina226_task.h>
 #include <ltr390uv_task.h>
 #include <mlx90614_task.h>
 #include <mmc56x3_task.h>
@@ -115,6 +116,7 @@ typedef enum i2c_components_tag {
     I2C_COMPONENT_ENS160,
     I2C_COMPONENT_HDC1080,
     I2C_COMPONENT_HMC5883L,
+    I2C_COMPONENT_INA226,
     I2C_COMPONENT_LTR390UV,
     I2C_COMPONENT_MLX90614,
     I2C_COMPONENT_MMC56X3,
@@ -394,6 +396,10 @@ static inline void i2c0_component_example_start(const i2c_components_t component
             /* starts hmc5883l task */
             i2c0_task_create(i2c0_hmc5883l_task, I2C0_HMC5883L_TASK_NAME);
             break;
+        case I2C_COMPONENT_INA226:
+            /* starts ina226 task */
+            i2c0_task_create(i2c0_ina226_task, I2C0_INA226_TASK_NAME);
+            break;
         case I2C_COMPONENT_LTR390UV:
             /* starts ltr390uv task */
             i2c0_task_create(i2c0_ltr390uv_task, I2C0_LTR390UV_TASK_NAME);
@@ -483,13 +489,14 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
     //i2c0_component_example_start(I2C_COMPONENT_AS3935);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
-    i2c0_component_example_start(I2C_COMPONENT_BME680);
+    //i2c0_component_example_start(I2C_COMPONENT_BME680);
     //i2c0_component_example_start(I2C_COMPONENT_BMP280);
     //i2c0_component_example_start(I2C_COMPONENT_BMP390);
     //i2c0_component_example_start(I2C_COMPONENT_CCS811);
     //i2c0_component_example_start(I2C_COMPONENT_ENS160);
     //i2c0_component_example_start(I2C_COMPONENT_HDC1080);
     //i2c0_component_example_start(I2C_COMPONENT_HMC5883L);
+    i2c0_component_example_start(I2C_COMPONENT_INA226);
     //i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
     //i2c0_component_example_start(I2C_COMPONENT_MLX90614);
     //i2c0_component_example_start(I2C_COMPONENT_MMC56X3);

@@ -76,7 +76,7 @@
 
 #define CCS811_POWERUP_DELAY_MS         UINT16_C(25)    //!< ccs811 I2C start-up delay before device accepts transactions
 #define CCS811_APPSTART_DELAY_MS        UINT16_C(25)            
-#define CCS811_RESET_DELAY_MS           UINT16_C(100)   //!< ccs811 I2C software reset delay before device accepts transactions
+#define CCS811_RESET_DELAY_MS           UINT16_C(250)   //!< ccs811 I2C software reset delay before device accepts transactions
 #define CCS811_WAKE_DELAY_MS            UINT16_C(5)     //!< ccs811 I2C wake-up delay from sleep before device accepts transactions
 #define CCS811_DATA_READY_DELAY_MS      UINT16_C(10)
 #define CCS811_DATA_POLL_TIMEOUT_MS     UINT16_C(100)
@@ -224,7 +224,7 @@ static inline esp_err_t ccs811_i2c_write_command(ccs811_handle_t handle, const u
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ccs811_i2c_write_command, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -242,7 +242,7 @@ static inline esp_err_t ccs811_i2c_write(ccs811_handle_t handle, const uint8_t *
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, buffer, size, I2C_XFR_TIMEOUT_MS), TAG, "ccs811_i2c_write, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -262,7 +262,7 @@ static inline esp_err_t ccs811_i2c_write_word_to(ccs811_handle_t handle, const u
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ccs811_i2c_write_word_to, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -282,7 +282,7 @@ static inline esp_err_t ccs811_i2c_write_byte_to(ccs811_handle_t handle, const u
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ccs811_i2c_write_byte_to, i2c write failed" );
                         
     return ESP_OK;
 }
@@ -614,15 +614,15 @@ static inline esp_err_t ccs811_setup(ccs811_handle_t handle) {
     return ESP_OK;
 }
 
-esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t *ccs811_config, ccs811_handle_t *ccs811_handle) {
+esp_err_t ccs811_init(i2c_master_bus_handle_t master_handle, const ccs811_config_t *ccs811_config, ccs811_handle_t *ccs811_handle) {
     /* validate arguments */
-    ESP_ARG_CHECK( bus_handle && ccs811_config );
+    ESP_ARG_CHECK( master_handle && ccs811_config );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(CCS811_POWERUP_DELAY_MS));
 
     /* validate device exists on the master bus */
-    esp_err_t ret = i2c_master_probe(bus_handle, ccs811_config->i2c_address, I2C_XFR_TIMEOUT_MS);
+    esp_err_t ret = i2c_master_probe(master_handle, ccs811_config->i2c_address, I2C_XFR_TIMEOUT_MS);
     ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ccs811 device handle initialization failed", ccs811_config->i2c_address);
 
     /* validate memory availability for handle */
@@ -642,7 +642,7 @@ esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t 
 
     /* validate device handle */
     if (out_handle->i2c_handle == NULL) {
-        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(bus_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus failed");
+        ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus failed");
     }
 
     /* attempt to init gpio wake and reset */
@@ -654,10 +654,6 @@ esp_err_t ccs811_init(i2c_master_bus_handle_t bus_handle, const ccs811_config_t 
     /* attempt to soft-reset */
     ESP_GOTO_ON_ERROR(ccs811_reset(out_handle), err_handle, TAG, "soft-reset failed");
 
-    vTaskDelay(pdMS_TO_TICKS(100));
-
-    /* attempt setup */
-    ESP_GOTO_ON_ERROR(ccs811_setup(out_handle), err_handle, TAG, "setup device failed");
     
     /* set device handle */
     *ccs811_handle = out_handle;
@@ -865,10 +861,13 @@ esp_err_t ccs811_reset(ccs811_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( ccs811_i2c_write(handle, tx, BIT40_UINT8_BUFFER_SIZE), TAG, "write soft-reset data failed" );
+    ESP_RETURN_ON_ERROR( ccs811_i2c_write(handle, tx, BIT40_UINT8_BUFFER_SIZE), TAG, "unable to write soft-reset, reset failed" );
 
     /* delay task before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(CCS811_RESET_DELAY_MS));
+
+    /* attempt setup */
+    ESP_RETURN_ON_ERROR(ccs811_setup(handle), TAG, "unable to setup device, reset failed");
 
     return ESP_OK;
 }

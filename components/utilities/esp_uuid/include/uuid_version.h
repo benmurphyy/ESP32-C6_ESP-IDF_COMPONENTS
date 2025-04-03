@@ -43,7 +43,7 @@ extern "C" {
 
 #define UUID_COMPONENT_NAME              "esp_uuid"
 /** Version release date  */
-#define UUID_FW_VERSION_DATE             "2025-04-02"
+#define UUID_FW_VERSION_DATE             "2025-04-03"
 /** Major version number (X.x.x) */
 #define UUID_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define UUID_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define UUID_FW_SEMANTIC_VERSION         "1.2.6-2"
+#define UUID_FW_SEMANTIC_VERSION         "1.2.6-4"
 /** Git version hash */
-#define UUID_FW_GIT_SHORT_SHA            "d60bc05"
+#define UUID_FW_GIT_SHORT_SHA            "a7615df"
 
 
 /**

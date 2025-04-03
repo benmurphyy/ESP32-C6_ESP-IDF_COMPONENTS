@@ -13,8 +13,7 @@
 #
 # Download CMake JSON-Parser: https://github.com/sbellus/json-cmake/blob/master/JSONParser.cmake
 # Copy the CMake JSONParser.cmake file to the tools/cmake directory of your ESP-IDF installation.
-# i.e. PIO Env: C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
-# i.e. ESP Env: C:\Users\lavco\esp\v5.4\esp-idf\tools\cmake
+# i.e. C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
 #
 include( $ENV{IDF_PATH}/tools/cmake/version.cmake )
 
@@ -91,71 +90,10 @@ if( EXISTS "$ENV{IDF_PATH}/tools/cmake/JSONParser.cmake"
 endif()
 
 
-# Register the component
+
+
 idf_component_register(
-    SRCS uuid.c
+    SRCS ina226.c
     INCLUDE_DIRS include
-    REQUIRES esp_timer
+    REQUIRES esp_driver_i2c esp_type_utils esp_timer
 )
-
-# Get global variables from idf build property
-idf_build_get_property( cmp_reg_sync COMPONENT_REGISTRY_SYNC )
-idf_build_get_property( cmp_reg_o COMPONENT_REGISTRY_OWNER )
-
-# Validate if the component should be synchronized with esp-idf and platformio registries
-string( COMPARE EQUAL "${cmp_reg_sync}" "ENABLED" STR_CMP_RESULT )
-
-# Register the component with the ESP-IDF components and platformio registries
-#if(STR_CMP_RESULT EQUAL 1)
-
-
-    #add_custom_target(
-    #    my_component_sync
-    #    COMMAND python ${CMAKE_SOURCE_DIR}/stg/esp_cmp_sync.py OK
-    #    COMMENT "python testing with add_custom_command..."
-    #)
-    #add_dependencies( ${PROJECT_NAME}.elf my_component_sync )
-
-#.pio\build\esp32s3box\components\peripherals\owb\esp_ds18b20\ds18b20.c.o
-
-    #add_custom_command(
-    #    TARGET ${COMPONENT_HEADER_NAME}.c.o
-    #    POST_BUILD
-    #    COMMAND python ${CMAKE_SOURCE_DIR}/stg/pio_lib_sync.py OK
-    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    #    COMMENT "python testing with add_custom_command..."
-    #)
-
-    # Package the component and upload it to the ESP-IDF component registry
-    #add_custom_command(
-    #    TARGET ${COMPONENT_LIB}
-    #    POST_BUILD
-    #    COMMAND powershell compote component register --name ${COMPONENT_NAME} --project-dir '${COMPONENT_DIR}' --dest-dir '${CMAKE_SOURCE_DIR}/log'
-    #    COMMENT "Registering component ${COMPONENT_NAME} with ESP-IDF component registry..."
-    #)
-
-    #add_custom_target(
-    #    my
-    #    COMMAND powershell compote component register --name ${COMPONENT_NAME} --project-dir '${COMPONENT_DIR}' --dest-dir '${CMAKE_SOURCE_DIR}/log'
-    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    #    COMMENT "Registering component ${COMPONENT_NAME} with ESP-IDF component registry..."
-    #)
-    #add_dependencies( ${COMPONENT_LIB} cmp_reg_sync )
-    #add_dependencies(${PROJECT_NAME}.elf cmp_reg_sync)
-
-
-    # Package the component and upload it to the ESP-IDF component registry
-    #if(NOT CMAKE_BUILD_EARLY_EXPANSION) 
-    #execute_process(
-    #    COMMAND powershell compote component upload --name "${COMPONENT_NAME}" --project-dir '"${COMPONENT_DIR}"' --dest-dir '"${CMAKE_SOURCE_DIR}/log"'
-    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    #    OUTPUT_FILE "${CMAKE_SOURCE_DIR}/log/esp_cmp_sync.log"
-    #)
-    #endif()
-    # Package the components and upload it to the platformio library registry
-    #execute_process(
-    #    COMMAND powershell pio pkg publish '"${COMPONENT_DIR}"' --owner "${cmp_reg_o}" --type library --no-interactive
-    #    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    #    OUTPUT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/log/pio_lib_sync.log"
-    #)
-#endif()

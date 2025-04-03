@@ -43,7 +43,7 @@ extern "C" {
 
 #define AS3935_COMPONENT_NAME              "esp_as3935"
 /** Version release date  */
-#define AS3935_FW_VERSION_DATE             "2025-04-02"
+#define AS3935_FW_VERSION_DATE             "2025-04-03"
 /** Major version number (X.x.x) */
 #define AS3935_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define AS3935_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define AS3935_FW_SEMANTIC_VERSION         "1.2.6-2"
+#define AS3935_FW_SEMANTIC_VERSION         "1.2.6-4"
 /** Git version hash */
-#define AS3935_FW_GIT_SHORT_SHA            "d60bc05"
+#define AS3935_FW_GIT_SHORT_SHA            "a7615df"
 
 
 /**
