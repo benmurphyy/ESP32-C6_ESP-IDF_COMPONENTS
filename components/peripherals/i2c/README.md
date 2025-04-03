@@ -20,6 +20,7 @@ ESP-IDF I2C device peripheral components supported at this time are listed as fo
 - ScioSense ENS160
 - Texas Instruments HDC1080
 - Honeywell HMC5883L
+- Texas Instruments INA226
 - Lite-On LTR390UV
 - Maxim-Integrated MAX30105 - Work in Progress
 - Melexis MLX90614

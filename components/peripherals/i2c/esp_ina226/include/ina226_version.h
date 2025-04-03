@@ -27,8 +27,8 @@
  * MIT Licensed as described in the file LICENSE
  */
 
-#ifndef __HDC1080_FW_VERSION_H__
-#define __HDC1080_FW_VERSION_H__
+#ifndef __INA226_FW_VERSION_H__
+#define __INA226_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,19 +41,19 @@ extern "C" {
  * public constant definitions
  */
 
-#define HDC1080_COMPONENT_NAME              "esp_hdc1080"
+#define INA226_COMPONENT_NAME              "esp_ina226"
 /** Version release date  */
-#define HDC1080_FW_VERSION_DATE             "2025-04-03"
+#define INA226_FW_VERSION_DATE             "2025-04-03"
 /** Major version number (X.x.x) */
-#define HDC1080_FW_VERSION_MAJOR            1
+#define INA226_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define HDC1080_FW_VERSION_MINOR            2
+#define INA226_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define HDC1080_FW_VERSION_PATCH            6
+#define INA226_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define HDC1080_FW_SEMANTIC_VERSION         "1.2.6-6"
+#define INA226_FW_SEMANTIC_VERSION         "1.2.6-6"
 /** Git version hash */
-#define HDC1080_FW_GIT_SHORT_SHA            "aba3ce7"
+#define INA226_FW_GIT_SHORT_SHA            "aba3ce7"
 
 
 /**
@@ -73,10 +73,10 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define HDC1080_FW_VERSION_STR                        \
-        STR( HDC1080_FW_VERSION_MAJOR ) "." \
-        STR( HDC1080_FW_VERSION_MINOR ) "." \
-        STR( HDC1080_FW_VERSION_PATCH )
+#define INA226_FW_VERSION_STR                        \
+        STR( INA226_FW_VERSION_MAJOR ) "." \
+        STR( INA226_FW_VERSION_MINOR ) "." \
+        STR( INA226_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -84,7 +84,7 @@ extern "C" {
  * 
  * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define HDC1080_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define INA226_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -93,11 +93,11 @@ extern "C" {
  * 
  * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define HDC1080_FW_VERSION_INT32            \
-        HDC1080_FW_VERSION_PARAMS_INT32(    \
-                HDC1080_FW_VERSION_MAJOR,   \
-                HDC1080_FW_VERSION_MINOR,   \
-                HDC1080_FW_VERSION_PATCH)
+#define INA226_FW_VERSION_INT32            \
+        INA226_FW_VERSION_PARAMS_INT32(    \
+                INA226_FW_VERSION_MAJOR,   \
+                INA226_FW_VERSION_MINOR,   \
+                INA226_FW_VERSION_PATCH)
 
 #ifdef __cplusplus
 }
@@ -105,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif //__HDC1080_FW_VERSION_H__
+#endif //__INA226_FW_VERSION_H__

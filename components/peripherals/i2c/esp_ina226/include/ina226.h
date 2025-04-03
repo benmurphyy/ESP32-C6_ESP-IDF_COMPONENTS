@@ -40,6 +40,7 @@
 #include <esp_err.h>
 #include <driver/i2c_master.h>
 #include <type_utils.h>
+#include "ina226_version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,6 +73,25 @@ extern "C" {
 #define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
 
 /*
+
+INA266 Wiring for Voltage
+- Source(+) to INA266 Voltage(+)
+- Source(-) to INA266 Voltage(-)
+
+INA266 Wiring for Current
+- Source(+) to INA266 Current(+)
+- INA266 Current(-) to Load(+)
+
+INA266 Wiring for Voltage & Current
+- Source(+) to INA266 Voltage(+)
+- INA266 Voltage(+) to INA266 Current(+)
+- INA266 Current(-) to Load(+)
+- Source(-) to INA266 Voltage(-)
+- INA266 Voltage(-) to Load(-)
+
+*/
+
+/*
  * INA226 macro definitions
 */
 #define I2C_INA226_CONFIG_DEFAULT {                                     \
@@ -81,56 +101,20 @@ extern "C" {
     .shunt_voltage_conv_time    = INA226_VOLT_CONV_TIME_1_1MS,          \
     .bus_voltage_conv_time      = INA226_VOLT_CONV_TIME_1_1MS,          \
     .mode                       = INA226_OP_MODE_CONT_SHUNT_BUS,        \
-    .shunt_resistance           = 0.0005,                               \
-    .max_current                = 10                                    \
+    .shunt_resistance           = 0.002,                                \
+    .max_current                = 0.5                                   \
     }
-                                /* rshunt is 0.5 milli ohms */
-                                /* up to max 10 amps */
-
+// shunt resistor 0.002 ohms
 
 /*
  * INA226 enumerator and structure declarations
 */
 
-/**
- * bus voltage range
- */
-typedef enum ina226_bus_voltage_ranges_e {
-    INA226_BUS_VOLT_RANGE_16V = 0, //!< 16V FSR
-    INA226_BUS_VOLT_RANGE_32V      //!< 32V FSR (default)
-} ina226_bus_voltage_ranges_t;
-
-/**
- * PGA gain for shunt voltage
- */
-typedef enum ina226_gains_e {
-    INA226_GAIN_1 = 0, //!< Gain: 1, Range: +-40 mV
-    INA226_GAIN_0_5,   //!< Gain: 1/2, Range: +-80 mV
-    INA226_GAIN_0_25,  //!< Gain: 1/4, Range: +-160 mV
-    INA226_GAIN_0_125  //!< Gain: 1/8, Range: +-320 mV (default)
-} ina226_gains_t;
 
 /**
  * ADC resolution/averaging
  */
-typedef enum ina226_resolutions_e {
-    INA226_RES_9BIT_1S    = 0,  //!< 9 bit, 1 sample, conversion time 84 us
-    INA226_RES_10BIT_1S   = 1,  //!< 10 bit, 1 sample, conversion time 148 us
-    INA226_RES_11BIT_1S   = 2,  //!< 11 bit, 1 sample, conversion time 276 us
-    INA226_RES_12BIT_1S   = 3,  //!< 12 bit, 1 sample, conversion time 532 us (default)
-    INA226_RES_12BIT_2S   = 9,  //!< 12 bit, 2 samples, conversion time 1.06 ms
-    INA226_RES_12BIT_4S   = 10, //!< 12 bit, 4 samples, conversion time 2.13 ms
-    INA226_RES_12BIT_8S   = 11, //!< 12 bit, 8 samples, conversion time 4.26 ms
-    INA226_RES_12BIT_16S  = 12, //!< 12 bit, 16 samples, conversion time 8.51 ms
-    INA226_RES_12BIT_32S  = 13, //!< 12 bit, 32 samples, conversion time 17.02 ms
-    INA226_RES_12BIT_64S  = 14, //!< 12 bit, 64 samples, conversion time 34.05 ms
-    INA226_RES_12BIT_128S = 15, //!< 12 bit, 128 samples, conversion time 68.1 ms
-} ina226_resolutions_t;
 
-typedef enum ina226_reset_states_e {
-    INA226_RESET_STATE_DISABLED = 0,
-    INA226_RESET_STATE_ENABLED  = 1
-} ina226_reset_states_t;
 
 typedef enum ina226_averaging_modes_e {
     INA226_AVG_MODE_1       = (0b000),  /*!< default */
@@ -165,6 +149,10 @@ typedef enum ina226_operating_modes_e {
     INA226_OP_MODE_CONT_SHUNT_BUS   = (0b111)   /*!< normal operating mode default */
 } ina226_operating_modes_t;
 
+/**
+ * @brief All-register reset, shunt voltage and bus voltage ADC 
+ * conversion times and averaging, operating mode.
+ */
 typedef union __attribute__((packed)) ina226_config_register_u {
     struct {
         ina226_operating_modes_t    mode:3; 
@@ -177,6 +165,9 @@ typedef union __attribute__((packed)) ina226_config_register_u {
     uint16_t reg;           /*!< represents the 16-bit control register as `uint16_t` */
 } ina226_config_register_t;
 
+/**
+ * @brief Alert configuration and Conversion Ready flag.
+ */
 typedef union __attribute__((packed)) ina226_mask_enable_register_u {
     struct {
         bool        alert_latch_enable:1;       /*!<  (bit:0) */
@@ -216,9 +207,8 @@ typedef struct ina226_config_s {
  */
 struct ina226_context_t {
     ina226_config_t             dev_config;       /*!< ina226 device configuration */
-    i2c_master_dev_handle_t     i2c_handle;  /*!< ina226 I2C device handle */
+    i2c_master_dev_handle_t     i2c_handle;       /*!< ina226 I2C device handle */
     float                       current_lsb;
-    float                       power_lsb;
 };
 
 typedef struct ina226_context_t ina226_context_t;
@@ -230,6 +220,8 @@ esp_err_t ina226_set_configuration_register(ina226_handle_t handle, const ina226
 
 esp_err_t ina226_get_calibration_register(ina226_handle_t handle, uint16_t *const reg);
 esp_err_t ina226_set_calibration_register(ina226_handle_t handle, const uint16_t reg);
+
+esp_err_t ina226_get_mask_enable_register(ina226_handle_t handle, ina226_mask_enable_register_t *const reg);
 
 /**
  * @brief initializes an INA226 device onto the I2C master bus.
@@ -272,9 +264,7 @@ esp_err_t ina226_get_mode(ina226_handle_t handle, ina226_operating_modes_t *cons
 esp_err_t ina226_set_mode(ina226_handle_t handle, const ina226_operating_modes_t mode);
 
 /**
- * @brief Perform calibration
- *
- * Current readings will be valid only after calibration
+ * @brief Calibrates the INA266.
  *
  * @param[in] handle INA226 device handle
  * @param[in] max_current maximum expected current, A
@@ -284,45 +274,74 @@ esp_err_t ina226_set_mode(ina226_handle_t handle, const ina226_operating_modes_t
 esp_err_t ina226_calibrate(ina226_handle_t handle, const float max_current, const float shunt_resistance);
 
 /**
- * @brief Read bus voltage
+ * @brief Reads bus voltage (V) from INA226.
  *
- * @param[in] handle INA226 device handle
- * @param[out] voltage bus voltage, V
+ * @param[in] handle INA226 device handle.
+ * @param[out] voltage INA226 bus voltage, V.
  * @return ESP_OK on success.
  */
 esp_err_t ina226_get_bus_voltage(ina226_handle_t handle, float *const voltage);
 
 /**
- * @brief Read shunt voltage
+ * @brief Triggers and reads bus voltage (V) from INA226.
  *
- * @param[in] handle INA226 device handle
- * @param[out] voltage shunt voltage, V
+ * @param[in] handle INA226 device handle.
+ * @param[out] voltage INA226 bus voltage, V.
+ * @return ESP_OK on success.
+ */
+esp_err_t ina226_get_triggered_bus_voltage(ina226_handle_t handle, float *const voltage);
+
+/**
+ * @brief Reads shunt voltage (V) from INA226.
+ *
+ * @param[in] handle INA226 device handle.
+ * @param[out] voltage INA226 shunt voltage, V.
  * @return ESP_OK on success.
  */
 esp_err_t ina226_get_shunt_voltage(ina226_handle_t handle, float *const voltage);
 
 /**
- * @brief Read current
+ * @brief Triggers and reads shunt voltage (V) from INA226.
  *
- * This function works properly only after calibration.
+ * @param[in] handle INA226 device handle.
+ * @param[out] voltage INA226 shunt voltage, V.
+ * @return ESP_OK on success.
+ */
+esp_err_t ina226_get_triggered_shunt_voltage(ina226_handle_t handle, float *const voltage);
+
+
+/**
+ * @brief Reads current (A) from INA226.
  *
- * @param[in] handle INA226 device handle
- * @param[out] current current, A
+ * @note This function works properly only after calibration.
+ *
+ * @param[in] handle INA226 device handle.
+ * @param[out] current INA226 current, A.
  * @return ESP_OK on success.
  */
 esp_err_t ina226_get_current(ina226_handle_t handle, float *const current);
 
 /**
- * @brief Read power
+ * @brief Triggers and reads current (A) from INA226.
  *
- * This function works properly only after calibration.
+ * @note This function works properly only after calibration.
  *
- * @param[in] handle INA226 device handle
- * @param[out] power power, W
+ * @param[in] handle INA226 device handle.
+ * @param[out] current INA226 current, A.
+ * @return ESP_OK on success.
+ */
+esp_err_t ina226_get_triggered_current(ina226_handle_t handle, float *const current);
+
+/**
+ * @brief Reads power (W) from INA226.
+ *
+ * @note This function works properly only after calibration.
+ *
+ * @param[in] handle INA226 device handle.
+ * @param[out] power INA226 power, W.
  * @return ESP_OK on success.
  */
 esp_err_t ina226_get_power(ina226_handle_t handle, float *const power);
-
 
 /**
  * @brief Removes an INA226 device from master bus.

@@ -125,6 +125,7 @@ Supported drivers include the following device peripherals:
 - I2C: ScioSense ENS160 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ens160>)
 - I2C: Texas Instruments HDC1080 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hdc1080>)
 - I2C: Honeywell HMC5883L (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_hmc5883l>)
+- I2C: Texas Instruments INA226 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ina226>)
 - I2C: Lite-On LTR390UV (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ltr390uv>)
 - I2C: Maxim-Integrated MAX30105 - Work in Progress
 - I2C: Melexis MLX90614 (<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mlx90614>)

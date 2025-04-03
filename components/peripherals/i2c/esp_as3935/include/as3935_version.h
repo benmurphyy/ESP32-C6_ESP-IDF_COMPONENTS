@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define AS3935_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define AS3935_FW_SEMANTIC_VERSION         "1.2.6-4"
+#define AS3935_FW_SEMANTIC_VERSION         "1.2.6-6"
 /** Git version hash */
-#define AS3935_FW_GIT_SHORT_SHA            "a7615df"
+#define AS3935_FW_GIT_SHORT_SHA            "aba3ce7"
 
 
 /**
