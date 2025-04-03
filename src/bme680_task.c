@@ -97,7 +97,7 @@ void i2c0_bme680_task( void *pvParameters ) {
             ESP_LOGI(APP_TAG, "dewpoint temperature:%.2f °C", data.dewpoint_temperature);
             ESP_LOGI(APP_TAG, "relative humidity:   %.2f %%", data.relative_humidity);
             ESP_LOGI(APP_TAG, "barometric pressure: %.2f hPa", data.barometric_pressure/100);
-            ESP_LOGI(APP_TAG, "gas resistance(%u):  %.2f kΩ", data.gas_index, data.gas_resistance/1000);
+            ESP_LOGI(APP_TAG, "gas resistance(%u):   %.2f kΩ", data.gas_index, data.gas_resistance/1000);
             ESP_LOGI(APP_TAG, "iaq score:           %u (%s)", data.iaq_score, bme680_air_quality_to_string(data.iaq_score));
             ESP_LOGI(APP_TAG, "heater is stable:    %s", data.heater_stable ? "yes" : "no");
             ESP_LOGI(APP_TAG, "gas range:           %u", data.gas_range);

@@ -25,7 +25,8 @@
  * @file uuid.c
  *
  * ESP-IDF UUID generator
- *
+ * 
+ * Motivated by: https://github.com/RobTillaart/UUID/blob/master/README.md
  *
  * Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
  *
@@ -69,6 +70,12 @@ static inline uint32_t uuid_random(void) {
     return (uuid_m_z << 16) + uuid_m_w;
 }
 
+/**
+ * @brief An example of a simple hash generator from a seeding string.
+ * 
+ * @param str Hash seeding string (i.e. __TIME__, __DATE__, __FILE__)
+ * @return uint32_t Generated hash.
+ */
 static inline uint32_t uuid_hash(const char * str) {
   //  very simple hash function.
   uint32_t hash = strnlen(str, UUID_HASH_MAX_SIZE);

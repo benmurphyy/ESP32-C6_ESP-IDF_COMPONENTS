@@ -90,7 +90,7 @@ void owb0_ds18b20_task( void *pvParameters ) {
         
         /* handle sensor */
         float temperature;
-        esp_err_t result = ds18b20_get_measurement(dev_hdl, &temperature);
+        esp_err_t result = ds18b20_get_temperature(dev_hdl, &temperature);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ds18b20 device read failed (%s)", esp_err_to_name(result));
         } else {
