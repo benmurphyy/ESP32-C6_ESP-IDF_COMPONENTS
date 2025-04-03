@@ -36,17 +36,19 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <esp_timer.h>
 
 
 /* constant definitions */
-#define UUID_ARGS_SIZE   2
-#define UUID_RANDOM_SIZE 4
-#define UUID_BUFFER_SIZE 37
+#define UUID_ARGS_SIZE      2
+#define UUID_RANDOM_SIZE    4
+#define UUID_BUFFER_SIZE    37
+#define UUID_HASH_MAX_SIZE  60
 
 
 /* Marsaglia initializer 'constants' */
-static uint32_t     uuid_m_w = 1;
-static uint32_t     uuid_m_z = 2;
+static uint32_t     uuid_m_w = 0;
+static uint32_t     uuid_m_z = 0;
 /* uuid mode - variant-4 (default) */
 static uuid_modes_t uuid_mode = UUID_MODE_VARIANT4;
 
@@ -67,8 +69,23 @@ static inline uint32_t uuid_random(void) {
     return (uuid_m_z << 16) + uuid_m_w;
 }
 
+static inline uint32_t uuid_hash(const char * str) {
+  //  very simple hash function.
+  uint32_t hash = strnlen(str, UUID_HASH_MAX_SIZE);
+  for (char *p = (char *) str; *p != 0; p++) {
+    //  use a big prime as magic number.
+    hash = hash * 2000099957 + (uint8_t) *p;
+  }
+  return hash;
+}
+
 void uuid_init(void) {
-    uuid_seed(2, 1, 2);
+    //  seed - differs per construction on compile time constants
+    //         and multiplication with esp_timer_get_time() (microseconds).
+    uint32_t s2 = uuid_hash(__TIME__) * (uint32_t)esp_timer_get_time();
+    uint32_t s1 = s2 ^ uuid_hash(__DATE__);
+             s2 = s2 ^ uuid_hash(__FILE__);
+    uuid_seed(2, s1, s2);
     uuid_set_mode(UUID_MODE_VARIANT4);
 }
 
@@ -83,7 +100,7 @@ void uuid_seed(uint8_t size, ... ) {
     va_start(valist, size);
 
     /* iterate through each argument */
-    for(uint8_t i = 0; i < size; i++) {
+    for(int32_t i = 0; i < size; i++) {
         s[i] = va_arg(valist, uint32_t);
     }
 
@@ -104,7 +121,7 @@ const char* uuid_generate(void) {
     uint32_t ar[UUID_RANDOM_SIZE];
 
     /* generate 4 random numbers */
-    for (uint8_t i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         ar[i] = uuid_random();
     }
 
@@ -124,7 +141,7 @@ const char* uuid_generate(void) {
     }
   
     /*  process 16 bytes build up the char array. */
-    for (uint8_t i = 0, j = 0; i < 16; i++) {
+    for (int32_t i = 0, j = 0; i < 16; i++) {
         /*
             multiples of 4 between 8 and 20 get a -.
             note we are processing 2 digits in one loop.
@@ -136,9 +153,9 @@ const char* uuid_generate(void) {
         }
   
         /* process one byte at the time instead of a nibble */
-        uint8_t nr   = i / 4;
-        uint8_t xx   = ar[nr];
-        uint8_t ch   = xx & 0x0F;
+        uint8_t nr = i / 4;
+        uint8_t xx = ar[nr];
+        uint8_t ch = xx & 0x0F;
 
         uuid_buffer[j++] = (ch < 10) ? '0' + ch : ('a' - 10) + ch;
 
@@ -149,7 +166,7 @@ const char* uuid_generate(void) {
     }
   
     /* null terminator - string */
-    uuid_buffer[UUID_BUFFER_SIZE-1] = 0;
+    uuid_buffer[UUID_BUFFER_SIZE-1] = 0x00;
 
     return (const char*)uuid_buffer;
 }

@@ -13,7 +13,8 @@
 #
 # Download CMake JSON-Parser: https://github.com/sbellus/json-cmake/blob/master/JSONParser.cmake
 # Copy the CMake JSONParser.cmake file to the tools/cmake directory of your ESP-IDF installation.
-# i.e. C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
+# i.e. PIO Env: C:\Users\user\.platformio\packages\framework-espidf\tools\cmake
+# i.e. ESP Env: C:\Users\lavco\esp\v5.4\esp-idf\tools\cmake
 #
 include( $ENV{IDF_PATH}/tools/cmake/version.cmake )
 
@@ -94,6 +95,7 @@ endif()
 idf_component_register(
     SRCS uuid.c
     INCLUDE_DIRS include
+    REQUIRES esp_timer
 )
 
 # Get global variables from idf build property
@@ -105,6 +107,7 @@ string( COMPARE EQUAL "${cmp_reg_sync}" "ENABLED" STR_CMP_RESULT )
 
 # Register the component with the ESP-IDF components and platformio registries
 #if(STR_CMP_RESULT EQUAL 1)
+
 
     #add_custom_target(
     #    my_component_sync

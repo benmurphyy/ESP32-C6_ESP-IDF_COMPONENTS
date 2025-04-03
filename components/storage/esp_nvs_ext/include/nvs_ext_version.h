@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define NVS_EXT_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define NVS_EXT_FW_SEMANTIC_VERSION         "1.2.6-1"
+#define NVS_EXT_FW_SEMANTIC_VERSION         "1.2.6-2"
 /** Git version hash */
-#define NVS_EXT_FW_GIT_SHORT_SHA            "c71bb1b"
+#define NVS_EXT_FW_GIT_SHORT_SHA            "d60bc05"
 
 
 /**

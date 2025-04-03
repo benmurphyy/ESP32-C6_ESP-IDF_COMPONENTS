@@ -47,19 +47,27 @@ void utils_uuid_task( void *pvParameters ) {
     for ( ;; ) {
         ESP_LOGI(APP_TAG, "######################## UUID - START #########################");
         
-        uint64_t start_time = esp_timer_get_time();
-        uuid_set_mode(UUID_MODE_VARIANT4);
-        const char* uuid_var = uuid_generate();
-        uint64_t stop_time = esp_timer_get_time();
-        uint32_t time_diff = stop_time - start_time;
-        ESP_LOGI(APP_TAG, "Variant4 UUID (%lu-us): %s", time_diff, uuid_var);
+        uint64_t start_time;
+        uint64_t stop_time;
+        uint32_t time_diff;
 
-        start_time = esp_timer_get_time();
-        uuid_set_mode(UUID_MODE_RANDOM);
-        const char* uuid_ran = uuid_generate();
-        stop_time = esp_timer_get_time();
-        time_diff = stop_time - start_time;
-        ESP_LOGI(APP_TAG, "Random UUID   (%lu-us): %s", time_diff, uuid_ran);
+        for(uint8_t i = 0; i < 5; i++) {
+            start_time = esp_timer_get_time();
+            uuid_set_mode(UUID_MODE_VARIANT4);
+            const char* uuid_var = uuid_generate();
+            stop_time = esp_timer_get_time();
+            time_diff = stop_time - start_time;
+            ESP_LOGI(APP_TAG, "Run(%u) Variant4 UUID (%lu-us): %s", i, time_diff, uuid_var);
+        }
+        
+        for(uint8_t i = 0; i < 5; i++) {
+            start_time = esp_timer_get_time();
+            uuid_set_mode(UUID_MODE_RANDOM);
+            const char* uuid_ran = uuid_generate();
+            stop_time = esp_timer_get_time();
+            time_diff = stop_time - start_time;
+            ESP_LOGI(APP_TAG, "Run(%u) Random UUID   (%lu-us): %s", i, time_diff, uuid_ran);
+        }
 
         uint32_t seed1 = random();
         uint32_t seed2 = random();

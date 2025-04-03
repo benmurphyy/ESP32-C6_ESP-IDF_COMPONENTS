@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define VEML7700_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define VEML7700_FW_SEMANTIC_VERSION         "1.2.6-1"
+#define VEML7700_FW_SEMANTIC_VERSION         "1.2.6-2"
 /** Git version hash */
-#define VEML7700_FW_GIT_SHORT_SHA            "c71bb1b"
+#define VEML7700_FW_GIT_SHORT_SHA            "d60bc05"
 
 
 /**

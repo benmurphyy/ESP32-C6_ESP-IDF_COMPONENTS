@@ -56,7 +56,7 @@ typedef enum uuid_modes_e {
 } uuid_modes_t;
 
 /**
- * @brief Initialize UUID generator with default seed values (1 and 2).
+ * @brief Initialize UUID generator with default seed values from hash algorithm.
  */
 void uuid_init(void);
 
