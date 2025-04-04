@@ -313,7 +313,7 @@ esp_err_t ina226_get_triggered_shunt_voltage(ina226_handle_t handle, float *cons
     ESP_ARG_CHECK( handle && voltage );
 
     /* attempt to trigger bus voltage */
-    ESP_RETURN_ON_ERROR( ina226_set_mode(handle, INA226_OP_MODE_TRIG_SHUNT_VOLT), TAG, "unable to trigger shunt voltage, get triggered shunt voltage failed" );
+    ESP_RETURN_ON_ERROR( ina226_set_operating_mode(handle, INA226_OP_MODE_TRIG_SHUNT_VOLT), TAG, "unable to trigger shunt voltage, get triggered shunt voltage failed" );
 
     /* attempt to poll status until data is available or timeout occurs  */
     do {
@@ -373,7 +373,7 @@ esp_err_t ina226_get_triggered_bus_voltage(ina226_handle_t handle, float *const 
     ESP_ARG_CHECK( handle && voltage );
 
     /* attempt to trigger bus voltage */
-    ESP_RETURN_ON_ERROR( ina226_set_mode(handle, INA226_OP_MODE_TRIG_BUS_VOLT), TAG, "unable to trigger bus voltage, get triggered bus voltage failed" );
+    ESP_RETURN_ON_ERROR( ina226_set_operating_mode(handle, INA226_OP_MODE_TRIG_BUS_VOLT), TAG, "unable to trigger bus voltage, get triggered bus voltage failed" );
 
     /* attempt to poll status until data is available or timeout occurs  */
     do {
@@ -433,7 +433,7 @@ esp_err_t ina226_get_triggered_current(ina226_handle_t handle, float *const curr
     ESP_ARG_CHECK( handle && current );
 
     /* attempt to trigger bus voltage */
-    ESP_RETURN_ON_ERROR( ina226_set_mode(handle, INA226_OP_MODE_TRIG_BUS_VOLT), TAG, "unable to trigger current, get triggered current failed" );
+    ESP_RETURN_ON_ERROR( ina226_set_operating_mode(handle, INA226_OP_MODE_TRIG_SHUNT_BUS), TAG, "unable to trigger current, get triggered current failed" );
 
     /* attempt to poll status until data is available or timeout occurs  */
     do {
@@ -493,7 +493,7 @@ esp_err_t ina226_get_mode(ina226_handle_t handle, ina226_operating_modes_t *cons
     ESP_RETURN_ON_ERROR( ina226_get_configuration_register(handle, &config), TAG, "read configuration register failed" );
 
     /* set mode */
-    *mode = config.bits.mode;
+    *mode = config.bits.operating_mode;
 
     return ESP_OK;
 }
@@ -508,7 +508,7 @@ esp_err_t ina226_set_mode(ina226_handle_t handle, const ina226_operating_modes_t
     ESP_RETURN_ON_ERROR( ina226_get_configuration_register(handle, &config), TAG, "read configuration register failed" );
 
     /* set mode */
-    config.bits.mode = mode;
+    config.bits.operating_mode = mode;
 
     /* attempt to write configuration register */
     ESP_RETURN_ON_ERROR( ina226_set_configuration_register(handle, config), TAG, "write configuration register failed" );
@@ -533,8 +533,8 @@ esp_err_t ina226_reset(ina226_handle_t handle) {
     /* attempt to configure device */
     ESP_RETURN_ON_ERROR(ina226_get_configuration_register(handle, &config), TAG, "unable to read configuration register, reset failed");
 
-    config.bits.mode                = handle->dev_config.mode;
-    config.bits.avg_mode            = handle->dev_config.averaging_mode;
+    config.bits.operating_mode      = handle->dev_config.operating_mode;
+    config.bits.averaging_mode      = handle->dev_config.averaging_mode;
     config.bits.bus_volt_conv_time  = handle->dev_config.bus_voltage_conv_time;
     config.bits.shun_volt_conv_time = handle->dev_config.shunt_voltage_conv_time;
 

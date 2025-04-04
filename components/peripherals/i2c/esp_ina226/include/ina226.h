@@ -99,7 +99,7 @@ INA266 Wiring for Voltage & Current
     .averaging_mode             = INA226_AVG_MODE_1,                    \
     .shunt_voltage_conv_time    = INA226_VOLT_CONV_TIME_1_1MS,          \
     .bus_voltage_conv_time      = INA226_VOLT_CONV_TIME_1_1MS,          \
-    .mode                       = INA226_OP_MODE_CONT_SHUNT_BUS,        \
+    .operating_mode             = INA226_OP_MODE_CONT_SHUNT_BUS,        \
     .shunt_resistance           = 0.002,                                \
     .max_current                = 0.5                                   \
     }
@@ -114,7 +114,9 @@ INA266 Wiring for Voltage & Current
  * ADC resolution/averaging
  */
 
-
+/**
+ * @brief Averaging modes enumerator for ADC resolution/averaging.
+ */
 typedef enum ina226_averaging_modes_e {
     INA226_AVG_MODE_1       = (0b000),  /*!< default */
     INA226_AVG_MODE_4       = (0b001),
@@ -126,6 +128,9 @@ typedef enum ina226_averaging_modes_e {
     INA226_AVG_MODE_1024    = (0b111)
 } ina226_averaging_modes_t;
 
+/**
+ * @brief Voltage conversion times enumerator for ADC resolution/averaging.
+ */
 typedef enum ina226_volt_conv_times_e {
     INA226_VOLT_CONV_TIME_140US     = (0b000),
     INA226_VOLT_CONV_TIME_204US     = (0b001),
@@ -137,6 +142,9 @@ typedef enum ina226_volt_conv_times_e {
     INA226_VOLT_CONV_TIME_8_244MS   = (0b111)
 } ina226_volt_conv_times_t;
 
+/**
+ * @brief Current conversion times enumerator for ADC resolution/averaging.
+ */
 typedef enum ina226_operating_modes_e {
     INA226_OP_MODE_SHUTDOWN         = (0b000),  /*!< device is powered down */
     INA226_OP_MODE_TRIG_SHUNT_VOLT  = (0b001),  /*!< triggers single-shot conversion when set */
@@ -154,10 +162,10 @@ typedef enum ina226_operating_modes_e {
  */
 typedef union __attribute__((packed)) ina226_config_register_u {
     struct {
-        ina226_operating_modes_t    mode:3; 
+        ina226_operating_modes_t    operating_mode:3; 
         ina226_volt_conv_times_t    shun_volt_conv_time:3;
         ina226_volt_conv_times_t    bus_volt_conv_time:3;
-        ina226_averaging_modes_t    avg_mode:3;
+        ina226_averaging_modes_t    averaging_mode:3;
         uint16_t                    reserved:3;        
         bool                        reset_enabled:1;         /*!< reset state BIT15 */
     } bits;                  /*!< represents the 16-bit control register parts in bits. */
@@ -187,17 +195,18 @@ typedef union __attribute__((packed)) ina226_mask_enable_register_u {
 
 
 /**
- * @brief i2c ina226 device configuration.
+ * @brief INA226 device configuration.
  */
 typedef struct ina226_config_s {
-    uint16_t                        i2c_address;        /*!< ina226 i2c device address */
-    uint32_t                        i2c_clock_speed;    /*!< ina226 i2c device scl clock speed  */
-    ina226_averaging_modes_t        averaging_mode;           /*!< averaging mode */
-    ina226_volt_conv_times_t        shunt_voltage_conv_time;
-    ina226_volt_conv_times_t        bus_voltage_conv_time;
-    ina226_operating_modes_t        mode;               /*!< operating mode */
-    float                           shunt_resistance;
-    float                           max_current;
+    uint16_t                        i2c_address;                /*!< ina226 i2c device address */
+    uint32_t                        i2c_clock_speed;            /*!< ina226 i2c device scl clock speed  */
+    ina226_averaging_modes_t        averaging_mode;             /*!< ina226 averaging mode */
+    ina226_volt_conv_times_t        shunt_voltage_conv_time;    /*!< ina226 shunt voltage conversion time */
+    ina226_volt_conv_times_t        bus_voltage_conv_time;      /*!< ina226 bus voltage conversion time */
+    ina226_operating_modes_t        operating_mode;             /*!< ina226 operating mode */
+    float                           shunt_resistance;           /*!< ina226 shunt resistance, Ohm */
+    float                           shunt_voltage;              /*!< ina226 shunt voltage, V */
+    float                           max_current;                /*!< ina226 maximum expected current, A */
 } ina226_config_t;
 
 
@@ -205,27 +214,70 @@ typedef struct ina226_config_s {
  * @brief INA226 context structure.
  */
 struct ina226_context_t {
-    ina226_config_t             dev_config;       /*!< ina226 device configuration */
-    i2c_master_dev_handle_t     i2c_handle;       /*!< ina226 I2C device handle */
-    float                       current_lsb;
+    ina226_config_t                 dev_config;       /*!< ina226 device configuration */
+    i2c_master_dev_handle_t         i2c_handle;       /*!< ina226 I2C device handle */
+    float                           current_lsb;      /*!< ina226 current LSB value, uA/bit, this is automatically configured */
 };
 
+/**
+ * @brief INA226 context structure definition.
+ */
 typedef struct ina226_context_t ina226_context_t;
+
+/**
+ * @brief INA226 handle structure definition.
+ */
 typedef struct ina226_context_t *ina226_handle_t;
 
-
+/**
+ * @brief Reads the configuration register from the INA226.
+ * 
+ * @param handle INA226 device handle.
+ * @param reg INA226 configuration register
+ * @return esp_err_t ESP_OK on success.
+ */
 esp_err_t ina226_get_configuration_register(ina226_handle_t handle, ina226_config_register_t *const reg);
+
+/**
+ * @brief Writes the configuration register to the INA226.
+ * 
+ * @param handle INA226 device handle.
+ * @param reg INA226 configuration register
+ * @return esp_err_t ESP_OK on success.
+ */
 esp_err_t ina226_set_configuration_register(ina226_handle_t handle, const ina226_config_register_t reg);
 
+/**
+ * @brief Reads the calibration register from the INA226.
+ * 
+ * @param handle INA226 device handle.
+ * @param reg INA226 calibration register
+ * @return esp_err_t ESP_OK on success.
+ */
 esp_err_t ina226_get_calibration_register(ina226_handle_t handle, uint16_t *const reg);
+
+/**
+ * @brief Writes the calibration register to the INA226.
+ * 
+ * @param handle INA226 device handle.
+ * @param reg INA226 calibration register
+ * @return esp_err_t ESP_OK on success.
+ */
 esp_err_t ina226_set_calibration_register(ina226_handle_t handle, const uint16_t reg);
 
+/**
+ * @brief Reads the mask/enable register from the INA226.
+ * 
+ * @param handle INA226 device handle.
+ * @param reg INA226 mask/enable register
+ * @return esp_err_t ESP_OK on success.
+ */
 esp_err_t ina226_get_mask_enable_register(ina226_handle_t handle, ina226_mask_enable_register_t *const reg);
 
 /**
  * @brief initializes an INA226 device onto the I2C master bus.
  *
- * @param[in] master_handle I2C master bus handle
+ * @param[in] master_handle I2C master bus handle.
  * @param[in] ina226_config INA226 device configuration.
  * @param[out] ina226_handle INA226 device handle.
  * @return ESP_OK on success.
@@ -233,41 +285,11 @@ esp_err_t ina226_get_mask_enable_register(ina226_handle_t handle, ina226_mask_en
 esp_err_t ina226_init(i2c_master_bus_handle_t master_handle, const ina226_config_t *ina226_config, ina226_handle_t *ina226_handle);
 
 /**
- * @brief Reset device
- *
- * Same as power-on reset. Resets all registers to default values.
- * Calibration is required for the device to read current, otherwise
- * only shunt voltage readings will be valid.
- *
- * @param[in] handle INA226 device handle
- * @return ESP_OK on success.
- */
-esp_err_t ina226_reset(ina226_handle_t handle);
-
-/**
- * @brief Get operating mode
- *
- * @param[in] handle INA226 device handle
- * @param[out] mode Operating mode
- * @return ESP_OK on success.
- */
-esp_err_t ina226_get_mode(ina226_handle_t handle, ina226_operating_modes_t *const mode);
-
-/**
- * @brief Set operating mode
- *
- * @param[in] handle INA226 device handle
- * @param[out] mode Operating mode
- * @return ESP_OK on success.
- */
-esp_err_t ina226_set_mode(ina226_handle_t handle, const ina226_operating_modes_t mode);
-
-/**
  * @brief Calibrates the INA266.
  *
  * @param[in] handle INA226 device handle
- * @param[in] max_current maximum expected current, A
- * @param[in] shunt_resistance shunt resistance, Ohm
+ * @param[in] max_current Maximum expected current, A
+ * @param[in] shunt_resistance Shunt resistance, Ohm
  * @return ESP_OK on success.
  */
 esp_err_t ina226_calibrate(ina226_handle_t handle, const float max_current, const float shunt_resistance);
@@ -340,6 +362,47 @@ esp_err_t ina226_get_triggered_current(ina226_handle_t handle, float *const curr
  * @return ESP_OK on success.
  */
 esp_err_t ina226_get_power(ina226_handle_t handle, float *const power);
+
+/**
+ * @brief Reads operating mode from the INA226.
+ *
+ * @param[in] handle INA226 device handle
+ * @param[out] mode Operating mode setting.
+ * @return ESP_OK on success.
+ */
+esp_err_t ina226_get_operating_mode(ina226_handle_t handle, ina226_operating_modes_t *const mode);
+
+/**
+ * @brief Writes operating mode to the INA226.
+ *
+ * @param[in] handle INA226 device handle
+ * @param[out] mode Operating mode setting.
+ * @return ESP_OK on success.
+ */
+esp_err_t ina226_set_operating_mode(ina226_handle_t handle, const ina226_operating_modes_t mode);
+
+esp_err_t ina226_get_averaging_mode(ina226_handle_t handle, ina226_averaging_modes_t *const mode);
+
+esp_err_t ina226_set_averaging_mode(ina226_handle_t handle, const ina226_averaging_modes_t mode);
+
+esp_err_t ina226_get_bus_volt_conv_time(ina226_handle_t handle, ina226_volt_conv_times_t *const conv_time);
+
+esp_err_t ina226_set_bus_volt_conv_time(ina226_handle_t handle, ina226_volt_conv_times_t *const conv_time);
+
+esp_err_t ina226_get_shunt_volt_conv_time(ina226_handle_t handle, ina226_volt_conv_times_t *const conv_time);
+
+esp_err_t ina226_set_shunt_volt_conv_time(ina226_handle_t handle, ina226_volt_conv_times_t *const conv_time);
+
+/**
+ * @brief Resets the INA226.
+ *
+ * Same as power-on reset. Resets all registers to default values.
+ * Calibration is conducted automatically after reset.
+ *
+ * @param[in] handle INA226 device handle
+ * @return ESP_OK on success.
+ */
+esp_err_t ina226_reset(ina226_handle_t handle);
 
 /**
  * @brief Removes an INA226 device from master bus.
