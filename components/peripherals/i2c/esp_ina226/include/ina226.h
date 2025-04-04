@@ -50,8 +50,7 @@ extern "C" {
  * INA226 definitions
 */
 
-#define I2C_INA226_DEV_CLK_SPD         UINT32_C(100000)    //!< ina226 I2C default clock frequency (100KHz)
-#define I2C_INA226_XFR_TIMEOUT_MS       UINT16_C(500)        //!< ina226 I2C transaction timeout in milliseconds
+#define I2C_INA226_DEV_CLK_SPD          UINT32_C(100000)    //!< ina226 I2C default clock frequency (100KHz)
 
 #define I2C_INA226_ADDR_GND_GND         UINT8_C(0x40)       //!< ina226 I2C address, A1 pin - GND, A0 pin - GND
 #define I2C_INA226_ADDR_GND_VS          UINT8_C(0x41)       //!< ina226 I2C address, A1 pin - GND, A0 pin - VS+
@@ -308,7 +307,6 @@ esp_err_t ina226_get_shunt_voltage(ina226_handle_t handle, float *const voltage)
  * @return ESP_OK on success.
  */
 esp_err_t ina226_get_triggered_shunt_voltage(ina226_handle_t handle, float *const voltage);
-
 
 /**
  * @brief Reads current (A) from INA226.
