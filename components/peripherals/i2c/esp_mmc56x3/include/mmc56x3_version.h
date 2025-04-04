@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define MMC56X3_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define MMC56X3_FW_SEMANTIC_VERSION         "1.2.6-20"
+#define MMC56X3_FW_SEMANTIC_VERSION         "1.2.6-21"
 /** Git version hash */
-#define MMC56X3_FW_GIT_SHORT_SHA            "cc01006"
+#define MMC56X3_FW_GIT_SHORT_SHA            "03cda0f"
 
 
 /**

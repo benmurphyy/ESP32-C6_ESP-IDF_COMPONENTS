@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define HDC1080_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define HDC1080_FW_SEMANTIC_VERSION         "1.2.6-20"
+#define HDC1080_FW_SEMANTIC_VERSION         "1.2.6-21"
 /** Git version hash */
-#define HDC1080_FW_GIT_SHORT_SHA            "cc01006"
+#define HDC1080_FW_GIT_SHORT_SHA            "03cda0f"
 
 
 /**
