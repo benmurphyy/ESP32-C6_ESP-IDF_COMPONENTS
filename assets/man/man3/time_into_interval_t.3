@@ -1,0 +1,59 @@
+.TH "time_into_interval_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+time_into_interval_t \- Time-into-interval structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <time_into_interval\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBname\fP"
+.br
+.ti -1c
+.RI "uint64_t \fBepoch_timestamp\fP"
+.br
+.ti -1c
+.RI "\fBtime_into_interval_types_t\fP \fBinterval_type\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBinterval_period\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBinterval_offset\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBhash_code\fP"
+.br
+.ti -1c
+.RI "SemaphoreHandle_t \fBmutex_handle\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Time-into-interval structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "uint64_t epoch_timestamp"
+time-into-interval, next event unix epoch timestamp (UTC) in milli-seconds 
+.SS "uint16_t hash_code"
+hash-code of the time-into-interval handle 
+.SS "uint16_t interval_offset"
+time-into-interval, interval offset setting, per interval type setting, that must be less than the interval period 
+.SS "uint16_t interval_period"
+time-into-interval, a non-zero interval period setting per interval type setting 
+.SS "\fBtime_into_interval_types_t\fP interval_type"
+time-into-interval, interval type setting 
+.SS "SemaphoreHandle_t mutex_handle"
+mutex handle of the time-into-interval handle 
+.SS "const char* name"
+time-into-interval, name, maximum of 25-characters 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

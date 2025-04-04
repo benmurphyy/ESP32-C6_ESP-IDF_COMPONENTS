@@ -1,0 +1,67 @@
+.TH "components/utilities/esp_math3d/quaternion.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/utilities/esp_math3d/quaternion.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBquaternion_t\fP"
+.br
+.RI "Quaternion structure\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct quaternion_t \fBquaternion_t\fP"
+.br
+.RI "Quaternion definitions\&. "
+.ti -1c
+.RI "typedef struct \fBquaternion_t\fP * \fBquaternion_handle_t\fP"
+.br
+.RI "Quaternion handle structure\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBquaternion_init\fP (\fBquaternion_handle_t\fP *quaternion_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBquaternion_init_data\fP (\fBquaternion_handle_t\fP quaternion_handle, float nw, float nx, float ny, float nz)"
+.br
+.ti -1c
+.RI "esp_err_t \fBquaternion_get_product\fP (\fBquaternion_handle_t\fP quaternion_handle, \fBquaternion_handle_t\fP *product_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBquaternion_get_conjugate\fP (\fBquaternion_handle_t\fP quaternion_handle, \fBquaternion_handle_t\fP *conjugate_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBquaternion_get_magnitude\fP (\fBquaternion_handle_t\fP quaternion_handle, float *magnitude)"
+.br
+.ti -1c
+.RI "esp_err_t \fBquaternion_normalize\fP (\fBquaternion_handle_t\fP quaternion_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBquaternion_get_normalized\fP (\fBquaternion_handle_t\fP quaternion_handle, \fBquaternion_handle_t\fP *normalized_handle)"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

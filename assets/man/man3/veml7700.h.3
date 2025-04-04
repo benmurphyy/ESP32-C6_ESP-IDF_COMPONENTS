@@ -1,0 +1,275 @@
+.TH "components/peripherals/i2c/esp_veml7700/include/veml7700.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_veml7700/include/veml7700.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'veml7700_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBveml7700_config_s\fP"
+.br
+.RI "VEML7700 device configuration structure\&. "
+.ti -1c
+.RI "struct \fBveml7700_context_t\fP"
+.br
+.RI "VEML7700 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_VEML7700_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "veml7700 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_VEML7700_DEV_ADDR\fP   UINT8_C(0x10)"
+.br
+.RI "veml7700 I2C address "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_VEML7700_CONFIG_DEFAULT\fP"
+.br
+.RI "VEML7700 device configuration initialization default\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBveml7700_gains_e\fP \fBveml7700_gains_t\fP"
+.br
+.RI "VEML7700 gains enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBveml7700_integration_times_e\fP \fBveml7700_integration_times_t\fP"
+.br
+.RI "VEML7700 integration times enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBveml7700_persistence_protections_e\fP \fBveml7700_persistence_protections_t\fP"
+.br
+.RI "VEML7700 persistence protections enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBveml7700_power_saving_modes_e\fP \fBveml7700_power_saving_modes_t\fP"
+.br
+.RI "VEML7700 power saving modes enumerator\&. "
+.ti -1c
+.RI "typedef struct \fBveml7700_config_s\fP \fBveml7700_config_t\fP"
+.br
+.RI "VEML7700 device configuration structure\&. "
+.ti -1c
+.RI "typedef struct veml7700_context_t \fBveml7700_context_t\fP"
+.br
+.RI "VEML7700 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBveml7700_context_t\fP * \fBveml7700_handle_t\fP"
+.br
+.RI "VEML7700 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBveml7700_gains_e\fP { \fBVEML7700_GAIN_1\fP = (0b00), \fBVEML7700_GAIN_2\fP = (0b01), \fBVEML7700_GAIN_DIV_8\fP = (0b10), \fBVEML7700_GAIN_DIV_4\fP = (0b11) }"
+.br
+.RI "VEML7700 gains enumerator\&. "
+.ti -1c
+.RI "enum \fBveml7700_integration_times_e\fP { \fBVEML7700_INTEGRATION_TIME_25MS\fP = (0b1100), \fBVEML7700_INTEGRATION_TIME_50MS\fP = (0b1000), \fBVEML7700_INTEGRATION_TIME_100MS\fP = (0b0000), \fBVEML7700_INTEGRATION_TIME_200MS\fP = (0b0001), \fBVEML7700_INTEGRATION_TIME_400MS\fP = (0b0010), \fBVEML7700_INTEGRATION_TIME_800MS\fP = (0b0011) }"
+.br
+.RI "VEML7700 integration times enumerator\&. "
+.ti -1c
+.RI "enum \fBveml7700_persistence_protections_e\fP { \fBVEML7700_PERSISTENCE_PROTECTION_1\fP = (0b00), \fBVEML7700_PERSISTENCE_PROTECTION_2\fP = (0b01), \fBVEML7700_PERSISTENCE_PROTECTION_4\fP = (0b10), \fBVEML7700_PERSISTENCE_PROTECTION_8\fP = (0b11) }"
+.br
+.RI "VEML7700 persistence protections enumerator\&. "
+.ti -1c
+.RI "enum \fBveml7700_power_saving_modes_e\fP { \fBVEML7700_POWER_SAVING_MODE_1\fP = (0b00), \fBVEML7700_POWER_SAVING_MODE_2\fP = (0b01), \fBVEML7700_POWER_SAVING_MODE_3\fP = (0b10), \fBVEML7700_POWER_SAVING_MODE_4\fP = (0b11) }"
+.br
+.RI "VEML7700 power saving modes enumerator\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_configuration_register\fP (\fBveml7700_handle_t\fP handle, veml7700_configuration_register_t *const reg)"
+.br
+.RI "Reads configuration register from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_configuration_register\fP (\fBveml7700_handle_t\fP handle, const veml7700_configuration_register_t reg)"
+.br
+.RI "Writes configuration register to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_threshold_registers\fP (\fBveml7700_handle_t\fP handle, uint16_t *const hi_threshold, uint16_t *const lo_threshold)"
+.br
+.RI "Reads high and low threshold registers from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_threshold_registers\fP (\fBveml7700_handle_t\fP handle, const uint16_t hi_threshold, const uint16_t lo_threshold)"
+.br
+.RI "Writes high and low threshold registers to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_power_saving_mode_register\fP (\fBveml7700_handle_t\fP handle, veml7700_power_saving_mode_register_t *const reg)"
+.br
+.RI "Reads power saving mode register from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_power_saving_mode_register\fP (\fBveml7700_handle_t\fP handle, const veml7700_power_saving_mode_register_t reg)"
+.br
+.RI "Writes power saving mode register to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_interrupt_status_register\fP (\fBveml7700_handle_t\fP handle, veml7700_interrupt_status_register_t *const reg)"
+.br
+.RI "Reads interrupt status register from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_identifier_register\fP (\fBveml7700_handle_t\fP handle, veml7700_identifier_register_t *const reg)"
+.br
+.RI "Reads identifier register from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_optimize_configuration\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Optimizes VEML7700 gain and integration time configuration\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_optimize_configuration___\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBveml7700_init\fP (i2c_master_bus_handle_t master_handle, const \fBveml7700_config_t\fP *veml7700_config, \fBveml7700_handle_t\fP *veml7700_handle)"
+.br
+.RI "Initializes an VEML7700 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_ambient_light_counts\fP (\fBveml7700_handle_t\fP handle, uint16_t *const counts)"
+.br
+.RI "Reads ambient light counts from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_ambient_light\fP (\fBveml7700_handle_t\fP handle, float *const ambient_light)"
+.br
+.RI "Reads ambient light (0 lux to 140 klux) from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_ambient_light_auto\fP (\fBveml7700_handle_t\fP handle, float *const ambient_light)"
+.br
+.RI "Reads optimal ambient light (0 lux to 140 klux) from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_white_channel_counts\fP (\fBveml7700_handle_t\fP handle, uint16_t *const counts)"
+.br
+.RI "Reads white channel counts from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_white_channel\fP (\fBveml7700_handle_t\fP handle, float *const white_light)"
+.br
+.RI "Reads white channel from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_white_channel_auto\fP (\fBveml7700_handle_t\fP handle, float *const white_light)"
+.br
+.RI "Reads optimal white channel from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_thresholds\fP (\fBveml7700_handle_t\fP handle, uint16_t *const hi_threshold, uint16_t *const lo_threshold)"
+.br
+.RI "Reads high and low als thresholds (lux) from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_thresholds\fP (\fBveml7700_handle_t\fP handle, const uint16_t hi_threshold, const uint16_t lo_threshold)"
+.br
+.RI "Writes high and low als thresholds (lux) to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_gain\fP (\fBveml7700_handle_t\fP handle, \fBveml7700_gains_t\fP *const gain)"
+.br
+.RI "Reads als gain from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_gain\fP (\fBveml7700_handle_t\fP handle, const \fBveml7700_gains_t\fP gain)"
+.br
+.RI "Writes als gain to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_integration_time\fP (\fBveml7700_handle_t\fP handle, \fBveml7700_integration_times_t\fP *const integration_time)"
+.br
+.RI "Reads als integration time from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_integration_time\fP (\fBveml7700_handle_t\fP handle, const \fBveml7700_integration_times_t\fP integration_time)"
+.br
+.RI "Writes als integration time to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_persistence_protection\fP (\fBveml7700_handle_t\fP handle, \fBveml7700_persistence_protections_t\fP *const persistence_protection)"
+.br
+.RI "Reads als persistence protection from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_persistence_protection\fP (\fBveml7700_handle_t\fP handle, const \fBveml7700_persistence_protections_t\fP persistence_protection)"
+.br
+.RI "Writes als persistence protection to VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_power_saving_mode\fP (\fBveml7700_handle_t\fP handle, \fBveml7700_power_saving_modes_t\fP *const power_saving_mode, bool *const power_saving_enabled)"
+.br
+.RI "Reads power saving mode from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_set_power_saving_mode\fP (\fBveml7700_handle_t\fP handle, const \fBveml7700_power_saving_modes_t\fP power_saving_mode, const bool power_saving_enabled)"
+.br
+.RI "Reads power saving mode from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_enable_irq\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Enables interrupt assertion\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_disable_irq\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Disables interrupt assertion\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_get_interrupt_status\fP (\fBveml7700_handle_t\fP handle, bool *const hi_threshold_exceeded, bool *const lo_threshold_exceeded)"
+.br
+.RI "Reads interrupt status from VEML7700\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_disable\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Shuts down VEML7700 until woken\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_enable\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Wakes up VEML7700 from shut-down\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_remove\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Removes an VEML7700 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBveml7700_delete\fP (\fBveml7700_handle_t\fP handle)"
+.br
+.RI "Removes an VEML7700 device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "const char * \fBveml7700_get_fw_version\fP (void)"
+.br
+.RI "Converts VEML7700 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBveml7700_get_fw_version_number\fP (void)"
+.br
+.RI "Converts VEML7700 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBveml7700_configuration_register_t\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_power_saving_mode_register_t\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_interrupt_status_register_t\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_identifier_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

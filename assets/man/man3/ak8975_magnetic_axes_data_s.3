@@ -1,0 +1,40 @@
+.TH "ak8975_magnetic_axes_data_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ak8975_magnetic_axes_data_s \- AK8975 processed compass axes data structure and axes have a range +/-1229 uT\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ak8975\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "float \fBx_axis\fP"
+.br
+.ti -1c
+.RI "float \fBy_axis\fP"
+.br
+.ti -1c
+.RI "float \fBz_axis\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+AK8975 processed compass axes data structure and axes have a range +/-1229 uT\&. 
+
+
+.PP
+\fBNote\fP
+.RS 4
+AK8975 data overflow of axes (x, y, z) is a sum of the absolute values for each axis and the sum of the axes should be smaller than 2400 uT (|X|+|Y|+|Z| < 2400 uT)\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

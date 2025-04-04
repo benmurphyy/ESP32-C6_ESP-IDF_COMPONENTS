@@ -1,0 +1,145 @@
+.TH "components/peripherals/spi/esp_max31865/max31865.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/spi/esp_max31865/max31865.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'max31865\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBspi_rtd_coeff_t\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSPI_MAX31865_REG_CONFIG\fP   UINT8_C(0x00)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_REG_RTD_MSB\fP   UINT8_C(0x01)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_REG_HIGH_FAULT_MSB\fP   UINT8_C(0x03)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_REG_LOW_FAULT_MSB\fP   UINT8_C(0x05)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_REG_FAULT_STATUS\fP   UINT8_C(0x07)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(100)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_DATA_READY_DELAY_MS\fP   UINT16_C(2)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_POWERUP_DELAY_MS\fP   UINT16_C(120)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_RESET_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_SETUP_DELAY_MS\fP   UINT16_C(15)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_APPSTART_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBSPI_MAX31865_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBspi_max31865_ready_rising_isr\fP (void *arg)"
+.br
+.ti -1c
+.RI "esp_err_t \fBspi_max31865_init\fP (const \fBspi_max31865_config_t\fP *max31865_config, \fBspi_max31865_handle_t\fP *max31865_handle)"
+.br
+.RI "Initializes an MAX31865 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBspi_max31865_remove\fP (\fBspi_max31865_handle_t\fP max31865_handle)"
+.br
+.RI "Removes an MAX31865 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBspi_max31865_delete\fP (\fBspi_max31865_handle_t\fP max31865_handle)"
+.br
+.RI "Removes an MAX31865 device from master bus and frees handle\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for MAX31865 RTD temperature sensor
+
+.PP
+https://github.com/UncleRus/esp-idf-lib/blob/master/components/max31865/max31865.c
+
+.PP
+https://github.com/espressif/esp-idf/blob/v5.3.2/examples/peripherals/spi_master/hd_eeprom/components/eeprom/spi_eeprom.h
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SS "#define SPI_MAX31865_APPSTART_DELAY_MS   UINT16_C(10)"
+max31865 delay after initialization before application start-up 
+.SS "#define SPI_MAX31865_CMD_DELAY_MS   UINT16_C(5)"
+max31865 delay before attempting SPI transactions after a command is issued 
+.SS "#define SPI_MAX31865_TX_RX_DELAY_MS   UINT16_C(10)"
+max31865 delay after attempting an SPI transmit transaction and attempting an SPI receive transaction 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

@@ -1,0 +1,836 @@
+.TH "utilities" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+utilities \- Utilities
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fBbytes_to_float_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_double_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_uint64_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_int64_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_uint32_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_int32_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_uint16_t\fP"
+.br
+.ti -1c
+.RI "union \fBbytes_to_int16_t\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBIT8_UINT8_BUFFER_SIZE\fP   (1)"
+.br
+.ti -1c
+.RI "#define \fBBIT16_UINT8_BUFFER_SIZE\fP   (2)"
+.br
+.ti -1c
+.RI "#define \fBBIT24_UINT8_BUFFER_SIZE\fP   (3)"
+.br
+.ti -1c
+.RI "#define \fBBIT32_UINT8_BUFFER_SIZE\fP   (4)"
+.br
+.ti -1c
+.RI "#define \fBBIT40_UINT8_BUFFER_SIZE\fP   (5)"
+.br
+.ti -1c
+.RI "#define \fBBIT48_UINT8_BUFFER_SIZE\fP   (6)"
+.br
+.ti -1c
+.RI "#define \fBBIT56_UINT8_BUFFER_SIZE\fP   (7)"
+.br
+.ti -1c
+.RI "#define \fBBIT64_UINT8_BUFFER_SIZE\fP   (8)"
+.br
+.ti -1c
+.RI "#define \fBBIT72_UINT8_BUFFER_SIZE\fP   (9)"
+.br
+.ti -1c
+.RI "#define \fBBIT80_UINT8_BUFFER_SIZE\fP   (10)"
+.br
+.ti -1c
+.RI "#define \fBBIT88_UINT8_BUFFER_SIZE\fP   (11)"
+.br
+.ti -1c
+.RI "#define \fBBIT96_UINT8_BUFFER_SIZE\fP   (12)"
+.br
+.ti -1c
+.RI "#define \fBBIT104_UINT8_BUFFER_SIZE\fP   (13)"
+.br
+.ti -1c
+.RI "#define \fBBIN8_CHAR_BUFFER_SIZE\fP   (8 + 1)"
+.br
+.ti -1c
+.RI "#define \fBBIN16_CHAR_BUFFER_SIZE\fP   (16 + 1)"
+.br
+.ti -1c
+.RI "#define \fBBIN32_CHAR_BUFFER_SIZE\fP   (32 + 1)"
+.br
+.ti -1c
+.RI "#define \fBBIN64_CHAR_BUFFER_SIZE\fP   (64 + 1)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef uint8_t \fBbit8_uint8_buffer_t\fP[BIT8_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit16_uint8_buffer_t\fP[BIT16_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit24_uint8_buffer_t\fP[BIT24_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit32_uint8_buffer_t\fP[BIT32_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit40_uint8_buffer_t\fP[BIT40_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit48_uint8_buffer_t\fP[BIT48_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit56_uint8_buffer_t\fP[BIT56_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit64_uint8_buffer_t\fP[BIT64_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit72_uint8_buffer_t\fP[BIT72_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit80_uint8_buffer_t\fP[BIT80_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit88_uint8_buffer_t\fP[BIT88_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit96_uint8_buffer_t\fP[BIT96_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef uint8_t \fBbit104_uint8_buffer_t\fP[BIT104_UINT8_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef char \fBbin8_char_buffer_t\fP[BIN8_CHAR_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef char \fBbin16_char_buffer_t\fP[BIN16_CHAR_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef char \fBbin32_char_buffer_t\fP[BIN32_CHAR_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef char \fBbin64_char_buffer_t\fP[BIN64_CHAR_BUFFER_SIZE]"
+.br
+.ti -1c
+.RI "typedef enum \fBuuid_modes_e\fP \fBuuid_modes_t\fP"
+.br
+.RI "UUID modes enumerator definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBuuid_modes_e\fP { \fBUUID_MODE_VARIANT4\fP = 0, \fBUUID_MODE_RANDOM\fP = 1 }"
+.br
+.RI "UUID modes enumerator definition\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "uint32_t \fBget_uint32_chip_id\fP (void)"
+.br
+.RI "Generates a unique \fRuint32_t\fP chip identifier from e-fuse mac address\&. "
+.ti -1c
+.RI "uint64_t \fBget_uint64_chip_id\fP (void)"
+.br
+.RI "Generates a unique \fRuint64_t\fP chip identifier from e-fuse mac address\&. "
+.ti -1c
+.RI "uint64_t \fBget_efuse_mac\fP (void)"
+.br
+.RI "Gets the e-fuse mac address\&. "
+.ti -1c
+.RI "const char * \fBuint8_to_binary\fP (const uint8_t value)"
+.br
+.RI "Converts \fRuint8_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBint8_to_binary\fP (const int8_t value)"
+.br
+.RI "Converts \fRint8_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBuint16_to_binary\fP (const uint16_t value)"
+.br
+.RI "Converts \fRuint16_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBint16_to_binary\fP (const int16_t value)"
+.br
+.RI "Converts \fRint16_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBuint32_to_binary\fP (const uint32_t value)"
+.br
+.RI "Converts \fRuint32_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBint32_to_binary\fP (const int32_t value)"
+.br
+.RI "Converts \fRint32_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBuint64_to_binary\fP (const uint64_t value)"
+.br
+.RI "Converts \fRuint64_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "const char * \fBint64_to_binary\fP (const int64_t value)"
+.br
+.RI "Converts \fRint64_t\fP type to binary as a string\&. "
+.ti -1c
+.RI "uint16_t \fBbytes_to_uint16\fP (const uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts byte array to \fRuint16_t\fP data-type\&. "
+.ti -1c
+.RI "uint32_t \fBbytes_to_uint32\fP (const uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts byte array to \fRuint32_t\fP data-type\&. "
+.ti -1c
+.RI "uint64_t \fBbytes_to_uint64\fP (const uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts byte array to \fRuint64_t\fP data-type\&. "
+.ti -1c
+.RI "int16_t \fBbytes_to_int16\fP (const uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts byte array to \fRint16_t\fP data-type\&. "
+.ti -1c
+.RI "int32_t \fBbytes_to_int32\fP (const uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts byte array to \fRint32_t\fP data-type\&. "
+.ti -1c
+.RI "int64_t \fBbytes_to_int64\fP (const uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts byte array to \fRint64_t\fP data-type\&. "
+.ti -1c
+.RI "void \fBuint16_to_bytes\fP (const uint16_t value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRuint16_t\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBuint32_to_bytes\fP (const uint32_t value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRuint32_t\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBuint64_to_bytes\fP (const uint64_t value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRuint64_t\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBint16_to_bytes\fP (const int16_t value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRint16_t\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBint32_to_bytes\fP (const int32_t value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRint32_t\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBint64_to_bytes\fP (const int64_t value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRint64_t\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBfloat_to_bytes\fP (const float value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRfloat\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBdouble_to_bytes\fP (const double value, uint8_t *bytes, const bool little_endian)"
+.br
+.RI "Converts \fRdouble\fP data-type to a byte array\&. "
+.ti -1c
+.RI "void \fBcopy_bytes\fP (const uint8_t *source, uint8_t *destination, const size_t size)"
+.br
+.RI "Copies bytes from source byte array to destination byte array\&. "
+.ti -1c
+.RI "const char * \fBtype_utils_get_fw_version\fP (void)"
+.br
+.RI "Converts \fRtype_utils\fP firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBtype_utils_get_fw_version_number\fP (void)"
+.br
+.RI "Converts \fRtype_utils\fP firmware version numbers (major, minor, patch) into an integer value\&. "
+.ti -1c
+.RI "void \fBuuid_init\fP (void)"
+.br
+.RI "Initialize UUID generator with default seed values from hash algorithm\&. "
+.ti -1c
+.RI "void \fBuuid_seed\fP (uint8_t size,\&.\&.\&.)"
+.br
+.RI "Seed the UUID generator with a variable number of arguments\&. The total number of arguments must be between 1 and 2\&. Otherwise, the generator will be seeded with default values (1 and 2)\&. "
+.ti -1c
+.RI "const char * \fBuuid_generate\fP (void)"
+.br
+.RI "Generate a UUID (i\&.e\&. d29b226d-04b5-e3ae-cd63-e6ec0d5611ab)\&. "
+.ti -1c
+.RI "void \fBuuid_set_mode\fP (const \fBuuid_modes_t\fP mode)"
+.br
+.RI "Set the UUID mode to either variant-4 or random\&. "
+.ti -1c
+.RI "\fBuuid_modes_t\fP \fBuuid_get_mode\fP (void)"
+.br
+.RI "Get the current UUID mode\&. "
+.ti -1c
+.RI "const char * \fBuuid_get_fw_version\fP (void)"
+.br
+.RI "Converts \fRuuid\fP firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBuuid_get_fw_version_number\fP (void)"
+.br
+.RI "Converts \fRuuid\fP firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE
+
+.PP
+Motivated by: https://github.com/RobTillaart/UUID/blob/master/README.md
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBuuid_modes_e\fP"
+
+.PP
+UUID modes enumerator definition\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\f(BIUUID_MODE_VARIANT4 \fP
+Variant-4 UUID 
+.TP
+\f(BIUUID_MODE_RANDOM \fP
+Random UUID 
+.SH "Function Documentation"
+.PP 
+.SS "int16_t bytes_to_int16 (const uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts byte array to \fRint16_t\fP data-type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbytes\fP Byte array to convert to \fRint16_t\fP data-type\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int16_t Converted byte array as \fRint16_t\fP data-type\&. 
+.RE
+.PP
+
+.SS "int32_t bytes_to_int32 (const uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts byte array to \fRint32_t\fP data-type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbytes\fP Byte array to convert to \fRint32_t\fP data-type\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int32_t Converted byte array as \fRint32_t\fP data-type\&. 
+.RE
+.PP
+
+.SS "int64_t bytes_to_int64 (const uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts byte array to \fRint64_t\fP data-type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbytes\fP Byte array to convert to \fRint64_t\fP data-type\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int64_t Converted byte array as \fRint64_t\fP data-type\&. 
+.RE
+.PP
+
+.SS "uint16_t bytes_to_uint16 (const uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts byte array to \fRuint16_t\fP data-type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbytes\fP Byte array to convert to \fRuint16_t\fP data-type\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+uint16_t Converted byte array as \fRuint16_t\fP data-type\&. 
+.RE
+.PP
+
+.SS "uint32_t bytes_to_uint32 (const uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts byte array to \fRuint32_t\fP data-type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbytes\fP Byte array to convert to \fRuint32_t\fP data-type\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+uint32_t Converted byte array as \fRuint32_t\fP data-type\&. 
+.RE
+.PP
+
+.SS "uint64_t bytes_to_uint64 (const uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts byte array to \fRuint64_t\fP data-type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbytes\fP Byte array to convert to \fRuint64_t\fP data-type\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+uint64_t Converted byte array as \fRuint64_t\fP data-type\&. 
+.RE
+.PP
+
+.SS "void copy_bytes (const uint8_t * source, uint8_t * destination, const size_t size)"
+
+.PP
+Copies bytes from source byte array to destination byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsource\fP Byte array source to copy from\&. 
+.br
+\fIdestination\fP Byte array destination to copy to\&. 
+.br
+\fIsize\fP Size of destination byte array\&. 
+.RE
+.PP
+
+.SS "void double_to_bytes (const double value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRdouble\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRdouble\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRdouble\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "void float_to_bytes (const float value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRfloat\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRfloat\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRfloat\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "uint64_t get_efuse_mac (void )"
+
+.PP
+Gets the e-fuse mac address\&. 
+.PP
+\fBReturns\fP
+.RS 4
+uint64_t Mac address\&. 
+.RE
+.PP
+
+.SS "uint32_t get_uint32_chip_id (void )"
+
+.PP
+Generates a unique \fRuint32_t\fP chip identifier from e-fuse mac address\&. 
+.PP
+\fBNote\fP
+.RS 4
+(i\&.e\&. a 32-bit integer matching the last 3 bytes of the MAC address\&. This is less unique than the MAC address chip ID, but is helpful when you need an identifier that can be no more than a 32-bit integer (like for switch\&.\&.\&.case
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+uint32_t 
+.RE
+.PP
+
+.SS "uint64_t get_uint64_chip_id (void )"
+
+.PP
+Generates a unique \fRuint64_t\fP chip identifier from e-fuse mac address\&. 
+.PP
+\fBReturns\fP
+.RS 4
+uint64_t Chip identifier\&. 
+.RE
+.PP
+
+.SS "const char * int16_to_binary (const int16_t value)"
+
+.PP
+Converts \fRint16_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint16_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "void int16_to_bytes (const int16_t value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRint16_t\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint16_t\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRint16_t\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "const char * int32_to_binary (const int32_t value)"
+
+.PP
+Converts \fRint32_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint32_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "void int32_to_bytes (const int32_t value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRint32_t\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint32_t\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRint32_t\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "const char * int64_to_binary (const int64_t value)"
+
+.PP
+Converts \fRint64_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint64_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "void int64_to_bytes (const int64_t value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRint64_t\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint64_t\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRint64_t\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "const char * int8_to_binary (const int8_t value)"
+
+.PP
+Converts \fRint8_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRint8_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "const char * type_utils_get_fw_version (void )"
+
+.PP
+Converts \fRtype_utils\fP firmware version numbers (major, minor, patch) into a string\&. 
+.PP
+\fBReturns\fP
+.RS 4
+char* \fRtype_utils\fP firmware version as a string that is formatted as X\&.X\&.X (e\&.g\&. 4\&.0\&.0)\&. 
+.RE
+.PP
+
+.SS "int32_t type_utils_get_fw_version_number (void )"
+
+.PP
+Converts \fRtype_utils\fP firmware version numbers (major, minor, patch) into an integer value\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int32_t \fRtype_utils\fP firmware version number\&. 
+.RE
+.PP
+
+.SS "const char * uint16_to_binary (const uint16_t value)"
+
+.PP
+Converts \fRuint16_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint16_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "void uint16_to_bytes (const uint16_t value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRuint16_t\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint16_t\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRuint16_t\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "const char * uint32_to_binary (const uint32_t value)"
+
+.PP
+Converts \fRuint32_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint32_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "void uint32_to_bytes (const uint32_t value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRuint32_t\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint32_t\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRuint32_t\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "const char * uint64_to_binary (const uint64_t value)"
+
+.PP
+Converts \fRuint64_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint64_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "void uint64_to_bytes (const uint64_t value, uint8_t * bytes, const bool little_endian)"
+
+.PP
+Converts \fRuint64_t\fP data-type to a byte array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint64_t\fP data-type to convert to byte array\&. 
+.br
+\fIbytes\fP Converted \fRuint64_t\fP data-type as byte array\&. 
+.br
+\fIlittle_endian\fP Little endian byte order when true, otherwise, big endian byte order when false\&. 
+.RE
+.PP
+
+.SS "const char * uint8_to_binary (const uint8_t value)"
+
+.PP
+Converts \fRuint8_t\fP type to binary as a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP \fRuint8_t\fP to transform to binary string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* binary string representation\&. 
+.RE
+.PP
+
+.SS "const char * uuid_generate (void )"
+
+.PP
+Generate a UUID (i\&.e\&. d29b226d-04b5-e3ae-cd63-e6ec0d5611ab)\&. 
+.PP
+\fBReturns\fP
+.RS 4
+const char* Pointer to the UUID string\&. 
+.RE
+.PP
+
+.SS "const char * uuid_get_fw_version (void )"
+
+.PP
+Converts \fRuuid\fP firmware version numbers (major, minor, patch) into a string\&. 
+.PP
+\fBReturns\fP
+.RS 4
+char* \fRuuid\fP firmware version as a string that is formatted as X\&.X\&.X (e\&.g\&. 4\&.0\&.0)\&. 
+.RE
+.PP
+
+.SS "int32_t uuid_get_fw_version_number (void )"
+
+.PP
+Converts \fRuuid\fP firmware version numbers (major, minor, patch) into an integer value\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int32_t \fRuuid\fP firmware version number\&. 
+.RE
+.PP
+
+.SS "\fBuuid_modes_t\fP uuid_get_mode (void )"
+
+.PP
+Get the current UUID mode\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBuuid_modes_t\fP The current UUID mode\&. 
+.RE
+.PP
+
+.SS "void uuid_seed (uint8_t size,  \&.\&.\&.)"
+
+.PP
+Seed the UUID generator with a variable number of arguments\&. The total number of arguments must be between 1 and 2\&. Otherwise, the generator will be seeded with default values (1 and 2)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP Number of arguments to seed the generator\&. 
+.br
+\fI\&.\&.\&.\fP Variable number of arguments (1 to 2, 2 seedlings is ideal)\&. 
+.RE
+.PP
+
+.SS "void uuid_set_mode (const \fBuuid_modes_t\fP mode)"
+
+.PP
+Set the UUID mode to either variant-4 or random\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImode\fP The UUID mode to set\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

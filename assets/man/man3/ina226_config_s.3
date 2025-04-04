@@ -1,0 +1,69 @@
+.TH "ina226_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ina226_config_s \- INA226 device configuration\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ina226\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBina226_averaging_modes_t\fP \fBaveraging_mode\fP"
+.br
+.ti -1c
+.RI "\fBina226_volt_conv_times_t\fP \fBshunt_voltage_conv_time\fP"
+.br
+.ti -1c
+.RI "\fBina226_volt_conv_times_t\fP \fBbus_voltage_conv_time\fP"
+.br
+.ti -1c
+.RI "\fBina226_operating_modes_t\fP \fBoperating_mode\fP"
+.br
+.ti -1c
+.RI "float \fBshunt_resistance\fP"
+.br
+.ti -1c
+.RI "float \fBshunt_voltage\fP"
+.br
+.ti -1c
+.RI "float \fBmax_current\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+INA226 device configuration\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBina226_averaging_modes_t\fP averaging_mode"
+ina226 averaging mode 
+.SS "\fBina226_volt_conv_times_t\fP bus_voltage_conv_time"
+ina226 bus voltage conversion time 
+.SS "uint16_t i2c_address"
+ina226 i2c device address 
+.SS "uint32_t i2c_clock_speed"
+ina226 i2c device scl clock speed 
+.SS "float max_current"
+ina226 maximum expected current, A 
+.SS "\fBina226_operating_modes_t\fP operating_mode"
+ina226 operating mode 
+.SS "float shunt_resistance"
+ina226 shunt resistance, Ohm 
+.SS "float shunt_voltage"
+ina226 shunt voltage, V 
+.SS "\fBina226_volt_conv_times_t\fP shunt_voltage_conv_time"
+ina226 shunt voltage conversion time 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

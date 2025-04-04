@@ -1,0 +1,84 @@
+.TH "veml7700_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+veml7700_config_s \- VEML7700 device configuration structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <veml7700\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_gains_t\fP \fBgain\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_integration_times_t\fP \fBintegration_time\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_persistence_protections_t\fP \fBpersistence_protect\fP"
+.br
+.ti -1c
+.RI "bool \fBirq_enabled\fP"
+.br
+.ti -1c
+.RI "bool \fBpower_disabled\fP"
+.br
+.ti -1c
+.RI "bool \fBpower_saving_enabled\fP"
+.br
+.ti -1c
+.RI "\fBveml7700_power_saving_modes_t\fP \fBpower_saving_mode\fP"
+.br
+.ti -1c
+.RI "bool \fBset_thresholds\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBhi_threshold\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBlo_threshold\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+VEML7700 device configuration structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBveml7700_gains_t\fP gain"
+veml7700 gain sensitivity 
+.SS "uint16_t hi_threshold"
+veml7700 high threshold register for the interrupt 
+.SS "uint16_t i2c_address"
+veml7700 i2c device address 
+.SS "uint32_t i2c_clock_speed"
+veml7700 i2c device scl clock speed 
+.SS "\fBveml7700_integration_times_t\fP integration_time"
+veml7700 integration time to measure 
+.SS "bool irq_enabled"
+veml7700 interrupt enabled when true 
+.SS "uint16_t lo_threshold"
+veml7700 low threshold register for the interrupt 
+.SS "\fBveml7700_persistence_protections_t\fP persistence_protect"
+veml7700 persistence protection 
+.SS "bool power_disabled"
+veml7700 power disabled when true 
+.SS "bool power_saving_enabled"
+veml7700 power saving enabled when true 
+.SS "\fBveml7700_power_saving_modes_t\fP power_saving_mode"
+veml7700 power mode register 
+.SS "bool set_thresholds"
+veml7700 configures interrupt thresholds 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

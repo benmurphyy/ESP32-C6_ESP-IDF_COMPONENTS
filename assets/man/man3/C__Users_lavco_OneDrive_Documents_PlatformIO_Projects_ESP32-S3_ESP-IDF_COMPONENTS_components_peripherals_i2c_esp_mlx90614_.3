@@ -1,0 +1,108 @@
+.TH "components/peripherals/i2c/esp_mlx90614 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_mlx90614 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBmlx90614\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Melexis MLX90614 single and dual-zone infrared thermometer sensor\&. Information on features and functionality are documented and can be found in the \fR\fBmlx90614\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_mlx90614
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBmlx90614\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_mlx90614
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── mlx90614_version\&.h
+    │   └── mlx90614\&.h
+    └── mlx90614\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results\&.
+
+.PP
+.PP
+.nf
+#include <mlx90614\&.h>
+
+void i2c0_mlx90614_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t         last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    mlx90614_config_t dev_cfg       = I2C_MLX90614_CONFIG_DEFAULT;
+    mlx90614_handle_t dev_hdl;
+    //
+    // init device
+    mlx90614_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "mlx90614 handle init failed");
+        assert(dev_hdl);
+    }
+    
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## MLX90614 \- START #########################");
+        //
+        // handle sensor
+        float temperature, obj1_temperature, obj2_temperature;
+        esp_err_t result = mlx90614_get_temperatures(dev_hdl, &temperature, &obj1_temperature, &obj2_temperature);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "mlx90614 device read failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "air temperature:      %\&.2f C", temperature);
+            ESP_LOGI(APP_TAG, "object 1 temperature: %\&.2f C", obj1_temperature);
+            ESP_LOGI(APP_TAG, "object 2 temperature: %\&.2f C", obj2_temperature);
+        }
+        //
+        ESP_LOGI(APP_TAG, "######################## MLX90614 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    mlx90614_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

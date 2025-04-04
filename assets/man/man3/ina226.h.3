@@ -1,0 +1,279 @@
+.TH "components/peripherals/i2c/esp_ina226/include/ina226.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ina226/include/ina226.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'ina226_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBina226_config_s\fP"
+.br
+.RI "INA226 device configuration\&. "
+.ti -1c
+.RI "struct \fBina226_context_t\fP"
+.br
+.RI "INA226 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_INA226_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "ina226 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_GND_GND\fP   UINT8_C(0x40)"
+.br
+.RI "ina226 I2C address, A1 pin - GND, A0 pin - GND "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_GND_VS\fP   UINT8_C(0x41)"
+.br
+.RI "ina226 I2C address, A1 pin - GND, A0 pin - VS+ "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_GND_SDA\fP   UINT8_C(0x42)"
+.br
+.RI "ina226 I2C address, A1 pin - GND, A0 pin - SDA "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_GND_SCL\fP   UINT8_C(0x43)"
+.br
+.RI "ina226 I2C address, A1 pin - GND, A0 pin - SCL "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_VS_GND\fP   UINT8_C(0x44)"
+.br
+.RI "ina226 I2C address, A1 pin - VS+, A0 pin - GND "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_VS_VS\fP   UINT8_C(0x45)"
+.br
+.RI "ina226 I2C address, A1 pin - VS+, A0 pin - VS+ "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_VS_SDA\fP   UINT8_C(0x46)"
+.br
+.RI "ina226 I2C address, A1 pin - VS+, A0 pin - SDA "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_VS_SCL\fP   UINT8_C(0x47)"
+.br
+.RI "ina226 I2C address, A1 pin - VS+, A0 pin - SCL "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SDA_GND\fP   UINT8_C(0x48)"
+.br
+.RI "ina226 I2C address, A1 pin - SDA, A0 pin - GND "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SDA_VS\fP   UINT8_C(0x49)"
+.br
+.RI "ina226 I2C address, A1 pin - SDA, A0 pin - VS+ "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SDA_SDA\fP   UINT8_C(0x4a)"
+.br
+.RI "ina226 I2C address, A1 pin - SDA, A0 pin - SDA "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SDA_SCL\fP   UINT8_C(0x4b)"
+.br
+.RI "ina226 I2C address, A1 pin - SDA, A0 pin - SCL "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SCL_GND\fP   UINT8_C(0x4c)"
+.br
+.RI "ina226 I2C address, A1 pin - SCL, A0 pin - GND "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SCL_VS\fP   UINT8_C(0x4d)"
+.br
+.RI "ina226 I2C address, A1 pin - SCL, A0 pin - VS+ "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SCL_SDA\fP   UINT8_C(0x4e)"
+.br
+.RI "ina226 I2C address, A1 pin - SCL, A0 pin - SDA "
+.ti -1c
+.RI "#define \fBI2C_INA226_ADDR_SCL_SCL\fP   UINT8_C(0x4f)"
+.br
+.RI "ina226 I2C address, A1 pin - SCL, A0 pin - SCL "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_INA226_CONFIG_DEFAULT\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBina226_averaging_modes_e\fP \fBina226_averaging_modes_t\fP"
+.br
+.RI "Averaging modes enumerator for ADC resolution/averaging\&. "
+.ti -1c
+.RI "typedef enum \fBina226_volt_conv_times_e\fP \fBina226_volt_conv_times_t\fP"
+.br
+.RI "Voltage conversion times enumerator for ADC resolution/averaging\&. "
+.ti -1c
+.RI "typedef enum \fBina226_operating_modes_e\fP \fBina226_operating_modes_t\fP"
+.br
+.RI "Current conversion times enumerator for ADC resolution/averaging\&. "
+.ti -1c
+.RI "typedef struct \fBina226_config_s\fP \fBina226_config_t\fP"
+.br
+.RI "INA226 device configuration\&. "
+.ti -1c
+.RI "typedef struct ina226_context_t \fBina226_context_t\fP"
+.br
+.RI "INA226 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBina226_context_t\fP * \fBina226_handle_t\fP"
+.br
+.RI "INA226 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBina226_averaging_modes_e\fP { \fBINA226_AVG_MODE_1\fP = (0b000), \fBINA226_AVG_MODE_4\fP = (0b001), \fBINA226_AVG_MODE_16\fP = (0b010), \fBINA226_AVG_MODE_64\fP = (0b011), \fBINA226_AVG_MODE_128\fP = (0b100), \fBINA226_AVG_MODE_256\fP = (0b101), \fBINA226_AVG_MODE_512\fP = (0b110), \fBINA226_AVG_MODE_1024\fP = (0b111) }"
+.br
+.RI "Averaging modes enumerator for ADC resolution/averaging\&. "
+.ti -1c
+.RI "enum \fBina226_volt_conv_times_e\fP { \fBINA226_VOLT_CONV_TIME_140US\fP = (0b000), \fBINA226_VOLT_CONV_TIME_204US\fP = (0b001), \fBINA226_VOLT_CONV_TIME_332US\fP = (0b010), \fBINA226_VOLT_CONV_TIME_588US\fP = (0b011), \fBINA226_VOLT_CONV_TIME_1_1MS\fP = (0b100), \fBINA226_VOLT_CONV_TIME_2_116MS\fP = (0b101), \fBINA226_VOLT_CONV_TIME_4_156MS\fP = (0b110), \fBINA226_VOLT_CONV_TIME_8_244MS\fP = (0b111) }"
+.br
+.RI "Voltage conversion times enumerator for ADC resolution/averaging\&. "
+.ti -1c
+.RI "enum \fBina226_operating_modes_e\fP { \fBINA226_OP_MODE_SHUTDOWN\fP = (0b000), \fBINA226_OP_MODE_TRIG_SHUNT_VOLT\fP = (0b001), \fBINA226_OP_MODE_TRIG_BUS_VOLT\fP = (0b010), \fBINA226_OP_MODE_TRIG_SHUNT_BUS\fP = (0b011), \fBINA226_OP_MODE_SHUTDOWN2\fP = (0b100), \fBINA226_OP_MODE_CONT_SHUNT_VOLT\fP = (0b101), \fBINA226_OP_MODE_CONT_BUS_VOLT\fP = (0b110), \fBINA226_OP_MODE_CONT_SHUNT_BUS\fP = (0b111) }"
+.br
+.RI "Current conversion times enumerator for ADC resolution/averaging\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_configuration_register\fP (\fBina226_handle_t\fP handle, ina226_config_register_t *const reg)"
+.br
+.RI "Reads the configuration register from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_set_configuration_register\fP (\fBina226_handle_t\fP handle, const ina226_config_register_t reg)"
+.br
+.RI "Writes the configuration register to the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_calibration_register\fP (\fBina226_handle_t\fP handle, uint16_t *const reg)"
+.br
+.RI "Reads the calibration register from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_set_calibration_register\fP (\fBina226_handle_t\fP handle, const uint16_t reg)"
+.br
+.RI "Writes the calibration register to the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_mask_enable_register\fP (\fBina226_handle_t\fP handle, ina226_mask_enable_register_t *const reg)"
+.br
+.RI "Reads the mask/enable register from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_init\fP (i2c_master_bus_handle_t master_handle, const \fBina226_config_t\fP *ina226_config, \fBina226_handle_t\fP *ina226_handle)"
+.br
+.RI "initializes an INA226 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_calibrate\fP (\fBina226_handle_t\fP handle, const float max_current, const float shunt_resistance)"
+.br
+.RI "Calibrates the INA266\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_bus_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Reads bus voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_triggered_bus_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Triggers and reads bus voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_shunt_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Reads shunt voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_triggered_shunt_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Triggers and reads shunt voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_current\fP (\fBina226_handle_t\fP handle, float *const current)"
+.br
+.RI "Reads current (A) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_triggered_current\fP (\fBina226_handle_t\fP handle, float *const current)"
+.br
+.RI "Triggers and reads current (A) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_power\fP (\fBina226_handle_t\fP handle, float *const power)"
+.br
+.RI "Reads power (W) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_operating_mode\fP (\fBina226_handle_t\fP handle, \fBina226_operating_modes_t\fP *const mode)"
+.br
+.RI "Reads operating mode from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_set_operating_mode\fP (\fBina226_handle_t\fP handle, const \fBina226_operating_modes_t\fP mode)"
+.br
+.RI "Writes operating mode to the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_averaging_mode\fP (\fBina226_handle_t\fP handle, \fBina226_averaging_modes_t\fP *const mode)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_set_averaging_mode\fP (\fBina226_handle_t\fP handle, const \fBina226_averaging_modes_t\fP mode)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_get_bus_volt_conv_time\fP (\fBina226_handle_t\fP handle, \fBina226_volt_conv_times_t\fP *const conv_time)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_set_bus_volt_conv_time\fP (\fBina226_handle_t\fP handle, \fBina226_volt_conv_times_t\fP *const conv_time)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_get_shunt_volt_conv_time\fP (\fBina226_handle_t\fP handle, \fBina226_volt_conv_times_t\fP *const conv_time)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_set_shunt_volt_conv_time\fP (\fBina226_handle_t\fP handle, \fBina226_volt_conv_times_t\fP *const conv_time)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_reset\fP (\fBina226_handle_t\fP handle)"
+.br
+.RI "Resets the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_remove\fP (\fBina226_handle_t\fP handle)"
+.br
+.RI "Removes an INA226 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_delete\fP (\fBina226_handle_t\fP handle)"
+.br
+.RI "Removes an INA226 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBina226_get_fw_version\fP (void)"
+.br
+.RI "Converts INA226 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBina226_get_fw_version_number\fP (void)"
+.br
+.RI "Converts INA226 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBina226_config_register_t\fP"
+.br
+.ti -1c
+.RI "\fBina226_mask_enable_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

@@ -1,0 +1,168 @@
+.TH "components/peripherals/i2c/esp_as7341 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_as7341 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBas7341\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the OSRAM AS7341 11-channel multi-spectral digital sensor\&. Information on features and functionality are documented and can be found in the \fR\fBas7341\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as7341
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBas7341\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_as7341
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── as7341_version\&.h
+    │   └── as7341\&.h
+    └── as7341\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results\&.
+
+.PP
+.PP
+.nf
+#include <as7341\&.h>
+
+void i2c0_as7341_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t          last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    as7341_config_t dev_cfg          = I2C_AS7341_CONFIG_DEFAULT;
+    as7341_handle_t dev_hdl;
+    bool                flicker_completed = false;
+    uint8_t             flicker_cycles = 0;
+    //
+    // init device
+    as7341_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "as7341 handle init failed");
+        assert(dev_hdl);
+    }
+    //
+    //as7341_disable_led(dev_hdl);
+    //
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## AS7341 \- START #########################");
+        //
+        if(flicker_completed == true) {
+            // handle sensor
+            as7341_channels_spectral_data_t adc_data;
+            esp_err_t result = as7341_get_spectral_measurements(dev_hdl, &adc_data);
+            if(result != ESP_OK) {
+                ESP_LOGE(APP_TAG, "spectral measurement failed (%s)", esp_err_to_name(result));
+            } else {
+                ESP_LOGW(APP_TAG, "F1    %d", adc_data\&.f1);
+                ESP_LOGW(APP_TAG, "F2    %d", adc_data\&.f2);
+                ESP_LOGW(APP_TAG, "F3    %d", adc_data\&.f3);
+                ESP_LOGW(APP_TAG, "F4    %d", adc_data\&.f4);
+                ESP_LOGW(APP_TAG, "F5    %d", adc_data\&.f5);
+                ESP_LOGW(APP_TAG, "F6    %d", adc_data\&.f6);
+                ESP_LOGW(APP_TAG, "F7    %d", adc_data\&.f7);
+                ESP_LOGW(APP_TAG, "F8    %d", adc_data\&.f8);
+                ESP_LOGW(APP_TAG, "NIR   %d", adc_data\&.nir);
+                ESP_LOGW(APP_TAG, "CLEAR %d", adc_data\&.clear);
+            }
+
+            as7341_channels_basic_counts_data_t basic_counts_data;
+            result = as7341_get_basic_counts(dev_hdl, adc_data, &basic_counts_data);
+            if(result != ESP_OK) {
+                ESP_LOGE(APP_TAG, "basic counts conversion failed (%s)", esp_err_to_name(result));
+            } else {
+                ESP_LOGW(APP_TAG, "F1    %f", basic_counts_data\&.f1);
+                ESP_LOGW(APP_TAG, "F2    %f", basic_counts_data\&.f2);
+                ESP_LOGW(APP_TAG, "F3    %f", basic_counts_data\&.f3);
+                ESP_LOGW(APP_TAG, "F4    %f", basic_counts_data\&.f4);
+                ESP_LOGW(APP_TAG, "F5    %f", basic_counts_data\&.f5);
+                ESP_LOGW(APP_TAG, "F6    %f", basic_counts_data\&.f6);
+                ESP_LOGW(APP_TAG, "F7    %f", basic_counts_data\&.f7);
+                ESP_LOGW(APP_TAG, "F8    %f", basic_counts_data\&.f8);
+                ESP_LOGW(APP_TAG, "NIR   %f", basic_counts_data\&.nir);
+                ESP_LOGW(APP_TAG, "CLEAR %f", basic_counts_data\&.clear);
+            }
+        } else {
+            if(flicker_cycles < 5) {
+                as7341_flicker_detection_states_t flicker_state;
+                esp_err_t result = as7341_get_flicker_detection_status(dev_hdl, &flicker_state);
+                if(result != ESP_OK) {
+                    ESP_LOGE(APP_TAG, "flicker detection failed (%s)", esp_err_to_name(result));
+                } else {
+                    switch(flicker_state) {
+                        case AS7341_FLICKER_DETECTION_INVALID:
+                            ESP_LOGW(APP_TAG, "Flicker Detection: Invalid");
+                            break;
+                        case AS7341_FLICKER_DETECTION_UNKNOWN:
+                            ESP_LOGW(APP_TAG, "Flicker Detection: Unknown");
+                            break;
+                        case AS7341_FLICKER_DETECTION_SATURATED:
+                            ESP_LOGW(APP_TAG, "Flicker Detection: Saturated");
+                            break;
+                        case AS7341_FLICKER_DETECTION_100HZ:
+                            ESP_LOGW(APP_TAG, "Flicker Detection: 100 Hz");
+                            break;
+                        case AS7341_FLICKER_DETECTION_120HZ:
+                            ESP_LOGW(APP_TAG, "Flicker Detection: 120 Hz");
+                            break;
+                    }
+                }
+                as7341_clear_flicker_detection_status_register(dev_hdl);
+                ++flicker_cycles;
+            } else {
+                flicker_completed = true;
+            }
+        }
+        //
+        ESP_LOGI(APP_TAG, "######################## AS7341 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    as7341_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

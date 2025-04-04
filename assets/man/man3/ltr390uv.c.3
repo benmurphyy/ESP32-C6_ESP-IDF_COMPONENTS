@@ -1,0 +1,316 @@
+.TH "components/peripherals/i2c/esp_ltr390uv/ltr390uv.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ltr390uv/ltr390uv.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/ltr390uv\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLTR390UV_REG_MAIN_CTRL_RW\fP   UINT8_C(0x00) /* 0x00 */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_UVS_MEAS_RW\fP   UINT8_C(0x04)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_UVS_GAIN_RW\fP   UINT8_C(0x05)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_PART_ID_R\fP   UINT8_C(0x06)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_MAIN_STS_R\fP   UINT8_C(0x07)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_DATA_0_R\fP   UINT8_C(0x0D) /* LSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_DATA_1_R\fP   UINT8_C(0x0E)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_DATA_2_R\fP   UINT8_C(0x0F) /* MSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_UVS_DATA_0_R\fP   UINT8_C(0x10) /* LSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_UVS_DATA_1_R\fP   UINT8_C(0x11)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_UVS_DATA_2_R\fP   UINT8_C(0x12) /* MSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_INT_CFG_RW\fP   UINT8_C(0x19)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_INT_PST_RW\fP   UINT8_C(0x1A)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_THRES_UP_0_RW\fP   UINT8_C(0x21) /* LSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_THRES_UP_1_RW\fP   UINT8_C(0x22)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_THRES_UP_2_RW\fP   UINT8_C(0x23) /* MSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_THRES_LO_0_RW\fP   UINT8_C(0x24) /* LSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_THRES_LO_1_RW\fP   UINT8_C(0x25)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_REG_ALS_THRES_LO_2_RW\fP   UINT8_C(0x26) /* MSB */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_SENSITIVITY_MAX\fP   (2300\&.0f)       /* see datasheet, section 4\&.5 */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_INTEGRATION_TIME_MAX\fP   (4\&.0f * 100\&.0f) /* I2C_LTR390UV_SR_20BIT */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_GAIN_MAX\fP   (18\&.0f)         /* I2C_LTR390UV_MG_X18 */"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(500)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_DATA_READY_DELAY_MS\fP   UINT16_C(2)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_POWERUP_DELAY_MS\fP   UINT16_C(120)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_RESET_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_WAKEUP_DELAY_MS\fP   UINT16_C(15)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_APPSTART_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBLTR390UV_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_control_register\fP (\fBltr390uv_handle_t\fP handle, ltr390uv_control_register_t *const reg)"
+.br
+.RI "Reads control register from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_control_register\fP (\fBltr390uv_handle_t\fP handle, const ltr390uv_control_register_t reg)"
+.br
+.RI "Writes control register to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_measure_register\fP (\fBltr390uv_handle_t\fP handle, ltr390uv_measure_register_t *const reg)"
+.br
+.RI "Reads ALS UVS measure register from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_measure_register\fP (\fBltr390uv_handle_t\fP handle, const ltr390uv_measure_register_t reg)"
+.br
+.RI "Writes ALS UVS measure register to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_gain_register\fP (\fBltr390uv_handle_t\fP handle, ltr390uv_gain_register_t *const reg)"
+.br
+.RI "Reads ALS UVS gain register from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_gain_register\fP (\fBltr390uv_handle_t\fP handle, const ltr390uv_gain_register_t reg)"
+.br
+.RI "Writes ALS UVS gain register to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_interrupt_config_register\fP (\fBltr390uv_handle_t\fP handle, ltr390uv_interrupt_config_register_t *const reg)"
+.br
+.RI "Reads interrupt configuration register from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_interrupt_config_register\fP (\fBltr390uv_handle_t\fP handle, const ltr390uv_interrupt_config_register_t reg)"
+.br
+.RI "Writes interrupt configuration register to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_status_register\fP (\fBltr390uv_handle_t\fP handle, ltr390uv_status_register_t *const reg)"
+.br
+.RI "Reads status register from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_init\fP (i2c_master_bus_handle_t master_handle, const \fBltr390uv_config_t\fP *ltr390uv_config, \fBltr390uv_handle_t\fP *ltr390uv_handle)"
+.br
+.RI "Initializes an LTR390UV device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_ambient_light\fP (\fBltr390uv_handle_t\fP handle, float *const ambient_light)"
+.br
+.RI "Reads ambient light from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_als\fP (\fBltr390uv_handle_t\fP handle, uint32_t *const sensor_counts)"
+.br
+.RI "Reads ALS sensor counts from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_ultraviolet_index\fP (\fBltr390uv_handle_t\fP handle, float *const ultraviolet_index)"
+.br
+.RI "Reads ultraviolet index (UVI) from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_uvs\fP (\fBltr390uv_handle_t\fP handle, uint32_t *const sensor_counts)"
+.br
+.RI "Reads UVS sensor counts from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_data_status\fP (\fBltr390uv_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads data ready status flag from LTR390UV\&. This flag is cleared after the register is read\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_power_status\fP (\fBltr390uv_handle_t\fP handle, bool *const power_on)"
+.br
+.RI "Reads power status flag from LTR390UV\&. This flag is cleared after the register is read\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_interrupt_status\fP (\fBltr390uv_handle_t\fP handle, bool *const interrupt)"
+.br
+.RI "Reads interrupt status flag from LTR390UV\&. This flag is cleared after the register is read\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_status\fP (\fBltr390uv_handle_t\fP handle, bool *const data_ready, bool *const power_on, bool *const interrupt)"
+.br
+.RI "Reads interrupt status flags from LTR390UV\&. The flags are cleared after the register is read\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_thresholds\fP (\fBltr390uv_handle_t\fP handle, uint32_t *const lower_threshold, uint32_t *const upper_threshold)"
+.br
+.RI "Reads UVS/ALS lower and upper thresholds from LTR390UV\&. The thresholds are used to trigger an interrupt when the light level exceeds the upper threshold or falls below the lower threshold\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_thresholds\fP (\fBltr390uv_handle_t\fP handle, const uint32_t lower_threshold, const uint32_t upper_threshold)"
+.br
+.RI "Writes UVS/ALS lower and upper thresholds to LTR390UV\&. The thresholds are used to trigger an interrupt when the light level exceeds the upper threshold or falls below the lower threshold\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_mode\fP (\fBltr390uv_handle_t\fP handle, \fBltr390uv_operation_modes_t\fP *const mode)"
+.br
+.RI "Reads operation mode from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_mode\fP (\fBltr390uv_handle_t\fP handle, const \fBltr390uv_operation_modes_t\fP mode)"
+.br
+.RI "Writes operation mode to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_resolution\fP (\fBltr390uv_handle_t\fP handle, \fBltr390uv_sensor_resolutions_t\fP *const resolution)"
+.br
+.RI "Reads sensor resolution from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_resolution\fP (\fBltr390uv_handle_t\fP handle, const \fBltr390uv_sensor_resolutions_t\fP resolution)"
+.br
+.RI "Writes sensor resolution to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_gain\fP (\fBltr390uv_handle_t\fP handle, \fBltr390uv_measurement_gains_t\fP *const gain)"
+.br
+.RI "Reads measurement gain from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_gain\fP (\fBltr390uv_handle_t\fP handle, const \fBltr390uv_measurement_gains_t\fP gain)"
+.br
+.RI "Writes measurement gain to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_get_rate\fP (\fBltr390uv_handle_t\fP handle, \fBltr390uv_measurement_rates_t\fP *const rate)"
+.br
+.RI "Reads measurement rate from LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_set_rate\fP (\fBltr390uv_handle_t\fP handle, const \fBltr390uv_measurement_rates_t\fP rate)"
+.br
+.RI "Writes measurement rate to LTR390UV\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_enable_interrupt\fP (\fBltr390uv_handle_t\fP handle, const \fBltr390uv_ls_interrupts_t\fP light_source)"
+.br
+.RI "Enables LTR390UV interrupts\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_disable_interrupt\fP (\fBltr390uv_handle_t\fP handle)"
+.br
+.RI "Disables LTR390UV interrupts\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_enable\fP (\fBltr390uv_handle_t\fP handle)"
+.br
+.RI "Activates LTR390UV for measurements\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_disable\fP (\fBltr390uv_handle_t\fP handle)"
+.br
+.RI "Places LTR390UV on standby (default)\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_reset\fP (\fBltr390uv_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset and initializes LTR390UV\&. See datasheet for details\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_remove\fP (\fBltr390uv_handle_t\fP handle)"
+.br
+.RI "Removes an LTR390UV device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBltr390uv_delete\fP (\fBltr390uv_handle_t\fP handle)"
+.br
+.RI "Removes an LTR390UV device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBltr390uv_get_fw_version\fP (void)"
+.br
+.RI "Converts LTR390UV firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBltr390uv_get_fw_version_number\fP (void)"
+.br
+.RI "Converts LTR390UV firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for LTR390UV sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SS "#define LTR390UV_APPSTART_DELAY_MS   UINT16_C(10)"
+ltr390uv delay after initialization before application start-up 
+.SS "#define LTR390UV_CMD_DELAY_MS   UINT16_C(5)"
+ltr390uv delay before attempting I2C transactions after a command is issued 
+.SS "#define LTR390UV_TX_RX_DELAY_MS   UINT16_C(10)"
+ltr390uv delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

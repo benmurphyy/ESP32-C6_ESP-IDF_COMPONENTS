@@ -1,0 +1,54 @@
+.TH "veml6040_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+veml6040_config_s \- VEML6040 configuration structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <veml6040\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBveml6040_integration_times_t\fP \fBintegration_time\fP"
+.br
+.ti -1c
+.RI "bool \fBshutdown_enabled\fP"
+.br
+.ti -1c
+.RI "\fBveml6040_modes_t\fP \fBmode\fP"
+.br
+.ti -1c
+.RI "\fBveml6040_triggers_t\fP \fBtrigger_method\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+VEML6040 configuration structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "uint16_t i2c_address"
+veml6040 i2c device address 
+.SS "uint32_t i2c_clock_speed"
+veml6040 i2c device scl clock speed 
+.SS "\fBveml6040_integration_times_t\fP integration_time"
+veml6040 integration time setting 
+.SS "\fBveml6040_modes_t\fP mode"
+veml6040 mode 
+.SS "bool shutdown_enabled"
+veml6040 is shutdown when enabled 
+.SS "\fBveml6040_triggers_t\fP trigger_method"
+veml6040 trigger method 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

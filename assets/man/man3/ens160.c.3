@@ -1,0 +1,366 @@
+.TH "components/peripherals/i2c/esp_ens160/ens160.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ens160/ens160.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/ens160\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+\fR#include <freertos/queue\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBENS160_REG_PART_ID_R\fP   UINT8_C(0x00)"
+.br
+.RI "ens160 I2C part identifier (default id: 0x01, 0x60) "
+.ti -1c
+.RI "#define \fBENS160_REG_OPMODE_RW\fP   UINT8_C(0x10)"
+.br
+.RI "ens160 I2C operating mode "
+.ti -1c
+.RI "#define \fBENS160_REG_INT_CONFIG_RW\fP   UINT8_C(0x11)"
+.br
+.RI "ens160 I2C interrupt pin configuration "
+.ti -1c
+.RI "#define \fBENS160_REG_COMMAND_RW\fP   UINT8_C(0x12)"
+.br
+.RI "ens160 I2C additional system commands "
+.ti -1c
+.RI "#define \fBENS160_REG_TEMP_IN_RW\fP   UINT8_C(0x13)"
+.br
+.RI "ens160 I2C host ambient temperature information "
+.ti -1c
+.RI "#define \fBENS160_REG_RH_IN_RW\fP   UINT8_C(0x15)"
+.br
+.RI "ens160 I2C host relative humidity information "
+.ti -1c
+.RI "#define \fBENS160_REG_DEVICE_STATUS_R\fP   UINT8_C(0x20)"
+.br
+.RI "ens160 I2C operating status "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_AQI_R\fP   UINT8_C(0x21)"
+.br
+.RI "ens160 I2C air quality index "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_TVOC_R\fP   UINT8_C(0x22)"
+.br
+.RI "ens160 I2C TVOC concentration (ppb) "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_ETOH_R\fP   UINT8_C(0x22)"
+.br
+.RI "ens160 I2C ETOH concentration (ppb) "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_ECO2_R\fP   UINT8_C(0x24)"
+.br
+.RI "ens160 I2C equivalent CO2 concentration (ppm) "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_BL_R\fP   UINT8_C(0x28)"
+.br
+.RI "ens160 I2C baseline information "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_TEMP_R\fP   UINT8_C(0x30)"
+.br
+.RI "ens160 I2C temperature used in calculations "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_RH_R\fP   UINT8_C(0x32)"
+.br
+.RI "ens160 I2C relative humidity used in calculations "
+.ti -1c
+.RI "#define \fBENS160_REG_DATA_MISR_R\fP   UINT8_C(0x38)"
+.br
+.RI "ens160 I2C data integrity field "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE0_RW\fP   UINT8_C(0x40)"
+.br
+.RI "ens160 I2C general purpose write0 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE1_RW\fP   UINT8_C(0x41)"
+.br
+.RI "ens160 I2C general purpose write1 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE2_RW\fP   UINT8_C(0x42)"
+.br
+.RI "ens160 I2C general purpose write2 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE3_RW\fP   UINT8_C(0x43)"
+.br
+.RI "ens160 I2C general purpose write3 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE4_RW\fP   UINT8_C(0x44)"
+.br
+.RI "ens160 I2C general purpose write4 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE5_RW\fP   UINT8_C(0x45)"
+.br
+.RI "ens160 I2C general purpose write5 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE6_RW\fP   UINT8_C(0x46)"
+.br
+.RI "ens160 I2C general purpose write6 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_WRITE7_RW\fP   UINT8_C(0x47)"
+.br
+.RI "ens160 I2C general purpose write7 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ0_R\fP   UINT8_C(0x48)"
+.br
+.RI "ens160 I2C general purpose read0 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ1_R\fP   UINT8_C(0x49)"
+.br
+.RI "ens160 I2C general purpose read1 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ2_R\fP   UINT8_C(0x4a)"
+.br
+.RI "ens160 I2C general purpose read2 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ3_R\fP   UINT8_C(0x4b)"
+.br
+.RI "ens160 I2C general purpose read3 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ4_R\fP   UINT8_C(0x4c)"
+.br
+.RI "ens160 I2C general purpose read4 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ5_R\fP   UINT8_C(0x4d)"
+.br
+.RI "ens160 I2C general purpose read5 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ6_R\fP   UINT8_C(0x4e)"
+.br
+.RI "ens160 I2C general purpose read6 register "
+.ti -1c
+.RI "#define \fBENS160_REG_GPR_READ7_R\fP   UINT8_C(0x4f)"
+.br
+.RI "ens160 I2C general purpose read7 register "
+.ti -1c
+.RI "#define \fBENS160_TEMPERATURE_MAX\fP   (float)(125\&.0)"
+.br
+.RI "ens160 maximum temperature range "
+.ti -1c
+.RI "#define \fBENS160_TEMPERATURE_MIN\fP   (float)(\-40\&.0)"
+.br
+.RI "ens160 minimum temperature range "
+.ti -1c
+.RI "#define \fBENS160_HUMIDITY_MAX\fP   (float)(100\&.0)"
+.br
+.RI "ens160 maximum humidity range "
+.ti -1c
+.RI "#define \fBENS160_HUMIDITY_MIN\fP   (float)(0\&.0)"
+.br
+.RI "ens160 minimum humidity range "
+.ti -1c
+.RI "#define \fBENS160_POWERUP_DELAY_MS\fP   UINT16_C(15)"
+.br
+.RI "ens160 50ms delay before making i2c transactions "
+.ti -1c
+.RI "#define \fBENS160_APPSTART_DELAY_MS\fP   UINT16_C(25)"
+.br
+.RI "ens160 25ms delay before making a measurement "
+.ti -1c
+.RI "#define \fBENS160_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.RI "ens160 5ms delay before making the next i2c transaction "
+.ti -1c
+.RI "#define \fBENS160_MODE_DELAY_MS\fP   UINT16_C(10)"
+.br
+.RI "ens160 10ms delay when updating the operating mode "
+.ti -1c
+.RI "#define \fBENS160_RESET_DELAY_MS\fP   UINT16_C(50)"
+.br
+.RI "ens160 50ms delay when resetting the device "
+.ti -1c
+.RI "#define \fBENS160_CLEAR_GPR_DELAY_MS\fP   UINT16_C(10)"
+.br
+.RI "ens160 10ms delay when clearing general purpose registers "
+.ti -1c
+.RI "#define \fBENS160_DATA_READY_DELAY_MS\fP   UINT16_C(1)"
+.br
+.RI "ens160 1ms delay when checking data ready in a loop "
+.ti -1c
+.RI "#define \fBENS160_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(1500)"
+.br
+.RI "ens160 1\&.5s timeout when making a measurement "
+.ti -1c
+.RI "#define \fBENS160_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBENS160_CONVERT_RS_RAW2OHMS_F\fP(x)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBens160_get_interrupt_config_register\fP (\fBens160_handle_t\fP handle, ens160_interrupt_config_register_t *const reg)"
+.br
+.RI "Reads interrupt configuration register from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_set_interrupt_config_register\fP (\fBens160_handle_t\fP handle, const ens160_interrupt_config_register_t reg)"
+.br
+.RI "Writes interrupt configuration register to ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_status_register\fP (\fBens160_handle_t\fP handle, ens160_status_register_t *const reg)"
+.br
+.RI "Reads status register from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_clear_general_purpose_registers\fP (\fBens160_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBens160_get_compensation_registers\fP (\fBens160_handle_t\fP handle, float *const temperature, float *const humidity)"
+.br
+.RI "Reads temperature and humidity compensation registers from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_set_compensation_registers\fP (\fBens160_handle_t\fP handle, const float temperature, const float humidity)"
+.br
+.RI "Writes temperature and humidity compensation registers to ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_part_id_register\fP (\fBens160_handle_t\fP handle, uint16_t *const reg)"
+.br
+.RI "Reads part identifier register from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_init\fP (i2c_master_bus_handle_t master_handle, const \fBens160_config_t\fP *ens160_config, \fBens160_handle_t\fP *ens160_handle)"
+.br
+.RI "Initializes an ENS160 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_measurement\fP (\fBens160_handle_t\fP handle, \fBens160_air_quality_data_t\fP *const data)"
+.br
+.RI "Reads calculated air quality measurements from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_raw_measurement\fP (\fBens160_handle_t\fP handle, \fBens160_air_quality_raw_data_t\fP *const data)"
+.br
+.RI "Reads raw air quality measurements from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_data_status\fP (\fBens160_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads data ready status from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_gpr_data_status\fP (\fBens160_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads general purpose registers data ready status from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_validity_status\fP (\fBens160_handle_t\fP handle, \fBens160_validity_flags_t\fP *const state)"
+.br
+.RI "Read validity flag status, device status and signal rating, from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_error_status\fP (\fBens160_handle_t\fP handle, bool *const error)"
+.br
+.RI "Read error status from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_mode_status\fP (\fBens160_handle_t\fP handle, bool *const mode)"
+.br
+.RI "Read operating mode status from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_status\fP (\fBens160_handle_t\fP handle, bool *const data_ready, bool *const gpr_data_ready, \fBens160_validity_flags_t\fP *const state, bool *const error, bool *const mode)"
+.br
+.RI "Reads data ready, general purpose registers data ready, validity flag, and error status from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_get_compensation_factors\fP (\fBens160_handle_t\fP handle, float *const temperature, float *const humidity)"
+.br
+.RI "Reads temperature and humidity compensation factors from ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_set_compensation_factors\fP (\fBens160_handle_t\fP handle, const float temperature, const float humidity)"
+.br
+.RI "Writes temperature and humidity compensation factors to ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_enable_standard_mode\fP (\fBens160_handle_t\fP handle)"
+.br
+.RI "Enables standard operating mode to ENS160 to operate as a gas sensor and respond to commands\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_enable_idle_mode\fP (\fBens160_handle_t\fP handle)"
+.br
+.RI "Enables idle operating mode to ENS160 to respond to commands\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_enable_deep_sleep_mode\fP (\fBens160_handle_t\fP handle)"
+.br
+.RI "Enables deep sleep operating mode to ENS160\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_reset\fP (\fBens160_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset and initializes ENS160 to idle mode\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_remove\fP (\fBens160_handle_t\fP handle)"
+.br
+.RI "Removes an ENS160 device from master I2C bus\&. "
+.ti -1c
+.RI "esp_err_t \fBens160_delete\fP (\fBens160_handle_t\fP handle)"
+.br
+.RI "Removes an ENS160 device from master bus and frees handle\&. "
+.ti -1c
+.RI "\fBens160_aqi_uba_row_t\fP \fBens160_aqi_index_to_definition\fP (const \fBens160_aqi_uba_indexes_t\fP index)"
+.br
+.RI "Decodes ENS160 air quality index to a uba definition row\&. "
+.ti -1c
+.RI "const char * \fBens160_get_fw_version\fP (void)"
+.br
+.RI "Converts ENS160 firmware version numbers (major, minor, patch, build) into a string\&. "
+.ti -1c
+.RI "int32_t \fBens160_get_fw_version_number\fP (void)"
+.br
+.RI "Converts ENS160 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for ENS160 Air Quality sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ENS160_CONVERT_RS_RAW2OHMS_F( x)"
+\fBValue:\fP
+.nf
+(pow (2, (float)(x) / 2048))
+.PP
+.fi
+
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

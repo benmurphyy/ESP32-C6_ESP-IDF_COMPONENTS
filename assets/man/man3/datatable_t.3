@@ -1,0 +1,110 @@
+.TH "datatable_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+datatable_t \- Data-table state object structure definition\&. Do not modify these fields once the data-table handle is created, these are read-only, and represent a state machine\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <datatable\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBname\fP"
+.br
+.ti -1c
+.RI "\fBdatatable_data_storage_types_t\fP \fBdata_storage_type\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBsampling_count\fP"
+.br
+.ti -1c
+.RI "\fBtime_into_interval_handle_t\fP \fBsampling_tii_handle\fP"
+.br
+.ti -1c
+.RI "\fBtime_into_interval_handle_t\fP \fBprocessing_tii_handle\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBrecord_id\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBcolumns_count\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBcolumns_size\fP"
+.br
+.ti -1c
+.RI "\fBdatatable_column_t\fP ** \fBcolumns\fP"
+.br
+.ti -1c
+.RI "\fBdatatable_process_t\fP ** \fBprocesses\fP"
+.br
+.ti -1c
+.RI "\fBdatatable_buffer_t\fP ** \fBbuffers\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBrows_count\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBrows_size\fP"
+.br
+.ti -1c
+.RI "\fBdatatable_row_t\fP ** \fBrows\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBsamples_maximum_size\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBhash_code\fP"
+.br
+.ti -1c
+.RI "SemaphoreHandle_t \fBmutex_handle\fP"
+.br
+.ti -1c
+.RI "\fBdatatable_event\fP \fBevent_handler\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Data-table state object structure definition\&. Do not modify these fields once the data-table handle is created, these are read-only, and represent a state machine\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBdatatable_buffer_t\fP** buffers"
+array of data-table column buffers, same size as column array 
+.SS "\fBdatatable_column_t\fP** columns"
+array of data-table columns 
+.SS "uint8_t columns_count"
+data-table column count seed number, this number should not exceed the column size 
+.SS "uint8_t columns_size"
+data-table column array size, static, set when data-table is created 
+.SS "\fBdatatable_data_storage_types_t\fP data_storage_type"
+data-table data storage type, defines handling of records when the data-table is full, set when data-table is created 
+.SS "uint16_t hash_code"
+hash-code of the data-table handle 
+.SS "const char* name"
+data-table textual name, maximum of 15 characters 
+.SS "\fBdatatable_process_t\fP** processes"
+array of data-table column processes, same size as column array 
+.SS "\fBtime_into_interval_handle_t\fP processing_tii_handle"
+data-table processing time-into-interval handle 
+.SS "uint16_t record_id"
+data-table record identifier seed number 
+.SS "\fBdatatable_row_t\fP** rows"
+array of data-table rows 
+.SS "uint16_t rows_count"
+data-table row count seed number, this number should not exceed the row size 
+.SS "uint16_t rows_size"
+data-table row array size, static, set when data-table is created 
+.SS "uint16_t samples_maximum_size"
+data-table column samples size maximum, this is calculated from the sampling and processing intervals 
+.SS "uint16_t sampling_count"
+data-table data sampling count seed number 
+.SS "\fBtime_into_interval_handle_t\fP sampling_tii_handle"
+data-table sampling time-into-interval handle 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

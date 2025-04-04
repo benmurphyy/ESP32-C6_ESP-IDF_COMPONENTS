@@ -1,0 +1,49 @@
+.TH "bmp390_context_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+bmp390_context_t \- BMP390 context structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <bmp390\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBbmp390_config_t\fP \fBdev_config\fP"
+.br
+.ti -1c
+.RI "i2c_master_dev_handle_t \fBi2c_handle\fP"
+.br
+.ti -1c
+.RI "\fBbmp390_cal_factors_t\fP * \fBdev_cal_factors\fP"
+.br
+.ti -1c
+.RI "\fBbmp390_conv_cal_factors_t\fP * \fBdev_conv_cal_factors\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBdev_type\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+BMP390 context structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBbmp390_cal_factors_t\fP* dev_cal_factors"
+bmp390 device calibration factors 
+.SS "\fBbmp390_config_t\fP dev_config"
+bmp390 device configuration 
+.SS "\fBbmp390_conv_cal_factors_t\fP* dev_conv_cal_factors"
+bmp390 device calibration factors converted to floating point numbers (section 8\&.4) 
+.SS "uint8_t dev_type"
+device type, should be bmp390 
+.SS "i2c_master_dev_handle_t i2c_handle"
+bmp380 i2c device handle 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

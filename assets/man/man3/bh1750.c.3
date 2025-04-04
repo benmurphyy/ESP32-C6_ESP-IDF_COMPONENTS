@@ -1,0 +1,135 @@
+.TH "components/peripherals/i2c/esp_bh1750/bh1750.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_bh1750/bh1750.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/bh1750\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBH1750_OPCODE_MT_HI\fP   UINT8_C(0x40)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_OPCODE_MT_LO\fP   UINT8_C(0x60)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_CMD_POWER_DOWN\fP   UINT8_C(0b00000000)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_CMD_POWER_UP\fP   UINT8_C(0b00000001)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_CMD_RESET\fP   UINT8_C(0b00000111)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_POWERUP_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_APPSTART_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_RESET_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_RETRY_DELAY_MS\fP   UINT16_C(2)"
+.br
+.ti -1c
+.RI "#define \fBBH1750_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBbh1750_init\fP (i2c_master_bus_handle_t master_handle, const \fBbh1750_config_t\fP *bh1750_config, \fBbh1750_handle_t\fP *bh1750_handle)"
+.br
+.RI "initializes an BH1750 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_get_ambient_light\fP (\fBbh1750_handle_t\fP handle, float *const ambient_light)"
+.br
+.RI "measure BH1750 illuminance\&. BH1750 goes into power-down mode after measurement when one-time measurements are configured\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_set_measurement_mode\fP (\fBbh1750_handle_t\fP handle, const \fBbh1750_measurement_modes_t\fP mode)"
+.br
+.RI "Writes measurement mode to bh1750\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_set_measurement_time\fP (\fBbh1750_handle_t\fP handle, const uint8_t timespan)"
+.br
+.RI "sets bh1750 sensor measurement time\&. see datasheet for details\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_enable_power\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "power-up BH1750 sensor\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_disable_power\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "power-down BH1750 sensor\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_reset\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "soft-reset BH1750 sensor\&. Reset command is not acceptable in power-down mode\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_remove\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "removes an BH1750 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_delete\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "removes an BH1750 device from master bus and frees handle\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for BH1750 illuminance sensor\&.
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BH1750_OPCODE_MT_HI   UINT8_C(0x40)"
+measurement time hi-bit 
+.SS "#define BH1750_OPCODE_MT_LO   UINT8_C(0x60)"
+measurement time lo-bit 
+.SS "#define BH1750_RETRY_DELAY_MS   UINT16_C(2)"
+bh1750 delay between an I2C receive transaction retry 
+.SS "#define BH1750_TX_RX_DELAY_MS   UINT16_C(10)"
+bh1750 delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

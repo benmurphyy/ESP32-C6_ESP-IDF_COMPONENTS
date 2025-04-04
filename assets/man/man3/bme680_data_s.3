@@ -1,0 +1,83 @@
+.TH "bme680_data_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+bme680_data_s \- BME680 data structure definition\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <bme680\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "float \fBdewpoint_temperature\fP"
+.br
+.ti -1c
+.RI "float \fBair_temperature\fP"
+.br
+.ti -1c
+.RI "float \fBrelative_humidity\fP"
+.br
+.ti -1c
+.RI "float \fBbarometric_pressure\fP"
+.br
+.ti -1c
+.RI "bool \fBgas_valid\fP"
+.br
+.ti -1c
+.RI "float \fBgas_resistance\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBgas_range\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBgas_index\fP"
+.br
+.ti -1c
+.RI "bool \fBheater_stable\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBiaq_score\fP"
+.br
+.ti -1c
+.RI "float \fBtemperature_score\fP"
+.br
+.ti -1c
+.RI "float \fBhumidity_score\fP"
+.br
+.ti -1c
+.RI "float \fBgas_score\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+BME680 data structure definition\&. 
+.SH "Field Documentation"
+.PP 
+.SS "float air_temperature"
+air temperature in degrees celsius 
+.SS "float barometric_pressure"
+barometric pressure in hecto-pascal 
+.SS "float dewpoint_temperature"
+dew-point temperature in degrees celsius 
+.SS "uint8_t gas_index"
+heater profile used (0\&.\&.9) 
+.SS "uint8_t gas_range"
+gas resistance range 
+.SS "float gas_resistance"
+gas resistance in ohms 
+.SS "bool gas_valid"
+indicates that the gas measurement results are valid 
+.SS "bool heater_stable"
+indicates that the heater temperature was stable 
+.SS "uint16_t iaq_score"
+air quality index (0\&.\&.500) 
+.SS "float relative_humidity"
+relative humidity in percent 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

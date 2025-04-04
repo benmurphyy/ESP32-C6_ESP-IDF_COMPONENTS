@@ -1,0 +1,163 @@
+.TH "components/peripherals/i2c/esp_sht4x/include/sht4x.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_sht4x/include/sht4x.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'sht4x_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fBi2c_sht4x_data___t\fP"
+.br
+.ti -1c
+.RI "struct \fBi2c_sht4x_data___t::temperature_tag\fP"
+.br
+.ti -1c
+.RI "union \fBi2c_sht4x_data___t::temperature_tag::temperature_data_tag\fP"
+.br
+.ti -1c
+.RI "struct \fBi2c_sht4x_data___t::humidity_tag\fP"
+.br
+.ti -1c
+.RI "union \fBi2c_sht4x_data___t::humidity_tag::humidity_data_tag\fP"
+.br
+.ti -1c
+.RI "struct \fBsht4x_config_s\fP"
+.br
+.RI "SHT4X configuration structure definition\&. "
+.ti -1c
+.RI "struct \fBsht4x_context_t\fP"
+.br
+.RI "SHT4X context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_SHT4X_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "sht4x i2c default scl clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_SHT4X_DEV_ADDR_LO\fP   UINT8_C(0x44)"
+.br
+.RI "sht4x i2c address when ADDR pin floating/low "
+.ti -1c
+.RI "#define \fBI2C_SHT4X_DEV_ADDR_HI\fP   UINT8_C(0x45)"
+.br
+.RI "sht4x i2c address when ADDR pin high "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_SHT4X_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fRi2c_sht4x_config_t\fP to default configuration settings\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBsht4x_heater_modes_e\fP \fBsht4x_heater_modes_t\fP"
+.br
+.RI "SHT4X measurement heater modes enumerator definition\&. "
+.ti -1c
+.RI "typedef enum \fBsht4x_repeat_modes_e\fP \fBsht4x_repeat_modes_t\fP"
+.br
+.RI "SHT4X measurement repeatability modes enumerator definition\&. "
+.ti -1c
+.RI "typedef struct \fBsht4x_config_s\fP \fBsht4x_config_t\fP"
+.br
+.RI "SHT4X configuration structure definition\&. "
+.ti -1c
+.RI "typedef struct sht4x_context_t \fBsht4x_context_t\fP"
+.br
+.RI "SHT4X context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBsht4x_context_t\fP * \fBsht4x_handle_t\fP"
+.br
+.RI "SHT4X handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBsht4x_heater_modes_e\fP { \fBSHT4X_HEATER_OFF\fP = 0, \fBSHT4X_HEATER_HIGH_LONG\fP, \fBSHT4X_HEATER_HIGH_SHORT\fP, \fBSHT4X_HEATER_MEDIUM_LONG\fP, \fBSHT4X_HEATER_MEDIUM_SHORT\fP, \fBSHT4X_HEATER_LOW_LONG\fP, \fBSHT4X_HEATER_LOW_SHORT\fP }"
+.br
+.RI "SHT4X measurement heater modes enumerator definition\&. "
+.ti -1c
+.RI "enum \fBsht4x_repeat_modes_e\fP { \fBSHT4X_REPEAT_HIGH\fP = 0, \fBSHT4X_REPEAT_MEDIUM\fP, \fBSHT4X_REPEAT_LOW\fP }"
+.br
+.RI "SHT4X measurement repeatability modes enumerator definition\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBsht4x_init\fP (const i2c_master_bus_handle_t master_handle, const \fBsht4x_config_t\fP *sht4x_config, \fBsht4x_handle_t\fP *const sht4x_handle)"
+.br
+.RI "Initializes an SHT4X device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_measurement\fP (\fBsht4x_handle_t\fP handle, float *const temperature, float *const humidity)"
+.br
+.RI "Reads high-level measurements from SHT4X\&. This is a blocking function\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_measurements\fP (\fBsht4x_handle_t\fP handle, float *const temperature, float *const humidity, float *const dewpoint)"
+.br
+.RI "Similar to \fRi2c_sht4x_read_measurement\fP but it includes the dewpoint temperature in the results\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_repeat_mode\fP (\fBsht4x_handle_t\fP handle, \fBsht4x_repeat_modes_t\fP *const mode)"
+.br
+.RI "Reads measurement repeatability mode setting from SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_set_repeat_mode\fP (\fBsht4x_handle_t\fP handle, const \fBsht4x_repeat_modes_t\fP mode)"
+.br
+.RI "Writes measurement repeatability mode setting to SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_heater_mode\fP (\fBsht4x_handle_t\fP handle, \fBsht4x_heater_modes_t\fP *const mode)"
+.br
+.RI "Reads measurement heater mode setting from SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_set_heater_mode\fP (\fBsht4x_handle_t\fP handle, const \fBsht4x_heater_modes_t\fP mode)"
+.br
+.RI "Writes measurement heater mode setting to SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_reset\fP (\fBsht4x_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset to SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_remove\fP (\fBsht4x_handle_t\fP handle)"
+.br
+.RI "Removes an SHT4X device from master I2C bus\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_delete\fP (\fBsht4x_handle_t\fP handle)"
+.br
+.RI "Removes an SHT4X device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "const char * \fBsht4x_get_fw_version\fP (void)"
+.br
+.RI "Converts SHT4X firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBsht4x_get_fw_version_number\fP (void)"
+.br
+.RI "Converts SHT4X firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

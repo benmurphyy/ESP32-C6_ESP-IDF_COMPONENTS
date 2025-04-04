@@ -1,0 +1,249 @@
+.TH "components/peripherals/i2c/esp_max30105/max30105.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_max30105/max30105.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/max30105\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX30105_REG_INT_STS1_R\fP   UINT8_C(0x00)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_INT_STS2_R\fP   UINT8_C(0x01)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_INT_ENB1_RW\fP   UINT8_C(0x02)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_INT_ENB2_RW\fP   UINT8_C(0x03)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_FIFO_WR_PTR_RW\fP   UINT8_C(0x04)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_FIFO_OVF_CNT_RW\fP   UINT8_C(0x05)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_FIFO_RD_PTR_RW\fP   UINT8_C(0x06)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_FIFO_DATA_RW\fP   UINT8_C(0x07)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_FIFO_CONFIG_RW\fP   UINT8_C(0x08)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_MODE_CONFIG_RW\fP   UINT8_C(0x09)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_SPO2_CONFIG_RW\fP   UINT8_C(0x0A)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_LED1_PA_RW\fP   UINT8_C(0x0C)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_LED2_PA_RW\fP   UINT8_C(0x0D)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_LED3_PA_RW\fP   UINT8_C(0x0E)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_PILOT_PA_RW\fP   UINT8_C(0x10)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_MLED1_MC_RW\fP   UINT8_C(0x11)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_MLED2_MC_RW\fP   UINT8_C(0x12)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_DIETEMP_INT_R\fP   UINT8_C(0x1F)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_DIETEMP_FRAC_R\fP   UINT8_C(0x20)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_DIETEMP_CONFIG_R\fP   UINT8_C(0x21)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_PROX_INT_THLD_RW\fP   UINT8_C(0x30)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_REV_ID_R\fP   UINT8_C(0xFE)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_REG_PART_ID_R\fP   UINT8_C(0xFE)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(100)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_DATA_READY_DELAY_MS\fP   UINT16_C(2)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_POWERUP_DELAY_MS\fP   UINT16_C(120)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_RESET_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_SETUP_DELAY_MS\fP   UINT16_C(15)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_APPSTART_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBMAX30105_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_status1_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_status1_register_t *const reg)"
+.br
+.RI "Reads interrupt status 1 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_status2_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_status2_register_t *const reg)"
+.br
+.RI "Reads interrupt status 2 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_enable1_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_enable1_register_t *const reg)"
+.br
+.RI "Reads interrupt enable 1 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_interrupt_enable1_register\fP (\fBmax30105_handle_t\fP handle, const max30105_interrupt_enable1_register_t reg)"
+.br
+.RI "Writes interrupt enable 1 register to MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_enable2_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_enable2_register_t *const reg)"
+.br
+.RI "Reads interrupt enable 2 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_interrupt_enable2_register\fP (\fBmax30105_handle_t\fP handle, const max30105_interrupt_enable2_register_t reg)"
+.br
+.RI "Writes interrupt enable 2 register to MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_mode_configuration_register\fP (\fBmax30105_handle_t\fP handle, max30105_mode_configuration_register_t *const reg)"
+.br
+.RI "Reads mode configuration register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_mode_configuration_register\fP (\fBmax30105_handle_t\fP handle, const max30105_mode_configuration_register_t reg)"
+.br
+.RI "Writes mode configuration register to MAX30105\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for MAX30105 sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SS "#define MAX30105_APPSTART_DELAY_MS   UINT16_C(10)"
+max30105 delay after initialization before application start-up 
+.SS "#define MAX30105_CMD_DELAY_MS   UINT16_C(5)"
+max30105 delay before attempting I2C transactions after a command is issued 
+.SS "#define MAX30105_REG_DIETEMP_CONFIG_R   UINT8_C(0x21)"
+max30105 
+.SS "#define MAX30105_REG_DIETEMP_FRAC_R   UINT8_C(0x20)"
+max30105 
+.SS "#define MAX30105_REG_DIETEMP_INT_R   UINT8_C(0x1F)"
+max30105 
+.SS "#define MAX30105_REG_FIFO_CONFIG_RW   UINT8_C(0x08)"
+max30105 
+.SS "#define MAX30105_REG_FIFO_DATA_RW   UINT8_C(0x07)"
+max30105 
+.SS "#define MAX30105_REG_FIFO_OVF_CNT_RW   UINT8_C(0x05)"
+max30105 
+.SS "#define MAX30105_REG_FIFO_RD_PTR_RW   UINT8_C(0x06)"
+max30105 
+.SS "#define MAX30105_REG_FIFO_WR_PTR_RW   UINT8_C(0x04)"
+max30105 
+.SS "#define MAX30105_REG_INT_ENB1_RW   UINT8_C(0x02)"
+max30105 
+.SS "#define MAX30105_REG_INT_ENB2_RW   UINT8_C(0x03)"
+max30105 
+.SS "#define MAX30105_REG_INT_STS1_R   UINT8_C(0x00)"
+max30105 
+.SS "#define MAX30105_REG_INT_STS2_R   UINT8_C(0x01)"
+max30105 
+.SS "#define MAX30105_REG_LED1_PA_RW   UINT8_C(0x0C)"
+max30105 
+.SS "#define MAX30105_REG_LED2_PA_RW   UINT8_C(0x0D)"
+max30105 
+.SS "#define MAX30105_REG_LED3_PA_RW   UINT8_C(0x0E)"
+max30105 
+.SS "#define MAX30105_REG_MLED1_MC_RW   UINT8_C(0x11)"
+max30105 
+.SS "#define MAX30105_REG_MLED2_MC_RW   UINT8_C(0x12)"
+max30105 
+.SS "#define MAX30105_REG_MODE_CONFIG_RW   UINT8_C(0x09)"
+max30105 
+.SS "#define MAX30105_REG_PART_ID_R   UINT8_C(0xFE)"
+max30105 
+.SS "#define MAX30105_REG_PILOT_PA_RW   UINT8_C(0x10)"
+max30105 
+.SS "#define MAX30105_REG_PROX_INT_THLD_RW   UINT8_C(0x30)"
+max30105 
+.SS "#define MAX30105_REG_REV_ID_R   UINT8_C(0xFE)"
+max30105 
+.SS "#define MAX30105_REG_SPO2_CONFIG_RW   UINT8_C(0x0A)"
+max30105 
+.SS "#define MAX30105_TX_RX_DELAY_MS   UINT16_C(10)"
+max30105 delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

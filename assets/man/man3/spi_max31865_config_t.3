@@ -1,0 +1,67 @@
+.TH "spi_max31865_config_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+spi_max31865_config_t \- MAX31865 SPI device configuration structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <max31865\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBclock_speed_hz\fP"
+.br
+.ti -1c
+.RI "int \fBinput_delay_ns\fP"
+.br
+.ti -1c
+.RI "\fBspi_max31865_modes_t\fP \fBmode\fP"
+.br
+.ti -1c
+.RI "\fBspi_max31865_connection_types_t\fP \fBconnection\fP"
+.br
+.ti -1c
+.RI "bool \fBv_bias_enabled\fP"
+.br
+.ti -1c
+.RI "\fBspi_max31865_filters_t\fP \fBfilter\fP"
+.br
+.ti -1c
+.RI "spi_host_device_t \fBhost\fP"
+.br
+.ti -1c
+.RI "gpio_num_t \fBcs_io_num\fP"
+.br
+.ti -1c
+.RI "gpio_num_t \fBmiso_io_num\fP"
+.br
+.ti -1c
+.RI "bool \fBirq_enabled\fP"
+.br
+.ti -1c
+.RI "gpio_num_t \fBirq_io_num\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+MAX31865 SPI device configuration structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "gpio_num_t cs_io_num"
+CS gpio number, set before calling \fRspi_eeprom_init()\fP 
+.SS "spi_host_device_t host"
+The SPI host used, set before calling \fRspi_eeprom_init()\fP 
+.SS "bool irq_enabled"
+Whether to use polling or interrupt when waiting for write to be done\&. Set before calling \fRspi_eeprom_init()\fP\&. 
+.SS "gpio_num_t irq_io_num"
+interrupt gpio number 
+.SS "gpio_num_t miso_io_num"
+MISO gpio number, set before calling \fRspi_eeprom_init()\fP 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

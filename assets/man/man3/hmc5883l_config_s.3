@@ -1,0 +1,64 @@
+.TH "hmc5883l_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+hmc5883l_config_s \- HMC5883L device configuration structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <hmc5883l\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBhmc5883l_modes_t\fP \fBmode\fP"
+.br
+.ti -1c
+.RI "\fBhmc5883l_sample_averages_t\fP \fBsample\fP"
+.br
+.ti -1c
+.RI "\fBhmc5883l_data_rates_t\fP \fBrate\fP"
+.br
+.ti -1c
+.RI "\fBhmc5883l_gains_t\fP \fBgain\fP"
+.br
+.ti -1c
+.RI "\fBhmc5883l_biases_t\fP \fBbias\fP"
+.br
+.ti -1c
+.RI "float \fBdeclination\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+HMC5883L device configuration structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBhmc5883l_biases_t\fP bias"
+measurement mode (bias) 
+.SS "float declination"
+magnetic declination angle http://www.magnetic-declination.com/ 
+.SS "\fBhmc5883l_gains_t\fP gain"
+used measurement mode 
+.SS "uint16_t i2c_address"
+ens160 i2c device address 
+.SS "uint32_t i2c_clock_speed"
+ens160 i2c device scl clock speed in hz 
+.SS "\fBhmc5883l_modes_t\fP mode"
+operating mode 
+.SS "\fBhmc5883l_data_rates_t\fP rate"
+data rate 
+.SS "\fBhmc5883l_sample_averages_t\fP sample"
+number of samples averaged 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

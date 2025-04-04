@@ -1,0 +1,143 @@
+.TH "components/peripherals/i2c/esp_ens160 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ens160 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBens160\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the ScioSense ENS160 digital metal-oxide multi-gas sensor\&. Information on features and functionality are documented and can be found in the \fR\fBens160\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ens160
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBens160\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_ens160
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── ens160_version\&.h
+    │   └── ens160\&.h
+    └── ens160\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results\&.
+
+.PP
+.PP
+.nf
+#include <ens160\&.h>
+
+void i2c0_ens160_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t          last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    ens160_config_t dev_cfg          = I2C_ENS160_CONFIG_DEFAULT;
+    ens160_handle_t dev_hdl;
+    //
+    // init device
+    ens160_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "ens160 handle init failed");
+        assert(dev_hdl);
+    }
+    //
+    uint16_t startup_time = 0; // seconds
+    //
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## ENS160 \- START #########################");
+        //
+        // handle sensor
+        ens160_validity_flags_t dev_flag;
+        if(ens160_get_validity_status(dev_hdl, &dev_flag) == ESP_OK) {
+            // validate device status
+            if(dev_flag == ENS160_VALFLAG_NORMAL) {
+                ens160_air_quality_data_t aq_data;
+                esp_err_t result = ens160_get_measurement(dev_hdl, &aq_data);
+                if(result != ESP_OK) {
+                    ESP_LOGE(APP_TAG, "ens160 device read failed (%s)", esp_err_to_name(result));
+                } else {
+                    ens160_aqi_uba_row_t uba_aqi = ens160_aqi_index_to_definition(aq_data\&.uba_aqi);
+
+                    ESP_LOGW(APP_TAG, "index    %1x (%s)", aq_data\&.uba_aqi, uba_aqi\&.rating);
+                    ESP_LOGW(APP_TAG, "tvco     %d (0x%04x)", aq_data\&.tvoc, aq_data\&.tvoc);
+                    ESP_LOGW(APP_TAG, "etoh     %d (0x%04x)", aq_data\&.etoh, aq_data\&.etoh);
+                    ESP_LOGW(APP_TAG, "eco2     %d (0x%04x)", aq_data\&.eco2, aq_data\&.eco2);
+                }
+                //
+                ens160_air_quality_raw_data_t aq_raw_data;
+                result = ens160_get_raw_measurement(dev_hdl, &aq_raw_data);
+                if(result != ESP_OK) {
+                    ESP_LOGE(APP_TAG, "ens160 device read failed (%s)", esp_err_to_name(result));
+                } else {
+                    ESP_LOGW(APP_TAG, "ri\-res 0 %lu", aq_raw_data\&.hp0_ri);
+                    ESP_LOGW(APP_TAG, "ri\-res 1 %lu", aq_raw_data\&.hp1_ri);
+                    ESP_LOGW(APP_TAG, "ri\-res 2 %lu", aq_raw_data\&.hp2_ri);
+                    ESP_LOGW(APP_TAG, "ri\-res 3 %lu", aq_raw_data\&.hp3_ri);
+
+                    ESP_LOGW(APP_TAG, "bl\-res 0 %lu", aq_raw_data\&.hp0_bl);
+                    ESP_LOGW(APP_TAG, "bl\-res 1 %lu", aq_raw_data\&.hp1_bl);
+                    ESP_LOGW(APP_TAG, "bl\-res 2 %lu", aq_raw_data\&.hp2_bl);
+                    ESP_LOGW(APP_TAG, "bl\-res 3 %lu", aq_raw_data\&.hp3_bl);
+                }
+            } else if(dev_flag == ENS160_VALFLAG_WARMUP) {
+                ESP_LOGW(APP_TAG, "ens160 device is warming up (180\-sec wait [%u\-sec])", startup_time);
+                startup_time = startup_time + I2C0_TASK_SAMPLING_RATE;
+            } else if(dev_flag == ENS160_VALFLAG_INITIAL_STARTUP) {
+                ESP_LOGW(APP_TAG, "ens160 device is undrgoing initial starting up (3600\-sec wait [%u\-sec])", startup_time);
+                startup_time = startup_time + I2C0_TASK_SAMPLING_RATE;
+            } else if(dev_flag == ENS160_VALFLAG_INVALID_OUTPUT) {
+                ESP_LOGW(APP_TAG, "ens160 device signals are giving unexpected values");
+            }
+        }
+        //
+        ESP_LOGI(APP_TAG, "######################## ENS160 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    ens160_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

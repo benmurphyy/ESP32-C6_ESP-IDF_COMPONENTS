@@ -1,0 +1,161 @@
+.TH "components/peripherals/i2c/esp_ahtxx/include/ahtxx.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ahtxx/include/ahtxx.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'ahtxx_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBahtxx_config_s\fP"
+.br
+.RI "AHTXX configuration structure definition\&. "
+.ti -1c
+.RI "struct \fBahtxx_context_t\fP"
+.br
+.RI "AHTXX context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_AHTXX_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.ti -1c
+.RI "#define \fBI2C_AHTXX_DEV_ADDR\fP   UINT8_C(0x38)"
+.br
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_AHT30_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fR\fBahtxx_config_t\fP\fP to default configuration settings for the aht30 sensor type\&. "
+.ti -1c
+.RI "#define \fBI2C_AHT25_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fR\fBahtxx_config_t\fP\fP to default configuration settings for the aht25 sensor type\&. "
+.ti -1c
+.RI "#define \fBI2C_AHT21_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fR\fBahtxx_config_t\fP\fP to default configuration settings for the aht21 sensor type\&. "
+.ti -1c
+.RI "#define \fBI2C_AHT20_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fR\fBahtxx_config_t\fP\fP to default configuration settings for the aht20 sensor type\&. "
+.ti -1c
+.RI "#define \fBI2C_AHT10_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fR\fBahtxx_config_t\fP\fP to default configuration settings for the aht10 sensor type\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBahtxx_sensor_types_e\fP \fBahtxx_sensor_types_t\fP"
+.br
+.RI "AHTXX sensor types enumerator definition\&. "
+.ti -1c
+.RI "typedef struct \fBahtxx_config_s\fP \fBahtxx_config_t\fP"
+.br
+.RI "AHTXX configuration structure definition\&. "
+.ti -1c
+.RI "typedef struct ahtxx_context_t \fBahtxx_context_t\fP"
+.br
+.RI "AHTXX context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBahtxx_context_t\fP * \fBahtxx_handle_t\fP"
+.br
+.RI "AHTXX handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBahtxx_sensor_types_e\fP { \fBAHTXX_AHT10\fP, \fBAHTXX_AHT20\fP, \fBAHTXX_AHT21\fP, \fBAHTXX_AHT25\fP, \fBAHTXX_AHT30\fP }"
+.br
+.RI "AHTXX sensor types enumerator definition\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_get_status_register\fP (\fBahtxx_handle_t\fP handle, ahtxx_status_register_t *const reg)"
+.br
+.RI "Reads status register from AHTXX\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_init\fP (const i2c_master_bus_handle_t master_handle, const \fBahtxx_config_t\fP *ahtxx_config, \fBahtxx_handle_t\fP *const ahtxx_handle)"
+.br
+.RI "Initializes an AHTXX device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_get_measurement\fP (\fBahtxx_handle_t\fP handle, float *const temperature, float *const humidity)"
+.br
+.RI "Reads temperature and relative humidity from AHTXX\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_get_measurements\fP (\fBahtxx_handle_t\fP handle, float *const temperature, float *const humidity, float *const dewpoint)"
+.br
+.RI "Similar to \fRi2c_aht2x_read_measurement\fP but it includes dewpoint in the results\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_get_busy_status\fP (\fBahtxx_handle_t\fP handle, bool *const busy)"
+.br
+.RI "Reads busy status flag from AHTXX\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_get_calibration_status\fP (\fBahtxx_handle_t\fP handle, bool *const calibrated)"
+.br
+.RI "Reads calibration status flag from AHTXX\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_get_status\fP (\fBahtxx_handle_t\fP handle, bool *const busy, bool *const calibrated)"
+.br
+.RI "Reads busy and calibrated status flags from AHTXX\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_reset\fP (\fBahtxx_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset and initializes AHTXX\&. See datasheet for details\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_remove\fP (\fBahtxx_handle_t\fP handle)"
+.br
+.RI "Removes an AHTXX device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBahtxx_delete\fP (\fBahtxx_handle_t\fP handle)"
+.br
+.RI "Removes an AHTXX device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBahtxx_get_fw_version\fP (void)"
+.br
+.RI "Converts AHTXX firmware version numbers (major, minor, patch, build) into a string\&. "
+.ti -1c
+.RI "int32_t \fBahtxx_get_fw_version_number\fP (void)"
+.br
+.RI "Converts AHTXX firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBahtxx_status_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

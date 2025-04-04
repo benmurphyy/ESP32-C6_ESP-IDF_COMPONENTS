@@ -75,7 +75,7 @@ The component C header version, yml, and json files are automically generated fr
 
 If information must be updated, be sure to update the template and not the generated file.  Otherwise, files are overwritten when the version is updated.  See the component's `CMakeLists.txt` file for more details.
 
-Documentation for components was generated with `doxygen` and the html version is available [here](/assets/html/index.html).
+Documentation for components was generated with `doxygen` and the html `alpha` version is available [here](/assets/html/index.html).
 
 To get started, locate and open the `app_config.h` file from the `include` folder and configure GPIO pins as needed.  Now, locate and open the `main.c` file from the `src` folder and go to the `void app_main( void )` subroutine to enable the device of interest.  The example code is located in the `[sensor]_task.h` and `[sensor]_task.c` files.
 

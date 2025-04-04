@@ -1,0 +1,102 @@
+.TH "components/peripherals/i2c/esp_ak8975 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ak8975 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the AKM AK8975 3-axis magnetic sensor\&. Information on features and functionality are documented and can be found in the \fR\fBak8975\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ak8975
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBak8975\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_ak8975
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── ak8975_version\&.h
+    │   └── ak8975\&.h
+    └── ak8975\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results\&.
+
+.PP
+.PP
+.nf
+#include <ak8975\&.h>
+
+void i2c0_ak8975_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t         last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    ak8975_config_t dev_cfg         = I2C_AK8975_CONFIG_DEFAULT;
+    ak8975_handle_t dev_hdl;
+    //
+    // init device
+    ak8975_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "ak8975 handle init failed");
+        assert(dev_hdl);
+    }
+    //
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## AK8975 \- START #########################");
+        //
+        // handle sensor
+        ak8975_magnetic_axes_data_t magnetic_axes;
+        esp_err_t result = ak8975_get_magnetic_axes(dev_hdl, &magnetic_axes);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "ak8975 device read failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "Compass X\-Axis:  %f mG", magnetic_axes\&.x_axis);
+            ESP_LOGI(APP_TAG, "Compass Y\-Axis:  %f mG", magnetic_axes\&.y_axis);
+            ESP_LOGI(APP_TAG, "Compass Z\-Axis:  %f mG", magnetic_axes\&.z_axis);
+            ESP_LOGI(APP_TAG, "Compass Heading: %f °", ak8975_convert_to_heading(magnetic_axes));
+        }
+        //
+        ESP_LOGI(APP_TAG, "######################## AK8975 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    ak8975_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

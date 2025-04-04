@@ -1,0 +1,240 @@
+.TH "components/peripherals/i2c/esp_mmc56x3/include/mmc56x3.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_mmc56x3/include/mmc56x3.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'mmc56x3_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBmmc56x3_magnetic_axes_data_s\fP"
+.br
+.RI "MMC56X3 magnetic axes data structure\&. "
+.ti -1c
+.RI "struct \fBmmc56x3_selftest_axes_data_s\fP"
+.br
+.RI "MMC56X3 self-test axes data structure\&. "
+.ti -1c
+.RI "struct \fBmmc56x3_config_s\fP"
+.br
+.RI "MMC56X3 configuration structure\&. "
+.ti -1c
+.RI "struct \fBmmc56x3_context_t\fP"
+.br
+.RI "MMC56X3 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_MMC56X3_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "mmc56x3 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_MMC56X3_DEV_ADDR\fP   UINT8_C(0x30)"
+.br
+.RI "mmc56x3 I2C address "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_MMC56X3_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fR\fBmmc56x3_config_t\fP\fP to default configuration settings\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBmmc56x3_measurement_times_e\fP \fBmmc56x3_measurement_times_t\fP"
+.br
+.RI "MMC56X3 measurement times enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBmmc56x3_measurement_samples_e\fP \fBmmc56x3_measurement_samples_t\fP"
+.br
+.RI "MMC56X3 measurement samples enumerator\&. "
+.ti -1c
+.RI "typedef struct \fBmmc56x3_magnetic_axes_data_s\fP \fBmmc56x3_magnetic_axes_data_t\fP"
+.br
+.RI "MMC56X3 magnetic axes data structure\&. "
+.ti -1c
+.RI "typedef struct \fBmmc56x3_selftest_axes_data_s\fP \fBmmc56x3_selftest_axes_data_t\fP"
+.br
+.RI "MMC56X3 self-test axes data structure\&. "
+.ti -1c
+.RI "typedef struct \fBmmc56x3_config_s\fP \fBmmc56x3_config_t\fP"
+.br
+.RI "MMC56X3 configuration structure\&. "
+.ti -1c
+.RI "typedef struct mmc56x3_context_t \fBmmc56x3_context_t\fP"
+.br
+.RI "MMC56X3 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBmmc56x3_context_t\fP * \fBmmc56x3_handle_t\fP"
+.br
+.RI "MMC56X3 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBmmc56x3_measurement_times_e\fP { \fBMMC56X3_MEAS_TIME_6_6MS\fP = (0b00), \fBMMC56X3_MEAS_TIME_3_5MS\fP = (0b01), \fBMMC56X3_MEAS_TIME_2MS\fP = (0b10), \fBMMC56X3_MEAS_TIME_1_2MS\fP = (0b11) }"
+.br
+.RI "MMC56X3 measurement times enumerator\&. "
+.ti -1c
+.RI "enum \fBmmc56x3_measurement_samples_e\fP { \fBMMC56X3_MEAS_SAMPLE_1\fP = (0b000), \fBMMC56X3_MEAS_SAMPLE_25\fP = (0b001), \fBMMC56X3_MEAS_SAMPLE_75\fP = (0b010), \fBMMC56X3_MEAS_SAMPLE_100\fP = (0b011), \fBMMC56X3_MEAS_SAMPLE_250\fP = (0b100), \fBMMC56X3_MEAS_SAMPLE_500\fP = (0b101), \fBMMC56X3_MEAS_SAMPLE_1000\fP = (0b110), \fBMMC56X3_MEAS_SAMPLE_2000\fP = (0b111) }"
+.br
+.RI "MMC56X3 measurement samples enumerator\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_status_register\fP (\fBmmc56x3_handle_t\fP handle, mmc56x3_status_register_t *const reg)"
+.br
+.RI "Reads status register from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_control0_register\fP (\fBmmc56x3_handle_t\fP handle, const mmc56x3_control0_register_t reg)"
+.br
+.RI "Writes control 0 register to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_control1_register\fP (\fBmmc56x3_handle_t\fP handle, const mmc56x3_control1_register_t reg)"
+.br
+.RI "Writes control 1 register to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_control2_register\fP (\fBmmc56x3_handle_t\fP handle, const mmc56x3_control2_register_t reg)"
+.br
+.RI "Writes control 2 register to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_product_id_register\fP (\fBmmc56x3_handle_t\fP handle, uint8_t *const reg)"
+.br
+.RI "Reads product identifier register from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_init\fP (i2c_master_bus_handle_t master_handle, const \fBmmc56x3_config_t\fP *mmc56x3_config, \fBmmc56x3_handle_t\fP *mmc56x3_handle)"
+.br
+.RI "Initializes an MMC56X3 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_temperature\fP (\fBmmc56x3_handle_t\fP handle, float *const temperature)"
+.br
+.RI "Reads temperature from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_magnetic_axes\fP (\fBmmc56x3_handle_t\fP handle, \fBmmc56x3_magnetic_axes_data_t\fP *const axes_data)"
+.br
+.RI "Reads magnetic axes (x, y, z axes) from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_temperature_data_status\fP (\fBmmc56x3_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads temperature data status from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_magnetic_data_status\fP (\fBmmc56x3_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads magnetic data status from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_data_status\fP (\fBmmc56x3_handle_t\fP handle, bool *const magnetic_ready, bool *const temperature_ready)"
+.br
+.RI "Reads magnetic and temperature data status from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_measure_mode\fP (\fBmmc56x3_handle_t\fP handle, const bool continuous)"
+.br
+.RI "Writes measurement mode to MMC56X3\&. The data rate must be configured to a non-zero value before enabling continuous measurements\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_data_rate\fP (\fBmmc56x3_handle_t\fP handle, const uint16_t rate)"
+.br
+.RI "Writes data rate to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_measure_bandwidth\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_measurement_times_t\fP bandwidth)"
+.br
+.RI "Writes measurement bandwidth to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_enable_periodical_set\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_measurement_samples_t\fP samples)"
+.br
+.RI "Enables MMC56X3 periodical set when the number of samples threshold is met\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_disable_periodical_set\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Disables MMC56X3 periodical set\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_selftest_thresholds\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_selftest_axes_data_t\fP axes_data)"
+.br
+.RI "Writes axes configuration to MMC56X3 to enable or disable axes (x, y, z), axes are enabled by default\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_selftest_set_values\fP (\fBmmc56x3_handle_t\fP handle, \fBmmc56x3_selftest_axes_data_t\fP *const axes_data)"
+.br
+.RI "Reads self-test axes data set-values from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_selftest_set_values\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_selftest_axes_data_t\fP axes_data)"
+.br
+.RI "Writes self-test axes data set-values to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_magnetic_set_reset\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Pulses large currents through the sense coils to clear any offset\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_reset\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_remove\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Removes an MMC56X3 device from master I2C bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_delete\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Removes an MMC56X3 device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "float \fBmmc56x3_convert_to_heading\fP (const \fBmmc56x3_magnetic_axes_data_t\fP axes_data)"
+.br
+.RI "Converts magnetic axes data to a heading\&. See Honeywell application note AN-203 for details\&. "
+.ti -1c
+.RI "float \fBmmc56x3_convert_to_true_heading\fP (const float declination, const \fBmmc56x3_magnetic_axes_data_t\fP axes_data)"
+.br
+.RI "Converts magnetic axes data with magnetic declination to a true heading\&. See Honeywell application note AN-203 for details\&. "
+.ti -1c
+.RI "const char * \fBmmc56x3_get_fw_version\fP (void)"
+.br
+.RI "Converts MMC56X3 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBmmc56x3_get_fw_version_number\fP (void)"
+.br
+.RI "Converts MMC56X3 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBmmc56x3_status_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmmc56x3_control0_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmmc56x3_control1_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmmc56x3_control2_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

@@ -1,0 +1,271 @@
+.TH "components/peripherals/i2c/esp_as3935/as3935.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_as3935/as3935.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/as3935\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <driver/gpio\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBAS3935_IRQ_FLAG_DEFAULT\fP   (0)"
+.br
+.RI "AS3935 definitions\&. "
+.ti -1c
+.RI "#define \fBAS3935_MUTEX_WAIT_TIME\fP   (50)"
+.br
+.ti -1c
+.RI "#define \fBAS3935_EVENT_LOOP_POOL_DELAY_MS\fP   (50)"
+.br
+.ti -1c
+.RI "#define \fBAS3935_EVENT_LOOP_POST_DELAY_MS\fP   (100)"
+.br
+.ti -1c
+.RI "#define \fBAS3935_EVENT_LOOP_QUEUE_SIZE\fP   (16)"
+.br
+.ti -1c
+.RI "#define \fBAS3935_EVENT_TASK_NAME\fP   'as3935_evt_tsk'"
+.br
+.ti -1c
+.RI "#define \fBAS3935_EVENT_TASK_STACK_SIZE\fP   (configMINIMAL_STACK_SIZE * 5)"
+.br
+.ti -1c
+.RI "#define \fBAS3935_EVENT_TASK_PRIORITY\fP   (tskIDLE_PRIORITY + 6)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.ti -1c
+.RI "#define \fBENSURE_TRUE\fP(ACTION)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBESP_EVENT_DEFINE_BASE\fP (ESP_AS3935_EVENT)"
+.br
+.RI "AS3935 monitor event base definition\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_monitor_init\fP (i2c_master_bus_handle_t master_handle, const \fBas3935_config_t\fP *as3935_config, \fBas3935_monitor_handle_t\fP *monitor_handle)"
+.br
+.RI "initialize AS3935 monitor instance\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_monitor_deinit\fP (\fBas3935_monitor_handle_t\fP monitor_handle)"
+.br
+.RI "de-initialize AS3935 monitor instance\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_monitor_add_handler\fP (\fBas3935_monitor_handle_t\fP monitor_handle, esp_event_handler_t event_handler, void *handler_args)"
+.br
+.RI "adds user defined event handler for AS3935 monitor\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_monitor_remove_handler\fP (\fBas3935_monitor_handle_t\fP monitor_handle, esp_event_handler_t event_handler)"
+.br
+.RI "removes user defined event handler for AS3935 monitor\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_get_0x00_register\fP (\fBas3935_handle_t\fP handle, as3935_0x00_register_t *const reg)"
+.br
+.RI "gets 0x00 register from AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_set_0x00_register\fP (\fBas3935_handle_t\fP handle, const as3935_0x00_register_t reg)"
+.br
+.RI "sets 0x00 register on AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_get_0x01_register\fP (\fBas3935_handle_t\fP handle, as3935_0x01_register_t *const reg)"
+.br
+.RI "gets 0x01 register from AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_set_0x01_register\fP (\fBas3935_handle_t\fP handle, const as3935_0x01_register_t reg)"
+.br
+.RI "sets 0x01 register on AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_get_0x02_register\fP (\fBas3935_handle_t\fP handle, as3935_0x02_register_t *const reg)"
+.br
+.RI "gets 0x02 register from AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_set_0x02_register\fP (\fBas3935_handle_t\fP handle, const as3935_0x02_register_t reg)"
+.br
+.RI "sets 0x02 register on AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_get_0x03_register\fP (\fBas3935_handle_t\fP handle, as3935_0x03_register_t *const reg)"
+.br
+.RI "gets 0x03 register from AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_set_0x03_register\fP (\fBas3935_handle_t\fP handle, const as3935_0x03_register_t reg)"
+.br
+.RI "sets 0x03 register on AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_get_0x08_register\fP (\fBas3935_handle_t\fP handle, as3935_0x08_register_t *const reg)"
+.br
+.RI "gets 0x08 register from AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_set_0x08_register\fP (\fBas3935_handle_t\fP handle, const as3935_0x08_register_t reg)"
+.br
+.RI "sets 0x08 register on AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_setup\fP (\fBas3935_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_init\fP (i2c_master_bus_handle_t master_handle, const \fBas3935_config_t\fP *as3935_config, \fBas3935_handle_t\fP *as3935_handle)"
+.br
+.RI "initializes an AS3935 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_register_isr\fP (\fBas3935_handle_t\fP handle, const as3935_isr_t isr)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_reset_to_defaults\fP (\fBas3935_handle_t\fP handle)"
+.br
+.RI "resets AS3935 to defaults\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_calibrate_rco\fP (\fBas3935_handle_t\fP handle)"
+.br
+.RI "calibrates AS3935 RC oscillator\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_clear_lightning_statistics\fP (\fBas3935_handle_t\fP handle)"
+.br
+.RI "clears AS3935 lightning statistics\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_enable_power\fP (\fBas3935_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_analog_frontend\fP (\fBas3935_handle_t\fP handle, \fBas3935_analog_frontends_t\fP *const analog_frontend)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_watchdog_threshold\fP (\fBas3935_handle_t\fP handle, \fBas3935_watchdog_thresholds_t\fP *const watchdog_threshold)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_noise_floor_threshold\fP (\fBas3935_handle_t\fP handle, \fBas3935_noise_levels_t\fP *const noise_level)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_spike_rejection\fP (\fBas3935_handle_t\fP handle, uint8_t *const spike_rejection)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_minimum_lightnings\fP (\fBas3935_handle_t\fP handle, \fBas3935_minimum_lightnings_t\fP *const min_lightnings)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_enable_disturber_detection\fP (\fBas3935_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_frequency_division_ratio\fP (\fBas3935_handle_t\fP handle, \fBas3935_frequency_division_ratios_t\fP *const ratio)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_display_oscillator_on_irq\fP (\fBas3935_handle_t\fP handle, const \fBas3935_oscillator_modes_t\fP oscillator_mode, bool *const enabled)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_internal_capacitors\fP (\fBas3935_handle_t\fP handle, uint8_t *const value)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_disable_power\fP (\fBas3935_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_analog_frontend\fP (\fBas3935_handle_t\fP handle, const \fBas3935_analog_frontends_t\fP analog_frontend)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_watchdog_threshold\fP (\fBas3935_handle_t\fP handle, const \fBas3935_watchdog_thresholds_t\fP watchdog_threshold)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_noise_floor_threshold\fP (\fBas3935_handle_t\fP handle, const \fBas3935_noise_levels_t\fP noise_level)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_spike_rejection\fP (\fBas3935_handle_t\fP handle, const uint8_t spike_rejection)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_minimum_lightnings\fP (\fBas3935_handle_t\fP handle, const \fBas3935_minimum_lightnings_t\fP min_lightnings)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_disable_disturber_detection\fP (\fBas3935_handle_t\fP handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_frequency_division_ratio\fP (\fBas3935_handle_t\fP handle, const \fBas3935_frequency_division_ratios_t\fP ratio)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_display_oscillator_on_irq\fP (\fBas3935_handle_t\fP handle, const \fBas3935_oscillator_modes_t\fP oscillator_mode, const bool enabled)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_set_internal_capacitors\fP (\fBas3935_handle_t\fP handle, const uint8_t value)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_interrupt_state\fP (\fBas3935_handle_t\fP handle, \fBas3935_interrupt_states_t\fP *const state)"
+.br
+.RI "gets interrupt state of AS3935\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_get_lightning_distance\fP (\fBas3935_handle_t\fP handle, \fBas3935_lightning_distances_t\fP *const distance)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_lightning_distance_km\fP (\fBas3935_handle_t\fP handle, uint8_t *const distance)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_lightning_energy\fP (\fBas3935_handle_t\fP handle, uint32_t *const energy)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_get_lightning_event\fP (\fBas3935_handle_t\fP handle, \fBas3935_lightning_distances_t\fP *const distance, uint32_t *const energy)"
+.br
+.ti -1c
+.RI "esp_err_t \fBas3935_remove\fP (\fBas3935_handle_t\fP handle)"
+.br
+.RI "Removes an AS3935 device from I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBas3935_delete\fP (\fBas3935_handle_t\fP handle)"
+.br
+.RI "Removes an AS3935 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBas3935_get_fw_version\fP (void)"
+.br
+.RI "Converts AS3935 firmware version numbers (major, minor, patch, build) into a string\&. "
+.ti -1c
+.RI "int32_t \fBas3935_get_fw_version_number\fP (void)"
+.br
+.RI "Converts AS3935 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for AS3935 lightning detection sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ENSURE_TRUE( ACTION)"
+\fBValue:\fP
+.nf
+do { BaseType_t __res = (ACTION); assert(__res == pdTRUE); (void)__res; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+macro definitions 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

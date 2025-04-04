@@ -1,0 +1,59 @@
+.TH "onewire_bus_rmt_obj_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+onewire_bus_rmt_obj_t
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBonewire_bus_t\fP \fBbase\fP"
+.br
+.ti -1c
+.RI "rmt_channel_handle_t \fBtx_channel\fP"
+.br
+.ti -1c
+.RI "rmt_channel_handle_t \fBrx_channel\fP"
+.br
+.ti -1c
+.RI "rmt_encoder_handle_t \fBtx_bytes_encoder\fP"
+.br
+.ti -1c
+.RI "rmt_encoder_handle_t \fBtx_copy_encoder\fP"
+.br
+.ti -1c
+.RI "rmt_symbol_word_t * \fBrx_symbols_buf\fP"
+.br
+.ti -1c
+.RI "size_t \fBmax_rx_bytes\fP"
+.br
+.ti -1c
+.RI "QueueHandle_t \fBreceive_queue\fP"
+.br
+.ti -1c
+.RI "SemaphoreHandle_t \fBbus_mutex\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "\fBonewire_bus_t\fP base"
+base class 
+.SS "size_t max_rx_bytes"
+buffer size in byte for single receive transaction 
+.SS "rmt_channel_handle_t rx_channel"
+rmt rx channel handler 
+.SS "rmt_symbol_word_t* rx_symbols_buf"
+hold rmt raw symbols 
+.SS "rmt_encoder_handle_t tx_bytes_encoder"
+used to encode commands and data 
+.SS "rmt_channel_handle_t tx_channel"
+rmt tx channel handler 
+.SS "rmt_encoder_handle_t tx_copy_encoder"
+used to encode reset pulse and bits 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

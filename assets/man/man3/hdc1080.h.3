@@ -1,0 +1,217 @@
+.TH "components/peripherals/i2c/esp_hdc1080/include/hdc1080.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_hdc1080/include/hdc1080.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'hdc1080_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhdc1080_config_s\fP"
+.br
+.RI "HDC1080 configuration structure definition\&. "
+.ti -1c
+.RI "struct \fBhdc1080_context_t\fP"
+.br
+.RI "HDC1080 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_HDC1080_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "hdc1080 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_HDC1080_DEV_ADDR_0\fP   UINT8_C(0x40)"
+.br
+.RI "hdc1080 I2C address when ADR1 = 0, ADR0 = 0 "
+.ti -1c
+.RI "#define \fBI2C_HDC1080_DEV_ADDR_1\fP   UINT8_C(0x41)"
+.br
+.RI "hdc1080 I2C address when ADR1 = 0, ADR0 = 1 "
+.ti -1c
+.RI "#define \fBI2C_HDC1080_DEV_ADDR_2\fP   UINT8_C(0x42)"
+.br
+.RI "hdc1080 I2C address when ADR1 = 1, ADR0 = 0 "
+.ti -1c
+.RI "#define \fBI2C_HDC1080_DEV_ADDR_3\fP   UINT8_C(0x43)"
+.br
+.RI "hdc1080 I2C address when ADR1 = 1, ADR0 = 1 "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_HDC1080_CONFIG_DEFAULT\fP"
+.br
+.RI "Macro that initializes \fRi2c_hdc1080_config_t\fP to default configuration settings\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBhdc1080_acquisition_modes_e\fP \fBhdc1080_acquisition_modes_t\fP"
+.br
+.RI "HDC1080 acquisition modes enumerator definition\&. "
+.ti -1c
+.RI "typedef enum \fBhdc1080_battery_states_e\fP \fBhdc1080_battery_states_t\fP"
+.br
+.RI "HDC1080 battery states enumerator definition\&. "
+.ti -1c
+.RI "typedef enum \fBhdc1080_temperature_resolutions_e\fP \fBhdc1080_temperature_resolutions_t\fP"
+.br
+.RI "HDC1080 temperature measurement resolutions enumerator definition\&. "
+.ti -1c
+.RI "typedef enum \fBhdc1080_humidity_resolutions_e\fP \fBhdc1080_humidity_resolutions_t\fP"
+.br
+.RI "HDC1080 humidity measurement resolutions enumerator definition\&. "
+.ti -1c
+.RI "typedef struct \fBhdc1080_config_s\fP \fBhdc1080_config_t\fP"
+.br
+.RI "HDC1080 configuration structure definition\&. "
+.ti -1c
+.RI "typedef struct hdc1080_context_t \fBhdc1080_context_t\fP"
+.br
+.RI "HDC1080 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBhdc1080_context_t\fP * \fBhdc1080_handle_t\fP"
+.br
+.RI "HDC1080 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBhdc1080_acquisition_modes_e\fP { \fBHDC1080_ACQUISITION_SINGLE\fP = 0, \fBHDC1080_ACQUISITION_SEQUENCED\fP = 1 }"
+.br
+.RI "HDC1080 acquisition modes enumerator definition\&. "
+.ti -1c
+.RI "enum \fBhdc1080_battery_states_e\fP { \fBHDC1080_BATT_VOLT_OVER_2_8V\fP = 0, \fBHDC1080_BATT_VOLT_UNDER_2_8V\fP = 1 }"
+.br
+.RI "HDC1080 battery states enumerator definition\&. "
+.ti -1c
+.RI "enum \fBhdc1080_temperature_resolutions_e\fP { \fBHDC1080_TEMPERATURE_RESOLUTION_14BIT\fP = 0, \fBHDC1080_TEMPERATURE_RESOLUTION_11BIT\fP = 1 }"
+.br
+.RI "HDC1080 temperature measurement resolutions enumerator definition\&. "
+.ti -1c
+.RI "enum \fBhdc1080_humidity_resolutions_e\fP { \fBHDC1080_HUMIDITY_RESOLUTION_14BIT\fP = (0b00), \fBHDC1080_HUMIDITY_RESOLUTION_11BIT\fP = (0b01), \fBHDC1080_HUMIDITY_RESOLUTION_8BIT\fP = (0b10) }"
+.br
+.RI "HDC1080 humidity measurement resolutions enumerator definition\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_serial_number_register\fP (\fBhdc1080_handle_t\fP handle, uint64_t *const reg)"
+.br
+.RI "Reads unique serial number register from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_manufacturer_id_register\fP (\fBhdc1080_handle_t\fP handle, uint16_t *const reg)"
+.br
+.RI "Reads manufacturer identifier register from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_device_id_register\fP (\fBhdc1080_handle_t\fP handle, uint16_t *const reg)"
+.br
+.RI "Reads device identifier register from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_configuration_register\fP (\fBhdc1080_handle_t\fP handle, hdc1080_configuration_register_t *const reg)"
+.br
+.RI "Reads configuration register from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_set_configuration_register\fP (\fBhdc1080_handle_t\fP handle, const hdc1080_configuration_register_t reg)"
+.br
+.RI "Writes configuration register to HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_init\fP (i2c_master_bus_handle_t master_handle, const \fBhdc1080_config_t\fP *hdc1080_config, \fBhdc1080_handle_t\fP *hdc1080_handle)"
+.br
+.RI "Initializes an HDC1080 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_measurement\fP (\fBhdc1080_handle_t\fP handle, float *const temperature, float *const humidity)"
+.br
+.RI "Reads temperature and relative humidity from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_measurements\fP (\fBhdc1080_handle_t\fP handle, float *const temperature, float *const humidity, float *const dewpoint)"
+.br
+.RI "Reads temperature, relative humidity, and dew-point from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_enable_heater\fP (\fBhdc1080_handle_t\fP handle)"
+.br
+.RI "Enables HDC1080 heater\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_disable_heater\fP (\fBhdc1080_handle_t\fP handle)"
+.br
+.RI "Disables HDC1080 heater\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_temperature_resolution\fP (\fBhdc1080_handle_t\fP handle, \fBhdc1080_temperature_resolutions_t\fP *const resolution)"
+.br
+.RI "Reads temperature measurement resolution from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_set_temperature_resolution\fP (\fBhdc1080_handle_t\fP handle, const \fBhdc1080_temperature_resolutions_t\fP resolution)"
+.br
+.RI "Writes temperature measurement resolution to HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_get_humidity_resolution\fP (\fBhdc1080_handle_t\fP handle, \fBhdc1080_humidity_resolutions_t\fP *const resolution)"
+.br
+.RI "Reads relative humidity measurement resolution from HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_set_humidity_resolution\fP (\fBhdc1080_handle_t\fP handle, const \fBhdc1080_humidity_resolutions_t\fP resolution)"
+.br
+.RI "Writes relative humidity measurement resolution to HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_reset\fP (\fBhdc1080_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset to HDC1080\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_remove\fP (\fBhdc1080_handle_t\fP handle)"
+.br
+.RI "Removes an HDC1080 device from master I2C bus\&. "
+.ti -1c
+.RI "esp_err_t \fBhdc1080_delete\fP (\fBhdc1080_handle_t\fP handle)"
+.br
+.RI "Removes an HDC1080 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBhdc1080_get_fw_version\fP (void)"
+.br
+.RI "Converts HDC1080 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBhdc1080_get_fw_version_number\fP (void)"
+.br
+.RI "Converts HDC1080 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBhdc1080_configuration_register_t\fP"
+.br
+.ti -1c
+.RI "\fBhdc1080_measurement_register_t\fP"
+.br
+.ti -1c
+.RI "\fBhdc1080_serial_number_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

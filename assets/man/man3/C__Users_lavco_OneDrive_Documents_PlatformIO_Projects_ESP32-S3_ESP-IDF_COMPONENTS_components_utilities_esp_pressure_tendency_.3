@@ -1,0 +1,88 @@
+.TH "components/utilities/esp_pressure_tendency Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/utilities/esp_pressure_tendency Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBpressure_tendency\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) pressure tendency component observes the last 3-hours of atmospheric pressure samples to determine if pressure is steady, rising, or falling\&. Information on features and functionality are documented and can be found in the \fR\fBpressure_tendency\&.h\fP\fP header file\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/utilities/esp_pressure_tendency
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBpressure_tendency\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_pressure_tendency
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── include
+    │   └── pressure_tendency_version\&.h
+    │   └── pressure_tendency\&.h
+    └── pressure_tendency\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once the component is referenced as an include, the functions should be visible and available for usage\&. The below example demonstrates a basic implementation that monitors atmospheric pressure samples and determines if pressure is steady, rising, or falling\&. Pressure tendency code \fRPRESSURE_TENDENCY_UNKNOWN\fP is reported when there is an insufficient number of samples to analyze\&.
+
+.PP
+.PP
+.nf
+#include <pressure_tendency\&.h>
+
+/* pa tendency handle and configuration */
+const uint16_t              tendency_samples_size = ((3600 * 3) / tii_sampling_cfg\&.interval_period); // 3\-hours = 10,800\-seconds / sampling rate
+pressure_tendency_handle_t  pa_tendency_hdl;
+pressure_tendency_codes_t   pa_tendency_code;
+float                       pa;
+float                       pa_3chg;
+
+void tendency(void) {
+    /* attempt to initialize a pa tendency handle */
+    pressure_tendency_init(tendency_samples_size, &pa_tendency_hdl);
+    if (pa_tendency_hdl == NULL) {
+        ESP_LOGE(TAG, "Unable to initialize pa tendency handle");
+        esp_restart(); 
+    }
+
+    /* attempt to measure atmospheric pressure sensor */
+    pa = measure\&.pa();
+
+    pressure_tendency_analysis(pa_tendency_hdl, pa, &pa_tendency_code, &pa_3chg);
+
+    ESP_LOGI(TAG, "Pressure Tendency:    %s", pressure_tendency_code_to_string(pa_tendency_code));
+    ESP_LOGI(TAG, "3\-hr Pressure Change: %\&.2f hPa", pa_3chg);
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

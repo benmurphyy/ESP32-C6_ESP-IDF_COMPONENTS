@@ -74,7 +74,7 @@ PROJECT_ICON           = "../../k0i05 Avatar/k0i05_avatar_round_20x20.png"
 # entered, it will be relative to the location where Doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = C:/Users/lavco/OneDrive/Documents/PlatformIO/Projects/ESP32-S3_ESP-IDF_COMPONENTS/doc
+OUTPUT_DIRECTORY       = assets
 
 # If the CREATE_SUBDIRS tag is set to YES then Doxygen will create up to 4096
 # sub-directories (in 2 levels) under the output directory of each output format
@@ -2238,7 +2238,7 @@ LATEX_EMOJI_DIRECTORY  =
 # readers/editors.
 # The default value is: NO.
 
-GENERATE_RTF           = NO
+GENERATE_RTF           = YES
 
 # The RTF_OUTPUT tag is used to specify where the RTF docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -2254,7 +2254,7 @@ RTF_OUTPUT             = rtf
 # The default value is: NO.
 # This tag requires that the tag GENERATE_RTF is set to YES.
 
-COMPACT_RTF            = NO
+COMPACT_RTF            = YES
 
 # If the RTF_HYPERLINKS tag is set to YES, the RTF that is generated will
 # contain hyperlink fields. The RTF file will contain links (just like the HTML
@@ -2266,7 +2266,7 @@ COMPACT_RTF            = NO
 # The default value is: NO.
 # This tag requires that the tag GENERATE_RTF is set to YES.
 
-RTF_HYPERLINKS         = NO
+RTF_HYPERLINKS         = YES
 
 # Load stylesheet definitions from file. Syntax is similar to Doxygen's
 # configuration file, i.e. a series of assignments. You only have to provide
@@ -2379,7 +2379,7 @@ XML_NS_MEMB_FILE_SCOPE = NO
 # that can be used to generate PDF.
 # The default value is: NO.
 
-GENERATE_DOCBOOK       = NO
+GENERATE_DOCBOOK       = YES
 
 # The DOCBOOK_OUTPUT tag is used to specify where the Docbook pages will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be put in

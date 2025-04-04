@@ -1,0 +1,199 @@
+.TH "components/peripherals/i2c/esp_veml6040/include/veml6040.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_veml6040/include/veml6040.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'veml6040_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBveml6040_config_s\fP"
+.br
+.RI "VEML6040 configuration structure\&. "
+.ti -1c
+.RI "struct \fBveml6040_context_t\fP"
+.br
+.RI "VEML6040 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_VEML6040_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "veml6040 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_VEML6040_DEV_ADDR\fP   UINT8_C(0x10)"
+.br
+.RI "veml6040 I2C address "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_VEML6040_CONFIG_DEFAULT\fP"
+.br
+.RI "VEML6040 device configuration initialization default macro\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBveml6040_integration_times_e\fP \fBveml6040_integration_times_t\fP"
+.br
+.RI "VEML6040 integration times enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBveml6040_triggers_e\fP \fBveml6040_triggers_t\fP"
+.br
+.RI "VEML6040 triggers enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBveml6040_modes_e\fP \fBveml6040_modes_t\fP"
+.br
+.RI "VEML6040 modes enumerator\&. "
+.ti -1c
+.RI "typedef struct \fBveml6040_config_s\fP \fBveml6040_config_t\fP"
+.br
+.RI "VEML6040 configuration structure\&. "
+.ti -1c
+.RI "typedef struct veml6040_context_t \fBveml6040_context_t\fP"
+.br
+.RI "VEML6040 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBveml6040_context_t\fP * \fBveml6040_handle_t\fP"
+.br
+.RI "VEML6040 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBveml6040_channels_t\fP { \fBVEML6040_CHANNEL_RED\fP = 0, \fBVEML6040_CHANNEL_GREEN\fP = 1, \fBVEML6040_CHANNEL_BLUE\fP = 2, \fBVEML6040_CHANNEL_WHITE\fP = 3 }"
+.br
+.RI "VEML6040 channels enumerator\&. "
+.ti -1c
+.RI "enum \fBveml6040_integration_times_e\fP { \fBVEML6040_INTEGRATION_TIME_40MS\fP = (0b000), \fBVEML6040_INTEGRATION_TIME_80MS\fP = (0b001), \fBVEML6040_INTEGRATION_TIME_160MS\fP = (0b010), \fBVEML6040_INTEGRATION_TIME_320MS\fP = (0b011), \fBVEML6040_INTEGRATION_TIME_640MS\fP = (0b100), \fBVEML6040_INTEGRATION_TIME_1280MS\fP = (0b101) }"
+.br
+.RI "VEML6040 integration times enumerator\&. "
+.ti -1c
+.RI "enum \fBveml6040_triggers_e\fP { \fBVEML6040_TRIGGER_NONE\fP = 0, \fBVEML6040_TRIGGER_ONE_TIME\fP = 1 }"
+.br
+.RI "VEML6040 triggers enumerator\&. "
+.ti -1c
+.RI "enum \fBveml6040_modes_e\fP { \fBVEML6040_MODE_AUTO\fP = 0, \fBVEML6040_MODE_MANUAL\fP = 1 }"
+.br
+.RI "VEML6040 modes enumerator\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_configuration_register\fP (\fBveml6040_handle_t\fP handle, veml6040_config_register_t *const reg)"
+.br
+.RI "Reads configuration register from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_set_configuration_register\fP (\fBveml6040_handle_t\fP handle, const veml6040_config_register_t reg)"
+.br
+.RI "Writes configuration register to VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_init\fP (i2c_master_bus_handle_t master_handle, const \fBveml6040_config_t\fP *veml6040_config, \fBveml6040_handle_t\fP *veml6040_handle)"
+.br
+.RI "Initializes an VEML6040 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_red_als\fP (\fBveml6040_handle_t\fP handle, float *const als)"
+.br
+.RI "Reads red illuminance channel from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_green_als\fP (\fBveml6040_handle_t\fP handle, float *const als)"
+.br
+.RI "Reads green illuminance channel from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_blue_als\fP (\fBveml6040_handle_t\fP handle, float *const als)"
+.br
+.RI "Reads blue illuminance channel from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_white_als\fP (\fBveml6040_handle_t\fP handle, float *const als)"
+.br
+.RI "Reads white illuminance channel from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_als\fP (\fBveml6040_handle_t\fP handle, float *const red_als, float *const green_als, float *const blue_als, float *const white_als)"
+.br
+.RI "Reads red, green, blue, and white illuminance channels from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_integration_time\fP (\fBveml6040_handle_t\fP handle, \fBveml6040_integration_times_t\fP *const integration_time)"
+.br
+.RI "Reads integration time from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_set_integration_time\fP (\fBveml6040_handle_t\fP handle, const \fBveml6040_integration_times_t\fP integration_time)"
+.br
+.RI "Writes integration time to VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_trigger_method\fP (\fBveml6040_handle_t\fP handle, \fBveml6040_triggers_t\fP *const trigger_method)"
+.br
+.RI "Reads trigger method from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_set_trigger_method\fP (\fBveml6040_handle_t\fP handle, const \fBveml6040_triggers_t\fP trigger_method)"
+.br
+.RI "Write trigger method to VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_get_mode\fP (\fBveml6040_handle_t\fP handle, \fBveml6040_modes_t\fP *const mode)"
+.br
+.RI "Reads mode from VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_set_mode\fP (\fBveml6040_handle_t\fP handle, const \fBveml6040_modes_t\fP mode)"
+.br
+.RI "Writes mode to VEML6040\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_disable\fP (\fBveml6040_handle_t\fP handle)"
+.br
+.RI "Shuts down VEML6040 until woken\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_enable\fP (\fBveml6040_handle_t\fP handle)"
+.br
+.RI "Wakes up VEML6040 from shutdown\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_remove\fP (\fBveml6040_handle_t\fP handle)"
+.br
+.RI "Removes an VEML6040 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBveml6040_delete\fP (\fBveml6040_handle_t\fP handle)"
+.br
+.RI "Removes an VEML6040 device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "const char * \fBveml6040_get_fw_version\fP (void)"
+.br
+.RI "Converts VEML6040 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBveml6040_get_fw_version_number\fP (void)"
+.br
+.RI "Converts VEML6040 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBveml6040_config_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

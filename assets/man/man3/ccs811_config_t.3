@@ -1,0 +1,94 @@
+.TH "ccs811_config_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ccs811_config_t \- CCS811 configuration structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ccs811\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "bool \fBirq_data_ready_io_enabled\fP"
+.br
+.ti -1c
+.RI "gpio_num_t \fBirq_data_ready_io_num\fP"
+.br
+.ti -1c
+.RI "bool \fBwake_io_enabled\fP"
+.br
+.ti -1c
+.RI "gpio_num_t \fBwake_io_num\fP"
+.br
+.ti -1c
+.RI "bool \fBreset_io_enabled\fP"
+.br
+.ti -1c
+.RI "gpio_num_t \fBreset_io_num\fP"
+.br
+.ti -1c
+.RI "bool \fBirq_threshold_enabled\fP"
+.br
+.ti -1c
+.RI "bool \fBirq_data_ready_enabled\fP"
+.br
+.ti -1c
+.RI "\fBccs811_drive_modes_t\fP \fBdrive_mode\fP"
+.br
+.ti -1c
+.RI "bool \fBset_environmental_data\fP"
+.br
+.ti -1c
+.RI "float \fBtemperature\fP"
+.br
+.ti -1c
+.RI "float \fBhumidity\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+CCS811 configuration structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBccs811_drive_modes_t\fP drive_mode"
+drive mode 
+.SS "float humidity"
+user-defined humidity environmental data 
+.SS "uint16_t i2c_address"
+ccs811 i2c device address 
+.SS "uint32_t i2c_clock_speed"
+ccs811 i2c device scl clock speed 
+.SS "bool irq_data_ready_enabled"
+interrupt data ready asserted when enabled 
+.SS "bool irq_data_ready_io_enabled"
+ccs811 flag to enable hardware interrupt 
+.SS "gpio_num_t irq_data_ready_io_num"
+mcu interrupt gpio number for ccs811 device 
+.SS "bool irq_threshold_enabled"
+interrupt threshold asserted when enabled 
+.SS "bool reset_io_enabled"
+ccs811 flag to enable hardware reset 
+.SS "gpio_num_t reset_io_num"
+mcu reset gpio number for ccs811 device 
+.SS "bool set_environmental_data"
+flag to set user-defined environmental data 
+.SS "float temperature"
+user-defined temperature environmental data 
+.SS "bool wake_io_enabled"
+ccs811 flag to enable hardware wake 
+.SS "gpio_num_t wake_io_num"
+mcu wake gpio number for ccs811 device 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

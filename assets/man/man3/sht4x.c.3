@@ -1,0 +1,215 @@
+.TH "components/peripherals/i2c/esp_sht4x/sht4x.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_sht4x/sht4x.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/sht4x\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSHT4X_CRC8_MASK\fP   UINT8_C(0x80)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_CRC8_INIT\fP   UINT8_C(0xff)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_CRC8_POLYNOM\fP   UINT8_C(0x31)"
+.br
+.RI "sht4x I2C CRC8 polynomial "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_RESET\fP   UINT8_C(0x94)"
+.br
+.RI "sht4x I2C soft-reset command "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_SERIAL\fP   UINT8_C(0x89)"
+.br
+.RI "sht4x I2C serial number request command "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_HIGH\fP   UINT8_C(0xFD)"
+.br
+.RI "sht4x I2C high resolution measurement command "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_MED\fP   UINT8_C(0xF6)"
+.br
+.RI "sht4x I2C medium resolution measurement command "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_LOW\fP   UINT8_C(0xE0)"
+.br
+.RI "sht4x I2C low resolution measurement command "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_H_HIGH_LONG\fP   UINT8_C(0x39)"
+.br
+.RI "sht4x I2C high resolution measurement command with heater enabled long pulse "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_H_HIGH_SHORT\fP   UINT8_C(0x32)"
+.br
+.RI "sht4x I2C high resolution measurement command with heater enabled short pulse "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_H_MED_LONG\fP   UINT8_C(0x2F)"
+.br
+.RI "sht4x I2C medium resolution measurement command with heater enabled long pulse "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_H_MED_SHORT\fP   UINT8_C(0x24)"
+.br
+.RI "sht4x I2C medium resolution measurement command with heater enabled short pulse "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_H_LOW_LONG\fP   UINT8_C(0x1E)"
+.br
+.RI "sht4x I2C low resolution measurement command with heater enabled long pulse "
+.ti -1c
+.RI "#define \fBSHT4X_CMD_MEAS_H_LOW_SHORT\fP   UINT8_C(0x15)"
+.br
+.RI "sht4x I2C low resolution measurement command with heater enabled short pulse "
+.ti -1c
+.RI "#define \fBSHT4X_TEMPERATURE_MAX\fP   (float)(125\&.0)"
+.br
+.RI "sht4x maximum temperature range "
+.ti -1c
+.RI "#define \fBSHT4X_TEMPERATURE_MIN\fP   (float)(\-40\&.0)"
+.br
+.RI "sht4x minimum temperature range "
+.ti -1c
+.RI "#define \fBSHT4X_HUMIDITY_MAX\fP   (float)(100\&.0)"
+.br
+.RI "sht4x maximum humidity range "
+.ti -1c
+.RI "#define \fBSHT4X_HUMIDITY_MIN\fP   (float)(0\&.0)"
+.br
+.RI "sht4x minimum humidity range "
+.ti -1c
+.RI "#define \fBSHT4X_POWERUP_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_APPSTART_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_RESET_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_RETRY_DELAY_MS\fP   UINT16_C(2)"
+.br
+.ti -1c
+.RI "#define \fBSHT4X_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBsht4x_init\fP (i2c_master_bus_handle_t master_handle, const \fBsht4x_config_t\fP *sht4x_config, \fBsht4x_handle_t\fP *sht4x_handle)"
+.br
+.RI "Initializes an SHT4X device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_measurement\fP (\fBsht4x_handle_t\fP handle, float *const temperature, float *const humidity)"
+.br
+.RI "Reads high-level measurements from SHT4X\&. This is a blocking function\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_measurements\fP (\fBsht4x_handle_t\fP handle, float *const temperature, float *const humidity, float *const dewpoint)"
+.br
+.RI "Similar to \fRi2c_sht4x_read_measurement\fP but it includes the dewpoint temperature in the results\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_repeat_mode\fP (\fBsht4x_handle_t\fP handle, \fBsht4x_repeat_modes_t\fP *const mode)"
+.br
+.RI "Reads measurement repeatability mode setting from SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_set_repeat_mode\fP (\fBsht4x_handle_t\fP handle, const \fBsht4x_repeat_modes_t\fP mode)"
+.br
+.RI "Writes measurement repeatability mode setting to SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_get_heater_mode\fP (\fBsht4x_handle_t\fP handle, \fBsht4x_heater_modes_t\fP *const mode)"
+.br
+.RI "Reads measurement heater mode setting from SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_set_heater_mode\fP (\fBsht4x_handle_t\fP handle, const \fBsht4x_heater_modes_t\fP mode)"
+.br
+.RI "Writes measurement heater mode setting to SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_reset\fP (\fBsht4x_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset to SHT4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_remove\fP (\fBsht4x_handle_t\fP handle)"
+.br
+.RI "Removes an SHT4X device from master I2C bus\&. "
+.ti -1c
+.RI "esp_err_t \fBsht4x_delete\fP (\fBsht4x_handle_t\fP handle)"
+.br
+.RI "Removes an SHT4X device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "const char * \fBsht4x_get_fw_version\fP (void)"
+.br
+.RI "Converts SHT4X firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBsht4x_get_fw_version_number\fP (void)"
+.br
+.RI "Converts SHT4X firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for SHT4x air temperature and relative humidity sensor
+
+.PP
+https://github.com/Sensirion/embedded-sht/releases
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define SHT4X_APPSTART_DELAY_MS   UINT16_C(10)"
+sht4x delay after initialization before application start-up 
+.SS "#define SHT4X_CMD_DELAY_MS   UINT16_C(5)"
+sht4x delay before attempting I2C transactions after a command is issued 
+.SS "#define SHT4X_CRC8_INIT   UINT8_C(0xff)"
+sht4x I2C CRC8 initialization 
+.SS "#define SHT4X_CRC8_MASK   UINT8_C(0x80)"
+sht4x I2C CRC8 mask 
+.SS "#define SHT4X_POWERUP_DELAY_MS   UINT16_C(5)"
+sht4x delay on power-up before attempting I2C transactions 
+.SS "#define SHT4X_RESET_DELAY_MS   UINT16_C(25)"
+sht4x delay before attempting I2C transactions after a reset is issued 
+.SS "#define SHT4X_RETRY_DELAY_MS   UINT16_C(2)"
+sht4x delay between an I2C receive transaction retry 
+.SS "#define SHT4X_TX_RX_DELAY_MS   UINT16_C(10)"
+sht4x delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

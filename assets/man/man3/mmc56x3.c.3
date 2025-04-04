@@ -1,0 +1,293 @@
+.TH "components/peripherals/i2c/esp_mmc56x3/mmc56x3.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_mmc56x3/mmc56x3.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/mmc56x3\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMMC56X3_REG_XOUT_0_R\fP   UINT8_C(0x00)"
+.br
+.RI "mmc56x3 I2C Xout[19:12] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_XOUT_1_R\fP   UINT8_C(0x01)"
+.br
+.RI "mmc56x3 I2C Xout[11:4] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_YOUT_0_R\fP   UINT8_C(0x02)"
+.br
+.RI "mmc56x3 I2C Yout[19:12] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_YOUT_1_R\fP   UINT8_C(0x03)"
+.br
+.RI "mmc56x3 I2C Yout[11:4] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ZOUT_0_R\fP   UINT8_C(0x04)"
+.br
+.RI "mmc56x3 I2C Zout[19:12] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ZOUT_1_R\fP   UINT8_C(0x05)"
+.br
+.RI "mmc56x3 I2C Zout[11:4] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_XOUT_2_R\fP   UINT8_C(0x06)"
+.br
+.RI "mmc56x3 I2C Xout[3:0] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_YOUT_2_R\fP   UINT8_C(0x07)"
+.br
+.RI "mmc56x3 I2C Yout[3:0] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ZOUT_2_R\fP   UINT8_C(0x08)"
+.br
+.RI "mmc56x3 I2C Zout[3:0] "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_TOUT_R\fP   UINT8_C(0x09)"
+.br
+.RI "mmc56x3 I2C temperature output "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_STATUS_1_R\fP   UINT8_C(0x18)"
+.br
+.RI "mmc56x3 I2C device status 1 "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ODR_W\fP   UINT8_C(0x1a)"
+.br
+.RI "mmc56x3 I2C output data rate "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_CONTROL_0_W\fP   UINT8_C(0x1b)"
+.br
+.RI "mmc56x3 I2C control register 0 "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_CONTROL_1_W\fP   UINT8_C(0x1c)"
+.br
+.RI "mmc56x3 I2C control register 1 "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_CONTROL_2_W\fP   UINT8_C(0x1d)"
+.br
+.RI "mmc56x3 I2C control register 2 "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ST_X_TH_W\fP   UINT8_C(0x1e)"
+.br
+.RI "mmc56x3 I2C x-axis selftest threshold "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ST_Y_TH_W\fP   UINT8_C(0x1f)"
+.br
+.RI "mmc56x3 I2C y-axis selftest threshold "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ST_Z_TH_W\fP   UINT8_C(0x20)"
+.br
+.RI "mmc56x3 I2C z-axis selftest threshold "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ST_X_SV_RW\fP   UINT8_C(0x27)"
+.br
+.RI "mmc56x3 I2C x-axis selftest set-value "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ST_Y_SV_RW\fP   UINT8_C(0x28)"
+.br
+.RI "mmc56x3 I2C y-axis selftest set-value "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_ST_Z_SV_RW\fP   UINT8_C(0x29)"
+.br
+.RI "mmc56x3 I2C z-axis selftest set-value "
+.ti -1c
+.RI "#define \fBMMC56X3_REG_PRODUCT_ID_R\fP   UINT8_C(0x39)"
+.br
+.RI "mmc56x3 I2C product identifier "
+.ti -1c
+.RI "#define \fBMMC56X3_POWERUP_DELAY_MS\fP   UINT16_C(50)"
+.br
+.ti -1c
+.RI "#define \fBMMC56X3_APPSTART_DELAY_MS\fP   UINT16_C(10)"
+.br
+.RI "mmc56x3 I2C delay in milliseconds app-start "
+.ti -1c
+.RI "#define \fBMMC56X3_RESET_DELAY_MS\fP   UINT16_C(50)"
+.br
+.RI "mmc56x3 I2C delay in milliseconds after reset "
+.ti -1c
+.RI "#define \fBMMC56X3_SETRESET_DELAY_MS\fP   UINT16_C(1)"
+.br
+.RI "mmc56x3 I2C delay in milliseconds after set-reset transaction "
+.ti -1c
+.RI "#define \fBMMC56X3_WRITE_DELAY_MS\fP   UINT16_C(1)"
+.br
+.RI "mmc56x3 I2C delay in milliseconds after write transaction "
+.ti -1c
+.RI "#define \fBMMC56X3_DATA_READY_DELAY_MS\fP   UINT16_C(1)"
+.br
+.RI "mmc56x3 1ms when checking data ready in a loop "
+.ti -1c
+.RI "#define \fBMMC56X3_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(100)"
+.br
+.RI "mmc56x3 100ms timeout when making a measurement "
+.ti -1c
+.RI "#define \fBMMC56X3_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBMMC56X3_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_status_register\fP (\fBmmc56x3_handle_t\fP handle, mmc56x3_status_register_t *const reg)"
+.br
+.RI "Reads status register from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_control0_register\fP (\fBmmc56x3_handle_t\fP handle, const mmc56x3_control0_register_t reg)"
+.br
+.RI "Writes control 0 register to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_control1_register\fP (\fBmmc56x3_handle_t\fP handle, const mmc56x3_control1_register_t reg)"
+.br
+.RI "Writes control 1 register to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_control2_register\fP (\fBmmc56x3_handle_t\fP handle, const mmc56x3_control2_register_t reg)"
+.br
+.RI "Writes control 2 register to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_product_id_register\fP (\fBmmc56x3_handle_t\fP handle, uint8_t *const reg)"
+.br
+.RI "Reads product identifier register from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_init\fP (i2c_master_bus_handle_t master_handle, const \fBmmc56x3_config_t\fP *mmc56x3_config, \fBmmc56x3_handle_t\fP *mmc56x3_handle)"
+.br
+.RI "Initializes an MMC56X3 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_temperature\fP (\fBmmc56x3_handle_t\fP handle, float *const temperature)"
+.br
+.RI "Reads temperature from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_magnetic_axes\fP (\fBmmc56x3_handle_t\fP handle, \fBmmc56x3_magnetic_axes_data_t\fP *const axes_data)"
+.br
+.RI "Reads magnetic axes (x, y, z axes) from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_magnetic_data_status\fP (\fBmmc56x3_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads magnetic data status from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_temperature_data_status\fP (\fBmmc56x3_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads temperature data status from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_data_status\fP (\fBmmc56x3_handle_t\fP handle, bool *const magnetic_ready, bool *const temperature_ready)"
+.br
+.RI "Reads magnetic and temperature data status from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_measure_mode\fP (\fBmmc56x3_handle_t\fP handle, const bool continuous)"
+.br
+.RI "Writes measurement mode to MMC56X3\&. The data rate must be configured to a non-zero value before enabling continuous measurements\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_data_rate\fP (\fBmmc56x3_handle_t\fP handle, const uint16_t rate)"
+.br
+.RI "Writes data rate to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_measure_bandwidth\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_measurement_times_t\fP bandwidth)"
+.br
+.RI "Writes measurement bandwidth to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_enable_periodical_set\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_measurement_samples_t\fP samples)"
+.br
+.RI "Enables MMC56X3 periodical set when the number of samples threshold is met\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_disable_periodical_set\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Disables MMC56X3 periodical set\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_magnetic_set_reset\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Pulses large currents through the sense coils to clear any offset\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_selftest_thresholds\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_selftest_axes_data_t\fP axes_data)"
+.br
+.RI "Writes axes configuration to MMC56X3 to enable or disable axes (x, y, z), axes are enabled by default\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_get_selftest_set_values\fP (\fBmmc56x3_handle_t\fP handle, \fBmmc56x3_selftest_axes_data_t\fP *const axes_data)"
+.br
+.RI "Reads self-test axes data set-values from MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_set_selftest_set_values\fP (\fBmmc56x3_handle_t\fP handle, const \fBmmc56x3_selftest_axes_data_t\fP axes_data)"
+.br
+.RI "Writes self-test axes data set-values to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_reset\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset to MMC56X3\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_remove\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Removes an MMC56X3 device from master I2C bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmmc56x3_delete\fP (\fBmmc56x3_handle_t\fP handle)"
+.br
+.RI "Removes an MMC56X3 device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "float \fBmmc56x3_convert_to_heading\fP (const \fBmmc56x3_magnetic_axes_data_t\fP axes_data)"
+.br
+.RI "Converts magnetic axes data to a heading\&. See Honeywell application note AN-203 for details\&. "
+.ti -1c
+.RI "float \fBmmc56x3_convert_to_true_heading\fP (const float declination, const \fBmmc56x3_magnetic_axes_data_t\fP axes_data)"
+.br
+.RI "Converts magnetic axes data with magnetic declination to a true heading\&. See Honeywell application note AN-203 for details\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for MMC56X3 Magnetic sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

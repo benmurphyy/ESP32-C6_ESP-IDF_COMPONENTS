@@ -1,0 +1,96 @@
+.TH "components/utilities/esp_kalman_motion/kalman_motion.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/utilities/esp_kalman_motion/kalman_motion.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'kalman_motion\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_init\fP (\fBkalman_motion_handle_t\fP *kalman_handle)"
+.br
+.RI "Initializes a kalman motion handle instance to filter data from a gyroscope and/or accelerometer\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_get_angle\fP (\fBkalman_motion_handle_t\fP kalman_handle, const float new_angle, const float new_rate, const float delta_time, float *const angle)"
+.br
+.RI "Calculates angle using a Kalman motion filter\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_set_angle\fP (\fBkalman_motion_handle_t\fP kalman_handle, const float angle)"
+.br
+.RI "Sets the angle and should be used to set the starting angle\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_get_rate\fP (\fBkalman_motion_handle_t\fP kalman_handle, float *const rate)"
+.br
+.RI "Gets the unbiased rate calculated from the rate and the calculated bias\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_set_q_angle\fP (\fBkalman_motion_handle_t\fP kalman_handle, const float q_angle)"
+.br
+.RI "Sets q_angle noise variance for the accelerometer\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_set_q_bias\fP (\fBkalman_motion_handle_t\fP kalman_handle, const float q_bias)"
+.br
+.RI "Sets q_bias noise variance for the gyroscope\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_set_r_measure\fP (\fBkalman_motion_handle_t\fP kalman_handle, const float r_measure)"
+.br
+.RI "Sets r_measure noise variance for the measurement\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_get_q_angle\fP (\fBkalman_motion_handle_t\fP kalman_handle, float *const q_angle)"
+.br
+.RI "Gets q_angle noise variance for the accelerometer\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_get_q_bias\fP (\fBkalman_motion_handle_t\fP kalman_handle, float *const q_bias)"
+.br
+.RI "Gets q_bias noise variance for the gyroscope\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_get_r_measure\fP (\fBkalman_motion_handle_t\fP kalman_handle, float *const r_measure)"
+.br
+.RI "Gets r_measure noise variance for the measurement\&. "
+.ti -1c
+.RI "esp_err_t \fBkalman_motion_delete\fP (\fBkalman_motion_handle_t\fP kalman_handle)"
+.br
+.RI "Frees Kalman motion handle\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF kalman motion filter library
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

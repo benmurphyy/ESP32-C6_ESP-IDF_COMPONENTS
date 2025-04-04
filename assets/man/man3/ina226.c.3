@@ -1,0 +1,226 @@
+.TH "components/peripherals/i2c/esp_ina226/ina226.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ina226/ina226.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/ina226\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBINA226_REG_CONFIG\fP   (0x00)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_SHUNT_V\fP   (0x01)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_BUS_V\fP   (0x02)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_POWER\fP   (0x03)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_CURRENT\fP   (0x04)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_CALIBRATION\fP   (0x05)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_MSK_ENA\fP   (0x06)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_MANU_ID\fP   (0xfe)"
+.br
+.ti -1c
+.RI "#define \fBINA226_REG_DIE_ID\fP   (0xff)"
+.br
+.ti -1c
+.RI "#define \fBINA226_DEF_CONFIG\fP   0x399f"
+.br
+.ti -1c
+.RI "#define \fBINA226_ASUKIAAA_DEFAULT_CONFIG\fP   0x4127"
+.br
+.ti -1c
+.RI "#define \fBINA226_MIN_SHUNT_RESISTANCE\fP   (0\&.001)"
+.br
+.ti -1c
+.RI "#define \fBINA226_MAX_SHUNT_VOLTAGE\fP   (81\&.92 / 1000)"
+.br
+.ti -1c
+.RI "#define \fBINA226_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(100)"
+.br
+.ti -1c
+.RI "#define \fBINA226_POWERUP_DELAY_MS\fP   UINT16_C(25)"
+.br
+.RI "ina226 I2C start-up delay before device accepts transactions "
+.ti -1c
+.RI "#define \fBINA226_APPSTART_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBINA226_RESET_DELAY_MS\fP   UINT16_C(250)"
+.br
+.RI "ina226 I2C software reset delay before device accepts transactions "
+.ti -1c
+.RI "#define \fBINA226_DATA_READY_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBINA226_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(100)"
+.br
+.ti -1c
+.RI "#define \fBINA226_CMD_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBINA226_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBina226_get_configuration_register\fP (\fBina226_handle_t\fP handle, ina226_config_register_t *const reg)"
+.br
+.RI "Reads the configuration register from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_set_configuration_register\fP (\fBina226_handle_t\fP handle, const ina226_config_register_t reg)"
+.br
+.RI "Writes the configuration register to the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_calibration_register\fP (\fBina226_handle_t\fP handle, uint16_t *const reg)"
+.br
+.RI "Reads the calibration register from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_set_calibration_register\fP (\fBina226_handle_t\fP handle, const uint16_t reg)"
+.br
+.RI "Writes the calibration register to the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_mask_enable_register\fP (\fBina226_handle_t\fP handle, ina226_mask_enable_register_t *const reg)"
+.br
+.RI "Reads the mask/enable register from the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_init\fP (i2c_master_bus_handle_t master_handle, const \fBina226_config_t\fP *ina226_config, \fBina226_handle_t\fP *ina226_handle)"
+.br
+.RI "initializes an INA226 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_calibrate\fP (\fBina226_handle_t\fP handle, const float max_current, const float shunt_resistance)"
+.br
+.RI "Calibrates the INA266\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_shunt_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Reads shunt voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_triggered_shunt_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Triggers and reads shunt voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_bus_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Reads bus voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_triggered_bus_voltage\fP (\fBina226_handle_t\fP handle, float *const voltage)"
+.br
+.RI "Triggers and reads bus voltage (V) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_current\fP (\fBina226_handle_t\fP handle, float *const current)"
+.br
+.RI "Reads current (A) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_triggered_current\fP (\fBina226_handle_t\fP handle, float *const current)"
+.br
+.RI "Triggers and reads current (A) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_power\fP (\fBina226_handle_t\fP handle, float *const power)"
+.br
+.RI "Reads power (W) from INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_get_mode\fP (\fBina226_handle_t\fP handle, \fBina226_operating_modes_t\fP *const mode)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_set_mode\fP (\fBina226_handle_t\fP handle, const \fBina226_operating_modes_t\fP mode)"
+.br
+.ti -1c
+.RI "esp_err_t \fBina226_reset\fP (\fBina226_handle_t\fP handle)"
+.br
+.RI "Resets the INA226\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_remove\fP (\fBina226_handle_t\fP handle)"
+.br
+.RI "Removes an INA226 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBina226_delete\fP (\fBina226_handle_t\fP handle)"
+.br
+.RI "Removes an INA226 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBina226_get_fw_version\fP (void)"
+.br
+.RI "Converts INA226 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBina226_get_fw_version_number\fP (void)"
+.br
+.RI "Converts INA226 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for INA225 current, voltage, and power monitoring sensor
+
+.PP
+https://github.com/cybergear-robotics/ina226/blob/master/ina226.c
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SS "#define INA226_MAX_SHUNT_VOLTAGE   (81\&.92 / 1000)"
+maximum allowable shunt voltage in volts 
+.SS "#define INA226_MIN_SHUNT_RESISTANCE   (0\&.001)"
+minimum allowable shunt resistance in ohms 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

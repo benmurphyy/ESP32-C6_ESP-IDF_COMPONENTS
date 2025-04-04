@@ -1,0 +1,59 @@
+.TH "ak8975_context_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ak8975_context_t \- AK8975 context structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ak8975\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBak8975_config_t\fP \fBdev_config\fP"
+.br
+.ti -1c
+.RI "i2c_master_dev_handle_t \fBi2c_handle\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBdevice_id\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBdevice_info\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBasa_x_value\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBasa_y_value\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBasa_z_value\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+AK8975 context structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "uint8_t asa_x_value"
+ak8975 x-axis sensitivity adjustment value 
+.SS "uint8_t asa_y_value"
+ak8975 y-axis sensitivity adjustment value 
+.SS "uint8_t asa_z_value"
+ak8975 z-axis sensitivity adjustment value 
+.SS "\fBak8975_config_t\fP dev_config"
+ak8975 device configuration 
+.SS "uint8_t device_id"
+ak8975 device identifier 
+.SS "uint8_t device_info"
+ak8975 device information 
+.SS "i2c_master_dev_handle_t i2c_handle"
+ak8975 I2C master device handle 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

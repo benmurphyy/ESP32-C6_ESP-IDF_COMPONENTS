@@ -1,0 +1,44 @@
+.TH "sht4x_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+sht4x_config_s \- SHT4X configuration structure definition\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <sht4x\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBsht4x_repeat_modes_t\fP \fBrepeat_mode\fP"
+.br
+.ti -1c
+.RI "\fBsht4x_heater_modes_t\fP \fBheater_mode\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+SHT4X configuration structure definition\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBsht4x_heater_modes_t\fP heater_mode"
+sht4x measurement heater mode setting 
+.SS "uint16_t i2c_address"
+sht4x i2c device address 
+.SS "uint32_t i2c_clock_speed"
+sht4x i2c device scl clock speed 
+.SS "\fBsht4x_repeat_modes_t\fP repeat_mode"
+sht4x measurement repeatability mode setting 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

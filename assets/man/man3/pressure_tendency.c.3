@@ -1,0 +1,198 @@
+.TH "components/utilities/esp_pressure_tendency/pressure_tendency.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/utilities/esp_pressure_tendency/pressure_tendency.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_types\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include 'include/pressure_tendency\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBpressure_tendency_code_to_string\fP (const \fBpressure_tendency_codes_t\fP code)"
+.br
+.RI "Converts \fR\fBpressure_tendency_codes_t\fP\fP enumerator pressure tendency code to string\&. "
+.ti -1c
+.RI "esp_err_t \fBpressure_tendency_init\fP (const uint16_t samples_size, \fBpressure_tendency_handle_t\fP *pressure_tendency_handle)"
+.br
+.RI "Initializes a pressure tendency handle by size of the 3-hr samples to analyze\&. The size of the samples is calculated from the sampling rate\&. 
+.br
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 180 e\&.g\&., three (3) hours\&. "
+.ti -1c
+.RI "esp_err_t \fBpressure_tendency_analysis\fP (\fBpressure_tendency_handle_t\fP pressure_tendency_handle, const float sample, \fBpressure_tendency_codes_t\fP *const code, float *const change)"
+.br
+.RI "Analyzes historical samples and pressure tendency appears after three (3) hours of operation\&. The pressure tendency are based the 3-hr variance of the previous 3-hour history\&. "
+.ti -1c
+.RI "esp_err_t \fBpressure_tendency_reset\fP (\fBpressure_tendency_handle_t\fP pressure_tendency_handle)"
+.br
+.RI "Purges pressure tendency samples array and resets samples counter\&. "
+.ti -1c
+.RI "esp_err_t \fBpressure_tendency_delete\fP (\fBpressure_tendency_handle_t\fP pressure_tendency_handle)"
+.br
+.RI "Frees pressure tendency handle\&. "
+.ti -1c
+.RI "const char * \fBpressure_tendency_get_fw_version\fP (void)"
+.br
+.RI "Converts \fRpressure_tendency\fP firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBpressure_tendency_get_fw_version_number\fP (void)"
+.br
+.RI "Converts \fRpressure_tendency\fP firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Air pressure tendency libary
+
+.PP
+A air pressure tendency appears after three (3) hours of operation\&. The tendency codes and change are based on the 3-hr variance from the previous 3-hr history\&.
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SH "Function Documentation"
+.PP 
+.SS "esp_err_t pressure_tendency_analysis (\fBpressure_tendency_handle_t\fP pressure_tendency_handle, const float sample, \fBpressure_tendency_codes_t\fP *const code, float *const change)"
+
+.PP
+Analyzes historical samples and pressure tendency appears after three (3) hours of operation\&. The pressure tendency are based the 3-hr variance of the previous 3-hour history\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpressure_tendency_handle\fP Pressure tendency handle\&. 
+.br
+\fIsample\fP Air pressure sample, in millibars or hecto-pascal, to push onto the samples stack\&. 
+.br
+\fIcode\fP Pressure tendency code of three (3) hour analysis\&. Pressure tendency code \fRPRESSURE_TENDENCY_UNKNOWN\fP is reported when there is an insufficient number of samples to analyze\&. 
+.br
+\fIchange\fP Pressure tendency variance over the past three (3) hours\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "const char * pressure_tendency_code_to_string (const \fBpressure_tendency_codes_t\fP code)"
+
+.PP
+Converts \fR\fBpressure_tendency_codes_t\fP\fP enumerator pressure tendency code to string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcode\fP Pressure tendency code to convert to a string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+const char* String representation of the pressure tendency code\&. 
+.RE
+.PP
+
+.SS "esp_err_t pressure_tendency_delete (\fBpressure_tendency_handle_t\fP pressure_tendency_handle)"
+
+.PP
+Frees pressure tendency handle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpressure_tendency_handle\fP Pressure tendency handle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "const char * pressure_tendency_get_fw_version (void )"
+
+.PP
+Converts \fRpressure_tendency\fP firmware version numbers (major, minor, patch) into a string\&. 
+.PP
+\fBReturns\fP
+.RS 4
+char* \fRpressure_tendency\fP firmware version as a string that is formatted as X\&.X\&.X (e\&.g\&. 4\&.0\&.0)\&. 
+.RE
+.PP
+
+.SS "int32_t pressure_tendency_get_fw_version_number (void )"
+
+.PP
+Converts \fRpressure_tendency\fP firmware version numbers (major, minor, patch) into an integer value\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int32_t \fRpressure_tendency\fP firmware version number\&. 
+.RE
+.PP
+
+.SS "esp_err_t pressure_tendency_init (const uint16_t samples_size, \fBpressure_tendency_handle_t\fP * pressure_tendency_handle)"
+
+.PP
+Initializes a pressure tendency handle by size of the 3-hr samples to analyze\&. The size of the samples is calculated from the sampling rate\&. 
+.br
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 180 e\&.g\&., three (3) hours\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsamples_size\fP Pressure tendency samples buffer size\&. 
+.br
+\fIpressure_tendency_handle\fP Pressure tendency handle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "esp_err_t pressure_tendency_reset (\fBpressure_tendency_handle_t\fP pressure_tendency_handle)"
+
+.PP
+Purges pressure tendency samples array and resets samples counter\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpressure_tendency_handle\fP Pressure tendency handle 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

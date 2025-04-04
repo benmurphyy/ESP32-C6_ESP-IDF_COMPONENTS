@@ -1,0 +1,34 @@
+.TH "ccs811_environmental_data_register_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ccs811_environmental_data_register_s \- CCS811 environmental data register structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ccs811\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "float \fBtemperature\fP"
+.br
+.ti -1c
+.RI "float \fBhumidity\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+CCS811 environmental data register structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "float humidity"
+humidity (50% = 0x64, 0x00 default) 
+.SS "float temperature"
+temperature (25 C = 0x64, 0x00 default) 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

@@ -1,0 +1,135 @@
+.TH "components/peripherals/i2c/esp_bh1750/include/bh1750.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_bh1750/include/bh1750.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'bh1750_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbh1750_config_s\fP"
+.br
+.RI "BH1750 device configuration structure\&. "
+.ti -1c
+.RI "struct \fBbh1750_context_t\fP"
+.br
+.RI "BH1750 I2C device handle structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_BH1750_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "bh1750 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_BH1750_DEV_ADDR_LO\fP   UINT8_C(0x23)"
+.br
+.RI "bh1750 I2C address when ADDR pin floating/low "
+.ti -1c
+.RI "#define \fBI2C_BH1750_DEV_ADDR_HI\fP   UINT8_C(0x5C)"
+.br
+.RI "bh1750 I2C address when ADDR pin high "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_BH1750_CONFIG_DEFAULT\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBbh1750_measurement_modes_e\fP \fBbh1750_measurement_modes_t\fP"
+.br
+.RI "BH1750 measurement modes enumerator\&. "
+.ti -1c
+.RI "typedef struct \fBbh1750_config_s\fP \fBbh1750_config_t\fP"
+.br
+.RI "BH1750 device configuration structure\&. "
+.ti -1c
+.RI "typedef struct bh1750_context_t \fBbh1750_context_t\fP"
+.br
+.RI "BH1750 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBbh1750_context_t\fP * \fBbh1750_handle_t\fP"
+.br
+.RI "BH1750 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBbh1750_measurement_modes_e\fP { \fBBH1750_MODE_OM_HI_RESOLUTION\fP = (0b00100000), \fBBH1750_MODE_OM_HI2_RESOLUTION\fP = (0b00100001), \fBBH1750_MODE_OM_LO_RESOLUTION\fP = (0b00100011), \fBBH1750_MODE_CM_HI_RESOLUTION\fP = (0b00010000), \fBBH1750_MODE_CM_HI2_RESOLUTION\fP = (0b00010001), \fBBH1750_MODE_CM_LO_RESOLUTION\fP = (0b00010011) }"
+.br
+.RI "BH1750 measurement modes enumerator\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBbh1750_init\fP (i2c_master_bus_handle_t master_handle, const \fBbh1750_config_t\fP *bh1750_config, \fBbh1750_handle_t\fP *bh1750_handle)"
+.br
+.RI "initializes an BH1750 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_get_ambient_light\fP (\fBbh1750_handle_t\fP handle, float *const ambient_light)"
+.br
+.RI "measure BH1750 illuminance\&. BH1750 goes into power-down mode after measurement when one-time measurements are configured\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_set_measurement_mode\fP (\fBbh1750_handle_t\fP handle, const \fBbh1750_measurement_modes_t\fP mode)"
+.br
+.RI "Writes measurement mode to bh1750\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_set_measurement_time\fP (\fBbh1750_handle_t\fP handle, const uint8_t timespan)"
+.br
+.RI "sets bh1750 sensor measurement time\&. see datasheet for details\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_enable_power\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "power-up BH1750 sensor\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_disable_power\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "power-down BH1750 sensor\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_reset\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "soft-reset BH1750 sensor\&. Reset command is not acceptable in power-down mode\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_remove\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "removes an BH1750 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBbh1750_delete\fP (\fBbh1750_handle_t\fP handle)"
+.br
+.RI "removes an BH1750 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBbh1750_get_fw_version\fP (void)"
+.br
+.RI "Converts BH1750 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBbh1750_get_fw_version_number\fP (void)"
+.br
+.RI "Converts BH1750 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

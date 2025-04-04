@@ -1,0 +1,142 @@
+.TH "components/peripherals/i2c/esp_sgp4x/include/sgp4x.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_sgp4x/include/sgp4x.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'sgp4x_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBsgp4x_config_t\fP"
+.br
+.RI "SGP4X device configuration structure\&. "
+.ti -1c
+.RI "struct \fBsgp4x_context_t\fP"
+.br
+.RI "SGP4X context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_SGP4X_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "sgp4x I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_SGP4X_DEV_ADDR\fP   UINT8_C(0x59)"
+.br
+.RI "sgp4x I2C address "
+.ti -1c
+.RI "#define \fBI2C_SGP4X_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_SGP41_CONFIG_DEFAULT\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBsgp4x_versions_e\fP \fBsgp4x_versions_t\fP"
+.br
+.RI "SGP4X versions enumerator\&. "
+.ti -1c
+.RI "typedef struct sgp4x_context_t \fBsgp4x_context_t\fP"
+.br
+.RI "SGP4X context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBsgp4x_context_t\fP * \fBsgp4x_handle_t\fP"
+.br
+.RI "SGP4X handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBsgp4x_versions_e\fP { \fBSGP4X_VERSION_SGP40\fP, \fBSGP4X_VERSION_SGP41\fP }"
+.br
+.RI "SGP4X versions enumerator\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_init\fP (i2c_master_bus_handle_t master_handle, const \fBsgp4x_config_t\fP *sgp4x_config, \fBsgp4x_handle_t\fP *sgp4x_handle)"
+.br
+.RI "Initializes an SGP4X device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_execute_compensated_conditioning\fP (\fBsgp4x_handle_t\fP handle, const float temperature, const float humidity, uint16_t *sraw_voc)"
+.br
+.RI "Starts the conditioning with temperature and humidity compensation, i\&.e\&., the VOC pixel will be operated at the same temperature as it is by calling the sgp41_measure_raw_signals function while the NOx pixel will be operated at a different temperature for conditioning\&. The conditioning should be ran when the device is initially powered for 10-seconds but do not run the conditioning longer than 10-seconds, otherwise damage may occur to the SGP4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_execute_conditioning\fP (\fBsgp4x_handle_t\fP handle, uint16_t *sraw_voc)"
+.br
+.RI "Starts the conditioning, i\&.e\&., the VOC pixel will be operated at the same temperature as it is by calling the sgp41_measure_raw_signals function while the NOx pixel will be operated at a different temperature for conditioning\&. The conditioning should be ran when the device is initially powered for 10-seconds but do not run the conditioning longer than 10-seconds, otherwise damage may occur to the SGP4X\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_measure_compensated_signals\fP (\fBsgp4x_handle_t\fP handle, const float temperature, const float humidity, uint16_t *sraw_voc, uint16_t *sraw_nox)"
+.br
+.RI "Starts and/or continues the VOC and NOX measurement mode with temperature and humidity compensation\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_measure_signals\fP (\fBsgp4x_handle_t\fP handle, uint16_t *sraw_voc, uint16_t *sraw_nox)"
+.br
+.RI "Starts and/or continues the VOC and NOX measurement mode using default temperature and humidity compensation\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_execute_self_test\fP (\fBsgp4x_handle_t\fP handle, sgp4x_self_test_result_t *const result)"
+.br
+.RI "Performs the built-in self-test that checks for integrity of both hotplate and MOX material\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_turn_heater_off\fP (\fBsgp4x_handle_t\fP handle)"
+.br
+.RI "Turns the hotplate off, stops the measurement, and SGP4X enters idle mode\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_reset\fP (\fBsgp4x_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset and initializes SGP4X\&. See datasheet for details\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_remove\fP (\fBsgp4x_handle_t\fP handle)"
+.br
+.RI "Removes an SGP4X device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBsgp4x_delete\fP (\fBsgp4x_handle_t\fP handle)"
+.br
+.RI "Removes an SGP4X device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBsgp4x_get_fw_version\fP (void)"
+.br
+.RI "Converts SGP4X firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBsgp4x_get_fw_version_number\fP (void)"
+.br
+.RI "Converts SGP4X firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBsgp4x_self_test_result_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

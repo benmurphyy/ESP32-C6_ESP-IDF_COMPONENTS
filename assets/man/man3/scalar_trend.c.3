@@ -1,0 +1,179 @@
+.TH "components/utilities/esp_scalar_trend/scalar_trend.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/utilities/esp_scalar_trend/scalar_trend.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_types\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <scalar_trend\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.ti -1c
+.RI "#define \fBSQR\fP(x)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBscalar_trend_code_to_string\fP (const \fBscalar_trend_codes_t\fP code)"
+.br
+.RI "Converts \fR\fBscalar_trend_codes_t\fP\fP enumerator trend code to string\&. "
+.ti -1c
+.RI "esp_err_t \fBscalar_trend_init\fP (const uint16_t samples_size, \fBscalar_trend_handle_t\fP *scalar_trend_handle)"
+.br
+.RI "Initializes a scalar trend handle by size of the 1-hr samples to analyze\&. The size of the samples is calculated from the sampling rate\&. 
+.br
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 60 e\&.g\&., one (1) hour\&. "
+.ti -1c
+.RI "esp_err_t \fBscalar_trend_analysis\fP (\fBscalar_trend_handle_t\fP scalar_trend_handle, const float sample, \fBscalar_trend_codes_t\fP *const code)"
+.br
+.RI "Analyzes historical samples and scalar Trend appears after one (1) hour of operation\&. The trend codes are a forecast of the 3-hr change based on the previous 1-hour history\&. "
+.ti -1c
+.RI "esp_err_t \fBscalar_trend_reset\fP (\fBscalar_trend_handle_t\fP scalar_trend_handle)"
+.br
+.RI "Purges scalar trend samples array and resets samples counter\&. "
+.ti -1c
+.RI "esp_err_t \fBscalar_trend_delete\fP (\fBscalar_trend_handle_t\fP scalar_trend_handle)"
+.br
+.RI "Frees scalar trend handle\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Scalar trend libary
+
+.PP
+Scalar Trend appears after one (1) hour of operation\&. The trend codes are a forecast of the 3-hr change based on the previous 1-hour history\&.
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE
+
+.PP
+Original sources https://gist.github.com/Paraphraser/c5609f85cc7ee6ecd03ce179fb7f7edb https://github.com/oyve/barometer-trend/blob/main/predictions/byPressureTrend.js 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define SQR( x)"
+\fBValue:\fP
+.nf
+((x) * (x))
+.PP
+.fi
+
+.SH "Function Documentation"
+.PP 
+.SS "esp_err_t scalar_trend_analysis (\fBscalar_trend_handle_t\fP scalar_trend_handle, const float sample, \fBscalar_trend_codes_t\fP *const code)"
+
+.PP
+Analyzes historical samples and scalar Trend appears after one (1) hour of operation\&. The trend codes are a forecast of the 3-hr change based on the previous 1-hour history\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIscalar_trend_handle\fP Scalar trend handle\&. 
+.br
+\fIsample\fP Scalar sample to push onto the samples stack\&. 
+.br
+\fIcode\fP Scalar trend code of one (1) hour analysis\&. Scalar trend code \fRSCALAR_TREND_UNKNOWN\fP is reported when there is an insufficient number of samples to analyze\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "const char * scalar_trend_code_to_string (const \fBscalar_trend_codes_t\fP code)"
+
+.PP
+Converts \fR\fBscalar_trend_codes_t\fP\fP enumerator trend code to string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcode\fP Scalar trend code to convert to a string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+const char* String representation of the scalar trend code\&. 
+.RE
+.PP
+
+.SS "esp_err_t scalar_trend_delete (\fBscalar_trend_handle_t\fP scalar_trend_handle)"
+
+.PP
+Frees scalar trend handle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIscalar_trend_handle\fP Scalar trend handle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "esp_err_t scalar_trend_init (const uint16_t samples_size, \fBscalar_trend_handle_t\fP * scalar_trend_handle)"
+
+.PP
+Initializes a scalar trend handle by size of the 1-hr samples to analyze\&. The size of the samples is calculated from the sampling rate\&. 
+.br
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 60 e\&.g\&., one (1) hour\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsamples_size\fP Scalar trend samples buffer size\&. 
+.br
+\fIscalar_trend_handle\fP Scalar trend handle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "esp_err_t scalar_trend_reset (\fBscalar_trend_handle_t\fP scalar_trend_handle)"
+
+.PP
+Purges scalar trend samples array and resets samples counter\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIscalar_trend_handle\fP Scalar trend handle 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

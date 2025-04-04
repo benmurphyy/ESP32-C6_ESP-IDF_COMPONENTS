@@ -1,0 +1,54 @@
+.TH "ccs811_context_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ccs811_context_t \- CCS811 context structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ccs811\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBccs811_config_t\fP \fBdev_config\fP"
+.br
+.ti -1c
+.RI "i2c_master_dev_handle_t \fBi2c_handle\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBhardware_id\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBhardware_version\fP"
+.br
+.ti -1c
+.RI "ccs811_firmware_version_format_t \fBbootloader_version\fP"
+.br
+.ti -1c
+.RI "ccs811_firmware_version_format_t \fBapplication_version\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+CCS811 context structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "ccs811_firmware_version_format_t application_version"
+ccs811 firmware application version 
+.SS "ccs811_firmware_version_format_t bootloader_version"
+ccs811 firmware bootloader version 
+.SS "\fBccs811_config_t\fP dev_config"
+ccs811 device configuration 
+.SS "uint8_t hardware_id"
+ccs811 hardware identifier (static 0x81) 
+.SS "uint8_t hardware_version"
+ccs811 hardware version (0x1X) 
+.SS "i2c_master_dev_handle_t i2c_handle"
+I2C device handle 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

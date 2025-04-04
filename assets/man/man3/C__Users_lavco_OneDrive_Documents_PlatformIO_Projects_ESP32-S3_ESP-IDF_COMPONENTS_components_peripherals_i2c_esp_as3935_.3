@@ -1,0 +1,130 @@
+.TH "components/peripherals/i2c/esp_as3935 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_as3935 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBas3935\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Austria Microsystems AS3935 franklin lightning sensor\&. Information on features and functionality are documented and can be found in the \fR\fBas3935\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as3935
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBas3935\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_as3935
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── as3935_version\&.h
+    │   └── as3935\&.h
+    └── as3935\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and monitors the interrupt on the AS3935\&. When an event is detected the AS3935 interrupt pin is asserted and event is printed to the serial terminal\&.
+
+.PP
+.PP
+.nf
+#include <as3935\&.h>
+
+static void as3935_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
+    as3935_monitor_context_t *as3935_monitor_context = (as3935_monitor_context_t *)event_data;
+
+    switch (event_id) {
+        case AS3935_INT_NOISE:
+            ESP_LOGW(APP_TAG, "as3935 device interrupt was noise related");
+            break;
+        case AS3935_INT_DISTURBER:
+            ESP_LOGW(APP_TAG, "as3935 device interrupt was disturber related");
+            break;
+        case AS3935_INT_LIGHTNING:
+            ESP_LOGW(APP_TAG, "as3935 device interrupt was lightning related");
+            ESP_LOGW(APP_TAG, "Lightning distance: %d", as3935_monitor_context\->base\&.lightning_distance);
+            break;
+        case AS3935_INT_NONE:
+            ESP_LOGW(APP_TAG, "as3935 device interrupt was related to nothing");
+            break;
+        default:
+            ESP_LOGW(APP_TAG, "as3935 device interrupt is unknown %li", event_id);
+            break;
+    }
+}
+
+
+void i2c0_as3935_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t         last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    as3935_monitor_handle_t monitor_hdl;
+    as3935_config_t dev_cfg          = I2C_AS3935_CONFIG_DEFAULT;
+    //as3935_handle_t dev_hdl;
+    //
+    // init device
+    //as3935_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    as3935_monitor_init(i2c0_bus_hdl, &dev_cfg, &monitor_hdl);
+    if (monitor_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "as3935_monitor_init handle init failed");
+        assert(as3935_monitor_init);
+    }
+    //
+    esp_err_t err = as3935_monitor_add_handler(monitor_hdl, as3935_event_handler, (void *)dev_cfg\&.irq_io_num);
+    if (err != ESP_OK) {
+        ESP_LOGE(APP_TAG, "as3935_monitor_add_handler failed");
+    }
+    //
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## AS3935 \- START #########################");
+        //
+        // handle sensor
+        //
+        ESP_LOGI(APP_TAG, "######################## AS3935 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    //as3935_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

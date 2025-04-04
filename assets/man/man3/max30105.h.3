@@ -1,0 +1,231 @@
+.TH "components/peripherals/i2c/esp_max30105/include/max30105.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_max30105/include/max30105.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBmax30105_config_s\fP"
+.br
+.RI "MAX30105 configuration structure\&. "
+.ti -1c
+.RI "struct \fBmax30105_context_t\fP"
+.br
+.RI "MAX30105 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_MAX30105_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "max30105 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_MAX30105_DEV_ADDR\fP   UINT8_C(0x38)"
+.br
+.RI "max30105 I2C address "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_MAX30105_CONFIG_DEFAULT\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBmax30105_adc_range_controls_e\fP \fBmax30105_adc_range_controls_t\fP"
+.br
+.RI "MAX30105 particle-sensing ADC range controls (18-bit resolution) enumerator (register 0x0a)\&. "
+.ti -1c
+.RI "typedef enum \fBmax30105_sample_rate_controls_e\fP \fBmax30105_sample_rate_controls_t\fP"
+.br
+.RI "MAX30105 particle-sensing sample rate control enumerator (register 0x0a)\&. "
+.ti -1c
+.RI "typedef enum \fBmax30105_led_pulse_width_controls_e\fP \fBmax30105_led_pulse_width_controls_t\fP"
+.br
+.RI "MAX30105 LED pulse width controls enumerator (register 0x0a)\&. "
+.ti -1c
+.RI "typedef enum \fBmax30105_control_modes_e\fP \fBmax30105_control_modes_t\fP"
+.br
+.RI "MAX30105 control modes enumerator\&. "
+.ti -1c
+.RI "typedef enum \fBmax30105_multi_led_control_modes_e\fP \fBmax30105_multi_led_control_modes_t\fP"
+.br
+.RI "MAX30105 multi-LED control modes enumerator (registers 0x11-0x12)\&. "
+.ti -1c
+.RI "typedef enum \fBmax30105_led_pulse_amplitudes_e\fP \fBmax30105_led_pulse_amplitudes_t\fP"
+.br
+.RI "MAX30105 LED pulse amplitudes enumerator (registers 0x0c-0x10)\&. "
+.ti -1c
+.RI "typedef struct \fBmax30105_config_s\fP \fBmax30105_config_t\fP"
+.br
+.RI "MAX30105 configuration structure\&. "
+.ti -1c
+.RI "typedef struct max30105_context_t \fBmax30105_context_t\fP"
+.br
+.RI "MAX30105 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBmax30105_context_t\fP * \fBmax30105_handle_t\fP"
+.br
+.RI "MAX30105 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBmax30105_adc_range_controls_e\fP { \fBMAX30105_ARC_7_81LSB\fP = (0x00), \fBMAX30105_ARC_15_63LSB\fP = (0x01), \fBMAX30105_ARC_31_25LSB\fP = (0x02), \fBMAX30105_ARC_62_5LSB\fP = (0x03) }"
+.br
+.RI "MAX30105 particle-sensing ADC range controls (18-bit resolution) enumerator (register 0x0a)\&. "
+.ti -1c
+.RI "enum \fBmax30105_sample_rate_controls_e\fP { \fBMAX30105_SRC_50SPS\fP = (0b000), \fBMAX30105_SRC_100SPS\fP = (0b001), \fBMAX30105_SRC_200SPS\fP = (0b010), \fBMAX30105_SRC_400SPS\fP = (0b011), \fBMAX30105_SRC_800SPS\fP = (0b100), \fBMAX30105_SRC_1000SPS\fP = (0b101), \fBMAX30105_SRC_1600SPS\fP = (0b110), \fBMAX30105_SRC_3200SPS\fP = (0b111) }"
+.br
+.RI "MAX30105 particle-sensing sample rate control enumerator (register 0x0a)\&. "
+.ti -1c
+.RI "enum \fBmax30105_led_pulse_width_controls_e\fP { \fBMAX30105_LPWC_69US_15BITS\fP = (0b00), \fBMAX30105_LPWC_118US_16BITS\fP = (0b01), \fBMAX30105_LPWC_215US_17BITS\fP = (0b10), \fBMAX30105_LPWC_411US_18BITS\fP = (0b11) }"
+.br
+.RI "MAX30105 LED pulse width controls enumerator (register 0x0a)\&. "
+.ti -1c
+.RI "enum \fBmax30105_control_modes_e\fP { \fBMAX30105_CM_PARTICLE_SENSING_1LED\fP = (0b010), \fBMAX30105_CM_PARTICLE_SENSING_2LED\fP = (0b011), \fBMAX30105_CM_MULTIPLE_LED\fP = (0b111) }"
+.br
+.RI "MAX30105 control modes enumerator\&. "
+.ti -1c
+.RI "enum \fBmax30105_multi_led_control_modes_e\fP { \fBMAX30105_MLCM_DISABLED\fP = (0b000), \fBMAX30105_MLCM_RED_LED\fP = (0b001), \fBMAX30105_MLCM_IR_LED\fP = (0b010), \fBMAX30105_MLCM_GREEN_LED\fP = (0b011), \fBMAX30105_MLCM_NONE\fP = (0b100), \fBMAX30105_MLCM_RED_PILOT\fP = (0b101), \fBMAX30105_MLCM_IR_PILOT\fP = (0b110), \fBMAX30105_MLCM_GREEN_PILOT\fP = (0b111) }"
+.br
+.RI "MAX30105 multi-LED control modes enumerator (registers 0x11-0x12)\&. "
+.ti -1c
+.RI "enum \fBmax30105_led_pulse_amplitudes_e\fP { \fBMAX30105_LPA_0_0MA\fP = (0x00), \fBMAX30105_LPA_0_2MA\fP = (0x01), \fBMAX30105_LPA_0_4MA\fP = (0x02), \fBMAX30105_LPA_3_1MA\fP = (0x0f), \fBMAX30105_LPA_6_4MA\fP = (0x1f), \fBMAX30105_LPA_12_5MA\fP = (0x3f), \fBMAX30105_LPA_25_4MA\fP = (0x7f), \fBMAX30105_LPA_50_0MA\fP = (0xff) }"
+.br
+.RI "MAX30105 LED pulse amplitudes enumerator (registers 0x0c-0x10)\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_status1_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_status1_register_t *const reg)"
+.br
+.RI "Reads interrupt status 1 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_status2_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_status2_register_t *const reg)"
+.br
+.RI "Reads interrupt status 2 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_enable1_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_enable1_register_t *const reg)"
+.br
+.RI "Reads interrupt enable 1 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_interrupt_enable1_register\fP (\fBmax30105_handle_t\fP handle, const max30105_interrupt_enable1_register_t reg)"
+.br
+.RI "Writes interrupt enable 1 register to MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_interrupt_enable2_register\fP (\fBmax30105_handle_t\fP handle, max30105_interrupt_enable2_register_t *const reg)"
+.br
+.RI "Reads interrupt enable 2 register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_interrupt_enable2_register\fP (\fBmax30105_handle_t\fP handle, const max30105_interrupt_enable2_register_t reg)"
+.br
+.RI "Writes interrupt enable 2 register to MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_mode_configuration_register\fP (\fBmax30105_handle_t\fP handle, max30105_mode_configuration_register_t *const reg)"
+.br
+.RI "Reads mode configuration register from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_mode_configuration_register\fP (\fBmax30105_handle_t\fP handle, const max30105_mode_configuration_register_t reg)"
+.br
+.RI "Writes mode configuration register to MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_init\fP (i2c_master_bus_handle_t master_handle, const \fBmax30105_config_t\fP *max30105_config, \fBmax30105_handle_t\fP *max30105_handle)"
+.br
+.RI "Initializes an MAX30105 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_optical_counts\fP (\fBmax30105_handle_t\fP handle, float *const red_count, float *const ir_count, float *const green_count)"
+.br
+.RI "Reads red, IR, and green LED ADC counts from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_data_status\fP (\fBmax30105_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads data status from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_get_control_mode\fP (\fBmax30105_handle_t\fP handle, \fBmax30105_control_modes_t\fP *const control_mode)"
+.br
+.RI "Reads control mode setting from MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_set_control_mode\fP (\fBmax30105_handle_t\fP handle, const \fBmax30105_control_modes_t\fP control_mode)"
+.br
+.RI "Writes control mode setting to MAX30105\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_remove\fP (\fBmax30105_handle_t\fP handle)"
+.br
+.RI "Removes an MAX30105 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmax30105_delete\fP (\fBmax30105_handle_t\fP handle)"
+.br
+.RI "Removes an MAX30105 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBmax30105_get_fw_version\fP (void)"
+.br
+.RI "Converts MAX30105 firmware version numbers (major, minor, patch, build) into a string\&. "
+.ti -1c
+.RI "int32_t \fBmax30105_get_fw_version_number\fP (void)"
+.br
+.RI "Converts MAX30105 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBmax30105_interrupt_status1_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_interrupt_status2_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_interrupt_enable1_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_interrupt_enable2_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_mode_configuration_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_multi_led_mode_control_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_fifo_write_pointer_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_fifo_overflow_counter_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_fifo_read_pointer_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmax30105_fifo_data_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

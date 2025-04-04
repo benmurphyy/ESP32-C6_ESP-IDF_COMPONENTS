@@ -1,0 +1,362 @@
+.TH "wx_utils" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+wx_utils \- Wx_utils
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBwx_scalar_range_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBwx_set_temperature_range\fP (const float maximum, const float minimum)"
+.br
+.RI "Sets the global weather utilities maximum and minimum temperature range (\fRwx_temperature_range\fP) in degrees Celsius\&. "
+.ti -1c
+.RI "esp_err_t \fBwx_set_humidity_range\fP (const float maximum, const float minimum)"
+.br
+.RI "Sets the global weather utilities humidity maximum and minimum range (\fRwx_humidity_range\fP) in percent\&. "
+.ti -1c
+.RI "esp_err_t \fBwx_td_range\fP (const float temperature, const float humidity, float *const dewpoint)"
+.br
+.RI "Calculates dewpoint temperature from air temperature and relative humidity with range validation\&. The default temperature range is from -40 to 125 degrees Celsius and default humidity range is from 0 to 100 percent\&. 
+.br
+ The default ranges can be adjusted through the set range functions\&. "
+.ti -1c
+.RI "const double \fBwx_c_to_k\fP (const double t)"
+.br
+.RI "Converts degrees celsius to kelvin\&. "
+.ti -1c
+.RI "const double \fBwx_k_to_c\fP (const double t)"
+.br
+.RI "Converts kelvin to degrees celsius\&. "
+.ti -1c
+.RI "const double \fBwx_v\fP (const double t)"
+.br
+.RI "Calculates v at temperature\&. "
+.ti -1c
+.RI "const double \fBwx_pwi\fP (const double t)"
+.br
+.RI "Calculates aqueous vapor pressure of ice at temperature\&. "
+.ti -1c
+.RI "const double \fBwx_pws\fP (const double t)"
+.br
+.RI "Calculates aqueous vapor pressure of water at temperature\&. "
+.ti -1c
+.RI "const double \fBwx_pressure_at_sea_level\fP (const double pa, const double l, const double ta)"
+.br
+.RI "Calculates the reduced air pressure QFF (pressure at sea level) without QFE\&. "
+.ti -1c
+.RI "const double \fBwx_qfe\fP (const double pa, const double l, const double ta)"
+.br
+.RI "Calculates the reduced air pressure QFE (pressure at a certain level)\&. "
+.ti -1c
+.RI "const double \fBwx_qff\fP (const double qfe, const double l, const double ta)"
+.br
+.RI "Calculates the reduced air pressure QFF (pressure at sea level)\&. "
+.ti -1c
+.RI "const double \fBwx_qnh\fP (const double qfe, const double h, const double a)"
+.br
+.RI "Calculates the reduced air pressure QNH (pressure at sea level according to ICAO standard atmospheric)\&. "
+.ti -1c
+.RI "const double \fBwx_td\fP (const double ta, const double hr)"
+.br
+.RI "Calculates dewpoint temperature from air temperature and relative humidity\&. "
+.ti -1c
+.RI "const double \fBwx_tw\fP (const double ta, const double hr, const double td, const double pa)"
+.br
+.RI "Calculates wetbulb temperature from air temperature, relative humidity, and dewpoint temperature\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF weather utilities
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Function Documentation"
+.PP 
+.SS "const double wx_c_to_k (const double t)"
+
+.PP
+Converts degrees celsius to kelvin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIt\fP Temperature in degrees celsius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double Temperature in kelvin\&. 
+.RE
+.PP
+
+.SS "const double wx_k_to_c (const double t)"
+
+.PP
+Converts kelvin to degrees celsius\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIt\fP Temperature in kelvin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double Temperature in degrees celsius\&. 
+.RE
+.PP
+
+.SS "const double wx_pressure_at_sea_level (const double pa, const double l, const double ta)"
+
+.PP
+Calculates the reduced air pressure QFF (pressure at sea level) without QFE\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIpa\fP Air pressure at this altitude in hecto-pascal\&. 
+.br
+\fIl\fP Reduction level at this altitude in meters\&. 
+.br
+\fIta\fP Air temperature at this altitude in degrees celsius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float Reduced air pressure QFF in hecto-pascal\&. 
+.RE
+.PP
+
+.SS "const double wx_pwi (const double t)"
+
+.PP
+Calculates aqueous vapor pressure of ice at temperature\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIt\fP Temperature in kelvin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double Aqueous vapor pressure of ice 
+.RE
+.PP
+
+.SS "const double wx_pws (const double t)"
+
+.PP
+Calculates aqueous vapor pressure of water at temperature\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIt\fP Temperature in kelvin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double Aqueous vapor pressure of water\&. 
+.RE
+.PP
+
+.SS "const double wx_qfe (const double pa, const double l, const double ta)"
+
+.PP
+Calculates the reduced air pressure QFE (pressure at a certain level)\&. 
+.PP
+\fBNote\fP
+.RS 4
+The reduction level for QFE processing is the elevation difference of the pressure sensor and the QFE level into which the pressure will be reduced\&. If the pressure sensor is above the QFE level, the reduction level to get the QFE level pressure is a positive value\&. If the sensor is below the QFE level, the reduction level is a negative value\&.
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIpa\fP Air pressure at this altitude in hecto-pascal\&. 
+.br
+\fIl\fP Reduction level in meters\&. 
+.br
+\fIta\fP Air temperature at this altitude in degrees celsius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float Reduced air pressure QFE in hecto-pascal\&. 
+.RE
+.PP
+
+.SS "const double wx_qff (const double qfe, const double l, const double ta)"
+
+.PP
+Calculates the reduced air pressure QFF (pressure at sea level)\&. 
+.PP
+\fBNote\fP
+.RS 4
+The reduction level is the elevation difference of the station altitude and the mean sea level\&.
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIqfe\fP Field elevation aire pressure in hecto-pascal\&. 
+.br
+\fIl\fP Reduction level at this altitude in meters\&. 
+.br
+\fIta\fP Air temperature at this altitude in degrees celsius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float Reduced air pressure QFF in hecto-pascal\&. 
+.RE
+.PP
+
+.SS "const double wx_qnh (const double qfe, const double h, const double a)"
+
+.PP
+Calculates the reduced air pressure QNH (pressure at sea level according to ICAO standard atmospheric)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIqfe\fP Staion level air pressure in hecto-pascal\&. 
+.br
+\fIh\fP Elevation of pressure QFE in International Standard Atmosphere (ISA)\&. 
+.br
+\fIa\fP Station altitude in meters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float Reduced air pressure QNH in hecto-pascal\&. 
+.RE
+.PP
+
+.SS "esp_err_t wx_set_humidity_range (const float maximum, const float minimum)"
+
+.PP
+Sets the global weather utilities humidity maximum and minimum range (\fRwx_humidity_range\fP) in percent\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImaximum\fP Maximum humidity range in percent\&. 
+.br
+\fIminimum\fP Minimum humidity range in percent\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "esp_err_t wx_set_temperature_range (const float maximum, const float minimum)"
+
+.PP
+Sets the global weather utilities maximum and minimum temperature range (\fRwx_temperature_range\fP) in degrees Celsius\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImaximum\fP Maximum temperature range in degrees Celsius\&. 
+.br
+\fIminimum\fP Minimum temperature range in degrees Celsius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "const double wx_td (const double ta, const double hr)"
+
+.PP
+Calculates dewpoint temperature from air temperature and relative humidity\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIta\fP Air temperature in degrees celsius\&. 
+.br
+\fIhr\fP Relative humidity in percent\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double Dewpoint temperature in degrees celsius\&. 
+.RE
+.PP
+
+.SS "esp_err_t wx_td_range (const float temperature, const float humidity, float *const dewpoint)"
+
+.PP
+Calculates dewpoint temperature from air temperature and relative humidity with range validation\&. The default temperature range is from -40 to 125 degrees Celsius and default humidity range is from 0 to 100 percent\&. 
+.br
+ The default ranges can be adjusted through the set range functions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItemperature\fP Air temperature in degrees Celsius\&. 
+.br
+\fIhumidity\fP Relative humidity in percent\&. 
+.br
+\fIdewpoint\fP Calculated dewpoint temperature in degrees Celsius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+esp_err_t ESP_OK on success\&. 
+.RE
+.PP
+
+.SS "const double wx_tw (const double ta, const double hr, const double td, const double pa)"
+
+.PP
+Calculates wetbulb temperature from air temperature, relative humidity, and dewpoint temperature\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIta\fP Air temperature in degrees celsius\&. 
+.br
+\fIhr\fP Relative humidity in percent\&. 
+.br
+\fItd\fP Dewpoint temperature in degrees celsius\&. 
+.br
+\fIpa\fP Air pressure in hecto-pascal\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double Wetbulb temperature in degrees celsius\&. 
+.RE
+.PP
+
+.SS "const double wx_v (const double t)"
+
+.PP
+Calculates v at temperature\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIt\fP Temperature in kelvin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double v at temperature\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

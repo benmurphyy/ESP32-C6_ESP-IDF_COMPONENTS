@@ -1,0 +1,282 @@
+.TH "components/peripherals/i2c/esp_mlx90614/include/mlx90614.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_mlx90614/include/mlx90614.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <esp_err\&.h>\fP
+.br
+\fR#include <driver/i2c_master\&.h>\fP
+.br
+\fR#include <type_utils\&.h>\fP
+.br
+\fR#include 'mlx90614_version\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBmlx90614_config_s\fP"
+.br
+.RI "MLX90614 configuration structure\&. "
+.ti -1c
+.RI "struct \fBmlx90614_context_t\fP"
+.br
+.RI "MLX90614 context structure\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBI2C_MLX90614_DEV_CLK_SPD\fP   UINT32_C(100000)"
+.br
+.RI "mlx90614 I2C default clock frequency (100KHz) "
+.ti -1c
+.RI "#define \fBI2C_MLX90614_DEV_ADDR\fP   UINT8_C(0x5A)"
+.br
+.RI "mlx90614 I2C address when ADDR pin floating/low "
+.ti -1c
+.RI "#define \fBI2C_XFR_TIMEOUT_MS\fP   (500)"
+.br
+.RI "I2C transaction timeout in milliseconds\&. "
+.ti -1c
+.RI "#define \fBI2C_MLX90614_CONFIG_DEFAULT\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum mlx90614_sensor_iirs_e \fBmlx90614_sensor_iirs_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_sensor_test_repeat_states_e \fBmlx90614_sensor_test_repeat_states_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_temperature_sensors_e \fBmlx90614_temperature_sensors_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_sensor_ir_types_e \fBmlx90614_sensor_ir_types_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_k_signs_e \fBmlx90614_k_signs_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_fir_values_e \fBmlx90614_fir_values_t\fP"
+.br
+.ti -1c
+.RI "typedef enum ml90614_gains_e \fBml90614_gains_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_nk2_signs_e \fBmlx90614_nk2_signs_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_sensor_test_states_e \fBmlx90614_sensor_test_states_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_pwm_modes_e \fBmlx90614_pwm_modes_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_pwm_mode_states_e \fBmlx90614_pwm_mode_states_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_sda_pin_modes_e \fBmlx90614_sda_pin_modes_t\fP"
+.br
+.ti -1c
+.RI "typedef enum mlx90614_thermal_modes_e \fBmlx90614_thermal_modes_t\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBmlx90614_config_s\fP \fBmlx90614_config_t\fP"
+.br
+.RI "MLX90614 configuration structure\&. "
+.ti -1c
+.RI "typedef struct mlx90614_context_t \fBmlx90614_context_t\fP"
+.br
+.RI "MLX90614 context structure definition\&. "
+.ti -1c
+.RI "typedef struct \fBmlx90614_context_t\fP * \fBmlx90614_handle_t\fP"
+.br
+.RI "MLX90614 handle structure definition\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBmlx90614_sensor_iirs_e\fP { \fBMLX90614_SENSOR_IIR_100\fP = (0b100), \fBMLX90614_SENSOR_IIR_80\fP = (0b101), \fBMLX90614_SENSOR_IIR_67\fP = (0b110), \fBMLX90614_SENSOR_IIR_57\fP = (0b111), \fBMLX90614_SENSOR_IIR_50\fP = (0b000), \fBMLX90614_SENSOR_IIR_25\fP = (0b001), \fBMLX90614_SENSOR_IIR_17\fP = (0b010), \fBMLX90614_SENSOR_IIR_13\fP = (0b011) }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_sensor_test_repeat_states_e\fP { \fBMLX90614_SENSOR_TEST_REPEAT_OFF\fP = 0, \fBMLX90614_SENSOR_TEST_REPEAT_ON\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_temperature_sensors_e\fP { \fBMLX90614_TEMPERATURE_SENSOR_TA_TOBJ1\fP = (0b00), \fBMLX90614_TEMPERATURE_SENSOR_TA_TOBJ2\fP = (0b01), \fBMLX90614_TEMPERATURE_SENSOR_TOBJ2\fP = (0b10), \fBMLX90614_TEMPERATURE_SENSOR_TOBJ1_TOBJ2\fP = (0b11) }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_sensor_ir_types_e\fP { \fBMLX90614_SENSOR_IR_TYPE_SINGLE\fP = 0, \fBMLX90614_SENSOR_IR_TYPE_DUAL\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_k_signs_e\fP { \fBMLX90614_K_SIGN_POSITIVE\fP = 0, \fBMLX90614_K_SIGN_NEGATIVE\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_fir_values_e\fP { \fBMLX90614_FIR_128\fP = (0b100), \fBMLX90614_FIR_256\fP = (0b101), \fBMLX90614_FIR_512\fP = (0b110), \fBMLX90614_FIR_1024\fP = (0b111) }"
+.br
+.ti -1c
+.RI "enum \fBml90614_gains_e\fP { \fBMLX90614_GAIN_1\fP = (0b000), \fBMLX90614_GAIN_3\fP = (0b001), \fBMLX90614_GAIN_6\fP = (0b010), \fBMLX90614_GAIN_12_5\fP = (0b011), \fBMLX90614_GAIN_25\fP = (0b100), \fBMLX90614_GAIN_50\fP = (0b101), \fBMLX90614_GAIN_100A\fP = (0b110), \fBMLX90614_GAIN_100B\fP = (0b111) }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_nk2_signs_e\fP { \fBMLX90614_KT2_SIGN_POSITIVE\fP = 0, \fBMLX90614_KT2_SIGN_NEGATIVE\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_sensor_test_states_e\fP { \fBMLX90614_SENSOR_TEST_ENABLED\fP = 0, \fBMLX90614_SENSOR_TEST_DISABLED\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_pwm_modes_e\fP { \fBMLX90614_PWM_MODE_EXTENDED\fP = 0, \fBMLX90614_PWM_MODE_SINGLE\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_pwm_mode_states_e\fP { \fBMLX90614_PWM_MODE_STATE_DISABLED\fP = 0, \fBMLX90614_PWM_MODE_STATE_ENABLED\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_sda_pin_modes_e\fP { \fBMLX90614_SDA_PIN_MODE_OPEN_DRAIN\fP = 0, \fBMLX90614_SDA_PIN_MODE_PUSH_PULL\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBmlx90614_thermal_modes_e\fP { \fBMLX90614_THERMAL_MODE_PWM\fP = 0, \fBMLX90614_THERMAL_MODE_THERMAL_RELAY\fP = 1 }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "union \fB__attribute__\fP ((packed)) ahtxx_status_register_u"
+.br
+.RI "AHTXX status register structure definition\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_config_register\fP (\fBmlx90614_handle_t\fP handle, mlx90614_config_register_t *const reg)"
+.br
+.RI "Reads configuration register from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_set_config_register\fP (\fBmlx90614_handle_t\fP handle, const mlx90614_config_register_t reg)"
+.br
+.RI "Writes configuration register to MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_pwmctrl_register\fP (\fBmlx90614_handle_t\fP handle, mlx90614_pwmctrl_register_t *const reg)"
+.br
+.RI "Reads PWM control register from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_set_pwmctrl_register\fP (\fBmlx90614_handle_t\fP handle, const mlx90614_pwmctrl_register_t reg)"
+.br
+.RI "Writes PWM control register to MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_flags_register\fP (\fBmlx90614_handle_t\fP handle, mlx90614_flags_register_t *const reg)"
+.br
+.RI "Reads flags register from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_init\fP (i2c_master_bus_handle_t master_handle, const \fBmlx90614_config_t\fP *mlx90614_config, \fBmlx90614_handle_t\fP *mlx90614_handle)"
+.br
+.RI "Initializes an MLX90614 device onto the master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_temperatures\fP (\fBmlx90614_handle_t\fP handle, float *const ambient_temperature, float *const object1_temperature, float *const object2_temperature)"
+.br
+.RI "Reads all three temperatures (ambient, object 1 and object 2) from the MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_ambient_temperature\fP (\fBmlx90614_handle_t\fP handle, float *const ambient_temperature)"
+.br
+.RI "Reads the ambient temperature from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_object1_temperature\fP (\fBmlx90614_handle_t\fP handle, float *const object1_temperature)"
+.br
+.RI "Reads object 1 temperature from mlx90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_object2_temperature\fP (\fBmlx90614_handle_t\fP handle, float *const object2_temperature)"
+.br
+.RI "Reads object 2 temperature from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_ir_channel1\fP (\fBmlx90614_handle_t\fP handle, int16_t *const ir_channel1)"
+.br
+.RI "Reads IR channel 1 from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_ir_channel2\fP (\fBmlx90614_handle_t\fP handle, int16_t *const ir_channel2)"
+.br
+.RI "Reads IR channel 2 from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_ambient_temperature_range\fP (\fBmlx90614_handle_t\fP handle, float *const ambient_temperature_range)"
+.br
+.RI "Reads ambient temperature range from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_emissivity\fP (\fBmlx90614_handle_t\fP handle, float *const coefficient)"
+.br
+.RI "Reads emissivity coefficient (0\&.1 to 1\&.0) setting from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_set_emissivity\fP (\fBmlx90614_handle_t\fP handle, const float coefficient)"
+.br
+.RI "Writes emissivity coefficient (0\&.1 to 1\&.0) setting to MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_object_maximum_temperature\fP (\fBmlx90614_handle_t\fP handle, float *const temperature)"
+.br
+.RI "Reads maximum object temperature setting from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_set_object_maximum_temperature\fP (\fBmlx90614_handle_t\fP handle, const float temperature)"
+.br
+.RI "Writes maximum object temperature setting to MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_object_minimum_temperature\fP (\fBmlx90614_handle_t\fP handle, float *const temperature)"
+.br
+.RI "Reads minimum object temperature setting from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_set_object_minimum_temperature\fP (\fBmlx90614_handle_t\fP handle, const float temperature)"
+.br
+.RI "Writes minimum object temperature setting to MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_get_address\fP (\fBmlx90614_handle_t\fP handle, uint8_t *const address)"
+.br
+.RI "Reads I2C address setting from MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_set_address\fP (\fBmlx90614_handle_t\fP handle, const uint8_t address)"
+.br
+.RI "Writes I2C address setting to MLX90614\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_sleep\fP (\fBmlx90614_handle_t\fP handle)"
+.br
+.RI "Puts the MLX90614 into sleep mode\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_wakeup\fP (\fBmlx90614_handle_t\fP handle)"
+.br
+.RI "Wakes-up the MLX90614 from sleep mode\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_remove\fP (\fBmlx90614_handle_t\fP handle)"
+.br
+.RI "Removes an MLX90614 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBmlx90614_delete\fP (\fBmlx90614_handle_t\fP handle)"
+.br
+.RI "Removes an MLX90614 device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBmlx90614_get_fw_version\fP (void)"
+.br
+.RI "Converts MLX90614 firmware version numbers (major, minor, patch, build) into a string\&. "
+.ti -1c
+.RI "int32_t \fBmlx90614_get_fw_version_number\fP (void)"
+.br
+.RI "Converts MLX90614 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBmlx90614_config_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmlx90614_pwmctrl_register_t\fP"
+.br
+.ti -1c
+.RI "\fBmlx90614_flags_register_t\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

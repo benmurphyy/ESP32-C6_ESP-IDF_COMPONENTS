@@ -1,0 +1,256 @@
+.TH "components/peripherals/i2c/esp_hmc5883l/hmc5883l.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_hmc5883l/hmc5883l.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/hmc5883l\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <stdlib\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_types\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHMC5883L_REG_CONFIG_A\fP   UINT8_C(0x00)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_CONFIG_B\fP   UINT8_C(0x01)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_MODE\fP   UINT8_C(0x02)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_DATA_OUT_X_MSB\fP   UINT8_C(0x03)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_DATA_OUT_X_LSB\fP   UINT8_C(0x04)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_DATA_OUT_Z_MSB\fP   UINT8_C(0x05)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_DATA_OUT_Z_LSB\fP   UINT8_C(0x06)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_DATA_OUT_Y_MSB\fP   UINT8_C(0x07)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_DATA_OUT_Y_LSB\fP   UINT8_C(0x08)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_STATUS\fP   UINT8_C(0x09)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_IDENT_A\fP   UINT8_C(0x0a)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_IDENT_B\fP   UINT8_C(0x0b)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_REG_IDENT_C\fP   UINT8_C(0x0c)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_DEV_ID\fP   UINT32_C(0x00333448)"
+.br
+.RI "Chip ID, "H43"\&. "
+.ti -1c
+.RI "#define \fBHMC5883L_XY_EXCITATION\fP   (1160)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_Z_EXCITATION\fP   (1080)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_DATA_READY_DELAY_MS\fP   UINT16_C(1)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(50)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_POWERUP_DELAY_MS\fP   UINT16_C(100)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_APPSTART_DELAY_MS\fP   UINT16_C(20)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_RESET_DELAY_MS\fP   UINT16_C(50)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_CMD_DELAY_MS\fP   UINT16_C(5)"
+.br
+.ti -1c
+.RI "#define \fBHMC5883L_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_identification_register\fP (\fBhmc5883l_handle_t\fP handle, uint32_t *const reg)"
+.br
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_configuration1_register\fP (\fBhmc5883l_handle_t\fP handle, hmc5883l_configuration1_register_t *const reg)"
+.br
+.RI "Reads configuration 1 register from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_configuration1_register\fP (\fBhmc5883l_handle_t\fP handle, const hmc5883l_configuration1_register_t reg)"
+.br
+.RI "Writes configuration 1 register to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_configuration2_register\fP (\fBhmc5883l_handle_t\fP handle, hmc5883l_configuration2_register_t *const reg)"
+.br
+.RI "Reads configuration 2 register from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_configuration2_register\fP (\fBhmc5883l_handle_t\fP handle, const hmc5883l_configuration2_register_t reg)"
+.br
+.RI "Writes configuration 2 register to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_mode_register\fP (\fBhmc5883l_handle_t\fP handle, hmc5883l_mode_register_t *const reg)"
+.br
+.RI "Reads mode register from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_mode_register\fP (\fBhmc5883l_handle_t\fP handle, const hmc5883l_mode_register_t reg)"
+.br
+.RI "Writes mode register to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_status_register\fP (\fBhmc5883l_handle_t\fP handle, hmc5883l_status_register_t *const reg)"
+.br
+.RI "Reads status register from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_init\fP (i2c_master_bus_handle_t master_handle, const \fBhmc5883l_config_t\fP *hmc5883l_config, \fBhmc5883l_handle_t\fP *hmc5883l_handle)"
+.br
+.RI "Initializes an HMC5883L device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_fixed_magnetic_axes\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_axes_data_t\fP *const axes_data)"
+.br
+.RI "Reads uncompensated axes measurements from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_magnetic_axes\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_magnetic_axes_data_t\fP *const axes_data)"
+.br
+.RI "Reads compensated magnetic axes measurements from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_calibrated_offsets\fP (\fBhmc5883l_handle_t\fP handle, const \fBhmc5883l_calibration_options_t\fP option)"
+.br
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_data_status\fP (\fBhmc5883l_handle_t\fP handle, bool *const ready, bool *const locked)"
+.br
+.RI "Reads data status from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_mode\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_modes_t\fP *const mode)"
+.br
+.RI "Reads operating mode setting from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_mode\fP (\fBhmc5883l_handle_t\fP handle, const \fBhmc5883l_modes_t\fP mode)"
+.br
+.RI "Writes operating mode setting to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_samples_averaged\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_sample_averages_t\fP *const sample)"
+.br
+.RI "Reads samples averaged setting from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_samples_averaged\fP (\fBhmc5883l_handle_t\fP handle, const \fBhmc5883l_sample_averages_t\fP sample)"
+.br
+.RI "Writes samples averaged setting to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_data_rate\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_data_rates_t\fP *const rate)"
+.br
+.RI "Reads data rate setting from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_data_rate\fP (\fBhmc5883l_handle_t\fP handle, const \fBhmc5883l_data_rates_t\fP rate)"
+.br
+.RI "Writes data rate setting to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_bias\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_biases_t\fP *const bias)"
+.br
+.RI "Reads measurement mode bias setting from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_bias\fP (\fBhmc5883l_handle_t\fP handle, const \fBhmc5883l_biases_t\fP bias)"
+.br
+.RI "Writes measurement mode bias setting to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_gain\fP (\fBhmc5883l_handle_t\fP handle, \fBhmc5883l_gains_t\fP *const gain)"
+.br
+.RI "Reads gain setting from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_set_gain\fP (\fBhmc5883l_handle_t\fP handle, const \fBhmc5883l_gains_t\fP gain)"
+.br
+.RI "Writes gain setting to HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_get_gain_sensitivity\fP (\fBhmc5883l_handle_t\fP handle, float *const sensitivity)"
+.br
+.RI "Reads gain sensitivity setting from HMC5883L\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_remove\fP (\fBhmc5883l_handle_t\fP handle)"
+.br
+.RI "Removes an HMC5883L device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBhmc5883l_delete\fP (\fBhmc5883l_handle_t\fP handle)"
+.br
+.RI "Removes an HMC5883L device from master bus and frees handle\&. "
+.ti -1c
+.RI "const char * \fBhmc5883l_get_fw_version\fP (void)"
+.br
+.RI "Converts HMC5883L firmware version numbers (major, minor, patch, build) into a string\&. "
+.ti -1c
+.RI "int32_t \fBhmc5883l_get_fw_version_number\fP (void)"
+.br
+.RI "Converts HMC5883L firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for HMC5883L digital compass sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

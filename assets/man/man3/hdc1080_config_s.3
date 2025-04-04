@@ -1,0 +1,44 @@
+.TH "hdc1080_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+hdc1080_config_s \- HDC1080 configuration structure definition\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <hdc1080\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBhdc1080_temperature_resolutions_t\fP \fBtemperature_resolution\fP"
+.br
+.ti -1c
+.RI "\fBhdc1080_humidity_resolutions_t\fP \fBhumidity_resolution\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+HDC1080 configuration structure definition\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBhdc1080_humidity_resolutions_t\fP humidity_resolution"
+hdc1080 device humidity resolution 
+.SS "uint16_t i2c_address"
+hdc1080 i2c device address 
+.SS "uint32_t i2c_clock_speed"
+hdc1080 i2c device scl clock speed 
+.SS "\fBhdc1080_temperature_resolutions_t\fP temperature_resolution"
+hdc1080 device temperature resolution 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

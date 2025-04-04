@@ -1,0 +1,338 @@
+.TH "components/peripherals/i2c/esp_ccs811/ccs811.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ccs811/ccs811.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/ccs811\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+\fR#include <esp_timer\&.h>\fP
+.br
+\fR#include <freertos/FreeRTOS\&.h>\fP
+.br
+\fR#include <freertos/task\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCCS811_HW_ID\fP   UINT8_C(0x81)"
+.br
+.RI "ccs811 I2C hardware identification (0x81) "
+.ti -1c
+.RI "#define \fBCCS811_REG_STATUS_R\fP   UINT8_C(0x00)"
+.br
+.RI "ccs811 I2C status register (1-byte) "
+.ti -1c
+.RI "#define \fBCCS811_REG_MEAS_MODE_RW\fP   UINT8_C(0x01)"
+.br
+.RI "ccs811 I2C measurement mode and conditions register (1-byte) "
+.ti -1c
+.RI "#define \fBCCS811_REG_ALG_RESULT_DATA_R\fP   UINT8_C(0x02)"
+.br
+.RI "ccs811 I2C algorithm results (up to 8-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_RAW_DATA_R\fP   UINT8_C(0x03)"
+.br
+.RI "ccs811 I2C raw ADC data values (2-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_ENV_DATA_W\fP   UINT8_C(0x05)"
+.br
+.RI "ccs811 I2C temperature and humidity compensation (4-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_NTC_R\fP   UINT8_C(0x06)"
+.br
+.RI "ccs811 I2C temperature and humidity compensation (4-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_THRESHOLDS_W\fP   UINT8_C(0x10)"
+.br
+.RI "ccs811 I2C interrupt threshold when in operation (4-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_BASELINE_RW\fP   UINT8_C(0x11)"
+.br
+.RI "ccs811 I2C encoded current baseline (2-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_HW_ID_R\fP   UINT8_C(0x20)"
+.br
+.RI "ccs811 I2C hardware identification register (1-byte), value is 0x81 "
+.ti -1c
+.RI "#define \fBCCS811_REG_HW_VERSION_R\fP   UINT8_C(0x21)"
+.br
+.RI "ccs811 I2C hardware version register (1-byte), value is 0x1x "
+.ti -1c
+.RI "#define \fBCCS811_REG_FW_BOOT_VERSION_R\fP   UINT8_C(0x23)"
+.br
+.RI "ccs811 I2C firmware boot version register (2-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_FW_APP_VERSION_R\fP   UINT8_C(0x24)"
+.br
+.RI "ccs811 I2C firmware application version register (2-bytes) "
+.ti -1c
+.RI "#define \fBCCS811_REG_INTERNAL_STATE_R\fP   UINT8_C(0xa0)"
+.br
+.RI "ccs811 I2C internal status register (1-byte) "
+.ti -1c
+.RI "#define \fBCCS811_REG_ERROR_ID_R\fP   UINT8_C(0xe0)"
+.br
+.RI "ccs811 I2C error source register from internal status register (1-byte) "
+.ti -1c
+.RI "#define \fBCCS811_REG_APP_START_W\fP   UINT8_C(0xf4)"
+.br
+.RI "ccs811 I2C application start (1-byte) "
+.ti -1c
+.RI "#define \fBCCS811_REG_SW_RESET_W\fP   UINT8_C(0xff)"
+.br
+.RI "ccs811 I2C software reset when correct 4-bytes written (0x11 0xe5 0x72 0x8a) "
+.ti -1c
+.RI "#define \fBCCS811_ECO2_RANGE_MIN\fP   (400)"
+.br
+.RI "ccs811 eCO2 minimum in ppm "
+.ti -1c
+.RI "#define \fBCCS811_ECO2_RANGE_MAX\fP   (32768)"
+.br
+.RI "ccs811 eCO2 maximum in ppm "
+.ti -1c
+.RI "#define \fBCCS811_ETVOC_RANGE_MIN\fP   (0)"
+.br
+.RI "ccs811 eTVOC minimum in ppb "
+.ti -1c
+.RI "#define \fBCCS811_ETVOC_RANGE_MAX\fP   (29206)"
+.br
+.RI "ccs811 eTVOC maximum in ppb "
+.ti -1c
+.RI "#define \fBCCS811_TEMPERATURE_RANGE_MIN\fP   (\-25)"
+.br
+.RI "ccs811 temperature minimum in degrees Celsius "
+.ti -1c
+.RI "#define \fBCCS811_TEMPERATURE_RANGE_MAX\fP   (50)"
+.br
+.RI "ccs811 temperature maximum in degrees Celsius "
+.ti -1c
+.RI "#define \fBCCS811_HUMIDITY_RANGE_MIN\fP   (0)"
+.br
+.RI "ccs811 relative humidity minimum in percent "
+.ti -1c
+.RI "#define \fBCCS811_HUMIDITY_RANGE_MAX\fP   (100)"
+.br
+.RI "ccs811 relative humidity maximum in percent "
+.ti -1c
+.RI "#define \fBCCS811_POWERUP_DELAY_MS\fP   UINT16_C(25)"
+.br
+.RI "ccs811 I2C start-up delay before device accepts transactions "
+.ti -1c
+.RI "#define \fBCCS811_APPSTART_DELAY_MS\fP   UINT16_C(25)"
+.br
+.ti -1c
+.RI "#define \fBCCS811_RESET_DELAY_MS\fP   UINT16_C(250)"
+.br
+.RI "ccs811 I2C software reset delay before device accepts transactions "
+.ti -1c
+.RI "#define \fBCCS811_WAKE_DELAY_MS\fP   UINT16_C(5)"
+.br
+.RI "ccs811 I2C wake-up delay from sleep before device accepts transactions "
+.ti -1c
+.RI "#define \fBCCS811_DATA_READY_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBCCS811_DATA_POLL_TIMEOUT_MS\fP   UINT16_C(100)"
+.br
+.ti -1c
+.RI "#define \fBCCS811_ERASE_DELAY_MS\fP   UINT16_C(500)"
+.br
+.RI "ccs811 I2C erase delay before device accepts transactions "
+.ti -1c
+.RI "#define \fBCCS811_VERIFY_DELAY_MS\fP   UINT16_C(70)"
+.br
+.RI "ccs811 I2C verification delay before device accepts transactions "
+.ti -1c
+.RI "#define \fBCCS811_TX_RX_DELAY_MS\fP   UINT16_C(10)"
+.br
+.ti -1c
+.RI "#define \fBCCS811_SW_RESET_DATA\fP   { 0x11, 0xe5, 0x72, 0x8a }"
+.br
+.ti -1c
+.RI "#define \fBCCS811_ERASE_DATA\fP   { 0xe7, 0xa7, 0xe6, 0x09 }"
+.br
+.ti -1c
+.RI "#define \fBESP_TIMEOUT_CHECK\fP(start,  len)"
+.br
+.ti -1c
+.RI "#define \fBESP_ARG_CHECK\fP(VAL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBccs811_get_status_register\fP (\fBccs811_handle_t\fP handle, ccs811_status_register_t *const reg)"
+.br
+.RI "Reads status register from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_measure_mode_register\fP (\fBccs811_handle_t\fP handle, ccs811_measure_mode_register_t *const reg)"
+.br
+.RI "Reads measure mode register from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_measure_mode_register\fP (\fBccs811_handle_t\fP handle, const ccs811_measure_mode_register_t reg)"
+.br
+.RI "Writes measure mode register to CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_error_register\fP (\fBccs811_handle_t\fP handle, ccs811_error_code_register_t *const reg)"
+.br
+.RI "Reads error register from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_environmental_data_register\fP (\fBccs811_handle_t\fP handle, const float temperature, const float humidity)"
+.br
+.RI "Writes environmental compensation factors data to CCS811 register\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_thresholds_register\fP (\fBccs811_handle_t\fP handle, const uint16_t low_to_med, const uint16_t med_to_high, const uint8_t hysteresis)"
+.br
+.RI "Writes eCO2 thresholds to CCS811 register\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_baseline_register\fP (\fBccs811_handle_t\fP handle, uint16_t *const reg)"
+.br
+.RI "Reads encoded version of the current baseline register from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_baseline_register\fP (\fBccs811_handle_t\fP handle, const uint16_t baseline)"
+.br
+.RI "Writes encoded version to the CCS811 baseline register\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_hardware_identifier_register\fP (\fBccs811_handle_t\fP handle, uint8_t *const reg)"
+.br
+.RI "Reads hardware identifier register from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_hardware_version_register\fP (\fBccs811_handle_t\fP handle, uint8_t *const reg)"
+.br
+.RI "Reads hardware version register from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_start_application\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Starts the CCS811 application\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_init\fP (i2c_master_bus_handle_t master_handle, const \fBccs811_config_t\fP *ccs811_config, \fBccs811_handle_t\fP *ccs811_handle)"
+.br
+.RI "Initializes a CCS811 device onto the I2C master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_measurement\fP (\fBccs811_handle_t\fP handle, uint16_t *eco2, uint16_t *etvoc)"
+.br
+.RI "Reads air quality measurement from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_environmental_data\fP (\fBccs811_handle_t\fP handle, const float temperature, const float humidity)"
+.br
+.RI "Writes environmental compensation factors data to CCS811 register\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_thresholds\fP (\fBccs811_handle_t\fP handle, const uint16_t low_to_med, const uint16_t med_to_high, const uint8_t hysteresis)"
+.br
+.RI "Writes eCO2 thresholds to CCS811 register\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_drive_mode\fP (\fBccs811_handle_t\fP handle, \fBccs811_drive_modes_t\fP *const mode)"
+.br
+.RI "Reads drive mode from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_set_drive_mode\fP (\fBccs811_handle_t\fP handle, const \fBccs811_drive_modes_t\fP mode)"
+.br
+.RI "Writes drive mode to CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_firmware_mode\fP (\fBccs811_handle_t\fP handle, \fBccs811_firmware_modes_t\fP *const mode)"
+.br
+.RI "Reads firmware mode from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_ntc_resistance\fP (\fBccs811_handle_t\fP handle, const uint32_t r_ref, uint32_t *const resistance)"
+.br
+.RI "Reads NTC resistance connected to CCS811 per AMS application note AN000372\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_data_status\fP (\fBccs811_handle_t\fP handle, bool *const ready)"
+.br
+.RI "Reads data ready status from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_get_error_status\fP (\fBccs811_handle_t\fP handle, bool *const error)"
+.br
+.RI "Reads error status from CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_reset\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Issues soft-reset to CCS811\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_io_wake\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Wakes the CCS811 through the configured wake GPIO pin number\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_io_sleep\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Puts the CCS811 a sleep through the configured wake GPIO pin number\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_io_reset\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Resets the CCS811 through the configured reset GPIO pin number\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_remove\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Removes a CCS811 device from master bus\&. "
+.ti -1c
+.RI "esp_err_t \fBccs811_delete\fP (\fBccs811_handle_t\fP handle)"
+.br
+.RI "Removes an CCS811 device from master I2C bus and delete the handle\&. "
+.ti -1c
+.RI "const char * \fBccs811_err_to_message\fP (ccs811_error_code_register_t error_reg)"
+.br
+.RI "Decodes CCS811 device error to a textual message representation\&. "
+.ti -1c
+.RI "const char * \fBccs811_err_to_code\fP (const ccs811_error_code_register_t error_reg)"
+.br
+.RI "Decodes CCS811 device error to a textual code representation\&. "
+.ti -1c
+.RI "const char * \fBccs811_measure_mode_description\fP (const \fBccs811_drive_modes_t\fP mode)"
+.br
+.RI "Decodes enumerated drive mode to a textual descriptive representation\&. "
+.ti -1c
+.RI "const char * \fBccs811_get_fw_version\fP (void)"
+.br
+.RI "Converts CCS811 firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBccs811_get_fw_version_number\fP (void)"
+.br
+.RI "Converts CCS811 firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF driver for CCS811 Air Quality sensor
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ESP_ARG_CHECK( VAL)"
+\fBValue:\fP
+.nf
+do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
+.PP
+.fi
+
+.SS "#define ESP_TIMEOUT_CHECK( start,  len)"
+\fBValue:\fP
+.nf
+((uint64_t)(esp_timer_get_time() \- (start)) >= (len))
+.PP
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

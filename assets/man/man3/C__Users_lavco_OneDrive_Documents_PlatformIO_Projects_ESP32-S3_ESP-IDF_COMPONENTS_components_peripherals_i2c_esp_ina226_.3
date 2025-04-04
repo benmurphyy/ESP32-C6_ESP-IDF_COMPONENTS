@@ -1,0 +1,130 @@
+.TH "components/peripherals/i2c/esp_ina226 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_ina226 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBina226\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Texas Instruments INA226 I2C voltage, current and power sensor\&. Information on features and functionality are documented and can be found in the \fR\fBina226\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ina226
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBina226\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_ina226
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── ina226_version\&.h
+    │   └── ina226\&.h
+    └── ina226\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results\&.
+
+.PP
+.PP
+.nf
+#include <ina226\&.h>
+
+void i2c0_ina226_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t         last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    ina226_config_t dev_cfg          = I2C_INA226_CONFIG_DEFAULT;
+    ina226_handle_t dev_hdl;
+    //
+    // init device
+    ina226_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "ahtxx handle init failed");
+        assert(dev_hdl);
+    }
+
+    ina226_config_register_t config;
+    ina226_get_configuration_register(dev_hdl, &config);
+    ESP_LOGI(APP_TAG, "Configuration (0x%04x): %s", config\&.reg, uint16_to_binary(config\&.reg));
+    
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## INA266 \- START #########################");
+        
+        // handle sensor
+        float bus_voltage, shunt_voltage, power, current;
+        esp_err_t result = ina226_get_bus_voltage(dev_hdl, &bus_voltage);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "ina226 device read bus voltage failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "bus voltage:     %\&.2f V", bus_voltage);
+        }
+        result = ina226_get_shunt_voltage(dev_hdl, &shunt_voltage);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "ina226 device read shunt voltage failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "shunt voltage:   %\&.2f mV", shunt_voltage * 1000);
+        }
+        result = ina226_get_current(dev_hdl, &current);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "ina226 device current failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "current:         %\&.2f mA", current * 1000);
+        }
+        result = ina226_get_power(dev_hdl, &power);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "ina226 device power failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "power:           %\&.2f mW", power * 1000);
+        }
+
+        
+        ESP_LOGI(APP_TAG, "######################## INA266 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    ina226_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

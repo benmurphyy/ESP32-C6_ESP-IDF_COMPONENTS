@@ -1,0 +1,157 @@
+.TH "components/storage/esp_nvs_ext/nvs_ext.c" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/storage/esp_nvs_ext/nvs_ext.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'include/nvs_ext\&.h'\fP
+.br
+\fR#include <string\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNVS_EXT_FLOAT_MAX_STRING_LENGTH\fP   (32)"
+.br
+.ti -1c
+.RI "#define \fBNVS_EXT_DOUBLE_MAX_STRING_LENGTH\fP   (64)"
+.br
+.ti -1c
+.RI "#define \fBNVS_EXT_NAMESPACE\fP   'nvs_ext_data'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBnvs_init\fP (void)"
+.br
+.RI "Initialization NVS storage\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_float\fP (const char *key, float write_value)"
+.br
+.RI "Writes float typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_float\fP (const char *key, float *read_value)"
+.br
+.RI "Reads float typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_double\fP (const char *key, double write_value)"
+.br
+.RI "Writes double typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_double\fP (const char *key, double *read_value)"
+.br
+.RI "Reads double typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_str\fP (const char *key, const char *write_str)"
+.br
+.RI "Writes string typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_str\fP (const char *key, char **read_str)"
+.br
+.RI "Reads string typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_u8\fP (const char *key, uint8_t write_value)"
+.br
+.RI "Writes uint8_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_u8\fP (const char *key, uint8_t *read_value)"
+.br
+.RI "Reads uint8_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_u16\fP (const char *key, uint16_t write_value)"
+.br
+.RI "Writes uint16_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_u16\fP (const char *key, uint16_t *read_value)"
+.br
+.RI "Reads uint16_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_u32\fP (const char *key, uint32_t write_value)"
+.br
+.RI "Writes uint32_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_u32\fP (const char *key, uint32_t *read_value)"
+.br
+.RI "Reads uint32_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_u64\fP (const char *key, uint64_t write_value)"
+.br
+.RI "Writes uint64_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_u64\fP (const char *key, uint64_t *read_value)"
+.br
+.RI "Reads uint64_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_i8\fP (const char *key, int8_t write_value)"
+.br
+.RI "Writes int8_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_i8\fP (const char *key, int8_t *read_value)"
+.br
+.RI "Reads int8_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_i16\fP (const char *key, int16_t write_value)"
+.br
+.RI "Writes int16_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_i16\fP (const char *key, int16_t *read_value)"
+.br
+.RI "Reads int16_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_i32\fP (const char *key, int32_t write_value)"
+.br
+.RI "Writes int32_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_i32\fP (const char *key, int32_t *read_value)"
+.br
+.RI "Reads int32_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_i64\fP (const char *key, int64_t write_value)"
+.br
+.RI "Writes int64_t typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_i64\fP (const char *key, int64_t *read_value)"
+.br
+.RI "Reads int64_t typed value from NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_write_struct\fP (const char *key, void *write_struct, size_t size)"
+.br
+.RI "Writes struct typed value to NVS\&. "
+.ti -1c
+.RI "esp_err_t \fBnvs_read_struct\fP (const char *key, void **read_struct, size_t size)"
+.br
+.RI "Reads struct type value from NVS\&. "
+.ti -1c
+.RI "const char * \fBnvs_ext_get_fw_version\fP (void)"
+.br
+.RI "Converts \fRnvs_ext\fP firmware version numbers (major, minor, patch) into a string\&. "
+.ti -1c
+.RI "int32_t \fBnvs_ext_get_fw_version_number\fP (void)"
+.br
+.RI "Converts \fRnvs_ext\fP firmware version numbers (major, minor, patch) into an integer value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+ESP-IDF nvs driver extension
+
+.PP
+Ported from esp-open-rtos
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com)
+
+.PP
+MIT Licensed as described in the file LICENSE 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

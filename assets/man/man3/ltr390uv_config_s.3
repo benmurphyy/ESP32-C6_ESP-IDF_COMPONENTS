@@ -1,0 +1,74 @@
+.TH "ltr390uv_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ltr390uv_config_s \- LTR390UV configuration structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ltr390uv\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwindow_factor\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_operation_modes_t\fP \fBoperation_mode\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_sensor_resolutions_t\fP \fBals_sensor_resolution\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_measurement_rates_t\fP \fBals_measurement_rate\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_measurement_gains_t\fP \fBals_measurement_gain\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_sensor_resolutions_t\fP \fBuvs_sensor_resolution\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_measurement_rates_t\fP \fBuvs_measurement_rate\fP"
+.br
+.ti -1c
+.RI "\fBltr390uv_measurement_gains_t\fP \fBuvs_measurement_gain\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+LTR390UV configuration structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBltr390uv_measurement_gains_t\fP als_measurement_gain"
+ltr390uv als measurement gain 
+.SS "\fBltr390uv_measurement_rates_t\fP als_measurement_rate"
+ltr390uv als measurement rate 
+.SS "\fBltr390uv_sensor_resolutions_t\fP als_sensor_resolution"
+ltr390uv als sensor resolution 
+.SS "uint16_t i2c_address"
+ltr390uv i2c device address 
+.SS "uint32_t i2c_clock_speed"
+ltr390uv i2c device scl clock speed in hz 
+.SS "\fBltr390uv_operation_modes_t\fP operation_mode"
+ltr390uv operation mode, als or uvs 
+.SS "\fBltr390uv_measurement_gains_t\fP uvs_measurement_gain"
+ltr390uv uvs measurement gain 
+.SS "\fBltr390uv_measurement_rates_t\fP uvs_measurement_rate"
+ltr390uv uvs measurement rate 
+.SS "\fBltr390uv_sensor_resolutions_t\fP uvs_sensor_resolution"
+ltr390uv uvs sensor resolution 
+.SS "uint8_t window_factor"
+ltr390uv window factor wfac = 1 for no window or clear window glass, wfac > 1 when device is under tinted window glass, calibrate under white LED 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

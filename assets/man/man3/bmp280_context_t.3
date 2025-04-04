@@ -1,0 +1,44 @@
+.TH "bmp280_context_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+bmp280_context_t \- BMP280 context structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <bmp280\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBbmp280_config_t\fP \fBdev_config\fP"
+.br
+.ti -1c
+.RI "i2c_master_dev_handle_t \fBi2c_handle\fP"
+.br
+.ti -1c
+.RI "\fBbmp280_cal_factors_t\fP * \fBdev_cal_factors\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBsensor_type\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+BMP280 context structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBbmp280_cal_factors_t\fP* dev_cal_factors"
+bmp280 device calibration factors 
+.SS "\fBbmp280_config_t\fP dev_config"
+bmp280 device configuration 
+.SS "i2c_master_dev_handle_t i2c_handle"
+bmp280 i2c device handle 
+.SS "uint8_t sensor_type"
+sensor type, should be bmp280 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

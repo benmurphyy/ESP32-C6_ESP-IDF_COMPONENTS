@@ -1,0 +1,69 @@
+.TH "components/utilities/esp_math3d/vector_int16.h" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/utilities/esp_math3d/vector_int16.h
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'quaternion\&.h'\fP
+.br
+\fR#include <stdint\&.h>\fP
+.br
+\fR#include <stdbool\&.h>\fP
+.br
+\fR#include <math\&.h>\fP
+.br
+\fR#include <esp_log\&.h>\fP
+.br
+\fR#include <esp_check\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBvector_int16_t\fP"
+.br
+.RI "Vector_int16 structure\&. "
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct vector_int16_t \fBvector_int16_t\fP"
+.br
+.RI "Vector_int16 definitions\&. "
+.ti -1c
+.RI "typedef struct \fBvector_int16_t\fP * \fBvector_int16_handle_t\fP"
+.br
+.RI "Vector_int16 handle structure\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "esp_err_t \fBvector_int16_init\fP (\fBvector_int16_handle_t\fP *vector_int16_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBvector_int16_init_data\fP (\fBvector_int16_handle_t\fP vector_int16_handle, int16_t nx, int16_t ny, int16_t nz)"
+.br
+.ti -1c
+.RI "esp_err_t \fBvector_int16_get_magnitude\fP (\fBvector_int16_handle_t\fP vector_int16_handle, float *magnitude)"
+.br
+.ti -1c
+.RI "esp_err_t \fBvector_int16_normalize\fP (\fBvector_int16_handle_t\fP vector_int16_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBvector_int16_get_normalized\fP (\fBvector_int16_handle_t\fP vector_int16_handle, \fBvector_int16_handle_t\fP *normalized_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBvector_int16_rotate\fP (\fBvector_int16_handle_t\fP vector_int16_handle, \fBquaternion_handle_t\fP quaternion_handle)"
+.br
+.ti -1c
+.RI "esp_err_t \fBvector_int16_get_rotated\fP (\fBvector_int16_handle_t\fP vector_int16_handle, \fBquaternion_handle_t\fP quaternion_handle, \fBvector_int16_handle_t\fP *rotated_handle)"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

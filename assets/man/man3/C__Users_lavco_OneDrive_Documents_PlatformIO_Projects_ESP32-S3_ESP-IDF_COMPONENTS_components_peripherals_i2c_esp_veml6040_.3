@@ -1,0 +1,116 @@
+.TH "components/peripherals/i2c/esp_veml6040 Directory Reference" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+components/peripherals/i2c/esp_veml6040 Directory Reference
+.SH SYNOPSIS
+.br
+.PP
+.SS "Directories"
+
+.in +1c
+.ti -1c
+.RI "directory \fBinclude\fP"
+.br
+.in -1c
+.SS "Files"
+
+.in +1c
+.ti -1c
+.RI "file \fBveml6040\&.c\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP \fR\fP
+
+.PP
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Vishay VEML6040 4-channel colour I2C sensor\&. Information on features and functionality are documented and can be found in the \fR\fBveml6040\&.h\fP\fP header file and in the \fRdocumentation\fP folder\&.
+.SH "Repository"
+.PP
+The component is hosted on github and is located here: https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_veml6040
+.SH "General Usage"
+.PP
+To get started, simply copy the component to your project's \fRcomponents\fP folder and reference the \fR\fBveml6040\&.h\fP\fP header file as an include\&. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable\&.
+
+.PP
+The auto-calibrate algorithms aren't consistent and are still being worked on\&.
+
+.PP
+.PP
+.nf
+components
+└── esp_veml6040
+    ├── CMakeLists\&.txt
+    ├── README\&.md
+    ├── LICENSE
+    ├── idf_component\&.yml
+    ├── library\&.json
+    ├── documentation
+    │   └── datasheets, etc\&.
+    ├── include
+    │   └── veml6040_version\&.h
+    │   └── veml6040\&.h
+    └── veml6040\&.c
+.fi
+.PP
+.SH "Basic Example"
+.PP
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example\&. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results\&.
+
+.PP
+.PP
+.nf
+#include <veml6040\&.h>
+
+
+void i2c0_veml6040_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time\&.
+    TickType_t          last_wake_time  = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    veml6040_config_t dev_cfg       = I2C_VEML6040_CONFIG_DEFAULT;
+    veml6040_handle_t dev_hdl;
+    //
+    // init device
+    veml6040_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "veml6040 handle init failed");
+        assert(dev_hdl);
+    }
+    //
+    veml6040_config_register_t cfg_reg;
+    //
+    veml6040_get_configuration_register(dev_hdl, &cfg_reg);
+    //
+    ESP_LOGI(APP_TAG, "Configuration Register: 0x%02x (%s)", cfg_reg\&.reg, uint16_to_binary(cfg_reg\&.reg));
+    // 
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## VEML6040 \- START #########################");
+        //
+        // handle sensor
+        float red_als, green_als, blue_als, white_als;
+        esp_err_t result = veml6040_get_als(dev_hdl, &red_als, &green_als, &blue_als, &white_als);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "veml6040 device read failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "Red ALS: %\&.2f Lux | Green ALS: %\&.2f Lux | Blue ALS: %\&.2f Lux | White ALS: %\&.2f Lux", red_als, green_als, blue_als, white_als);
+        }
+        //
+        ESP_LOGI(APP_TAG, "######################## VEML6040 \- END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, I2C0_TASK_SAMPLING_RATE );
+    }
+    //
+    // free resources
+    veml6040_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
+.fi
+.PP
+
+.PP
+Copyright (c) 2024 Eric Gionet (gionet.c.eric@gmail.com) 

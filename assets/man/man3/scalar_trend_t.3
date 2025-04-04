@@ -1,0 +1,44 @@
+.TH "scalar_trend_t" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+scalar_trend_t \- Scalar trend structure\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <scalar_trend\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "double \fBcritical_t\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBsamples_count\fP"
+.br
+.ti -1c
+.RI "uint16_t \fBsamples_size\fP"
+.br
+.ti -1c
+.RI "float * \fBsamples\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Scalar trend structure\&. 
+.SH "Field Documentation"
+.PP 
+.SS "double critical_t"
+scalar trend samples absolute critical t value, state machine variable 
+.SS "float* samples"
+scalar trend samples array, state machine variable 
+.SS "uint16_t samples_count"
+scalar trend samples count, state machine variable 
+.SS "uint16_t samples_size"
+scalar trend samples size, state machine variable 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.

@@ -1,0 +1,39 @@
+.TH "ahtxx_config_s" 3 "ESP-IDF Components by K0I05" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ahtxx_config_s \- AHTXX configuration structure definition\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <ahtxx\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBi2c_address\fP"
+.br
+.ti -1c
+.RI "uint32_t \fBi2c_clock_speed\fP"
+.br
+.ti -1c
+.RI "\fBahtxx_sensor_types_t\fP \fBsensor_type\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+AHTXX configuration structure definition\&. 
+.SH "Field Documentation"
+.PP 
+.SS "uint16_t i2c_address"
+ahtxx i2c device address 
+.SS "uint32_t i2c_clock_speed"
+ahtxx i2c device scl clock speed in hz 
+.SS "\fBahtxx_sensor_types_t\fP sensor_type"
+aht sensor type, see \fRi2c_ahtxx_sensor_types_t\fP enumerator for support sensor types 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for ESP-IDF Components by K0I05 from the source code\&.
