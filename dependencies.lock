@@ -22,6 +22,6 @@ dependencies:
       path: C:\Users\lavco\OneDrive\Documents\PlatformIO\Projects\ESP32-S3_ESP-IDF_COMPONENTS\components\peripherals
       type: local
     version: '*'
-manifest_hash: 1207149362f7474bfea7337c00aa792465fab61df7ac279b78b02e959c567f9c
+manifest_hash: 8898079fc30c84cd41b017ce9fa5b10316cc564e2f3bd3dcf05b4db0b9e40ed7
 target: esp32s3
 version: 1.0.0
