@@ -20,13 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
+// https://github.com/cybergear-robotics/ina226/blob/master/ina226.c
 /**
  * @file ina226.c
  *
  * ESP-IDF driver for INA225 current, voltage, and power monitoring sensor
  * 
- * https://github.com/cybergear-robotics/ina226/blob/master/ina226.c
+ * 
  *
  * Ported from esp-open-rtos
  *

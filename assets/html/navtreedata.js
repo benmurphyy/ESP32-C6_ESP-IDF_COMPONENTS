@@ -25,9 +25,6 @@
 var NAVTREE =
 [
   [ "ESP-IDF Components by K0I05", "index.html", [
-    [ "1.0.2", "md_components_2peripherals_2owb_2onewire__bus_2_c_h_a_n_g_e_l_o_g.html", [
-      [ "1.0.0", "md_components_2peripherals_2owb_2onewire__bus_2_c_h_a_n_g_e_l_o_g.html#autotoc_md100", null ]
-    ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -53,18 +50,18 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"ahtxx_8c.html",
-"ds18b20_8c.html#a609b47df2a476d4523e1e4d18f93a38b",
-"group__drivers.html#ga07e6782fe9746241d6091a5e671ddf06",
-"group__drivers.html#ga3df45aea74256b7236c66d3d603fe4ad",
-"group__drivers.html#ga7227b636c5307b20783c53f0efdc9706",
-"group__drivers.html#gaa65d7446b4cd69035489e605630e4ad4",
-"group__drivers.html#gadcf19e4502c842b6dbc749ed6e19ab96",
-"group__drivers.html#gga43330b906b500291d79752f60652555da947876ba048b07fdd2d6fb2ffc1fec72",
-"group__drivers.html#ggaf3d372d9d9a63fe1bc8b70e59180476aab0de5e8296d4e3a3cf61bcc6b4072f27",
-"pressure__tendency_8c.html#abdfc685f6f2abff2900a51ebef05df2d",
-"structccs811__context__t.html",
-"structs12sd__context__t.html#ac4e5cffa8a1a6f47c218af44df2beca7"
+"annotated.html",
+"d2/df7/font__latin__8x8_8h_source.html",
+"d6/d0f/group__drivers.html#ga1a819671d1ed391a0666e7c8b3b0721e",
+"d6/d0f/group__drivers.html#ga5138a917680071ae02ee47c3caa2a447",
+"d6/d0f/group__drivers.html#ga871d59246e5c9f84ce0edb737276caab",
+"d6/d0f/group__drivers.html#gabb75fad4789bdf0a5626bbce8e79840b",
+"d6/d0f/group__drivers.html#gaedfefa4560269ccc8dd9556b61d9c577",
+"d6/d0f/group__drivers.html#gga7c19f6649ac85eab8edb7dd5a4377816a541d420238237767fab406a135551676",
+"d7/d10/structbmp280__context__t.html#af426a06322777dd303c01b6f98ec3981",
+"da/de5/structas7341__channels__basic__counts__data__s.html#a57916690c6b7a0640867501187470581",
+"de/d51/structak8975__magnetic__axes__data__s.html",
+"dir_941e2ce9072f74fc365c513b5393b268.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

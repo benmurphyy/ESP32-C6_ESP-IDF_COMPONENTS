@@ -103,7 +103,8 @@ INA266 Wiring for Voltage & Current
     .shunt_resistance           = 0.002,                                \
     .max_current                = 0.5                                   \
     }
-// shunt resistor 0.002 ohms
+
+    // shunt resistor 0.002 ohms
 
 /*
  * INA226 enumerator and structure declarations
@@ -118,28 +119,28 @@ INA266 Wiring for Voltage & Current
  * @brief Averaging modes enumerator for ADC resolution/averaging.
  */
 typedef enum ina226_averaging_modes_e {
-    INA226_AVG_MODE_1       = (0b000),  /*!< default */
-    INA226_AVG_MODE_4       = (0b001),
-    INA226_AVG_MODE_16      = (0b010),
-    INA226_AVG_MODE_64      = (0b011),
-    INA226_AVG_MODE_128     = (0b100),
-    INA226_AVG_MODE_256     = (0b101),
-    INA226_AVG_MODE_512     = (0b110),
-    INA226_AVG_MODE_1024    = (0b111)
+    INA226_AVG_MODE_1       = (0b000),  /*!< 1 sample averaged (default) */
+    INA226_AVG_MODE_4       = (0b001),  /*!< 4 samples averaged */
+    INA226_AVG_MODE_16      = (0b010),  /*!< 16 samples averaged */
+    INA226_AVG_MODE_64      = (0b011),  /*!< 64 samples averaged */
+    INA226_AVG_MODE_128     = (0b100),  /*!< 128 samples averaged */
+    INA226_AVG_MODE_256     = (0b101),  /*!< 256 samples averaged */
+    INA226_AVG_MODE_512     = (0b110),  /*!< 512 samples averaged */
+    INA226_AVG_MODE_1024    = (0b111)   /*!< 1024 samples averaged */
 } ina226_averaging_modes_t;
 
 /**
  * @brief Voltage conversion times enumerator for ADC resolution/averaging.
  */
 typedef enum ina226_volt_conv_times_e {
-    INA226_VOLT_CONV_TIME_140US     = (0b000),
-    INA226_VOLT_CONV_TIME_204US     = (0b001),
-    INA226_VOLT_CONV_TIME_332US     = (0b010),
-    INA226_VOLT_CONV_TIME_588US     = (0b011),
-    INA226_VOLT_CONV_TIME_1_1MS     = (0b100),  /*!< 1.1 ms default */
-    INA226_VOLT_CONV_TIME_2_116MS   = (0b101),
-    INA226_VOLT_CONV_TIME_4_156MS   = (0b110),
-    INA226_VOLT_CONV_TIME_8_244MS   = (0b111)
+    INA226_VOLT_CONV_TIME_140US     = (0b000),  /*!< 140 us voltage conversion time */
+    INA226_VOLT_CONV_TIME_204US     = (0b001),  /*!< 204 us voltage conversion time */
+    INA226_VOLT_CONV_TIME_332US     = (0b010),  /*!< 332 us voltage conversion time */
+    INA226_VOLT_CONV_TIME_588US     = (0b011),  /*!< 588 us voltage conversion time */
+    INA226_VOLT_CONV_TIME_1_1MS     = (0b100),  /*!< 1.1 ms voltage conversion time (default) */
+    INA226_VOLT_CONV_TIME_2_116MS   = (0b101),  /*!< 116 ms voltage conversion time */
+    INA226_VOLT_CONV_TIME_4_156MS   = (0b110),  /*!< 156 ms voltage conversion time */
+    INA226_VOLT_CONV_TIME_8_244MS   = (0b111)   /*!< 244 ms voltage conversion time */
 } ina226_volt_conv_times_t;
 
 /**

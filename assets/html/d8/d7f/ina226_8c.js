@@ -1,0 +1,26 @@
+var ina226_8c =
+[
+    [ "INA226_MAX_SHUNT_VOLTAGE", "d8/d7f/ina226_8c.html#a0d09057d9e1bcb9430695abb40a144ce", null ],
+    [ "INA226_MIN_SHUNT_RESISTANCE", "d8/d7f/ina226_8c.html#af9ce3462feb410b56a62aae4e7c8a904", null ],
+    [ "INA226_POWERUP_DELAY_MS", "d8/d7f/ina226_8c.html#aca90ce0b2622462fa3f5419b0fc9e9e4", null ],
+    [ "INA226_RESET_DELAY_MS", "d8/d7f/ina226_8c.html#a7a4ea2725d982c60d16cb7003e6276d5", null ],
+    [ "ina226_calibrate", "d6/d0f/group__drivers.html#ga8eea27ae0382d61f7c80bb4774c0c50c", null ],
+    [ "ina226_delete", "d6/d0f/group__drivers.html#ga4340968df777a40e1055e7fd696a5473", null ],
+    [ "ina226_get_bus_voltage", "d6/d0f/group__drivers.html#ga1032dce6b1672ba3fc96c7101215d5b5", null ],
+    [ "ina226_get_calibration_register", "d6/d0f/group__drivers.html#ga87e0c6dc6bcf9fb3630f3eb072290ead", null ],
+    [ "ina226_get_configuration_register", "d6/d0f/group__drivers.html#ga874bf54050809918410d24a7716ab49d", null ],
+    [ "ina226_get_current", "d6/d0f/group__drivers.html#gaab786a59b9cf01076a4e4cc5a508a52f", null ],
+    [ "ina226_get_fw_version", "d6/d0f/group__drivers.html#ga1d811627c85d6ec2b884ebad0eeb62e3", null ],
+    [ "ina226_get_fw_version_number", "d6/d0f/group__drivers.html#gab02fa33d34919a5ef63b93b492f10e6d", null ],
+    [ "ina226_get_mask_enable_register", "d6/d0f/group__drivers.html#gab5a69559c93404d72986fea90cddd5ba", null ],
+    [ "ina226_get_power", "d6/d0f/group__drivers.html#gafe669e8a9ae6777cb8d428f41139f078", null ],
+    [ "ina226_get_shunt_voltage", "d6/d0f/group__drivers.html#ga3a3b0b1318c633222c93cecb44264d63", null ],
+    [ "ina226_get_triggered_bus_voltage", "d6/d0f/group__drivers.html#gab0cd7952b9db1d15f522b1931ddbb9c0", null ],
+    [ "ina226_get_triggered_current", "d6/d0f/group__drivers.html#ga9ad8e8e43146aac88c11ec453d8627be", null ],
+    [ "ina226_get_triggered_shunt_voltage", "d6/d0f/group__drivers.html#ga68f7fcc45f14c1bf03185b8499ba3226", null ],
+    [ "ina226_init", "d6/d0f/group__drivers.html#ga8fa5583edc47339a2d2e11da22f37ede", null ],
+    [ "ina226_remove", "d6/d0f/group__drivers.html#gadbb4cf932d249b9addb0a4d775c75222", null ],
+    [ "ina226_reset", "d6/d0f/group__drivers.html#ga411af4609160753897a5a58f29028c52", null ],
+    [ "ina226_set_calibration_register", "d6/d0f/group__drivers.html#ga15fbf992c0198f0796a94feb34ba27d2", null ],
+    [ "ina226_set_configuration_register", "d6/d0f/group__drivers.html#gae437da62262dfe72003a49af0837fca3", null ]
+];
