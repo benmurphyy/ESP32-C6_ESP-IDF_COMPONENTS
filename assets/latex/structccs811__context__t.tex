@@ -1,0 +1,73 @@
+\doxysection{ccs811\+\_\+context\+\_\+t Struct Reference}
+\hypertarget{structccs811__context__t}{}\label{structccs811__context__t}\index{ccs811\_context\_t@{ccs811\_context\_t}}
+
+
+CCS811 context structure.  
+
+
+
+
+{\ttfamily \#include $<$ccs811.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structccs811__config__t}{ccs811\+\_\+config\+\_\+t}} \mbox{\hyperlink{structccs811__context__t_a509aba09e8653883a4756e2ef35e28b7}{dev\+\_\+config}}
+\item 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t \mbox{\hyperlink{structccs811__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\+\_\+handle}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structccs811__context__t_a0a7a727f2fa2e4038e2ed79fd4ff4db5}{hardware\+\_\+id}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structccs811__context__t_a4b07fdad3a66e807aaaa14dacefc64f5}{hardware\+\_\+version}}
+\item 
+ccs811\+\_\+firmware\+\_\+version\+\_\+format\+\_\+t \mbox{\hyperlink{structccs811__context__t_a093edfafe8e0e6b8499f50ea211c5430}{bootloader\+\_\+version}}
+\item 
+ccs811\+\_\+firmware\+\_\+version\+\_\+format\+\_\+t \mbox{\hyperlink{structccs811__context__t_a425ab850b98564623ea5038fc50b06a7}{application\+\_\+version}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+CCS811 context structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structccs811__context__t_a425ab850b98564623ea5038fc50b06a7}\index{ccs811\_context\_t@{ccs811\_context\_t}!application\_version@{application\_version}}
+\index{application\_version@{application\_version}!ccs811\_context\_t@{ccs811\_context\_t}}
+\doxysubsubsection{\texorpdfstring{application\_version}{application\_version}}
+{\footnotesize\ttfamily \label{structccs811__context__t_a425ab850b98564623ea5038fc50b06a7} 
+ccs811\+\_\+firmware\+\_\+version\+\_\+format\+\_\+t application\+\_\+version}
+
+ccs811 firmware application version \Hypertarget{structccs811__context__t_a093edfafe8e0e6b8499f50ea211c5430}\index{ccs811\_context\_t@{ccs811\_context\_t}!bootloader\_version@{bootloader\_version}}
+\index{bootloader\_version@{bootloader\_version}!ccs811\_context\_t@{ccs811\_context\_t}}
+\doxysubsubsection{\texorpdfstring{bootloader\_version}{bootloader\_version}}
+{\footnotesize\ttfamily \label{structccs811__context__t_a093edfafe8e0e6b8499f50ea211c5430} 
+ccs811\+\_\+firmware\+\_\+version\+\_\+format\+\_\+t bootloader\+\_\+version}
+
+ccs811 firmware bootloader version \Hypertarget{structccs811__context__t_a509aba09e8653883a4756e2ef35e28b7}\index{ccs811\_context\_t@{ccs811\_context\_t}!dev\_config@{dev\_config}}
+\index{dev\_config@{dev\_config}!ccs811\_context\_t@{ccs811\_context\_t}}
+\doxysubsubsection{\texorpdfstring{dev\_config}{dev\_config}}
+{\footnotesize\ttfamily \label{structccs811__context__t_a509aba09e8653883a4756e2ef35e28b7} 
+\mbox{\hyperlink{structccs811__config__t}{ccs811\+\_\+config\+\_\+t}} dev\+\_\+config}
+
+ccs811 device configuration \Hypertarget{structccs811__context__t_a0a7a727f2fa2e4038e2ed79fd4ff4db5}\index{ccs811\_context\_t@{ccs811\_context\_t}!hardware\_id@{hardware\_id}}
+\index{hardware\_id@{hardware\_id}!ccs811\_context\_t@{ccs811\_context\_t}}
+\doxysubsubsection{\texorpdfstring{hardware\_id}{hardware\_id}}
+{\footnotesize\ttfamily \label{structccs811__context__t_a0a7a727f2fa2e4038e2ed79fd4ff4db5} 
+uint8\+\_\+t hardware\+\_\+id}
+
+ccs811 hardware identifier (static 0x81) \Hypertarget{structccs811__context__t_a4b07fdad3a66e807aaaa14dacefc64f5}\index{ccs811\_context\_t@{ccs811\_context\_t}!hardware\_version@{hardware\_version}}
+\index{hardware\_version@{hardware\_version}!ccs811\_context\_t@{ccs811\_context\_t}}
+\doxysubsubsection{\texorpdfstring{hardware\_version}{hardware\_version}}
+{\footnotesize\ttfamily \label{structccs811__context__t_a4b07fdad3a66e807aaaa14dacefc64f5} 
+uint8\+\_\+t hardware\+\_\+version}
+
+ccs811 hardware version (0x1X) \Hypertarget{structccs811__context__t_aebc33e9d9d97bc57c51d01fa39056a22}\index{ccs811\_context\_t@{ccs811\_context\_t}!i2c\_handle@{i2c\_handle}}
+\index{i2c\_handle@{i2c\_handle}!ccs811\_context\_t@{ccs811\_context\_t}}
+\doxysubsubsection{\texorpdfstring{i2c\_handle}{i2c\_handle}}
+{\footnotesize\ttfamily \label{structccs811__context__t_aebc33e9d9d97bc57c51d01fa39056a22} 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t i2c\+\_\+handle}
+
+I2C device handle 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+ccs811/include/\mbox{\hyperlink{ccs811_8h}{ccs811.\+h}}\end{DoxyCompactItemize}

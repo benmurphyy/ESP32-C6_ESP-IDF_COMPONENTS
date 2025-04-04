@@ -1,0 +1,128 @@
+\doxysection{components/peripherals/spi/esp\+\_\+max31865/max31865.c File Reference}
+\hypertarget{max31865_8c}{}\label{max31865_8c}\index{components/peripherals/spi/esp\_max31865/max31865.c@{components/peripherals/spi/esp\_max31865/max31865.c}}
+{\ttfamily \#include "{}max31865.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structspi__rtd__coeff__t}{spi\+\_\+rtd\+\_\+coeff\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{max31865_8c_ae5d7bdb5b1dfbb427c2da82bcf007934}\label{max31865_8c_ae5d7bdb5b1dfbb427c2da82bcf007934} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+REG\+\_\+\+CONFIG}~UINT8\+\_\+C(0x00)
+\item 
+\Hypertarget{max31865_8c_aee01fbcafa5c5d80ac237245745c04ba}\label{max31865_8c_aee01fbcafa5c5d80ac237245745c04ba} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+REG\+\_\+\+RTD\+\_\+\+MSB}~UINT8\+\_\+C(0x01)
+\item 
+\Hypertarget{max31865_8c_ada0219f3fafc2b3e10af241156aa8fda}\label{max31865_8c_ada0219f3fafc2b3e10af241156aa8fda} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+REG\+\_\+\+HIGH\+\_\+\+FAULT\+\_\+\+MSB}~UINT8\+\_\+C(0x03)
+\item 
+\Hypertarget{max31865_8c_abca7f7883abca99884edadbb9298010e}\label{max31865_8c_abca7f7883abca99884edadbb9298010e} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+REG\+\_\+\+LOW\+\_\+\+FAULT\+\_\+\+MSB}~UINT8\+\_\+C(0x05)
+\item 
+\Hypertarget{max31865_8c_a7bcae265efab2f95b04d3789114c85a6}\label{max31865_8c_a7bcae265efab2f95b04d3789114c85a6} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+REG\+\_\+\+FAULT\+\_\+\+STATUS}~UINT8\+\_\+C(0x07)
+\item 
+\Hypertarget{max31865_8c_a9413af4c66a3a60e67b0eae56e64a161}\label{max31865_8c_a9413af4c66a3a60e67b0eae56e64a161} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(100)
+\item 
+\Hypertarget{max31865_8c_afafbc792e5924cccc87621acba9d03a2}\label{max31865_8c_afafbc792e5924cccc87621acba9d03a2} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(2)
+\item 
+\Hypertarget{max31865_8c_acad0d6c58d4f338b6046de27dfa3c0ff}\label{max31865_8c_acad0d6c58d4f338b6046de27dfa3c0ff} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(120)
+\item 
+\Hypertarget{max31865_8c_aaa8c6729a4ecca9552367f8bd857fd38}\label{max31865_8c_aaa8c6729a4ecca9552367f8bd857fd38} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{max31865_8c_a2391b27598d8b33c86d85eeb804134d2}\label{max31865_8c_a2391b27598d8b33c86d85eeb804134d2} 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+SETUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(15)
+\item 
+\#define \mbox{\hyperlink{max31865_8c_acef647c42152064510f48f2fdfb8fafe}{SPI\+\_\+\+MAX31865\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{max31865_8c_a10e15b24e69372e1e18cd5a980d1d612}{SPI\+\_\+\+MAX31865\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{max31865_8c_a1d1634229474196e9d91d06d6fc87b75}{SPI\+\_\+\+MAX31865\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{max31865_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{max31865_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{max31865_8c_aba38d9edf7f254e0784266d150b42f5d}\label{max31865_8c_aba38d9edf7f254e0784266d150b42f5d} 
+void {\bfseries spi\+\_\+max31865\+\_\+ready\+\_\+rising\+\_\+isr} (void \texorpdfstring{$\ast$}{*}arg)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga802f250a56d82b7f538421065bfd7c4d}{spi\+\_\+max31865\+\_\+init}} (const \mbox{\hyperlink{structspi__max31865__config__t}{spi\+\_\+max31865\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}max31865\+\_\+config, \mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an MAX31865 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa4974de2659627b67439a6eb43b0a00b}{spi\+\_\+max31865\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Removes an MAX31865 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa99e2cf7b0d8f44c1982ce37d99c0bbd}{spi\+\_\+max31865\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Removes an MAX31865 device from master bus and frees handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for MAX31865 RTD temperature sensor
+
+\href{https://github.com/UncleRus/esp-idf-lib/blob/master/components/max31865/max31865.c}{\texttt{ https\+://github.\+com/\+Uncle\+Rus/esp-\/idf-\/lib/blob/master/components/max31865/max31865.\+c}}
+
+\href{https://github.com/espressif/esp-idf/blob/v5.3.2/examples/peripherals/spi_master/hd_eeprom/components/eeprom/spi_eeprom.h}{\texttt{ https\+://github.\+com/espressif/esp-\/idf/blob/v5.\+3.\+2/examples/peripherals/spi\+\_\+master/hd\+\_\+eeprom/components/eeprom/spi\+\_\+eeprom.\+h}}
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{max31865_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{max31865.c@{max31865.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!max31865.c@{max31865.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{max31865_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{max31865_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{max31865.c@{max31865.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!max31865.c@{max31865.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{max31865_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}
+\Hypertarget{max31865_8c_acef647c42152064510f48f2fdfb8fafe}\index{max31865.c@{max31865.c}!SPI\_MAX31865\_APPSTART\_DELAY\_MS@{SPI\_MAX31865\_APPSTART\_DELAY\_MS}}
+\index{SPI\_MAX31865\_APPSTART\_DELAY\_MS@{SPI\_MAX31865\_APPSTART\_DELAY\_MS}!max31865.c@{max31865.c}}
+\doxysubsubsection{\texorpdfstring{SPI\_MAX31865\_APPSTART\_DELAY\_MS}{SPI\_MAX31865\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{max31865_8c_acef647c42152064510f48f2fdfb8fafe} 
+\#define SPI\+\_\+\+MAX31865\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+max31865 delay after initialization before application start-\/up \Hypertarget{max31865_8c_a10e15b24e69372e1e18cd5a980d1d612}\index{max31865.c@{max31865.c}!SPI\_MAX31865\_CMD\_DELAY\_MS@{SPI\_MAX31865\_CMD\_DELAY\_MS}}
+\index{SPI\_MAX31865\_CMD\_DELAY\_MS@{SPI\_MAX31865\_CMD\_DELAY\_MS}!max31865.c@{max31865.c}}
+\doxysubsubsection{\texorpdfstring{SPI\_MAX31865\_CMD\_DELAY\_MS}{SPI\_MAX31865\_CMD\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{max31865_8c_a10e15b24e69372e1e18cd5a980d1d612} 
+\#define SPI\+\_\+\+MAX31865\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+max31865 delay before attempting SPI transactions after a command is issued \Hypertarget{max31865_8c_a1d1634229474196e9d91d06d6fc87b75}\index{max31865.c@{max31865.c}!SPI\_MAX31865\_TX\_RX\_DELAY\_MS@{SPI\_MAX31865\_TX\_RX\_DELAY\_MS}}
+\index{SPI\_MAX31865\_TX\_RX\_DELAY\_MS@{SPI\_MAX31865\_TX\_RX\_DELAY\_MS}!max31865.c@{max31865.c}}
+\doxysubsubsection{\texorpdfstring{SPI\_MAX31865\_TX\_RX\_DELAY\_MS}{SPI\_MAX31865\_TX\_RX\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{max31865_8c_a1d1634229474196e9d91d06d6fc87b75} 
+\#define SPI\+\_\+\+MAX31865\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+max31865 delay after attempting an SPI transmit transaction and attempting an SPI receive transaction 

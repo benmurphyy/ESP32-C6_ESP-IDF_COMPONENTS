@@ -1,0 +1,1710 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="group__utilities" kind="group">
+    <compoundname>utilities</compoundname>
+    <title>Utilities</title>
+    <innerclass refid="unionbytes__to__float__t" prot="public">bytes_to_float_t</innerclass>
+    <innerclass refid="unionbytes__to__double__t" prot="public">bytes_to_double_t</innerclass>
+    <innerclass refid="unionbytes__to__uint64__t" prot="public">bytes_to_uint64_t</innerclass>
+    <innerclass refid="unionbytes__to__int64__t" prot="public">bytes_to_int64_t</innerclass>
+    <innerclass refid="unionbytes__to__uint32__t" prot="public">bytes_to_uint32_t</innerclass>
+    <innerclass refid="unionbytes__to__int32__t" prot="public">bytes_to_int32_t</innerclass>
+    <innerclass refid="unionbytes__to__uint16__t" prot="public">bytes_to_uint16_t</innerclass>
+    <innerclass refid="unionbytes__to__int16__t" prot="public">bytes_to_int16_t</innerclass>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__utilities_1gabf26cbb275bbdd3b365df9af0f784043" prot="public" static="no" strong="no">
+        <type></type>
+        <name>uuid_modes_e</name>
+        <enumvalue id="group__utilities_1ggabf26cbb275bbdd3b365df9af0f784043ab9351dd1945e9c76a58398b8b514511f" prot="public">
+          <name>UUID_MODE_VARIANT4</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Variant-4 UUID </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__utilities_1ggabf26cbb275bbdd3b365df9af0f784043ad3e83d7f4610b724f49dd943ecdd0ab6" prot="public">
+          <name>UUID_MODE_RANDOM</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Random UUID </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>UUID modes enumerator definition. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="53" column="1" bodyfile="components/utilities/esp_uuid/include/uuid.h" bodystart="53" bodyend="56"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__utilities_1gac0ca97a89ccf0c23b56b2824306a974c" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit8_uint8_buffer_t[BIT8_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT8_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit8_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="75" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga0a42b66762b4b4b1fdce48c11e7b5b63" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit16_uint8_buffer_t[BIT16_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT16_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit16_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="76" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga6968a86fa6915c66d2b604c7ebf38ab8" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit24_uint8_buffer_t[BIT24_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT24_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit24_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="77" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1gac7e8bd2f53f2d060353c3c4acb9a243c" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit32_uint8_buffer_t[BIT32_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT32_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit32_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="78" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1gadeb8da49373de97789ecc169ebd3ea57" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit40_uint8_buffer_t[BIT40_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT40_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit40_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="79" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga3335ee6afa7163230aed5dd6dbdb87bb" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit48_uint8_buffer_t[BIT48_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT48_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit48_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="80" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga7539f2b4b4a0772ac106bfa4bb4aecc6" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit56_uint8_buffer_t[BIT56_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT56_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit56_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="81" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga01fd6de2c2acda08be6fba3734f1a573" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit64_uint8_buffer_t[BIT64_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT64_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit64_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="82" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga948024cc6ba14e7944ee743c5eb2e72d" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit72_uint8_buffer_t[BIT72_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT72_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit72_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="83" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1gaa244160d5140850ee38e4804066a498e" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit80_uint8_buffer_t[BIT80_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT80_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit80_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="84" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga52f3c94cb3882cd48d93d40d2bff9803" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit88_uint8_buffer_t[BIT88_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT88_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit88_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="85" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga7f8b38b7ca07743d886c1598ccf2a840" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit96_uint8_buffer_t[BIT96_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT96_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit96_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="86" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga86925ca39589c3e602d4e939c2349459" prot="public" static="no">
+        <type>uint8_t</type>
+        <definition>typedef uint8_t bit104_uint8_buffer_t[BIT104_UINT8_BUFFER_SIZE]</definition>
+        <argsstring>[BIT104_UINT8_BUFFER_SIZE]</argsstring>
+        <name>bit104_uint8_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="87" column="17" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1gab81d7fe964bf2c89b1d3da25ce4a6546" prot="public" static="no">
+        <type>char</type>
+        <definition>typedef char bin8_char_buffer_t[BIN8_CHAR_BUFFER_SIZE]</definition>
+        <argsstring>[BIN8_CHAR_BUFFER_SIZE]</argsstring>
+        <name>bin8_char_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="89" column="14" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1gac09106ea894f0be0b23fac1d537fdfb4" prot="public" static="no">
+        <type>char</type>
+        <definition>typedef char bin16_char_buffer_t[BIN16_CHAR_BUFFER_SIZE]</definition>
+        <argsstring>[BIN16_CHAR_BUFFER_SIZE]</argsstring>
+        <name>bin16_char_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="90" column="14" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga6847b9606b7fa50d38990734e50a46c3" prot="public" static="no">
+        <type>char</type>
+        <definition>typedef char bin32_char_buffer_t[BIN32_CHAR_BUFFER_SIZE]</definition>
+        <argsstring>[BIN32_CHAR_BUFFER_SIZE]</argsstring>
+        <name>bin32_char_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="91" column="14" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1ga7aaeb2c658d20b97f13e49434c5bcb06" prot="public" static="no">
+        <type>char</type>
+        <definition>typedef char bin64_char_buffer_t[BIN64_CHAR_BUFFER_SIZE]</definition>
+        <argsstring>[BIN64_CHAR_BUFFER_SIZE]</argsstring>
+        <name>bin64_char_buffer_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="92" column="14" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__utilities_1gaec357ab99a5343487d3168efc03c0c3b" prot="public" static="no">
+        <type>enum <ref refid="group__utilities_1gabf26cbb275bbdd3b365df9af0f784043" kindref="member">uuid_modes_e</ref></type>
+        <definition>typedef enum uuid_modes_e uuid_modes_t</definition>
+        <argsstring></argsstring>
+        <name>uuid_modes_t</name>
+        <briefdescription>
+<para>UUID modes enumerator definition. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="56" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="group__utilities_1gaa4221834572879d4f0c074355c398f7c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t get_uint32_chip_id</definition>
+        <argsstring>(void)</argsstring>
+        <name>get_uint32_chip_id</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Generates a unique <computeroutput>uint32_t</computeroutput> chip identifier from e-fuse mac address. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>(i.e. a 32-bit integer matching the last 3 bytes of the MAC address. This is less unique than the MAC address chip ID, but is helpful when you need an identifier that can be no more than a 32-bit integer (like for switch...case</para>
+</simplesect>
+<simplesect kind="return"><para>uint32_t </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="160" column="10" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="62" bodyend="68" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="160" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga53af0bb4b91bc34fbc5e72e8706b0bd3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t get_uint64_chip_id</definition>
+        <argsstring>(void)</argsstring>
+        <name>get_uint64_chip_id</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Generates a unique <computeroutput>uint64_t</computeroutput> chip identifier from e-fuse mac address. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>uint64_t Chip identifier. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="167" column="10" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="70" bodyend="76" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="167" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga02d6d016b948747dcd9ac341965b11e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t get_efuse_mac</definition>
+        <argsstring>(void)</argsstring>
+        <name>get_efuse_mac</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Gets the e-fuse mac address. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>uint64_t Mac address. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="174" column="10" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="78" bodyend="82" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="174" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gad5099995b3a7cf28d0daa6a503b98645" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * uint8_to_binary</definition>
+        <argsstring>(const uint8_t value)</argsstring>
+        <name>uint8_to_binary</name>
+        <param>
+          <type>const uint8_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint8_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint8_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="182" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="84" bodyend="95" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="182" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga2f80b461540976962acdece55f4c2539" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * int8_to_binary</definition>
+        <argsstring>(const int8_t value)</argsstring>
+        <name>int8_to_binary</name>
+        <param>
+          <type>const int8_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int8_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int8_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="190" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="97" bodyend="108" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="190" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga83ba4e6a92abb94ff961114fc6338d6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * uint16_to_binary</definition>
+        <argsstring>(const uint16_t value)</argsstring>
+        <name>uint16_to_binary</name>
+        <param>
+          <type>const uint16_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint16_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint16_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="198" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="110" bodyend="121" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="198" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga7ed8cc5cd375f803b38a7fbb480e7d23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * int16_to_binary</definition>
+        <argsstring>(const int16_t value)</argsstring>
+        <name>int16_to_binary</name>
+        <param>
+          <type>const int16_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int16_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int16_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="206" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="123" bodyend="134" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="206" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga28d2915394ebd3a7f838c7700d09a14a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * uint32_to_binary</definition>
+        <argsstring>(const uint32_t value)</argsstring>
+        <name>uint32_to_binary</name>
+        <param>
+          <type>const uint32_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint32_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint32_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="214" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="136" bodyend="147" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="214" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga08cf13e715b06a322b3c865c14756af5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * int32_to_binary</definition>
+        <argsstring>(const int32_t value)</argsstring>
+        <name>int32_to_binary</name>
+        <param>
+          <type>const int32_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int32_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int32_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="222" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="149" bodyend="160" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="222" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga93c75563c392ca0d8b77951982f993e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * uint64_to_binary</definition>
+        <argsstring>(const uint64_t value)</argsstring>
+        <name>uint64_to_binary</name>
+        <param>
+          <type>const uint64_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint64_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint64_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="230" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="162" bodyend="173" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="230" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga915ff6e345918ba361f0b8c74da9f34f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * int64_to_binary</definition>
+        <argsstring>(const int64_t value)</argsstring>
+        <name>int64_to_binary</name>
+        <param>
+          <type>const int64_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int64_t</computeroutput> type to binary as a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int64_t</computeroutput> to transform to binary string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char* binary string representation. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="238" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="175" bodyend="186" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="238" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga605b20edeec2b66a776c2a83b4781ff9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint16_t</type>
+        <definition>uint16_t bytes_to_uint16</definition>
+        <argsstring>(const uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>bytes_to_uint16</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts byte array to <computeroutput>uint16_t</computeroutput> data-type. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array to convert to <computeroutput>uint16_t</computeroutput> data-type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>uint16_t Converted byte array as <computeroutput>uint16_t</computeroutput> data-type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="247" column="10" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="188" bodyend="196" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="247" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gaa055c1b1c048a38d62e293d4eeeb5c80" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t bytes_to_uint32</definition>
+        <argsstring>(const uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>bytes_to_uint32</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts byte array to <computeroutput>uint32_t</computeroutput> data-type. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array to convert to <computeroutput>uint32_t</computeroutput> data-type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>uint32_t Converted byte array as <computeroutput>uint32_t</computeroutput> data-type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="256" column="10" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="198" bodyend="210" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="256" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gab62f44ce85772e99cf5210675216c5a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint64_t</type>
+        <definition>uint64_t bytes_to_uint64</definition>
+        <argsstring>(const uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>bytes_to_uint64</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts byte array to <computeroutput>uint64_t</computeroutput> data-type. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array to convert to <computeroutput>uint64_t</computeroutput> data-type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>uint64_t Converted byte array as <computeroutput>uint64_t</computeroutput> data-type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="265" column="10" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="212" bodyend="232" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="265" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga33d9aabd97bcb7b60e0a78442b2a72b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int16_t</type>
+        <definition>int16_t bytes_to_int16</definition>
+        <argsstring>(const uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>bytes_to_int16</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts byte array to <computeroutput>int16_t</computeroutput> data-type. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array to convert to <computeroutput>int16_t</computeroutput> data-type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>int16_t Converted byte array as <computeroutput>int16_t</computeroutput> data-type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="274" column="9" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="234" bodyend="241" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="274" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gac7858a718d06f472d758de11c508c911" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>int32_t bytes_to_int32</definition>
+        <argsstring>(const uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>bytes_to_int32</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts byte array to <computeroutput>int32_t</computeroutput> data-type. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array to convert to <computeroutput>int32_t</computeroutput> data-type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>int32_t Converted byte array as <computeroutput>int32_t</computeroutput> data-type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="283" column="9" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="243" bodyend="255" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="283" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga4b37473c1250634455d4b2b0e3e4d90a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int64_t</type>
+        <definition>int64_t bytes_to_int64</definition>
+        <argsstring>(const uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>bytes_to_int64</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts byte array to <computeroutput>int64_t</computeroutput> data-type. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array to convert to <computeroutput>int64_t</computeroutput> data-type. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>int64_t Converted byte array as <computeroutput>int64_t</computeroutput> data-type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="292" column="9" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="257" bodyend="277" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="292" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gac54447af40b737a8be4021c5101c81cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void uint16_to_bytes</definition>
+        <argsstring>(const uint16_t value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>uint16_to_bytes</name>
+        <param>
+          <type>const uint16_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint16_t</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint16_t</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>uint16_t</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="301" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="279" bodyend="287" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="301" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga54e47b002115c5793969900470f6af8f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void uint32_to_bytes</definition>
+        <argsstring>(const uint32_t value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>uint32_to_bytes</name>
+        <param>
+          <type>const uint32_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint32_t</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint32_t</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>uint32_t</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="310" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="289" bodyend="301" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="310" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga75f3e4044e67b3a8eb14d85ba691f37f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void uint64_to_bytes</definition>
+        <argsstring>(const uint64_t value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>uint64_to_bytes</name>
+        <param>
+          <type>const uint64_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uint64_t</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint64_t</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>uint64_t</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="319" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="303" bodyend="323" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="319" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga9b368e02c0fe7796842760c30c58b3a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void int16_to_bytes</definition>
+        <argsstring>(const int16_t value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>int16_to_bytes</name>
+        <param>
+          <type>const int16_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int16_t</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int16_t</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>int16_t</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="328" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="325" bodyend="333" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="328" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga7c1e944b045d519a6b00199c78dfcf59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void int32_to_bytes</definition>
+        <argsstring>(const int32_t value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>int32_to_bytes</name>
+        <param>
+          <type>const int32_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int32_t</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int32_t</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>int32_t</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="337" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="335" bodyend="347" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="337" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga99e9c88b8e41b8c546f0b459143f7cda" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void int64_to_bytes</definition>
+        <argsstring>(const int64_t value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>int64_to_bytes</name>
+        <param>
+          <type>const int64_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>int64_t</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>int64_t</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>int64_t</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="346" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="349" bodyend="369" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="346" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga3baa3c6459675c670651f2554d65c55c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void float_to_bytes</definition>
+        <argsstring>(const float value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>float_to_bytes</name>
+        <param>
+          <type>const float</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>float</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>float</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>float</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="355" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="371" bodyend="378" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="355" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gaf06471cb89408719d5e921ed2b0c5df0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void double_to_bytes</definition>
+        <argsstring>(const double value, uint8_t *bytes, const bool little_endian)</argsstring>
+        <name>double_to_bytes</name>
+        <param>
+          <type>const double</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>bytes</declname>
+        </param>
+        <param>
+          <type>const bool</type>
+          <declname>little_endian</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>double</computeroutput> data-type to a byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>double</computeroutput> data-type to convert to byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Converted <computeroutput>double</computeroutput> data-type as byte array. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>little_endian</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Little endian byte order when true, otherwise, big endian byte order when false. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="364" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="380" bodyend="387" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="364" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga662dadeba35a233c25d00622819ac24d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void copy_bytes</definition>
+        <argsstring>(const uint8_t *source, uint8_t *destination, const size_t size)</argsstring>
+        <name>copy_bytes</name>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>source</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>destination</declname>
+        </param>
+        <param>
+          <type>const size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+<para>Copies bytes from source byte array to destination byte array. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>source</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array source to copy from. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>destination</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Byte array destination to copy to. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of destination byte array. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="373" column="6" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="389" bodyend="391" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="373" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga44a16a18055e007ba0048cccf269b073" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * type_utils_get_fw_version</definition>
+        <argsstring>(void)</argsstring>
+        <name>type_utils_get_fw_version</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>type_utils</computeroutput> firmware version numbers (major, minor, patch) into a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>char* <computeroutput>type_utils</computeroutput> firmware version as a string that is formatted as X.X.X (e.g. 4.0.0). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="380" column="12" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="393" bodyend="395" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="380" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga70df88e94f6150b2abb5e825907b8981" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>int32_t type_utils_get_fw_version_number</definition>
+        <argsstring>(void)</argsstring>
+        <name>type_utils_get_fw_version_number</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>type_utils</computeroutput> firmware version numbers (major, minor, patch) into an integer value. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>int32_t <computeroutput>type_utils</computeroutput> firmware version number. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="387" column="9" bodyfile="components/utilities/esp_type_utils/type_utils.c" bodystart="397" bodyend="399" declfile="components/utilities/esp_type_utils/include/type_utils.h" declline="387" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gae3afdb98080a940f9f65478b3cd2830e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void uuid_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>uuid_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initialize UUID generator with default seed values from hash algorithm. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="61" column="6" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="89" bodyend="97" declfile="components/utilities/esp_uuid/include/uuid.h" declline="61" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga2c97147e288e90f41210300ce3888c19" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void uuid_seed</definition>
+        <argsstring>(uint8_t size,...)</argsstring>
+        <name>uuid_seed</name>
+        <param>
+          <type>uint8_t</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+<para>Seed the UUID generator with a variable number of arguments. The total number of arguments must be between 1 and 2. Otherwise, the generator will be seeded with default values (1 and 2). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of arguments to seed the generator. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>...</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Variable number of arguments (1 to 2, 2 seedlings is ideal). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="71" column="6" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="99" bodyend="124" declfile="components/utilities/esp_uuid/include/uuid.h" declline="71" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gabf038ede87aad3fe426bb2b84f084ce3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * uuid_generate</definition>
+        <argsstring>(void)</argsstring>
+        <name>uuid_generate</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Generate a UUID (i.e. d29b226d-04b5-e3ae-cd63-e6ec0d5611ab). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>const char* Pointer to the UUID string. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="78" column="12" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="126" bodyend="179" declfile="components/utilities/esp_uuid/include/uuid.h" declline="78" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gac8af278bba83c1d281cda5e8bf35cac3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void uuid_set_mode</definition>
+        <argsstring>(const uuid_modes_t mode)</argsstring>
+        <name>uuid_set_mode</name>
+        <param>
+          <type>const <ref refid="group__utilities_1gaec357ab99a5343487d3168efc03c0c3b" kindref="member">uuid_modes_t</ref></type>
+          <declname>mode</declname>
+        </param>
+        <briefdescription>
+<para>Set the UUID mode to either variant-4 or random. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mode</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The UUID mode to set. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="85" column="6" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="181" bodyend="183" declfile="components/utilities/esp_uuid/include/uuid.h" declline="85" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga2555e9a52df3835cbacd235cb16b1229" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__utilities_1gaec357ab99a5343487d3168efc03c0c3b" kindref="member">uuid_modes_t</ref></type>
+        <definition>uuid_modes_t uuid_get_mode</definition>
+        <argsstring>(void)</argsstring>
+        <name>uuid_get_mode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Get the current UUID mode. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para><ref refid="group__utilities_1gaec357ab99a5343487d3168efc03c0c3b" kindref="member">uuid_modes_t</ref> The current UUID mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="92" column="14" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="185" bodyend="187" declfile="components/utilities/esp_uuid/include/uuid.h" declline="92" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1ga218eddb6c7a3fc4d6ad4f267f6ad0b37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * uuid_get_fw_version</definition>
+        <argsstring>(void)</argsstring>
+        <name>uuid_get_fw_version</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uuid</computeroutput> firmware version numbers (major, minor, patch) into a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>char* <computeroutput>uuid</computeroutput> firmware version as a string that is formatted as X.X.X (e.g. 4.0.0). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="99" column="12" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="189" bodyend="191" declfile="components/utilities/esp_uuid/include/uuid.h" declline="99" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="group__utilities_1gac7b188027ddf769484337c8920ad0e4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>int32_t uuid_get_fw_version_number</definition>
+        <argsstring>(void)</argsstring>
+        <name>uuid_get_fw_version_number</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>uuid</computeroutput> firmware version numbers (major, minor, patch) into an integer value. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>int32_t <computeroutput>uuid</computeroutput> firmware version number. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_uuid/include/uuid.h" line="106" column="9" bodyfile="components/utilities/esp_uuid/uuid.c" bodystart="193" bodyend="195" declfile="components/utilities/esp_uuid/include/uuid.h" declline="106" declcolumn="9"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="group__utilities_1gad422353745ebda062e1164754de6e957" prot="public" static="no">
+        <name>BIT8_UINT8_BUFFER_SIZE</name>
+        <initializer>(1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="51" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga8ed9f09d958890ffa10ed6087530f824" prot="public" static="no">
+        <name>BIT16_UINT8_BUFFER_SIZE</name>
+        <initializer>(2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="52" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1gad5954a0ffdea61ab9437d564cc0b4da9" prot="public" static="no">
+        <name>BIT24_UINT8_BUFFER_SIZE</name>
+        <initializer>(3)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="53" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1gac496cf730f87b8e9a129abc81ada9d34" prot="public" static="no">
+        <name>BIT32_UINT8_BUFFER_SIZE</name>
+        <initializer>(4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="54" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga0a9bd421b688266b200dd9526ee2c99c" prot="public" static="no">
+        <name>BIT40_UINT8_BUFFER_SIZE</name>
+        <initializer>(5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="55" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga75ab6492bc04f6ded1734bbc174b14b4" prot="public" static="no">
+        <name>BIT48_UINT8_BUFFER_SIZE</name>
+        <initializer>(6)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="56" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga8ee5f49e222160b11b63297be729667b" prot="public" static="no">
+        <name>BIT56_UINT8_BUFFER_SIZE</name>
+        <initializer>(7)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="57" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga03e134217428e7e74442aeefbca7dbfd" prot="public" static="no">
+        <name>BIT64_UINT8_BUFFER_SIZE</name>
+        <initializer>(8)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="58" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga2c6d6d2bf660376a309e74739303a9a5" prot="public" static="no">
+        <name>BIT72_UINT8_BUFFER_SIZE</name>
+        <initializer>(9)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="59" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga3ed4b4cee5881c579c3971cd2bfd9a39" prot="public" static="no">
+        <name>BIT80_UINT8_BUFFER_SIZE</name>
+        <initializer>(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="60" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga3767a1161a8348547016519d08856162" prot="public" static="no">
+        <name>BIT88_UINT8_BUFFER_SIZE</name>
+        <initializer>(11)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="61" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1gab54be8a2371b94f929ece1c98dd852d4" prot="public" static="no">
+        <name>BIT96_UINT8_BUFFER_SIZE</name>
+        <initializer>(12)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="62" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga07d21f4c8835aaf60d6b602907d207b2" prot="public" static="no">
+        <name>BIT104_UINT8_BUFFER_SIZE</name>
+        <initializer>(13)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="63" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga52375b7a57005b5e2c65f289e277c2a3" prot="public" static="no">
+        <name>BIN8_CHAR_BUFFER_SIZE</name>
+        <initializer>(8 + 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="65" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga7136cc8047e273234895cda5e5c4ea2a" prot="public" static="no">
+        <name>BIN16_CHAR_BUFFER_SIZE</name>
+        <initializer>(16 + 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="66" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga4b476686ae2cdf3d7e70c354177de6fd" prot="public" static="no">
+        <name>BIN32_CHAR_BUFFER_SIZE</name>
+        <initializer>(32 + 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="67" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__utilities_1ga197f7132c4307b5e584891943046ee58" prot="public" static="no">
+        <name>BIN64_CHAR_BUFFER_SIZE</name>
+        <initializer>(64 + 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="68" column="9" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE</para>
+<para>Motivated by: <ulink url="https://github.com/RobTillaart/UUID/blob/master/README.md">https://github.com/RobTillaart/UUID/blob/master/README.md</ulink></para>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

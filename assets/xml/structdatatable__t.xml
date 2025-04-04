@@ -1,0 +1,420 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structdatatable__t" kind="struct" language="C++" prot="public">
+    <compoundname>datatable_t</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdatatable__t_1a8f8f80d37794cde9472343e4487ba3eb" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>datatable_t::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table textual name, maximum of 15 characters </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="271" column="40" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="271" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1af755c8b1d5e46192e79cab2dd18013a4" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gafea26979a663f28e185180413d2a0657" kindref="member">datatable_data_storage_types_t</ref></type>
+        <definition>datatable_data_storage_types_t data_storage_type</definition>
+        <argsstring></argsstring>
+        <name>data_storage_type</name>
+        <qualifiedname>datatable_t::data_storage_type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table data storage type, defines handling of records when the data-table is full, set when data-table is created </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="272" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="272" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1af66d20eb4152fa62fb3f09a6fbb4c066" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sampling_count</definition>
+        <argsstring></argsstring>
+        <name>sampling_count</name>
+        <qualifiedname>datatable_t::sampling_count</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table data sampling count seed number </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="273" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="273" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a059747cf18649b21a0f7ba9669445f72" prot="public" static="no" mutable="no">
+        <type><ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref></type>
+        <definition>time_into_interval_handle_t sampling_tii_handle</definition>
+        <argsstring></argsstring>
+        <name>sampling_tii_handle</name>
+        <qualifiedname>datatable_t::sampling_tii_handle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table sampling time-into-interval handle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="274" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="274" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a0bbbfc4ee38bf6c2c6fe47d82c2a28c4" prot="public" static="no" mutable="no">
+        <type><ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref></type>
+        <definition>time_into_interval_handle_t processing_tii_handle</definition>
+        <argsstring></argsstring>
+        <name>processing_tii_handle</name>
+        <qualifiedname>datatable_t::processing_tii_handle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table processing time-into-interval handle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="275" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="275" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a6f91e4291d2d54d3a839775ff28b74c4" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t record_id</definition>
+        <argsstring></argsstring>
+        <name>record_id</name>
+        <qualifiedname>datatable_t::record_id</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table record identifier seed number </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="276" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="276" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1ac3e1907e6b26de76919e4630e516f600" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t columns_count</definition>
+        <argsstring></argsstring>
+        <name>columns_count</name>
+        <qualifiedname>datatable_t::columns_count</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table column count seed number, this number should not exceed the column size </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="277" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="277" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a963305ee188090a9c65c00e7f523e9ad" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t columns_size</definition>
+        <argsstring></argsstring>
+        <name>columns_size</name>
+        <qualifiedname>datatable_t::columns_size</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table column array size, static, set when data-table is created </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="278" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="278" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1ab6f2aaaf1a1ec185d4696db440451969" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga5d1a7ffc0777ec12780e576d0a3a4e95" kindref="member">datatable_column_t</ref> **</type>
+        <definition>datatable_column_t** columns</definition>
+        <argsstring></argsstring>
+        <name>columns</name>
+        <qualifiedname>datatable_t::columns</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>array of data-table columns </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="279" column="39" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="279" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a5182df0f5a4ab561b1d4f42302dc7dbf" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga1b4136f3a54eecfa26399e3ad68c340d" kindref="member">datatable_process_t</ref> **</type>
+        <definition>datatable_process_t** processes</definition>
+        <argsstring></argsstring>
+        <name>processes</name>
+        <qualifiedname>datatable_t::processes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>array of data-table column processes, same size as column array </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="280" column="39" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="280" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a3c6d8f7c16d9799f4e1b2e83bba5e35d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga58b94d6f9e1be1eaf4584002e1905058" kindref="member">datatable_buffer_t</ref> **</type>
+        <definition>datatable_buffer_t** buffers</definition>
+        <argsstring></argsstring>
+        <name>buffers</name>
+        <qualifiedname>datatable_t::buffers</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>array of data-table column buffers, same size as column array </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="281" column="39" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1ad5b794b2cc15ece43d5bcd77db6ebee4" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t rows_count</definition>
+        <argsstring></argsstring>
+        <name>rows_count</name>
+        <qualifiedname>datatable_t::rows_count</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table row count seed number, this number should not exceed the row size </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="282" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="282" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a99c296f51bfaf092b06e326955cd35ca" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t rows_size</definition>
+        <argsstring></argsstring>
+        <name>rows_size</name>
+        <qualifiedname>datatable_t::rows_size</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table row array size, static, set when data-table is created </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="283" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="283" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a7740fae811610362533237d45f002aa6" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga9dff1bcb1f19fd9373a9662c6131d340" kindref="member">datatable_row_t</ref> **</type>
+        <definition>datatable_row_t** rows</definition>
+        <argsstring></argsstring>
+        <name>rows</name>
+        <qualifiedname>datatable_t::rows</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>array of data-table rows </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="284" column="39" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="284" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a2b8bd4b3a1e51cb9ee321f448ca8b5fa" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t samples_maximum_size</definition>
+        <argsstring></argsstring>
+        <name>samples_maximum_size</name>
+        <qualifiedname>datatable_t::samples_maximum_size</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>data-table column samples size maximum, this is calculated from the sampling and processing intervals </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="285" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="285" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a0a1d9d7263f576adb1f197ef6b817614" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t hash_code</definition>
+        <argsstring></argsstring>
+        <name>hash_code</name>
+        <qualifiedname>datatable_t::hash_code</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>hash-code of the data-table handle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="286" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="286" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1a6b9fc4bb50387bce7985d23208bd52fe" prot="public" static="no" mutable="no">
+        <type>SemaphoreHandle_t</type>
+        <definition>SemaphoreHandle_t mutex_handle</definition>
+        <argsstring></argsstring>
+        <name>mutex_handle</name>
+        <qualifiedname>datatable_t::mutex_handle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="287" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="287" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__t_1addda5be8c7d72058a6f6ef2f261d8186" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gae397b383bdf6cba570a50642a798b17b" kindref="member">datatable_event</ref></type>
+        <definition>datatable_event event_handler</definition>
+        <argsstring></argsstring>
+        <name>event_handler</name>
+        <qualifiedname>datatable_t::event_handler</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="288" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="288" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table state object structure definition. Do not modify these fields once the data-table handle is created, these are read-only, and represent a state machine. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="8">
+        <label>datatable_bool_column_data_type_tag</label>
+        <link refid="structdatatable__bool__column__data__type__tag"/>
+      </node>
+      <node id="6">
+        <label>datatable_buffer_tag</label>
+        <link refid="uniondatatable__buffer__tag"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>vector_samples</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>bool_samples</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>float_samples</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>int16_samples</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>datatable_column_name_tag</label>
+        <link refid="structdatatable__column__name__tag"/>
+      </node>
+      <node id="3">
+        <label>datatable_column_tag</label>
+        <link refid="structdatatable__column__tag"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>names</edgelabel>
+        </childnode>
+      </node>
+      <node id="15">
+        <label>datatable_event_tag</label>
+        <link refid="structdatatable__event__tag"/>
+      </node>
+      <node id="9">
+        <label>datatable_float_column_data_type_tag</label>
+        <link refid="structdatatable__float__column__data__type__tag"/>
+      </node>
+      <node id="13">
+        <label>datatable_id_column_data_type_tag</label>
+        <link refid="structdatatable__id__column__data__type__tag"/>
+      </node>
+      <node id="10">
+        <label>datatable_int16_column_data_type_tag</label>
+        <link refid="structdatatable__int16__column__data__type__tag"/>
+      </node>
+      <node id="5">
+        <label>datatable_process_tag</label>
+        <link refid="structdatatable__process__tag"/>
+      </node>
+      <node id="12">
+        <label>datatable_row_data_column_tag</label>
+        <link refid="uniondatatable__row__data__column__tag"/>
+        <childnode refid="13" relation="usage">
+          <edgelabel>id_data</edgelabel>
+        </childnode>
+        <childnode refid="14" relation="usage">
+          <edgelabel>ts_data</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>vector_data</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>bool_data</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>float_data</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>int16_data</edgelabel>
+        </childnode>
+      </node>
+      <node id="11">
+        <label>datatable_row_tag</label>
+        <link refid="structdatatable__row__tag"/>
+        <childnode refid="12" relation="usage">
+          <edgelabel>data_columns</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>datatable_t</label>
+        <link refid="structdatatable__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>processing_tii_handle</edgelabel>
+          <edgelabel>sampling_tii_handle</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>columns</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>processes</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>buffers</edgelabel>
+        </childnode>
+        <childnode refid="11" relation="usage">
+          <edgelabel>rows</edgelabel>
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>event_handler</edgelabel>
+        </childnode>
+      </node>
+      <node id="14">
+        <label>datatable_ts_column_data_type_tag</label>
+        <link refid="structdatatable__ts__column__data__type__tag"/>
+      </node>
+      <node id="7">
+        <label>datatable_vector_column_data_type_tag</label>
+        <link refid="structdatatable__vector__column__data__type__tag"/>
+      </node>
+      <node id="2">
+        <label>time_into_interval_t</label>
+        <link refid="structtime__into__interval__t"/>
+      </node>
+    </collaborationgraph>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="270" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="270" bodyend="289"/>
+    <listofallmembers>
+      <member refid="structdatatable__t_1a3c6d8f7c16d9799f4e1b2e83bba5e35d" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>buffers</name></member>
+      <member refid="structdatatable__t_1ab6f2aaaf1a1ec185d4696db440451969" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>columns</name></member>
+      <member refid="structdatatable__t_1ac3e1907e6b26de76919e4630e516f600" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>columns_count</name></member>
+      <member refid="structdatatable__t_1a963305ee188090a9c65c00e7f523e9ad" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>columns_size</name></member>
+      <member refid="structdatatable__t_1af755c8b1d5e46192e79cab2dd18013a4" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>data_storage_type</name></member>
+      <member refid="structdatatable__t_1addda5be8c7d72058a6f6ef2f261d8186" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>event_handler</name></member>
+      <member refid="structdatatable__t_1a0a1d9d7263f576adb1f197ef6b817614" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>hash_code</name></member>
+      <member refid="structdatatable__t_1a6b9fc4bb50387bce7985d23208bd52fe" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>mutex_handle</name></member>
+      <member refid="structdatatable__t_1a8f8f80d37794cde9472343e4487ba3eb" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>name</name></member>
+      <member refid="structdatatable__t_1a5182df0f5a4ab561b1d4f42302dc7dbf" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>processes</name></member>
+      <member refid="structdatatable__t_1a0bbbfc4ee38bf6c2c6fe47d82c2a28c4" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>processing_tii_handle</name></member>
+      <member refid="structdatatable__t_1a6f91e4291d2d54d3a839775ff28b74c4" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>record_id</name></member>
+      <member refid="structdatatable__t_1a7740fae811610362533237d45f002aa6" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>rows</name></member>
+      <member refid="structdatatable__t_1ad5b794b2cc15ece43d5bcd77db6ebee4" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>rows_count</name></member>
+      <member refid="structdatatable__t_1a99c296f51bfaf092b06e326955cd35ca" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>rows_size</name></member>
+      <member refid="structdatatable__t_1a2b8bd4b3a1e51cb9ee321f448ca8b5fa" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>samples_maximum_size</name></member>
+      <member refid="structdatatable__t_1af66d20eb4152fa62fb3f09a6fbb4c066" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>sampling_count</name></member>
+      <member refid="structdatatable__t_1a059747cf18649b21a0f7ba9669445f72" prot="public" virt="non-virtual"><scope>datatable_t</scope><name>sampling_tii_handle</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

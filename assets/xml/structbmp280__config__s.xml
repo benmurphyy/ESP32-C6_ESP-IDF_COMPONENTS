@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structbmp280__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>bmp280_config_s</compoundname>
+    <includes refid="bmp280_8h" local="no">bmp280.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbmp280__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>bmp280_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="209" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="209" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp280__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>bmp280_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 i2c device scl clock speed </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="210" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="210" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp280__config__s_1a12241bc86e835299ae12611b56b7e246" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga09b778eb79ca4059180c508483dd7426" kindref="member">bmp280_power_modes_t</ref></type>
+        <definition>bmp280_power_modes_t power_mode</definition>
+        <argsstring></argsstring>
+        <name>power_mode</name>
+        <qualifiedname>bmp280_config_s::power_mode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 power mode setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="211" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="211" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp280__config__s_1a57e6b0c4dacd2ca29ad4c3c71a98f728" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga6f4e9c7fd7225c16ee96a6f9df8b9719" kindref="member">bmp280_iir_filters_t</ref></type>
+        <definition>bmp280_iir_filters_t iir_filter</definition>
+        <argsstring></argsstring>
+        <name>iir_filter</name>
+        <qualifiedname>bmp280_config_s::iir_filter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 IIR filter setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="212" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="212" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp280__config__s_1ae73fa5c593d834c2e39a628b574ae876" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga21e2402ff8bbe587f1c9564f68de0561" kindref="member">bmp280_pressure_oversampling_t</ref></type>
+        <definition>bmp280_pressure_oversampling_t pressure_oversampling</definition>
+        <argsstring></argsstring>
+        <name>pressure_oversampling</name>
+        <qualifiedname>bmp280_config_s::pressure_oversampling</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 pressure oversampling setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="213" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="213" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp280__config__s_1a378ce448d1df2ee325ce28239a946b02" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga5cfc950126ecbc2ac018615da7ed9448" kindref="member">bmp280_temperature_oversampling_t</ref></type>
+        <definition>bmp280_temperature_oversampling_t temperature_oversampling</definition>
+        <argsstring></argsstring>
+        <name>temperature_oversampling</name>
+        <qualifiedname>bmp280_config_s::temperature_oversampling</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 temperature oversampling setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="214" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="214" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp280__config__s_1a0d5af9bb0a15a2c61d91fb67231f8feb" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaa9766737a9535054ecb73ff34d467dbd" kindref="member">bmp280_standby_times_t</ref></type>
+        <definition>bmp280_standby_times_t standby_time</definition>
+        <argsstring></argsstring>
+        <name>standby_time</name>
+        <qualifiedname>bmp280_config_s::standby_time</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp280 stand-by time setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="215" column="45" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="215" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>BMP280 configuration structure definition. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_bmp280/include/bmp280.h" line="208" column="1" bodyfile="components/peripherals/i2c/esp_bmp280/include/bmp280.h" bodystart="208" bodyend="216"/>
+    <listofallmembers>
+      <member refid="structbmp280__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>i2c_address</name></member>
+      <member refid="structbmp280__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structbmp280__config__s_1a57e6b0c4dacd2ca29ad4c3c71a98f728" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>iir_filter</name></member>
+      <member refid="structbmp280__config__s_1a12241bc86e835299ae12611b56b7e246" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>power_mode</name></member>
+      <member refid="structbmp280__config__s_1ae73fa5c593d834c2e39a628b574ae876" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>pressure_oversampling</name></member>
+      <member refid="structbmp280__config__s_1a0d5af9bb0a15a2c61d91fb67231f8feb" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>standby_time</name></member>
+      <member refid="structbmp280__config__s_1a378ce448d1df2ee325ce28239a946b02" prot="public" virt="non-virtual"><scope>bmp280_config_s</scope><name>temperature_oversampling</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

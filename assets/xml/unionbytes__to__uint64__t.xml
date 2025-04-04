@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="unionbytes__to__uint64__t" kind="union" language="C++" prot="public">
+    <compoundname>bytes_to_uint64_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="unionbytes__to__uint64__t_1afe6ba1b22411145f320c05a743cd8f33" prot="public" static="no" mutable="no">
+        <type>bit64_uint8_buffer_t</type>
+        <definition>bit64_uint8_buffer_t bytes</definition>
+        <argsstring></argsstring>
+        <name>bytes</name>
+        <qualifiedname>bytes_to_uint64_t::bytes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="112" column="26" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionbytes__to__uint64__t_1a4e630859cc0e2a22bd6acf39a6a8e218" prot="public" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>bytes_to_uint64_t::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_type_utils/include/type_utils.h" line="113" column="26" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/utilities/esp_type_utils/include/type_utils.h" line="111" column="1" bodyfile="components/utilities/esp_type_utils/include/type_utils.h" bodystart="111" bodyend="114"/>
+    <listofallmembers>
+      <member refid="unionbytes__to__uint64__t_1afe6ba1b22411145f320c05a743cd8f33" prot="public" virt="non-virtual"><scope>bytes_to_uint64_t</scope><name>bytes</name></member>
+      <member refid="unionbytes__to__uint64__t_1a4e630859cc0e2a22bd6acf39a6a8e218" prot="public" virt="non-virtual"><scope>bytes_to_uint64_t</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

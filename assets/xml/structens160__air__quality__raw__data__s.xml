@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structens160__air__quality__raw__data__s" kind="struct" language="C++" prot="public">
+    <compoundname>ens160_air_quality_raw_data_s</compoundname>
+    <includes refid="ens160_8h" local="no">ens160.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1a2f4f6628c9df6be1689f335edb411d75" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp0_ri</definition>
+        <argsstring></argsstring>
+        <name>hp0_ri</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp0_ri</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="224" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="224" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1a3358fe289b2e5c4f6b7a47c9a2575d3b" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp1_ri</definition>
+        <argsstring></argsstring>
+        <name>hp1_ri</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp1_ri</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="225" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="225" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1a2f476f89b8b2cc588ef43b29c5ed512a" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp2_ri</definition>
+        <argsstring></argsstring>
+        <name>hp2_ri</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp2_ri</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="226" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="226" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1a9083d4b3c0f60ff781e1ccced308d7f3" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp3_ri</definition>
+        <argsstring></argsstring>
+        <name>hp3_ri</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp3_ri</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="227" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="227" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1a4ec634cdc91b1f8b0bf036703cd202f9" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp0_bl</definition>
+        <argsstring></argsstring>
+        <name>hp0_bl</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp0_bl</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="228" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="228" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1ab0c04480f68f3bf56ef2e4f8f1b0be37" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp1_bl</definition>
+        <argsstring></argsstring>
+        <name>hp1_bl</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp1_bl</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="229" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1acd8dbfd0cab04410d3a79be37ad91bc2" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp2_bl</definition>
+        <argsstring></argsstring>
+        <name>hp2_bl</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp2_bl</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="230" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="230" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__air__quality__raw__data__s_1a946365ccfbc5881b53ceb5e652f4474c" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t hp3_bl</definition>
+        <argsstring></argsstring>
+        <name>hp3_bl</name>
+        <qualifiedname>ens160_air_quality_raw_data_s::hp3_bl</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="231" column="37" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="231" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>ENS160 air quality raw data structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="223" column="1" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="223" bodyend="232"/>
+    <listofallmembers>
+      <member refid="structens160__air__quality__raw__data__s_1a4ec634cdc91b1f8b0bf036703cd202f9" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp0_bl</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1a2f4f6628c9df6be1689f335edb411d75" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp0_ri</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1ab0c04480f68f3bf56ef2e4f8f1b0be37" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp1_bl</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1a3358fe289b2e5c4f6b7a47c9a2575d3b" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp1_ri</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1acd8dbfd0cab04410d3a79be37ad91bc2" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp2_bl</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1a2f476f89b8b2cc588ef43b29c5ed512a" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp2_ri</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1a946365ccfbc5881b53ceb5e652f4474c" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp3_bl</name></member>
+      <member refid="structens160__air__quality__raw__data__s_1a9083d4b3c0f60ff781e1ccced308d7f3" prot="public" virt="non-virtual"><scope>ens160_air_quality_raw_data_s</scope><name>hp3_ri</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

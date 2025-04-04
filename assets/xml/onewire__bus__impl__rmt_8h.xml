@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="onewire__bus__impl__rmt_8h" kind="file" language="C++">
+    <compoundname>onewire_bus_impl_rmt.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="yes">esp_err.h</includes>
+    <includes refid="onewire__types_8h" local="yes">onewire_types.h</includes>
+    <includedby refid="onewire__bus_8h" local="yes">components/peripherals/owb/onewire_bus/include/onewire_bus.h</includedby>
+    <includedby refid="onewire__bus__impl__rmt_8c" local="yes">components/peripherals/owb/onewire_bus/src/onewire_bus_impl_rmt.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/owb/onewire_bus/include/onewire_bus_impl_rmt.h</label>
+        <link refid="onewire__bus__impl__rmt_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>onewire_types.h</label>
+        <link refid="onewire__types_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>esp_err.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>components/peripherals/owb/esp_ds18b20/ds18b20.c</label>
+        <link refid="ds18b20_8c"/>
+      </node>
+      <node id="3">
+        <label>components/peripherals/owb/esp_ds18b20/include/ds18b20.h</label>
+        <link refid="ds18b20_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>components/peripherals/owb/onewire_bus/include/onewire_bus.h</label>
+        <link refid="onewire__bus_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>components/peripherals/owb/onewire_bus/include/onewire_bus_impl_rmt.h</label>
+        <link refid="onewire__bus__impl__rmt_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structonewire__bus__rmt__config__t" prot="public">onewire_bus_rmt_config_t</innerclass>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="onewire__bus__impl__rmt_8h_1a07591c3df6ef26728e657b6d38b052f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t onewire_new_bus_rmt</definition>
+        <argsstring>(const onewire_bus_config_t *bus_config, const onewire_bus_rmt_config_t *rmt_config, onewire_bus_handle_t *ret_bus)</argsstring>
+        <name>onewire_new_bus_rmt</name>
+        <param>
+          <type>const <ref refid="structonewire__bus__config__t" kindref="compound">onewire_bus_config_t</ref> *</type>
+          <declname>bus_config</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structonewire__bus__rmt__config__t" kindref="compound">onewire_bus_rmt_config_t</ref> *</type>
+          <declname>rmt_config</declname>
+        </param>
+        <param>
+          <type><ref refid="structonewire__bus__t" kindref="compound">onewire_bus_handle_t</ref> *</type>
+          <declname>ret_bus</declname>
+        </param>
+        <briefdescription>
+<para>Create 1-Wire bus with RMT backend. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>One 1-Wire bus utilizes a pair of RMT TX and RX channels</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">bus_config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>1-Wire bus configuration </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">rmt_config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>RMT specific configuration </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">ret_bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Returned 1-Wire bus handle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><itemizedlist>
+<listitem><para>ESP_OK: create 1-Wire bus handle successfully</para>
+</listitem><listitem><para>ESP_ERR_INVALID_ARG: create 1-Wire bus handle failed because of invalid argument</para>
+</listitem><listitem><para>ESP_ERR_NO_MEM: create 1-Wire bus handle failed because of out of memory</para>
+</listitem><listitem><para>ESP_FAIL: create 1-Wire bus handle failed because some other error </para>
+</listitem></itemizedlist>
+</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/include/onewire_bus_impl_rmt.h" line="38" column="11" bodyfile="components/peripherals/owb/onewire_bus/src/onewire_bus_impl_rmt.c" bodystart="248" bodyend="342" declfile="components/peripherals/owb/onewire_bus/include/onewire_bus_impl_rmt.h" declline="38" declcolumn="11"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>SPDX-FileCopyrightText:<sp/>2022-2023<sp/>Espressif<sp/>Systems<sp/>(Shanghai)<sp/>CO<sp/>LTD</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;esp_err.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;onewire_types.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="structonewire__bus__rmt__config__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="20" refid="structonewire__bus__rmt__config__t_1ad8f34eb6bb5033b2626849e9cc7d38b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structonewire__bus__rmt__config__t_1ad8f34eb6bb5033b2626849e9cc7d38b1" kindref="member">max_rx_bytes</ref>;<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}<sp/><ref refid="structonewire__bus__rmt__config__t" kindref="compound">onewire_bus_rmt_config_t</ref>;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal">esp_err_t<sp/>onewire_new_bus_rmt(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structonewire__bus__config__t" kindref="compound">onewire_bus_config_t</ref><sp/>*bus_config,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structonewire__bus__rmt__config__t" kindref="compound">onewire_bus_rmt_config_t</ref><sp/>*rmt_config,<sp/>onewire_bus_handle_t<sp/>*ret_bus);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/owb/onewire_bus/include/onewire_bus_impl_rmt.h"/>
+  </compounddef>
+</doxygen>

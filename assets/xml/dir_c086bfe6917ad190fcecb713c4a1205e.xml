@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_c086bfe6917ad190fcecb713c4a1205e" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_tlv493d/include</compoundname>
+    <innerfile refid="tlv493d_8h">tlv493d.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_tlv493d/include/"/>
+  </compounddef>
+</doxygen>

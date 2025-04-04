@@ -1,0 +1,403 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="onewire__device_8c" kind="file" language="C++">
+    <compoundname>onewire_device.c</compoundname>
+    <includes local="no">string.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="yes">esp_check.h</includes>
+    <includes local="yes">esp_log.h</includes>
+    <includes refid="onewire__bus_8h" local="yes">onewire_bus.h</includes>
+    <includes refid="onewire__device_8h" local="yes">onewire_device.h</includes>
+    <includes refid="onewire__crc_8h" local="yes">onewire_crc.h</includes>
+    <includes refid="onewire__cmd_8h" local="yes">onewire_cmd.h</includes>
+    <incdepgraph>
+      <node id="6">
+        <label>onewire_bus.h</label>
+        <link refid="onewire__bus_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>onewire_bus_impl_rmt.h</label>
+        <link refid="onewire__bus__impl__rmt_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>onewire_cmd.h</label>
+        <link refid="onewire__cmd_8h_source"/>
+      </node>
+      <node id="12">
+        <label>onewire_crc.h</label>
+        <link refid="onewire__crc_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>onewire_device.h</label>
+        <link refid="onewire__device_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>onewire_types.h</label>
+        <link refid="onewire__types_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>components/peripherals/owb/onewire_bus/src/onewire_device.c</label>
+        <link refid="onewire__device_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>esp_check.h</label>
+      </node>
+      <node id="8">
+        <label>esp_err.h</label>
+      </node>
+      <node id="5">
+        <label>esp_log.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="13">
+        <label>stddef.h</label>
+      </node>
+      <node id="7">
+        <label>stdint.h</label>
+      </node>
+      <node id="2">
+        <label>string.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structonewire__device__iter__t" prot="public">onewire_device_iter_t</innerclass>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="onewire__device_8c_1a47e43c0c49ad58847489d1db61527963" prot="public" static="no">
+        <type>struct onewire_device_iter_t</type>
+        <definition>typedef struct onewire_device_iter_t onewire_device_iter_t</definition>
+        <argsstring></argsstring>
+        <name>onewire_device_iter_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/src/onewire_device.c" line="22" column="23"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="onewire__device_8c_1a5a85b9c772bbeb480b209a3e6ea92b4c" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* TAG</definition>
+        <argsstring></argsstring>
+        <name>TAG</name>
+        <initializer>= &quot;1-wire.device&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/src/onewire_device.c" line="15" column="19" bodyfile="components/peripherals/owb/onewire_bus/src/onewire_device.c" bodystart="15" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="onewire__device_8c_1a251800e38e2087189f36b4050a35e5a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t onewire_new_device_iter</definition>
+        <argsstring>(onewire_bus_handle_t bus, onewire_device_iter_handle_t *ret_iter)</argsstring>
+        <name>onewire_new_device_iter</name>
+        <param>
+          <type><ref refid="structonewire__bus__t" kindref="compound">onewire_bus_handle_t</ref></type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type><ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_handle_t</ref> *</type>
+          <declname>ret_iter</declname>
+        </param>
+        <briefdescription>
+<para>Create an iterator to enumerate the 1-Wire devices on the bus. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>1-Wire bus handle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">ret_iter</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Returned created device iterator </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><itemizedlist>
+<listitem><para>ESP_OK: Create device iterator successfully</para>
+</listitem><listitem><para>ESP_ERR_INVALID_ARG: Invalid argument</para>
+</listitem><listitem><para>ESP_ERR_NO_MEM: No memory to create device iterator</para>
+</listitem><listitem><para>ESP_FAIL: Other errors </para>
+</listitem></itemizedlist>
+</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/src/onewire_device.c" line="24" column="11" bodyfile="components/peripherals/owb/onewire_bus/src/onewire_device.c" bodystart="24" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="onewire__device_8c_1ae2b11e9e139f0ac432a898a017193004" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t onewire_del_device_iter</definition>
+        <argsstring>(onewire_device_iter_handle_t iter)</argsstring>
+        <name>onewire_del_device_iter</name>
+        <param>
+          <type><ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_handle_t</ref></type>
+          <declname>iter</declname>
+        </param>
+        <briefdescription>
+<para>Delete the device iterator. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">iter</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device iterator handle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><itemizedlist>
+<listitem><para>ESP_OK: Delete device iterator successfully</para>
+</listitem><listitem><para>ESP_ERR_INVALID_ARG: Invalid argument</para>
+</listitem><listitem><para>ESP_FAIL: Other errors </para>
+</listitem></itemizedlist>
+</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/src/onewire_device.c" line="37" column="11" bodyfile="components/peripherals/owb/onewire_bus/src/onewire_device.c" bodystart="37" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="onewire__device_8c_1a1526399a9cabb39e980a410b0c19bbbb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t onewire_device_iter_get_next</definition>
+        <argsstring>(onewire_device_iter_handle_t iter, onewire_device_t *dev)</argsstring>
+        <name>onewire_device_iter_get_next</name>
+        <param>
+          <type><ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_handle_t</ref></type>
+          <declname>iter</declname>
+        </param>
+        <param>
+          <type><ref refid="structonewire__device__t" kindref="compound">onewire_device_t</ref> *</type>
+          <declname>dev</declname>
+        </param>
+        <briefdescription>
+<para>Get the next 1-Wire device from the iterator. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">iter</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device iterator handle </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">dev</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Returned 1-Wire device handle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><itemizedlist>
+<listitem><para>ESP_OK: Get next device successfully</para>
+</listitem><listitem><para>ESP_ERR_INVALID_ARG: Invalid argument</para>
+</listitem><listitem><para>ESP_ERR_NOT_FOUND: No more device to get</para>
+</listitem><listitem><para>ESP_FAIL: Other errors </para>
+</listitem></itemizedlist>
+</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/src/onewire_device.c" line="47" column="11" bodyfile="components/peripherals/owb/onewire_bus/src/onewire_device.c" bodystart="47" bodyend="124"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>SPDX-FileCopyrightText:<sp/>2022-2023<sp/>Espressif<sp/>Systems<sp/>(Shanghai)<sp/>CO<sp/>LTD</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;esp_check.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;esp_log.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;onewire_bus.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;onewire_device.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;onewire_crc.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;onewire_cmd.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*TAG<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;1-wire.device&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="structonewire__device__iter__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>onewire_bus_handle_t<sp/>bus;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>last_discrepancy;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>is_last_device;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>rom_number[</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(onewire_device_address_t)];</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}<sp/><ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_t</ref>;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal">esp_err_t<sp/>onewire_new_device_iter(onewire_bus_handle_t<sp/>bus,<sp/>onewire_device_iter_handle_t<sp/>*ret_iter)</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(bus<sp/>&amp;&amp;<sp/>ret_iter,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;invalid<sp/>argument&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_t</ref><sp/>*iter<sp/>=<sp/>calloc(1,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structonewire__device__iter__t" kindref="compound">onewire_device_iter_t</ref>));</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(iter,<sp/>ESP_ERR_NO_MEM,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;no<sp/>mem<sp/>for<sp/>device<sp/>iterator&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>iter-&gt;bus<sp/>=<sp/>bus;</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>*ret_iter<sp/>=<sp/>iter;</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal">esp_err_t<sp/>onewire_del_device_iter(onewire_device_iter_handle_t<sp/>iter)</highlight></codeline>
+<codeline lineno="38"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(iter,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;invalid<sp/>argument&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>free(iter);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Search<sp/>algorithm<sp/>inspired<sp/>by<sp/>https://www.analog.com/en/app-notes/1wire-search-algorithm.html</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal">esp_err_t<sp/>onewire_device_iter_get_next(onewire_device_iter_handle_t<sp/>iter,<sp/><ref refid="structonewire__device__t" kindref="compound">onewire_device_t</ref><sp/>*dev)</highlight></codeline>
+<codeline lineno="48"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(iter<sp/>&amp;&amp;<sp/>dev,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;invalid<sp/>argument&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>we<sp/>don&apos;t<sp/>treat<sp/>iterator<sp/>ending<sp/>and<sp/>ESP_ERR_NOT_FOUND<sp/>as<sp/>an<sp/>error<sp/>condition,<sp/>so<sp/>just<sp/>print<sp/>debug<sp/>message<sp/>here</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(iter-&gt;is_last_device)<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_LOGD(TAG,<sp/></highlight><highlight class="stringliteral">&quot;1-wire<sp/>rom<sp/>search<sp/>finished&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_ERR_NOT_FOUND;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>onewire_bus_handle_t<sp/>bus<sp/>=<sp/>iter-&gt;bus;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>reset_result<sp/>=<sp/>onewire_bus_reset(bus);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(reset_result<sp/>==<sp/>ESP_ERR_NOT_FOUND)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_LOGW(TAG,<sp/></highlight><highlight class="stringliteral">&quot;reset<sp/>bus<sp/>failed:<sp/>no<sp/>devices<sp/>found&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_ERR_NOT_FOUND;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(reset_result,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;reset<sp/>bus<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>send<sp/>rom<sp/>search<sp/>command<sp/>and<sp/>start<sp/>search<sp/>algorithm</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(onewire_bus_write_bytes(bus,<sp/>(uint8_t[])<sp/>{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ONEWIRE_CMD_SEARCH_NORMAL</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>},<sp/>1),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;send<sp/>ONEWIRE_CMD_SEARCH_NORMAL<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>last_zero<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(uint16_t<sp/>rom_bit_index<sp/>=<sp/>0;<sp/>rom_bit_index<sp/>&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(onewire_device_address_t)<sp/>*<sp/>8;<sp/>rom_bit_index<sp/>++)<sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>rom_byte_index<sp/>=<sp/>rom_bit_index<sp/>/<sp/>8;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>rom_bit_mask<sp/>=<sp/>1<sp/>&lt;&lt;<sp/>(rom_bit_index<sp/>%<sp/>8);<sp/></highlight><highlight class="comment">//<sp/>calculate<sp/>byte<sp/>index<sp/>and<sp/>bit<sp/>mask<sp/>in<sp/>advance<sp/>for<sp/>convenience</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>rom_bit<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>rom_bit_complement<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(onewire_bus_read_bit(bus,<sp/>&amp;rom_bit),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;read<sp/>rom_bit<sp/>error&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">//<sp/>write<sp/>1<sp/>bit<sp/>to<sp/>read<sp/>from<sp/>the<sp/>bus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(onewire_bus_read_bit(bus,<sp/>&amp;rom_bit_complement),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;read<sp/>rom_bit_complement<sp/>error&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">//<sp/>read<sp/>a<sp/>bit<sp/>and<sp/>its<sp/>complement</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>No<sp/>devices<sp/>participating<sp/>in<sp/>search.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(rom_bit<sp/>&amp;&amp;<sp/>rom_bit_complement)<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_LOGE(TAG,<sp/></highlight><highlight class="stringliteral">&quot;no<sp/>devices<sp/>participating<sp/>in<sp/>search&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_ERR_NOT_FOUND;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>search_direction;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(rom_bit<sp/>!=<sp/>rom_bit_complement)<sp/>{<sp/></highlight><highlight class="comment">//<sp/>There<sp/>are<sp/>only<sp/>0s<sp/>or<sp/>1s<sp/>in<sp/>the<sp/>bit<sp/>of<sp/>the<sp/>participating<sp/>ROM<sp/>numbers.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>search_direction<sp/>=<sp/>rom_bit;<sp/><sp/></highlight><highlight class="comment">//<sp/>just<sp/>go<sp/>ahead</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{<sp/></highlight><highlight class="comment">//<sp/>There<sp/>are<sp/>both<sp/>0s<sp/>and<sp/>1s<sp/>in<sp/>the<sp/>current<sp/>bit<sp/>position<sp/>of<sp/>the<sp/>participating<sp/>ROM<sp/>numbers.<sp/>This<sp/>is<sp/>a<sp/>discrepancy.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(rom_bit_index<sp/>&lt;<sp/>iter-&gt;last_discrepancy)<sp/>{<sp/></highlight><highlight class="comment">//<sp/>current<sp/>id<sp/>bit<sp/>is<sp/>before<sp/>the<sp/>last<sp/>discrepancy<sp/>bit</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>search_direction<sp/>=<sp/>(iter-&gt;rom_number[rom_byte_index]<sp/>&amp;<sp/>rom_bit_mask)<sp/>?<sp/>0x01<sp/>:<sp/>0x00;<sp/></highlight><highlight class="comment">//<sp/>follow<sp/>previous<sp/>way</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>search_direction<sp/>=<sp/>(rom_bit_index<sp/>==<sp/>iter-&gt;last_discrepancy)<sp/>?<sp/>0x01<sp/>:<sp/>0x00;<sp/></highlight><highlight class="comment">//<sp/>search<sp/>for<sp/>0<sp/>bit<sp/>first</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(search_direction<sp/>==<sp/>0)<sp/>{<sp/></highlight><highlight class="comment">//<sp/>record<sp/>zero&apos;s<sp/>position<sp/>in<sp/>last<sp/>zero</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>last_zero<sp/>=<sp/>rom_bit_index;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(search_direction<sp/>==<sp/>1)<sp/>{<sp/></highlight><highlight class="comment">//<sp/>set<sp/>corrsponding<sp/>rom<sp/>bit<sp/>by<sp/>search<sp/>direction</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter-&gt;rom_number[rom_byte_index]<sp/>|=<sp/>rom_bit_mask;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter-&gt;rom_number[rom_byte_index]<sp/>&amp;=<sp/>~rom_bit_mask;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>set<sp/>search<sp/>direction</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(onewire_bus_write_bit(bus,<sp/>search_direction),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;write<sp/>direction<sp/>bit<sp/>error&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>if<sp/>the<sp/>search<sp/>was<sp/>successful</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>iter-&gt;last_discrepancy<sp/>=<sp/>last_zero;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(iter-&gt;last_discrepancy<sp/>==<sp/>0)<sp/>{<sp/></highlight><highlight class="comment">//<sp/>last<sp/>zero<sp/>loops<sp/>back<sp/>to<sp/>the<sp/>first<sp/>bit</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter-&gt;is_last_device<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>check<sp/>crc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(onewire_crc8(0,<sp/>iter-&gt;rom_number,<sp/>7)<sp/>==<sp/>iter-&gt;rom_number[7],<sp/>ESP_ERR_INVALID_CRC,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;bad<sp/>device<sp/>crc&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>save<sp/>the<sp/>ROM<sp/>number<sp/>as<sp/>the<sp/>device<sp/>address</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>memcpy(&amp;dev-&gt;<ref refid="structonewire__device__t_1a5afc4be76558fd465ffae808b95240db" kindref="member">address</ref>,<sp/>iter-&gt;rom_number,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(onewire_device_address_t));</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>dev-&gt;<ref refid="structonewire__device__t_1a852a10af8beadc461028932833c630b2" kindref="member">bus</ref><sp/>=<sp/>bus;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_LOGD(TAG,<sp/></highlight><highlight class="stringliteral">&quot;new<sp/>1-Wire<sp/>device<sp/>found,<sp/>address:<sp/>%016llX&quot;</highlight><highlight class="normal">,<sp/>dev-&gt;<ref refid="structonewire__device__t_1a5afc4be76558fd465ffae808b95240db" kindref="member">address</ref>);</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/owb/onewire_bus/src/onewire_device.c"/>
+  </compounddef>
+</doxygen>

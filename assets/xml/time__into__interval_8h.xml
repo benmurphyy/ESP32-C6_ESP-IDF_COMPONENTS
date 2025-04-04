@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="time__into__interval_8h" kind="file" language="C++">
+    <compoundname>time_into_interval.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">time.h</includes>
+    <includes local="no">sys/time.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">freertos/FreeRTOS.h</includes>
+    <includes local="no">freertos/task.h</includes>
+    <includes local="no">freertos/semphr.h</includes>
+    <includes refid="time__into__interval__version_8h" local="yes">time_into_interval_version.h</includes>
+    <includedby refid="time__into__interval_8c" local="yes">components/schedule/esp_time_into_interval/time_into_interval.c</includedby>
+    <includedby refid="datatable_8h" local="no">components/storage/esp_datalogger/include/datatable.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/schedule/esp_time_into_interval/include/time_into_interval.h</label>
+        <link refid="time__into__interval_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>time_into_interval_version.h</label>
+        <link refid="time__into__interval__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>freertos/FreeRTOS.h</label>
+      </node>
+      <node id="9">
+        <label>freertos/semphr.h</label>
+      </node>
+      <node id="8">
+        <label>freertos/task.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+      <node id="5">
+        <label>sys/time.h</label>
+      </node>
+      <node id="4">
+        <label>time.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>components/schedule/esp_time_into_interval/include/time_into_interval.h</label>
+        <link refid="time__into__interval_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>components/schedule/esp_time_into_interval/time_into_interval.c</label>
+        <link refid="time__into__interval_8c"/>
+      </node>
+      <node id="4">
+        <label>components/storage/esp_datalogger/datatable.c</label>
+        <link refid="datatable_8c"/>
+      </node>
+      <node id="3">
+        <label>components/storage/esp_datalogger/include/datatable.h</label>
+        <link refid="datatable_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structtime__into__interval__config__tag" prot="public">time_into_interval_config_tag</innerclass>
+    <innerclass refid="structtime__into__interval__t" prot="public">time_into_interval_t</innerclass>
+    <sectiondef kind="enum">
+      <member refid="group___free_r_t_o_s_1gada504a9c0f0f4dfe0f199664315cf03e" kind="enum"><name>time_into_interval_types_tag</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kind="typedef"><name>time_into_interval_types_t</name></member>
+      <member refid="group___free_r_t_o_s_1ga6e978e77c6c540b23118c566330e5c98" kind="typedef"><name>time_into_interval_config_t</name></member>
+      <member refid="group___free_r_t_o_s_1gae4e15ab69f530a7e83dcdf3af9aeba46" kind="typedef"><name>time_into_interval_t</name></member>
+      <member refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kind="typedef"><name>time_into_interval_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group___free_r_t_o_s_1ga8839638585a6027c6b6004269ce33332" kind="function"><name>time_into_interval_normalize_interval_to_sec</name></member>
+      <member refid="group___free_r_t_o_s_1ga4ea58aff92e03e0999e13b9059db560c" kind="function"><name>time_into_interval_normalize_interval_to_msec</name></member>
+      <member refid="group___free_r_t_o_s_1ga982c2457f6151d440ce678d7cfcbc6e9" kind="function"><name>time_into_interval_get_epoch_timestamp</name></member>
+      <member refid="group___free_r_t_o_s_1ga19bb96065ad640e8015b423a6ddb5203" kind="function"><name>time_into_interval_get_epoch_timestamp_msec</name></member>
+      <member refid="group___free_r_t_o_s_1ga6522ff46a3f8f569a093fbe0c843e733" kind="function"><name>time_into_interval_get_epoch_timestamp_usec</name></member>
+      <member refid="group___free_r_t_o_s_1ga5a8f66c96d678209be13d05551e03b41" kind="function"><name>time_into_interval_set_epoch_timestamp_event</name></member>
+      <member refid="group___free_r_t_o_s_1gaea97dc6faeb6a62d513f1770a047e84f" kind="function"><name>time_into_interval_init</name></member>
+      <member refid="group___free_r_t_o_s_1gad8797044bf62fb81d63b0641eb69d0d0" kind="function"><name>time_into_interval</name></member>
+      <member refid="group___free_r_t_o_s_1gaff5bdae2635f1eef5f2a5b2b4f15ed70" kind="function"><name>time_into_interval_delay</name></member>
+      <member refid="group___free_r_t_o_s_1ga67a2453e7554521bf2433e6c7dc97d89" kind="function"><name>time_into_interval_get_last_event</name></member>
+      <member refid="group___free_r_t_o_s_1gaf78af531a43da234d76d18bd625e2f61" kind="function"><name>time_into_interval_delete</name></member>
+      <member refid="group___free_r_t_o_s_1ga2c01efdfcdc21973ae44337092dd43d9" kind="function"><name>time_into_interval_get_fw_version</name></member>
+      <member refid="group___free_r_t_o_s_1ga6e7164d22748e5d4e5a486a2679ba124" kind="function"><name>time_into_interval_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__TIME_INTO_INTERVAL_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__TIME_INTO_INTERVAL_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;time.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;sys/time.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/FreeRTOS.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/task.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/semphr.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;time_into_interval_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group___free_r_t_o_s_1gada504a9c0f0f4dfe0f199664315cf03e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group___free_r_t_o_s_1gada504a9c0f0f4dfe0f199664315cf03e" kindref="member">time_into_interval_types_tag</ref><sp/>{</highlight></codeline>
+<codeline lineno="58" refid="group___free_r_t_o_s_1ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group___free_r_t_o_s_1ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b" kindref="member">TIME_INTO_INTERVAL_SEC</ref>,<sp/></highlight></codeline>
+<codeline lineno="59" refid="group___free_r_t_o_s_1ggada504a9c0f0f4dfe0f199664315cf03ea2c749b9f8d47709452ae742faac5b425" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group___free_r_t_o_s_1ggada504a9c0f0f4dfe0f199664315cf03ea2c749b9f8d47709452ae742faac5b425" kindref="member">TIME_INTO_INTERVAL_MIN</ref>,<sp/></highlight></codeline>
+<codeline lineno="60" refid="group___free_r_t_o_s_1ggada504a9c0f0f4dfe0f199664315cf03ea9d879915b4d045c4ada8b90c4001eb04" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group___free_r_t_o_s_1ggada504a9c0f0f4dfe0f199664315cf03ea9d879915b4d045c4ada8b90c4001eb04" kindref="member">TIME_INTO_INTERVAL_HR</ref><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="61" refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" refkind="member"><highlight class="normal">}<sp/><ref refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kindref="member">time_into_interval_types_t</ref>;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="structtime__into__interval__config__tag" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtime__into__interval__config__tag" kindref="compound">time_into_interval_config_tag</ref><sp/>{</highlight></codeline>
+<codeline lineno="68" refid="structtime__into__interval__config__tag_1a8f8f80d37794cde9472343e4487ba3eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__config__tag_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="69" refid="structtime__into__interval__config__tag_1afc1e4351f1556110d518be945051f2ef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kindref="member">time_into_interval_types_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__config__tag_1afc1e4351f1556110d518be945051f2ef" kindref="member">interval_type</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70" refid="structtime__into__interval__config__tag_1a5ad8525a82f3f239e2996a31cf1da9bb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__config__tag_1a5ad8525a82f3f239e2996a31cf1da9bb" kindref="member">interval_period</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="71" refid="structtime__into__interval__config__tag_1a5934c7b21109948494861935ee2fda9a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__config__tag_1a5934c7b21109948494861935ee2fda9a" kindref="member">interval_offset</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="72" refid="group___free_r_t_o_s_1ga6e978e77c6c540b23118c566330e5c98" refkind="member"><highlight class="normal">}<sp/><ref refid="group___free_r_t_o_s_1ga6e978e77c6c540b23118c566330e5c98" kindref="member">time_into_interval_config_t</ref>;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="structtime__into__interval__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtime__into__interval__t" kindref="compound">time_into_interval_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="79" refid="structtime__into__interval__t_1a8f8f80d37794cde9472343e4487ba3eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80" refid="structtime__into__interval__t_1a647b79dbf0451b370e22b0165db894e7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1a647b79dbf0451b370e22b0165db894e7" kindref="member">epoch_timestamp</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="81" refid="structtime__into__interval__t_1afc1e4351f1556110d518be945051f2ef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kindref="member">time_into_interval_types_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1afc1e4351f1556110d518be945051f2ef" kindref="member">interval_type</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82" refid="structtime__into__interval__t_1a5ad8525a82f3f239e2996a31cf1da9bb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1a5ad8525a82f3f239e2996a31cf1da9bb" kindref="member">interval_period</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="83" refid="structtime__into__interval__t_1a5934c7b21109948494861935ee2fda9a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1a5934c7b21109948494861935ee2fda9a" kindref="member">interval_offset</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84" refid="structtime__into__interval__t_1a0a1d9d7263f576adb1f197ef6b817614" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1a0a1d9d7263f576adb1f197ef6b817614" kindref="member">hash_code</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85" refid="structtime__into__interval__t_1a6b9fc4bb50387bce7985d23208bd52fe" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>SemaphoreHandle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtime__into__interval__t_1a6b9fc4bb50387bce7985d23208bd52fe" kindref="member">mutex_handle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="group___free_r_t_o_s_1gae4e15ab69f530a7e83dcdf3af9aeba46" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtime__into__interval__t" kindref="compound">time_into_interval_t</ref><sp/><ref refid="structtime__into__interval__t" kindref="compound">time_into_interval_t</ref>;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtime__into__interval__t" kindref="compound">time_into_interval_t</ref><sp/>*<ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref>;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="comment">//<sp/>https://lloydrochester.com/post/c/c-timestamp-epoch/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal">uint64_t<sp/><ref refid="group___free_r_t_o_s_1ga8839638585a6027c6b6004269ce33332" kindref="member">time_into_interval_normalize_interval_to_sec</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kindref="member">time_into_interval_types_t</ref><sp/><ref refid="structtime__into__interval__t_1afc1e4351f1556110d518be945051f2ef" kindref="member">interval_type</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>interval);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal">uint64_t<sp/><ref refid="group___free_r_t_o_s_1ga4ea58aff92e03e0999e13b9059db560c" kindref="member">time_into_interval_normalize_interval_to_msec</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kindref="member">time_into_interval_types_t</ref><sp/><ref refid="structtime__into__interval__t_1afc1e4351f1556110d518be945051f2ef" kindref="member">interval_type</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>interval);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal">uint64_t<sp/><ref refid="group___free_r_t_o_s_1ga982c2457f6151d440ce678d7cfcbc6e9" kindref="member">time_into_interval_get_epoch_timestamp</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal">uint64_t<sp/><ref refid="group___free_r_t_o_s_1ga19bb96065ad640e8015b423a6ddb5203" kindref="member">time_into_interval_get_epoch_timestamp_msec</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal">uint64_t<sp/><ref refid="group___free_r_t_o_s_1ga6522ff46a3f8f569a093fbe0c843e733" kindref="member">time_into_interval_get_epoch_timestamp_usec</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal">esp_err_t<sp/><ref refid="group___free_r_t_o_s_1ga5a8f66c96d678209be13d05551e03b41" kindref="member">time_into_interval_set_epoch_timestamp_event</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group___free_r_t_o_s_1gad0a6a2a318069e1eb5bb480541532a4d" kindref="member">time_into_interval_types_t</ref><sp/><ref refid="structtime__into__interval__t_1afc1e4351f1556110d518be945051f2ef" kindref="member">interval_type</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/><ref refid="structtime__into__interval__t_1a5ad8525a82f3f239e2996a31cf1da9bb" kindref="member">interval_period</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/><ref refid="structtime__into__interval__t_1a5934c7b21109948494861935ee2fda9a" kindref="member">interval_offset</ref>,<sp/>uint64_t<sp/>*<ref refid="structtime__into__interval__t_1a647b79dbf0451b370e22b0165db894e7" kindref="member">epoch_timestamp</ref>);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal">esp_err_t<sp/><ref refid="group___free_r_t_o_s_1gaea97dc6faeb6a62d513f1770a047e84f" kindref="member">time_into_interval_init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group___free_r_t_o_s_1ga6e978e77c6c540b23118c566330e5c98" kindref="member">time_into_interval_config_t</ref><sp/>*time_into_interval_config,<sp/></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref><sp/>*time_into_interval_handle);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="group___free_r_t_o_s_1gad8797044bf62fb81d63b0641eb69d0d0" kindref="member">time_into_interval</ref>(<ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref><sp/>time_into_interval_handle);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal">esp_err_t<sp/><ref refid="group___free_r_t_o_s_1gaff5bdae2635f1eef5f2a5b2b4f15ed70" kindref="member">time_into_interval_delay</ref>(<ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref><sp/>time_into_interval_handle);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal">esp_err_t<sp/><ref refid="group___free_r_t_o_s_1ga67a2453e7554521bf2433e6c7dc97d89" kindref="member">time_into_interval_get_last_event</ref>(<ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref><sp/>time_into_interval_handle,<sp/>uint64_t<sp/>*<ref refid="structtime__into__interval__t_1a647b79dbf0451b370e22b0165db894e7" kindref="member">epoch_timestamp</ref>);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal">esp_err_t<sp/><ref refid="group___free_r_t_o_s_1gaf78af531a43da234d76d18bd625e2f61" kindref="member">time_into_interval_delete</ref>(<ref refid="group___free_r_t_o_s_1gaa862ccd8f6519ec10b85b169d3018023" kindref="member">time_into_interval_handle_t</ref><sp/>time_into_interval_handle);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group___free_r_t_o_s_1ga2c01efdfcdc21973ae44337092dd43d9" kindref="member">time_into_interval_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal">int32_t<sp/><ref refid="group___free_r_t_o_s_1ga6e7164d22748e5d4e5a486a2679ba124" kindref="member">time_into_interval_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__TIME_INTO_INTERVAL_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/schedule/esp_time_into_interval/include/time_into_interval.h"/>
+  </compounddef>
+</doxygen>

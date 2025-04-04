@@ -1,0 +1,76 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+sgp4x/include/sgp4x.h File Reference}
+\hypertarget{sgp4x_8h}{}\label{sgp4x_8h}\index{components/peripherals/i2c/esp\_sgp4x/include/sgp4x.h@{components/peripherals/i2c/esp\_sgp4x/include/sgp4x.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+{\ttfamily \#include "{}sgp4x\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structsgp4x__config__t}{sgp4x\+\_\+config\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em SGP4X device configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structsgp4x__context__t}{sgp4x\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em SGP4X context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+SGP4\+X\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em sgp4x I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+SGP4\+X\+\_\+\+DEV\+\_\+\+ADDR}~UINT8\+\_\+C(0x59)
+\begin{DoxyCompactList}\small\item\em sgp4x I2C address \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+SGP4\+X\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_ga5740bccde801d90d1b16127b61f2200d}{I2\+C\+\_\+\+SGP41\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga172a041d0029789cda43731ae5d58411}{sgp4x\+\_\+versions\+\_\+e}} {\bfseries sgp4x\+\_\+versions\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SGP4X versions enumerator. \end{DoxyCompactList}\item 
+typedef struct sgp4x\+\_\+context\+\_\+t {\bfseries sgp4x\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SGP4X context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structsgp4x__context__t}{sgp4x\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries sgp4x\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SGP4X handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga172a041d0029789cda43731ae5d58411}{sgp4x\+\_\+versions\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga172a041d0029789cda43731ae5d58411abd896d46b209f042add938b9449048a9}{SGP4\+X\+\_\+\+VERSION\+\_\+\+SGP40}}
+, {\bfseries SGP4\+X\+\_\+\+VERSION\+\_\+\+SGP41}
+ \}
+\begin{DoxyCompactList}\small\item\em SGP4X versions enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0bec60b8c1ab24e8061a1d6dadeed8fc}{sgp4x\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{structsgp4x__config__t}{sgp4x\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}sgp4x\+\_\+config, \mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}sgp4x\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an SGP4X device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga52efe21453b1d3606b14e49aefef9ae1}{sgp4x\+\_\+execute\+\_\+compensated\+\_\+conditioning}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity, uint16\+\_\+t \texorpdfstring{$\ast$}{*}sraw\+\_\+voc)
+\begin{DoxyCompactList}\small\item\em Starts the conditioning with temperature and humidity compensation, i.\+e., the VOC pixel will be operated at the same temperature as it is by calling the sgp41\+\_\+measure\+\_\+raw\+\_\+signals function while the NOx pixel will be operated at a different temperature for conditioning. The conditioning should be ran when the device is initially powered for 10-\/seconds but do not run the conditioning longer than 10-\/seconds, otherwise damage may occur to the SGP4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga12f002286cb3e1a07ee467160febf165}{sgp4x\+\_\+execute\+\_\+conditioning}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}sraw\+\_\+voc)
+\begin{DoxyCompactList}\small\item\em Starts the conditioning, i.\+e., the VOC pixel will be operated at the same temperature as it is by calling the sgp41\+\_\+measure\+\_\+raw\+\_\+signals function while the NOx pixel will be operated at a different temperature for conditioning. The conditioning should be ran when the device is initially powered for 10-\/seconds but do not run the conditioning longer than 10-\/seconds, otherwise damage may occur to the SGP4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaadd5bf985665147c4d997b26120dd9aa}{sgp4x\+\_\+measure\+\_\+compensated\+\_\+signals}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity, uint16\+\_\+t \texorpdfstring{$\ast$}{*}sraw\+\_\+voc, uint16\+\_\+t \texorpdfstring{$\ast$}{*}sraw\+\_\+nox)
+\begin{DoxyCompactList}\small\item\em Starts and/or continues the VOC and NOX measurement mode with temperature and humidity compensation. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4efe02574e8280c6d1f75e5d67c1c282}{sgp4x\+\_\+measure\+\_\+signals}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}sraw\+\_\+voc, uint16\+\_\+t \texorpdfstring{$\ast$}{*}sraw\+\_\+nox)
+\begin{DoxyCompactList}\small\item\em Starts and/or continues the VOC and NOX measurement mode using default temperature and humidity compensation. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga74a5a683b3490a8aaf03b03539929fae}{sgp4x\+\_\+execute\+\_\+self\+\_\+test}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle, sgp4x\+\_\+self\+\_\+test\+\_\+result\+\_\+t \texorpdfstring{$\ast$}{*}const result)
+\begin{DoxyCompactList}\small\item\em Performs the built-\/in self-\/test that checks for integrity of both hotplate and MOX material. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1a819671d1ed391a0666e7c8b3b0721e}{sgp4x\+\_\+turn\+\_\+heater\+\_\+off}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Turns the hotplate off, stops the measurement, and SGP4X enters idle mode. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1dd9539587a9de55514ab1dbeeb5d705}{sgp4x\+\_\+reset}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset and initializes SGP4X. See datasheet for details. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga05534062bf7f57eac9d0992fb788c4d7}{sgp4x\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an SGP4X device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad0cd93f1a86d46ac471b1266854ad781}{sgp4x\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an SGP4X device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gaff4d0425f787cda12108abe40e286d37}{sgp4x\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts SGP4X firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga2bf0031a0518fb0d4d8f1db8bf200dbb}{sgp4x\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts SGP4X firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries sgp4x\+\_\+self\+\_\+test\+\_\+result\+\_\+t}
+\end{DoxyCompactItemize}

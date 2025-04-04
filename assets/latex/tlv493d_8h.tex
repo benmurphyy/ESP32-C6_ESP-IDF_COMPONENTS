@@ -1,0 +1,127 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+tlv493d/include/tlv493d.h File Reference}
+\hypertarget{tlv493d_8h}{}\label{tlv493d_8h}\index{components/peripherals/i2c/esp\_tlv493d/include/tlv493d.h@{components/peripherals/i2c/esp\_tlv493d/include/tlv493d.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtlv493d__raw__data__s}{tlv493d\+\_\+raw\+\_\+data\+\_\+s}}
+\item 
+struct \mbox{\hyperlink{structtlv493d__data__s}{tlv493d\+\_\+data\+\_\+s}}
+\item 
+struct \mbox{\hyperlink{structtlv493d__config__s}{tlv493d\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em TLV493D configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtlv493d__context__t}{tlv493d\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em TLV493D context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+TLV493\+D\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em tlv493d I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+TLV493\+D\+\_\+\+DEV\+\_\+\+ADDR\+\_\+\+LO}~UINT8\+\_\+C(0x1F)
+\begin{DoxyCompactList}\small\item\em tlv493d I2C address \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+TLV493\+D\+\_\+\+DEV\+\_\+\+ADDR\+\_\+\+HI}~UINT8\+\_\+C(0x5E)
+\begin{DoxyCompactList}\small\item\em tlv493d I2C address \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_gad171287ac8085f0a188a683075880fde}{I2\+C\+\_\+\+TLV493\+D\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga43330b906b500291d79752f60652555d}{tlv493d\+\_\+power\+\_\+modes\+\_\+e}} \mbox{\hyperlink{group__drivers_ga02db763e5747b105f9e52eacb812b95e}{tlv493d\+\_\+power\+\_\+modes\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em TLV493D power modes enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga8a1c2496b7b3fa516317908155db1508}{tlv493d\+\_\+channel\+\_\+conversions\+\_\+e}} {\bfseries tlv493d\+\_\+channel\+\_\+conversions\+\_\+t}
+\begin{DoxyCompactList}\small\item\em TLV493D channel conversations enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga81ff587a2eccd15913024e248e774309}{tlv493d\+\_\+i2c\+\_\+addresses\+\_\+e}} {\bfseries tlv493d\+\_\+i2c\+\_\+addresses\+\_\+t}
+\begin{DoxyCompactList}\small\item\em TLV493D addresses for slaves enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga86b1342fde57c461ca1223323b8a3a49}{tlv493d\+\_\+low\+\_\+power\+\_\+periods\+\_\+e}} {\bfseries tlv493d\+\_\+low\+\_\+power\+\_\+periods\+\_\+t}
+\begin{DoxyCompactList}\small\item\em TLV493D low power periods enumerator. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structtlv493d__raw__data__s}{tlv493d\+\_\+raw\+\_\+data\+\_\+s}} {\bfseries tlv493d\+\_\+data\+\_\+signal\+\_\+t}
+\item 
+typedef struct \mbox{\hyperlink{structtlv493d__data__s}{tlv493d\+\_\+data\+\_\+s}} {\bfseries tlv493d\+\_\+data\+\_\+t}
+\item 
+typedef struct \mbox{\hyperlink{structtlv493d__config__s}{tlv493d\+\_\+config\+\_\+s}} {\bfseries tlv493d\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em TLV493D configuration structure. \end{DoxyCompactList}\item 
+typedef struct tlv493d\+\_\+context\+\_\+t {\bfseries tlv493d\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em TLV493D context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structtlv493d__context__t}{tlv493d\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries tlv493d\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em TLV493D handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga43330b906b500291d79752f60652555d}{tlv493d\+\_\+power\+\_\+modes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_gga43330b906b500291d79752f60652555da096d4f84a3c98ffc81ecce9b391e9cb3}{TLV493\+D\+\_\+\+POWER\+\_\+\+DOWN\+\_\+\+MODE}}
+, \mbox{\hyperlink{group__drivers_gga43330b906b500291d79752f60652555da7c4dc9deabc6fd57f2361702ce138dc1}{TLV493\+D\+\_\+\+FAST\+\_\+\+MODE}}
+, \mbox{\hyperlink{group__drivers_gga43330b906b500291d79752f60652555da947876ba048b07fdd2d6fb2ffc1fec72}{TLV493\+D\+\_\+\+LOW\+\_\+\+POWER\+\_\+\+MODE}}
+, \mbox{\hyperlink{group__drivers_gga43330b906b500291d79752f60652555da81daf123b750564b4a35b46b72ba2535}{TLV493\+D\+\_\+\+ULTRA\+\_\+\+LOW\+\_\+\+POWER\+\_\+\+MODE}}
+, \newline
+\mbox{\hyperlink{group__drivers_gga43330b906b500291d79752f60652555da709b17b9642a9101413e26db720bf6ff}{TLV493\+D\+\_\+\+MASTER\+\_\+\+CONTROLLED\+\_\+\+MODE}}
+ \}
+\begin{DoxyCompactList}\small\item\em TLV493D power modes enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_ga8a1c2496b7b3fa516317908155db1508}\label{group__drivers_ga8a1c2496b7b3fa516317908155db1508} 
+enum \mbox{\hyperlink{group__drivers_ga8a1c2496b7b3fa516317908155db1508}{tlv493d\+\_\+channel\+\_\+conversions\+\_\+e}} \{ {\bfseries TLV493\+D\+\_\+\+CHANNEL\+\_\+\+CONV\+\_\+\+COMPLETED} = (0b00)
+, {\bfseries TLV493\+D\+\_\+\+CHANNEL\+\_\+\+Y\+\_\+\+CONV\+\_\+\+ONGOING} = (0b01)
+, {\bfseries TLV493\+D\+\_\+\+CHANNEL\+\_\+\+Z\+\_\+\+CONV\+\_\+\+ONGOING} = (0b10)
+, {\bfseries TLV493\+D\+\_\+\+CHANNEL\+\_\+\+TEMP\+\_\+\+CONV\+\_\+\+ONGOING} = (0b11)
+ \}
+\begin{DoxyCompactList}\small\item\em TLV493D channel conversations enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_ga81ff587a2eccd15913024e248e774309}\label{group__drivers_ga81ff587a2eccd15913024e248e774309} 
+enum \mbox{\hyperlink{group__drivers_ga81ff587a2eccd15913024e248e774309}{tlv493d\+\_\+i2c\+\_\+addresses\+\_\+e}} \{ {\bfseries TLV493\+D\+\_\+\+I2\+C\+\_\+\+ADDRESS\+\_\+00} = (0b00)
+, {\bfseries TLV493\+D\+\_\+\+I2\+C\+\_\+\+ADDRESS\+\_\+01} = (0b01)
+, {\bfseries TLV493\+D\+\_\+\+I2\+C\+\_\+\+ADDRESS\+\_\+10} = (0b10)
+, {\bfseries TLV493\+D\+\_\+\+I2\+C\+\_\+\+ADDRESS\+\_\+11} = (0b11)
+ \}
+\begin{DoxyCompactList}\small\item\em TLV493D addresses for slaves enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_ga86b1342fde57c461ca1223323b8a3a49}\label{group__drivers_ga86b1342fde57c461ca1223323b8a3a49} 
+enum \mbox{\hyperlink{group__drivers_ga86b1342fde57c461ca1223323b8a3a49}{tlv493d\+\_\+low\+\_\+power\+\_\+periods\+\_\+e}} \{ {\bfseries TLV493\+D\+\_\+\+LOW\+\_\+\+POWER\+\_\+\+PERIOD\+\_\+100\+MS} = (0b0)
+, {\bfseries TLV493\+D\+\_\+\+LOW\+\_\+\+POWER\+\_\+\+PERIOD\+\_\+12\+MS} = (0b1)
+ \}
+\begin{DoxyCompactList}\small\item\em TLV493D low power periods enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga686d6f2d835e70c98d2c9400d5021cb2}{tlv493d\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga93552d2492ff661b95f1b0b8171d46da}{tlv493d\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}tlv493d\+\_\+config, \mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}tlv493d\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an TLV493D device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t {\bfseries tlv493d\+\_\+get\+\_\+data} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{structtlv493d__data__s}{tlv493d\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const data)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries tlv493d\+\_\+get\+\_\+data\+\_\+status} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries tlv493d\+\_\+power\+\_\+down} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries tlv493d\+\_\+power\+\_\+up} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga67aa2d3b740377ce7d9e70145f41b192}{tlv493d\+\_\+reset}} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset and initializes TLV493D. See datasheet for details. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga88b6f19971557e23d6c09027e9448b56}{tlv493d\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an TLV493D device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga53229d80a482f2ecf4137287fd5f63e7}{tlv493d\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an TLV493D device from master bus and frees handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries tlv493d\+\_\+temperature\+\_\+msb\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+bx\+\_\+by\+\_\+lsb\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+bz\+\_\+lsb\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+factory\+\_\+setting1\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+factory\+\_\+setting2\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+factory\+\_\+setting3\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+reserved1\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+mode1\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+reserved2\+\_\+register\+\_\+t}
+\item 
+{\bfseries tlv493d\+\_\+mode2\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

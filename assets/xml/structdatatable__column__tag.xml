@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structdatatable__column__tag" kind="struct" language="C++" prot="public">
+    <compoundname>datatable_column_tag</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdatatable__column__tag_1afb737dfee831ce3b8365b7697a2d1d73" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga4cab61e7d0a437c5256a034e1ac012ad" kindref="member">datatable_column_name_t</ref></type>
+        <definition>datatable_column_name_t names[3]</definition>
+        <argsstring>[3]</argsstring>
+        <name>names</name>
+        <qualifiedname>datatable_column_tag::names</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="207" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="207" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__column__tag_1a1577023c2447b93b268bc226c7194e01" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga99852941e2ac190b9cb243918bb56cbe" kindref="member">datatable_column_data_types_t</ref></type>
+        <definition>datatable_column_data_types_t data_type</definition>
+        <argsstring></argsstring>
+        <name>data_type</name>
+        <qualifiedname>datatable_column_tag::data_type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="208" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="208" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table column structure. The data-table record identifier and timestamp columns are created by default when the data-table is created. The record identifier and record timestamp data-types are excluded from data processing. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>datatable_column_name_tag</label>
+        <link refid="structdatatable__column__name__tag"/>
+      </node>
+      <node id="1">
+        <label>datatable_column_tag</label>
+        <link refid="structdatatable__column__tag"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>names</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="206" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="206" bodyend="209"/>
+    <listofallmembers>
+      <member refid="structdatatable__column__tag_1a1577023c2447b93b268bc226c7194e01" prot="public" virt="non-virtual"><scope>datatable_column_tag</scope><name>data_type</name></member>
+      <member refid="structdatatable__column__tag_1afb737dfee831ce3b8365b7697a2d1d73" prot="public" virt="non-virtual"><scope>datatable_column_tag</scope><name>names</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

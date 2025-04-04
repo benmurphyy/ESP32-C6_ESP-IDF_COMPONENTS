@@ -1,0 +1,37 @@
+\doxysection{components/utilities/esp\+\_\+math3d/vector\+\_\+int16.h File Reference}
+\hypertarget{vector__int16_8h}{}\label{vector__int16_8h}\index{components/utilities/esp\_math3d/vector\_int16.h@{components/utilities/esp\_math3d/vector\_int16.h}}
+{\ttfamily \#include "{}quaternion.\+h"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvector__int16__t}{vector\+\_\+int16\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Vector\+\_\+int16 structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct vector\+\_\+int16\+\_\+t {\bfseries vector\+\_\+int16\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector\+\_\+int16 definitions. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structvector__int16__t}{vector\+\_\+int16\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries vector\+\_\+int16\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector\+\_\+int16 handle structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+init} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}vector\+\_\+int16\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+init\+\_\+data} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, int16\+\_\+t nx, int16\+\_\+t ny, int16\+\_\+t nz)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+get\+\_\+magnitude} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, float \texorpdfstring{$\ast$}{*}magnitude)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+normalize} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+get\+\_\+normalized} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, \mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}normalized\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+rotate} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+get\+\_\+rotated} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}rotated\+\_\+handle)
+\end{DoxyCompactItemize}

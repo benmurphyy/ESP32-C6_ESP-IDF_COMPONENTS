@@ -1,0 +1,538 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="max31865_8c" kind="file" language="C++">
+    <compoundname>max31865.c</compoundname>
+    <includes refid="max31865_8h" local="yes">max31865.h</includes>
+    <includes local="no">string.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">math.h</includes>
+    <includes local="no">esp_log.h</includes>
+    <includes local="no">esp_check.h</includes>
+    <includes local="no">esp_timer.h</includes>
+    <includes local="no">freertos/FreeRTOS.h</includes>
+    <includes local="no">freertos/task.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/spi/esp_max31865/max31865.c</label>
+        <link refid="max31865_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>max31865.h</label>
+        <link refid="max31865_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>driver/gpio.h</label>
+      </node>
+      <node id="7">
+        <label>driver/spi_common.h</label>
+      </node>
+      <node id="8">
+        <label>driver/spi_master.h</label>
+      </node>
+      <node id="13">
+        <label>esp_check.h</label>
+      </node>
+      <node id="5">
+        <label>esp_err.h</label>
+      </node>
+      <node id="12">
+        <label>esp_log.h</label>
+      </node>
+      <node id="14">
+        <label>esp_timer.h</label>
+      </node>
+      <node id="15">
+        <label>freertos/FreeRTOS.h</label>
+      </node>
+      <node id="16">
+        <label>freertos/task.h</label>
+      </node>
+      <node id="11">
+        <label>math.h</label>
+      </node>
+      <node id="4">
+        <label>stdbool.h</label>
+      </node>
+      <node id="3">
+        <label>stdint.h</label>
+      </node>
+      <node id="10">
+        <label>stdio.h</label>
+      </node>
+      <node id="9">
+        <label>string.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structspi__rtd__coeff__t" prot="public">spi_rtd_coeff_t</innerclass>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="max31865_8c_1ae5d7bdb5b1dfbb427c2da82bcf007934" prot="public" static="no">
+        <name>SPI_MAX31865_REG_CONFIG</name>
+        <initializer>UINT8_C(0x00)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="53" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1aee01fbcafa5c5d80ac237245745c04ba" prot="public" static="no">
+        <name>SPI_MAX31865_REG_RTD_MSB</name>
+        <initializer>UINT8_C(0x01)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="54" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1ada0219f3fafc2b3e10af241156aa8fda" prot="public" static="no">
+        <name>SPI_MAX31865_REG_HIGH_FAULT_MSB</name>
+        <initializer>UINT8_C(0x03)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="55" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1abca7f7883abca99884edadbb9298010e" prot="public" static="no">
+        <name>SPI_MAX31865_REG_LOW_FAULT_MSB</name>
+        <initializer>UINT8_C(0x05)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="56" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1a7bcae265efab2f95b04d3789114c85a6" prot="public" static="no">
+        <name>SPI_MAX31865_REG_FAULT_STATUS</name>
+        <initializer>UINT8_C(0x07)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="57" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1a9413af4c66a3a60e67b0eae56e64a161" prot="public" static="no">
+        <name>SPI_MAX31865_DATA_POLL_TIMEOUT_MS</name>
+        <initializer>UINT16_C(100)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="59" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1afafbc792e5924cccc87621acba9d03a2" prot="public" static="no">
+        <name>SPI_MAX31865_DATA_READY_DELAY_MS</name>
+        <initializer>UINT16_C(2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="60" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1acad0d6c58d4f338b6046de27dfa3c0ff" prot="public" static="no">
+        <name>SPI_MAX31865_POWERUP_DELAY_MS</name>
+        <initializer>UINT16_C(120)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="61" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1aaa8c6729a4ecca9552367f8bd857fd38" prot="public" static="no">
+        <name>SPI_MAX31865_RESET_DELAY_MS</name>
+        <initializer>UINT16_C(25)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="62" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1a2391b27598d8b33c86d85eeb804134d2" prot="public" static="no">
+        <name>SPI_MAX31865_SETUP_DELAY_MS</name>
+        <initializer>UINT16_C(15)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="63" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1acef647c42152064510f48f2fdfb8fafe" prot="public" static="no">
+        <name>SPI_MAX31865_APPSTART_DELAY_MS</name>
+        <initializer>UINT16_C(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>max31865 delay after initialization before application start-up </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="64" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1a10e15b24e69372e1e18cd5a980d1d612" prot="public" static="no">
+        <name>SPI_MAX31865_CMD_DELAY_MS</name>
+        <initializer>UINT16_C(5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>max31865 delay before attempting SPI transactions after a command is issued </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="65" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1a1d1634229474196e9d91d06d6fc87b75" prot="public" static="no">
+        <name>SPI_MAX31865_TX_RX_DELAY_MS</name>
+        <initializer>UINT16_C(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>max31865 delay after attempting an SPI transmit transaction and attempting an SPI receive transaction </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="66" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1aee7b193fcb571e0c3bc88c29f1662af4" prot="public" static="no">
+        <name>ESP_TIMEOUT_CHECK</name>
+        <param><defname>start</defname></param>
+        <param><defname>len</defname></param>
+        <initializer>((uint64_t)(esp_timer_get_time() - (start)) &gt;= (len))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="72" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="max31865_8c_1ac2bb3db0b37c9f45103fd513ca5158fe" prot="public" static="no">
+        <name>ESP_ARG_CHECK</name>
+        <param><defname>VAL</defname></param>
+        <initializer>do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="73" column="9" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="73" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="max31865_8c_1a5a85b9c772bbeb480b209a3e6ea92b4c" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* TAG</definition>
+        <argsstring></argsstring>
+        <name>TAG</name>
+        <initializer>= &quot;max31865&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="78" column="19" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="78" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="max31865_8c_1a47716b82c6a6d0f2cabf2b4e4782aea6" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void spi_max31865_cs_high</definition>
+        <argsstring>(spi_transaction_t *t)</argsstring>
+        <name>spi_max31865_cs_high</name>
+        <param>
+          <type>spi_transaction_t *</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="93" column="20" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="93" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="max31865_8c_1a4d0b68217df913d8276bc441f8abe28d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void spi_max31865_cs_low</definition>
+        <argsstring>(spi_transaction_t *t)</argsstring>
+        <name>spi_max31865_cs_low</name>
+        <param>
+          <type>spi_transaction_t *</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="98" column="20" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="98" bodyend="101"/>
+      </memberdef>
+      <memberdef kind="function" id="max31865_8c_1aba38d9edf7f254e0784266d150b42f5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void spi_max31865_ready_rising_isr</definition>
+        <argsstring>(void *arg)</argsstring>
+        <name>spi_max31865_ready_rising_isr</name>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/spi/esp_max31865/max31865.c" line="103" column="6" bodyfile="components/peripherals/spi/esp_max31865/max31865.c" bodystart="103" bodyend="107"/>
+      </memberdef>
+      <member refid="group__drivers_1ga802f250a56d82b7f538421065bfd7c4d" kind="function"><name>spi_max31865_init</name></member>
+      <member refid="group__drivers_1gaa4974de2659627b67439a6eb43b0a00b" kind="function"><name>spi_max31865_remove</name></member>
+      <member refid="group__drivers_1gaa99e2cf7b0d8f44c1982ce37d99c0bbd" kind="function"><name>spi_max31865_delete</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>ESP-IDF driver for MAX31865 RTD temperature sensor</para>
+<para><ulink url="https://github.com/UncleRus/esp-idf-lib/blob/master/components/max31865/max31865.c">https://github.com/UncleRus/esp-idf-lib/blob/master/components/max31865/max31865.c</ulink></para>
+<para><ulink url="https://github.com/espressif/esp-idf/blob/v5.3.2/examples/peripherals/spi_master/hd_eeprom/components/eeprom/spi_eeprom.h">https://github.com/espressif/esp-idf/blob/v5.3.2/examples/peripherals/spi_master/hd_eeprom/components/eeprom/spi_eeprom.h</ulink></para>
+<para>Ported from esp-open-rtos</para>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="max31865_8h" kindref="compound">max31865.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;math.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_log.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_check.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_timer.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/FreeRTOS.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/task.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>MAX31865<sp/>definitions</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_REG_CONFIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x00)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_REG_RTD_MSB<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x01)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_REG_HIGH_FAULT_MSB<sp/><sp/><sp/><sp/><sp/>UINT8_C(0x03)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_REG_LOW_FAULT_MSB<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x05)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_REG_FAULT_STATUS<sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x07)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_DATA_POLL_TIMEOUT_MS<sp/><sp/>UINT16_C(100)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_DATA_READY_DELAY_MS<sp/><sp/><sp/>UINT16_C(2)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_POWERUP_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(120)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_RESET_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(25)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_SETUP_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(15)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_APPSTART_DELAY_MS<sp/><sp/><sp/><sp/><sp/>UINT16_C(10)<sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_CMD_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(5)<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_TX_RX_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(10)<sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>*<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="71"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESP_TIMEOUT_CHECK(start,<sp/>len)<sp/>((uint64_t)(esp_timer_get_time()<sp/>-<sp/>(start))<sp/>&gt;=<sp/>(len))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESP_ARG_CHECK(VAL)<sp/>do<sp/>{<sp/>if<sp/>(!(VAL))<sp/>return<sp/>ESP_ERR_INVALID_ARG;<sp/>}<sp/>while<sp/>(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="76"><highlight class="comment">*<sp/>static<sp/>constant<sp/>declerations</highlight></codeline>
+<codeline lineno="77"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*TAG<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;max31865&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="structspi__rtd__coeff__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>a,<sp/>b;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal">}<sp/><ref refid="structspi__rtd__coeff__t" kindref="compound">spi_rtd_coeff_t</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="85"><highlight class="comment">static<sp/>const<sp/>spi_rtd_coeff_t<sp/>spi_rtd_coeff[]<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>[SPI_MAX31865_ITS90]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>{<sp/>.a<sp/>=<sp/>3.9083e-3f,<sp/>.b<sp/>=<sp/>-5.775e-7f<sp/>},</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>[SPI_MAX31865_DIN43760]<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>{<sp/>.a<sp/>=<sp/>3.9848e-3f,<sp/>.b<sp/>=<sp/>-5.8019e-7f<sp/>},</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>[SPI_MAX31865_US_INDUSTRIAL]<sp/>=<sp/>{<sp/>.a<sp/>=<sp/>3.9692e-3f,<sp/>.b<sp/>=<sp/>-5.8495e-7f<sp/>},</highlight></codeline>
+<codeline lineno="89"><highlight class="comment">};</highlight></codeline>
+<codeline lineno="90"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>spi_max31865_cs_high(spi_transaction_t*<sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_EARLY_LOGV(TAG,<sp/></highlight><highlight class="stringliteral">&quot;cs<sp/>high<sp/>%d.&quot;</highlight><highlight class="normal">,<sp/>((<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>)t-&gt;user)-&gt;spi_dev_config.cs_io_num);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_set_level(((<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>)t-&gt;user)-&gt;spi_dev_config.cs_io_num,<sp/>1);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>spi_max31865_cs_low(spi_transaction_t*<sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_set_level(((<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>)t-&gt;user)-&gt;spi_dev_config.cs_io_num,<sp/>0);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_EARLY_LOGV(TAG,<sp/></highlight><highlight class="stringliteral">&quot;cs<sp/>low<sp/>%d.&quot;</highlight><highlight class="normal">,<sp/>((<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>)t-&gt;user)-&gt;spi_dev_config.cs_io_num);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>spi_max31865_ready_rising_isr(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>arg)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>handle<sp/>=<sp/>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>)arg;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>xSemaphoreGive(handle-&gt;<ref refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" kindref="member">spi_ready_sem</ref>);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_EARLY_LOGV(TAG,<sp/></highlight><highlight class="stringliteral">&quot;ready<sp/>detected.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga802f250a56d82b7f538421065bfd7c4d" kindref="member">spi_max31865_init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structspi__max31865__config__t" kindref="compound">spi_max31865_config_t</ref><sp/>*max31865_config,<sp/><ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>*max31865_handle)<sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>ret<sp/>=<sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>max31865_config<sp/>);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>host<sp/>and<sp/>interrupt<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(max31865_config-&gt;<ref refid="structspi__max31865__config__t_1af76a23d5ea575f0b95d86d14d246c9a7" kindref="member">irq_enabled</ref><sp/>==<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal"><sp/>&amp;&amp;<sp/>max31865_config-&gt;<ref refid="structspi__max31865__config__t_1af2bc3d31ad0099123ad13e726b96cb8f" kindref="member">host</ref><sp/>==<sp/>SPI1_HOST)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_FALSE(</highlight><highlight class="keyword">false</highlight><highlight class="normal">,<sp/>ESP_ERR_INVALID_ARG,<sp/>err,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;interrupt<sp/>cannot<sp/>be<sp/>used<sp/>on<sp/>SPI1<sp/>host,<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>memory<sp/>availability<sp/>for<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>out_handle<sp/>=<sp/>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>)calloc(1,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structspi__max31865__t" kindref="compound">spi_max31865_t</ref>));</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_FALSE(out_handle,<sp/>ESP_ERR_NO_MEM,<sp/>err,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;no<sp/>memory<sp/>for<sp/>spi<sp/>max31865<sp/>device,<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>configuration<sp/>to<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref><sp/>=<sp/>*max31865_config;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>device<sp/>configuration<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>spi_device_interface_config_t<sp/>spi_dev_conf<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.command_bits<sp/>=<sp/>10,</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.clock_speed_hz<sp/>=<sp/>out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.clock_speed_hz,</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.mode<sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//SPI<sp/>mode<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>The<sp/>timing<sp/>requirements<sp/>to<sp/>read<sp/>the<sp/>busy<sp/>signal<sp/>from<sp/>the<sp/>EEPROM<sp/>cannot<sp/>be<sp/>easily<sp/>emulated</highlight></codeline>
+<codeline lineno="135"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>by<sp/>SPI<sp/>transactions.<sp/>We<sp/>need<sp/>to<sp/>control<sp/>CS<sp/>pin<sp/>by<sp/>SW<sp/>to<sp/>check<sp/>the<sp/>busy<sp/>signal<sp/>manually.</highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.spics_io_num<sp/>=<sp/>-1,</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.queue_size<sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.flags<sp/>=<sp/>SPI_DEVICE_HALFDUPLEX<sp/>|<sp/>SPI_DEVICE_POSITIVE_CS,</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.pre_cb<sp/>=<sp/>spi_max31865_cs_high,</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.post_cb<sp/>=<sp/>spi_max31865_cs_low,</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.input_delay_ns<sp/>=<sp/>out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.input_delay_ns,<sp/><sp/></highlight><highlight class="comment">//the<sp/>EEPROM<sp/>output<sp/>the<sp/>data<sp/>half<sp/>a<sp/>SPI<sp/>clock<sp/>behind.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle-&gt;<ref refid="structspi__max31865__t_1a7e11d30725e980842ce6d3b21899b3db" kindref="member">spi_dev_handle</ref><sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(spi_bus_add_device(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1af2bc3d31ad0099123ad13e726b96cb8f" kindref="member">host</ref>,<sp/>&amp;spi_dev_conf,<sp/>&amp;out_handle-&gt;<ref refid="structspi__max31865__t_1a7e11d30725e980842ce6d3b21899b3db" kindref="member">spi_dev_handle</ref>),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;spi<sp/>new<sp/>bus<sp/>for<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>configure<sp/>cs<sp/>io<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_config_t<sp/>cs_gpio_cfg<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.pin_bit_mask<sp/>=<sp/>BIT64(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1ad5c5178be79dd4595aaf8a6e80317cec" kindref="member">cs_io_num</ref>),</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.mode<sp/>=<sp/>GPIO_MODE_OUTPUT,</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_set_level(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1ad5c5178be79dd4595aaf8a6e80317cec" kindref="member">cs_io_num</ref>,<sp/>0);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_config(&amp;cs_gpio_cfg);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>configure<sp/>isr<sp/>handler<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1af76a23d5ea575f0b95d86d14d246c9a7" kindref="member">irq_enabled</ref><sp/>==<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out_handle-&gt;<ref refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" kindref="member">spi_ready_sem</ref><sp/>=<sp/>xSemaphoreCreateBinary();</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_FALSE(out_handle-&gt;<ref refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" kindref="member">spi_ready_sem</ref>,<sp/>ESP_ERR_NO_MEM,<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;no<sp/>memory<sp/>for<sp/>spi<sp/>ready<sp/>semaphore,<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gpio_set_intr_type(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1abed2cffc0dcc04374d6f9b2a4c9f9aba" kindref="member">miso_io_num</ref>,<sp/>GPIO_INTR_POSEDGE);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(gpio_isr_handler_add(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1abed2cffc0dcc04374d6f9b2a4c9f9aba" kindref="member">miso_io_num</ref>,<sp/>spi_max31865_ready_rising_isr,<sp/>out_handle),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;add<sp/>gpio<sp/>isr<sp/>handler<sp/>for<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gpio_intr_disable(out_handle-&gt;<ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>.<ref refid="structspi__max31865__config__t_1abed2cffc0dcc04374d6f9b2a4c9f9aba" kindref="member">miso_io_num</ref>);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>*max31865_handle<sp/>=<sp/>out_handle;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/>err_handle:</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle<sp/>&amp;&amp;<sp/>out_handle-&gt;<ref refid="structspi__max31865__t_1a7e11d30725e980842ce6d3b21899b3db" kindref="member">spi_dev_handle</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>spi_bus_remove_device(out_handle-&gt;<ref refid="structspi__max31865__t_1a7e11d30725e980842ce6d3b21899b3db" kindref="member">spi_dev_handle</ref>);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle<sp/>&amp;&amp;<sp/>out_handle-&gt;<ref refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" kindref="member">spi_ready_sem</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>vSemaphoreDelete(out_handle-&gt;<ref refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" kindref="member">spi_ready_sem</ref>);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(out_handle);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>err:</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ret;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa4974de2659627b67439a6eb43b0a00b" kindref="member">spi_max31865_remove</ref>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle)<sp/>{</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>max31865_handle<sp/>);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa99e2cf7b0d8f44c1982ce37d99c0bbd" kindref="member">spi_max31865_delete</ref>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle)<sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>max31865_handle<sp/>);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/spi/esp_max31865/max31865.c"/>
+  </compounddef>
+</doxygen>

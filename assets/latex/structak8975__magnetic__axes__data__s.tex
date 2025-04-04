@@ -1,0 +1,36 @@
+\doxysection{ak8975\+\_\+magnetic\+\_\+axes\+\_\+data\+\_\+s Struct Reference}
+\hypertarget{structak8975__magnetic__axes__data__s}{}\label{structak8975__magnetic__axes__data__s}\index{ak8975\_magnetic\_axes\_data\_s@{ak8975\_magnetic\_axes\_data\_s}}
+
+
+AK8975 processed compass axes data structure and axes have a range +/-\/1229 uT.  
+
+
+
+
+{\ttfamily \#include $<$ak8975.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structak8975__magnetic__axes__data__s_a7f5e1d80511c99ed5c13e4b5fe27bf1c}\label{structak8975__magnetic__axes__data__s_a7f5e1d80511c99ed5c13e4b5fe27bf1c} 
+float {\bfseries x\+\_\+axis}
+\item 
+\Hypertarget{structak8975__magnetic__axes__data__s_a937eb3463151eb587f321caa55f8d1f9}\label{structak8975__magnetic__axes__data__s_a937eb3463151eb587f321caa55f8d1f9} 
+float {\bfseries y\+\_\+axis}
+\item 
+\Hypertarget{structak8975__magnetic__axes__data__s_a08df59f3ee94043f7a9691491a9819df}\label{structak8975__magnetic__axes__data__s_a08df59f3ee94043f7a9691491a9819df} 
+float {\bfseries z\+\_\+axis}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+AK8975 processed compass axes data structure and axes have a range +/-\/1229 uT. 
+
+\begin{DoxyNote}{Note}
+AK8975 data overflow of axes (x, y, z) is a sum of the absolute values for each axis and the sum of the axes should be smaller than 2400 uT (\texorpdfstring{$\vert$}{|}\+X\texorpdfstring{$\vert$}{|}+\texorpdfstring{$\vert$}{|}\+Y\texorpdfstring{$\vert$}{|}+\texorpdfstring{$\vert$}{|}\+Z\texorpdfstring{$\vert$}{|} \texorpdfstring{$<$}{<} 2400 uT). 
+\end{DoxyNote}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+ak8975/include/\mbox{\hyperlink{ak8975_8h}{ak8975.\+h}}\end{DoxyCompactItemize}

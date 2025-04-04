@@ -1,0 +1,369 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="tlv493d_8h" kind="file" language="C++">
+    <compoundname>tlv493d.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includedby refid="tlv493d_8c" local="yes">components/peripherals/i2c/esp_tlv493d/tlv493d.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_tlv493d/include/tlv493d.h</label>
+        <link refid="tlv493d_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_tlv493d/include/tlv493d.h</label>
+        <link refid="tlv493d_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_tlv493d/tlv493d.c</label>
+        <link refid="tlv493d_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structtlv493d__raw__data__s" prot="public">tlv493d_raw_data_s</innerclass>
+    <innerclass refid="structtlv493d__data__s" prot="public">tlv493d_data_s</innerclass>
+    <innerclass refid="structtlv493d__config__s" prot="public">tlv493d_config_s</innerclass>
+    <innerclass refid="structtlv493d__context__t" prot="public">tlv493d_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1gae4a5a8f18f5ff0ba996b19b806dd9548" kind="define"><name>I2C_TLV493D_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga28978e7e3ef48ca6a35c5cab4ad1e9da" kind="define"><name>I2C_TLV493D_DEV_ADDR_LO</name></member>
+      <member refid="group__drivers_1ga2c4069f4c488febbe2bb3d07382de5eb" kind="define"><name>I2C_TLV493D_DEV_ADDR_HI</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1gad171287ac8085f0a188a683075880fde" kind="define"><name>I2C_TLV493D_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1ga43330b906b500291d79752f60652555d" kind="enum"><name>tlv493d_power_modes_e</name></member>
+      <member refid="group__drivers_1ga8a1c2496b7b3fa516317908155db1508" kind="enum"><name>tlv493d_channel_conversions_e</name></member>
+      <member refid="group__drivers_1ga81ff587a2eccd15913024e248e774309" kind="enum"><name>tlv493d_i2c_addresses_e</name></member>
+      <member refid="group__drivers_1ga86b1342fde57c461ca1223323b8a3a49" kind="enum"><name>tlv493d_low_power_periods_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1ga02db763e5747b105f9e52eacb812b95e" kind="typedef"><name>tlv493d_power_modes_t</name></member>
+      <member refid="group__drivers_1ga38099431745f98ecb45e97a48e95354f" kind="typedef"><name>tlv493d_channel_conversions_t</name></member>
+      <member refid="group__drivers_1gaa476e735b76d51c1cf315acadc5224e0" kind="typedef"><name>tlv493d_i2c_addresses_t</name></member>
+      <member refid="group__drivers_1gabbdc9914456cb4111ff59a09fe48a6d4" kind="typedef"><name>tlv493d_low_power_periods_t</name></member>
+      <member refid="group__drivers_1ga045be470f3f6742d429efbee2444f60c" kind="typedef"><name>tlv493d_data_signal_t</name></member>
+      <member refid="group__drivers_1gacf4d9b4cbe70a3d77085b259842b1574" kind="typedef"><name>tlv493d_data_t</name></member>
+      <member refid="group__drivers_1ga93552d2492ff661b95f1b0b8171d46da" kind="typedef"><name>tlv493d_config_t</name></member>
+      <member refid="group__drivers_1gac2c0e0351b825e8899fdc4d9af90f0d2" kind="typedef"><name>tlv493d_context_t</name></member>
+      <member refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kind="typedef"><name>tlv493d_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1gae17c2ce427f8f758d4ce5d4635043b26" kind="variable"><name>tlv493d_temperature_msb_register_t</name></member>
+      <member refid="group__drivers_1gade8d8489dfc7dd57ec9970dbe38bbe8c" kind="variable"><name>tlv493d_bx_by_lsb_register_t</name></member>
+      <member refid="group__drivers_1ga91dbd0ed0ee4376c49d20160408fb206" kind="variable"><name>tlv493d_bz_lsb_register_t</name></member>
+      <member refid="group__drivers_1gab6cc2e99721349d328b53a9f6fb9468c" kind="variable"><name>tlv493d_factory_setting1_register_t</name></member>
+      <member refid="group__drivers_1gae3b2c8b8080921d1030bb6de79e9443f" kind="variable"><name>tlv493d_factory_setting2_register_t</name></member>
+      <member refid="group__drivers_1ga26d43baa139f9bf0c1acd35e377e43e9" kind="variable"><name>tlv493d_factory_setting3_register_t</name></member>
+      <member refid="group__drivers_1ga0abad624b8cad07bba1133fbcf529b91" kind="variable"><name>tlv493d_reserved1_register_t</name></member>
+      <member refid="group__drivers_1gaf3163215aa3e65378de317e77e29fabd" kind="variable"><name>tlv493d_mode1_register_t</name></member>
+      <member refid="group__drivers_1ga4544ac5a3aeb6d18aa977dfd5a3fbb75" kind="variable"><name>tlv493d_reserved2_register_t</name></member>
+      <member refid="group__drivers_1ga522dfd1970326f970174ab86b81a4efb" kind="variable"><name>tlv493d_mode2_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga686d6f2d835e70c98d2c9400d5021cb2" kind="function"><name>tlv493d_init</name></member>
+      <member refid="group__drivers_1gad63f29ed0b6a0a20f40b04733e1b77bb" kind="function"><name>tlv493d_get_data</name></member>
+      <member refid="group__drivers_1ga06e616c81c46030a149878b3efe26c84" kind="function"><name>tlv493d_get_data_status</name></member>
+      <member refid="group__drivers_1gaad2cf38df7777ba953a8744cd814da41" kind="function"><name>tlv493d_power_down</name></member>
+      <member refid="group__drivers_1ga560b7c57f84380d8c09efb1416b9437b" kind="function"><name>tlv493d_power_up</name></member>
+      <member refid="group__drivers_1ga67aa2d3b740377ce7d9e70145f41b192" kind="function"><name>tlv493d_reset</name></member>
+      <member refid="group__drivers_1ga88b6f19971557e23d6c09027e9448b56" kind="function"><name>tlv493d_remove</name></member>
+      <member refid="group__drivers_1ga53229d80a482f2ecf4137287fd5f63e7" kind="function"><name>tlv493d_delete</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__TLV493D_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__TLV493D_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>TLV493D<sp/>definitions</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="group__drivers_1gae4a5a8f18f5ff0ba996b19b806dd9548" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_TLV493D_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__drivers_1ga28978e7e3ef48ca6a35c5cab4ad1e9da" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_TLV493D_DEV_ADDR_LO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x1F)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__drivers_1ga2c4069f4c488febbe2bb3d07382de5eb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_TLV493D_DEV_ADDR_HI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x5E)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>TLV493D<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_TLV493D_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_TLV493D_DEV_ADDR_LO,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="64"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_TLV493D_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="65"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.parity_test_enabled<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>true,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.power_mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>TLV493D_LOW_POWER_MODE,<sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.irq_pin_enabled<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>true<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="group__drivers_1ga43330b906b500291d79752f60652555d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga43330b906b500291d79752f60652555d" kindref="member">tlv493d_power_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="76" refid="group__drivers_1gga43330b906b500291d79752f60652555da096d4f84a3c98ffc81ecce9b391e9cb3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga43330b906b500291d79752f60652555da096d4f84a3c98ffc81ecce9b391e9cb3" kindref="member">TLV493D_POWER_DOWN_MODE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="77" refid="group__drivers_1gga43330b906b500291d79752f60652555da7c4dc9deabc6fd57f2361702ce138dc1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga43330b906b500291d79752f60652555da7c4dc9deabc6fd57f2361702ce138dc1" kindref="member">TLV493D_FAST_MODE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="78" refid="group__drivers_1gga43330b906b500291d79752f60652555da947876ba048b07fdd2d6fb2ffc1fec72" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga43330b906b500291d79752f60652555da947876ba048b07fdd2d6fb2ffc1fec72" kindref="member">TLV493D_LOW_POWER_MODE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79" refid="group__drivers_1gga43330b906b500291d79752f60652555da81daf123b750564b4a35b46b72ba2535" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga43330b906b500291d79752f60652555da81daf123b750564b4a35b46b72ba2535" kindref="member">TLV493D_ULTRA_LOW_POWER_MODE</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80" refid="group__drivers_1gga43330b906b500291d79752f60652555da709b17b9642a9101413e26db720bf6ff" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga43330b906b500291d79752f60652555da709b17b9642a9101413e26db720bf6ff" kindref="member">TLV493D_MASTER_CONTROLLED_MODE</ref><sp/><sp/></highlight></codeline>
+<codeline lineno="81" refid="group__drivers_1ga02db763e5747b105f9e52eacb812b95e" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga02db763e5747b105f9e52eacb812b95e" kindref="member">tlv493d_power_modes_t</ref>;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="group__drivers_1ga8a1c2496b7b3fa516317908155db1508" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga8a1c2496b7b3fa516317908155db1508" kindref="member">tlv493d_channel_conversions_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_CHANNEL_CONV_COMPLETED<sp/><sp/><sp/><sp/>=<sp/>(0b00),</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_CHANNEL_Y_CONV_ONGOING<sp/><sp/><sp/><sp/>=<sp/>(0b01),</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_CHANNEL_Z_CONV_ONGOING<sp/><sp/><sp/><sp/>=<sp/>(0b10),</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_CHANNEL_TEMP_CONV_ONGOING<sp/>=<sp/>(0b11),</highlight></codeline>
+<codeline lineno="91" refid="group__drivers_1ga38099431745f98ecb45e97a48e95354f" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga38099431745f98ecb45e97a48e95354f" kindref="member">tlv493d_channel_conversions_t</ref>;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="group__drivers_1ga81ff587a2eccd15913024e248e774309" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga81ff587a2eccd15913024e248e774309" kindref="member">tlv493d_i2c_addresses_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_I2C_ADDRESS_00<sp/>=<sp/>(0b00),</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_I2C_ADDRESS_01<sp/>=<sp/>(0b01),</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_I2C_ADDRESS_10<sp/>=<sp/>(0b10),</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_I2C_ADDRESS_11<sp/>=<sp/>(0b11),</highlight></codeline>
+<codeline lineno="101" refid="group__drivers_1gaa476e735b76d51c1cf315acadc5224e0" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gaa476e735b76d51c1cf315acadc5224e0" kindref="member">tlv493d_i2c_addresses_t</ref>;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="group__drivers_1ga86b1342fde57c461ca1223323b8a3a49" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga86b1342fde57c461ca1223323b8a3a49" kindref="member">tlv493d_low_power_periods_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_LOW_POWER_PERIOD_100MS<sp/>=<sp/>(0b0),</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>TLV493D_LOW_POWER_PERIOD_12MS<sp/><sp/>=<sp/>(0b1),</highlight></codeline>
+<codeline lineno="109" refid="group__drivers_1gabbdc9914456cb4111ff59a09fe48a6d4" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gabbdc9914456cb4111ff59a09fe48a6d4" kindref="member">tlv493d_low_power_periods_t</ref>;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_temperature_msb_register_u<sp/>{</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga38099431745f98ecb45e97a48e95354f" kindref="member">tlv493d_channel_conversions_t</ref><sp/>channel:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>frame_counter:2;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>temperature_msb:4;<sp/><sp/></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal">}<sp/>tlv493d_temperature_msb_register_t;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_bx_by_lsb_register_u<sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>by_lsb:4;<sp/><sp/></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>bx_lsb:4;<sp/><sp/></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal">}<sp/>tlv493d_bx_by_lsb_register_t;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_bz_lsb_register_u<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>bz_lsb:4;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>power_down_flag:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>parity_fuse_flag:1;<sp/></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>test_mode_flag:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal">}<sp/>tlv493d_bz_lsb_register_t;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_factory_setting1_register_u<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved1:3;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:2;<sp/></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved2:3;<sp/><sp/></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal">}<sp/>tlv493d_factory_setting1_register_t;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_factory_setting2_register_u<sp/>{</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:8;<sp/></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">}<sp/>tlv493d_factory_setting2_register_t;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_factory_setting3_register_u<sp/>{</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:5;<sp/></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved:3;<sp/><sp/></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">}<sp/>tlv493d_factory_setting3_register_t;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_reserved1_register_u<sp/>{</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:8;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal">}<sp/>tlv493d_reserved1_register_t;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_mode1_register_u<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>low_power_mode_enabled:1;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>fast_mode_enabled:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>irq_pin_enabled:1;<sp/></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:2;<sp/><sp/></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gaa476e735b76d51c1cf315acadc5224e0" kindref="member">tlv493d_i2c_addresses_t</ref><sp/>i2c_slave_address:2;<sp/><sp/></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>parity:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal">}<sp/>tlv493d_mode1_register_t;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_reserved2_register_u<sp/>{</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:8;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal">}<sp/>tlv493d_reserved2_register_t;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>tlv493d_mode2_register_u<sp/>{</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>factory_setting:5;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>parity_test_enabled:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gabbdc9914456cb4111ff59a09fe48a6d4" kindref="member">tlv493d_low_power_periods_t</ref><sp/>low_power_period:1;<sp/></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>temperature_disabled:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal">}<sp/>tlv493d_mode2_register_t;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222" refid="structtlv493d__raw__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtlv493d__raw__data__s" kindref="compound">tlv493d_raw_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="223" refid="structtlv493d__raw__data__s_1a95ae661dc6167baa56ab42509c14cc9c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><ref refid="structtlv493d__raw__data__s_1a95ae661dc6167baa56ab42509c14cc9c" kindref="member">x_axis</ref>;<sp/></highlight></codeline>
+<codeline lineno="224" refid="structtlv493d__raw__data__s_1ad8168f97a27ae42893c873cd61d0b832" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><ref refid="structtlv493d__raw__data__s_1ad8168f97a27ae42893c873cd61d0b832" kindref="member">y_axis</ref>;<sp/></highlight></codeline>
+<codeline lineno="225" refid="structtlv493d__raw__data__s_1ab9642d770c4122570c7b12316c098dec" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><ref refid="structtlv493d__raw__data__s_1ab9642d770c4122570c7b12316c098dec" kindref="member">z_axis</ref>;<sp/></highlight></codeline>
+<codeline lineno="226" refid="structtlv493d__raw__data__s_1a4af92569ea830250443045233c9bf5fb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><ref refid="structtlv493d__raw__data__s_1a4af92569ea830250443045233c9bf5fb" kindref="member">temperature</ref>;<sp/></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>temperature_enabled;</highlight></codeline>
+<codeline lineno="228"><highlight class="normal">}<sp/>tlv493d_data_signal_t;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230" refid="structtlv493d__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtlv493d__data__s" kindref="compound">tlv493d_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="231" refid="structtlv493d__data__s_1a7f5e1d80511c99ed5c13e4b5fe27bf1c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__data__s_1a7f5e1d80511c99ed5c13e4b5fe27bf1c" kindref="member">x_axis</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="232" refid="structtlv493d__data__s_1a937eb3463151eb587f321caa55f8d1f9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__data__s_1a937eb3463151eb587f321caa55f8d1f9" kindref="member">y_axis</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="233" refid="structtlv493d__data__s_1a08df59f3ee94043f7a9691491a9819df" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__data__s_1a08df59f3ee94043f7a9691491a9819df" kindref="member">z_axis</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="234" refid="structtlv493d__data__s_1afc1d28cfbce795d6ea954ebe725241f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__data__s_1afc1d28cfbce795d6ea954ebe725241f5" kindref="member">temperature</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>temperature_enabled;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal">}<sp/>tlv493d_data_t;</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="242" refid="structtlv493d__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtlv493d__config__s" kindref="compound">tlv493d_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="243" refid="structtlv493d__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structtlv493d__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="244" refid="structtlv493d__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structtlv493d__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="245" refid="structtlv493d__config__s_1a0856626b1f77b1d85093591e15c39c11" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__config__s_1a0856626b1f77b1d85093591e15c39c11" kindref="member">parity_test_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="246" refid="structtlv493d__config__s_1abb53afa1fbbd77bd9238fbd052fc76ea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__config__s_1abb53afa1fbbd77bd9238fbd052fc76ea" kindref="member">temperature_disabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="247" refid="structtlv493d__config__s_1a420feac2db4a45b1baf335d529632d32" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga02db763e5747b105f9e52eacb812b95e" kindref="member">tlv493d_power_modes_t</ref><sp/><ref refid="structtlv493d__config__s_1a420feac2db4a45b1baf335d529632d32" kindref="member">power_mode</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="248" refid="structtlv493d__config__s_1a0ebbf4191996b305e6f209eae8f7bc42" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structtlv493d__config__s_1a0ebbf4191996b305e6f209eae8f7bc42" kindref="member">irq_pin_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="249" refid="group__drivers_1ga93552d2492ff661b95f1b0b8171d46da" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga93552d2492ff661b95f1b0b8171d46da" kindref="member">tlv493d_config_t</ref>;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight></codeline>
+<codeline lineno="254" refid="structtlv493d__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtlv493d__context__t" kindref="compound">tlv493d_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="255" refid="structtlv493d__context__t_1abe267ae76e893c759daf40d98dd4e681" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga93552d2492ff661b95f1b0b8171d46da" kindref="member">tlv493d_config_t</ref><sp/><ref refid="structtlv493d__context__t_1abe267ae76e893c759daf40d98dd4e681" kindref="member">dev_config</ref>;<sp/></highlight></codeline>
+<codeline lineno="256" refid="structtlv493d__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><ref refid="structtlv493d__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>tlv493d_factory_setting1_register_t<sp/>factory_setting1_reg;</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/>tlv493d_factory_setting2_register_t<sp/>factory_setting2_reg;</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/>tlv493d_factory_setting3_register_t<sp/>factory_setting3_reg;</highlight></codeline>
+<codeline lineno="260"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"></highlight></codeline>
+<codeline lineno="265" refid="group__drivers_1gac2c0e0351b825e8899fdc4d9af90f0d2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtlv493d__context__t" kindref="compound">tlv493d_context_t</ref><sp/><ref refid="structtlv493d__context__t" kindref="compound">tlv493d_context_t</ref>;</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight></codeline>
+<codeline lineno="270" refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtlv493d__context__t" kindref="compound">tlv493d_context_t</ref><sp/>*<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref>;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga686d6f2d835e70c98d2c9400d5021cb2" kindref="member">tlv493d_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga93552d2492ff661b95f1b0b8171d46da" kindref="member">tlv493d_config_t</ref><sp/>*tlv493d_config,<sp/><ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>*tlv493d_handle);</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal">esp_err_t<sp/>tlv493d_get_data(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle,<sp/>tlv493d_data_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>data);</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal">esp_err_t<sp/>tlv493d_get_data_status(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ready);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal">esp_err_t<sp/>tlv493d_power_down(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal">esp_err_t<sp/>tlv493d_power_up(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight></codeline>
+<codeline lineno="298" refid="group__drivers_1ga67aa2d3b740377ce7d9e70145f41b192" refkind="member"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga67aa2d3b740377ce7d9e70145f41b192" kindref="member">tlv493d_reset</ref>(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga88b6f19971557e23d6c09027e9448b56" kindref="member">tlv493d_remove</ref>(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga53229d80a482f2ecf4137287fd5f63e7" kindref="member">tlv493d_delete</ref>(<ref refid="group__drivers_1ga74d5bbe8e6492b2ba70d8f9849e31bad" kindref="member">tlv493d_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal"></highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">//<sp/>__TLD493D_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_tlv493d/include/tlv493d.h"/>
+  </compounddef>
+</doxygen>

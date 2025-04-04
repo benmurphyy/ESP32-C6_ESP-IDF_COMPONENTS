@@ -1,0 +1,73 @@
+\doxysection{bh1750\+\_\+config\+\_\+s Struct Reference}
+\hypertarget{structbh1750__config__s}{}\label{structbh1750__config__s}\index{bh1750\_config\_s@{bh1750\_config\_s}}
+
+
+BH1750 device configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$bh1750.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structbh1750__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\+\_\+address}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structbh1750__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\+\_\+clock\+\_\+speed}}
+\item 
+\mbox{\hyperlink{group__drivers_ga76514573edf401f3839df07163bff37a}{bh1750\+\_\+measurement\+\_\+modes\+\_\+t}} \mbox{\hyperlink{structbh1750__config__s_a09bf1ec8aebe11fb3339162eabc7befb}{mode}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbh1750__config__s_a67c8a6b1b37fcf1a90c4f0f6429dc621}{timespan}}
+\item 
+bool \mbox{\hyperlink{structbh1750__config__s_aa6fa4c88cf9f6eb809ae5cc80f41f8b1}{set\+\_\+timespan}}
+\item 
+bool \mbox{\hyperlink{structbh1750__config__s_ab3de6a2f149a9bffab11fd855329f12f}{power\+\_\+enabled}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+BH1750 device configuration structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structbh1750__config__s_a4fc512d568c2b72f6907c218205cf6c9}\index{bh1750\_config\_s@{bh1750\_config\_s}!i2c\_address@{i2c\_address}}
+\index{i2c\_address@{i2c\_address}!bh1750\_config\_s@{bh1750\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_address}{i2c\_address}}
+{\footnotesize\ttfamily \label{structbh1750__config__s_a4fc512d568c2b72f6907c218205cf6c9} 
+uint16\+\_\+t i2c\+\_\+address}
+
+bh1750 i2c device address \Hypertarget{structbh1750__config__s_a770b3ab4bba557baec88287d86832a34}\index{bh1750\_config\_s@{bh1750\_config\_s}!i2c\_clock\_speed@{i2c\_clock\_speed}}
+\index{i2c\_clock\_speed@{i2c\_clock\_speed}!bh1750\_config\_s@{bh1750\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_clock\_speed}{i2c\_clock\_speed}}
+{\footnotesize\ttfamily \label{structbh1750__config__s_a770b3ab4bba557baec88287d86832a34} 
+uint32\+\_\+t i2c\+\_\+clock\+\_\+speed}
+
+bh1750 i2c device scl clock speed in hz \Hypertarget{structbh1750__config__s_a09bf1ec8aebe11fb3339162eabc7befb}\index{bh1750\_config\_s@{bh1750\_config\_s}!mode@{mode}}
+\index{mode@{mode}!bh1750\_config\_s@{bh1750\_config\_s}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily \label{structbh1750__config__s_a09bf1ec8aebe11fb3339162eabc7befb} 
+\mbox{\hyperlink{group__drivers_ga76514573edf401f3839df07163bff37a}{bh1750\+\_\+measurement\+\_\+modes\+\_\+t}} mode}
+
+bh1750 measurement mode \Hypertarget{structbh1750__config__s_ab3de6a2f149a9bffab11fd855329f12f}\index{bh1750\_config\_s@{bh1750\_config\_s}!power\_enabled@{power\_enabled}}
+\index{power\_enabled@{power\_enabled}!bh1750\_config\_s@{bh1750\_config\_s}}
+\doxysubsubsection{\texorpdfstring{power\_enabled}{power\_enabled}}
+{\footnotesize\ttfamily \label{structbh1750__config__s_ab3de6a2f149a9bffab11fd855329f12f} 
+bool power\+\_\+enabled}
+
+bh1750 powered up at initialization \Hypertarget{structbh1750__config__s_aa6fa4c88cf9f6eb809ae5cc80f41f8b1}\index{bh1750\_config\_s@{bh1750\_config\_s}!set\_timespan@{set\_timespan}}
+\index{set\_timespan@{set\_timespan}!bh1750\_config\_s@{bh1750\_config\_s}}
+\doxysubsubsection{\texorpdfstring{set\_timespan}{set\_timespan}}
+{\footnotesize\ttfamily \label{structbh1750__config__s_aa6fa4c88cf9f6eb809ae5cc80f41f8b1} 
+bool set\+\_\+timespan}
+
+set bh1750 measurement timespan when true \Hypertarget{structbh1750__config__s_a67c8a6b1b37fcf1a90c4f0f6429dc621}\index{bh1750\_config\_s@{bh1750\_config\_s}!timespan@{timespan}}
+\index{timespan@{timespan}!bh1750\_config\_s@{bh1750\_config\_s}}
+\doxysubsubsection{\texorpdfstring{timespan}{timespan}}
+{\footnotesize\ttfamily \label{structbh1750__config__s_a67c8a6b1b37fcf1a90c4f0f6429dc621} 
+uint8\+\_\+t timespan}
+
+bh1750 measurement time duration 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+bh1750/include/\mbox{\hyperlink{bh1750_8h}{bh1750.\+h}}\end{DoxyCompactItemize}

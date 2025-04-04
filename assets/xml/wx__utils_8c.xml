@@ -1,0 +1,452 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="wx__utils_8c" kind="file" language="C++">
+    <compoundname>wx_utils.c</compoundname>
+    <includes refid="wx__utils_8h" local="yes">wx_utils.h</includes>
+    <includes local="no">string.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">esp_log.h</includes>
+    <includes local="no">esp_check.h</includes>
+    <includes local="no">freertos/FreeRTOS.h</includes>
+    <includes local="no">freertos/task.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>components/utilities/esp_wx_utils/wx_utils.c</label>
+        <link refid="wx__utils_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>wx_utils.h</label>
+        <link refid="wx__utils_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>esp_check.h</label>
+      </node>
+      <node id="6">
+        <label>esp_err.h</label>
+      </node>
+      <node id="9">
+        <label>esp_log.h</label>
+      </node>
+      <node id="11">
+        <label>freertos/FreeRTOS.h</label>
+      </node>
+      <node id="12">
+        <label>freertos/task.h</label>
+      </node>
+      <node id="7">
+        <label>math.h</label>
+      </node>
+      <node id="5">
+        <label>stdbool.h</label>
+      </node>
+      <node id="4">
+        <label>stdint.h</label>
+      </node>
+      <node id="3">
+        <label>stdio.h</label>
+      </node>
+      <node id="8">
+        <label>string.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="wx__utils_8c_1a93cedab733e0e5c49b590ce38beaa510" prot="public" static="no">
+        <name>WX_TEMPERATURE_MAX</name>
+        <initializer>(float)(125.0)</initializer>
+        <briefdescription>
+<para>maximum temperature range </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="51" column="9" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="wx__utils_8c_1a7b6edc6e4d9bd3a12b53fdbf5ea4f963" prot="public" static="no">
+        <name>WX_TEMPERATURE_MIN</name>
+        <initializer>(float)(-40.0)</initializer>
+        <briefdescription>
+<para>minimum temperature range </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="52" column="9" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="wx__utils_8c_1aeb181279e68304420d7d16119d893476" prot="public" static="no">
+        <name>WX_HUMIDITY_MAX</name>
+        <initializer>(float)(100.0)</initializer>
+        <briefdescription>
+<para>maximum humidity range </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="53" column="9" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="wx__utils_8c_1a2bc2559cd94781d662267d6959b6455b" prot="public" static="no">
+        <name>WX_HUMIDITY_MIN</name>
+        <initializer>(float)(0.0)</initializer>
+        <briefdescription>
+<para>minimum humidity range </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="54" column="9" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="wx__utils_8c_1ac2bb3db0b37c9f45103fd513ca5158fe" prot="public" static="no">
+        <name>ESP_ARG_CHECK</name>
+        <param><defname>VAL</defname></param>
+        <initializer>do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="61" column="9" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="61" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="wx__utils_8c_1ab6d4aaa6f43c3259d000d7f297e6124e" prot="public" static="yes" mutable="no">
+        <type><ref refid="structwx__scalar__range__t" kindref="compound">wx_scalar_range_t</ref></type>
+        <definition>wx_scalar_range_t wx_temperature_range</definition>
+        <argsstring></argsstring>
+        <name>wx_temperature_range</name>
+        <initializer>= { .maximum = <ref refid="wx__utils_8c_1a93cedab733e0e5c49b590ce38beaa510" kindref="member">WX_TEMPERATURE_MAX</ref>, .minimum = <ref refid="wx__utils_8c_1a7b6edc6e4d9bd3a12b53fdbf5ea4f963" kindref="member">WX_TEMPERATURE_MIN</ref> }</initializer>
+        <briefdescription>
+<para>Weather utilities temperature maximum and minimum ranges in degrees Celsius (default maximum 125 and minimum -40). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="70" column="33" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="variable" id="wx__utils_8c_1a771525d93e1b70687e00c2ce606a4658" prot="public" static="yes" mutable="no">
+        <type><ref refid="structwx__scalar__range__t" kindref="compound">wx_scalar_range_t</ref></type>
+        <definition>wx_scalar_range_t wx_humidity_range</definition>
+        <argsstring></argsstring>
+        <name>wx_humidity_range</name>
+        <initializer>= { .maximum = <ref refid="wx__utils_8c_1aeb181279e68304420d7d16119d893476" kindref="member">WX_HUMIDITY_MAX</ref>, .minimum = <ref refid="wx__utils_8c_1a2bc2559cd94781d662267d6959b6455b" kindref="member">WX_HUMIDITY_MIN</ref> }</initializer>
+        <briefdescription>
+<para>Weather utilities humidity maximum and minimum ranges in percent (default maximum 100 and minimum 0). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="75" column="33" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="75" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="variable" id="wx__utils_8c_1a5a85b9c772bbeb480b209a3e6ea92b4c" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* TAG</definition>
+        <argsstring></argsstring>
+        <name>TAG</name>
+        <initializer>= &quot;wx_utils&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="82" column="19" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="82" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__wx__utils_1ga007944c60d61949b8d9f3961d4efe263" kind="function"><name>wx_set_temperature_range</name></member>
+      <member refid="group__wx__utils_1ga729e8446a82e36e3889e88f251620a79" kind="function"><name>wx_set_humidity_range</name></member>
+      <member refid="group__wx__utils_1gaf9560dbeb2376204ae455a7e71407e04" kind="function"><name>wx_td_range</name></member>
+      <member refid="group__wx__utils_1ga6f8a84895a0f475d4850db1f31bc4a84" kind="function"><name>wx_c_to_k</name></member>
+      <member refid="group__wx__utils_1ga931c1bcd4eaa1ed9f1058c9bb3641071" kind="function"><name>wx_k_to_c</name></member>
+      <member refid="group__wx__utils_1ga1566153b847245076c2be30f76a741c6" kind="function"><name>wx_v</name></member>
+      <member refid="group__wx__utils_1ga75bd4d837c1f829e0d896a0960b4032c" kind="function"><name>wx_pwi</name></member>
+      <member refid="group__wx__utils_1ga72dbbedce71f89709a492598e5157820" kind="function"><name>wx_pws</name></member>
+      <member refid="group__wx__utils_1ga53a05dd931fd2c3146d6f8f41893d9a3" kind="function"><name>wx_pressure_at_sea_level</name></member>
+      <member refid="group__wx__utils_1ga0b1ca2c46ff5cfef33fd5831beddaf08" kind="function"><name>wx_td</name></member>
+      <memberdef kind="function" id="wx__utils_8c_1ae42e1ea802b482c4071f20b0c659e49a" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const double</type>
+        <definition>static const double wx_phit</definition>
+        <argsstring>(const double ta, const double tw, const double pa)</argsstring>
+        <name>wx_phit</name>
+        <param>
+          <type>const double</type>
+          <declname>ta</declname>
+        </param>
+        <param>
+          <type>const double</type>
+          <declname>tw</declname>
+        </param>
+        <param>
+          <type>const double</type>
+          <declname>pa</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="198" column="28" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="198" bodyend="202"/>
+      </memberdef>
+      <memberdef kind="function" id="wx__utils_8c_1a02ecf5e524ed0582d1dcebcdda3eb8df" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const double</type>
+        <definition>static const double wx_pder</definition>
+        <argsstring>(const double ta, const double tw, const double phit)</argsstring>
+        <name>wx_pder</name>
+        <param>
+          <type>const double</type>
+          <declname>ta</declname>
+        </param>
+        <param>
+          <type>const double</type>
+          <declname>tw</declname>
+        </param>
+        <param>
+          <type>const double</type>
+          <declname>phit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_wx_utils/wx_utils.c" line="204" column="28" bodyfile="components/utilities/esp_wx_utils/wx_utils.c" bodystart="204" bodyend="206"/>
+      </memberdef>
+      <member refid="group__wx__utils_1gae159e7e1938651f641ddaf776c24c08c" kind="function"><name>wx_tw</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>ESP-IDF weather utilities (utils)</para>
+<para>References <ulink url="https://docs.vaisala.com/r/M212417EN-H/en-US/GUID-EBE2B115-3C98-4C8C-9F2D-A2FF1EFECFCC">https://docs.vaisala.com/r/M212417EN-H/en-US/GUID-EBE2B115-3C98-4C8C-9F2D-A2FF1EFECFCC</ulink> <ulink url="https://earthscience.stackexchange.com/questions/16366/weather-forecast-based-on-pressure-temperature-and-humidity-only-for-implement">https://earthscience.stackexchange.com/questions/16366/weather-forecast-based-on-pressure-temperature-and-humidity-only-for-implement</ulink> <ulink url="https://web.archive.org/web/20110610213848/http://www.meteormetrics.com/zambretti.htm">https://web.archive.org/web/20110610213848/http://www.meteormetrics.com/zambretti.htm</ulink></para>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="wx__utils_8h" kindref="compound">wx_utils.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_log.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_check.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/FreeRTOS.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/task.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*<sp/>weather<sp/>utilities<sp/>definitions</highlight></codeline>
+<codeline lineno="49"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WX_TEMPERATURE_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(float)(125.0)<sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WX_TEMPERATURE_MIN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(float)(-40.0)<sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WX_HUMIDITY_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(float)(100.0)<sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WX_HUMIDITY_MIN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(float)(0.0)<sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>*<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="59"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESP_ARG_CHECK(VAL)<sp/>do<sp/>{<sp/>if<sp/>(!(VAL))<sp/>return<sp/>ESP_ERR_INVALID_ARG;<sp/>}<sp/>while<sp/>(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="64"><highlight class="comment">*<sp/>weather<sp/>utilities<sp/>static<sp/>global<sp/>declarations</highlight></codeline>
+<codeline lineno="65"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/><ref refid="structwx__scalar__range__t" kindref="compound">wx_scalar_range_t</ref><sp/>wx_temperature_range<sp/>=<sp/>{<sp/>.maximum<sp/>=<sp/><ref refid="wx__utils_8c_1a93cedab733e0e5c49b590ce38beaa510" kindref="member">WX_TEMPERATURE_MAX</ref>,<sp/>.minimum<sp/>=<sp/><ref refid="wx__utils_8c_1a7b6edc6e4d9bd3a12b53fdbf5ea4f963" kindref="member">WX_TEMPERATURE_MIN</ref><sp/>};</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/><ref refid="structwx__scalar__range__t" kindref="compound">wx_scalar_range_t</ref><sp/>wx_humidity_range<sp/>=<sp/>{<sp/>.maximum<sp/>=<sp/><ref refid="wx__utils_8c_1aeb181279e68304420d7d16119d893476" kindref="member">WX_HUMIDITY_MAX</ref>,<sp/>.minimum<sp/>=<sp/><ref refid="wx__utils_8c_1a2bc2559cd94781d662267d6959b6455b" kindref="member">WX_HUMIDITY_MIN</ref><sp/>};</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="79"><highlight class="comment">*<sp/>static<sp/>constant<sp/>declarations</highlight></codeline>
+<codeline lineno="80"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*TAG<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;wx_utils&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="86"><highlight class="comment">*<sp/>functions<sp/>and<sp/>subroutines</highlight></codeline>
+<codeline lineno="87"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal">esp_err_t<sp/><ref refid="group__wx__utils_1ga007944c60d61949b8d9f3961d4efe263" kindref="member">wx_set_temperature_range</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>maximum,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>minimum)<sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>max<sp/>and<sp/>min<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(minimum<sp/>&gt;<sp/>maximum<sp/>||<sp/>maximum<sp/>&lt;<sp/>minimum)<sp/>{</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;minimum<sp/>temperature<sp/>must<sp/>be<sp/>smaller<sp/>than<sp/>the<sp/>maximum<sp/>temperature,<sp/>set<sp/>temperature<sp/>range<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>max<sp/>and<sp/>min<sp/>range<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>wx_temperature_range<sp/>=<sp/>(<ref refid="structwx__scalar__range__t" kindref="compound">wx_scalar_range_t</ref>){<sp/>.maximum<sp/>=<sp/>maximum,<sp/>.minimum<sp/>=<sp/>minimum<sp/>};</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal">esp_err_t<sp/><ref refid="group__wx__utils_1ga729e8446a82e36e3889e88f251620a79" kindref="member">wx_set_humidity_range</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>maximum,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>minimum)<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>max<sp/>and<sp/>min<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(minimum<sp/>&gt;<sp/>maximum<sp/>||<sp/>maximum<sp/>&lt;<sp/>minimum)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;minimum<sp/>humidity<sp/>must<sp/>be<sp/>smaller<sp/>than<sp/>the<sp/>maximum<sp/>humidity,<sp/>set<sp/>humidity<sp/>range<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>max<sp/>and<sp/>min<sp/>ranges<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>wx_humidity_range<sp/>=<sp/>(<ref refid="structwx__scalar__range__t" kindref="compound">wx_scalar_range_t</ref>){<sp/>.maximum<sp/>=<sp/>maximum,<sp/>.minimum<sp/>=<sp/>minimum<sp/>};</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal">esp_err_t<sp/><ref refid="group__wx__utils_1gaf9560dbeb2376204ae455a7e71407e04" kindref="member">wx_td_range</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>humidity,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>dewpoint)<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>dewpoint<sp/>);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>validate<sp/>range<sp/>of<sp/>temperature<sp/>parameter</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(temperature<sp/>&gt;<sp/>wx_temperature_range.maximum<sp/>||<sp/>temperature<sp/>&lt;<sp/>wx_temperature_range.minimum)<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;temperature<sp/>is<sp/>out<sp/>of<sp/>range,<sp/>calculate<sp/>dewpoint<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>validate<sp/>range<sp/>of<sp/>humidity<sp/>parameter</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(humidity<sp/>&gt;<sp/>wx_humidity_range.maximum<sp/>||<sp/>humidity<sp/>&lt;<sp/>wx_humidity_range.minimum)<sp/>{</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">,<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;humidity<sp/>is<sp/>out<sp/>of<sp/>range,<sp/>calculate<sp/>dewpoint<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>calculate<sp/>dew-point<sp/>temperature</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//double<sp/>H<sp/>=<sp/>(log10(humidity)-2)/0.4343<sp/>+<sp/>(17.62*temperature)/(243.12+temperature);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//*dewpoint<sp/>=<sp/>243.12*H/(17.62-H);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/>*dewpoint<sp/>=<sp/><ref refid="group__wx__utils_1ga0b1ca2c46ff5cfef33fd5831beddaf08" kindref="member">wx_td</ref>(temperature,<sp/>humidity);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga6f8a84895a0f475d4850db1f31bc4a84" kindref="member">wx_c_to_k</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>t<sp/>+<sp/>273.15;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga931c1bcd4eaa1ed9f1058c9bb3641071" kindref="member">wx_k_to_c</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>t<sp/>-<sp/>273.15;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga1566153b847245076c2be30f76a741c6" kindref="member">wx_v</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>c0<sp/>=<sp/>0.4931358;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>c1<sp/>=<sp/>-0.0046094296;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>c2<sp/>=<sp/>0.000013746454;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>c3<sp/>=<sp/>-0.000000012743214;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>t<sp/>-<sp/>c0<sp/>-<sp/>c1<sp/>*<sp/>t<sp/>-<sp/>c2<sp/>*<sp/>pow(t,<sp/>2)<sp/>-<sp/>c3<sp/>*<sp/>pow(t,<sp/>3);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga75bd4d837c1f829e0d896a0960b4032c" kindref="member">wx_pwi</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a0<sp/>=<sp/>-5674.5359;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a1<sp/>=<sp/>6.3925247;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a2<sp/>=<sp/>-9.677843E-03;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a3<sp/>=<sp/>0.00000062215701;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a4<sp/>=<sp/>2.0747825E-09;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a5<sp/>=<sp/>-9.484024E-13;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a6<sp/>=<sp/>4.1635019;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>exp(<sp/>(a0<sp/>/<sp/>t)<sp/>+<sp/>a1<sp/>+<sp/>(a2<sp/>*<sp/>t)<sp/>+<sp/>(a3<sp/>*<sp/>pow(t,<sp/>2))<sp/>+<sp/>(a4<sp/>*<sp/>pow(t,<sp/>3))<sp/>+<sp/>(a5<sp/>*<sp/>pow(t,<sp/>4))<sp/>+<sp/>(a6<sp/>*<sp/>log(t))<sp/>)<sp/>*<sp/>0.01;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga72dbbedce71f89709a492598e5157820" kindref="member">wx_pws</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>b_1<sp/>=<sp/>-5800.2206;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>b0<sp/>=<sp/>1.3914993;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>b1<sp/>=<sp/>-0.048640239;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>b2<sp/>=<sp/>0.000041764768;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>b3<sp/>=<sp/>-0.000000014452093;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>b4<sp/>=<sp/>6.5459673;</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>v<sp/>=<sp/><ref refid="group__wx__utils_1ga1566153b847245076c2be30f76a741c6" kindref="member">wx_v</ref>(t);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>exp(<sp/>(b_1<sp/>/<sp/>v)<sp/>+<sp/>b0<sp/>+<sp/>(b1<sp/>*<sp/>v)<sp/>+<sp/>(b2<sp/>*<sp/>pow(v,<sp/>2))<sp/>+<sp/>(b3<sp/>*<sp/>pow(v,<sp/>3))<sp/>+<sp/>(b4<sp/>*<sp/>log(v))<sp/>)<sp/>*<sp/>0.01;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga53a05dd931fd2c3146d6f8f41893d9a3" kindref="member">wx_pressure_at_sea_level</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>ph,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>t)<sp/>{</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>see<sp/>https://keisan.casio.com/exec/system/1224575267</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>precalculate<sp/>altitude,<sp/>corrected<sp/>for<sp/>the<sp/>temperature<sp/>lapse<sp/>rate</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>hl<sp/>=<sp/>a<sp/>*<sp/>0.0065;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ph<sp/>/<sp/>pow(1.0-hl/(t+hl+273.15),5.257);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1ga0b1ca2c46ff5cfef33fd5831beddaf08" kindref="member">wx_td</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>ta,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>hr)<sp/>{</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a1<sp/>=<sp/>243.12;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>a2<sp/>=<sp/>17.62;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>H<sp/>=<sp/>log(<sp/>hr<sp/>*<sp/>exp(<sp/>(a2<sp/>*<sp/>ta)<sp/>/<sp/>(a1<sp/>+<sp/>ta)<sp/>)<sp/>/<sp/>100<sp/>);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(a1<sp/>*<sp/>H)<sp/>/<sp/>(a2<sp/>-<sp/>H);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>wx_phit(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>ta,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>tw,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>pa)<sp/>{</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>pws_tw<sp/>=<sp/><ref refid="group__wx__utils_1ga72dbbedce71f89709a492598e5157820" kindref="member">wx_pws</ref>(<ref refid="group__wx__utils_1ga6f8a84895a0f475d4850db1f31bc4a84" kindref="member">wx_c_to_k</ref>(tw));</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>pws_tw<sp/>-<sp/>0.000662<sp/>*<sp/>pa<sp/>*<sp/>(ta<sp/>-<sp/>tw);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>wx_pder(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>ta,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>tw,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>phit)<sp/>{</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>NAN;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/><ref refid="group__wx__utils_1gae159e7e1938651f641ddaf776c24c08c" kindref="member">wx_tw</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>ta,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>hr,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>td,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>pa)<sp/>{</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>pws_td<sp/>=<sp/><ref refid="group__wx__utils_1ga72dbbedce71f89709a492598e5157820" kindref="member">wx_pws</ref>(<ref refid="group__wx__utils_1ga6f8a84895a0f475d4850db1f31bc4a84" kindref="member">wx_c_to_k</ref>(td));</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>twet_init<sp/>=<sp/>243.12<sp/>*<sp/>(<sp/>log(pws_td<sp/>/<sp/>6.112)<sp/>/<sp/>(17.62<sp/>-<sp/>log(pws_td<sp/>/<sp/>6.112))<sp/>);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>NAN;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="components/utilities/esp_wx_utils/wx_utils.c"/>
+  </compounddef>
+</doxygen>

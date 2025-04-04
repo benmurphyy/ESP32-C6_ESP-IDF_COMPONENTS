@@ -1,0 +1,227 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ccs811/ccs811.c File Reference}
+\hypertarget{ccs811_8c}{}\label{ccs811_8c}\index{components/peripherals/i2c/esp\_ccs811/ccs811.c@{components/peripherals/i2c/esp\_ccs811/ccs811.c}}
+{\ttfamily \#include "{}include/ccs811.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{ccs811_8c_aae262a346059d19e4740db59aeacf4fc}\label{ccs811_8c_aae262a346059d19e4740db59aeacf4fc} 
+\#define {\bfseries CCS811\+\_\+\+HW\+\_\+\+ID}~UINT8\+\_\+C(0x81)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C hardware identification (0x81) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_acb0da4715312b34f0f2b654cd9b47d65}\label{ccs811_8c_acb0da4715312b34f0f2b654cd9b47d65} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+STATUS\+\_\+R}~UINT8\+\_\+C(0x00)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C status register (1-\/byte) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a9c87cdf7717a1d373317395c3c629b08}\label{ccs811_8c_a9c87cdf7717a1d373317395c3c629b08} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+MEAS\+\_\+\+MODE\+\_\+\+RW}~UINT8\+\_\+C(0x01)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C measurement mode and conditions register (1-\/byte) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a0aecf6d661d26c2031972a95781ff4e7}\label{ccs811_8c_a0aecf6d661d26c2031972a95781ff4e7} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+ALG\+\_\+\+RESULT\+\_\+\+DATA\+\_\+R}~UINT8\+\_\+C(0x02)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C algorithm results (up to 8-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a94050dc404f48c49c1b05425153ef171}\label{ccs811_8c_a94050dc404f48c49c1b05425153ef171} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+RAW\+\_\+\+DATA\+\_\+R}~UINT8\+\_\+C(0x03)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C raw ADC data values (2-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a53e3a2d8f1fc5a57b0549bf62d74f35a}\label{ccs811_8c_a53e3a2d8f1fc5a57b0549bf62d74f35a} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+ENV\+\_\+\+DATA\+\_\+W}~UINT8\+\_\+C(0x05)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C temperature and humidity compensation (4-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a478af02d0d3e25adedae5f6764997750}\label{ccs811_8c_a478af02d0d3e25adedae5f6764997750} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+NTC\+\_\+R}~UINT8\+\_\+C(0x06)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C temperature and humidity compensation (4-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a67894a8e9c3451119f0fb6f766733b6a}\label{ccs811_8c_a67894a8e9c3451119f0fb6f766733b6a} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+THRESHOLDS\+\_\+W}~UINT8\+\_\+C(0x10)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C interrupt threshold when in operation (4-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_ab8346908375c6e29caff70b019700d0d}\label{ccs811_8c_ab8346908375c6e29caff70b019700d0d} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+BASELINE\+\_\+\+RW}~UINT8\+\_\+C(0x11)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C encoded current baseline (2-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a7e63a5c16d84908ff04afe6d751ba032}\label{ccs811_8c_a7e63a5c16d84908ff04afe6d751ba032} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+HW\+\_\+\+ID\+\_\+R}~UINT8\+\_\+C(0x20)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C hardware identification register (1-\/byte), value is 0x81 \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a703160d1416b163f9bb43a3026168bf3}\label{ccs811_8c_a703160d1416b163f9bb43a3026168bf3} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+HW\+\_\+\+VERSION\+\_\+R}~UINT8\+\_\+C(0x21)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C hardware version register (1-\/byte), value is 0x1x \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_aa9967947ed62d7326e0faa8dd76a922f}\label{ccs811_8c_aa9967947ed62d7326e0faa8dd76a922f} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+FW\+\_\+\+BOOT\+\_\+\+VERSION\+\_\+R}~UINT8\+\_\+C(0x23)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C firmware boot version register (2-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_acf1fbbac521f1686ace029799e92975e}\label{ccs811_8c_acf1fbbac521f1686ace029799e92975e} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+FW\+\_\+\+APP\+\_\+\+VERSION\+\_\+R}~UINT8\+\_\+C(0x24)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C firmware application version register (2-\/bytes) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_ae66e380f08af94ce79a84df73d7b700a}\label{ccs811_8c_ae66e380f08af94ce79a84df73d7b700a} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+INTERNAL\+\_\+\+STATE\+\_\+R}~UINT8\+\_\+C(0xa0)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C internal status register (1-\/byte) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a61a5032a9eab4fc1f1a9e08f40a977a7}\label{ccs811_8c_a61a5032a9eab4fc1f1a9e08f40a977a7} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+ERROR\+\_\+\+ID\+\_\+R}~UINT8\+\_\+C(0xe0)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C error source register from internal status register (1-\/byte) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a1828facc9981058b7d3fbb676940df71}\label{ccs811_8c_a1828facc9981058b7d3fbb676940df71} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+APP\+\_\+\+START\+\_\+W}~UINT8\+\_\+C(0xf4)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C application start (1-\/byte) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_aa8717db2ab11a5400dbfbfb97d297391}\label{ccs811_8c_aa8717db2ab11a5400dbfbfb97d297391} 
+\#define {\bfseries CCS811\+\_\+\+REG\+\_\+\+SW\+\_\+\+RESET\+\_\+W}~UINT8\+\_\+C(0xff)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C software reset when correct 4-\/bytes written (0x11 0xe5 0x72 0x8a) \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_aa2440f3687ae80202c43de13d7599bb4}\label{ccs811_8c_aa2440f3687ae80202c43de13d7599bb4} 
+\#define {\bfseries CCS811\+\_\+\+ECO2\+\_\+\+RANGE\+\_\+\+MIN}~(400)
+\begin{DoxyCompactList}\small\item\em ccs811 e\+CO2 minimum in ppm \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a494270ef5655ffd9208285ac14edfa00}\label{ccs811_8c_a494270ef5655ffd9208285ac14edfa00} 
+\#define {\bfseries CCS811\+\_\+\+ECO2\+\_\+\+RANGE\+\_\+\+MAX}~(32768)
+\begin{DoxyCompactList}\small\item\em ccs811 e\+CO2 maximum in ppm \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a418662946d8dcf277978a64d075e8330}\label{ccs811_8c_a418662946d8dcf277978a64d075e8330} 
+\#define {\bfseries CCS811\+\_\+\+ETVOC\+\_\+\+RANGE\+\_\+\+MIN}~(0)
+\begin{DoxyCompactList}\small\item\em ccs811 e\+TVOC minimum in ppb \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a104204ed762c1fc792cf9d790836ca1a}\label{ccs811_8c_a104204ed762c1fc792cf9d790836ca1a} 
+\#define {\bfseries CCS811\+\_\+\+ETVOC\+\_\+\+RANGE\+\_\+\+MAX}~(29206)
+\begin{DoxyCompactList}\small\item\em ccs811 e\+TVOC maximum in ppb \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_aeb1f3d1cd7b8a9ec1077963830725e22}\label{ccs811_8c_aeb1f3d1cd7b8a9ec1077963830725e22} 
+\#define {\bfseries CCS811\+\_\+\+TEMPERATURE\+\_\+\+RANGE\+\_\+\+MIN}~(-\/25)
+\begin{DoxyCompactList}\small\item\em ccs811 temperature minimum in degrees Celsius \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_afa30d19f27292c60bb3e187ff2c55795}\label{ccs811_8c_afa30d19f27292c60bb3e187ff2c55795} 
+\#define {\bfseries CCS811\+\_\+\+TEMPERATURE\+\_\+\+RANGE\+\_\+\+MAX}~(50)
+\begin{DoxyCompactList}\small\item\em ccs811 temperature maximum in degrees Celsius \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a5c377e08bc1c17570b9875b2a825b13f}\label{ccs811_8c_a5c377e08bc1c17570b9875b2a825b13f} 
+\#define {\bfseries CCS811\+\_\+\+HUMIDITY\+\_\+\+RANGE\+\_\+\+MIN}~(0)
+\begin{DoxyCompactList}\small\item\em ccs811 relative humidity minimum in percent \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a7a362fe8e0c30f3ac9785433185d5b1a}\label{ccs811_8c_a7a362fe8e0c30f3ac9785433185d5b1a} 
+\#define {\bfseries CCS811\+\_\+\+HUMIDITY\+\_\+\+RANGE\+\_\+\+MAX}~(100)
+\begin{DoxyCompactList}\small\item\em ccs811 relative humidity maximum in percent \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a8c56e538f483de634a6852a1fd9b8dd3}\label{ccs811_8c_a8c56e538f483de634a6852a1fd9b8dd3} 
+\#define {\bfseries CCS811\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C start-\/up delay before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a9fcebb8e951048e0b1759419b24a034c}\label{ccs811_8c_a9fcebb8e951048e0b1759419b24a034c} 
+\#define {\bfseries CCS811\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{ccs811_8c_aee16d79acb336163405e51bf8b74a76d}\label{ccs811_8c_aee16d79acb336163405e51bf8b74a76d} 
+\#define {\bfseries CCS811\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(250)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C software reset delay before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a1e1996b2576e80d86962aefb4b22877b}\label{ccs811_8c_a1e1996b2576e80d86962aefb4b22877b} 
+\#define {\bfseries CCS811\+\_\+\+WAKE\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(5)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C wake-\/up delay from sleep before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_ae180690414e28b1ec0c677bf87906d05}\label{ccs811_8c_ae180690414e28b1ec0c677bf87906d05} 
+\#define {\bfseries CCS811\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{ccs811_8c_af552ae06cdc703984054b3adffb1f0e5}\label{ccs811_8c_af552ae06cdc703984054b3adffb1f0e5} 
+\#define {\bfseries CCS811\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(100)
+\item 
+\Hypertarget{ccs811_8c_adca2d00d36eb15fa494bb7992aa768b0}\label{ccs811_8c_adca2d00d36eb15fa494bb7992aa768b0} 
+\#define {\bfseries CCS811\+\_\+\+ERASE\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(500)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C erase delay before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a661284ada1c7829adee0b9417b76df89}\label{ccs811_8c_a661284ada1c7829adee0b9417b76df89} 
+\#define {\bfseries CCS811\+\_\+\+VERIFY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(70)
+\begin{DoxyCompactList}\small\item\em ccs811 I2C verification delay before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ccs811_8c_a80477721250dd0b853e6d8b8d78ecca7}\label{ccs811_8c_a80477721250dd0b853e6d8b8d78ecca7} 
+\#define {\bfseries CCS811\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{ccs811_8c_a0ea4516848f0f59cb769ce6857d53f38}\label{ccs811_8c_a0ea4516848f0f59cb769ce6857d53f38} 
+\#define {\bfseries CCS811\+\_\+\+SW\+\_\+\+RESET\+\_\+\+DATA}~\{ 0x11, 0xe5, 0x72, 0x8a \}
+\item 
+\Hypertarget{ccs811_8c_a9a46e592ef23247d7e79fe9689545d0c}\label{ccs811_8c_a9a46e592ef23247d7e79fe9689545d0c} 
+\#define {\bfseries CCS811\+\_\+\+ERASE\+\_\+\+DATA}~\{ 0xe7, 0xa7, 0xe6, 0x09 \}
+\item 
+\#define \mbox{\hyperlink{ccs811_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{ccs811_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0bff976989ba5bf0eaa1ca9e38e9d3af}{ccs811\+\_\+get\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, ccs811\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads status register from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad2a11eca0777e7719a0a1e9e566576de}{ccs811\+\_\+get\+\_\+measure\+\_\+mode\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, ccs811\+\_\+measure\+\_\+mode\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads measure mode register from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad3b44884f844b3777372970af4145217}{ccs811\+\_\+set\+\_\+measure\+\_\+mode\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const ccs811\+\_\+measure\+\_\+mode\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes measure mode register to CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga61b35f4a71f4b97d0012f77d411375c6}{ccs811\+\_\+get\+\_\+error\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, ccs811\+\_\+error\+\_\+code\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads error register from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3376d27746958386be2ab4a5bbfc398d}{ccs811\+\_\+set\+\_\+environmental\+\_\+data\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity)
+\begin{DoxyCompactList}\small\item\em Writes environmental compensation factors data to CCS811 register. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga25478eadc453cd81afe79e8be0bc0389}{ccs811\+\_\+set\+\_\+thresholds\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t low\+\_\+to\+\_\+med, const uint16\+\_\+t med\+\_\+to\+\_\+high, const uint8\+\_\+t hysteresis)
+\begin{DoxyCompactList}\small\item\em Writes e\+CO2 thresholds to CCS811 register. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaffafc27a7d92e5fa6c5c523e7b3473ba}{ccs811\+\_\+get\+\_\+baseline\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads encoded version of the current baseline register from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4f9290f72d94b19f5f9cca0e2ed43c63}{ccs811\+\_\+set\+\_\+baseline\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t baseline)
+\begin{DoxyCompactList}\small\item\em Writes encoded version to the CCS811 baseline register. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaeeedd12bb1ac608249d2ced247383657}{ccs811\+\_\+get\+\_\+hardware\+\_\+identifier\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads hardware identifier register from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5a5c0f26a73196ef7f8b3a86a7151133}{ccs811\+\_\+get\+\_\+hardware\+\_\+version\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads hardware version register from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaacddf12a1b0fa04e95f4f425fce71483}{ccs811\+\_\+start\+\_\+application}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Starts the CCS811 application. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafb2476c99e169fab5776d8795fb2bfe7}{ccs811\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{structccs811__config__t}{ccs811\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}ccs811\+\_\+config, \mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}ccs811\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes a CCS811 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa02485dd45552bcdab58c102c0df56e7}{ccs811\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}eco2, uint16\+\_\+t \texorpdfstring{$\ast$}{*}etvoc)
+\begin{DoxyCompactList}\small\item\em Reads air quality measurement from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga72d5edd9419a160994e6efd2fb4c5dd8}{ccs811\+\_\+set\+\_\+environmental\+\_\+data}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity)
+\begin{DoxyCompactList}\small\item\em Writes environmental compensation factors data to CCS811 register. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae958fb94ab668f974903ba290fbdace4}{ccs811\+\_\+set\+\_\+thresholds}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t low\+\_\+to\+\_\+med, const uint16\+\_\+t med\+\_\+to\+\_\+high, const uint8\+\_\+t hysteresis)
+\begin{DoxyCompactList}\small\item\em Writes e\+CO2 thresholds to CCS811 register. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae4a67a7a46ce69f0b857b79f9b8c2376}{ccs811\+\_\+get\+\_\+drive\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gad91c6a3379cef0d15d8465d67c1479fa}{ccs811\+\_\+drive\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads drive mode from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gacdddac5cd9dae68712edb710148f1b11}{ccs811\+\_\+set\+\_\+drive\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gad91c6a3379cef0d15d8465d67c1479fa}{ccs811\+\_\+drive\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes drive mode to CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga024130f529315f52acbe65121df34581}{ccs811\+\_\+get\+\_\+firmware\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gadcc6aa53d50a1deb71f652886244b5b0}{ccs811\+\_\+firmware\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads firmware mode from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga320ffdba546b10f2327379aa76a0deed}{ccs811\+\_\+get\+\_\+ntc\+\_\+resistance}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, const uint32\+\_\+t r\+\_\+ref, uint32\+\_\+t \texorpdfstring{$\ast$}{*}const resistance)
+\begin{DoxyCompactList}\small\item\em Reads NTC resistance connected to CCS811 per AMS application note AN000372. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaea36b6c9e450ae85fcf0e89c51f2a4ad}{ccs811\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads data ready status from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf0b5cc8ab33a370424bbe905ed7a1c76}{ccs811\+\_\+get\+\_\+error\+\_\+status}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const error)
+\begin{DoxyCompactList}\small\item\em Reads error status from CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa5141a128d613111e1a3f5b5b189f49b}{ccs811\+\_\+reset}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset to CCS811. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga53ca5f2dc25d5785c6d05ddb711a2f26}{ccs811\+\_\+io\+\_\+wake}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Wakes the CCS811 through the configured wake GPIO pin number. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga585652bc7c427d8c3f1745aa1d6fdf06}{ccs811\+\_\+io\+\_\+sleep}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Puts the CCS811 a sleep through the configured wake GPIO pin number. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8f5338c785855e5a7fff79194aa4cb9f}{ccs811\+\_\+io\+\_\+reset}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Resets the CCS811 through the configured reset GPIO pin number. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga94d2bde4433eccabe0971f3646a8c581}{ccs811\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes a CCS811 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga411b556cedc994f96c23259453c55d27}{ccs811\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an CCS811 device from master I2C bus and delete the handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gae1a3cb157ee35d3a706afea61c4c85e0}{ccs811\+\_\+err\+\_\+to\+\_\+message}} (ccs811\+\_\+error\+\_\+code\+\_\+register\+\_\+t error\+\_\+reg)
+\begin{DoxyCompactList}\small\item\em Decodes CCS811 device error to a textual message representation. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gad3c6b76aefc8ee97bf3d646d57e99a75}{ccs811\+\_\+err\+\_\+to\+\_\+code}} (const ccs811\+\_\+error\+\_\+code\+\_\+register\+\_\+t error\+\_\+reg)
+\begin{DoxyCompactList}\small\item\em Decodes CCS811 device error to a textual code representation. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga6549ec2730d45f8316474755e09f6a04}{ccs811\+\_\+measure\+\_\+mode\+\_\+description}} (const \mbox{\hyperlink{group__drivers_gad91c6a3379cef0d15d8465d67c1479fa}{ccs811\+\_\+drive\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Decodes enumerated drive mode to a textual descriptive representation. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gae2118089810b70ab33694f634ec10262}{ccs811\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts CCS811 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga241483f7879eb78e0c440d0a95def97d}{ccs811\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts CCS811 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for CCS811 Air Quality sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ccs811_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{ccs811.c@{ccs811.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!ccs811.c@{ccs811.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{ccs811_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{ccs811_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{ccs811.c@{ccs811.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!ccs811.c@{ccs811.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{ccs811_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}

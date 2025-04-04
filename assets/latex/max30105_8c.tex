@@ -1,0 +1,295 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+max30105/max30105.c File Reference}
+\hypertarget{max30105_8c}{}\label{max30105_8c}\index{components/peripherals/i2c/esp\_max30105/max30105.c@{components/peripherals/i2c/esp\_max30105/max30105.c}}
+{\ttfamily \#include "{}include/max30105.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a71c67a7a404578ff07c9f07efe6d702e}{MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+STS1\+\_\+R}}~UINT8\+\_\+C(0x00)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a292e19a07c32fca0970804e8db8ff989}{MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+STS2\+\_\+R}}~UINT8\+\_\+C(0x01)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_aea8b4cf44279275994efef2dc3e62f31}{MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+ENB1\+\_\+\+RW}}~UINT8\+\_\+C(0x02)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_aa34547bb0f52a0a55ded017b97bb9685}{MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+ENB2\+\_\+\+RW}}~UINT8\+\_\+C(0x03)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_ac965048365c0ea55887731c92ac0a0a8}{MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+WR\+\_\+\+PTR\+\_\+\+RW}}~UINT8\+\_\+C(0x04)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a4a203854b32f3f76cb5598aa45adae60}{MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+OVF\+\_\+\+CNT\+\_\+\+RW}}~UINT8\+\_\+C(0x05)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_ae105fb4ff7ed2cc4fb18f227c8af7c8d}{MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+RD\+\_\+\+PTR\+\_\+\+RW}}~UINT8\+\_\+C(0x06)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a07a59f4aa757bf2a51be62a262424044}{MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+DATA\+\_\+\+RW}}~UINT8\+\_\+C(0x07)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a02ff0346f2c4a15fbb9447d390ec36e0}{MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+CONFIG\+\_\+\+RW}}~UINT8\+\_\+C(0x08)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a89e92da53f2583c7a8865b188b5a8cff}{MAX30105\+\_\+\+REG\+\_\+\+MODE\+\_\+\+CONFIG\+\_\+\+RW}}~UINT8\+\_\+C(0x09)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a689258d2df7792752ece15fd8cc0aa97}{MAX30105\+\_\+\+REG\+\_\+\+SPO2\+\_\+\+CONFIG\+\_\+\+RW}}~UINT8\+\_\+C(0x0A)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a86e905e95f857d9bfc9e1d2a66e2c1c8}{MAX30105\+\_\+\+REG\+\_\+\+LED1\+\_\+\+PA\+\_\+\+RW}}~UINT8\+\_\+C(0x0C)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_ac22285cf8c649683588e67911527a993}{MAX30105\+\_\+\+REG\+\_\+\+LED2\+\_\+\+PA\+\_\+\+RW}}~UINT8\+\_\+C(0x0D)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_aaf86dd596dc392d426f06f0d907a0ff3}{MAX30105\+\_\+\+REG\+\_\+\+LED3\+\_\+\+PA\+\_\+\+RW}}~UINT8\+\_\+C(0x0E)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a48d44c2063f46ff2e7db66ad0ac53e45}{MAX30105\+\_\+\+REG\+\_\+\+PILOT\+\_\+\+PA\+\_\+\+RW}}~UINT8\+\_\+C(0x10)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_aba4130a36afcc9541185325ce83fa8fd}{MAX30105\+\_\+\+REG\+\_\+\+MLED1\+\_\+\+MC\+\_\+\+RW}}~UINT8\+\_\+C(0x11)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_ad3c7d17c069a115156764c182ace498a}{MAX30105\+\_\+\+REG\+\_\+\+MLED2\+\_\+\+MC\+\_\+\+RW}}~UINT8\+\_\+C(0x12)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a0395ec9c822f7d81ce7d587dd1d2a14d}{MAX30105\+\_\+\+REG\+\_\+\+DIETEMP\+\_\+\+INT\+\_\+R}}~UINT8\+\_\+C(0x1F)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a46dd47f3a20749c98f30d00978b14b70}{MAX30105\+\_\+\+REG\+\_\+\+DIETEMP\+\_\+\+FRAC\+\_\+R}}~UINT8\+\_\+C(0x20)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_aaf7ce7ef851acba94bb11b12497bba08}{MAX30105\+\_\+\+REG\+\_\+\+DIETEMP\+\_\+\+CONFIG\+\_\+R}}~UINT8\+\_\+C(0x21)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a35a630eb5555acb3ba2ed0ae41c9885a}{MAX30105\+\_\+\+REG\+\_\+\+PROX\+\_\+\+INT\+\_\+\+THLD\+\_\+\+RW}}~UINT8\+\_\+C(0x30)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a30eef42882a73170e1af6685028c6c9d}{MAX30105\+\_\+\+REG\+\_\+\+REV\+\_\+\+ID\+\_\+R}}~UINT8\+\_\+C(0x\+FE)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a80edf47558d43f992ee9a32767c65ad3}{MAX30105\+\_\+\+REG\+\_\+\+PART\+\_\+\+ID\+\_\+R}}~UINT8\+\_\+C(0x\+FE)
+\item 
+\Hypertarget{max30105_8c_a80fc3b10d1a834d300520f001fac5e30}\label{max30105_8c_a80fc3b10d1a834d300520f001fac5e30} 
+\#define {\bfseries MAX30105\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(100)
+\item 
+\Hypertarget{max30105_8c_abc5094eb663e259d43fb03cd90c02bae}\label{max30105_8c_abc5094eb663e259d43fb03cd90c02bae} 
+\#define {\bfseries MAX30105\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(2)
+\item 
+\Hypertarget{max30105_8c_a8dc3b25659b00edebf0276d6953402eb}\label{max30105_8c_a8dc3b25659b00edebf0276d6953402eb} 
+\#define {\bfseries MAX30105\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(120)
+\item 
+\Hypertarget{max30105_8c_af1fc2a19597577addccec9a96512ac37}\label{max30105_8c_af1fc2a19597577addccec9a96512ac37} 
+\#define {\bfseries MAX30105\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{max30105_8c_a22a77272a40b57b0766f0674a3f8023f}\label{max30105_8c_a22a77272a40b57b0766f0674a3f8023f} 
+\#define {\bfseries MAX30105\+\_\+\+SETUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(15)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a1191a11167e2f86f5674540cc13bcd1b}{MAX30105\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a3d01263f472fe57de4de15b9011bc8ac}{MAX30105\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_a59bcab93572375f450386ef9b604c9e5}{MAX30105\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{max30105_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaabc9f71c22edd8f86e30f4c8f272f3ed}{max30105\+\_\+get\+\_\+interrupt\+\_\+status1\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+status1\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt status 1 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa7d230779617843339697177a2e9539a}{max30105\+\_\+get\+\_\+interrupt\+\_\+status2\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+status2\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt status 2 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad7d0f67365ce70618b141ed3fd6dc420}{max30105\+\_\+get\+\_\+interrupt\+\_\+enable1\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+enable1\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt enable 1 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5c4b439eb292fd8a1a27dca8e64cac24}{max30105\+\_\+set\+\_\+interrupt\+\_\+enable1\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const max30105\+\_\+interrupt\+\_\+enable1\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes interrupt enable 1 register to MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gacdf531a20c00a19f39f46e49ed4b5195}{max30105\+\_\+get\+\_\+interrupt\+\_\+enable2\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+enable2\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt enable 2 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8e9655185febb88a4922f6d36ff5286e}{max30105\+\_\+set\+\_\+interrupt\+\_\+enable2\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const max30105\+\_\+interrupt\+\_\+enable2\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes interrupt enable 2 register to MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga825dd4dccb365826ec6a5dc4a8a4b2b3}{max30105\+\_\+get\+\_\+mode\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+mode\+\_\+configuration\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads mode configuration register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad8b44bbc555adccc623edb3b23fa1ea9}{max30105\+\_\+set\+\_\+mode\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const max30105\+\_\+mode\+\_\+configuration\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes mode configuration register to MAX30105. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for MAX30105 sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{max30105_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{max30105.c@{max30105.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{max30105_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{max30105_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{max30105.c@{max30105.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{max30105_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}
+\Hypertarget{max30105_8c_a1191a11167e2f86f5674540cc13bcd1b}\index{max30105.c@{max30105.c}!MAX30105\_APPSTART\_DELAY\_MS@{MAX30105\_APPSTART\_DELAY\_MS}}
+\index{MAX30105\_APPSTART\_DELAY\_MS@{MAX30105\_APPSTART\_DELAY\_MS}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_APPSTART\_DELAY\_MS}{MAX30105\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{max30105_8c_a1191a11167e2f86f5674540cc13bcd1b} 
+\#define MAX30105\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+max30105 delay after initialization before application start-\/up \Hypertarget{max30105_8c_a3d01263f472fe57de4de15b9011bc8ac}\index{max30105.c@{max30105.c}!MAX30105\_CMD\_DELAY\_MS@{MAX30105\_CMD\_DELAY\_MS}}
+\index{MAX30105\_CMD\_DELAY\_MS@{MAX30105\_CMD\_DELAY\_MS}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_CMD\_DELAY\_MS}{MAX30105\_CMD\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{max30105_8c_a3d01263f472fe57de4de15b9011bc8ac} 
+\#define MAX30105\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+max30105 delay before attempting I2C transactions after a command is issued \Hypertarget{max30105_8c_aaf7ce7ef851acba94bb11b12497bba08}\index{max30105.c@{max30105.c}!MAX30105\_REG\_DIETEMP\_CONFIG\_R@{MAX30105\_REG\_DIETEMP\_CONFIG\_R}}
+\index{MAX30105\_REG\_DIETEMP\_CONFIG\_R@{MAX30105\_REG\_DIETEMP\_CONFIG\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_DIETEMP\_CONFIG\_R}{MAX30105\_REG\_DIETEMP\_CONFIG\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_aaf7ce7ef851acba94bb11b12497bba08} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+DIETEMP\+\_\+\+CONFIG\+\_\+R~UINT8\+\_\+C(0x21)}
+
+max30105 \Hypertarget{max30105_8c_a46dd47f3a20749c98f30d00978b14b70}\index{max30105.c@{max30105.c}!MAX30105\_REG\_DIETEMP\_FRAC\_R@{MAX30105\_REG\_DIETEMP\_FRAC\_R}}
+\index{MAX30105\_REG\_DIETEMP\_FRAC\_R@{MAX30105\_REG\_DIETEMP\_FRAC\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_DIETEMP\_FRAC\_R}{MAX30105\_REG\_DIETEMP\_FRAC\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_a46dd47f3a20749c98f30d00978b14b70} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+DIETEMP\+\_\+\+FRAC\+\_\+R~UINT8\+\_\+C(0x20)}
+
+max30105 \Hypertarget{max30105_8c_a0395ec9c822f7d81ce7d587dd1d2a14d}\index{max30105.c@{max30105.c}!MAX30105\_REG\_DIETEMP\_INT\_R@{MAX30105\_REG\_DIETEMP\_INT\_R}}
+\index{MAX30105\_REG\_DIETEMP\_INT\_R@{MAX30105\_REG\_DIETEMP\_INT\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_DIETEMP\_INT\_R}{MAX30105\_REG\_DIETEMP\_INT\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_a0395ec9c822f7d81ce7d587dd1d2a14d} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+DIETEMP\+\_\+\+INT\+\_\+R~UINT8\+\_\+C(0x1F)}
+
+max30105 \Hypertarget{max30105_8c_a02ff0346f2c4a15fbb9447d390ec36e0}\index{max30105.c@{max30105.c}!MAX30105\_REG\_FIFO\_CONFIG\_RW@{MAX30105\_REG\_FIFO\_CONFIG\_RW}}
+\index{MAX30105\_REG\_FIFO\_CONFIG\_RW@{MAX30105\_REG\_FIFO\_CONFIG\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_FIFO\_CONFIG\_RW}{MAX30105\_REG\_FIFO\_CONFIG\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a02ff0346f2c4a15fbb9447d390ec36e0} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+CONFIG\+\_\+\+RW~UINT8\+\_\+C(0x08)}
+
+max30105 \Hypertarget{max30105_8c_a07a59f4aa757bf2a51be62a262424044}\index{max30105.c@{max30105.c}!MAX30105\_REG\_FIFO\_DATA\_RW@{MAX30105\_REG\_FIFO\_DATA\_RW}}
+\index{MAX30105\_REG\_FIFO\_DATA\_RW@{MAX30105\_REG\_FIFO\_DATA\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_FIFO\_DATA\_RW}{MAX30105\_REG\_FIFO\_DATA\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a07a59f4aa757bf2a51be62a262424044} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+DATA\+\_\+\+RW~UINT8\+\_\+C(0x07)}
+
+max30105 \Hypertarget{max30105_8c_a4a203854b32f3f76cb5598aa45adae60}\index{max30105.c@{max30105.c}!MAX30105\_REG\_FIFO\_OVF\_CNT\_RW@{MAX30105\_REG\_FIFO\_OVF\_CNT\_RW}}
+\index{MAX30105\_REG\_FIFO\_OVF\_CNT\_RW@{MAX30105\_REG\_FIFO\_OVF\_CNT\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_FIFO\_OVF\_CNT\_RW}{MAX30105\_REG\_FIFO\_OVF\_CNT\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a4a203854b32f3f76cb5598aa45adae60} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+OVF\+\_\+\+CNT\+\_\+\+RW~UINT8\+\_\+C(0x05)}
+
+max30105 \Hypertarget{max30105_8c_ae105fb4ff7ed2cc4fb18f227c8af7c8d}\index{max30105.c@{max30105.c}!MAX30105\_REG\_FIFO\_RD\_PTR\_RW@{MAX30105\_REG\_FIFO\_RD\_PTR\_RW}}
+\index{MAX30105\_REG\_FIFO\_RD\_PTR\_RW@{MAX30105\_REG\_FIFO\_RD\_PTR\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_FIFO\_RD\_PTR\_RW}{MAX30105\_REG\_FIFO\_RD\_PTR\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_ae105fb4ff7ed2cc4fb18f227c8af7c8d} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+RD\+\_\+\+PTR\+\_\+\+RW~UINT8\+\_\+C(0x06)}
+
+max30105 \Hypertarget{max30105_8c_ac965048365c0ea55887731c92ac0a0a8}\index{max30105.c@{max30105.c}!MAX30105\_REG\_FIFO\_WR\_PTR\_RW@{MAX30105\_REG\_FIFO\_WR\_PTR\_RW}}
+\index{MAX30105\_REG\_FIFO\_WR\_PTR\_RW@{MAX30105\_REG\_FIFO\_WR\_PTR\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_FIFO\_WR\_PTR\_RW}{MAX30105\_REG\_FIFO\_WR\_PTR\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_ac965048365c0ea55887731c92ac0a0a8} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+FIFO\+\_\+\+WR\+\_\+\+PTR\+\_\+\+RW~UINT8\+\_\+C(0x04)}
+
+max30105 \Hypertarget{max30105_8c_aea8b4cf44279275994efef2dc3e62f31}\index{max30105.c@{max30105.c}!MAX30105\_REG\_INT\_ENB1\_RW@{MAX30105\_REG\_INT\_ENB1\_RW}}
+\index{MAX30105\_REG\_INT\_ENB1\_RW@{MAX30105\_REG\_INT\_ENB1\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_INT\_ENB1\_RW}{MAX30105\_REG\_INT\_ENB1\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_aea8b4cf44279275994efef2dc3e62f31} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+ENB1\+\_\+\+RW~UINT8\+\_\+C(0x02)}
+
+max30105 \Hypertarget{max30105_8c_aa34547bb0f52a0a55ded017b97bb9685}\index{max30105.c@{max30105.c}!MAX30105\_REG\_INT\_ENB2\_RW@{MAX30105\_REG\_INT\_ENB2\_RW}}
+\index{MAX30105\_REG\_INT\_ENB2\_RW@{MAX30105\_REG\_INT\_ENB2\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_INT\_ENB2\_RW}{MAX30105\_REG\_INT\_ENB2\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_aa34547bb0f52a0a55ded017b97bb9685} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+ENB2\+\_\+\+RW~UINT8\+\_\+C(0x03)}
+
+max30105 \Hypertarget{max30105_8c_a71c67a7a404578ff07c9f07efe6d702e}\index{max30105.c@{max30105.c}!MAX30105\_REG\_INT\_STS1\_R@{MAX30105\_REG\_INT\_STS1\_R}}
+\index{MAX30105\_REG\_INT\_STS1\_R@{MAX30105\_REG\_INT\_STS1\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_INT\_STS1\_R}{MAX30105\_REG\_INT\_STS1\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_a71c67a7a404578ff07c9f07efe6d702e} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+STS1\+\_\+R~UINT8\+\_\+C(0x00)}
+
+max30105 \Hypertarget{max30105_8c_a292e19a07c32fca0970804e8db8ff989}\index{max30105.c@{max30105.c}!MAX30105\_REG\_INT\_STS2\_R@{MAX30105\_REG\_INT\_STS2\_R}}
+\index{MAX30105\_REG\_INT\_STS2\_R@{MAX30105\_REG\_INT\_STS2\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_INT\_STS2\_R}{MAX30105\_REG\_INT\_STS2\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_a292e19a07c32fca0970804e8db8ff989} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+INT\+\_\+\+STS2\+\_\+R~UINT8\+\_\+C(0x01)}
+
+max30105 \Hypertarget{max30105_8c_a86e905e95f857d9bfc9e1d2a66e2c1c8}\index{max30105.c@{max30105.c}!MAX30105\_REG\_LED1\_PA\_RW@{MAX30105\_REG\_LED1\_PA\_RW}}
+\index{MAX30105\_REG\_LED1\_PA\_RW@{MAX30105\_REG\_LED1\_PA\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_LED1\_PA\_RW}{MAX30105\_REG\_LED1\_PA\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a86e905e95f857d9bfc9e1d2a66e2c1c8} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+LED1\+\_\+\+PA\+\_\+\+RW~UINT8\+\_\+C(0x0C)}
+
+max30105 \Hypertarget{max30105_8c_ac22285cf8c649683588e67911527a993}\index{max30105.c@{max30105.c}!MAX30105\_REG\_LED2\_PA\_RW@{MAX30105\_REG\_LED2\_PA\_RW}}
+\index{MAX30105\_REG\_LED2\_PA\_RW@{MAX30105\_REG\_LED2\_PA\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_LED2\_PA\_RW}{MAX30105\_REG\_LED2\_PA\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_ac22285cf8c649683588e67911527a993} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+LED2\+\_\+\+PA\+\_\+\+RW~UINT8\+\_\+C(0x0D)}
+
+max30105 \Hypertarget{max30105_8c_aaf86dd596dc392d426f06f0d907a0ff3}\index{max30105.c@{max30105.c}!MAX30105\_REG\_LED3\_PA\_RW@{MAX30105\_REG\_LED3\_PA\_RW}}
+\index{MAX30105\_REG\_LED3\_PA\_RW@{MAX30105\_REG\_LED3\_PA\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_LED3\_PA\_RW}{MAX30105\_REG\_LED3\_PA\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_aaf86dd596dc392d426f06f0d907a0ff3} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+LED3\+\_\+\+PA\+\_\+\+RW~UINT8\+\_\+C(0x0E)}
+
+max30105 \Hypertarget{max30105_8c_aba4130a36afcc9541185325ce83fa8fd}\index{max30105.c@{max30105.c}!MAX30105\_REG\_MLED1\_MC\_RW@{MAX30105\_REG\_MLED1\_MC\_RW}}
+\index{MAX30105\_REG\_MLED1\_MC\_RW@{MAX30105\_REG\_MLED1\_MC\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_MLED1\_MC\_RW}{MAX30105\_REG\_MLED1\_MC\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_aba4130a36afcc9541185325ce83fa8fd} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+MLED1\+\_\+\+MC\+\_\+\+RW~UINT8\+\_\+C(0x11)}
+
+max30105 \Hypertarget{max30105_8c_ad3c7d17c069a115156764c182ace498a}\index{max30105.c@{max30105.c}!MAX30105\_REG\_MLED2\_MC\_RW@{MAX30105\_REG\_MLED2\_MC\_RW}}
+\index{MAX30105\_REG\_MLED2\_MC\_RW@{MAX30105\_REG\_MLED2\_MC\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_MLED2\_MC\_RW}{MAX30105\_REG\_MLED2\_MC\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_ad3c7d17c069a115156764c182ace498a} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+MLED2\+\_\+\+MC\+\_\+\+RW~UINT8\+\_\+C(0x12)}
+
+max30105 \Hypertarget{max30105_8c_a89e92da53f2583c7a8865b188b5a8cff}\index{max30105.c@{max30105.c}!MAX30105\_REG\_MODE\_CONFIG\_RW@{MAX30105\_REG\_MODE\_CONFIG\_RW}}
+\index{MAX30105\_REG\_MODE\_CONFIG\_RW@{MAX30105\_REG\_MODE\_CONFIG\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_MODE\_CONFIG\_RW}{MAX30105\_REG\_MODE\_CONFIG\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a89e92da53f2583c7a8865b188b5a8cff} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+MODE\+\_\+\+CONFIG\+\_\+\+RW~UINT8\+\_\+C(0x09)}
+
+max30105 \Hypertarget{max30105_8c_a80edf47558d43f992ee9a32767c65ad3}\index{max30105.c@{max30105.c}!MAX30105\_REG\_PART\_ID\_R@{MAX30105\_REG\_PART\_ID\_R}}
+\index{MAX30105\_REG\_PART\_ID\_R@{MAX30105\_REG\_PART\_ID\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_PART\_ID\_R}{MAX30105\_REG\_PART\_ID\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_a80edf47558d43f992ee9a32767c65ad3} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+PART\+\_\+\+ID\+\_\+R~UINT8\+\_\+C(0x\+FE)}
+
+max30105 \Hypertarget{max30105_8c_a48d44c2063f46ff2e7db66ad0ac53e45}\index{max30105.c@{max30105.c}!MAX30105\_REG\_PILOT\_PA\_RW@{MAX30105\_REG\_PILOT\_PA\_RW}}
+\index{MAX30105\_REG\_PILOT\_PA\_RW@{MAX30105\_REG\_PILOT\_PA\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_PILOT\_PA\_RW}{MAX30105\_REG\_PILOT\_PA\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a48d44c2063f46ff2e7db66ad0ac53e45} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+PILOT\+\_\+\+PA\+\_\+\+RW~UINT8\+\_\+C(0x10)}
+
+max30105 \Hypertarget{max30105_8c_a35a630eb5555acb3ba2ed0ae41c9885a}\index{max30105.c@{max30105.c}!MAX30105\_REG\_PROX\_INT\_THLD\_RW@{MAX30105\_REG\_PROX\_INT\_THLD\_RW}}
+\index{MAX30105\_REG\_PROX\_INT\_THLD\_RW@{MAX30105\_REG\_PROX\_INT\_THLD\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_PROX\_INT\_THLD\_RW}{MAX30105\_REG\_PROX\_INT\_THLD\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a35a630eb5555acb3ba2ed0ae41c9885a} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+PROX\+\_\+\+INT\+\_\+\+THLD\+\_\+\+RW~UINT8\+\_\+C(0x30)}
+
+max30105 \Hypertarget{max30105_8c_a30eef42882a73170e1af6685028c6c9d}\index{max30105.c@{max30105.c}!MAX30105\_REG\_REV\_ID\_R@{MAX30105\_REG\_REV\_ID\_R}}
+\index{MAX30105\_REG\_REV\_ID\_R@{MAX30105\_REG\_REV\_ID\_R}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_REV\_ID\_R}{MAX30105\_REG\_REV\_ID\_R}}
+{\footnotesize\ttfamily \label{max30105_8c_a30eef42882a73170e1af6685028c6c9d} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+REV\+\_\+\+ID\+\_\+R~UINT8\+\_\+C(0x\+FE)}
+
+max30105 \Hypertarget{max30105_8c_a689258d2df7792752ece15fd8cc0aa97}\index{max30105.c@{max30105.c}!MAX30105\_REG\_SPO2\_CONFIG\_RW@{MAX30105\_REG\_SPO2\_CONFIG\_RW}}
+\index{MAX30105\_REG\_SPO2\_CONFIG\_RW@{MAX30105\_REG\_SPO2\_CONFIG\_RW}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_REG\_SPO2\_CONFIG\_RW}{MAX30105\_REG\_SPO2\_CONFIG\_RW}}
+{\footnotesize\ttfamily \label{max30105_8c_a689258d2df7792752ece15fd8cc0aa97} 
+\#define MAX30105\+\_\+\+REG\+\_\+\+SPO2\+\_\+\+CONFIG\+\_\+\+RW~UINT8\+\_\+C(0x0A)}
+
+max30105 \Hypertarget{max30105_8c_a59bcab93572375f450386ef9b604c9e5}\index{max30105.c@{max30105.c}!MAX30105\_TX\_RX\_DELAY\_MS@{MAX30105\_TX\_RX\_DELAY\_MS}}
+\index{MAX30105\_TX\_RX\_DELAY\_MS@{MAX30105\_TX\_RX\_DELAY\_MS}!max30105.c@{max30105.c}}
+\doxysubsubsection{\texorpdfstring{MAX30105\_TX\_RX\_DELAY\_MS}{MAX30105\_TX\_RX\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{max30105_8c_a59bcab93572375f450386ef9b604c9e5} 
+\#define MAX30105\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+max30105 delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 

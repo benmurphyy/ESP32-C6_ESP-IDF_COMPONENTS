@@ -1,0 +1,268 @@
+\doxysection{mlx90614.\+h}
+\hypertarget{mlx90614_8h_source}{}\label{mlx90614_8h_source}\index{components/peripherals/i2c/esp\_mlx90614/include/mlx90614.h@{components/peripherals/i2c/esp\_mlx90614/include/mlx90614.h}}
+\mbox{\hyperlink{mlx90614_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#ifndef\ \_\_MLX90614\_H\_\_}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ \_\_MLX90614\_H\_\_}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}mlx90614\_version.h"{}}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00048\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ MLX90614\ definitions}}
+\DoxyCodeLine{00053\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ I2C\_MLX90614\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ \ }}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ I2C\_MLX90614\_DEV\_ADDR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x5A)\ \ \ \ \ }}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ \ \ \ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *\ macro\ definitions}}
+\DoxyCodeLine{00063\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ I2C\_MLX90614\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_MLX90614\_DEV\_ADDR,\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ =\ I2C\_MLX90614\_DEV\_CLK\_SPD\ \}}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ *\ SHT4X\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00070\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_sensor\_iirs\_e\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ MLX90614\_SENSOR\_IIR\_100\ =\ (0b100),}
+\DoxyCodeLine{00074\ \ \ \ \ MLX90614\_SENSOR\_IIR\_80\ =\ (0b101),}
+\DoxyCodeLine{00075\ \ \ \ \ MLX90614\_SENSOR\_IIR\_67\ =\ (0b110),}
+\DoxyCodeLine{00076\ \ \ \ \ MLX90614\_SENSOR\_IIR\_57\ =\ (0b111),}
+\DoxyCodeLine{00077\ \ \ \ \ MLX90614\_SENSOR\_IIR\_50\ =\ (0b000),}
+\DoxyCodeLine{00078\ \ \ \ \ MLX90614\_SENSOR\_IIR\_25\ =\ (0b001),}
+\DoxyCodeLine{00079\ \ \ \ \ MLX90614\_SENSOR\_IIR\_17\ =\ (0b010),}
+\DoxyCodeLine{00080\ \ \ \ \ MLX90614\_SENSOR\_IIR\_13\ =\ (0b011)}
+\DoxyCodeLine{00081\ \}\ mlx90614\_sensor\_iirs\_t;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_sensor\_test\_repeat\_states\_e\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ MLX90614\_SENSOR\_TEST\_REPEAT\_OFF\ =\ 0,}
+\DoxyCodeLine{00085\ \ \ \ \ MLX90614\_SENSOR\_TEST\_REPEAT\_ON\ \ =\ 1}
+\DoxyCodeLine{00086\ \}\ mlx90614\_sensor\_test\_repeat\_states\_t;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_temperature\_sensors\_e\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ MLX90614\_TEMPERATURE\_SENSOR\_TA\_TOBJ1\ \ \ \ =\ (0b00),}
+\DoxyCodeLine{00090\ \ \ \ \ MLX90614\_TEMPERATURE\_SENSOR\_TA\_TOBJ2\ \ \ \ =\ (0b01),}
+\DoxyCodeLine{00091\ \ \ \ \ MLX90614\_TEMPERATURE\_SENSOR\_TOBJ2\ \ \ \ \ \ \ =\ (0b10),}
+\DoxyCodeLine{00092\ \ \ \ \ MLX90614\_TEMPERATURE\_SENSOR\_TOBJ1\_TOBJ2\ =\ (0b11)}
+\DoxyCodeLine{00093\ \}\ mlx90614\_temperature\_sensors\_t;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_sensor\_ir\_types\_e\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ MLX90614\_SENSOR\_IR\_TYPE\_SINGLE\ =\ 0,}
+\DoxyCodeLine{00097\ \ \ \ \ MLX90614\_SENSOR\_IR\_TYPE\_DUAL\ \ \ =\ 1}
+\DoxyCodeLine{00098\ \}\ mlx90614\_sensor\_ir\_types\_t;}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_k\_signs\_e\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ MLX90614\_K\_SIGN\_POSITIVE\ =\ 0,}
+\DoxyCodeLine{00102\ \ \ \ \ MLX90614\_K\_SIGN\_NEGATIVE\ =\ 1}
+\DoxyCodeLine{00103\ \}\ mlx90614\_k\_signs\_t;}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_fir\_values\_e\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ MLX90614\_FIR\_128\ \ \ \ =\ (0b100),}
+\DoxyCodeLine{00107\ \ \ \ \ MLX90614\_FIR\_256\ \ \ \ =\ (0b101),}
+\DoxyCodeLine{00108\ \ \ \ \ MLX90614\_FIR\_512\ \ \ \ =\ (0b110),}
+\DoxyCodeLine{00109\ \ \ \ \ MLX90614\_FIR\_1024\ \ \ =\ (0b111)}
+\DoxyCodeLine{00110\ \}\ mlx90614\_fir\_values\_t;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ ml90614\_gains\_e\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ MLX90614\_GAIN\_1\ \ \ \ \ =\ (0b000),}
+\DoxyCodeLine{00114\ \ \ \ \ MLX90614\_GAIN\_3\ \ \ \ \ =\ (0b001),}
+\DoxyCodeLine{00115\ \ \ \ \ MLX90614\_GAIN\_6\ \ \ \ \ =\ (0b010),}
+\DoxyCodeLine{00116\ \ \ \ \ MLX90614\_GAIN\_12\_5\ \ =\ (0b011),}
+\DoxyCodeLine{00117\ \ \ \ \ MLX90614\_GAIN\_25\ \ \ \ =\ (0b100),}
+\DoxyCodeLine{00118\ \ \ \ \ MLX90614\_GAIN\_50\ \ \ \ =\ (0b101),}
+\DoxyCodeLine{00119\ \ \ \ \ MLX90614\_GAIN\_100A\ \ =\ (0b110),}
+\DoxyCodeLine{00120\ \ \ \ \ MLX90614\_GAIN\_100B\ \ =\ (0b111)}
+\DoxyCodeLine{00121\ \}\ ml90614\_gains\_t;}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_nk2\_signs\_e\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ MLX90614\_KT2\_SIGN\_POSITIVE\ =\ 0,}
+\DoxyCodeLine{00125\ \ \ \ \ MLX90614\_KT2\_SIGN\_NEGATIVE\ =\ 1}
+\DoxyCodeLine{00126\ \}\ mlx90614\_nk2\_signs\_t;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_sensor\_test\_states\_e\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ MLX90614\_SENSOR\_TEST\_ENABLED\ \ =\ 0,}
+\DoxyCodeLine{00130\ \ \ \ \ MLX90614\_SENSOR\_TEST\_DISABLED\ =\ 1}
+\DoxyCodeLine{00131\ \}\ mlx90614\_sensor\_test\_states\_t;}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mlx90614\_config\_register\_u\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ mlx90614\_sensor\_iirs\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iir:3;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ mlx90614\_sensor\_test\_repeat\_states\_t\ \ \ \ test\_repeat\_state:1;\ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ mlx90614\_temperature\_sensors\_t\ \ \ \ \ \ \ \ \ \ t\_sensors:2;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ mlx90614\_sensor\_ir\_types\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ ir\_type:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ mlx90614\_k\_signs\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k\_sign:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ mlx90614\_fir\_values\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fir:3;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ ml90614\_gains\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gain:3;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ mlx90614\_nk2\_signs\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ kt2\_sign:1;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ mlx90614\_sensor\_test\_states\_t\ \ \ \ \ \ \ \ \ \ \ test\_state:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \}\ bit;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ uint16\_t\ reg;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00149\ \}\ mlx90614\_config\_register\_t;}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_pwm\_modes\_e\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ MLX90614\_PWM\_MODE\_EXTENDED\ =\ 0,}
+\DoxyCodeLine{00153\ \ \ \ \ MLX90614\_PWM\_MODE\_SINGLE\ \ \ =\ 1}
+\DoxyCodeLine{00154\ \}\ mlx90614\_pwm\_modes\_t;}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_pwm\_mode\_states\_e\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ MLX90614\_PWM\_MODE\_STATE\_DISABLED\ =\ 0,}
+\DoxyCodeLine{00158\ \ \ \ \ MLX90614\_PWM\_MODE\_STATE\_ENABLED\ \ =\ 1}
+\DoxyCodeLine{00159\ \}\ mlx90614\_pwm\_mode\_states\_t;}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_sda\_pin\_modes\_e\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ MLX90614\_SDA\_PIN\_MODE\_OPEN\_DRAIN\ \ =\ 0,}
+\DoxyCodeLine{00163\ \ \ \ \ MLX90614\_SDA\_PIN\_MODE\_PUSH\_PULL\ \ \ =\ 1}
+\DoxyCodeLine{00164\ \}\ mlx90614\_sda\_pin\_modes\_t;}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ mlx90614\_thermal\_modes\_e\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ MLX90614\_THERMAL\_MODE\_PWM\ \ \ \ \ \ \ \ \ \ \ =\ 0,}
+\DoxyCodeLine{00168\ \ \ \ \ MLX90614\_THERMAL\_MODE\_THERMAL\_RELAY\ =\ 1}
+\DoxyCodeLine{00169\ \}\ mlx90614\_thermal\_modes\_t;}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00174\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mlx90614\_pwmctrl\_register\_u\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ mlx90614\_pwm\_modes\_t\ \ \ \ \ \ \ \ pwm\_mode:1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ mlx90614\_pwm\_mode\_states\_t\ \ pwm\_mode\_state:1;\ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ mlx90614\_sda\_pin\_modes\_t\ \ \ \ sda\_pin\_mode:1;\ \ \ \ \ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ mlx90614\_thermal\_modes\_t\ \ \ \ thermal\_mode:1;\ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pwm\_repetition:5;\ \ \ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pwm\_period\_mult:7;\ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \}\ bit;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00183\ \ \ \ \ uint16\_t\ reg;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ pwm\_period;\ \ \ \ }
+\DoxyCodeLine{00185\ \}\ mlx90614\_pwmctrl\_register\_t;}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00190\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mlx90614\_flags\_register\_u\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ uint16\_t\ reserved1:3;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ not\_implemented:1;\ \ \ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ init:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ ee\_dead:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ unused:1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ ee\_busy:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ uint16\_t\ reserved2:8;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ \}\ bit;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00200\ \ \ \ \ uint16\_t\ reg;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00201\ \}\ mlx90614\_flags\_register\_t;}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmlx90614__config__s}{mlx90614\_config\_s}}\ \{}
+\DoxyCodeLine{00207\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmlx90614__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00208\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmlx90614__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ }
+\DoxyCodeLine{00209\ \}\ \mbox{\hyperlink{group__drivers_ga3b89cb540f8756eaa8561b0803944261}{mlx90614\_config\_t}};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00214\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmlx90614__context__t}{mlx90614\_context\_t}}\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga3b89cb540f8756eaa8561b0803944261}{mlx90614\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmlx90614__context__t_a2c655c72640d85324f9c9c33f7c6f0c7}{dev\_config}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00216\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \mbox{\hyperlink{structmlx90614__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i2c\_dev\_address;\ \ \ \ /*!<\ mlx90614\ I2C\ device\ address\ */}}
+\DoxyCodeLine{00218\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmlx90614__context__t_af9d1dac2573b67b2d8f09944b9fe56a0}{ident\_number\_hi}};\ \ \ \ }
+\DoxyCodeLine{00219\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmlx90614__context__t_a55dba723c2b0fc0a31486ca6a9c62ae9}{ident\_number\_lo}};\ \ \ \ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pwm\_period\_multiplier;}
+\DoxyCodeLine{00221\ \};}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00226\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmlx90614__context__t}{mlx90614\_context\_t}}\ \mbox{\hyperlink{structmlx90614__context__t}{mlx90614\_context\_t}};}
+\DoxyCodeLine{00230\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmlx90614__context__t}{mlx90614\_context\_t}}\ *\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}};}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00242\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae6c00386c02dc6fd22b98c05aefc6aaf}{mlx90614\_get\_config\_register}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ mlx90614\_config\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00251\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac3ee11d9d16b30bac90034bf9ecd7f39}{mlx90614\_set\_config\_register}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ mlx90614\_config\_register\_t\ reg);}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00260\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf1f2b115bc0503fb641fa762e993c192}{mlx90614\_get\_pwmctrl\_register}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ mlx90614\_pwmctrl\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00269\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafb9ca0c03095af27fbeeb39efe5a39fc}{mlx90614\_set\_pwmctrl\_register}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ mlx90614\_pwmctrl\_register\_t\ reg);}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00278\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8e56470ea2abd177657bf997bab22a6c}{mlx90614\_get\_flags\_register}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ mlx90614\_flags\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00288\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa9533b016553667f1a3bc24657888623}{mlx90614\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga3b89cb540f8756eaa8561b0803944261}{mlx90614\_config\_t}}\ *mlx90614\_config,\ \mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ *mlx90614\_handle);}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00299\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga2ed8901aaa44892d12a3d3ddb491a5a3}{mlx90614\_get\_temperatures}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ ambient\_temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ object1\_temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ object2\_temperature);}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00308\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa53b297cab26b1204884f542d2cd13e0}{mlx90614\_get\_ambient\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ ambient\_temperature);}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00317\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9adc8ce95a84866b6d5eb783f400750f}{mlx90614\_get\_object1\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ object1\_temperature);}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00326\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3fa1330f26dc797efba1165c1c1b3c89}{mlx90614\_get\_object2\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ object2\_temperature);}
+\DoxyCodeLine{00327\ }
+\DoxyCodeLine{00335\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga29c2f952a2c5456614c69444bbb6b761}{mlx90614\_get\_ir\_channel1}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ int16\_t\ *\textcolor{keyword}{const}\ ir\_channel1);}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00344\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf68ce13d1a00f65eeca56ed12c8b168c}{mlx90614\_get\_ir\_channel2}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ int16\_t\ *\textcolor{keyword}{const}\ ir\_channel2);}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00353\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae9e9b5674e87016d3ab86924f14e18a8}{mlx90614\_get\_ambient\_temperature\_range}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ ambient\_temperature\_range);}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00362\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7bbd918f23b1fd6a743e00617b743761}{mlx90614\_get\_emissivity}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ coefficient);}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00371\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gabc92065ed27424a5f72c9fbbb1843221}{mlx90614\_set\_emissivity}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ coefficient);}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00380\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga198317e5b867179de548f3fcb2c87906}{mlx90614\_get\_object\_maximum\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00389\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafe59944841793f6ec6dec8bdfbf6c06f}{mlx90614\_set\_object\_maximum\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ temperature);}
+\DoxyCodeLine{00390\ }
+\DoxyCodeLine{00398\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga2409170ee5b22a5f6f464d55a45e485d}{mlx90614\_get\_object\_minimum\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00407\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaad3c280185e3590a17b088cb183131d9}{mlx90614\_set\_object\_minimum\_temperature}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ temperature);}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00416\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaaa6cba838ea2747ce873eb89bd1b8c2a}{mlx90614\_get\_address}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ uint8\_t\ *\textcolor{keyword}{const}\ address);}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00427\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9d62fd88b1a133af4c6849e0b6affb90}{mlx90614\_set\_address}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ uint8\_t\ address);}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00435\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5bd6555a149d3542970c66fe7dbd9aa6}{mlx90614\_sleep}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle);}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00443\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga6084ae9316aa34a499c35607caad73e6}{mlx90614\_wakeup}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle);}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00451\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga538c2e4ce54941d0276df342a5ff3c16}{mlx90614\_remove}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle);}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00459\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga14e6bf68c0f1ec63183ec07978cba91f}{mlx90614\_delete}}(\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\_handle\_t}}\ handle);}
+\DoxyCodeLine{00460\ }
+\DoxyCodeLine{00466\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_gae95f6be3a0ece48094e6752fa798248c}{mlx90614\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00467\ }
+\DoxyCodeLine{00473\ int32\_t\ \mbox{\hyperlink{group__drivers_gaf441a9689a95cb859df7035940e009f0}{mlx90614\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00474\ }
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ }
+\DoxyCodeLine{00477\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00478\ \}}
+\DoxyCodeLine{00479\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00482\ }
+\DoxyCodeLine{00483\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_MLX90614\_H\_\_}}
+
+\end{DoxyCode}

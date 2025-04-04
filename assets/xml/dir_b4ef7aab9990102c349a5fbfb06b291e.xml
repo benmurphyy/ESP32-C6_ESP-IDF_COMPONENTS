@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_b4ef7aab9990102c349a5fbfb06b291e" kind="dir">
+    <compoundname>components/peripherals/spi/esp_max31865</compoundname>
+    <innerfile refid="max31865_8c">max31865.c</innerfile>
+    <innerfile refid="max31865_8h">max31865.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/spi/esp_max31865/"/>
+  </compounddef>
+</doxygen>

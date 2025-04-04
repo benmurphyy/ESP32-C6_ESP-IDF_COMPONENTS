@@ -1,0 +1,67 @@
+\doxysection{components/utilities/esp\+\_\+type\+\_\+utils Directory Reference}
+\hypertarget{dir_ffcdb155dfca58330a1da0208b696b68}{}\label{dir_ffcdb155dfca58330a1da0208b696b68}\index{components/utilities/esp\_type\_utils Directory Reference@{components/utilities/esp\_type\_utils Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_941e2ce9072f74fc365c513b5393b268}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{type__utils_8c}{type\+\_\+utils.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_type_utils}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_type_utils}{\texttt{ }}
+
+This ESP32 espressif IoT development framework (esp-\/idf) type utilities component was developed as a helper for byte manipulation and string functionality. Information on features and functionality are documented and can be found in the {\ttfamily \doxylink{type__utils_8h}{type\+\_\+utils.\+h}} header file.\hypertarget{README.md_autotoc_md127}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md127}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/utilities/esp_type_utils}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/utilities/esp\+\_\+type\+\_\+utils}}\hypertarget{README.md_autotoc_md128}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md128}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{type__utils_8h}{type\+\_\+utils.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_type\_utils}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ type\_utils\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ type\_utils.h}
+\DoxyCodeLine{\ \ \ \ └──\ type\_utils.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md129}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md129}
+Once the component is referenced as an include, the functions should be visible and available for usage. The below example demonstrates an i2c transaction which reads the register\textquotesingle{}s contents and writes the contents of the register as a binary string.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*\ declare\ device\ registers\ */}}
+\DoxyCodeLine{ltr390uv\_control\_register\_t\ c\_reg;}
+\DoxyCodeLine{ltr390uv\_interrupt\_config\_register\_t\ ic\_reg;}
+\DoxyCodeLine{ltr390uv\_measure\_register\_t\ m\_reg;}
+\DoxyCodeLine{ltr390uv\_gain\_register\_t\ \ \ \ g\_reg;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*\ attempt\ i2c\ read\ transaction\ from\ device\ registers\ */}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_gacc958f4ef325bd874f9702ca6c893cdb}{ltr390uv\_get\_measure\_register}}(dev\_hdl,\ \&m\_reg);}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga5c593c30d2be1fcdc4b0193b18efddd5}{ltr390uv\_get\_gain\_register}}(dev\_hdl,\ \&g\_reg);}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga10311c032bccc9a49abc6f049fe3464d}{ltr390uv\_get\_interrupt\_config\_register}}(dev\_hdl,\ \&ic\_reg);}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_gad612f2f8f8c797f9d002b6e3dc8a54dd}{ltr390uv\_get\_control\_register}}(dev\_hdl,\ \&c\_reg);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*\ print\ device\ register\ as\ a\ binary\ string\ */}}
+\DoxyCodeLine{ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Control\ Register\ (0x\%02x):\ \%s"{}},\ c\_reg.reg,\ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(c\_reg.reg));}
+\DoxyCodeLine{ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Measure\ Register\ (0x\%02x):\ \%s"{}},\ m\_reg.reg,\ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(m\_reg.reg));}
+\DoxyCodeLine{ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Gain\ Register\ \ \ \ (0x\%02x):\ \%s"{}},\ g\_reg.reg,\ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(g\_reg.reg));}
+\DoxyCodeLine{ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}IRQ\ Cfg\ Register\ (0x\%02x):\ \%s"{}},\ ic\_reg.reg,\ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(ic\_reg.reg));}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

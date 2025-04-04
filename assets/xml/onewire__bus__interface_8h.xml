@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="onewire__bus__interface_8h" kind="file" language="C++">
+    <compoundname>onewire_bus_interface.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="yes">esp_err.h</includes>
+    <includedby refid="onewire__bus__api_8c" local="yes">components/peripherals/owb/onewire_bus/src/onewire_bus_api.c</includedby>
+    <includedby refid="onewire__bus__impl__rmt_8c" local="yes">components/peripherals/owb/onewire_bus/src/onewire_bus_impl_rmt.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/owb/onewire_bus/interface/onewire_bus_interface.h</label>
+        <link refid="onewire__bus__interface_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>esp_err.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structonewire__bus__t" prot="public">onewire_bus_t</innerclass>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="onewire__bus__interface_8h_1add6ae7a9d2d6107a48b181f58c6dda54" prot="public" static="no">
+        <type>struct onewire_bus_t</type>
+        <definition>typedef struct onewire_bus_t onewire_bus_t</definition>
+        <argsstring></argsstring>
+        <name>onewire_bus_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Type of 1-Wire bus </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/interface/onewire_bus_interface.h" line="15" column="28" bodyfile="components/peripherals/owb/onewire_bus/interface/onewire_bus_interface.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>SPDX-FileCopyrightText:<sp/>2022-2023<sp/>Espressif<sp/>Systems<sp/>(Shanghai)<sp/>CO<sp/>LTD</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;esp_err.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref><sp/><ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref>;<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="structonewire__bus__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="34" refid="structonewire__bus__t_1afada884b3d82aeaefe2ec9a03cf9f0e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>(*<ref refid="structonewire__bus__t_1afada884b3d82aeaefe2ec9a03cf9f0e9" kindref="member">write_bytes</ref>)(<ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref><sp/>*bus,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>*tx_data,<sp/>uint8_t<sp/>tx_data_size);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="structonewire__bus__t_1a5e264bcb0a9aa05a8a37a9a3911af3eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>(*<ref refid="structonewire__bus__t_1a5e264bcb0a9aa05a8a37a9a3911af3eb" kindref="member">read_bytes</ref>)(<ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref><sp/>*bus,<sp/>uint8_t<sp/>*rx_buf,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>rx_buf_size);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="structonewire__bus__t_1a41ec43f6b226c80f9a5b39945af01c14" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>(*<ref refid="structonewire__bus__t_1a41ec43f6b226c80f9a5b39945af01c14" kindref="member">write_bit</ref>)(onewire_bus_handle_t<sp/>handle,<sp/>uint8_t<sp/>tx_bit);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="structonewire__bus__t_1a0f3cd296844f271fa90a53b70fbe4bed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>(*<ref refid="structonewire__bus__t_1a0f3cd296844f271fa90a53b70fbe4bed" kindref="member">read_bit</ref>)(onewire_bus_handle_t<sp/>handle,<sp/>uint8_t<sp/>*rx_bit);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="structonewire__bus__t_1a550161c28abdf6c7a2982c2180f10afc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>(*<ref refid="structonewire__bus__t_1a550161c28abdf6c7a2982c2180f10afc" kindref="member">reset</ref>)(<ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref><sp/>*bus);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="structonewire__bus__t_1a5ca49c820334b23d01c79e9f1a7ad011" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>(*<ref refid="structonewire__bus__t_1a5ca49c820334b23d01c79e9f1a7ad011" kindref="member">del</ref>)(<ref refid="structonewire__bus__t" kindref="compound">onewire_bus_t</ref><sp/>*bus);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/owb/onewire_bus/interface/onewire_bus_interface.h"/>
+  </compounddef>
+</doxygen>

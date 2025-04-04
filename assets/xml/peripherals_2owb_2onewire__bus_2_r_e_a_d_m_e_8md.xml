@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="peripherals_2owb_2onewire__bus_2_r_e_a_d_m_e_8md" kind="file" language="Markdown">
+    <compoundname>README.md</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">#<sp/>Dallas<sp/>1-Wire<sp/>Bus<sp/>Driver</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">[![Component<sp/>Registry](https://components.espressif.com/components/espressif/onewire_bus/badge.svg)](https://components.espressif.com/components/espressif/onewire_bus)</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">This<sp/>directory<sp/>contains<sp/>an<sp/>implementation<sp/>for<sp/>Dallas<sp/>1-Wire<sp/>bus<sp/>by<sp/>different<sp/>peripherals.<sp/>Currently<sp/>only<sp/>RMT<sp/>is<sp/>supported<sp/>as<sp/>the<sp/>backend.</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">https://github.com/espressif/idf-extra-components/tree/master/onewire_bus</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/owb/onewire_bus/README.md"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,180 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+sht4x/sht4x.c File Reference}
+\hypertarget{sht4x_8c}{}\label{sht4x_8c}\index{components/peripherals/i2c/esp\_sht4x/sht4x.c@{components/peripherals/i2c/esp\_sht4x/sht4x.c}}
+{\ttfamily \#include "{}include/sht4x.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_a564f2fa6e94b6f601b731011ef59ada4}{SHT4\+X\+\_\+\+CRC8\+\_\+\+MASK}}~UINT8\+\_\+C(0x80)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_adf474120a7137df08a4c09aa7201b895}{SHT4\+X\+\_\+\+CRC8\+\_\+\+INIT}}~UINT8\+\_\+C(0xff)
+\item 
+\Hypertarget{sht4x_8c_a830036ee108909138128cfb5905a8b6f}\label{sht4x_8c_a830036ee108909138128cfb5905a8b6f} 
+\#define {\bfseries SHT4\+X\+\_\+\+CRC8\+\_\+\+POLYNOM}~UINT8\+\_\+C(0x31)
+\begin{DoxyCompactList}\small\item\em sht4x I2C CRC8 polynomial \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_ac8de7108bcd49d7c1c7ff2f35ab538e4}\label{sht4x_8c_ac8de7108bcd49d7c1c7ff2f35ab538e4} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+RESET}~UINT8\+\_\+C(0x94)
+\begin{DoxyCompactList}\small\item\em sht4x I2C soft-\/reset command \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a48408f55b13782dbb8a1db6098631be5}\label{sht4x_8c_a48408f55b13782dbb8a1db6098631be5} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+SERIAL}~UINT8\+\_\+C(0x89)
+\begin{DoxyCompactList}\small\item\em sht4x I2C serial number request command \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_ab0275d521da5c463284d392f54247328}\label{sht4x_8c_ab0275d521da5c463284d392f54247328} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+HIGH}~UINT8\+\_\+C(0x\+FD)
+\begin{DoxyCompactList}\small\item\em sht4x I2C high resolution measurement command \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a0e99bc4c755e48696af95cda8c25ab76}\label{sht4x_8c_a0e99bc4c755e48696af95cda8c25ab76} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+MED}~UINT8\+\_\+C(0x\+F6)
+\begin{DoxyCompactList}\small\item\em sht4x I2C medium resolution measurement command \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_aa3d7654214aae6e172c75105e3ba61d1}\label{sht4x_8c_aa3d7654214aae6e172c75105e3ba61d1} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+LOW}~UINT8\+\_\+C(0x\+E0)
+\begin{DoxyCompactList}\small\item\em sht4x I2C low resolution measurement command \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a03c2394a1213b871f5e159f91681b8a6}\label{sht4x_8c_a03c2394a1213b871f5e159f91681b8a6} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+H\+\_\+\+HIGH\+\_\+\+LONG}~UINT8\+\_\+C(0x39)
+\begin{DoxyCompactList}\small\item\em sht4x I2C high resolution measurement command with heater enabled long pulse \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a952c3a4d97c4f34742ed6537f492a6a4}\label{sht4x_8c_a952c3a4d97c4f34742ed6537f492a6a4} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+H\+\_\+\+HIGH\+\_\+\+SHORT}~UINT8\+\_\+C(0x32)
+\begin{DoxyCompactList}\small\item\em sht4x I2C high resolution measurement command with heater enabled short pulse \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a1cf270c34d1d70a8e04ee381eafcac55}\label{sht4x_8c_a1cf270c34d1d70a8e04ee381eafcac55} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+H\+\_\+\+MED\+\_\+\+LONG}~UINT8\+\_\+C(0x2F)
+\begin{DoxyCompactList}\small\item\em sht4x I2C medium resolution measurement command with heater enabled long pulse \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a2cab6fbd4e7778a0c19bf40f91dce164}\label{sht4x_8c_a2cab6fbd4e7778a0c19bf40f91dce164} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+H\+\_\+\+MED\+\_\+\+SHORT}~UINT8\+\_\+C(0x24)
+\begin{DoxyCompactList}\small\item\em sht4x I2C medium resolution measurement command with heater enabled short pulse \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a976d1d85940dc1019ec52997bc479674}\label{sht4x_8c_a976d1d85940dc1019ec52997bc479674} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+H\+\_\+\+LOW\+\_\+\+LONG}~UINT8\+\_\+C(0x1E)
+\begin{DoxyCompactList}\small\item\em sht4x I2C low resolution measurement command with heater enabled long pulse \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a859e1bea7044e34880b049672250970f}\label{sht4x_8c_a859e1bea7044e34880b049672250970f} 
+\#define {\bfseries SHT4\+X\+\_\+\+CMD\+\_\+\+MEAS\+\_\+\+H\+\_\+\+LOW\+\_\+\+SHORT}~UINT8\+\_\+C(0x15)
+\begin{DoxyCompactList}\small\item\em sht4x I2C low resolution measurement command with heater enabled short pulse \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a4e71fa3f594fac157591c8c10bdc13d0}\label{sht4x_8c_a4e71fa3f594fac157591c8c10bdc13d0} 
+\#define {\bfseries SHT4\+X\+\_\+\+TEMPERATURE\+\_\+\+MAX}~(float)(125.\+0)
+\begin{DoxyCompactList}\small\item\em sht4x maximum temperature range \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a27e2680a5bb4e7cf112f593e37c1ee65}\label{sht4x_8c_a27e2680a5bb4e7cf112f593e37c1ee65} 
+\#define {\bfseries SHT4\+X\+\_\+\+TEMPERATURE\+\_\+\+MIN}~(float)(-\/40.\+0)
+\begin{DoxyCompactList}\small\item\em sht4x minimum temperature range \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a60ae83dcb7a005fc059718c227360797}\label{sht4x_8c_a60ae83dcb7a005fc059718c227360797} 
+\#define {\bfseries SHT4\+X\+\_\+\+HUMIDITY\+\_\+\+MAX}~(float)(100.\+0)
+\begin{DoxyCompactList}\small\item\em sht4x maximum humidity range \end{DoxyCompactList}\item 
+\Hypertarget{sht4x_8c_a462c5e2f4293a22cef5a5afb8e6a0033}\label{sht4x_8c_a462c5e2f4293a22cef5a5afb8e6a0033} 
+\#define {\bfseries SHT4\+X\+\_\+\+HUMIDITY\+\_\+\+MIN}~(float)(0.\+0)
+\begin{DoxyCompactList}\small\item\em sht4x minimum humidity range \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{sht4x_8c_a0f5b3dddb79887a3f874b48458a87bc5}{SHT4\+X\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_aad6d1197d7e38624da61adc8f09cfb36}{SHT4\+X\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_a5f46fe1d5201b603e451ddc9ad9903ee}{SHT4\+X\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(25)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_a8819693a6033fb1e769e4fae67693da3}{SHT4\+X\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_a524dbf10e8bbddb721e37bc02b26edda}{SHT4\+X\+\_\+\+RETRY\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(2)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_ad23fce6420ee5afda21e5da825d6320f}{SHT4\+X\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{sht4x_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga42d4a8ba981a9e27a2f06b779c06f1a9}{sht4x\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga5ca6e3df86dcbbba4a2a65014de70423}{sht4x\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}sht4x\+\_\+config, \mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}sht4x\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an SHT4X device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5c8a6cc7090c0cae8891b16d934d170d}{sht4x\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity)
+\begin{DoxyCompactList}\small\item\em Reads high-\/level measurements from SHT4X. This is a blocking function. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0b8e85efac9959659fb38381a0df33c3}{sht4x\+\_\+get\+\_\+measurements}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity, float \texorpdfstring{$\ast$}{*}const dewpoint)
+\begin{DoxyCompactList}\small\item\em Similar to {\ttfamily i2c\+\_\+sht4x\+\_\+read\+\_\+measurement} but it includes the dewpoint temperature in the results. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac560af9e65f325df1f1d28873826010d}{sht4x\+\_\+get\+\_\+repeat\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gaa3ca8d58b6772111c2fe9b2714691e74}{sht4x\+\_\+repeat\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads measurement repeatability mode setting from SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0310bc33c15029a3d6f99d60ca25beb5}{sht4x\+\_\+set\+\_\+repeat\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gaa3ca8d58b6772111c2fe9b2714691e74}{sht4x\+\_\+repeat\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes measurement repeatability mode setting to SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae74680f79f544896e2d63f12cec010c3}{sht4x\+\_\+get\+\_\+heater\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga172b07afab8f75e7f52efe0e5669461a}{sht4x\+\_\+heater\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads measurement heater mode setting from SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga84243f1723d1fc83cf804b0914681dec}{sht4x\+\_\+set\+\_\+heater\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga172b07afab8f75e7f52efe0e5669461a}{sht4x\+\_\+heater\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes measurement heater mode setting to SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab0576084424fabc85a793cca32e9dc7b}{sht4x\+\_\+reset}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset to SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6559e247f4f3ddda5907d7e48100375e}{sht4x\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an SHT4X device from master I2C bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadc55d64648a9648100abe176dcbf6a94}{sht4x\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an SHT4X device from master I2C bus and delete the handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga7dc2bdb1090f30af18882528f9c590bd}{sht4x\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts SHT4X firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga46afff26fb2c3d61420378265344fb2a}{sht4x\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts SHT4X firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for SHT4x air temperature and relative humidity sensor
+
+\href{https://github.com/Sensirion/embedded-sht/releases}{\texttt{ https\+://github.\+com/\+Sensirion/embedded-\/sht/releases}}
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{sht4x_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{sht4x.c@{sht4x.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{sht4x_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{sht4x_8c_aad6d1197d7e38624da61adc8f09cfb36}\index{sht4x.c@{sht4x.c}!SHT4X\_APPSTART\_DELAY\_MS@{SHT4X\_APPSTART\_DELAY\_MS}}
+\index{SHT4X\_APPSTART\_DELAY\_MS@{SHT4X\_APPSTART\_DELAY\_MS}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_APPSTART\_DELAY\_MS}{SHT4X\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{sht4x_8c_aad6d1197d7e38624da61adc8f09cfb36} 
+\#define SHT4\+X\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+sht4x delay after initialization before application start-\/up \Hypertarget{sht4x_8c_a8819693a6033fb1e769e4fae67693da3}\index{sht4x.c@{sht4x.c}!SHT4X\_CMD\_DELAY\_MS@{SHT4X\_CMD\_DELAY\_MS}}
+\index{SHT4X\_CMD\_DELAY\_MS@{SHT4X\_CMD\_DELAY\_MS}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_CMD\_DELAY\_MS}{SHT4X\_CMD\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{sht4x_8c_a8819693a6033fb1e769e4fae67693da3} 
+\#define SHT4\+X\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+sht4x delay before attempting I2C transactions after a command is issued \Hypertarget{sht4x_8c_adf474120a7137df08a4c09aa7201b895}\index{sht4x.c@{sht4x.c}!SHT4X\_CRC8\_INIT@{SHT4X\_CRC8\_INIT}}
+\index{SHT4X\_CRC8\_INIT@{SHT4X\_CRC8\_INIT}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_CRC8\_INIT}{SHT4X\_CRC8\_INIT}}
+{\footnotesize\ttfamily \label{sht4x_8c_adf474120a7137df08a4c09aa7201b895} 
+\#define SHT4\+X\+\_\+\+CRC8\+\_\+\+INIT~UINT8\+\_\+C(0xff)}
+
+sht4x I2C CRC8 initialization \Hypertarget{sht4x_8c_a564f2fa6e94b6f601b731011ef59ada4}\index{sht4x.c@{sht4x.c}!SHT4X\_CRC8\_MASK@{SHT4X\_CRC8\_MASK}}
+\index{SHT4X\_CRC8\_MASK@{SHT4X\_CRC8\_MASK}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_CRC8\_MASK}{SHT4X\_CRC8\_MASK}}
+{\footnotesize\ttfamily \label{sht4x_8c_a564f2fa6e94b6f601b731011ef59ada4} 
+\#define SHT4\+X\+\_\+\+CRC8\+\_\+\+MASK~UINT8\+\_\+C(0x80)}
+
+sht4x I2C CRC8 mask \Hypertarget{sht4x_8c_a0f5b3dddb79887a3f874b48458a87bc5}\index{sht4x.c@{sht4x.c}!SHT4X\_POWERUP\_DELAY\_MS@{SHT4X\_POWERUP\_DELAY\_MS}}
+\index{SHT4X\_POWERUP\_DELAY\_MS@{SHT4X\_POWERUP\_DELAY\_MS}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_POWERUP\_DELAY\_MS}{SHT4X\_POWERUP\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{sht4x_8c_a0f5b3dddb79887a3f874b48458a87bc5} 
+\#define SHT4\+X\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+sht4x delay on power-\/up before attempting I2C transactions \Hypertarget{sht4x_8c_a5f46fe1d5201b603e451ddc9ad9903ee}\index{sht4x.c@{sht4x.c}!SHT4X\_RESET\_DELAY\_MS@{SHT4X\_RESET\_DELAY\_MS}}
+\index{SHT4X\_RESET\_DELAY\_MS@{SHT4X\_RESET\_DELAY\_MS}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_RESET\_DELAY\_MS}{SHT4X\_RESET\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{sht4x_8c_a5f46fe1d5201b603e451ddc9ad9903ee} 
+\#define SHT4\+X\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(25)}
+
+sht4x delay before attempting I2C transactions after a reset is issued \Hypertarget{sht4x_8c_a524dbf10e8bbddb721e37bc02b26edda}\index{sht4x.c@{sht4x.c}!SHT4X\_RETRY\_DELAY\_MS@{SHT4X\_RETRY\_DELAY\_MS}}
+\index{SHT4X\_RETRY\_DELAY\_MS@{SHT4X\_RETRY\_DELAY\_MS}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_RETRY\_DELAY\_MS}{SHT4X\_RETRY\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{sht4x_8c_a524dbf10e8bbddb721e37bc02b26edda} 
+\#define SHT4\+X\+\_\+\+RETRY\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(2)}
+
+sht4x delay between an I2C receive transaction retry \Hypertarget{sht4x_8c_ad23fce6420ee5afda21e5da825d6320f}\index{sht4x.c@{sht4x.c}!SHT4X\_TX\_RX\_DELAY\_MS@{SHT4X\_TX\_RX\_DELAY\_MS}}
+\index{SHT4X\_TX\_RX\_DELAY\_MS@{SHT4X\_TX\_RX\_DELAY\_MS}!sht4x.c@{sht4x.c}}
+\doxysubsubsection{\texorpdfstring{SHT4X\_TX\_RX\_DELAY\_MS}{SHT4X\_TX\_RX\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{sht4x_8c_ad23fce6420ee5afda21e5da825d6320f} 
+\#define SHT4\+X\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+sht4x delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 

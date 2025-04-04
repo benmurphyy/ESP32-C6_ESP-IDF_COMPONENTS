@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="bh1750_8h" kind="file" language="C++">
+    <compoundname>bh1750.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="bh1750__version_8h" local="yes">bh1750_version.h</includes>
+    <includedby refid="bh1750_8c" local="yes">components/peripherals/i2c/esp_bh1750/bh1750.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_bh1750/include/bh1750.h</label>
+        <link refid="bh1750_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>bh1750_version.h</label>
+        <link refid="bh1750__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_bh1750/bh1750.c</label>
+        <link refid="bh1750_8c"/>
+      </node>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_bh1750/include/bh1750.h</label>
+        <link refid="bh1750_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structbh1750__config__s" prot="public">bh1750_config_s</innerclass>
+    <innerclass refid="structbh1750__context__t" prot="public">bh1750_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1ga8ca572ae385810ed22987909ac62afaa" kind="define"><name>I2C_BH1750_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga7ebe0e0fe7d678d2de29f645ceed7434" kind="define"><name>I2C_BH1750_DEV_ADDR_LO</name></member>
+      <member refid="group__drivers_1ga279d08d7ecfc79b7a65142103ccca222" kind="define"><name>I2C_BH1750_DEV_ADDR_HI</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga897305b241314fd8783d5dfc0d7fbb13" kind="define"><name>I2C_BH1750_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1ga66416e4a883bd9a0719917edaeaae8a7" kind="enum"><name>bh1750_measurement_modes_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1ga76514573edf401f3839df07163bff37a" kind="typedef"><name>bh1750_measurement_modes_t</name></member>
+      <member refid="group__drivers_1ga473a8d2e67b27ec75271fdda3b84dbba" kind="typedef"><name>bh1750_config_t</name></member>
+      <member refid="group__drivers_1gafbb0c71ed2cd2bbdd5f13d269a2cca0f" kind="typedef"><name>bh1750_context_t</name></member>
+      <member refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kind="typedef"><name>bh1750_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1ga7e476a2704b4a58413b2a7de316ef29d" kind="function"><name>bh1750_init</name></member>
+      <member refid="group__drivers_1gac577dd8a77cf737c5ef25add84188e01" kind="function"><name>bh1750_get_ambient_light</name></member>
+      <member refid="group__drivers_1ga2d4689f3f1c8bbc70b719b38f009c3ac" kind="function"><name>bh1750_set_measurement_mode</name></member>
+      <member refid="group__drivers_1ga4649a73b0eb65849d3e8b2d53d0e586f" kind="function"><name>bh1750_set_measurement_time</name></member>
+      <member refid="group__drivers_1gaed00b37e5bfd7819e2c81ef02a04268b" kind="function"><name>bh1750_enable_power</name></member>
+      <member refid="group__drivers_1ga1abd1351a7490b7dccc38ba2bc42dce2" kind="function"><name>bh1750_disable_power</name></member>
+      <member refid="group__drivers_1ga814dc723c84984e588504cab4a1b2552" kind="function"><name>bh1750_reset</name></member>
+      <member refid="group__drivers_1gadbed4b29cd5936e8df6767c128fa640f" kind="function"><name>bh1750_remove</name></member>
+      <member refid="group__drivers_1ga0922b011c6b1d2ce91933e71ea9158f9" kind="function"><name>bh1750_delete</name></member>
+      <member refid="group__drivers_1ga30c1494f2d5eb6e99457fae608843b9b" kind="function"><name>bh1750_get_fw_version</name></member>
+      <member refid="group__drivers_1ga4de5312877ad5741597622e5ce03d875" kind="function"><name>bh1750_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__BH1750_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__BH1750_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;bh1750_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>BH1750<sp/>definitions</highlight></codeline>
+<codeline lineno="51"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="group__drivers_1ga8ca572ae385810ed22987909ac62afaa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BH1750_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__drivers_1ga7ebe0e0fe7d678d2de29f645ceed7434" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BH1750_DEV_ADDR_LO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x23)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__drivers_1ga279d08d7ecfc79b7a65142103ccca222" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BH1750_DEV_ADDR_HI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x5C)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*<sp/>macros<sp/>definitions</highlight></codeline>
+<codeline lineno="62"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BH1750_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="65"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_BH1750_DEV_ADDR_LO,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/>=<sp/>I2C_BH1750_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>BH1750_MODE_CM_HI_RESOLUTION,<sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="68"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.power_enabled<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>true,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.set_timespan<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>false<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>*<sp/>BH1750<sp/>enumerator<sp/>and<sp/>structure<sp/>declarations</highlight></codeline>
+<codeline lineno="73"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="group__drivers_1ga66416e4a883bd9a0719917edaeaae8a7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga66416e4a883bd9a0719917edaeaae8a7" kindref="member">bh1750_measurement_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="80" refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a7f7bb6d23176ee157f6543f55a77e359" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a7f7bb6d23176ee157f6543f55a77e359" kindref="member">BH1750_MODE_OM_HI_RESOLUTION</ref><sp/><sp/>=<sp/>(0b00100000),<sp/></highlight></codeline>
+<codeline lineno="81" refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a410482d12c5fdbdfc0921e3c8b24021a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a410482d12c5fdbdfc0921e3c8b24021a" kindref="member">BH1750_MODE_OM_HI2_RESOLUTION</ref><sp/>=<sp/>(0b00100001),<sp/></highlight></codeline>
+<codeline lineno="82" refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7acdc33ad63cd65a7573c5802fdc547684" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7acdc33ad63cd65a7573c5802fdc547684" kindref="member">BH1750_MODE_OM_LO_RESOLUTION</ref><sp/><sp/>=<sp/>(0b00100011),<sp/></highlight></codeline>
+<codeline lineno="83" refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a088345f3ccd93ad8a00d1963a7cc7d3c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a088345f3ccd93ad8a00d1963a7cc7d3c" kindref="member">BH1750_MODE_CM_HI_RESOLUTION</ref><sp/><sp/>=<sp/>(0b00010000),<sp/></highlight></codeline>
+<codeline lineno="84" refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a1e5b71915290ad20b74a50e4215b30ce" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a1e5b71915290ad20b74a50e4215b30ce" kindref="member">BH1750_MODE_CM_HI2_RESOLUTION</ref><sp/>=<sp/>(0b00010001),<sp/></highlight></codeline>
+<codeline lineno="85" refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7ac05789a192dcd720760050d89124cb21" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7ac05789a192dcd720760050d89124cb21" kindref="member">BH1750_MODE_CM_LO_RESOLUTION</ref><sp/><sp/>=<sp/>(0b00010011)<sp/><sp/></highlight></codeline>
+<codeline lineno="86" refid="group__drivers_1ga76514573edf401f3839df07163bff37a" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga76514573edf401f3839df07163bff37a" kindref="member">bh1750_measurement_modes_t</ref>;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="structbh1750__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbh1750__config__s" kindref="compound">bh1750_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="92" refid="structbh1750__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93" refid="structbh1750__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;</highlight></codeline>
+<codeline lineno="94" refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga76514573edf401f3839df07163bff37a" kindref="member">bh1750_measurement_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95" refid="structbh1750__config__s_1a67c8a6b1b37fcf1a90c4f0f6429dc621" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__config__s_1a67c8a6b1b37fcf1a90c4f0f6429dc621" kindref="member">timespan</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="96" refid="structbh1750__config__s_1aa6fa4c88cf9f6eb809ae5cc80f41f8b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__config__s_1aa6fa4c88cf9f6eb809ae5cc80f41f8b1" kindref="member">set_timespan</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97" refid="structbh1750__config__s_1ab3de6a2f149a9bffab11fd855329f12f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__config__s_1ab3de6a2f149a9bffab11fd855329f12f" kindref="member">power_enabled</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="98" refid="group__drivers_1ga473a8d2e67b27ec75271fdda3b84dbba" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga473a8d2e67b27ec75271fdda3b84dbba" kindref="member">bh1750_config_t</ref>;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="structbh1750__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbh1750__context__t" kindref="compound">bh1750_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="104" refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga473a8d2e67b27ec75271fdda3b84dbba" kindref="member">bh1750_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="105" refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111" refid="group__drivers_1gafbb0c71ed2cd2bbdd5f13d269a2cca0f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbh1750__context__t" kindref="compound">bh1750_context_t</ref><sp/><ref refid="structbh1750__context__t" kindref="compound">bh1750_context_t</ref>;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbh1750__context__t" kindref="compound">bh1750_context_t</ref><sp/>*<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref>;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga7e476a2704b4a58413b2a7de316ef29d" kindref="member">bh1750_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga473a8d2e67b27ec75271fdda3b84dbba" kindref="member">bh1750_config_t</ref><sp/>*bh1750_config,<sp/><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>*bh1750_handle);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac577dd8a77cf737c5ef25add84188e01" kindref="member">bh1750_get_ambient_light</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ambient_light);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga2d4689f3f1c8bbc70b719b38f009c3ac" kindref="member">bh1750_set_measurement_mode</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga76514573edf401f3839df07163bff37a" kindref="member">bh1750_measurement_modes_t</ref><sp/>mode);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4649a73b0eb65849d3e8b2d53d0e586f" kindref="member">bh1750_set_measurement_time</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>timespan);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaed00b37e5bfd7819e2c81ef02a04268b" kindref="member">bh1750_enable_power</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1abd1351a7490b7dccc38ba2bc42dce2" kindref="member">bh1750_disable_power</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga814dc723c84984e588504cab4a1b2552" kindref="member">bh1750_reset</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gadbed4b29cd5936e8df6767c128fa640f" kindref="member">bh1750_remove</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga0922b011c6b1d2ce91933e71ea9158f9" kindref="member">bh1750_delete</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202" refid="group__drivers_1ga30c1494f2d5eb6e99457fae608843b9b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1ga30c1494f2d5eb6e99457fae608843b9b" kindref="member">bh1750_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209" refid="group__drivers_1ga4de5312877ad5741597622e5ce03d875" refkind="member"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1ga4de5312877ad5741597622e5ce03d875" kindref="member">bh1750_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__BH1750_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_bh1750/include/bh1750.h"/>
+  </compounddef>
+</doxygen>

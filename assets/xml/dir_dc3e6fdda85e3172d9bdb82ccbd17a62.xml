@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_dc3e6fdda85e3172d9bdb82ccbd17a62" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_veml7700/include</compoundname>
+    <innerfile refid="veml7700_8h">veml7700.h</innerfile>
+    <innerfile refid="veml7700__version_8h">veml7700_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_veml7700/include/"/>
+  </compounddef>
+</doxygen>

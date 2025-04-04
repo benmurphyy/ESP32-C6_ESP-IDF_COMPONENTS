@@ -1,0 +1,187 @@
+\doxysection{onewire\+\_\+bus\+\_\+t Struct Reference}
+\hypertarget{structonewire__bus__t}{}\label{structonewire__bus__t}\index{onewire\_bus\_t@{onewire\_bus\_t}}
+
+
+1-\/Wire bus interface definition  
+
+
+
+
+{\ttfamily \#include $<$onewire\+\_\+bus\+\_\+interface.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__t_afada884b3d82aeaefe2ec9a03cf9f0e9}{write\+\_\+bytes}} )(\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}tx\+\_\+data, uint8\+\_\+t tx\+\_\+data\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Write bytes to 1-\/wire bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__t_a5e264bcb0a9aa05a8a37a9a3911af3eb}{read\+\_\+bytes}} )(\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus, uint8\+\_\+t \texorpdfstring{$\ast$}{*}rx\+\_\+buf, size\+\_\+t rx\+\_\+buf\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Read bytes from 1-\/wire bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__t_a41ec43f6b226c80f9a5b39945af01c14}{write\+\_\+bit}} )(\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t tx\+\_\+bit)
+\begin{DoxyCompactList}\small\item\em Write a bit to 1-\/wire bus, this is a blocking function. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__t_a0f3cd296844f271fa90a53b70fbe4bed}{read\+\_\+bit}} )(\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}rx\+\_\+bit)
+\begin{DoxyCompactList}\small\item\em Read a bit from 1-\/wire bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__t_a550161c28abdf6c7a2982c2180f10afc}{reset}} )(\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus)
+\begin{DoxyCompactList}\small\item\em Send reset pulse to the bus, and check if there are devices attached to the bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__t_a5ca49c820334b23d01c79e9f1a7ad011}{del}} )(\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus)
+\begin{DoxyCompactList}\small\item\em Free 1-\/Wire bus resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+1-\/Wire bus interface definition 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structonewire__bus__t_a5ca49c820334b23d01c79e9f1a7ad011}\index{onewire\_bus\_t@{onewire\_bus\_t}!del@{del}}
+\index{del@{del}!onewire\_bus\_t@{onewire\_bus\_t}}
+\doxysubsubsection{\texorpdfstring{del}{del}}
+{\footnotesize\ttfamily \label{structonewire__bus__t_a5ca49c820334b23d01c79e9f1a7ad011} 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} del) (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus)}
+
+
+
+Free 1-\/Wire bus resources. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em bus} & 1-\/Wire bus handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item ESP\+\_\+\+OK\+: Free resources successfully
+\item ESP\+\_\+\+FAIL\+: Free resources failed because error occurred 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{structonewire__bus__t_a0f3cd296844f271fa90a53b70fbe4bed}\index{onewire\_bus\_t@{onewire\_bus\_t}!read\_bit@{read\_bit}}
+\index{read\_bit@{read\_bit}!onewire\_bus\_t@{onewire\_bus\_t}}
+\doxysubsubsection{\texorpdfstring{read\_bit}{read\_bit}}
+{\footnotesize\ttfamily \label{structonewire__bus__t_a0f3cd296844f271fa90a53b70fbe4bed} 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} read\+\_\+bit) (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}rx\+\_\+bit)}
+
+
+
+Read a bit from 1-\/wire bus. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em handle} & 1-\/wire bus handle \\
+\hline
+\mbox{\texttt{ out}}  & {\em rx\+\_\+bit} & received bit, 0 for zero bit, 1 for one bit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item ESP\+\_\+\+OK Read bit from 1-\/wire bus successfully.
+\item ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARG Invalid argument. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{structonewire__bus__t_a5e264bcb0a9aa05a8a37a9a3911af3eb}\index{onewire\_bus\_t@{onewire\_bus\_t}!read\_bytes@{read\_bytes}}
+\index{read\_bytes@{read\_bytes}!onewire\_bus\_t@{onewire\_bus\_t}}
+\doxysubsubsection{\texorpdfstring{read\_bytes}{read\_bytes}}
+{\footnotesize\ttfamily \label{structonewire__bus__t_a5e264bcb0a9aa05a8a37a9a3911af3eb} 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} read\+\_\+bytes) (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus, uint8\+\_\+t \texorpdfstring{$\ast$}{*}rx\+\_\+buf, size\+\_\+t rx\+\_\+buf\+\_\+size)}
+
+
+
+Read bytes from 1-\/wire bus. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em bus} & 1-\/wire bus handle \\
+\hline
+\mbox{\texttt{ out}}  & {\em rx\+\_\+buf} & pointer to buffer to store received data \\
+\hline
+\mbox{\texttt{ in}}  & {\em rx\+\_\+buf\+\_\+size} & size of buffer to store received data, in bytes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item ESP\+\_\+\+OK\+: Read bytes from 1-\/Wire bus successfully
+\item ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARG\+: Read bytes from 1-\/Wire bus failed because of invalid argument
+\item ESP\+\_\+\+FAIL\+: Read bytes from 1-\/Wire bus failed because of other errors 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{structonewire__bus__t_a550161c28abdf6c7a2982c2180f10afc}\index{onewire\_bus\_t@{onewire\_bus\_t}!reset@{reset}}
+\index{reset@{reset}!onewire\_bus\_t@{onewire\_bus\_t}}
+\doxysubsubsection{\texorpdfstring{reset}{reset}}
+{\footnotesize\ttfamily \label{structonewire__bus__t_a550161c28abdf6c7a2982c2180f10afc} 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} reset) (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus)}
+
+
+
+Send reset pulse to the bus, and check if there are devices attached to the bus. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em bus} & 1-\/Wire bus handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item ESP\+\_\+\+OK\+: Reset 1-\/Wire bus successfully and find device on the bus
+\item ESP\+\_\+\+ERR\+\_\+\+NOT\+\_\+\+FOUND\+: Reset 1-\/Wire bus successfully but no device found on the bus
+\item ESP\+\_\+\+FAIL\+: Reset 1-\/Wire bus failed because of other errors 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{structonewire__bus__t_a41ec43f6b226c80f9a5b39945af01c14}\index{onewire\_bus\_t@{onewire\_bus\_t}!write\_bit@{write\_bit}}
+\index{write\_bit@{write\_bit}!onewire\_bus\_t@{onewire\_bus\_t}}
+\doxysubsubsection{\texorpdfstring{write\_bit}{write\_bit}}
+{\footnotesize\ttfamily \label{structonewire__bus__t_a41ec43f6b226c80f9a5b39945af01c14} 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} write\+\_\+bit) (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t tx\+\_\+bit)}
+
+
+
+Write a bit to 1-\/wire bus, this is a blocking function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em handle} & 1-\/wire bus handle \\
+\hline
+\mbox{\texttt{ in}}  & {\em tx\+\_\+bit} & bit to transmit, 0 for zero bit, other for one bit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item ESP\+\_\+\+OK Write bit to 1-\/wire bus successfully.
+\item ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARG Invalid argument. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{structonewire__bus__t_afada884b3d82aeaefe2ec9a03cf9f0e9}\index{onewire\_bus\_t@{onewire\_bus\_t}!write\_bytes@{write\_bytes}}
+\index{write\_bytes@{write\_bytes}!onewire\_bus\_t@{onewire\_bus\_t}}
+\doxysubsubsection{\texorpdfstring{write\_bytes}{write\_bytes}}
+{\footnotesize\ttfamily \label{structonewire__bus__t_afada884b3d82aeaefe2ec9a03cf9f0e9} 
+esp\+\_\+err\+\_\+t(\texorpdfstring{$\ast$}{*} write\+\_\+bytes) (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \texorpdfstring{$\ast$}{*}bus, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}tx\+\_\+data, uint8\+\_\+t tx\+\_\+data\+\_\+size)}
+
+
+
+Write bytes to 1-\/wire bus. 
+
+\begin{DoxyNote}{Note}
+This is a blocking function
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em bus} & 1-\/Wire bus handle \\
+\hline
+\mbox{\texttt{ in}}  & {\em tx\+\_\+data} & pointer to data to be sent \\
+\hline
+\mbox{\texttt{ in}}  & {\em tx\+\_\+data\+\_\+size} & size of data to be sent, in bytes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item ESP\+\_\+\+OK\+: Write bytes to 1-\/Wire bus successfully
+\item ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+ARG\+: Write bytes to 1-\/Wire bus failed because of invalid argument
+\item ESP\+\_\+\+FAIL\+: Write bytes to 1-\/Wire bus failed because of other errors 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/owb/onewire\+\_\+bus/interface/onewire\+\_\+bus\+\_\+interface.\+h\end{DoxyCompactItemize}

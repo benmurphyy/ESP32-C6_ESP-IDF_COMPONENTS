@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="ahtxx_8h" kind="file" language="C++">
+    <compoundname>ahtxx.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="ahtxx__version_8h" local="yes">ahtxx_version.h</includes>
+    <includedby refid="ahtxx_8c" local="yes">components/peripherals/i2c/esp_ahtxx/ahtxx.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ahtxx/include/ahtxx.h</label>
+        <link refid="ahtxx_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ahtxx_version.h</label>
+        <link refid="ahtxx__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_ahtxx/ahtxx.c</label>
+        <link refid="ahtxx_8c"/>
+      </node>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ahtxx/include/ahtxx.h</label>
+        <link refid="ahtxx_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structahtxx__config__s" prot="public">ahtxx_config_s</innerclass>
+    <innerclass refid="structahtxx__context__t" prot="public">ahtxx_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1gaeb1d1e5ae1a1ee405edcf1f447a8ed5e" kind="define"><name>I2C_AHTXX_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga57ee2aaac97db3bcab231deccc6e3399" kind="define"><name>I2C_AHTXX_DEV_ADDR</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga7b83e45fecacb1c890f5ed26765e8da3" kind="define"><name>I2C_AHT30_CONFIG_DEFAULT</name></member>
+      <member refid="group__drivers_1gae4134028a75c7a35c3788b8700185676" kind="define"><name>I2C_AHT25_CONFIG_DEFAULT</name></member>
+      <member refid="group__drivers_1ga6a49467196b5d6dc6f860f73413264b4" kind="define"><name>I2C_AHT21_CONFIG_DEFAULT</name></member>
+      <member refid="group__drivers_1gafaf90a48857bdc123dbc7c3a145545f5" kind="define"><name>I2C_AHT20_CONFIG_DEFAULT</name></member>
+      <member refid="group__drivers_1gaacc36b22e4864f582ea9f7fdbbc5898c" kind="define"><name>I2C_AHT10_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1gabab94be3831f8f2b9625a28dc64f09cb" kind="enum"><name>ahtxx_sensor_types_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1gae6649d0c7e2b9bda0ec664a94c4a31b8" kind="typedef"><name>ahtxx_sensor_types_t</name></member>
+      <member refid="group__drivers_1ga4481478f7508935e24b98cf5027da6dd" kind="typedef"><name>ahtxx_config_t</name></member>
+      <member refid="group__drivers_1ga39698f791d9caec004bf818b4145d461" kind="typedef"><name>ahtxx_context_t</name></member>
+      <member refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kind="typedef"><name>ahtxx_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1ga5f9e62f6da7b8790a7906e92a36c8366" kind="variable"><name>ahtxx_status_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1gafd126b56a8357d0583e1f775ac82eec9" kind="function"><name>ahtxx_get_status_register</name></member>
+      <member refid="group__drivers_1ga3a9d6c91fdd6cdc14ea60798524c9c4e" kind="function"><name>ahtxx_init</name></member>
+      <member refid="group__drivers_1gae4440d265f608195e5937336cd3582a4" kind="function"><name>ahtxx_get_measurement</name></member>
+      <member refid="group__drivers_1gacbd108ca689401c69b12b6ca3b706931" kind="function"><name>ahtxx_get_measurements</name></member>
+      <member refid="group__drivers_1gad373f3332ae26a5cd75e454d7ca2ba22" kind="function"><name>ahtxx_get_busy_status</name></member>
+      <member refid="group__drivers_1gad1ce57f1854e8737d28e745f7b0514ed" kind="function"><name>ahtxx_get_calibration_status</name></member>
+      <member refid="group__drivers_1gac0d330794d286009a3a6724de57bed1d" kind="function"><name>ahtxx_get_status</name></member>
+      <member refid="group__drivers_1gad2a97b455e90b2390e26fd31917e1270" kind="function"><name>ahtxx_reset</name></member>
+      <member refid="group__drivers_1ga53548925117543986f2a6d5a4fea0355" kind="function"><name>ahtxx_remove</name></member>
+      <member refid="group__drivers_1gac24744a484425cf1d9096994bebf0e4d" kind="function"><name>ahtxx_delete</name></member>
+      <member refid="group__drivers_1gaee72d6200c7a90bd870758f2da3be930" kind="function"><name>ahtxx_get_fw_version</name></member>
+      <member refid="group__drivers_1gaa4618ea6847e9349c1f82c03310818dc" kind="function"><name>ahtxx_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" refkind="member"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__AHTXX_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__AHTXX_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ahtxx_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__drivers_1gaeb1d1e5ae1a1ee405edcf1f447a8ed5e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHTXX_DEV_CLK_SPD<sp/><sp/><sp/>UINT32_C(100000)<sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="group__drivers_1ga57ee2aaac97db3bcab231deccc6e3399" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHTXX_DEV_ADDR<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x38)<sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="group__drivers_1ga7b83e45fecacb1c890f5ed26765e8da3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHT30_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_AHTXX_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/>=<sp/>I2C_AHTXX_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.sensor_type<sp/><sp/><sp/><sp/><sp/>=<sp/>AHTXX_AHT30<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="group__drivers_1gae4134028a75c7a35c3788b8700185676" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHT25_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="78"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_AHTXX_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/>=<sp/>I2C_AHTXX_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.sensor_type<sp/><sp/><sp/><sp/><sp/>=<sp/>AHTXX_AHT25<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="group__drivers_1ga6a49467196b5d6dc6f860f73413264b4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHT21_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="86"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_AHTXX_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="87"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/>=<sp/>I2C_AHTXX_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="88"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.sensor_type<sp/><sp/><sp/><sp/><sp/>=<sp/>AHTXX_AHT21<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="group__drivers_1gafaf90a48857bdc123dbc7c3a145545f5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHT20_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="94"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_AHTXX_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/>=<sp/>I2C_AHTXX_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="96"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.sensor_type<sp/><sp/><sp/><sp/><sp/>=<sp/>AHTXX_AHT20<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="group__drivers_1gaacc36b22e4864f582ea9f7fdbbc5898c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AHT10_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="102"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_AHTXX_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="103"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/>=<sp/>I2C_AHTXX_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="104"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.sensor_type<sp/><sp/><sp/><sp/><sp/>=<sp/>AHTXX_AHT10<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="group__drivers_1gabab94be3831f8f2b9625a28dc64f09cb" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gabab94be3831f8f2b9625a28dc64f09cb" kindref="member">ahtxx_sensor_types_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>AHTXX_AHT10,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>AHTXX_AHT20,</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>AHTXX_AHT21,</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>AHTXX_AHT25,</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>AHTXX_AHT30</highlight></codeline>
+<codeline lineno="125" refid="group__drivers_1gae6649d0c7e2b9bda0ec664a94c4a31b8" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gae6649d0c7e2b9bda0ec664a94c4a31b8" kindref="member">ahtxx_sensor_types_t</ref>;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ahtxx_status_register_u<sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved1:3;<sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>calibrated:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved2:3;<sp/></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>busy:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal">}<sp/>ahtxx_status_register_t;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143" refid="structahtxx__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structahtxx__config__s" kindref="compound">ahtxx_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="144" refid="structahtxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structahtxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="145" refid="structahtxx__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structahtxx__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="146" refid="structahtxx__config__s_1ad118bbd4ee441e78ed11faecc4d74e48" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gae6649d0c7e2b9bda0ec664a94c4a31b8" kindref="member">ahtxx_sensor_types_t</ref><sp/><ref refid="structahtxx__config__s_1ad118bbd4ee441e78ed11faecc4d74e48" kindref="member">sensor_type</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="147" refid="group__drivers_1ga4481478f7508935e24b98cf5027da6dd" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga4481478f7508935e24b98cf5027da6dd" kindref="member">ahtxx_config_t</ref>;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="structahtxx__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structahtxx__context__t" kindref="compound">ahtxx_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="153" refid="structahtxx__context__t_1a198ffdfab768951b66a32ee85b0c18bc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga4481478f7508935e24b98cf5027da6dd" kindref="member">ahtxx_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structahtxx__context__t_1a198ffdfab768951b66a32ee85b0c18bc" kindref="member">dev_config</ref>;<sp/></highlight></codeline>
+<codeline lineno="154" refid="structahtxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><ref refid="structahtxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/></highlight></codeline>
+<codeline lineno="155"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="group__drivers_1ga39698f791d9caec004bf818b4145d461" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structahtxx__context__t" kindref="compound">ahtxx_context_t</ref><sp/><ref refid="structahtxx__context__t" kindref="compound">ahtxx_context_t</ref>;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structahtxx__context__t" kindref="compound">ahtxx_context_t</ref>*<sp/><ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref>;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gafd126b56a8357d0583e1f775ac82eec9" kindref="member">ahtxx_get_status_register</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle,<sp/>ahtxx_status_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga3a9d6c91fdd6cdc14ea60798524c9c4e" kindref="member">ahtxx_init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga4481478f7508935e24b98cf5027da6dd" kindref="member">ahtxx_config_t</ref><sp/>*ahtxx_config,<sp/><ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ahtxx_handle);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae4440d265f608195e5937336cd3582a4" kindref="member">ahtxx_get_measurement</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>humidity);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gacbd108ca689401c69b12b6ca3b706931" kindref="member">ahtxx_get_measurements</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>humidity,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>dewpoint);</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad373f3332ae26a5cd75e454d7ca2ba22" kindref="member">ahtxx_get_busy_status</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>busy);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad1ce57f1854e8737d28e745f7b0514ed" kindref="member">ahtxx_get_calibration_status</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>calibrated);</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac0d330794d286009a3a6724de57bed1d" kindref="member">ahtxx_get_status</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>busy,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>calibrated);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad2a97b455e90b2390e26fd31917e1270" kindref="member">ahtxx_reset</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga53548925117543986f2a6d5a4fea0355" kindref="member">ahtxx_remove</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac24744a484425cf1d9096994bebf0e4d" kindref="member">ahtxx_delete</ref>(<ref refid="group__drivers_1gab66af7e90e12339f8760c01abf09c759" kindref="member">ahtxx_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1gaee72d6200c7a90bd870758f2da3be930" kindref="member">ahtxx_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1gaa4618ea6847e9349c1f82c03310818dc" kindref="member">ahtxx_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">//<sp/>__AHTXX_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_ahtxx/include/ahtxx.h"/>
+  </compounddef>
+</doxygen>

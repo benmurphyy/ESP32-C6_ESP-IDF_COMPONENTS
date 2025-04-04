@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structbme680__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>bme680_config_s</compoundname>
+    <includes refid="bme680_8h" local="no">bme680.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbme680__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>bme680_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="349" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="349" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>bme680_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 i2c device scl clock speed </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="350" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a43ecd923f632053e1120e76b712eb2fa" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kindref="member">bme680_power_modes_t</ref></type>
+        <definition>bme680_power_modes_t power_mode</definition>
+        <argsstring></argsstring>
+        <name>power_mode</name>
+        <qualifiedname>bme680_config_s::power_mode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 power mode </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="351" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1aaf5cd8b42e05ad6889ece734c13f6562" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kindref="member">bme680_iir_filters_t</ref></type>
+        <definition>bme680_iir_filters_t iir_filter</definition>
+        <argsstring></argsstring>
+        <name>iir_filter</name>
+        <qualifiedname>bme680_config_s::iir_filter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="352" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="352" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a05fd18f1afad7f06ccd629a79d90509a" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kindref="member">bme680_pressure_oversampling_t</ref></type>
+        <definition>bme680_pressure_oversampling_t pressure_oversampling</definition>
+        <argsstring></argsstring>
+        <name>pressure_oversampling</name>
+        <qualifiedname>bme680_config_s::pressure_oversampling</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="353" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="353" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1ae3166fc6f91eaa49f161a461b66e59f4" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kindref="member">bme680_temperature_oversampling_t</ref></type>
+        <definition>bme680_temperature_oversampling_t temperature_oversampling</definition>
+        <argsstring></argsstring>
+        <name>temperature_oversampling</name>
+        <qualifiedname>bme680_config_s::temperature_oversampling</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="354" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="354" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a153e7d5bfb50f457574ff4bd23e33859" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kindref="member">bme680_humidity_oversampling_t</ref></type>
+        <definition>bme680_humidity_oversampling_t humidity_oversampling</definition>
+        <argsstring></argsstring>
+        <name>humidity_oversampling</name>
+        <qualifiedname>bme680_config_s::humidity_oversampling</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="355" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="355" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a36fdc8559e1cbfa31f5bb5243ae5f56d" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool gas_enabled</definition>
+        <argsstring></argsstring>
+        <name>gas_enabled</name>
+        <qualifiedname>bme680_config_s::gas_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 gas measurements enabled when true </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="356" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="356" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a62c79fac486cde538921ca50ced01127" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t heater_temperature</definition>
+        <argsstring></argsstring>
+        <name>heater_temperature</name>
+        <qualifiedname>bme680_config_s::heater_temperature</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 heater temperature for forced mode in degrees celsius </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="357" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="357" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a0ab2c5eea7e0868d17b6c8c3a14cd110" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t heater_duration</definition>
+        <argsstring></argsstring>
+        <name>heater_duration</name>
+        <qualifiedname>bme680_config_s::heater_duration</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 heating duration for forced mode in milliseconds </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="358" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="358" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1ad630f45b4b68dd68cee2a36ae2db5552" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t heater_temperature_profile[BME680_HEATER_PROFILE_SIZE]</definition>
+        <argsstring>[BME680_HEATER_PROFILE_SIZE]</argsstring>
+        <name>heater_temperature_profile</name>
+        <qualifiedname>bme680_config_s::heater_temperature_profile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 heater temperature profile in degrees celsius </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="359" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="359" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1af6c3e2adb91a1e60dadae66ee9218303" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t heater_duration_profile[BME680_HEATER_PROFILE_SIZE]</definition>
+        <argsstring>[BME680_HEATER_PROFILE_SIZE]</argsstring>
+        <name>heater_duration_profile</name>
+        <qualifiedname>bme680_config_s::heater_duration_profile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 heating duration profile in milliseconds </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="360" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="360" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a2573355afe4c6bca8bfa99a4dfb7b0ea" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t heater_profile_size</definition>
+        <argsstring></argsstring>
+        <name>heater_profile_size</name>
+        <qualifiedname>bme680_config_s::heater_profile_size</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 size of the heating profile </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="361" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="361" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__config__s_1a10ae592277d68fbfb9c4cc1661ba425f" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t heater_shared_duration</definition>
+        <argsstring></argsstring>
+        <name>heater_shared_duration</name>
+        <qualifiedname>bme680_config_s::heater_shared_duration</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 heating duration for parallel mode in milliseconds </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="362" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="362" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>BME680 configuration structure definition. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="348" column="1" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="348" bodyend="363"/>
+    <listofallmembers>
+      <member refid="structbme680__config__s_1a36fdc8559e1cbfa31f5bb5243ae5f56d" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>gas_enabled</name></member>
+      <member refid="structbme680__config__s_1a0ab2c5eea7e0868d17b6c8c3a14cd110" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>heater_duration</name></member>
+      <member refid="structbme680__config__s_1af6c3e2adb91a1e60dadae66ee9218303" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>heater_duration_profile</name></member>
+      <member refid="structbme680__config__s_1a2573355afe4c6bca8bfa99a4dfb7b0ea" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>heater_profile_size</name></member>
+      <member refid="structbme680__config__s_1a10ae592277d68fbfb9c4cc1661ba425f" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>heater_shared_duration</name></member>
+      <member refid="structbme680__config__s_1a62c79fac486cde538921ca50ced01127" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>heater_temperature</name></member>
+      <member refid="structbme680__config__s_1ad630f45b4b68dd68cee2a36ae2db5552" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>heater_temperature_profile</name></member>
+      <member refid="structbme680__config__s_1a153e7d5bfb50f457574ff4bd23e33859" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>humidity_oversampling</name></member>
+      <member refid="structbme680__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>i2c_address</name></member>
+      <member refid="structbme680__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structbme680__config__s_1aaf5cd8b42e05ad6889ece734c13f6562" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>iir_filter</name></member>
+      <member refid="structbme680__config__s_1a43ecd923f632053e1120e76b712eb2fa" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>power_mode</name></member>
+      <member refid="structbme680__config__s_1a05fd18f1afad7f06ccd629a79d90509a" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>pressure_oversampling</name></member>
+      <member refid="structbme680__config__s_1ae3166fc6f91eaa49f161a461b66e59f4" prot="public" virt="non-virtual"><scope>bme680_config_s</scope><name>temperature_oversampling</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

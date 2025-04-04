@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structi2c__sht4x__data______t_1_1humidity__tag" kind="struct" language="C++" prot="public">
+    <compoundname>i2c_sht4x_data___t::humidity_tag</compoundname>
+    <innerclass refid="unioni2c__sht4x__data______t_1_1humidity__tag_1_1humidity__data__tag" prot="public">i2c_sht4x_data___t::humidity_tag::humidity_data_tag</innerclass>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structi2c__sht4x__data______t_1_1humidity__tag_1a2f6521b7a0a620c8fe5aa7e53efd69fb" prot="public" static="no" mutable="no">
+        <type>union <ref refid="unioni2c__sht4x__data______t_1_1humidity__tag_1_1humidity__data__tag" kindref="compound">i2c_sht4x_data___t::humidity_tag::humidity_data_tag</ref></type>
+        <definition>union i2c_sht4x_data___t::humidity_tag::humidity_data_tag humidity_data</definition>
+        <argsstring></argsstring>
+        <name>humidity_data</name>
+        <qualifiedname>i2c_sht4x_data___t::humidity_tag::humidity_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="97" column="23"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>i2c_sht4x_data___t::humidity_tag</label>
+        <link refid="structi2c__sht4x__data______t_1_1humidity__tag"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>humidity_data</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>humidity_data_tag</label>
+        <link refid="unioni2c__sht4x__data______t_1_1humidity__tag_1_1humidity__data__tag"/>
+      </node>
+    </collaborationgraph>
+    <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="92" column="5" bodyfile="components/peripherals/i2c/esp_sht4x/include/sht4x.h" bodystart="92" bodyend="98"/>
+    <listofallmembers>
+      <member refid="structi2c__sht4x__data______t_1_1humidity__tag_1a2f6521b7a0a620c8fe5aa7e53efd69fb" prot="public" virt="non-virtual"><scope>i2c_sht4x_data___t::humidity_tag</scope><name>humidity_data</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

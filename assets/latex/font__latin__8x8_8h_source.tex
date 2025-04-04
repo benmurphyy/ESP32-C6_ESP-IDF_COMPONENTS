@@ -1,0 +1,365 @@
+\doxysection{font\+\_\+latin\+\_\+8x8.\+h}
+\hypertarget{font__latin__8x8_8h_source}{}\label{font__latin__8x8_8h_source}\index{components/peripherals/i2c/esp\_ssd1306/include/font\_latin\_8x8.h@{components/peripherals/i2c/esp\_ssd1306/include/font\_latin\_8x8.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#ifndef\ \_\_FONT8X8\_LATIN\_H\_\_}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ \_\_FONT8X8\_LATIN\_H\_\_}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00042\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ }}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ Constant:\ font8x8\_latin\_tr}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ Contains\ an\ 90\ degree\ transposed\ 8x8\ font\ map\ for\ unicode\ points\ }}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ U+0000\ -\/\ U+00FF\ (latin)}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ To\ make\ it\ easy\ to\ use\ with\ SSD1306's\ GDDRAM\ mapping\ and\ API,}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ this\ constant\ is\ an\ 90\ degree\ transposed.}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ The\ original\ version\ written\ by\ Marcel\ Sondaar\ is\ availble\ at:}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ \ \ https://github.com/dhepper/font8x8/blob/master/font8x8\_latin.h\ }}
+\DoxyCodeLine{00056\ \textcolor{comment}{}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ \ \ Conversion\ is\ done\ via\ following\ procedure:}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ \ \ \ for\ (int\ code\ =\ 0;\ code\ <\ 256;\ code++)\ \{}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ \ \ \ \ \ \ \ uint8\_t\ trans[8];}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ \ \ \ \ \ \ \ for\ (int\ w\ =\ 0;\ w\ <\ 8;\ w++)\ \{}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ trans[w]\ =\ 0x00;}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ for\ (int\ b\ =\ 0;\ b\ <\ 8;\ b++)\ \{}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ trans[w]\ |=\ ((font8x8\_latin[code][b]\ \&\ (1\ <<\ w))\ >>\ w)\ <<\ b;}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ \ \ \ \ for\ (int\ w\ =\ 0;\ w\ <\ 8;\ w++)\ \{}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (w\ ==\ 0)\ \{\ printf("{}\ \ \ \ \{\ "{});\ \}}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ printf("{}0x\%.2X"{},\ trans[w]);}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (w\ <\ 7)\ \{\ printf("{},\ "{});\ \}}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (w\ ==\ 7)\ \{\ printf("{}\ \},\ \ \ //\ U+00\%.2X\ (\%c)\(\backslash\)n"{},\ code,\ code);\ \}}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00075\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00078\ \textcolor{comment}{static\ const\ struct\ \{}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ unsigned\ int\ \ \ width;}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ \ \ \ unsigned\ int\ \ \ height;}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ \ \ \ unsigned\ int\ \ \ bytes\_per\_pixel;\ //\ 3:RGB,\ 4:RGBA\ \ }}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ \ \ \ char\ \ \ \ \ \ \ \ \ \ *comment;}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ unsigned\ char\ \ pixel\_data[8\ *\ 8\ *\ 3\ +\ 1];}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \}\ gimp\_image\ =\ \{}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ 8,\ 8,\ 3,}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ "{}Created\ with\ GIMP"{},}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00089\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0"{}}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00095\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)377\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)0\(\backslash\)377\(\backslash\)377\(\backslash\)377"{}}}
+\DoxyCodeLine{00096\ \textcolor{comment}{\ \ \ \ "{}\(\backslash\)377\(\backslash\)377\(\backslash\)377"{},}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ \ \};}}
+\DoxyCodeLine{00098\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ FONT\_LATIN\_8x8\_COLS\_SIZE\ \ 8\ \ \ \ }\textcolor{comment}{//\ number\ of\ columns\ for\ chars}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#define\ FONT\_LATIN\_8x8\_ROWS\_SIZE\ \ 256\ \ }\textcolor{comment}{//\ number\ of\ rows\ for\ chars}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{comment}{//\ basic\ latin\ +\ control\ +\ extended\ latin}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint8\_t\ font\_latin\_8x8\_tr[FONT\_LATIN\_8x8\_ROWS\_SIZE][FONT\_LATIN\_8x8\_COLS\_SIZE]\ =\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0000\ ()}}
+\DoxyCodeLine{00113\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0001\ ()}}
+\DoxyCodeLine{00114\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0002\ ()}}
+\DoxyCodeLine{00115\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0003\ ()}}
+\DoxyCodeLine{00116\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0004\ ()}}
+\DoxyCodeLine{00117\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0005\ ()}}
+\DoxyCodeLine{00118\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0006\ ()}}
+\DoxyCodeLine{00119\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0007\ ()}}
+\DoxyCodeLine{00120\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0008\ )}}
+\DoxyCodeLine{00121\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0009\ (\ )}}
+\DoxyCodeLine{00122\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+000A\ ()}}
+\DoxyCodeLine{00123\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+000B\ (\ )}}
+\DoxyCodeLine{00124\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+000C\ ()}}
+\DoxyCodeLine{00125\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+000D\ ()}}
+\DoxyCodeLine{00126\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+000E\ ()}}
+\DoxyCodeLine{00127\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+000F\ ()\ 16}}
+\DoxyCodeLine{00128\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0010\ ()\ }}
+\DoxyCodeLine{00129\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0011\ ()}}
+\DoxyCodeLine{00130\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0012\ ()}}
+\DoxyCodeLine{00131\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0013\ ()}}
+\DoxyCodeLine{00132\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0014\ ()}}
+\DoxyCodeLine{00133\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0015\ ()}}
+\DoxyCodeLine{00134\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0016\ ()}}
+\DoxyCodeLine{00135\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0017\ ()}}
+\DoxyCodeLine{00136\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0018\ ()}}
+\DoxyCodeLine{00137\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0019\ ()}}
+\DoxyCodeLine{00138\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+001A\ ()}}
+\DoxyCodeLine{00139\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+001B\ (}}
+\DoxyCodeLine{00140\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+001C\ ()}}
+\DoxyCodeLine{00141\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+001D\ ()}}
+\DoxyCodeLine{00142\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+001E\ ()}}
+\DoxyCodeLine{00143\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+001F\ ()}}
+\DoxyCodeLine{00144\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0020\ (\ )\ space}}
+\DoxyCodeLine{00145\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x06,\ 0x5F,\ 0x5F,\ 0x06,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0021\ (!)}}
+\DoxyCodeLine{00146\ \ \ \ \ \{\ 0x00,\ 0x03,\ 0x03,\ 0x00,\ 0x03,\ 0x03,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0022\ ("{})}}
+\DoxyCodeLine{00147\ \ \ \ \ \{\ 0x14,\ 0x7F,\ 0x7F,\ 0x14,\ 0x7F,\ 0x7F,\ 0x14,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0023\ (\#)}}
+\DoxyCodeLine{00148\ \ \ \ \ \{\ 0x24,\ 0x2E,\ 0x6B,\ 0x6B,\ 0x3A,\ 0x12,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0024\ (\$)}}
+\DoxyCodeLine{00149\ \ \ \ \ \{\ 0x46,\ 0x66,\ 0x30,\ 0x18,\ 0x0C,\ 0x66,\ 0x62,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0025\ (\%)}}
+\DoxyCodeLine{00150\ \ \ \ \ \{\ 0x30,\ 0x7A,\ 0x4F,\ 0x5D,\ 0x37,\ 0x7A,\ 0x48,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0026\ (\&)}}
+\DoxyCodeLine{00151\ \ \ \ \ \{\ 0x04,\ 0x07,\ 0x03,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0027\ (')}}
+\DoxyCodeLine{00152\ \ \ \ \ \{\ 0x00,\ 0x1C,\ 0x3E,\ 0x63,\ 0x41,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0028\ (()}}
+\DoxyCodeLine{00153\ \ \ \ \ \{\ 0x00,\ 0x41,\ 0x63,\ 0x3E,\ 0x1C,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0029\ ())}}
+\DoxyCodeLine{00154\ \ \ \ \ \{\ 0x08,\ 0x2A,\ 0x3E,\ 0x1C,\ 0x1C,\ 0x3E,\ 0x2A,\ 0x08\ \},\ \ \ \textcolor{comment}{//\ U+002A\ (*)}}
+\DoxyCodeLine{00155\ \ \ \ \ \{\ 0x08,\ 0x08,\ 0x3E,\ 0x3E,\ 0x08,\ 0x08,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+002B\ (+)}}
+\DoxyCodeLine{00156\ \ \ \ \ \{\ 0x00,\ 0x80,\ 0xE0,\ 0x60,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+002C\ (,)}}
+\DoxyCodeLine{00157\ \ \ \ \ \{\ 0x08,\ 0x08,\ 0x08,\ 0x08,\ 0x08,\ 0x08,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+002D\ (-\/)}}
+\DoxyCodeLine{00158\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x60,\ 0x60,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+002E\ (.)}}
+\DoxyCodeLine{00159\ \ \ \ \ \{\ 0x60,\ 0x30,\ 0x18,\ 0x0C,\ 0x06,\ 0x03,\ 0x01,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+002F\ (/)}}
+\DoxyCodeLine{00160\ \ \ \ \ \{\ 0x3E,\ 0x7F,\ 0x71,\ 0x59,\ 0x4D,\ 0x7F,\ 0x3E,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0030\ (0)}}
+\DoxyCodeLine{00161\ \ \ \ \ \{\ 0x40,\ 0x42,\ 0x7F,\ 0x7F,\ 0x40,\ 0x40,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0031\ (1)}}
+\DoxyCodeLine{00162\ \ \ \ \ \{\ 0x62,\ 0x73,\ 0x59,\ 0x49,\ 0x6F,\ 0x66,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0032\ (2)}}
+\DoxyCodeLine{00163\ \ \ \ \ \{\ 0x22,\ 0x63,\ 0x49,\ 0x49,\ 0x7F,\ 0x36,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0033\ (3)}}
+\DoxyCodeLine{00164\ \ \ \ \ \{\ 0x18,\ 0x1C,\ 0x16,\ 0x53,\ 0x7F,\ 0x7F,\ 0x50,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0034\ (4)}}
+\DoxyCodeLine{00165\ \ \ \ \ \{\ 0x27,\ 0x67,\ 0x45,\ 0x45,\ 0x7D,\ 0x39,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0035\ (5)}}
+\DoxyCodeLine{00166\ \ \ \ \ \{\ 0x3C,\ 0x7E,\ 0x4B,\ 0x49,\ 0x79,\ 0x30,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0036\ (6)}}
+\DoxyCodeLine{00167\ \ \ \ \ \{\ 0x03,\ 0x03,\ 0x71,\ 0x79,\ 0x0F,\ 0x07,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0037\ (7)}}
+\DoxyCodeLine{00168\ \ \ \ \ \{\ 0x36,\ 0x7F,\ 0x49,\ 0x49,\ 0x7F,\ 0x36,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0038\ (8)}}
+\DoxyCodeLine{00169\ \ \ \ \ \{\ 0x06,\ 0x4F,\ 0x49,\ 0x69,\ 0x3F,\ 0x1E,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0039\ (9)}}
+\DoxyCodeLine{00170\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x66,\ 0x66,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+003A\ (:)}}
+\DoxyCodeLine{00171\ \ \ \ \ \{\ 0x00,\ 0x80,\ 0xE6,\ 0x66,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+003B\ (;)}}
+\DoxyCodeLine{00172\ \ \ \ \ \{\ 0x08,\ 0x1C,\ 0x36,\ 0x63,\ 0x41,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+003C\ (<)}}
+\DoxyCodeLine{00173\ \ \ \ \ \{\ 0x24,\ 0x24,\ 0x24,\ 0x24,\ 0x24,\ 0x24,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+003D\ (=)}}
+\DoxyCodeLine{00174\ \ \ \ \ \{\ 0x00,\ 0x41,\ 0x63,\ 0x36,\ 0x1C,\ 0x08,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+003E\ (>)}}
+\DoxyCodeLine{00175\ \ \ \ \ \{\ 0x02,\ 0x03,\ 0x51,\ 0x59,\ 0x0F,\ 0x06,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+003F\ (?)}}
+\DoxyCodeLine{00176\ \ \ \ \ \{\ 0x3E,\ 0x7F,\ 0x41,\ 0x5D,\ 0x5D,\ 0x1F,\ 0x1E,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0040\ (@)}}
+\DoxyCodeLine{00177\ \ \ \ \ \{\ 0x7C,\ 0x7E,\ 0x13,\ 0x13,\ 0x7E,\ 0x7C,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0041\ (A)}}
+\DoxyCodeLine{00178\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x49,\ 0x49,\ 0x7F,\ 0x36,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0042\ (B)}}
+\DoxyCodeLine{00179\ \ \ \ \ \{\ 0x1C,\ 0x3E,\ 0x63,\ 0x41,\ 0x41,\ 0x63,\ 0x22,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0043\ (C)}}
+\DoxyCodeLine{00180\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x41,\ 0x63,\ 0x3E,\ 0x1C,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0044\ (D)}}
+\DoxyCodeLine{00181\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x49,\ 0x5D,\ 0x41,\ 0x63,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0045\ (E)}}
+\DoxyCodeLine{00182\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x49,\ 0x1D,\ 0x01,\ 0x03,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0046\ (F)}}
+\DoxyCodeLine{00183\ \ \ \ \ \{\ 0x1C,\ 0x3E,\ 0x63,\ 0x41,\ 0x51,\ 0x73,\ 0x72,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0047\ (G)}}
+\DoxyCodeLine{00184\ \ \ \ \ \{\ 0x7F,\ 0x7F,\ 0x08,\ 0x08,\ 0x7F,\ 0x7F,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0048\ (H)}}
+\DoxyCodeLine{00185\ \ \ \ \ \{\ 0x00,\ 0x41,\ 0x7F,\ 0x7F,\ 0x41,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0049\ (I)}}
+\DoxyCodeLine{00186\ \ \ \ \ \{\ 0x30,\ 0x70,\ 0x40,\ 0x41,\ 0x7F,\ 0x3F,\ 0x01,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+004A\ (J)}}
+\DoxyCodeLine{00187\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x08,\ 0x1C,\ 0x77,\ 0x63,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+004B\ (K)}}
+\DoxyCodeLine{00188\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x41,\ 0x40,\ 0x60,\ 0x70,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+004C\ (L)}}
+\DoxyCodeLine{00189\ \ \ \ \ \{\ 0x7F,\ 0x7F,\ 0x0E,\ 0x1C,\ 0x0E,\ 0x7F,\ 0x7F,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+004D\ (M)}}
+\DoxyCodeLine{00190\ \ \ \ \ \{\ 0x7F,\ 0x7F,\ 0x06,\ 0x0C,\ 0x18,\ 0x7F,\ 0x7F,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+004E\ (N)}}
+\DoxyCodeLine{00191\ \ \ \ \ \{\ 0x1C,\ 0x3E,\ 0x63,\ 0x41,\ 0x63,\ 0x3E,\ 0x1C,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+004F\ (O)}}
+\DoxyCodeLine{00192\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x49,\ 0x09,\ 0x0F,\ 0x06,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0050\ (P)}}
+\DoxyCodeLine{00193\ \ \ \ \ \{\ 0x1E,\ 0x3F,\ 0x21,\ 0x71,\ 0x7F,\ 0x5E,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0051\ (Q)}}
+\DoxyCodeLine{00194\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x09,\ 0x19,\ 0x7F,\ 0x66,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0052\ (R)}}
+\DoxyCodeLine{00195\ \ \ \ \ \{\ 0x26,\ 0x6F,\ 0x4D,\ 0x59,\ 0x73,\ 0x32,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0053\ (S)}}
+\DoxyCodeLine{00196\ \ \ \ \ \{\ 0x03,\ 0x41,\ 0x7F,\ 0x7F,\ 0x41,\ 0x03,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0054\ (T)}}
+\DoxyCodeLine{00197\ \ \ \ \ \{\ 0x7F,\ 0x7F,\ 0x40,\ 0x40,\ 0x7F,\ 0x7F,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0055\ (U)}}
+\DoxyCodeLine{00198\ \ \ \ \ \{\ 0x1F,\ 0x3F,\ 0x60,\ 0x60,\ 0x3F,\ 0x1F,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0056\ (V)}}
+\DoxyCodeLine{00199\ \ \ \ \ \{\ 0x7F,\ 0x7F,\ 0x30,\ 0x18,\ 0x30,\ 0x7F,\ 0x7F,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0057\ (W)}}
+\DoxyCodeLine{00200\ \ \ \ \ \{\ 0x43,\ 0x67,\ 0x3C,\ 0x18,\ 0x3C,\ 0x67,\ 0x43,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0058\ (X)}}
+\DoxyCodeLine{00201\ \ \ \ \ \{\ 0x07,\ 0x4F,\ 0x78,\ 0x78,\ 0x4F,\ 0x07,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0059\ (Y)}}
+\DoxyCodeLine{00202\ \ \ \ \ \{\ 0x47,\ 0x63,\ 0x71,\ 0x59,\ 0x4D,\ 0x67,\ 0x73,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+005A\ (Z)}}
+\DoxyCodeLine{00203\ \ \ \ \ \{\ 0x00,\ 0x7F,\ 0x7F,\ 0x41,\ 0x41,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+005B\ ([)}}
+\DoxyCodeLine{00204\ \ \ \ \ \{\ 0x01,\ 0x03,\ 0x06,\ 0x0C,\ 0x18,\ 0x30,\ 0x60,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+005C\ (\(\backslash\))}}
+\DoxyCodeLine{00205\ \ \ \ \ \{\ 0x00,\ 0x41,\ 0x41,\ 0x7F,\ 0x7F,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+005D\ (])}}
+\DoxyCodeLine{00206\ \ \ \ \ \{\ 0x08,\ 0x0C,\ 0x06,\ 0x03,\ 0x06,\ 0x0C,\ 0x08,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+005E\ (\string^)}}
+\DoxyCodeLine{00207\ \ \ \ \ \{\ 0x80,\ 0x80,\ 0x80,\ 0x80,\ 0x80,\ 0x80,\ 0x80,\ 0x80\ \},\ \ \ \textcolor{comment}{//\ U+005F\ (\_)}}
+\DoxyCodeLine{00208\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x03,\ 0x07,\ 0x04,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0060\ (`)}}
+\DoxyCodeLine{00209\ \ \ \ \ \{\ 0x20,\ 0x74,\ 0x54,\ 0x54,\ 0x3C,\ 0x78,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0061\ (a)}}
+\DoxyCodeLine{00210\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x3F,\ 0x48,\ 0x48,\ 0x78,\ 0x30,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0062\ (b)}}
+\DoxyCodeLine{00211\ \ \ \ \ \{\ 0x38,\ 0x7C,\ 0x44,\ 0x44,\ 0x6C,\ 0x28,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0063\ (c)}}
+\DoxyCodeLine{00212\ \ \ \ \ \{\ 0x30,\ 0x78,\ 0x48,\ 0x49,\ 0x3F,\ 0x7F,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0064\ (d)}}
+\DoxyCodeLine{00213\ \ \ \ \ \{\ 0x38,\ 0x7C,\ 0x54,\ 0x54,\ 0x5C,\ 0x18,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0065\ (e)}}
+\DoxyCodeLine{00214\ \ \ \ \ \{\ 0x48,\ 0x7E,\ 0x7F,\ 0x49,\ 0x03,\ 0x02,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0066\ (f)}}
+\DoxyCodeLine{00215\ \ \ \ \ \{\ 0x98,\ 0xBC,\ 0xA4,\ 0xA4,\ 0xF8,\ 0x7C,\ 0x04,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0067\ (g)}}
+\DoxyCodeLine{00216\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x08,\ 0x04,\ 0x7C,\ 0x78,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0068\ (h)}}
+\DoxyCodeLine{00217\ \ \ \ \ \{\ 0x00,\ 0x44,\ 0x7D,\ 0x7D,\ 0x40,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0069\ (i)}}
+\DoxyCodeLine{00218\ \ \ \ \ \{\ 0x60,\ 0xE0,\ 0x80,\ 0x80,\ 0xFD,\ 0x7D,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+006A\ (j)}}
+\DoxyCodeLine{00219\ \ \ \ \ \{\ 0x41,\ 0x7F,\ 0x7F,\ 0x10,\ 0x38,\ 0x6C,\ 0x44,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+006B\ (k)}}
+\DoxyCodeLine{00220\ \ \ \ \ \{\ 0x00,\ 0x41,\ 0x7F,\ 0x7F,\ 0x40,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+006C\ (l)}}
+\DoxyCodeLine{00221\ \ \ \ \ \{\ 0x7C,\ 0x7C,\ 0x18,\ 0x38,\ 0x1C,\ 0x7C,\ 0x78,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+006D\ (m)}}
+\DoxyCodeLine{00222\ \ \ \ \ \{\ 0x7C,\ 0x7C,\ 0x04,\ 0x04,\ 0x7C,\ 0x78,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+006E\ (n)}}
+\DoxyCodeLine{00223\ \ \ \ \ \{\ 0x38,\ 0x7C,\ 0x44,\ 0x44,\ 0x7C,\ 0x38,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+006F\ (o)}}
+\DoxyCodeLine{00224\ \ \ \ \ \{\ 0x84,\ 0xFC,\ 0xF8,\ 0xA4,\ 0x24,\ 0x3C,\ 0x18,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0070\ (p)}}
+\DoxyCodeLine{00225\ \ \ \ \ \{\ 0x18,\ 0x3C,\ 0x24,\ 0xA4,\ 0xF8,\ 0xFC,\ 0x84,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0071\ (q)}}
+\DoxyCodeLine{00226\ \ \ \ \ \{\ 0x44,\ 0x7C,\ 0x78,\ 0x4C,\ 0x04,\ 0x1C,\ 0x18,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0072\ (r)}}
+\DoxyCodeLine{00227\ \ \ \ \ \{\ 0x48,\ 0x5C,\ 0x54,\ 0x54,\ 0x74,\ 0x24,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0073\ (s)}}
+\DoxyCodeLine{00228\ \ \ \ \ \{\ 0x00,\ 0x04,\ 0x3E,\ 0x7F,\ 0x44,\ 0x24,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0074\ (t)}}
+\DoxyCodeLine{00229\ \ \ \ \ \{\ 0x3C,\ 0x7C,\ 0x40,\ 0x40,\ 0x3C,\ 0x7C,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0075\ (u)}}
+\DoxyCodeLine{00230\ \ \ \ \ \{\ 0x1C,\ 0x3C,\ 0x60,\ 0x60,\ 0x3C,\ 0x1C,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0076\ (v)}}
+\DoxyCodeLine{00231\ \ \ \ \ \{\ 0x3C,\ 0x7C,\ 0x70,\ 0x38,\ 0x70,\ 0x7C,\ 0x3C,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0077\ (w)}}
+\DoxyCodeLine{00232\ \ \ \ \ \{\ 0x44,\ 0x6C,\ 0x38,\ 0x10,\ 0x38,\ 0x6C,\ 0x44,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0078\ (x)}}
+\DoxyCodeLine{00233\ \ \ \ \ \{\ 0x9C,\ 0xBC,\ 0xA0,\ 0xA0,\ 0xFC,\ 0x7C,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0079\ (y)}}
+\DoxyCodeLine{00234\ \ \ \ \ \{\ 0x4C,\ 0x64,\ 0x74,\ 0x5C,\ 0x4C,\ 0x64,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+007A\ (z)}}
+\DoxyCodeLine{00235\ \ \ \ \ \{\ 0x08,\ 0x08,\ 0x3E,\ 0x77,\ 0x41,\ 0x41,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+007B\ (\{)}}
+\DoxyCodeLine{00236\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x77,\ 0x77,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+007C\ (|)}}
+\DoxyCodeLine{00237\ \ \ \ \ \{\ 0x41,\ 0x41,\ 0x77,\ 0x3E,\ 0x08,\ 0x08,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+007D\ (\})}}
+\DoxyCodeLine{00238\ \ \ \ \ \{\ 0x02,\ 0x03,\ 0x01,\ 0x03,\ 0x02,\ 0x03,\ 0x01,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+007E\ (\string~)}}
+\DoxyCodeLine{00239\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+007F\ ()}}
+\DoxyCodeLine{00240\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0080\ ()}}
+\DoxyCodeLine{00241\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0081\ ()}}
+\DoxyCodeLine{00242\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0082\ ()}}
+\DoxyCodeLine{00243\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0083\ ()}}
+\DoxyCodeLine{00244\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0084\ ()}}
+\DoxyCodeLine{00245\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0085\ ()}}
+\DoxyCodeLine{00246\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0086\ ()}}
+\DoxyCodeLine{00247\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0087\ ()}}
+\DoxyCodeLine{00248\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0088\ ()}}
+\DoxyCodeLine{00249\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0089\ ()}}
+\DoxyCodeLine{00250\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+008A\ ()}}
+\DoxyCodeLine{00251\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+008B\ ()}}
+\DoxyCodeLine{00252\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+008C\ ()}}
+\DoxyCodeLine{00253\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+008D\ ()}}
+\DoxyCodeLine{00254\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+008E\ ()}}
+\DoxyCodeLine{00255\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+008F\ ()}}
+\DoxyCodeLine{00256\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0090\ ()}}
+\DoxyCodeLine{00257\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0091\ ()\ }}
+\DoxyCodeLine{00258\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0092\ ()}}
+\DoxyCodeLine{00259\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0093\ ()}}
+\DoxyCodeLine{00260\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0094\ ()}}
+\DoxyCodeLine{00261\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0095\ ()}}
+\DoxyCodeLine{00262\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0096\ ()}}
+\DoxyCodeLine{00263\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0097\ ()}}
+\DoxyCodeLine{00264\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0098\ ()}}
+\DoxyCodeLine{00265\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+0099\ ()}}
+\DoxyCodeLine{00266\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+009A\ ()}}
+\DoxyCodeLine{00267\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+009B\ (}}
+\DoxyCodeLine{00268\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+009C\ ()}}
+\DoxyCodeLine{00269\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+009D\ ()\ ///}}
+\DoxyCodeLine{00270\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+009E\ ()}}
+\DoxyCodeLine{00271\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+009F\ ()}}
+\DoxyCodeLine{00272\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A0\ ()}}
+\DoxyCodeLine{00273\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x7B,\ 0x7B,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A1\ (¡)}}
+\DoxyCodeLine{00274\ \ \ \ \ \{\ 0x18,\ 0x3C,\ 0x24,\ 0xE7,\ 0xE7,\ 0x24,\ 0x24,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A2\ (¢)}}
+\DoxyCodeLine{00275\ \ \ \ \ \{\ 0x68,\ 0x7E,\ 0x7F,\ 0x49,\ 0x43,\ 0x66,\ 0x20,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A3\ (£)}}
+\DoxyCodeLine{00276\ \ \ \ \ \{\ 0x44,\ 0x7C,\ 0x38,\ 0x28,\ 0x38,\ 0x7C,\ 0x44,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A4\ (¤)}}
+\DoxyCodeLine{00277\ \ \ \ \ \{\ 0x2B,\ 0x2F,\ 0xFC,\ 0xFC,\ 0x2F,\ 0x2B,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A5\ (¥)}}
+\DoxyCodeLine{00278\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x77,\ 0x77,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A6\ (¦)}}
+\DoxyCodeLine{00279\ \ \ \ \ \{\ 0x40,\ 0xDA,\ 0xBF,\ 0xA5,\ 0xFD,\ 0x59,\ 0x03,\ 0x02\ \},\ \ \ \textcolor{comment}{//\ U+00A7\ (§)}}
+\DoxyCodeLine{00280\ \ \ \ \ \{\ 0x01,\ 0x01,\ 0x00,\ 0x00,\ 0x01,\ 0x01,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00A8\ (¨)}}
+\DoxyCodeLine{00281\ \ \ \ \ \{\ 0x3C,\ 0x42,\ 0x99,\ 0xA5,\ 0xA5,\ 0x81,\ 0x42,\ 0x3C\ \},\ \ \ \textcolor{comment}{//\ U+00A9\ (©)}}
+\DoxyCodeLine{00282\ \ \ \ \ \{\ 0x00,\ 0x06,\ 0x0F,\ 0x09,\ 0x0F,\ 0x0F,\ 0x08,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00AA\ (ª)}}
+\DoxyCodeLine{00283\ \ \ \ \ \{\ 0x08,\ 0x1C,\ 0x36,\ 0x22,\ 0x08,\ 0x1C,\ 0x36,\ 0x22\ \},\ \ \ \textcolor{comment}{//\ U+00AB\ («)}}
+\DoxyCodeLine{00284\ \ \ \ \ \{\ 0x08,\ 0x08,\ 0x08,\ 0x08,\ 0x38,\ 0x38,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00AC\ (¬)}}
+\DoxyCodeLine{00285\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00AD\ (­)}}
+\DoxyCodeLine{00286\ \ \ \ \ \{\ 0x3C,\ 0x42,\ 0xBD,\ 0x95,\ 0x95,\ 0xA9,\ 0x42,\ 0x3C\ \},\ \ \ \textcolor{comment}{//\ U+00AE\ (®)}}
+\DoxyCodeLine{00287\ \ \ \ \ \{\ 0x00,\ 0x01,\ 0x01,\ 0x01,\ 0x01,\ 0x01,\ 0x01,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00AF\ (¯)}}
+\DoxyCodeLine{00288\ \ \ \ \ \{\ 0x00,\ 0x06,\ 0x0F,\ 0x09,\ 0x0F,\ 0x06,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B0\ (°)}}
+\DoxyCodeLine{00289\ \ \ \ \ \{\ 0x00,\ 0x44,\ 0x44,\ 0x5F,\ 0x5F,\ 0x44,\ 0x44,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B1\ (±)}}
+\DoxyCodeLine{00290\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x19,\ 0x1D,\ 0x17,\ 0x12,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B2\ (²)}}
+\DoxyCodeLine{00291\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x11,\ 0x15,\ 0x1F,\ 0x0A,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B3\ (³)}}
+\DoxyCodeLine{00292\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x02,\ 0x03,\ 0x01,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B4\ (´)}}
+\DoxyCodeLine{00293\ \ \ \ \ \{\ 0x80,\ 0xFC,\ 0x7C,\ 0x20,\ 0x20,\ 0x3C,\ 0x1C,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B5\ (µ)}}
+\DoxyCodeLine{00294\ \ \ \ \ \{\ 0x06,\ 0x0F,\ 0x09,\ 0x7F,\ 0x7F,\ 0x01,\ 0x7F,\ 0x7F\ \},\ \ \ \textcolor{comment}{//\ U+00B6\ (¶)}}
+\DoxyCodeLine{00295\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x00,\ 0x18,\ 0x18,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B7\ (·)}}
+\DoxyCodeLine{00296\ \ \ \ \ \{\ 0x00,\ 0x80,\ 0x80,\ 0xA0,\ 0xE0,\ 0x40,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B8\ (¸)}}
+\DoxyCodeLine{00297\ \ \ \ \ \{\ 0x00,\ 0x00,\ 0x0A,\ 0x0F,\ 0x08,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00B9\ (¹)}}
+\DoxyCodeLine{00298\ \ \ \ \ \{\ 0x00,\ 0x06,\ 0x0F,\ 0x09,\ 0x0F,\ 0x06,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00BA\ (º)}}
+\DoxyCodeLine{00299\ \ \ \ \ \{\ 0x22,\ 0x36,\ 0x1C,\ 0x08,\ 0x22,\ 0x36,\ 0x1C,\ 0x08\ \},\ \ \ \textcolor{comment}{//\ U+00BB\ (»)}}
+\DoxyCodeLine{00300\ \ \ \ \ \{\ 0xCF,\ 0xE7,\ 0x38,\ 0x18,\ 0x6C,\ 0x7E,\ 0x73,\ 0x79\ \},\ \ \ \textcolor{comment}{//\ U+00BC\ (¼)}}
+\DoxyCodeLine{00301\ \ \ \ \ \{\ 0x4F,\ 0x6F,\ 0x30,\ 0x18,\ 0xCC,\ 0xEE,\ 0xBB,\ 0x91\ \},\ \ \ \textcolor{comment}{//\ U+00BD\ (½)}}
+\DoxyCodeLine{00302\ \ \ \ \ \{\ 0x15,\ 0x55,\ 0x6A,\ 0x30,\ 0x18,\ 0x6C,\ 0x56,\ 0xFA\ \},\ \ \ \textcolor{comment}{//\ U+00BE\ (¾)}}
+\DoxyCodeLine{00303\ \ \ \ \ \{\ 0x30,\ 0x78,\ 0x4D,\ 0x45,\ 0x60,\ 0x20,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00BF\ (¿)}}
+\DoxyCodeLine{00304\ \ \ \ \ \{\ 0x71,\ 0x79,\ 0x2D,\ 0x24,\ 0x2C,\ 0x78,\ 0x70,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C0\ (À)}}
+\DoxyCodeLine{00305\ \ \ \ \ \{\ 0x70,\ 0x78,\ 0x2C,\ 0x24,\ 0x2D,\ 0x79,\ 0x71,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C1\ (Á)}}
+\DoxyCodeLine{00306\ \ \ \ \ \{\ 0x70,\ 0x7A,\ 0x2B,\ 0x29,\ 0x2B,\ 0x7A,\ 0x70,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C2\ (Â)}}
+\DoxyCodeLine{00307\ \ \ \ \ \{\ 0x72,\ 0x7B,\ 0x29,\ 0x2B,\ 0x2A,\ 0x7B,\ 0x71,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C3\ (Ã)}}
+\DoxyCodeLine{00308\ \ \ \ \ \{\ 0x79,\ 0x7D,\ 0x16,\ 0x12,\ 0x16,\ 0x7D,\ 0x79,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C4\ (Ä)}}
+\DoxyCodeLine{00309\ \ \ \ \ \{\ 0x70,\ 0x78,\ 0x2B,\ 0x2B,\ 0x78,\ 0x70,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C5\ (Å)}}
+\DoxyCodeLine{00310\ \ \ \ \ \{\ 0x7C,\ 0x7E,\ 0x0B,\ 0x09,\ 0x7F,\ 0x7F,\ 0x49,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C6\ (Æ)}}
+\DoxyCodeLine{00311\ \ \ \ \ \{\ 0x0E,\ 0x9F,\ 0x91,\ 0xB1,\ 0xFB,\ 0x4A,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C7\ (Ç)}}
+\DoxyCodeLine{00312\ \ \ \ \ \{\ 0x45,\ 0x7D,\ 0x7D,\ 0x54,\ 0x54,\ 0x44,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C8\ (È)}}
+\DoxyCodeLine{00313\ \ \ \ \ \{\ 0x44,\ 0x7C,\ 0x7C,\ 0x55,\ 0x55,\ 0x45,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00C9\ (É)}}
+\DoxyCodeLine{00314\ \ \ \ \ \{\ 0x44,\ 0x7E,\ 0x7D,\ 0x55,\ 0x56,\ 0x44,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00CA\ (Ê)}}
+\DoxyCodeLine{00315\ \ \ \ \ \{\ 0x44,\ 0x7D,\ 0x7D,\ 0x54,\ 0x55,\ 0x45,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00CB\ (Ë)}}
+\DoxyCodeLine{00316\ \ \ \ \ \{\ 0x01,\ 0x45,\ 0x7D,\ 0x7C,\ 0x44,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00CC\ (Ì)}}
+\DoxyCodeLine{00317\ \ \ \ \ \{\ 0x00,\ 0x44,\ 0x7C,\ 0x7D,\ 0x45,\ 0x01,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00CD\ (Í)}}
+\DoxyCodeLine{00318\ \ \ \ \ \{\ 0x00,\ 0x4A,\ 0x79,\ 0x79,\ 0x4A,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00CE\ (Î)}}
+\DoxyCodeLine{00319\ \ \ \ \ \{\ 0x01,\ 0x45,\ 0x7C,\ 0x7C,\ 0x45,\ 0x01,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00CF\ (Ï)}}
+\DoxyCodeLine{00320\ \ \ \ \ \{\ 0x4D,\ 0x7F,\ 0x7F,\ 0x4D,\ 0x41,\ 0x7F,\ 0x3E,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D0\ (Ð)}}
+\DoxyCodeLine{00321\ \ \ \ \ \{\ 0x7D,\ 0x7D,\ 0x19,\ 0x31,\ 0x7D,\ 0x7D,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D1\ (Ñ)}}
+\DoxyCodeLine{00322\ \ \ \ \ \{\ 0x00,\ 0x11,\ 0x39,\ 0x6D,\ 0x6C,\ 0x38,\ 0x10,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D2\ (Ò)}}
+\DoxyCodeLine{00323\ \ \ \ \ \{\ 0x00,\ 0x10,\ 0x38,\ 0x6C,\ 0x6D,\ 0x39,\ 0x11,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D3\ (Ó)}}
+\DoxyCodeLine{00324\ \ \ \ \ \{\ 0x00,\ 0x12,\ 0x3B,\ 0x6D,\ 0x6D,\ 0x3B,\ 0x12,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D4\ (Ô)}}
+\DoxyCodeLine{00325\ \ \ \ \ \{\ 0x32,\ 0x7B,\ 0x49,\ 0x4B,\ 0x4A,\ 0x7B,\ 0x31,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D5\ (Õ)}}
+\DoxyCodeLine{00326\ \ \ \ \ \{\ 0x01,\ 0x19,\ 0x3C,\ 0x66,\ 0x66,\ 0x3C,\ 0x19,\ 0x01\ \},\ \ \ \textcolor{comment}{//\ U+00D6\ (Ö)}}
+\DoxyCodeLine{00327\ \ \ \ \ \{\ 0x00,\ 0x22,\ 0x36,\ 0x1C,\ 0x36,\ 0x22,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D7\ (×)}}
+\DoxyCodeLine{00328\ \ \ \ \ \{\ 0x5C,\ 0x3E,\ 0x73,\ 0x59,\ 0x6F,\ 0x3E,\ 0x1D,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D8\ (Ø)}}
+\DoxyCodeLine{00329\ \ \ \ \ \{\ 0x00,\ 0x3D,\ 0x7D,\ 0x41,\ 0x40,\ 0x7C,\ 0x3C,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00D9\ (Ù)}}
+\DoxyCodeLine{00330\ \ \ \ \ \{\ 0x00,\ 0x3C,\ 0x7C,\ 0x40,\ 0x41,\ 0x7D,\ 0x3D,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00DA\ (Ú)}}
+\DoxyCodeLine{00331\ \ \ \ \ \{\ 0x00,\ 0x3A,\ 0x7B,\ 0x41,\ 0x41,\ 0x7B,\ 0x3A,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00DB\ (Û)}}
+\DoxyCodeLine{00332\ \ \ \ \ \{\ 0x3D,\ 0x7D,\ 0x40,\ 0x40,\ 0x7D,\ 0x3D,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00DC\ (Ü)}}
+\DoxyCodeLine{00333\ \ \ \ \ \{\ 0x00,\ 0x0C,\ 0x1C,\ 0x70,\ 0x71,\ 0x1D,\ 0x0D,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00DD\ (Ý)}}
+\DoxyCodeLine{00334\ \ \ \ \ \{\ 0x81,\ 0xFF,\ 0xFF,\ 0xA5,\ 0x24,\ 0x3C,\ 0x18,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00DE\ (Þ)}}
+\DoxyCodeLine{00335\ \ \ \ \ \{\ 0xFC,\ 0xFE,\ 0x2A,\ 0x2A,\ 0x3E,\ 0x14,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00DF\ (ß)}}
+\DoxyCodeLine{00336\ \ \ \ \ \{\ 0x21,\ 0x75,\ 0x55,\ 0x54,\ 0x7C,\ 0x78,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E0\ (à)}}
+\DoxyCodeLine{00337\ \ \ \ \ \{\ 0x20,\ 0x74,\ 0x54,\ 0x55,\ 0x7D,\ 0x79,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E1\ (á)}}
+\DoxyCodeLine{00338\ \ \ \ \ \{\ 0x02,\ 0x23,\ 0x75,\ 0x55,\ 0x55,\ 0x7D,\ 0x7B,\ 0x42\ \},\ \ \ \textcolor{comment}{//\ U+00E2\ (â)}}
+\DoxyCodeLine{00339\ \ \ \ \ \{\ 0x22,\ 0x77,\ 0x55,\ 0x57,\ 0x7E,\ 0x7B,\ 0x41,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E3\ (ã)}}
+\DoxyCodeLine{00340\ \ \ \ \ \{\ 0x21,\ 0x75,\ 0x54,\ 0x54,\ 0x7D,\ 0x79,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E4\ (ä)}}
+\DoxyCodeLine{00341\ \ \ \ \ \{\ 0x20,\ 0x74,\ 0x57,\ 0x57,\ 0x7C,\ 0x78,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E5\ (å)}}
+\DoxyCodeLine{00342\ \ \ \ \ \{\ 0x20,\ 0x74,\ 0x54,\ 0x54,\ 0x7C,\ 0x7C,\ 0x54,\ 0x54\ \},\ \ \ \textcolor{comment}{//\ U+00E6\ (æ)}}
+\DoxyCodeLine{00343\ \ \ \ \ \{\ 0x18,\ 0x3C,\ 0xA4,\ 0xA4,\ 0xE4,\ 0x40,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E7\ (ç)}}
+\DoxyCodeLine{00344\ \ \ \ \ \{\ 0x39,\ 0x7D,\ 0x55,\ 0x54,\ 0x5C,\ 0x18,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E8\ (è)}}
+\DoxyCodeLine{00345\ \ \ \ \ \{\ 0x38,\ 0x7C,\ 0x54,\ 0x55,\ 0x5D,\ 0x19,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00E9\ (é)}}
+\DoxyCodeLine{00346\ \ \ \ \ \{\ 0x02,\ 0x3B,\ 0x7D,\ 0x55,\ 0x55,\ 0x5D,\ 0x1B,\ 0x02\ \},\ \ \ \textcolor{comment}{//\ U+00EA\ (ê)}}
+\DoxyCodeLine{00347\ \ \ \ \ \{\ 0x39,\ 0x7D,\ 0x54,\ 0x54,\ 0x5D,\ 0x19,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00EB\ (ë)}}
+\DoxyCodeLine{00348\ \ \ \ \ \{\ 0x01,\ 0x45,\ 0x7D,\ 0x7C,\ 0x40,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00EC\ (ì)}}
+\DoxyCodeLine{00349\ \ \ \ \ \{\ 0x00,\ 0x44,\ 0x7D,\ 0x7D,\ 0x41,\ 0x00,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00ED\ (í)}}
+\DoxyCodeLine{00350\ \ \ \ \ \{\ 0x02,\ 0x03,\ 0x45,\ 0x7D,\ 0x7D,\ 0x43,\ 0x02,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00EE\ (î)}}
+\DoxyCodeLine{00351\ \ \ \ \ \{\ 0x01,\ 0x45,\ 0x7C,\ 0x7C,\ 0x41,\ 0x01,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00EF\ (ï)}}
+\DoxyCodeLine{00352\ \ \ \ \ \{\ 0x25,\ 0x77,\ 0x52,\ 0x57,\ 0x7D,\ 0x38,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F0\ (ð)}}
+\DoxyCodeLine{00353\ \ \ \ \ \{\ 0x7A,\ 0x7A,\ 0x0A,\ 0x0A,\ 0x7A,\ 0x70,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F1\ (ñ)}}
+\DoxyCodeLine{00354\ \ \ \ \ \{\ 0x32,\ 0x7A,\ 0x4A,\ 0x48,\ 0x78,\ 0x30,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F2\ (ò)}}
+\DoxyCodeLine{00355\ \ \ \ \ \{\ 0x30,\ 0x78,\ 0x48,\ 0x4A,\ 0x7A,\ 0x32,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F3\ (ó)}}
+\DoxyCodeLine{00356\ \ \ \ \ \{\ 0x32,\ 0x7B,\ 0x49,\ 0x49,\ 0x7B,\ 0x32,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F4\ (ô)}}
+\DoxyCodeLine{00357\ \ \ \ \ \{\ 0x32,\ 0x7B,\ 0x49,\ 0x4B,\ 0x7A,\ 0x33,\ 0x01,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F5\ (õ)}}
+\DoxyCodeLine{00358\ \ \ \ \ \{\ 0x32,\ 0x7A,\ 0x48,\ 0x48,\ 0x7A,\ 0x32,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F6\ (ö)}}
+\DoxyCodeLine{00359\ \ \ \ \ \{\ 0x00,\ 0x08,\ 0x08,\ 0x6B,\ 0x6B,\ 0x08,\ 0x08,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F7\ (÷)}}
+\DoxyCodeLine{00360\ \ \ \ \ \{\ 0x00,\ 0xB8,\ 0xFC,\ 0x74,\ 0x5C,\ 0x7E,\ 0x3A,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F8\ (ø)}}
+\DoxyCodeLine{00361\ \ \ \ \ \{\ 0x3A,\ 0x7A,\ 0x42,\ 0x40,\ 0x78,\ 0x78,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00F9\ (ù)}}
+\DoxyCodeLine{00362\ \ \ \ \ \{\ 0x38,\ 0x78,\ 0x40,\ 0x42,\ 0x7A,\ 0x7A,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00FA\ (ú)}}
+\DoxyCodeLine{00363\ \ \ \ \ \{\ 0x3A,\ 0x7B,\ 0x41,\ 0x41,\ 0x7B,\ 0x7A,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00FB\ (û)}}
+\DoxyCodeLine{00364\ \ \ \ \ \{\ 0x3A,\ 0x7A,\ 0x40,\ 0x40,\ 0x7A,\ 0x7A,\ 0x40,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00FC\ (ü)}}
+\DoxyCodeLine{00365\ \ \ \ \ \{\ 0x98,\ 0xB8,\ 0xA0,\ 0xA2,\ 0xFA,\ 0x7A,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00FD\ (ý)}}
+\DoxyCodeLine{00366\ \ \ \ \ \{\ 0x00,\ 0x7C,\ 0x7C,\ 0x28,\ 0x28,\ 0x38,\ 0x10,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00FE\ (þ)}}
+\DoxyCodeLine{00367\ \ \ \ \ \{\ 0x9A,\ 0xBA,\ 0xA0,\ 0xA0,\ 0xFA,\ 0x7A,\ 0x00,\ 0x00\ \},\ \ \ \textcolor{comment}{//\ U+00FF\ (ÿ)}}
+\DoxyCodeLine{00368\ \};}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00371\ \}}
+\DoxyCodeLine{00372\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_FONT8X8\_LATIN\_H\_\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -1,0 +1,73 @@
+\doxysection{veml6040\+\_\+config\+\_\+s Struct Reference}
+\hypertarget{structveml6040__config__s}{}\label{structveml6040__config__s}\index{veml6040\_config\_s@{veml6040\_config\_s}}
+
+
+VEML6040 configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$veml6040.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structveml6040__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\+\_\+address}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structveml6040__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\+\_\+clock\+\_\+speed}}
+\item 
+\mbox{\hyperlink{group__drivers_ga965474f5a3cc90e59052034af367a774}{veml6040\+\_\+integration\+\_\+times\+\_\+t}} \mbox{\hyperlink{structveml6040__config__s_ab29761d1a2c746cba1008634577f8c3f}{integration\+\_\+time}}
+\item 
+bool \mbox{\hyperlink{structveml6040__config__s_af87081b9da47c4d26f13f6020f2aedd2}{shutdown\+\_\+enabled}}
+\item 
+\mbox{\hyperlink{group__drivers_ga9d3ce83e852049877f395e14bc449799}{veml6040\+\_\+modes\+\_\+t}} \mbox{\hyperlink{structveml6040__config__s_af06f2c1a7cdeaefc98bf3e2c8114f21c}{mode}}
+\item 
+\mbox{\hyperlink{group__drivers_ga80b746ffca4da5b50952601d10cce4a8}{veml6040\+\_\+triggers\+\_\+t}} \mbox{\hyperlink{structveml6040__config__s_af74cd89ac619f1dd7abe5725de0eacb1}{trigger\+\_\+method}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+VEML6040 configuration structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structveml6040__config__s_a4fc512d568c2b72f6907c218205cf6c9}\index{veml6040\_config\_s@{veml6040\_config\_s}!i2c\_address@{i2c\_address}}
+\index{i2c\_address@{i2c\_address}!veml6040\_config\_s@{veml6040\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_address}{i2c\_address}}
+{\footnotesize\ttfamily \label{structveml6040__config__s_a4fc512d568c2b72f6907c218205cf6c9} 
+uint16\+\_\+t i2c\+\_\+address}
+
+veml6040 i2c device address \Hypertarget{structveml6040__config__s_a770b3ab4bba557baec88287d86832a34}\index{veml6040\_config\_s@{veml6040\_config\_s}!i2c\_clock\_speed@{i2c\_clock\_speed}}
+\index{i2c\_clock\_speed@{i2c\_clock\_speed}!veml6040\_config\_s@{veml6040\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_clock\_speed}{i2c\_clock\_speed}}
+{\footnotesize\ttfamily \label{structveml6040__config__s_a770b3ab4bba557baec88287d86832a34} 
+uint32\+\_\+t i2c\+\_\+clock\+\_\+speed}
+
+veml6040 i2c device scl clock speed \Hypertarget{structveml6040__config__s_ab29761d1a2c746cba1008634577f8c3f}\index{veml6040\_config\_s@{veml6040\_config\_s}!integration\_time@{integration\_time}}
+\index{integration\_time@{integration\_time}!veml6040\_config\_s@{veml6040\_config\_s}}
+\doxysubsubsection{\texorpdfstring{integration\_time}{integration\_time}}
+{\footnotesize\ttfamily \label{structveml6040__config__s_ab29761d1a2c746cba1008634577f8c3f} 
+\mbox{\hyperlink{group__drivers_ga965474f5a3cc90e59052034af367a774}{veml6040\+\_\+integration\+\_\+times\+\_\+t}} integration\+\_\+time}
+
+veml6040 integration time setting \Hypertarget{structveml6040__config__s_af06f2c1a7cdeaefc98bf3e2c8114f21c}\index{veml6040\_config\_s@{veml6040\_config\_s}!mode@{mode}}
+\index{mode@{mode}!veml6040\_config\_s@{veml6040\_config\_s}}
+\doxysubsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily \label{structveml6040__config__s_af06f2c1a7cdeaefc98bf3e2c8114f21c} 
+\mbox{\hyperlink{group__drivers_ga9d3ce83e852049877f395e14bc449799}{veml6040\+\_\+modes\+\_\+t}} mode}
+
+veml6040 mode \Hypertarget{structveml6040__config__s_af87081b9da47c4d26f13f6020f2aedd2}\index{veml6040\_config\_s@{veml6040\_config\_s}!shutdown\_enabled@{shutdown\_enabled}}
+\index{shutdown\_enabled@{shutdown\_enabled}!veml6040\_config\_s@{veml6040\_config\_s}}
+\doxysubsubsection{\texorpdfstring{shutdown\_enabled}{shutdown\_enabled}}
+{\footnotesize\ttfamily \label{structveml6040__config__s_af87081b9da47c4d26f13f6020f2aedd2} 
+bool shutdown\+\_\+enabled}
+
+veml6040 is shutdown when enabled \Hypertarget{structveml6040__config__s_af74cd89ac619f1dd7abe5725de0eacb1}\index{veml6040\_config\_s@{veml6040\_config\_s}!trigger\_method@{trigger\_method}}
+\index{trigger\_method@{trigger\_method}!veml6040\_config\_s@{veml6040\_config\_s}}
+\doxysubsubsection{\texorpdfstring{trigger\_method}{trigger\_method}}
+{\footnotesize\ttfamily \label{structveml6040__config__s_af74cd89ac619f1dd7abe5725de0eacb1} 
+\mbox{\hyperlink{group__drivers_ga80b746ffca4da5b50952601d10cce4a8}{veml6040\+\_\+triggers\+\_\+t}} trigger\+\_\+method}
+
+veml6040 trigger method 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+veml6040/include/\mbox{\hyperlink{veml6040_8h}{veml6040.\+h}}\end{DoxyCompactItemize}

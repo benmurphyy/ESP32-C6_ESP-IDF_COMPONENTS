@@ -1,0 +1,59 @@
+\doxysection{hmc5883l\+\_\+context\+\_\+t Struct Reference}
+\hypertarget{structhmc5883l__context__t}{}\label{structhmc5883l__context__t}\index{hmc5883l\_context\_t@{hmc5883l\_context\_t}}
+
+
+HMC5883L context structure.  
+
+
+
+
+{\ttfamily \#include $<$hmc5883l.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structhmc5883l__context__t_aa3a6bc0240ad497d21d5a321578a27c5}\label{structhmc5883l__context__t_aa3a6bc0240ad497d21d5a321578a27c5} 
+\mbox{\hyperlink{group__drivers_ga8f35b67fc189ae7fc9aeb20cb5736dc8}{hmc5883l\+\_\+config\+\_\+t}} {\bfseries dev\+\_\+config}
+\item 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t \mbox{\hyperlink{structhmc5883l__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\+\_\+handle}}
+\item 
+\Hypertarget{structhmc5883l__context__t_a023c35f98754f38f7329ecada59a85f1}\label{structhmc5883l__context__t_a023c35f98754f38f7329ecada59a85f1} 
+uint32\+\_\+t {\bfseries dev\+\_\+id}
+\item 
+float \mbox{\hyperlink{structhmc5883l__context__t_a87088520682791495522a2e20bf06860}{declination}}
+\item 
+\Hypertarget{structhmc5883l__context__t_a0db34b09a45b565ac3d94a1d7124ddda}\label{structhmc5883l__context__t_a0db34b09a45b565ac3d94a1d7124ddda} 
+bool {\bfseries gain\+\_\+calibrated}
+\item 
+\Hypertarget{structhmc5883l__context__t_a5dfbf9742938889334ecb0456217aeba}\label{structhmc5883l__context__t_a5dfbf9742938889334ecb0456217aeba} 
+bool {\bfseries offset\+\_\+calibrated}
+\item 
+\Hypertarget{structhmc5883l__context__t_a58d6c7bc9722b70839742217668e31a5}\label{structhmc5883l__context__t_a58d6c7bc9722b70839742217668e31a5} 
+\mbox{\hyperlink{structhmc5883l__offset__axes__data__s}{hmc5883l\+\_\+offset\+\_\+axes\+\_\+data\+\_\+t}} {\bfseries offset\+\_\+axes}
+\item 
+\Hypertarget{structhmc5883l__context__t_ac1b091e4680188804d8e6dede8db50fb}\label{structhmc5883l__context__t_ac1b091e4680188804d8e6dede8db50fb} 
+\mbox{\hyperlink{structhmc5883l__gain__error__axes__data__s}{hmc5883l\+\_\+gain\+\_\+error\+\_\+axes\+\_\+data\+\_\+t}} {\bfseries gain\+\_\+error\+\_\+axes}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+HMC5883L context structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structhmc5883l__context__t_a87088520682791495522a2e20bf06860}\index{hmc5883l\_context\_t@{hmc5883l\_context\_t}!declination@{declination}}
+\index{declination@{declination}!hmc5883l\_context\_t@{hmc5883l\_context\_t}}
+\doxysubsubsection{\texorpdfstring{declination}{declination}}
+{\footnotesize\ttfamily \label{structhmc5883l__context__t_a87088520682791495522a2e20bf06860} 
+float declination}
+
+magnetic declination angle \href{http://www.magnetic-declination.com/}{\texttt{ http\+://www.\+magnetic-\/declination.\+com/}} \Hypertarget{structhmc5883l__context__t_aebc33e9d9d97bc57c51d01fa39056a22}\index{hmc5883l\_context\_t@{hmc5883l\_context\_t}!i2c\_handle@{i2c\_handle}}
+\index{i2c\_handle@{i2c\_handle}!hmc5883l\_context\_t@{hmc5883l\_context\_t}}
+\doxysubsubsection{\texorpdfstring{i2c\_handle}{i2c\_handle}}
+{\footnotesize\ttfamily \label{structhmc5883l__context__t_aebc33e9d9d97bc57c51d01fa39056a22} 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t i2c\+\_\+handle}
+
+I2C device handle 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+hmc5883l/include/\mbox{\hyperlink{hmc5883l_8h}{hmc5883l.\+h}}\end{DoxyCompactItemize}

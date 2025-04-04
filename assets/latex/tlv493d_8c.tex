@@ -1,0 +1,144 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+tlv493d/tlv493d.c File Reference}
+\hypertarget{tlv493d_8c}{}\label{tlv493d_8c}\index{components/peripherals/i2c/esp\_tlv493d/tlv493d.c@{components/peripherals/i2c/esp\_tlv493d/tlv493d.c}}
+{\ttfamily \#include "{}include/tlv493d.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{tlv493d_8c_aa2ccef0ebe2e82344961898de0c70988}\label{tlv493d_8c_aa2ccef0ebe2e82344961898de0c70988} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+BX\+\_\+\+MSB\+\_\+R}~UINT8\+\_\+C(0x00)
+\item 
+\Hypertarget{tlv493d_8c_ac1d0d2089ee9bbf97004434b77e7d187}\label{tlv493d_8c_ac1d0d2089ee9bbf97004434b77e7d187} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+BY\+\_\+\+MSB\+\_\+R}~UINT8\+\_\+C(0x01)
+\item 
+\Hypertarget{tlv493d_8c_afeb33e34afa8c3133f3516cdaf2596d0}\label{tlv493d_8c_afeb33e34afa8c3133f3516cdaf2596d0} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+BZ\+\_\+\+MSB\+\_\+R}~UINT8\+\_\+C(0x02)
+\item 
+\Hypertarget{tlv493d_8c_a7520d211ea14290572b12cd83dd8aac6}\label{tlv493d_8c_a7520d211ea14290572b12cd83dd8aac6} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+MSB\+\_\+R}~UINT8\+\_\+C(0x03)
+\item 
+\Hypertarget{tlv493d_8c_a3087735c06c7dddc1947cbb9eb4a210c}\label{tlv493d_8c_a3087735c06c7dddc1947cbb9eb4a210c} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+BX\+\_\+\+BY\+\_\+\+LSB\+\_\+R}~UINT8\+\_\+C(0x04)
+\item 
+\Hypertarget{tlv493d_8c_abd0eb449db0c39ce8a4a306b97ce2547}\label{tlv493d_8c_abd0eb449db0c39ce8a4a306b97ce2547} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+BZ\+\_\+\+LSB\+\_\+R}~UINT8\+\_\+C(0x05)
+\item 
+\Hypertarget{tlv493d_8c_adc4c77169f3d1eab719802d8793aefff}\label{tlv493d_8c_adc4c77169f3d1eab719802d8793aefff} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+LSB\+\_\+R}~UINT8\+\_\+C(0x06)
+\item 
+\Hypertarget{tlv493d_8c_a442f518b717c92be59ecb41dac25ccd3}\label{tlv493d_8c_a442f518b717c92be59ecb41dac25ccd3} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+FACTSET1\+\_\+R}~UINT8\+\_\+C(0x07)
+\item 
+\Hypertarget{tlv493d_8c_ac09faa4b199e98d25236e3b9373bb211}\label{tlv493d_8c_ac09faa4b199e98d25236e3b9373bb211} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+FACTSET2\+\_\+R}~UINT8\+\_\+C(0x08)
+\item 
+\Hypertarget{tlv493d_8c_a9d5238db6129498f09c7cba9e28c8ce7}\label{tlv493d_8c_a9d5238db6129498f09c7cba9e28c8ce7} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+FACTSET3\+\_\+R}~UINT8\+\_\+C(0x09)
+\item 
+\Hypertarget{tlv493d_8c_a02784e78fd2b7110cebb7e68de2de250}\label{tlv493d_8c_a02784e78fd2b7110cebb7e68de2de250} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+MOD1\+\_\+W}~UINT8\+\_\+C(0x01)
+\item 
+\Hypertarget{tlv493d_8c_abc28011287f0638799c409120345c1e0}\label{tlv493d_8c_abc28011287f0638799c409120345c1e0} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+RESERVED2\+\_\+W}~UINT8\+\_\+C(0x02)
+\item 
+\Hypertarget{tlv493d_8c_ae3944551fe7fb9c63ef81a860fa8b847}\label{tlv493d_8c_ae3944551fe7fb9c63ef81a860fa8b847} 
+\#define {\bfseries TLV493\+D\+\_\+\+REG\+\_\+\+MOD2\+\_\+W}~UINT8\+\_\+C(0x03)
+\item 
+\Hypertarget{tlv493d_8c_a026447510af986ff51eaec83fa4870ea}\label{tlv493d_8c_a026447510af986ff51eaec83fa4870ea} 
+\#define {\bfseries TLV493\+D\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(1000)
+\item 
+\Hypertarget{tlv493d_8c_afcc8b71dd978f2f921c4d9a3754bdf6a}\label{tlv493d_8c_afcc8b71dd978f2f921c4d9a3754bdf6a} 
+\#define {\bfseries TLV493\+D\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(2)
+\item 
+\Hypertarget{tlv493d_8c_a41fb9341c983aa4c77e572a74b1987e3}\label{tlv493d_8c_a41fb9341c983aa4c77e572a74b1987e3} 
+\#define {\bfseries TLV493\+D\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(120)
+\item 
+\Hypertarget{tlv493d_8c_abf670eeeabbef7d48d6f4b8b496e04cc}\label{tlv493d_8c_abf670eeeabbef7d48d6f4b8b496e04cc} 
+\#define {\bfseries TLV493\+D\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{tlv493d_8c_afb0cd9dd60cc5744dbe885ccd45f956c}\label{tlv493d_8c_afb0cd9dd60cc5744dbe885ccd45f956c} 
+\#define {\bfseries TLV493\+D\+\_\+\+SETUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(15)
+\item 
+\#define \mbox{\hyperlink{tlv493d_8c_a3b9e66367f74801af8c61e9e2b4d5813}{TLV493\+D\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(25)
+\item 
+\#define \mbox{\hyperlink{tlv493d_8c_a0266232efbc277be29574a6ee8ee485b}{TLV493\+D\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{tlv493d_8c_a05525d1f3dee79b0246cc6edc7235d96}{TLV493\+D\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{tlv493d_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{tlv493d_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga686d6f2d835e70c98d2c9400d5021cb2}{tlv493d\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga93552d2492ff661b95f1b0b8171d46da}{tlv493d\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}tlv493d\+\_\+config, \mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}tlv493d\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an TLV493D device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t {\bfseries tlv493d\+\_\+get\+\_\+data} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{structtlv493d__data__s}{tlv493d\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const data)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries tlv493d\+\_\+get\+\_\+data\+\_\+status} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga88b6f19971557e23d6c09027e9448b56}{tlv493d\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an TLV493D device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga53229d80a482f2ecf4137287fd5f63e7}{tlv493d\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga74d5bbe8e6492b2ba70d8f9849e31bad}{tlv493d\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an TLV493D device from master bus and frees handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for TLV493D magnetic sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{tlv493d_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{tlv493d.c@{tlv493d.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!tlv493d.c@{tlv493d.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{tlv493d_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{tlv493d_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{tlv493d.c@{tlv493d.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!tlv493d.c@{tlv493d.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{tlv493d_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}
+\Hypertarget{tlv493d_8c_a3b9e66367f74801af8c61e9e2b4d5813}\index{tlv493d.c@{tlv493d.c}!TLV493D\_APPSTART\_DELAY\_MS@{TLV493D\_APPSTART\_DELAY\_MS}}
+\index{TLV493D\_APPSTART\_DELAY\_MS@{TLV493D\_APPSTART\_DELAY\_MS}!tlv493d.c@{tlv493d.c}}
+\doxysubsubsection{\texorpdfstring{TLV493D\_APPSTART\_DELAY\_MS}{TLV493D\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{tlv493d_8c_a3b9e66367f74801af8c61e9e2b4d5813} 
+\#define TLV493\+D\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(25)}
+
+delay after initialization before application start-\/up \Hypertarget{tlv493d_8c_a0266232efbc277be29574a6ee8ee485b}\index{tlv493d.c@{tlv493d.c}!TLV493D\_CMD\_DELAY\_MS@{TLV493D\_CMD\_DELAY\_MS}}
+\index{TLV493D\_CMD\_DELAY\_MS@{TLV493D\_CMD\_DELAY\_MS}!tlv493d.c@{tlv493d.c}}
+\doxysubsubsection{\texorpdfstring{TLV493D\_CMD\_DELAY\_MS}{TLV493D\_CMD\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{tlv493d_8c_a0266232efbc277be29574a6ee8ee485b} 
+\#define TLV493\+D\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+delay before attempting I2C transactions after a command is issued \Hypertarget{tlv493d_8c_a05525d1f3dee79b0246cc6edc7235d96}\index{tlv493d.c@{tlv493d.c}!TLV493D\_TX\_RX\_DELAY\_MS@{TLV493D\_TX\_RX\_DELAY\_MS}}
+\index{TLV493D\_TX\_RX\_DELAY\_MS@{TLV493D\_TX\_RX\_DELAY\_MS}!tlv493d.c@{tlv493d.c}}
+\doxysubsubsection{\texorpdfstring{TLV493D\_TX\_RX\_DELAY\_MS}{TLV493D\_TX\_RX\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{tlv493d_8c_a05525d1f3dee79b0246cc6edc7235d96} 
+\#define TLV493\+D\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 

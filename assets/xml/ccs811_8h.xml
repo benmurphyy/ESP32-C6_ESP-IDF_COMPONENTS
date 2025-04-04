@@ -1,0 +1,439 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="ccs811_8h" kind="file" language="C++">
+    <compoundname>ccs811.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/gpio.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="ccs811__version_8h" local="yes">ccs811_version.h</includes>
+    <includedby refid="ccs811_8c" local="yes">components/peripherals/i2c/esp_ccs811/ccs811.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ccs811/include/ccs811.h</label>
+        <link refid="ccs811_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ccs811_version.h</label>
+        <link refid="ccs811__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/gpio.h</label>
+      </node>
+      <node id="6">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="8">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_ccs811/ccs811.c</label>
+        <link refid="ccs811_8c"/>
+      </node>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ccs811/include/ccs811.h</label>
+        <link refid="ccs811_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structccs811__thresholds__register__s" prot="public">ccs811_thresholds_register_s</innerclass>
+    <innerclass refid="structccs811__environmental__data__register__s" prot="public">ccs811_environmental_data_register_s</innerclass>
+    <innerclass refid="structccs811__error__row__s" prot="public">ccs811_error_row_s</innerclass>
+    <innerclass refid="structccs811__measure__mode__row__s" prot="public">ccs811_measure_mode_row_s</innerclass>
+    <innerclass refid="structccs811__config__t" prot="public">ccs811_config_t</innerclass>
+    <innerclass refid="structccs811__context__t" prot="public">ccs811_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1gabdf0cc7d8f8821ee7de4aefcc10fa83d" kind="define"><name>I2C_CCS811_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga2b8071c12d3b4ad585f81e8da78fc7c5" kind="define"><name>I2C_CCS811_DEV_ADDR_LO</name></member>
+      <member refid="group__drivers_1gad1a2bd896b353c80a982963238f639f3" kind="define"><name>I2C_CCS811_DEV_ADDR_HI</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga2ce64e208d4916728d421a9f782a1f4b" kind="define"><name>CCS811_ERROR_TABLE_SIZE</name></member>
+      <member refid="group__drivers_1ga29a57c6f12a44f68158f0f9576726a59" kind="define"><name>CCS811_MEASURE_MODE_TABLE_SIZE</name></member>
+      <member refid="group__drivers_1ga7f1586818ba6d6d3893928bfdfaae120" kind="define"><name>I2C_CCS811_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1gad77e9dec744afbae856a9e21ee269514" kind="enum"><name>ccs811_drive_modes_e</name></member>
+      <member refid="group__drivers_1gaedfefa4560269ccc8dd9556b61d9c577" kind="enum"><name>ccs811_firmware_modes_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kind="typedef"><name>ccs811_drive_modes_t</name></member>
+      <member refid="group__drivers_1gadcc6aa53d50a1deb71f652886244b5b0" kind="typedef"><name>ccs811_firmware_modes_t</name></member>
+      <member refid="group__drivers_1ga7b2dc0d56f2446e378d4d2be4e33cebb" kind="typedef"><name>ccs811_thresholds_register_t</name></member>
+      <member refid="group__drivers_1gae23c53308d871ca1dc743c3f00167060" kind="typedef"><name>ccs811_environmental_data_register_t</name></member>
+      <member refid="group__drivers_1gab35e15dea9a2729c641d7fce4e19b7c9" kind="typedef"><name>ccs811_error_row_t</name></member>
+      <member refid="group__drivers_1ga935eb9ffb87083d7fbc1859298ab2146" kind="typedef"><name>ccs811_measure_mode_row_t</name></member>
+      <member refid="group__drivers_1ga6c6ead2572e33cd7719d804d59b630b6" kind="typedef"><name>ccs811_context_t</name></member>
+      <member refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kind="typedef"><name>ccs811_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1gace61cc230408bb558e09786da8777ad6" kind="variable"><name>ccs811_status_register_t</name></member>
+      <member refid="group__drivers_1gafd35a3c78aa253b57f7c72bc2bf80971" kind="variable"><name>ccs811_measure_mode_register_t</name></member>
+      <member refid="group__drivers_1gad5731317a2a74378b6ff45ff62a0921b" kind="variable"><name>ccs811_raw_data_register_t</name></member>
+      <member refid="group__drivers_1gad8a033af147862af8b783eafb7d10351" kind="variable"><name>ccs811_threshold_value_t</name></member>
+      <member refid="group__drivers_1ga308a2244325bd36aaea89b9e03eb5e3e" kind="variable"><name>ccs811_firmware_version_format_t</name></member>
+      <member refid="group__drivers_1ga41962e5dda0c8ad9ffb0db48dca758b2" kind="variable"><name>ccs811_error_code_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga0bff976989ba5bf0eaa1ca9e38e9d3af" kind="function"><name>ccs811_get_status_register</name></member>
+      <member refid="group__drivers_1gad2a11eca0777e7719a0a1e9e566576de" kind="function"><name>ccs811_get_measure_mode_register</name></member>
+      <member refid="group__drivers_1gad3b44884f844b3777372970af4145217" kind="function"><name>ccs811_set_measure_mode_register</name></member>
+      <member refid="group__drivers_1ga61b35f4a71f4b97d0012f77d411375c6" kind="function"><name>ccs811_get_error_register</name></member>
+      <member refid="group__drivers_1ga3376d27746958386be2ab4a5bbfc398d" kind="function"><name>ccs811_set_environmental_data_register</name></member>
+      <member refid="group__drivers_1ga25478eadc453cd81afe79e8be0bc0389" kind="function"><name>ccs811_set_thresholds_register</name></member>
+      <member refid="group__drivers_1gaffafc27a7d92e5fa6c5c523e7b3473ba" kind="function"><name>ccs811_get_baseline_register</name></member>
+      <member refid="group__drivers_1ga4f9290f72d94b19f5f9cca0e2ed43c63" kind="function"><name>ccs811_set_baseline_register</name></member>
+      <member refid="group__drivers_1gaeeedd12bb1ac608249d2ced247383657" kind="function"><name>ccs811_get_hardware_identifier_register</name></member>
+      <member refid="group__drivers_1ga5a5c0f26a73196ef7f8b3a86a7151133" kind="function"><name>ccs811_get_hardware_version_register</name></member>
+      <member refid="group__drivers_1gaacddf12a1b0fa04e95f4f425fce71483" kind="function"><name>ccs811_start_application</name></member>
+      <member refid="group__drivers_1gafb2476c99e169fab5776d8795fb2bfe7" kind="function"><name>ccs811_init</name></member>
+      <member refid="group__drivers_1gaa02485dd45552bcdab58c102c0df56e7" kind="function"><name>ccs811_get_measurement</name></member>
+      <member refid="group__drivers_1ga72d5edd9419a160994e6efd2fb4c5dd8" kind="function"><name>ccs811_set_environmental_data</name></member>
+      <member refid="group__drivers_1gae958fb94ab668f974903ba290fbdace4" kind="function"><name>ccs811_set_thresholds</name></member>
+      <member refid="group__drivers_1gae4a67a7a46ce69f0b857b79f9b8c2376" kind="function"><name>ccs811_get_drive_mode</name></member>
+      <member refid="group__drivers_1gacdddac5cd9dae68712edb710148f1b11" kind="function"><name>ccs811_set_drive_mode</name></member>
+      <member refid="group__drivers_1ga024130f529315f52acbe65121df34581" kind="function"><name>ccs811_get_firmware_mode</name></member>
+      <member refid="group__drivers_1ga320ffdba546b10f2327379aa76a0deed" kind="function"><name>ccs811_get_ntc_resistance</name></member>
+      <member refid="group__drivers_1gaea36b6c9e450ae85fcf0e89c51f2a4ad" kind="function"><name>ccs811_get_data_status</name></member>
+      <member refid="group__drivers_1gaf0b5cc8ab33a370424bbe905ed7a1c76" kind="function"><name>ccs811_get_error_status</name></member>
+      <member refid="group__drivers_1gaa5141a128d613111e1a3f5b5b189f49b" kind="function"><name>ccs811_reset</name></member>
+      <member refid="group__drivers_1ga53ca5f2dc25d5785c6d05ddb711a2f26" kind="function"><name>ccs811_io_wake</name></member>
+      <member refid="group__drivers_1ga585652bc7c427d8c3f1745aa1d6fdf06" kind="function"><name>ccs811_io_sleep</name></member>
+      <member refid="group__drivers_1ga8f5338c785855e5a7fff79194aa4cb9f" kind="function"><name>ccs811_io_reset</name></member>
+      <member refid="group__drivers_1ga94d2bde4433eccabe0971f3646a8c581" kind="function"><name>ccs811_remove</name></member>
+      <member refid="group__drivers_1ga411b556cedc994f96c23259453c55d27" kind="function"><name>ccs811_delete</name></member>
+      <member refid="group__drivers_1gae1a3cb157ee35d3a706afea61c4c85e0" kind="function"><name>ccs811_err_to_message</name></member>
+      <member refid="group__drivers_1gad3c6b76aefc8ee97bf3d646d57e99a75" kind="function"><name>ccs811_err_to_code</name></member>
+      <member refid="group__drivers_1ga6549ec2730d45f8316474755e09f6a04" kind="function"><name>ccs811_measure_mode_description</name></member>
+      <member refid="group__drivers_1gae2118089810b70ab33694f634ec10262" kind="function"><name>ccs811_get_fw_version</name></member>
+      <member refid="group__drivers_1ga241483f7879eb78e0c440d0a95def97d" kind="function"><name>ccs811_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__CCS811_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__CCS811_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/gpio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ccs811_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*<sp/>CCS811<sp/>definitions</highlight></codeline>
+<codeline lineno="52"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="group__drivers_1gabdf0cc7d8f8821ee7de4aefcc10fa83d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_CCS811_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__drivers_1ga2b8071c12d3b4ad585f81e8da78fc7c5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_CCS811_DEV_ADDR_LO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x5a)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="group__drivers_1gad1a2bd896b353c80a982963238f639f3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_CCS811_DEV_ADDR_HI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x5b)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="group__drivers_1ga2ce64e208d4916728d421a9f782a1f4b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CCS811_ERROR_TABLE_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(6)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="group__drivers_1ga29a57c6f12a44f68158f0f9576726a59" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CCS811_MEASURE_MODE_TABLE_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(5)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>*<sp/>CCS811<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="66"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_CCS811_CONFIG_DEFAULT<sp/><sp/><sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_CCS811_DEV_ADDR_LO,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_CCS811_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.wake_io_enabled<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>false,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.reset_io_enabled<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>false,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="73"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.irq_threshold_enabled<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>false,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="74"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.irq_data_ready_enabled<sp/><sp/><sp/><sp/><sp/>=<sp/>false,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="75"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.drive_mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>CCS811_DRIVE_MODE_CONSTANT_POWER_IAQ,<sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="76"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.set_environmental_data<sp/><sp/><sp/><sp/><sp/>=<sp/>false<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>*<sp/>CCS811<sp/>enumerator<sp/>and<sp/>structure<sp/>declarations</highlight></codeline>
+<codeline lineno="81"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="group__drivers_1gad77e9dec744afbae856a9e21ee269514" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gad77e9dec744afbae856a9e21ee269514" kindref="member">ccs811_drive_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="87" refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a927a472dd6d96402a8527b31d3b284d8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a927a472dd6d96402a8527b31d3b284d8" kindref="member">CCS811_DRIVE_MODE_IDLE</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b000),<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88" refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a1576068aa364e7161710aa725246b0ca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a1576068aa364e7161710aa725246b0ca" kindref="member">CCS811_DRIVE_MODE_CONSTANT_POWER_IAQ</ref><sp/><sp/><sp/><sp/>=<sp/>(0b001),<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89" refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a5da13e811ece358296d6c30bed60a035" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a5da13e811ece358296d6c30bed60a035" kindref="member">CCS811_DRIVE_MODE_PULSE_HEATING_IAQ</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b010),<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="90" refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a7995182e6e67ebf4bb4aca62232e0cde" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a7995182e6e67ebf4bb4aca62232e0cde" kindref="member">CCS811_DRIVE_MODE_LP_PULSE_HEATING_IAQ</ref><sp/><sp/>=<sp/>(0b011),<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="91" refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a7bf4c5a5370085433832ccf4cf4572a1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad77e9dec744afbae856a9e21ee269514a7bf4c5a5370085433832ccf4cf4572a1" kindref="member">CCS811_DRIVE_MODE_CONSTANT_POWER</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100)<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="92" refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref>;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="group__drivers_1gaedfefa4560269ccc8dd9556b61d9c577" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gaedfefa4560269ccc8dd9556b61d9c577" kindref="member">ccs811_firmware_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="98" refid="group__drivers_1ggaedfefa4560269ccc8dd9556b61d9c577af104393905e284d07718a641f4b0160f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggaedfefa4560269ccc8dd9556b61d9c577af104393905e284d07718a641f4b0160f" kindref="member">CCS811_FW_MODE_BOOT</ref><sp/>=<sp/>0,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="99" refid="group__drivers_1ggaedfefa4560269ccc8dd9556b61d9c577a71982c6b85c48afd8df2bd862c55a85e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggaedfefa4560269ccc8dd9556b61d9c577a71982c6b85c48afd8df2bd862c55a85e" kindref="member">CCS811_FW_MODE_APP</ref><sp/><sp/>=<sp/>1<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="100" refid="group__drivers_1gadcc6aa53d50a1deb71f652886244b5b0" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gadcc6aa53d50a1deb71f652886244b5b0" kindref="member">ccs811_firmware_modes_t</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ccs811_status_register_u<sp/>{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">STS_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>error:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data_ready:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>app_valid:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>app_verify_completed:1;<sp/></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>app_erase_completed:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gadcc6aa53d50a1deb71f652886244b5b0" kindref="member">ccs811_firmware_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>firmware_mode:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="117"><highlight class="normal">}<sp/>ccs811_status_register_t;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ccs811_measure_mode_register_u<sp/>{</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">MODE_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>irq_threshold_enabled:1;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>irq_data_ready_enabled:1;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>drive_mode:3;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="131"><highlight class="normal">}<sp/>ccs811_measure_mode_register_t;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ccs811_raw_data_register_u<sp/>{</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">RDAT_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/>raw_adc:10;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/>current:6;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>reg;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="142"><highlight class="normal">}<sp/>ccs811_raw_data_register_t;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ccs811_threshold_value_u<sp/>{</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">THRVAL_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/>hi_byte:8;<sp/><sp/></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/>lo_byte:8;<sp/><sp/></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>value;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="153"><highlight class="normal">}<sp/>ccs811_threshold_value_t;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158" refid="structccs811__thresholds__register__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__thresholds__register__s" kindref="compound">ccs811_thresholds_register_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="159" refid="structccs811__thresholds__register__s_1a3cca275727de956cf1c4074c578f733e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ccs811_threshold_value_t<sp/><sp/><sp/><sp/><ref refid="structccs811__thresholds__register__s_1a3cca275727de956cf1c4074c578f733e" kindref="member">low_to_med</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="160" refid="structccs811__thresholds__register__s_1ab15e9e78bd14a6158d8902e39ed853e2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ccs811_threshold_value_t<sp/><sp/><sp/><sp/><ref refid="structccs811__thresholds__register__s_1ab15e9e78bd14a6158d8902e39ed853e2" kindref="member">med_to_high</ref>;<sp/></highlight></codeline>
+<codeline lineno="161" refid="structccs811__thresholds__register__s_1a161e08a7c91bc23fa80f36171adead3f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__thresholds__register__s_1a161e08a7c91bc23fa80f36171adead3f" kindref="member">hysteresis</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="162" refid="group__drivers_1ga7b2dc0d56f2446e378d4d2be4e33cebb" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga7b2dc0d56f2446e378d4d2be4e33cebb" kindref="member">ccs811_thresholds_register_t</ref>;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="structccs811__environmental__data__register__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__environmental__data__register__s" kindref="compound">ccs811_environmental_data_register_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="168" refid="structccs811__environmental__data__register__s_1afc1d28cfbce795d6ea954ebe725241f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="structccs811__environmental__data__register__s_1afc1d28cfbce795d6ea954ebe725241f5" kindref="member">temperature</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="169" refid="structccs811__environmental__data__register__s_1a6a87b2b0cff24d38b367ccd34843a206" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="structccs811__environmental__data__register__s_1a6a87b2b0cff24d38b367ccd34843a206" kindref="member">humidity</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="170" refid="group__drivers_1gae23c53308d871ca1dc743c3f00167060" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gae23c53308d871ca1dc743c3f00167060" kindref="member">ccs811_environmental_data_register_t</ref>;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ccs811_firmware_version_format_u<sp/>{</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">FWVF_PARTS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/>major:4;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/>minor:4;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/>trivial:8;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>parts;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>version;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="182"><highlight class="normal">}<sp/>ccs811_firmware_version_format_t;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ccs811_error_code_register_u<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ERRC_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>write_register_invalid:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>read_register_invalid:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>drive_mode_invalid:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>max_resistance_exceeded:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>heater_current_fault:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>heater_voltage_fault:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="199"><highlight class="normal">}<sp/>ccs811_error_code_register_t;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204" refid="structccs811__error__row__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__error__row__s" kindref="compound">ccs811_error_row_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="205" refid="structccs811__error__row__s_1ad0e6b406ad1011f626536339fb6427dc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structccs811__error__row__s_1ad0e6b406ad1011f626536339fb6427dc" kindref="member">code</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="206" refid="structccs811__error__row__s_1a2c3cb87d009c003069b9a90f020f8a9f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structccs811__error__row__s_1a2c3cb87d009c003069b9a90f020f8a9f" kindref="member">msg</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="207" refid="group__drivers_1gab35e15dea9a2729c641d7fce4e19b7c9" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gab35e15dea9a2729c641d7fce4e19b7c9" kindref="member">ccs811_error_row_t</ref>;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212" refid="structccs811__measure__mode__row__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__measure__mode__row__s" kindref="compound">ccs811_measure_mode_row_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="213" refid="structccs811__measure__mode__row__s_1a655f7421109da72152c5ddbbef30791d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref><sp/><ref refid="structccs811__measure__mode__row__s_1a655f7421109da72152c5ddbbef30791d" kindref="member">mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="214" refid="structccs811__measure__mode__row__s_1a710bce51374aba96ab04912897666c35" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structccs811__measure__mode__row__s_1a710bce51374aba96ab04912897666c35" kindref="member">desc</ref>;<sp/></highlight></codeline>
+<codeline lineno="215" refid="group__drivers_1ga935eb9ffb87083d7fbc1859298ab2146" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga935eb9ffb87083d7fbc1859298ab2146" kindref="member">ccs811_measure_mode_row_t</ref>;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220" refid="structccs811__config__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="221" refid="structccs811__config__t_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="222" refid="structccs811__config__t_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="223" refid="structccs811__config__t_1a29e0f05cb99392dbab61c87bb7272bad" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a29e0f05cb99392dbab61c87bb7272bad" kindref="member">irq_data_ready_io_enabled</ref>;<sp/></highlight></codeline>
+<codeline lineno="224" refid="structccs811__config__t_1a825720d04efeda69c1cd7b0aa00f61d1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_num_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a825720d04efeda69c1cd7b0aa00f61d1" kindref="member">irq_data_ready_io_num</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="225" refid="structccs811__config__t_1afaafb2c6920016adb532a0670c4ec346" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1afaafb2c6920016adb532a0670c4ec346" kindref="member">wake_io_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="226" refid="structccs811__config__t_1a240196dba9b17629756769b1120e3ff5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_num_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a240196dba9b17629756769b1120e3ff5" kindref="member">wake_io_num</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="227" refid="structccs811__config__t_1acff0aeed76f5cb293de63fcc923ed1e7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1acff0aeed76f5cb293de63fcc923ed1e7" kindref="member">reset_io_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="228" refid="structccs811__config__t_1ae9f6e6c1e76476a547ddd7d15d18a5a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_num_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1ae9f6e6c1e76476a547ddd7d15d18a5a6" kindref="member">reset_io_num</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="229" refid="structccs811__config__t_1a6fa4ac8d3eadbed86ef8bf39e17cf07f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a6fa4ac8d3eadbed86ef8bf39e17cf07f" kindref="member">irq_threshold_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="230" refid="structccs811__config__t_1a126d25280e38f53d8c6f12f20f51cf3e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a126d25280e38f53d8c6f12f20f51cf3e" kindref="member">irq_data_ready_enabled</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="231" refid="structccs811__config__t_1a44b3e976883bbf406c2f7cdae10a27f6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a44b3e976883bbf406c2f7cdae10a27f6" kindref="member">drive_mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="232" refid="structccs811__config__t_1a78e0fb435aec7bf61d511bbbe0446154" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a78e0fb435aec7bf61d511bbbe0446154" kindref="member">set_environmental_data</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="233" refid="structccs811__config__t_1afc1d28cfbce795d6ea954ebe725241f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1afc1d28cfbce795d6ea954ebe725241f5" kindref="member">temperature</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="234" refid="structccs811__config__t_1a6a87b2b0cff24d38b367ccd34843a206" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t_1a6a87b2b0cff24d38b367ccd34843a206" kindref="member">humidity</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="235"><highlight class="normal">}<sp/><ref refid="structccs811__config__t" kindref="compound">ccs811_config_t</ref>;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240" refid="structccs811__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__context__t" kindref="compound">ccs811_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="241" refid="structccs811__context__t_1a509aba09e8653883a4756e2ef35e28b7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structccs811__config__t" kindref="compound">ccs811_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__context__t_1a509aba09e8653883a4756e2ef35e28b7" kindref="member">dev_config</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="242" refid="structccs811__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="243" refid="structccs811__context__t_1a0a7a727f2fa2e4038e2ed79fd4ff4db5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__context__t_1a0a7a727f2fa2e4038e2ed79fd4ff4db5" kindref="member">hardware_id</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="244" refid="structccs811__context__t_1a4b07fdad3a66e807aaaa14dacefc64f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__context__t_1a4b07fdad3a66e807aaaa14dacefc64f5" kindref="member">hardware_version</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="245" refid="structccs811__context__t_1a093edfafe8e0e6b8499f50ea211c5430" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ccs811_firmware_version_format_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__context__t_1a093edfafe8e0e6b8499f50ea211c5430" kindref="member">bootloader_version</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="246" refid="structccs811__context__t_1a425ab850b98564623ea5038fc50b06a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>ccs811_firmware_version_format_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structccs811__context__t_1a425ab850b98564623ea5038fc50b06a7" kindref="member">application_version</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="247"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight></codeline>
+<codeline lineno="252" refid="group__drivers_1ga6c6ead2572e33cd7719d804d59b630b6" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__context__t" kindref="compound">ccs811_context_t</ref><sp/><ref refid="structccs811__context__t" kindref="compound">ccs811_context_t</ref>;</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257" refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structccs811__context__t" kindref="compound">ccs811_context_t</ref><sp/>*<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref>;</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga0bff976989ba5bf0eaa1ca9e38e9d3af" kindref="member">ccs811_get_status_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>ccs811_status_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad2a11eca0777e7719a0a1e9e566576de" kindref="member">ccs811_get_measure_mode_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>ccs811_measure_mode_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad3b44884f844b3777372970af4145217" kindref="member">ccs811_set_measure_mode_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ccs811_measure_mode_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga61b35f4a71f4b97d0012f77d411375c6" kindref="member">ccs811_get_error_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>ccs811_error_code_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga3376d27746958386be2ab4a5bbfc398d" kindref="member">ccs811_set_environmental_data_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>humidity);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga25478eadc453cd81afe79e8be0bc0389" kindref="member">ccs811_set_thresholds_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>low_to_med,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>med_to_high,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>hysteresis);</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaffafc27a7d92e5fa6c5c523e7b3473ba" kindref="member">ccs811_get_baseline_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>uint16_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="325"><highlight class="normal"></highlight></codeline>
+<codeline lineno="333"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4f9290f72d94b19f5f9cca0e2ed43c63" kindref="member">ccs811_set_baseline_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>reg);</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"></highlight></codeline>
+<codeline lineno="342"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaeeedd12bb1ac608249d2ced247383657" kindref="member">ccs811_get_hardware_identifier_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"></highlight></codeline>
+<codeline lineno="351"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga5a5c0f26a73196ef7f8b3a86a7151133" kindref="member">ccs811_get_hardware_version_register</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaacddf12a1b0fa04e95f4f425fce71483" kindref="member">ccs811_start_application</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"></highlight></codeline>
+<codeline lineno="369"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gafb2476c99e169fab5776d8795fb2bfe7" kindref="member">ccs811_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structccs811__config__t" kindref="compound">ccs811_config_t</ref><sp/>*ccs811_config,<sp/><ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>*ccs811_handle);</highlight></codeline>
+<codeline lineno="370"><highlight class="normal"></highlight></codeline>
+<codeline lineno="379"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa02485dd45552bcdab58c102c0df56e7" kindref="member">ccs811_get_measurement</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/>uint16_t<sp/>*eco2,<sp/>uint16_t<sp/>*etvoc);</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"></highlight></codeline>
+<codeline lineno="389"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga72d5edd9419a160994e6efd2fb4c5dd8" kindref="member">ccs811_set_environmental_data</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>humidity);</highlight></codeline>
+<codeline lineno="390"><highlight class="normal"></highlight></codeline>
+<codeline lineno="400"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae958fb94ab668f974903ba290fbdace4" kindref="member">ccs811_set_thresholds</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>low_to_med,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>med_to_high,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>hysteresis);</highlight></codeline>
+<codeline lineno="401"><highlight class="normal"></highlight></codeline>
+<codeline lineno="409"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae4a67a7a46ce69f0b857b79f9b8c2376" kindref="member">ccs811_get_drive_mode</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mode);</highlight></codeline>
+<codeline lineno="410"><highlight class="normal"></highlight></codeline>
+<codeline lineno="418"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gacdddac5cd9dae68712edb710148f1b11" kindref="member">ccs811_set_drive_mode</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref><sp/>mode);</highlight></codeline>
+<codeline lineno="419"><highlight class="normal"></highlight></codeline>
+<codeline lineno="427"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga024130f529315f52acbe65121df34581" kindref="member">ccs811_get_firmware_mode</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1gadcc6aa53d50a1deb71f652886244b5b0" kindref="member">ccs811_firmware_modes_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mode);</highlight></codeline>
+<codeline lineno="428"><highlight class="normal"></highlight></codeline>
+<codeline lineno="437"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga320ffdba546b10f2327379aa76a0deed" kindref="member">ccs811_get_ntc_resistance</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint32_t<sp/>r_ref,<sp/>uint32_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>resistance);</highlight></codeline>
+<codeline lineno="438"><highlight class="normal"></highlight></codeline>
+<codeline lineno="446"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaea36b6c9e450ae85fcf0e89c51f2a4ad" kindref="member">ccs811_get_data_status</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ready);</highlight></codeline>
+<codeline lineno="447"><highlight class="normal"></highlight></codeline>
+<codeline lineno="455"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaf0b5cc8ab33a370424bbe905ed7a1c76" kindref="member">ccs811_get_error_status</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>error);</highlight></codeline>
+<codeline lineno="456"><highlight class="normal"></highlight></codeline>
+<codeline lineno="463"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa5141a128d613111e1a3f5b5b189f49b" kindref="member">ccs811_reset</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="464"><highlight class="normal"></highlight></codeline>
+<codeline lineno="471"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga53ca5f2dc25d5785c6d05ddb711a2f26" kindref="member">ccs811_io_wake</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="472"><highlight class="normal"></highlight></codeline>
+<codeline lineno="479"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga585652bc7c427d8c3f1745aa1d6fdf06" kindref="member">ccs811_io_sleep</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="480"><highlight class="normal"></highlight></codeline>
+<codeline lineno="487"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga8f5338c785855e5a7fff79194aa4cb9f" kindref="member">ccs811_io_reset</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="488"><highlight class="normal"></highlight></codeline>
+<codeline lineno="495"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga94d2bde4433eccabe0971f3646a8c581" kindref="member">ccs811_remove</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="496"><highlight class="normal"></highlight></codeline>
+<codeline lineno="503"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga411b556cedc994f96c23259453c55d27" kindref="member">ccs811_delete</ref>(<ref refid="group__drivers_1ga93f5ff3bbfd6b970a656de57f9ab5621" kindref="member">ccs811_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="504"><highlight class="normal"></highlight></codeline>
+<codeline lineno="511"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="group__drivers_1gae1a3cb157ee35d3a706afea61c4c85e0" kindref="member">ccs811_err_to_message</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ccs811_error_code_register_t<sp/>error_reg);</highlight></codeline>
+<codeline lineno="512"><highlight class="normal"></highlight></codeline>
+<codeline lineno="519"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="group__drivers_1gad3c6b76aefc8ee97bf3d646d57e99a75" kindref="member">ccs811_err_to_code</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ccs811_error_code_register_t<sp/>error_reg);</highlight></codeline>
+<codeline lineno="520"><highlight class="normal"></highlight></codeline>
+<codeline lineno="527"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="group__drivers_1ga6549ec2730d45f8316474755e09f6a04" kindref="member">ccs811_measure_mode_description</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gad91c6a3379cef0d15d8465d67c1479fa" kindref="member">ccs811_drive_modes_t</ref><sp/>mode);</highlight></codeline>
+<codeline lineno="528"><highlight class="normal"></highlight></codeline>
+<codeline lineno="534"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1gae2118089810b70ab33694f634ec10262" kindref="member">ccs811_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="535"><highlight class="normal"></highlight></codeline>
+<codeline lineno="541"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1ga241483f7879eb78e0c440d0a95def97d" kindref="member">ccs811_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="542"><highlight class="normal"></highlight></codeline>
+<codeline lineno="543"><highlight class="normal"></highlight></codeline>
+<codeline lineno="544"><highlight class="normal"></highlight></codeline>
+<codeline lineno="545"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="546"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="547"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="548"><highlight class="normal"></highlight></codeline>
+<codeline lineno="550"><highlight class="normal"></highlight></codeline>
+<codeline lineno="551"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__CCS811_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h"/>
+  </compounddef>
+</doxygen>

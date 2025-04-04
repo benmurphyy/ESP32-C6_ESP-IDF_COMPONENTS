@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structdatatable__id__column__data__type__tag" kind="struct" language="C++" prot="public">
+    <compoundname>datatable_id_column_data_type_tag</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdatatable__id__column__data__type__tag_1a900b69af7d674b8db3bceae754b4955a" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>datatable_id_column_data_type_tag::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="144" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table record identifier column data-type structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="143" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="143" bodyend="145"/>
+    <listofallmembers>
+      <member refid="structdatatable__id__column__data__type__tag_1a900b69af7d674b8db3bceae754b4955a" prot="public" virt="non-virtual"><scope>datatable_id_column_data_type_tag</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structdatatable__row__tag" kind="struct" language="C++" prot="public">
+    <compoundname>datatable_row_tag</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdatatable__row__tag_1af866202551fdf7fba325bd0c3521dea5" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gafdf46b5183ba6678a79453181aff427c" kindref="member">datatable_row_data_column_t</ref> **</type>
+        <definition>datatable_row_data_column_t** data_columns</definition>
+        <argsstring></argsstring>
+        <name>data_columns</name>
+        <qualifiedname>datatable_row_tag::data_columns</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="249" column="35" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table row structure. This structure is a data model that represents data storage of record by data-table row and configured data-table columns. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="6">
+        <label>datatable_bool_column_data_type_tag</label>
+        <link refid="structdatatable__bool__column__data__type__tag"/>
+      </node>
+      <node id="7">
+        <label>datatable_float_column_data_type_tag</label>
+        <link refid="structdatatable__float__column__data__type__tag"/>
+      </node>
+      <node id="3">
+        <label>datatable_id_column_data_type_tag</label>
+        <link refid="structdatatable__id__column__data__type__tag"/>
+      </node>
+      <node id="8">
+        <label>datatable_int16_column_data_type_tag</label>
+        <link refid="structdatatable__int16__column__data__type__tag"/>
+      </node>
+      <node id="2">
+        <label>datatable_row_data_column_tag</label>
+        <link refid="uniondatatable__row__data__column__tag"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>id_data</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>ts_data</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>vector_data</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>bool_data</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>float_data</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>int16_data</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>datatable_row_tag</label>
+        <link refid="structdatatable__row__tag"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>data_columns</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>datatable_ts_column_data_type_tag</label>
+        <link refid="structdatatable__ts__column__data__type__tag"/>
+      </node>
+      <node id="5">
+        <label>datatable_vector_column_data_type_tag</label>
+        <link refid="structdatatable__vector__column__data__type__tag"/>
+      </node>
+    </collaborationgraph>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="248" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="248" bodyend="250"/>
+    <listofallmembers>
+      <member refid="structdatatable__row__tag_1af866202551fdf7fba325bd0c3521dea5" prot="public" virt="non-virtual"><scope>datatable_row_tag</scope><name>data_columns</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

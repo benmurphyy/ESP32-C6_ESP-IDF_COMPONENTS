@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_03e058c62302307ae891cba4adf1e180" kind="dir">
+    <compoundname>components/utilities/esp_wx_utils</compoundname>
+    <innerfile refid="wx__utils_8c">wx_utils.c</innerfile>
+    <innerfile refid="wx__utils_8h">wx_utils.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/utilities/esp_wx_utils/"/>
+  </compounddef>
+</doxygen>

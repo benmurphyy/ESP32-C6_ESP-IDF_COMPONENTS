@@ -1,0 +1,390 @@
+\doxysection{bme680.\+h}
+\hypertarget{bme680_8h_source}{}\label{bme680_8h_source}\index{components/peripherals/i2c/esp\_bme680/include/bme680.h@{components/peripherals/i2c/esp\_bme680/include/bme680.h}}
+\mbox{\hyperlink{bme680_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#ifndef\ \_\_BME680\_H\_\_}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ \_\_BME680\_H\_\_}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ "{}bme680\_version.h"{}}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00048\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ BME680\ definitions}}
+\DoxyCodeLine{00053\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ I2C\_BME680\_DEV\_CLK\_SPD\ \ \ \ \ \ UINT32\_C(100000)\ \ \ }}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ *\ supported\ device\ addresses}}
+\DoxyCodeLine{00058\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ I2C\_BME680\_DEV\_ADDR\_LO\ \ \ \ \ \ UINT8\_C(0x76)\ }}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ I2C\_BME680\_DEV\_ADDR\_HI\ \ \ \ \ \ UINT8\_C(0x77)\ }}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ BME680\_HEATER\_TEMP\_MIN\ \ \ \ \ \ UINT8\_C(200)\ \ }\textcolor{comment}{//\ min.\ 200\ degree\ Celsius}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ BME680\_HEATER\_TEMP\_MAX\ \ \ \ \ \ UINT8\_C(400)\ \ }\textcolor{comment}{//\ max.\ 200\ degree\ Celsius}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ BME680\_HEATER\_PROFILE\_SIZE\ \ UINT8\_C(10)\ \ \ }\textcolor{comment}{//\ max.\ 10\ heater\ profiles\ (0..9)}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ *\ BME680\ macros}}
+\DoxyCodeLine{00070\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ I2C\_BME680\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_BME680\_DEV\_ADDR\_HI,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_BME680\_DEV\_CLK\_SPD,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .power\_mode\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ BME680\_POWER\_MODE\_FORCED,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .iir\_filter\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ BME680\_IIR\_FILTER\_OFF,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .pressure\_oversampling\ \ \ \ \ \ =\ BME680\_PRESSURE\_OVERSAMPLING\_4X,\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .temperature\_oversampling\ \ \ =\ BME680\_TEMPERATURE\_OVERSAMPLING\_4X,\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .humidity\_oversampling\ \ \ \ \ \ =\ BME680\_HUMIDITY\_OVERSAMPLING\_4X,\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .gas\_enabled\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ true,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .heater\_temperature\ \ \ \ \ \ \ \ \ =\ 300,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .heater\_duration\ \ \ \ \ \ \ \ \ \ \ \ =\ 300,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .heater\_profile\_size\ \ \ \ \ \ \ \ =\ 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ *\ BME680\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00088\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gae4d73e09adf36a810fdf5b28b78b5a36}{bme680\_heater\_setpoints\_e}}\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ BME680\_HEATER\_SETPOINT\_0\ \ =\ (0b0000),}
+\DoxyCodeLine{00096\ \ \ \ \ BME680\_HEATER\_SETPOINT\_1\ \ =\ (0b0001),}
+\DoxyCodeLine{00097\ \ \ \ \ BME680\_HEATER\_SETPOINT\_2\ \ =\ (0b0010),}
+\DoxyCodeLine{00098\ \ \ \ \ BME680\_HEATER\_SETPOINT\_3\ \ =\ (0b0011),}
+\DoxyCodeLine{00099\ \ \ \ \ BME680\_HEATER\_SETPOINT\_4\ \ =\ (0b0100),}
+\DoxyCodeLine{00100\ \ \ \ \ BME680\_HEATER\_SETPOINT\_5\ \ =\ (0b0101),}
+\DoxyCodeLine{00101\ \ \ \ \ BME680\_HEATER\_SETPOINT\_6\ \ =\ (0b0110),}
+\DoxyCodeLine{00102\ \ \ \ \ BME680\_HEATER\_SETPOINT\_7\ \ =\ (0b0111),}
+\DoxyCodeLine{00103\ \ \ \ \ BME680\_HEATER\_SETPOINT\_8\ \ =\ (0b1000),}
+\DoxyCodeLine{00104\ \ \ \ \ BME680\_HEATER\_SETPOINT\_9\ \ =\ (0b1001)}
+\DoxyCodeLine{00105\ \}\ \mbox{\hyperlink{group__drivers_ga457964ffe1aeb9433d63ed769051c6d6}{bme680\_heater\_setpoints\_t}};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00110\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gadc9774869967ccfbe0d894a20a2a7745}{bme680\_gas\_wait\_multipliers\_e}}\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ BME680\_GAS\_WAIT\_MULT\_1\ \ =\ (0b00),}
+\DoxyCodeLine{00112\ \ \ \ \ BME680\_GAS\_WAIT\_MULT\_4\ \ =\ (0b01),}
+\DoxyCodeLine{00113\ \ \ \ \ BME680\_GAS\_WAIT\_MULT\_16\ =\ (0b10),}
+\DoxyCodeLine{00114\ \ \ \ \ BME680\_GAS\_WAIT\_MULT\_64\ =\ (0b11)}
+\DoxyCodeLine{00115\ \}\ \mbox{\hyperlink{group__drivers_ga0ae04038fc3cbfd0bbe06d04a716578a}{bme680\_gas\_wait\_multipliers\_t}};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga07839710ced515edc57e1265a9f942d0}{bme680\_iir\_filters\_e}}\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ BME680\_IIR\_FILTER\_OFF\ =\ (0b000),}
+\DoxyCodeLine{00122\ \ \ \ \ BME680\_IIR\_FILTER\_1\ \ \ =\ (0b001),}
+\DoxyCodeLine{00123\ \ \ \ \ BME680\_IIR\_FILTER\_3\ \ \ =\ (0b010),}
+\DoxyCodeLine{00124\ \ \ \ \ BME680\_IIR\_FILTER\_7\ \ \ =\ (0b011),}
+\DoxyCodeLine{00125\ \ \ \ \ BME680\_IIR\_FILTER\_15\ \ =\ (0b100),}
+\DoxyCodeLine{00126\ \ \ \ \ BME680\_IIR\_FILTER\_31\ \ =\ (0b101),}
+\DoxyCodeLine{00127\ \ \ \ \ BME680\_IIR\_FILTER\_63\ \ =\ (0b110),}
+\DoxyCodeLine{00128\ \ \ \ \ BME680\_IIR\_FILTER\_127\ =\ (0b111),}
+\DoxyCodeLine{00129\ \}\ \mbox{\hyperlink{group__drivers_ga659bc184b62bd53670e369a09e6a315b}{bme680\_iir\_filters\_t}};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00134\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga036c0d22ef7602a37e6acc30754c44d6}{bme680\_power\_modes\_e}}\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga036c0d22ef7602a37e6acc30754c44d6a6b69b7e506c1ffb45148d3fe8f077ab3}{BME680\_POWER\_MODE\_SLEEP}}\ \ \ \ \ \ =\ (0b00),\ }
+\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga036c0d22ef7602a37e6acc30754c44d6a5c62dd38dc60b06037d60c9037582874}{BME680\_POWER\_MODE\_FORCED}}\ \ \ \ \ =\ (0b01),\ }
+\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga036c0d22ef7602a37e6acc30754c44d6aec4ae7ef1889a0be7d0e6fd06d32b9de}{BME680\_POWER\_MODE\_PARALLEL}}\ \ \ =\ (0b10),\ }
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga036c0d22ef7602a37e6acc30754c44d6ac967972c848d852ac3fa8d84b4e18f1d}{BME680\_POWER\_MODE\_SEQUENTIAL}}\ =\ (0b11)\ \ }
+\DoxyCodeLine{00139\ \}\ \mbox{\hyperlink{group__drivers_ga631c33b35db1e3bcdc9dbeb3732e7e21}{bme680\_power\_modes\_t}};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00144\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga94e531ba21486e2c6f40f16e3021a97a}{bme680\_pressure\_oversampling\_e}}\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga94e531ba21486e2c6f40f16e3021a97aac54a44dc0d22775a71ca05f86e70ca88}{BME680\_PRESSURE\_OVERSAMPLING\_SKIPPED}}\ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga94e531ba21486e2c6f40f16e3021a97aa1a4382cea626cc63ea901d45add1b408}{BME680\_PRESSURE\_OVERSAMPLING\_1X}}\ \ \ \ \ \ \ \ \ =\ (0b001),\ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga94e531ba21486e2c6f40f16e3021a97aa58f7f00961d4297da4d477c33a93a81d}{BME680\_PRESSURE\_OVERSAMPLING\_2X}}\ \ \ \ \ \ \ \ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga94e531ba21486e2c6f40f16e3021a97aadead53800b79df0e0201a31807639b38}{BME680\_PRESSURE\_OVERSAMPLING\_4X}}\ \ \ \ \ \ \ \ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga94e531ba21486e2c6f40f16e3021a97aa3fb7cab771665aeb98b6684a47902f99}{BME680\_PRESSURE\_OVERSAMPLING\_8X}}\ \ \ \ \ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga94e531ba21486e2c6f40f16e3021a97aa76b01b1da7edcc7afcdd5e9f0db7874c}{BME680\_PRESSURE\_OVERSAMPLING\_16X}}\ \ \ \ \ \ \ \ =\ (0b101)\ \ \ }
+\DoxyCodeLine{00151\ \}\ \mbox{\hyperlink{group__drivers_ga7b38c1d35a8f7a27af3c264c46f78bbe}{bme680\_pressure\_oversampling\_t}};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00156\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga759038547cb6202de03caba5a7c882a7}{bme680\_temperature\_oversampling\_e}}\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga759038547cb6202de03caba5a7c882a7a6f28a8b91d2c2ad346a455885a2eeae6}{BME680\_TEMPERATURE\_OVERSAMPLING\_SKIPPED}}\ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga759038547cb6202de03caba5a7c882a7a9db54aa27b3bee04e3f2df6a0233b2d2}{BME680\_TEMPERATURE\_OVERSAMPLING\_1X}}\ \ \ \ \ \ \ \ \ =\ (0b001),\ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga759038547cb6202de03caba5a7c882a7acec878b493e26e412ad07d0a71f054b5}{BME680\_TEMPERATURE\_OVERSAMPLING\_2X}}\ \ \ \ \ \ \ \ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga759038547cb6202de03caba5a7c882a7ac9891d9fbad80d05bee5a2da831872a0}{BME680\_TEMPERATURE\_OVERSAMPLING\_4X}}\ \ \ \ \ \ \ \ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga759038547cb6202de03caba5a7c882a7ac1ea641bf1243022aa2c7750b766363a}{BME680\_TEMPERATURE\_OVERSAMPLING\_8X}}\ \ \ \ \ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00162\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga759038547cb6202de03caba5a7c882a7ae0bbbabd9ac3b588b93cf5d0e07f2909}{BME680\_TEMPERATURE\_OVERSAMPLING\_16X}}\ \ \ \ \ \ \ \ =\ (0b101),\ \ }
+\DoxyCodeLine{00163\ \}\ \mbox{\hyperlink{group__drivers_ga5be0c6fd6abecc9e2e055f27ec0be79d}{bme680\_temperature\_oversampling\_t}};}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga3fff6756c917ec8461faffdfb8bb2ef4}{bme680\_humidity\_oversampling\_e}}\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga3fff6756c917ec8461faffdfb8bb2ef4aff8cf04d2d511c862dc2283cb2d40808}{BME680\_HUMIDITY\_OVERSAMPLING\_SKIPPED}}\ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga3fff6756c917ec8461faffdfb8bb2ef4aeaf4a961a9514c45260f91f3f6c3be0a}{BME680\_HUMIDITY\_OVERSAMPLING\_1X}}\ \ \ \ \ \ \ \ \ =\ (0b001),\ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga3fff6756c917ec8461faffdfb8bb2ef4ac222619e62fafebad55802c08d22ec90}{BME680\_HUMIDITY\_OVERSAMPLING\_2X}}\ \ \ \ \ \ \ \ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga3fff6756c917ec8461faffdfb8bb2ef4a4af4ee525dba2162ed18450858af2f33}{BME680\_HUMIDITY\_OVERSAMPLING\_4X}}\ \ \ \ \ \ \ \ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00173\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga3fff6756c917ec8461faffdfb8bb2ef4a9ee54de303e17d3bb73c53a754e35433}{BME680\_HUMIDITY\_OVERSAMPLING\_8X}}\ \ \ \ \ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga3fff6756c917ec8461faffdfb8bb2ef4ab11434b263d85dc3f5a56700a7e26c01}{BME680\_HUMIDITY\_OVERSAMPLING\_16X}}\ \ \ \ \ \ \ \ =\ (0b101),\ \ }
+\DoxyCodeLine{00175\ \}\ \mbox{\hyperlink{group__drivers_ga36a632407bbbcf95a69386b2240e981d}{bme680\_humidity\_oversampling\_t}};}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00182\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_status0\_register\_u\ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ uint8\_t\ gas\_measurement\_index:4;\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ uint8\_t\ reserved:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ measuring:1;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ gas\_measuring:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ new\_data:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00189\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00190\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00191\ \}\ bme680\_status0\_register\_t;}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00197\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_control\_measurement\_register\_u\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga631c33b35db1e3bcdc9dbeb3732e7e21}{bme680\_power\_modes\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ power\_mode:2;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga7b38c1d35a8f7a27af3c264c46f78bbe}{bme680\_pressure\_oversampling\_t}}\ \ \ \ \ \ pressure\_oversampling:3;\ \ \ \ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5be0c6fd6abecc9e2e055f27ec0be79d}{bme680\_temperature\_oversampling\_t}}\ \ \ temperature\_oversampling:3;\ }
+\DoxyCodeLine{00202\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00203\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00204\ \}\ bme680\_control\_measurement\_register\_t;}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00210\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_control\_humidity\_register\_u\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga36a632407bbbcf95a69386b2240e981d}{bme680\_humidity\_oversampling\_t}}\ \ \ \ \ \ humidity\_oversampling:3;\ \ \ \ }
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:3;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spi\_irq\_enabled:1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00216\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00217\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00218\ \}\ bme680\_control\_humidity\_register\_t;}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00224\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_control\_gas1\_register\_u\ \{}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga457964ffe1aeb9433d63ed769051c6d6}{bme680\_heater\_setpoints\_t}}\ \ \ heater\_setpoint:4;\ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gas\_conversion\_enabled:1;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved:3;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00229\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00230\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00231\ \}\ bme680\_control\_gas1\_register\_t;}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00237\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_control\_gas0\_register\_u\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:3;\ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heater\_disabled:1;\ }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:4;\ \ \ \ }
+\DoxyCodeLine{00242\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00243\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00244\ \}\ bme680\_control\_gas0\_register\_t;}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00250\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_gas\_r\_lsb\_register\_u\ \{}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ gas\_range:4;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heater\_stable:1;\ \ \ \ }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gas\_valid:1;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ gas\_lsb:2;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00256\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00257\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00258\ \}\ bme680\_gas\_lsb\_register\_t;}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00264\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bme680\_configuration\_register\_u\ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spi\_enabled:1;\ \ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:1;\ \ \ \ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga659bc184b62bd53670e369a09e6a315b}{bme680\_iir\_filters\_t}}\ \ \ \ iir\_filter:3;\ \ \ }
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:3;\ \ \ \ }
+\DoxyCodeLine{00270\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00271\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00272\ \}\ bme680\_config\_register\_t;}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00277\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__cal__factors__s}{bme680\_cal\_factors\_s}}\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{comment}{/*\ temperature\ compensation\ */}}
+\DoxyCodeLine{00279\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_T1;}
+\DoxyCodeLine{00280\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_T2;}
+\DoxyCodeLine{00281\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_T3;}
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temperature\_fine;}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{comment}{/*\ humidity\ compensation\ */}}
+\DoxyCodeLine{00284\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H1;}
+\DoxyCodeLine{00285\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H2;}
+\DoxyCodeLine{00286\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H3;}
+\DoxyCodeLine{00287\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H4;}
+\DoxyCodeLine{00288\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H5;}
+\DoxyCodeLine{00289\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H6;}
+\DoxyCodeLine{00290\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_H7;}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{comment}{/*\ pressure\ compensation\ */}}
+\DoxyCodeLine{00292\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P1;}
+\DoxyCodeLine{00293\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P2;}
+\DoxyCodeLine{00294\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P3;}
+\DoxyCodeLine{00295\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P4;}
+\DoxyCodeLine{00296\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P5;}
+\DoxyCodeLine{00297\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P6;}
+\DoxyCodeLine{00298\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P7;}
+\DoxyCodeLine{00299\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P8;}
+\DoxyCodeLine{00300\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P9;}
+\DoxyCodeLine{00301\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_P10;}
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{comment}{/*\ resistance\ heat\ compensation\ */}}
+\DoxyCodeLine{00303\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_G1;}
+\DoxyCodeLine{00304\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_G2;}
+\DoxyCodeLine{00305\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ par\_G3;}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{/*\ other\ */}}
+\DoxyCodeLine{00307\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\_heat\_range;}
+\DoxyCodeLine{00308\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\_heat\_val;}
+\DoxyCodeLine{00309\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\_switching\_error;}
+\DoxyCodeLine{00310\ \}\ \mbox{\hyperlink{group__drivers_ga1fcb18f07741a3e8b640e2d3ba059f12}{bme680\_cal\_factors\_t}};}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00315\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__data__s}{bme680\_data\_s}}\ \{}
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \mbox{\hyperlink{structbme680__data__s_a708b12e594d183ba115f10e8aca0665b}{dewpoint\_temperature}};\ \ }
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \mbox{\hyperlink{structbme680__data__s_a5cbb9c964da67812cd01b081c2fc6cd1}{air\_temperature}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \mbox{\hyperlink{structbme680__data__s_ad60830bc80efb7e8a11d6fb25518f55b}{relative\_humidity}};\ \ \ \ \ }
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \mbox{\hyperlink{structbme680__data__s_ad2a540b7fffffcd5581c3d05d94df7f6}{barometric\_pressure}};\ \ \ }
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \mbox{\hyperlink{structbme680__data__s_a806fa5bc30520f84f87b8479ea263e04}{gas\_valid}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \mbox{\hyperlink{structbme680__data__s_ac30cebc4cd86ec13a739515a74105b50}{gas\_resistance}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00322\ \ \ \ \ uint8\_t\ \ \mbox{\hyperlink{structbme680__data__s_a87b4540d7cba30cb7f7e184467b34394}{gas\_range}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00323\ \ \ \ \ uint8\_t\ \ \mbox{\hyperlink{structbme680__data__s_ac9861af59182939c5f1d292857cc218c}{gas\_index}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \mbox{\hyperlink{structbme680__data__s_a62791e77eacb0713ac8dd58380b791f4}{heater\_stable}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00325\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structbme680__data__s_acebbf28041a5672d184c08d6dd285509}{iaq\_score}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ temperature\_score;}
+\DoxyCodeLine{00327\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ humidity\_score;}
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ gas\_score;}
+\DoxyCodeLine{00329\ \}\ \mbox{\hyperlink{group__drivers_ga3238b870a3bc18b1c513b52ebb74e125}{bme680\_data\_t}};}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00334\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__adc__data__s}{bme680\_adc\_data\_s}}\ \{}
+\DoxyCodeLine{00335\ \ \ \ \ uint32\_t\ temperature;}
+\DoxyCodeLine{00336\ \ \ \ \ uint16\_t\ humidity;}
+\DoxyCodeLine{00337\ \ \ \ \ uint32\_t\ pressure;}
+\DoxyCodeLine{00338\ \ \ \ \ uint16\_t\ gas;}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ gas\_valid;}
+\DoxyCodeLine{00340\ \ \ \ \ uint8\_t\ \ gas\_range;}
+\DoxyCodeLine{00341\ \ \ \ \ uint8\_t\ \ gas\_index;}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ heater\_stable;}
+\DoxyCodeLine{00343\ \}\ \mbox{\hyperlink{group__drivers_ga9eb84555a3dc9ced6a91394e16736f96}{bme680\_adc\_data\_t}};}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00348\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__config__s}{bme680\_config\_s}}\ \{}
+\DoxyCodeLine{00349\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00350\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00351\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga631c33b35db1e3bcdc9dbeb3732e7e21}{bme680\_power\_modes\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a43ecd923f632053e1120e76b712eb2fa}{power\_mode}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00352\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga659bc184b62bd53670e369a09e6a315b}{bme680\_iir\_filters\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iir\_filter;}
+\DoxyCodeLine{00353\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga7b38c1d35a8f7a27af3c264c46f78bbe}{bme680\_pressure\_oversampling\_t}}\ \ \ \ \ \ \ \ \ \ pressure\_oversampling;}
+\DoxyCodeLine{00354\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5be0c6fd6abecc9e2e055f27ec0be79d}{bme680\_temperature\_oversampling\_t}}\ \ \ \ \ \ \ temperature\_oversampling;}
+\DoxyCodeLine{00355\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga36a632407bbbcf95a69386b2240e981d}{bme680\_humidity\_oversampling\_t}}\ \ \ \ \ \ \ \ \ \ humidity\_oversampling;}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a36fdc8559e1cbfa31f5bb5243ae5f56d}{gas\_enabled}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00357\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a62c79fac486cde538921ca50ced01127}{heater\_temperature}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00358\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a0ab2c5eea7e0868d17b6c8c3a14cd110}{heater\_duration}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00359\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_ad630f45b4b68dd68cee2a36ae2db5552}{heater\_temperature\_profile}}[BME680\_HEATER\_PROFILE\_SIZE];\ }
+\DoxyCodeLine{00360\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_af6c3e2adb91a1e60dadae66ee9218303}{heater\_duration\_profile}}[BME680\_HEATER\_PROFILE\_SIZE];\ \ \ \ }
+\DoxyCodeLine{00361\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a2573355afe4c6bca8bfa99a4dfb7b0ea}{heater\_profile\_size}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00362\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__config__s_a10ae592277d68fbfb9c4cc1661ba425f}{heater\_shared\_duration}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00363\ \}\ \mbox{\hyperlink{group__drivers_ga754b18e9f8c3f77d4c2738fa59403150}{bme680\_config\_t}};}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00368\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__context__t}{bme680\_context\_t}}\ \{}
+\DoxyCodeLine{00369\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga754b18e9f8c3f77d4c2738fa59403150}{bme680\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__context__t_aa4e93061bf25a3b8212915158f959fab}{dev\_config}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00370\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00371\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga1fcb18f07741a3e8b640e2d3ba059f12}{bme680\_cal\_factors\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structbme680__context__t_aee1baf73a44df48ffc18338303db75f4}{dev\_cal\_factors}};\ \ \ \ }
+\DoxyCodeLine{00372\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbme680__context__t_a88e300db221e7a0382f2a4c289b9557d}{chip\_id}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00373\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ambient\_temperature;}
+\DoxyCodeLine{00374\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variant\_id;}
+\DoxyCodeLine{00375\ \};}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00380\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__context__t}{bme680\_context\_t}}\ \mbox{\hyperlink{structbme680__context__t}{bme680\_context\_t}};}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00385\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbme680__context__t}{bme680\_context\_t}}\ *\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}};}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00396\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1428013d7162e45e0aa98d692ebe6e6f}{bme680\_get\_chip\_id\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ uint8\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00397\ }
+\DoxyCodeLine{00405\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9645bd4e638ebc98c2ecf61195de5776}{bme680\_get\_variant\_id\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ uint8\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00414\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga6c954f3140a0b05f025691007165c466}{bme680\_get\_status0\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_status0\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00415\ }
+\DoxyCodeLine{00423\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac36e4d6c1442349c26e027f8bc0ed54e}{bme680\_get\_gas\_lsb\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_gas\_lsb\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00424\ }
+\DoxyCodeLine{00432\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5bfb7440dc318d739486c5632d789e13}{bme680\_set\_gas\_lsb\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bme680\_gas\_lsb\_register\_t\ reg);}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00441\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gabfbef4c619fd0ea64e7865014519e06e}{bme680\_get\_control\_measurement\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_control\_measurement\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00442\ }
+\DoxyCodeLine{00450\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0e7ab74cc925aee01a695b997b7ea162}{bme680\_set\_control\_measurement\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bme680\_control\_measurement\_register\_t\ reg);}
+\DoxyCodeLine{00451\ }
+\DoxyCodeLine{00459\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac9241adfbbf7d21531e5c997f704a348}{bme680\_get\_control\_humidity\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_control\_humidity\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00460\ }
+\DoxyCodeLine{00468\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafa9c1fab99a1cb32bb82203888173bca}{bme680\_set\_control\_humidity\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bme680\_control\_humidity\_register\_t\ reg);}
+\DoxyCodeLine{00469\ }
+\DoxyCodeLine{00477\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab445e7b178ff65ebd6a729c3df48f762}{bme680\_get\_control\_gas0\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_control\_gas0\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00478\ }
+\DoxyCodeLine{00486\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga6b1f88599ddbe2aec815577d99ceaccf}{bme680\_set\_control\_gas0\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bme680\_control\_gas0\_register\_t\ reg);}
+\DoxyCodeLine{00487\ }
+\DoxyCodeLine{00495\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4286bdbfb0299500c38524fb574727b9}{bme680\_get\_control\_gas1\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_control\_gas1\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00496\ }
+\DoxyCodeLine{00504\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac47fa145af66cf63719d286ad72f07e4}{bme680\_set\_control\_gas1\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bme680\_control\_gas1\_register\_t\ reg);}
+\DoxyCodeLine{00505\ }
+\DoxyCodeLine{00513\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5d99d3bd2ca005930e5b735e1d0049d2}{bme680\_get\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ bme680\_config\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00514\ }
+\DoxyCodeLine{00522\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga244e6a799e41182cbb51d26989edcdf1}{bme680\_set\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bme680\_config\_register\_t\ reg);}
+\DoxyCodeLine{00523\ }
+\DoxyCodeLine{00532\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga634c8a6901632299925de54d36aa85c4}{bme680\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga754b18e9f8c3f77d4c2738fa59403150}{bme680\_config\_t}}\ *bme680\_config,\ \mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ *bme680\_handle);}
+\DoxyCodeLine{00533\ }
+\DoxyCodeLine{00541\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga36125455be024323f83d41ebf4a261de}{bme680\_get\_adc\_signals}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga9eb84555a3dc9ced6a91394e16736f96}{bme680\_adc\_data\_t}}\ *\textcolor{keyword}{const}\ data);}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00550\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga110830ca8c0c7f369b8e9e694d183c82}{bme680\_get\_data}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga3238b870a3bc18b1c513b52ebb74e125}{bme680\_data\_t}}\ *\textcolor{keyword}{const}\ data);}
+\DoxyCodeLine{00551\ }
+\DoxyCodeLine{00559\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga96ab8615b99ad6d0bfb15f2e9674d920}{bme680\_get\_data\_status}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ ready);}
+\DoxyCodeLine{00560\ }
+\DoxyCodeLine{00568\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3900195ee2d52c50a52336b520ea9862}{bme680\_get\_gas\_measurement\_index}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ uint8\_t\ *\textcolor{keyword}{const}\ index);}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00577\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga11e221835d68171e4a1500d5210ad2ab}{bme680\_get\_power\_mode}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga631c33b35db1e3bcdc9dbeb3732e7e21}{bme680\_power\_modes\_t}}\ *\textcolor{keyword}{const}\ power\_mode);}
+\DoxyCodeLine{00578\ }
+\DoxyCodeLine{00586\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga78b2866a9e56e873ec90b39049196fa7}{bme680\_set\_power\_mode}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga631c33b35db1e3bcdc9dbeb3732e7e21}{bme680\_power\_modes\_t}}\ power\_mode);}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00595\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gacb2dc88ee8756b1d878642755c578e64}{bme680\_get\_pressure\_oversampling}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga7b38c1d35a8f7a27af3c264c46f78bbe}{bme680\_pressure\_oversampling\_t}}\ *\textcolor{keyword}{const}\ oversampling);}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00604\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaeaaa875bf00f30d1a8b3a7d0a56765a3}{bme680\_set\_pressure\_oversampling}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga7b38c1d35a8f7a27af3c264c46f78bbe}{bme680\_pressure\_oversampling\_t}}\ oversampling);}
+\DoxyCodeLine{00605\ }
+\DoxyCodeLine{00613\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad929ae529dd3a1ac96d70bbb57677c03}{bme680\_get\_temperature\_oversampling}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga5be0c6fd6abecc9e2e055f27ec0be79d}{bme680\_temperature\_oversampling\_t}}\ *\textcolor{keyword}{const}\ oversampling);}
+\DoxyCodeLine{00614\ }
+\DoxyCodeLine{00622\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga469d38f764c34555d25bd3add78713ea}{bme680\_set\_temperature\_oversampling}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga5be0c6fd6abecc9e2e055f27ec0be79d}{bme680\_temperature\_oversampling\_t}}\ oversampling);}
+\DoxyCodeLine{00623\ }
+\DoxyCodeLine{00631\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga824c402878d6a0f4725b29d0a255075b}{bme680\_get\_humidity\_oversampling}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga36a632407bbbcf95a69386b2240e981d}{bme680\_humidity\_oversampling\_t}}\ *\textcolor{keyword}{const}\ oversampling);}
+\DoxyCodeLine{00632\ }
+\DoxyCodeLine{00640\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1714d1fac241515bc7482e33751b413f}{bme680\_set\_humidity\_oversampling}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga36a632407bbbcf95a69386b2240e981d}{bme680\_humidity\_oversampling\_t}}\ oversampling);}
+\DoxyCodeLine{00641\ }
+\DoxyCodeLine{00649\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gabcbd257633d63e36ceecfe5a3a9cd9ae}{bme680\_get\_iir\_filter}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga659bc184b62bd53670e369a09e6a315b}{bme680\_iir\_filters\_t}}\ *\textcolor{keyword}{const}\ iir\_filter);}
+\DoxyCodeLine{00650\ }
+\DoxyCodeLine{00658\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga42d032ca7dca23fe748a5d386db89720}{bme680\_set\_iir\_filter}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga659bc184b62bd53670e369a09e6a315b}{bme680\_iir\_filters\_t}}\ iir\_filter);}
+\DoxyCodeLine{00659\ }
+\DoxyCodeLine{00666\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga606c1061cf4c410083cd645dd379f19a}{bme680\_reset}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle);}
+\DoxyCodeLine{00667\ }
+\DoxyCodeLine{00674\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{group__drivers_ga1035dfc4e91ae0606e10d9b6298ff96f}{bme680\_air\_quality\_to\_string}}(\textcolor{keywordtype}{float}\ iaq\_score);}
+\DoxyCodeLine{00675\ }
+\DoxyCodeLine{00682\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga71deded33055c869346bef7d326cb4ec}{bme680\_remove}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle);}
+\DoxyCodeLine{00683\ }
+\DoxyCodeLine{00690\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga43ca650aa6143976272296a64313fe69}{bme680\_delete}}(\mbox{\hyperlink{group__drivers_ga613796da4cb6da455381a179729e91f0}{bme680\_handle\_t}}\ handle);}
+\DoxyCodeLine{00691\ }
+\DoxyCodeLine{00697\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_ga71a0175fc3b38bd5fb9530849ab78f94}{bme680\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00698\ }
+\DoxyCodeLine{00704\ int32\_t\ \mbox{\hyperlink{group__drivers_ga0893a15c64ff19d7056a8ce9e9c81ac1}{bme680\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00705\ }
+\DoxyCodeLine{00706\ }
+\DoxyCodeLine{00707\ }
+\DoxyCodeLine{00708\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00709\ \}}
+\DoxyCodeLine{00710\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00711\ }
+\DoxyCodeLine{00713\ }
+\DoxyCodeLine{00714\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_BME680\_H\_\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_c0c6ed27134d935a850a7ccbc22250aa" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_ina226/include</compoundname>
+    <innerfile refid="ina226_8h">ina226.h</innerfile>
+    <innerfile refid="ina226__version_8h">ina226_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ina226/include/"/>
+  </compounddef>
+</doxygen>

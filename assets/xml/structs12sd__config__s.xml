@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structs12sd__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>s12sd_config_s</compoundname>
+    <includes refid="s12sd_8h" local="no">s12sd.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structs12sd__config__s_1a57fbbfb60781af698c4dcd7cd1381af1" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t adc_unit</definition>
+        <argsstring></argsstring>
+        <name>adc_unit</name>
+        <qualifiedname>s12sd_config_s::adc_unit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>s12sd adc unit </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/adc/esp_s12sd/include/s12sd.h" line="84" column="17" bodyfile="components/peripherals/adc/esp_s12sd/include/s12sd.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structs12sd__config__s_1a4fea492036f39c812cbada5718176922" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t adc_channel</definition>
+        <argsstring></argsstring>
+        <name>adc_channel</name>
+        <qualifiedname>s12sd_config_s::adc_channel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>s12sd adc channel </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/adc/esp_s12sd/include/s12sd.h" line="85" column="17" bodyfile="components/peripherals/adc/esp_s12sd/include/s12sd.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>S12SD configuration structure definition. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>public enumerator, union, and structure definitions </para>
+    </detaileddescription>
+    <location file="components/peripherals/adc/esp_s12sd/include/s12sd.h" line="83" column="1" bodyfile="components/peripherals/adc/esp_s12sd/include/s12sd.h" bodystart="83" bodyend="86"/>
+    <listofallmembers>
+      <member refid="structs12sd__config__s_1a4fea492036f39c812cbada5718176922" prot="public" virt="non-virtual"><scope>s12sd_config_s</scope><name>adc_channel</name></member>
+      <member refid="structs12sd__config__s_1a57fbbfb60781af698c4dcd7cd1381af1" prot="public" virt="non-virtual"><scope>s12sd_config_s</scope><name>adc_unit</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

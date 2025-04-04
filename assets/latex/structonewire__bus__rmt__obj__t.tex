@@ -1,0 +1,75 @@
+\doxysection{onewire\+\_\+bus\+\_\+rmt\+\_\+obj\+\_\+t Struct Reference}
+\hypertarget{structonewire__bus__rmt__obj__t}{}\label{structonewire__bus__rmt__obj__t}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} \mbox{\hyperlink{structonewire__bus__rmt__obj__t_a070111cd9158e2c0f04daef399273ec7}{base}}
+\item 
+rmt\+\_\+channel\+\_\+handle\+\_\+t \mbox{\hyperlink{structonewire__bus__rmt__obj__t_a5e20c8f274fa348357a0ecad7a64b230}{tx\+\_\+channel}}
+\item 
+rmt\+\_\+channel\+\_\+handle\+\_\+t \mbox{\hyperlink{structonewire__bus__rmt__obj__t_a2f8d7d9ee9961d32488437ac13803e97}{rx\+\_\+channel}}
+\item 
+rmt\+\_\+encoder\+\_\+handle\+\_\+t \mbox{\hyperlink{structonewire__bus__rmt__obj__t_ab0dd9ba8fccbd283fd2619ed30baef58}{tx\+\_\+bytes\+\_\+encoder}}
+\item 
+rmt\+\_\+encoder\+\_\+handle\+\_\+t \mbox{\hyperlink{structonewire__bus__rmt__obj__t_af4b1182c1201c65760117aa4e91c8c4b}{tx\+\_\+copy\+\_\+encoder}}
+\item 
+rmt\+\_\+symbol\+\_\+word\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structonewire__bus__rmt__obj__t_a9a3b01cc4f904f5f7d98e8876a6ac784}{rx\+\_\+symbols\+\_\+buf}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structonewire__bus__rmt__obj__t_ae2168be4d710c2edecbf3f91502a6f82}{max\+\_\+rx\+\_\+bytes}}
+\item 
+\Hypertarget{structonewire__bus__rmt__obj__t_a482a8a15ecaa6b04c0f0c9925938a618}\label{structonewire__bus__rmt__obj__t_a482a8a15ecaa6b04c0f0c9925938a618} 
+Queue\+Handle\+\_\+t {\bfseries receive\+\_\+queue}
+\item 
+\Hypertarget{structonewire__bus__rmt__obj__t_ae88f52307ff3eac9b45970ced910acb3}\label{structonewire__bus__rmt__obj__t_ae88f52307ff3eac9b45970ced910acb3} 
+Semaphore\+Handle\+\_\+t {\bfseries bus\+\_\+mutex}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structonewire__bus__rmt__obj__t_a070111cd9158e2c0f04daef399273ec7}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!base@{base}}
+\index{base@{base}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{base}{base}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_a070111cd9158e2c0f04daef399273ec7} 
+\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+t}} base}
+
+base class \Hypertarget{structonewire__bus__rmt__obj__t_ae2168be4d710c2edecbf3f91502a6f82}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!max\_rx\_bytes@{max\_rx\_bytes}}
+\index{max\_rx\_bytes@{max\_rx\_bytes}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{max\_rx\_bytes}{max\_rx\_bytes}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_ae2168be4d710c2edecbf3f91502a6f82} 
+size\+\_\+t max\+\_\+rx\+\_\+bytes}
+
+buffer size in byte for single receive transaction \Hypertarget{structonewire__bus__rmt__obj__t_a2f8d7d9ee9961d32488437ac13803e97}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!rx\_channel@{rx\_channel}}
+\index{rx\_channel@{rx\_channel}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{rx\_channel}{rx\_channel}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_a2f8d7d9ee9961d32488437ac13803e97} 
+rmt\+\_\+channel\+\_\+handle\+\_\+t rx\+\_\+channel}
+
+rmt rx channel handler \Hypertarget{structonewire__bus__rmt__obj__t_a9a3b01cc4f904f5f7d98e8876a6ac784}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!rx\_symbols\_buf@{rx\_symbols\_buf}}
+\index{rx\_symbols\_buf@{rx\_symbols\_buf}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{rx\_symbols\_buf}{rx\_symbols\_buf}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_a9a3b01cc4f904f5f7d98e8876a6ac784} 
+rmt\+\_\+symbol\+\_\+word\+\_\+t\texorpdfstring{$\ast$}{*} rx\+\_\+symbols\+\_\+buf}
+
+hold rmt raw symbols \Hypertarget{structonewire__bus__rmt__obj__t_ab0dd9ba8fccbd283fd2619ed30baef58}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!tx\_bytes\_encoder@{tx\_bytes\_encoder}}
+\index{tx\_bytes\_encoder@{tx\_bytes\_encoder}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{tx\_bytes\_encoder}{tx\_bytes\_encoder}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_ab0dd9ba8fccbd283fd2619ed30baef58} 
+rmt\+\_\+encoder\+\_\+handle\+\_\+t tx\+\_\+bytes\+\_\+encoder}
+
+used to encode commands and data \Hypertarget{structonewire__bus__rmt__obj__t_a5e20c8f274fa348357a0ecad7a64b230}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!tx\_channel@{tx\_channel}}
+\index{tx\_channel@{tx\_channel}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{tx\_channel}{tx\_channel}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_a5e20c8f274fa348357a0ecad7a64b230} 
+rmt\+\_\+channel\+\_\+handle\+\_\+t tx\+\_\+channel}
+
+rmt tx channel handler \Hypertarget{structonewire__bus__rmt__obj__t_af4b1182c1201c65760117aa4e91c8c4b}\index{onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}!tx\_copy\_encoder@{tx\_copy\_encoder}}
+\index{tx\_copy\_encoder@{tx\_copy\_encoder}!onewire\_bus\_rmt\_obj\_t@{onewire\_bus\_rmt\_obj\_t}}
+\doxysubsubsection{\texorpdfstring{tx\_copy\_encoder}{tx\_copy\_encoder}}
+{\footnotesize\ttfamily \label{structonewire__bus__rmt__obj__t_af4b1182c1201c65760117aa4e91c8c4b} 
+rmt\+\_\+encoder\+\_\+handle\+\_\+t tx\+\_\+copy\+\_\+encoder}
+
+used to encode reset pulse and bits 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/owb/onewire\+\_\+bus/src/onewire\+\_\+bus\+\_\+impl\+\_\+rmt.\+c\end{DoxyCompactItemize}

@@ -1,0 +1,560 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="bme680_8h" kind="file" language="C++">
+    <compoundname>bme680.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="bme680__version_8h" local="yes">bme680_version.h</includes>
+    <includedby refid="bme680_8c" local="yes">components/peripherals/i2c/esp_bme680/bme680.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_bme680/include/bme680.h</label>
+        <link refid="bme680_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>bme680_version.h</label>
+        <link refid="bme680__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_bme680/bme680.c</label>
+        <link refid="bme680_8c"/>
+      </node>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_bme680/include/bme680.h</label>
+        <link refid="bme680_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structbme680__cal__factors__s" prot="public">bme680_cal_factors_s</innerclass>
+    <innerclass refid="structbme680__data__s" prot="public">bme680_data_s</innerclass>
+    <innerclass refid="structbme680__adc__data__s" prot="public">bme680_adc_data_s</innerclass>
+    <innerclass refid="structbme680__config__s" prot="public">bme680_config_s</innerclass>
+    <innerclass refid="structbme680__context__t" prot="public">bme680_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1ga91f7f12ab13dfd442db035e12c62558d" kind="define"><name>I2C_BME680_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga01c379f28a4673d112382bf9801d673c" kind="define"><name>I2C_BME680_DEV_ADDR_LO</name></member>
+      <member refid="group__drivers_1gaa1d56d3463d0b38650d27be65fd73e9c" kind="define"><name>I2C_BME680_DEV_ADDR_HI</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga26c752c27dd9a71242cc54ae148ae3d2" kind="define"><name>BME680_HEATER_TEMP_MIN</name></member>
+      <member refid="group__drivers_1ga51d8f28364b40fdac92dd13980205e03" kind="define"><name>BME680_HEATER_TEMP_MAX</name></member>
+      <member refid="group__drivers_1ga43a69462b99e282f6b5406de483417e3" kind="define"><name>BME680_HEATER_PROFILE_SIZE</name></member>
+      <member refid="group__drivers_1gab5488660ba71a597b2317b7a7a0bb67d" kind="define"><name>I2C_BME680_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1gae4d73e09adf36a810fdf5b28b78b5a36" kind="enum"><name>bme680_heater_setpoints_e</name></member>
+      <member refid="group__drivers_1gadc9774869967ccfbe0d894a20a2a7745" kind="enum"><name>bme680_gas_wait_multipliers_e</name></member>
+      <member refid="group__drivers_1ga07839710ced515edc57e1265a9f942d0" kind="enum"><name>bme680_iir_filters_e</name></member>
+      <member refid="group__drivers_1ga036c0d22ef7602a37e6acc30754c44d6" kind="enum"><name>bme680_power_modes_e</name></member>
+      <member refid="group__drivers_1ga94e531ba21486e2c6f40f16e3021a97a" kind="enum"><name>bme680_pressure_oversampling_e</name></member>
+      <member refid="group__drivers_1ga759038547cb6202de03caba5a7c882a7" kind="enum"><name>bme680_temperature_oversampling_e</name></member>
+      <member refid="group__drivers_1ga3fff6756c917ec8461faffdfb8bb2ef4" kind="enum"><name>bme680_humidity_oversampling_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1ga457964ffe1aeb9433d63ed769051c6d6" kind="typedef"><name>bme680_heater_setpoints_t</name></member>
+      <member refid="group__drivers_1ga0ae04038fc3cbfd0bbe06d04a716578a" kind="typedef"><name>bme680_gas_wait_multipliers_t</name></member>
+      <member refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kind="typedef"><name>bme680_iir_filters_t</name></member>
+      <member refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kind="typedef"><name>bme680_power_modes_t</name></member>
+      <member refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kind="typedef"><name>bme680_pressure_oversampling_t</name></member>
+      <member refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kind="typedef"><name>bme680_temperature_oversampling_t</name></member>
+      <member refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kind="typedef"><name>bme680_humidity_oversampling_t</name></member>
+      <member refid="group__drivers_1ga1fcb18f07741a3e8b640e2d3ba059f12" kind="typedef"><name>bme680_cal_factors_t</name></member>
+      <member refid="group__drivers_1ga3238b870a3bc18b1c513b52ebb74e125" kind="typedef"><name>bme680_data_t</name></member>
+      <member refid="group__drivers_1ga9eb84555a3dc9ced6a91394e16736f96" kind="typedef"><name>bme680_adc_data_t</name></member>
+      <member refid="group__drivers_1ga754b18e9f8c3f77d4c2738fa59403150" kind="typedef"><name>bme680_config_t</name></member>
+      <member refid="group__drivers_1gae8f85658022709fe28cbfbc010cd7b3d" kind="typedef"><name>bme680_context_t</name></member>
+      <member refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kind="typedef"><name>bme680_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1gabea65224f860e437759e4387b5491565" kind="variable"><name>bme680_status0_register_t</name></member>
+      <member refid="group__drivers_1gab0114eb1c546ffe338ba161f664af494" kind="variable"><name>bme680_control_measurement_register_t</name></member>
+      <member refid="group__drivers_1ga44fcfaaca5dbafe3d4c710801af04513" kind="variable"><name>bme680_control_humidity_register_t</name></member>
+      <member refid="group__drivers_1ga7a5b1c6c7ed556e900d209c05ac2028d" kind="variable"><name>bme680_control_gas1_register_t</name></member>
+      <member refid="group__drivers_1gab63f32338a395879b458f622e61b908d" kind="variable"><name>bme680_control_gas0_register_t</name></member>
+      <member refid="group__drivers_1ga5254434ee1305602287f13792f30ea10" kind="variable"><name>bme680_gas_lsb_register_t</name></member>
+      <member refid="group__drivers_1ga6265c588db38fcc244dc0e3812f64bcc" kind="variable"><name>bme680_config_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga1428013d7162e45e0aa98d692ebe6e6f" kind="function"><name>bme680_get_chip_id_register</name></member>
+      <member refid="group__drivers_1ga9645bd4e638ebc98c2ecf61195de5776" kind="function"><name>bme680_get_variant_id_register</name></member>
+      <member refid="group__drivers_1ga6c954f3140a0b05f025691007165c466" kind="function"><name>bme680_get_status0_register</name></member>
+      <member refid="group__drivers_1gac36e4d6c1442349c26e027f8bc0ed54e" kind="function"><name>bme680_get_gas_lsb_register</name></member>
+      <member refid="group__drivers_1ga5bfb7440dc318d739486c5632d789e13" kind="function"><name>bme680_set_gas_lsb_register</name></member>
+      <member refid="group__drivers_1gabfbef4c619fd0ea64e7865014519e06e" kind="function"><name>bme680_get_control_measurement_register</name></member>
+      <member refid="group__drivers_1ga0e7ab74cc925aee01a695b997b7ea162" kind="function"><name>bme680_set_control_measurement_register</name></member>
+      <member refid="group__drivers_1gac9241adfbbf7d21531e5c997f704a348" kind="function"><name>bme680_get_control_humidity_register</name></member>
+      <member refid="group__drivers_1gafa9c1fab99a1cb32bb82203888173bca" kind="function"><name>bme680_set_control_humidity_register</name></member>
+      <member refid="group__drivers_1gab445e7b178ff65ebd6a729c3df48f762" kind="function"><name>bme680_get_control_gas0_register</name></member>
+      <member refid="group__drivers_1ga6b1f88599ddbe2aec815577d99ceaccf" kind="function"><name>bme680_set_control_gas0_register</name></member>
+      <member refid="group__drivers_1ga4286bdbfb0299500c38524fb574727b9" kind="function"><name>bme680_get_control_gas1_register</name></member>
+      <member refid="group__drivers_1gac47fa145af66cf63719d286ad72f07e4" kind="function"><name>bme680_set_control_gas1_register</name></member>
+      <member refid="group__drivers_1ga5d99d3bd2ca005930e5b735e1d0049d2" kind="function"><name>bme680_get_configuration_register</name></member>
+      <member refid="group__drivers_1ga244e6a799e41182cbb51d26989edcdf1" kind="function"><name>bme680_set_configuration_register</name></member>
+      <member refid="group__drivers_1ga634c8a6901632299925de54d36aa85c4" kind="function"><name>bme680_init</name></member>
+      <member refid="group__drivers_1ga36125455be024323f83d41ebf4a261de" kind="function"><name>bme680_get_adc_signals</name></member>
+      <member refid="group__drivers_1ga110830ca8c0c7f369b8e9e694d183c82" kind="function"><name>bme680_get_data</name></member>
+      <member refid="group__drivers_1ga96ab8615b99ad6d0bfb15f2e9674d920" kind="function"><name>bme680_get_data_status</name></member>
+      <member refid="group__drivers_1ga3900195ee2d52c50a52336b520ea9862" kind="function"><name>bme680_get_gas_measurement_index</name></member>
+      <member refid="group__drivers_1ga11e221835d68171e4a1500d5210ad2ab" kind="function"><name>bme680_get_power_mode</name></member>
+      <member refid="group__drivers_1ga78b2866a9e56e873ec90b39049196fa7" kind="function"><name>bme680_set_power_mode</name></member>
+      <member refid="group__drivers_1gacb2dc88ee8756b1d878642755c578e64" kind="function"><name>bme680_get_pressure_oversampling</name></member>
+      <member refid="group__drivers_1gaeaaa875bf00f30d1a8b3a7d0a56765a3" kind="function"><name>bme680_set_pressure_oversampling</name></member>
+      <member refid="group__drivers_1gad929ae529dd3a1ac96d70bbb57677c03" kind="function"><name>bme680_get_temperature_oversampling</name></member>
+      <member refid="group__drivers_1ga469d38f764c34555d25bd3add78713ea" kind="function"><name>bme680_set_temperature_oversampling</name></member>
+      <member refid="group__drivers_1ga824c402878d6a0f4725b29d0a255075b" kind="function"><name>bme680_get_humidity_oversampling</name></member>
+      <member refid="group__drivers_1ga1714d1fac241515bc7482e33751b413f" kind="function"><name>bme680_set_humidity_oversampling</name></member>
+      <member refid="group__drivers_1gabcbd257633d63e36ceecfe5a3a9cd9ae" kind="function"><name>bme680_get_iir_filter</name></member>
+      <member refid="group__drivers_1ga42d032ca7dca23fe748a5d386db89720" kind="function"><name>bme680_set_iir_filter</name></member>
+      <member refid="group__drivers_1ga606c1061cf4c410083cd645dd379f19a" kind="function"><name>bme680_reset</name></member>
+      <member refid="group__drivers_1ga1035dfc4e91ae0606e10d9b6298ff96f" kind="function"><name>bme680_air_quality_to_string</name></member>
+      <member refid="group__drivers_1ga71deded33055c869346bef7d326cb4ec" kind="function"><name>bme680_remove</name></member>
+      <member refid="group__drivers_1ga43ca650aa6143976272296a64313fe69" kind="function"><name>bme680_delete</name></member>
+      <member refid="group__drivers_1ga71a0175fc3b38bd5fb9530849ab78f94" kind="function"><name>bme680_get_fw_version</name></member>
+      <member refid="group__drivers_1ga0893a15c64ff19d7056a8ce9e9c81ac1" kind="function"><name>bme680_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__BME680_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__BME680_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;bme680_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*<sp/>BME680<sp/>definitions</highlight></codeline>
+<codeline lineno="53"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__drivers_1ga91f7f12ab13dfd442db035e12c62558d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BME680_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*<sp/>supported<sp/>device<sp/>addresses</highlight></codeline>
+<codeline lineno="58"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__drivers_1ga01c379f28a4673d112382bf9801d673c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BME680_DEV_ADDR_LO<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x76)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="group__drivers_1gaa1d56d3463d0b38650d27be65fd73e9c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BME680_DEV_ADDR_HI<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x77)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BME680_HEATER_TEMP_MIN<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(200)<sp/><sp/></highlight><highlight class="comment">//<sp/>min.<sp/>200<sp/>degree<sp/>Celsius</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BME680_HEATER_TEMP_MAX<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(400)<sp/><sp/></highlight><highlight class="comment">//<sp/>max.<sp/>200<sp/>degree<sp/>Celsius</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BME680_HEATER_PROFILE_SIZE<sp/><sp/>UINT8_C(10)<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>max.<sp/>10<sp/>heater<sp/>profiles<sp/>(0..9)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>*<sp/>BME680<sp/>macros</highlight></codeline>
+<codeline lineno="70"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_BME680_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_BME680_DEV_ADDR_HI,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="73"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_BME680_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="74"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.power_mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>BME680_POWER_MODE_FORCED,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="75"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.iir_filter<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>BME680_IIR_FILTER_OFF,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="76"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.pressure_oversampling<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>BME680_PRESSURE_OVERSAMPLING_4X,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="77"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.temperature_oversampling<sp/><sp/><sp/>=<sp/>BME680_TEMPERATURE_OVERSAMPLING_4X,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="78"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.humidity_oversampling<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>BME680_HUMIDITY_OVERSAMPLING_4X,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.gas_enabled<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>true,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.heater_temperature<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>300,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="81"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.heater_duration<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>300,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="82"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.heater_profile_size<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="83"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/>*<sp/>BME680<sp/>enumerator<sp/>and<sp/>structure<sp/>declarations</highlight></codeline>
+<codeline lineno="88"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="group__drivers_1gae4d73e09adf36a810fdf5b28b78b5a36" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gae4d73e09adf36a810fdf5b28b78b5a36" kindref="member">bme680_heater_setpoints_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_0<sp/><sp/>=<sp/>(0b0000),</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_1<sp/><sp/>=<sp/>(0b0001),</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_2<sp/><sp/>=<sp/>(0b0010),</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_3<sp/><sp/>=<sp/>(0b0011),</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_4<sp/><sp/>=<sp/>(0b0100),</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_5<sp/><sp/>=<sp/>(0b0101),</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_6<sp/><sp/>=<sp/>(0b0110),</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_7<sp/><sp/>=<sp/>(0b0111),</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_8<sp/><sp/>=<sp/>(0b1000),</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_HEATER_SETPOINT_9<sp/><sp/>=<sp/>(0b1001)</highlight></codeline>
+<codeline lineno="105" refid="group__drivers_1ga457964ffe1aeb9433d63ed769051c6d6" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga457964ffe1aeb9433d63ed769051c6d6" kindref="member">bme680_heater_setpoints_t</ref>;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="group__drivers_1gadc9774869967ccfbe0d894a20a2a7745" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gadc9774869967ccfbe0d894a20a2a7745" kindref="member">bme680_gas_wait_multipliers_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_GAS_WAIT_MULT_1<sp/><sp/>=<sp/>(0b00),</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_GAS_WAIT_MULT_4<sp/><sp/>=<sp/>(0b01),</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_GAS_WAIT_MULT_16<sp/>=<sp/>(0b10),</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_GAS_WAIT_MULT_64<sp/>=<sp/>(0b11)</highlight></codeline>
+<codeline lineno="115" refid="group__drivers_1ga0ae04038fc3cbfd0bbe06d04a716578a" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga0ae04038fc3cbfd0bbe06d04a716578a" kindref="member">bme680_gas_wait_multipliers_t</ref>;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="group__drivers_1ga07839710ced515edc57e1265a9f942d0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga07839710ced515edc57e1265a9f942d0" kindref="member">bme680_iir_filters_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_OFF<sp/>=<sp/>(0b000),</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_1<sp/><sp/><sp/>=<sp/>(0b001),</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_3<sp/><sp/><sp/>=<sp/>(0b010),</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_7<sp/><sp/><sp/>=<sp/>(0b011),</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_15<sp/><sp/>=<sp/>(0b100),</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_31<sp/><sp/>=<sp/>(0b101),</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_63<sp/><sp/>=<sp/>(0b110),</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>BME680_IIR_FILTER_127<sp/>=<sp/>(0b111),</highlight></codeline>
+<codeline lineno="129" refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kindref="member">bme680_iir_filters_t</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="group__drivers_1ga036c0d22ef7602a37e6acc30754c44d6" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga036c0d22ef7602a37e6acc30754c44d6" kindref="member">bme680_power_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="135" refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6a6b69b7e506c1ffb45148d3fe8f077ab3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6a6b69b7e506c1ffb45148d3fe8f077ab3" kindref="member">BME680_POWER_MODE_SLEEP</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b00),<sp/></highlight></codeline>
+<codeline lineno="136" refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6a5c62dd38dc60b06037d60c9037582874" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6a5c62dd38dc60b06037d60c9037582874" kindref="member">BME680_POWER_MODE_FORCED</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b01),<sp/></highlight></codeline>
+<codeline lineno="137" refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6aec4ae7ef1889a0be7d0e6fd06d32b9de" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6aec4ae7ef1889a0be7d0e6fd06d32b9de" kindref="member">BME680_POWER_MODE_PARALLEL</ref><sp/><sp/><sp/>=<sp/>(0b10),<sp/></highlight></codeline>
+<codeline lineno="138" refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6ac967972c848d852ac3fa8d84b4e18f1d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga036c0d22ef7602a37e6acc30754c44d6ac967972c848d852ac3fa8d84b4e18f1d" kindref="member">BME680_POWER_MODE_SEQUENTIAL</ref><sp/>=<sp/>(0b11)<sp/><sp/></highlight></codeline>
+<codeline lineno="139" refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kindref="member">bme680_power_modes_t</ref>;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="group__drivers_1ga94e531ba21486e2c6f40f16e3021a97a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga94e531ba21486e2c6f40f16e3021a97a" kindref="member">bme680_pressure_oversampling_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="145" refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aac54a44dc0d22775a71ca05f86e70ca88" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aac54a44dc0d22775a71ca05f86e70ca88" kindref="member">BME680_PRESSURE_OVERSAMPLING_SKIPPED</ref><sp/><sp/><sp/><sp/>=<sp/>(0b000),<sp/><sp/></highlight></codeline>
+<codeline lineno="146" refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa1a4382cea626cc63ea901d45add1b408" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa1a4382cea626cc63ea901d45add1b408" kindref="member">BME680_PRESSURE_OVERSAMPLING_1X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b001),<sp/><sp/></highlight></codeline>
+<codeline lineno="147" refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa58f7f00961d4297da4d477c33a93a81d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa58f7f00961d4297da4d477c33a93a81d" kindref="member">BME680_PRESSURE_OVERSAMPLING_2X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b010),<sp/><sp/></highlight></codeline>
+<codeline lineno="148" refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aadead53800b79df0e0201a31807639b38" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aadead53800b79df0e0201a31807639b38" kindref="member">BME680_PRESSURE_OVERSAMPLING_4X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b011),<sp/><sp/></highlight></codeline>
+<codeline lineno="149" refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa3fb7cab771665aeb98b6684a47902f99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa3fb7cab771665aeb98b6684a47902f99" kindref="member">BME680_PRESSURE_OVERSAMPLING_8X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100),<sp/><sp/></highlight></codeline>
+<codeline lineno="150" refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa76b01b1da7edcc7afcdd5e9f0db7874c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga94e531ba21486e2c6f40f16e3021a97aa76b01b1da7edcc7afcdd5e9f0db7874c" kindref="member">BME680_PRESSURE_OVERSAMPLING_16X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b101)<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="151" refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kindref="member">bme680_pressure_oversampling_t</ref>;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="group__drivers_1ga759038547cb6202de03caba5a7c882a7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga759038547cb6202de03caba5a7c882a7" kindref="member">bme680_temperature_oversampling_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="157" refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7a6f28a8b91d2c2ad346a455885a2eeae6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7a6f28a8b91d2c2ad346a455885a2eeae6" kindref="member">BME680_TEMPERATURE_OVERSAMPLING_SKIPPED</ref><sp/><sp/><sp/><sp/>=<sp/>(0b000),<sp/><sp/></highlight></codeline>
+<codeline lineno="158" refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7a9db54aa27b3bee04e3f2df6a0233b2d2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7a9db54aa27b3bee04e3f2df6a0233b2d2" kindref="member">BME680_TEMPERATURE_OVERSAMPLING_1X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b001),<sp/><sp/></highlight></codeline>
+<codeline lineno="159" refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7acec878b493e26e412ad07d0a71f054b5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7acec878b493e26e412ad07d0a71f054b5" kindref="member">BME680_TEMPERATURE_OVERSAMPLING_2X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b010),<sp/><sp/></highlight></codeline>
+<codeline lineno="160" refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7ac9891d9fbad80d05bee5a2da831872a0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7ac9891d9fbad80d05bee5a2da831872a0" kindref="member">BME680_TEMPERATURE_OVERSAMPLING_4X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b011),<sp/><sp/></highlight></codeline>
+<codeline lineno="161" refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7ac1ea641bf1243022aa2c7750b766363a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7ac1ea641bf1243022aa2c7750b766363a" kindref="member">BME680_TEMPERATURE_OVERSAMPLING_8X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100),<sp/><sp/></highlight></codeline>
+<codeline lineno="162" refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7ae0bbbabd9ac3b588b93cf5d0e07f2909" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga759038547cb6202de03caba5a7c882a7ae0bbbabd9ac3b588b93cf5d0e07f2909" kindref="member">BME680_TEMPERATURE_OVERSAMPLING_16X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b101),<sp/><sp/></highlight></codeline>
+<codeline lineno="163" refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kindref="member">bme680_temperature_oversampling_t</ref>;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168" refid="group__drivers_1ga3fff6756c917ec8461faffdfb8bb2ef4" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga3fff6756c917ec8461faffdfb8bb2ef4" kindref="member">bme680_humidity_oversampling_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="169" refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4aff8cf04d2d511c862dc2283cb2d40808" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4aff8cf04d2d511c862dc2283cb2d40808" kindref="member">BME680_HUMIDITY_OVERSAMPLING_SKIPPED</ref><sp/><sp/><sp/><sp/>=<sp/>(0b000),<sp/><sp/></highlight></codeline>
+<codeline lineno="170" refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4aeaf4a961a9514c45260f91f3f6c3be0a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4aeaf4a961a9514c45260f91f3f6c3be0a" kindref="member">BME680_HUMIDITY_OVERSAMPLING_1X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b001),<sp/><sp/></highlight></codeline>
+<codeline lineno="171" refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4ac222619e62fafebad55802c08d22ec90" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4ac222619e62fafebad55802c08d22ec90" kindref="member">BME680_HUMIDITY_OVERSAMPLING_2X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b010),<sp/><sp/></highlight></codeline>
+<codeline lineno="172" refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4a4af4ee525dba2162ed18450858af2f33" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4a4af4ee525dba2162ed18450858af2f33" kindref="member">BME680_HUMIDITY_OVERSAMPLING_4X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b011),<sp/><sp/></highlight></codeline>
+<codeline lineno="173" refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4a9ee54de303e17d3bb73c53a754e35433" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4a9ee54de303e17d3bb73c53a754e35433" kindref="member">BME680_HUMIDITY_OVERSAMPLING_8X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100),<sp/><sp/></highlight></codeline>
+<codeline lineno="174" refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4ab11434b263d85dc3f5a56700a7e26c01" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga3fff6756c917ec8461faffdfb8bb2ef4ab11434b263d85dc3f5a56700a7e26c01" kindref="member">BME680_HUMIDITY_OVERSAMPLING_16X</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b101),<sp/><sp/></highlight></codeline>
+<codeline lineno="175" refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kindref="member">bme680_humidity_oversampling_t</ref>;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_status0_register_u<sp/>{</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>gas_measurement_index:4;<sp/></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>measuring:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>gas_measuring:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>new_data:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal">}<sp/>bme680_status0_register_t;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_control_measurement_register_u<sp/>{</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kindref="member">bme680_power_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>power_mode:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kindref="member">bme680_pressure_oversampling_t</ref><sp/><sp/><sp/><sp/><sp/><sp/>pressure_oversampling:3;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kindref="member">bme680_temperature_oversampling_t</ref><sp/><sp/><sp/>temperature_oversampling:3;<sp/></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal">}<sp/>bme680_control_measurement_register_t;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_control_humidity_register_u<sp/>{</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kindref="member">bme680_humidity_oversampling_t</ref><sp/><sp/><sp/><sp/><sp/><sp/>humidity_oversampling:3;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:3;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>spi_irq_enabled:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="218"><highlight class="normal">}<sp/>bme680_control_humidity_register_t;</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_control_gas1_register_u<sp/>{</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga457964ffe1aeb9433d63ed769051c6d6" kindref="member">bme680_heater_setpoints_t</ref><sp/><sp/><sp/>heater_setpoint:4;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gas_conversion_enabled:1;</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:3;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="231"><highlight class="normal">}<sp/>bme680_control_gas1_register_t;</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_control_gas0_register_u<sp/>{</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:3;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>heater_disabled:1;<sp/></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:4;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal">}<sp/>bme680_control_gas0_register_t;</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_gas_r_lsb_register_u<sp/>{</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gas_range:4;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>heater_stable:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gas_valid:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gas_lsb:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="258"><highlight class="normal">}<sp/>bme680_gas_lsb_register_t;</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>bme680_configuration_register_u<sp/>{</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>spi_enabled:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kindref="member">bme680_iir_filters_t</ref><sp/><sp/><sp/><sp/>iir_filter:3;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:3;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="272"><highlight class="normal">}<sp/>bme680_config_register_t;</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277" refid="structbme680__cal__factors__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__cal__factors__s" kindref="compound">bme680_cal_factors_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>temperature<sp/>compensation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_T1;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_T2;</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_T3;</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>temperature_fine;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>humidity<sp/>compensation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H1;</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H2;</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H3;</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H4;</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H5;</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H6;</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_H7;</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pressure<sp/>compensation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P1;</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P2;</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P3;</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P4;</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P5;</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P6;</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P7;</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P8;</highlight></codeline>
+<codeline lineno="300"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P9;</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_P10;</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>resistance<sp/>heat<sp/>compensation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_G1;</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/>int16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_G2;</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>par_G3;</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>other<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>res_heat_range;</highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>res_heat_val;</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/>int8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>range_switching_error;</highlight></codeline>
+<codeline lineno="310" refid="group__drivers_1ga1fcb18f07741a3e8b640e2d3ba059f12" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga1fcb18f07741a3e8b640e2d3ba059f12" kindref="member">bme680_cal_factors_t</ref>;</highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315" refid="structbme680__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__data__s" kindref="compound">bme680_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="316" refid="structbme680__data__s_1a708b12e594d183ba115f10e8aca0665b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1a708b12e594d183ba115f10e8aca0665b" kindref="member">dewpoint_temperature</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="317" refid="structbme680__data__s_1a5cbb9c964da67812cd01b081c2fc6cd1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1a5cbb9c964da67812cd01b081c2fc6cd1" kindref="member">air_temperature</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="318" refid="structbme680__data__s_1ad60830bc80efb7e8a11d6fb25518f55b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1ad60830bc80efb7e8a11d6fb25518f55b" kindref="member">relative_humidity</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="319" refid="structbme680__data__s_1ad2a540b7fffffcd5581c3d05d94df7f6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1ad2a540b7fffffcd5581c3d05d94df7f6" kindref="member">barometric_pressure</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="320" refid="structbme680__data__s_1a806fa5bc30520f84f87b8479ea263e04" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1a806fa5bc30520f84f87b8479ea263e04" kindref="member">gas_valid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="321" refid="structbme680__data__s_1ac30cebc4cd86ec13a739515a74105b50" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1ac30cebc4cd86ec13a739515a74105b50" kindref="member">gas_resistance</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="322" refid="structbme680__data__s_1a87b4540d7cba30cb7f7e184467b34394" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><ref refid="structbme680__data__s_1a87b4540d7cba30cb7f7e184467b34394" kindref="member">gas_range</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="323" refid="structbme680__data__s_1ac9861af59182939c5f1d292857cc218c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><ref refid="structbme680__data__s_1ac9861af59182939c5f1d292857cc218c" kindref="member">gas_index</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="324" refid="structbme680__data__s_1a62791e77eacb0713ac8dd58380b791f4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__data__s_1a62791e77eacb0713ac8dd58380b791f4" kindref="member">heater_stable</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="325" refid="structbme680__data__s_1acebbf28041a5672d184c08d6dd285509" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structbme680__data__s_1acebbf28041a5672d184c08d6dd285509" kindref="member">iaq_score</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>temperature_score;</highlight></codeline>
+<codeline lineno="327"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>humidity_score;</highlight></codeline>
+<codeline lineno="328"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>gas_score;</highlight></codeline>
+<codeline lineno="329" refid="group__drivers_1ga3238b870a3bc18b1c513b52ebb74e125" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga3238b870a3bc18b1c513b52ebb74e125" kindref="member">bme680_data_t</ref>;</highlight></codeline>
+<codeline lineno="330"><highlight class="normal"></highlight></codeline>
+<codeline lineno="334" refid="structbme680__adc__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__adc__data__s" kindref="compound">bme680_adc_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>temperature;</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>humidity;</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>pressure;</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>gas;</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>gas_valid;</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/>gas_range;</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/>gas_index;</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>heater_stable;</highlight></codeline>
+<codeline lineno="343" refid="group__drivers_1ga9eb84555a3dc9ced6a91394e16736f96" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga9eb84555a3dc9ced6a91394e16736f96" kindref="member">bme680_adc_data_t</ref>;</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"></highlight></codeline>
+<codeline lineno="348" refid="structbme680__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__config__s" kindref="compound">bme680_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="349" refid="structbme680__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="350" refid="structbme680__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="351" refid="structbme680__config__s_1a43ecd923f632053e1120e76b712eb2fa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kindref="member">bme680_power_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a43ecd923f632053e1120e76b712eb2fa" kindref="member">power_mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kindref="member">bme680_iir_filters_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iir_filter;</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kindref="member">bme680_pressure_oversampling_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pressure_oversampling;</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kindref="member">bme680_temperature_oversampling_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>temperature_oversampling;</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kindref="member">bme680_humidity_oversampling_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>humidity_oversampling;</highlight></codeline>
+<codeline lineno="356" refid="structbme680__config__s_1a36fdc8559e1cbfa31f5bb5243ae5f56d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a36fdc8559e1cbfa31f5bb5243ae5f56d" kindref="member">gas_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="357" refid="structbme680__config__s_1a62c79fac486cde538921ca50ced01127" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a62c79fac486cde538921ca50ced01127" kindref="member">heater_temperature</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="358" refid="structbme680__config__s_1a0ab2c5eea7e0868d17b6c8c3a14cd110" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a0ab2c5eea7e0868d17b6c8c3a14cd110" kindref="member">heater_duration</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="359" refid="structbme680__config__s_1ad630f45b4b68dd68cee2a36ae2db5552" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1ad630f45b4b68dd68cee2a36ae2db5552" kindref="member">heater_temperature_profile</ref>[BME680_HEATER_PROFILE_SIZE];<sp/></highlight></codeline>
+<codeline lineno="360" refid="structbme680__config__s_1af6c3e2adb91a1e60dadae66ee9218303" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1af6c3e2adb91a1e60dadae66ee9218303" kindref="member">heater_duration_profile</ref>[BME680_HEATER_PROFILE_SIZE];<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="361" refid="structbme680__config__s_1a2573355afe4c6bca8bfa99a4dfb7b0ea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a2573355afe4c6bca8bfa99a4dfb7b0ea" kindref="member">heater_profile_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="362" refid="structbme680__config__s_1a10ae592277d68fbfb9c4cc1661ba425f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__config__s_1a10ae592277d68fbfb9c4cc1661ba425f" kindref="member">heater_shared_duration</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="363" refid="group__drivers_1ga754b18e9f8c3f77d4c2738fa59403150" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga754b18e9f8c3f77d4c2738fa59403150" kindref="member">bme680_config_t</ref>;</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"></highlight></codeline>
+<codeline lineno="368" refid="structbme680__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__context__t" kindref="compound">bme680_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="369" refid="structbme680__context__t_1aa4e93061bf25a3b8212915158f959fab" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga754b18e9f8c3f77d4c2738fa59403150" kindref="member">bme680_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__context__t_1aa4e93061bf25a3b8212915158f959fab" kindref="member">dev_config</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="370" refid="structbme680__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="371" refid="structbme680__context__t_1aee1baf73a44df48ffc18338303db75f4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga1fcb18f07741a3e8b640e2d3ba059f12" kindref="member">bme680_cal_factors_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structbme680__context__t_1aee1baf73a44df48ffc18338303db75f4" kindref="member">dev_cal_factors</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="372" refid="structbme680__context__t_1a88e300db221e7a0382f2a4c289b9557d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbme680__context__t_1a88e300db221e7a0382f2a4c289b9557d" kindref="member">chip_id</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ambient_temperature;</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>variant_id;</highlight></codeline>
+<codeline lineno="375"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"></highlight></codeline>
+<codeline lineno="380" refid="group__drivers_1gae8f85658022709fe28cbfbc010cd7b3d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__context__t" kindref="compound">bme680_context_t</ref><sp/><ref refid="structbme680__context__t" kindref="compound">bme680_context_t</ref>;</highlight></codeline>
+<codeline lineno="381"><highlight class="normal"></highlight></codeline>
+<codeline lineno="385" refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbme680__context__t" kindref="compound">bme680_context_t</ref><sp/>*<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref>;</highlight></codeline>
+<codeline lineno="386"><highlight class="normal"></highlight></codeline>
+<codeline lineno="387"><highlight class="normal"></highlight></codeline>
+<codeline lineno="388"><highlight class="normal"></highlight></codeline>
+<codeline lineno="396"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1428013d7162e45e0aa98d692ebe6e6f" kindref="member">bme680_get_chip_id_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="397"><highlight class="normal"></highlight></codeline>
+<codeline lineno="405"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga9645bd4e638ebc98c2ecf61195de5776" kindref="member">bme680_get_variant_id_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"></highlight></codeline>
+<codeline lineno="414"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga6c954f3140a0b05f025691007165c466" kindref="member">bme680_get_status0_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_status0_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="415"><highlight class="normal"></highlight></codeline>
+<codeline lineno="423"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac36e4d6c1442349c26e027f8bc0ed54e" kindref="member">bme680_get_gas_lsb_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_gas_lsb_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="424"><highlight class="normal"></highlight></codeline>
+<codeline lineno="432"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga5bfb7440dc318d739486c5632d789e13" kindref="member">bme680_set_gas_lsb_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bme680_gas_lsb_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="433"><highlight class="normal"></highlight></codeline>
+<codeline lineno="441"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gabfbef4c619fd0ea64e7865014519e06e" kindref="member">bme680_get_control_measurement_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_control_measurement_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="442"><highlight class="normal"></highlight></codeline>
+<codeline lineno="450"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga0e7ab74cc925aee01a695b997b7ea162" kindref="member">bme680_set_control_measurement_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bme680_control_measurement_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="451"><highlight class="normal"></highlight></codeline>
+<codeline lineno="459"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac9241adfbbf7d21531e5c997f704a348" kindref="member">bme680_get_control_humidity_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_control_humidity_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="460"><highlight class="normal"></highlight></codeline>
+<codeline lineno="468"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gafa9c1fab99a1cb32bb82203888173bca" kindref="member">bme680_set_control_humidity_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bme680_control_humidity_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="469"><highlight class="normal"></highlight></codeline>
+<codeline lineno="477"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gab445e7b178ff65ebd6a729c3df48f762" kindref="member">bme680_get_control_gas0_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_control_gas0_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="478"><highlight class="normal"></highlight></codeline>
+<codeline lineno="486"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga6b1f88599ddbe2aec815577d99ceaccf" kindref="member">bme680_set_control_gas0_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bme680_control_gas0_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="487"><highlight class="normal"></highlight></codeline>
+<codeline lineno="495"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4286bdbfb0299500c38524fb574727b9" kindref="member">bme680_get_control_gas1_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_control_gas1_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="496"><highlight class="normal"></highlight></codeline>
+<codeline lineno="504"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac47fa145af66cf63719d286ad72f07e4" kindref="member">bme680_set_control_gas1_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bme680_control_gas1_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="505"><highlight class="normal"></highlight></codeline>
+<codeline lineno="513"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga5d99d3bd2ca005930e5b735e1d0049d2" kindref="member">bme680_get_configuration_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>bme680_config_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="514"><highlight class="normal"></highlight></codeline>
+<codeline lineno="522"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga244e6a799e41182cbb51d26989edcdf1" kindref="member">bme680_set_configuration_register</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bme680_config_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="523"><highlight class="normal"></highlight></codeline>
+<codeline lineno="532"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga634c8a6901632299925de54d36aa85c4" kindref="member">bme680_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga754b18e9f8c3f77d4c2738fa59403150" kindref="member">bme680_config_t</ref><sp/>*bme680_config,<sp/><ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>*bme680_handle);</highlight></codeline>
+<codeline lineno="533"><highlight class="normal"></highlight></codeline>
+<codeline lineno="541"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga36125455be024323f83d41ebf4a261de" kindref="member">bme680_get_adc_signals</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga9eb84555a3dc9ced6a91394e16736f96" kindref="member">bme680_adc_data_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>data);</highlight></codeline>
+<codeline lineno="542"><highlight class="normal"></highlight></codeline>
+<codeline lineno="550"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga110830ca8c0c7f369b8e9e694d183c82" kindref="member">bme680_get_data</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga3238b870a3bc18b1c513b52ebb74e125" kindref="member">bme680_data_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>data);</highlight></codeline>
+<codeline lineno="551"><highlight class="normal"></highlight></codeline>
+<codeline lineno="559"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga96ab8615b99ad6d0bfb15f2e9674d920" kindref="member">bme680_get_data_status</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ready);</highlight></codeline>
+<codeline lineno="560"><highlight class="normal"></highlight></codeline>
+<codeline lineno="568"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga3900195ee2d52c50a52336b520ea9862" kindref="member">bme680_get_gas_measurement_index</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>index);</highlight></codeline>
+<codeline lineno="569"><highlight class="normal"></highlight></codeline>
+<codeline lineno="577"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga11e221835d68171e4a1500d5210ad2ab" kindref="member">bme680_get_power_mode</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kindref="member">bme680_power_modes_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>power_mode);</highlight></codeline>
+<codeline lineno="578"><highlight class="normal"></highlight></codeline>
+<codeline lineno="586"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga78b2866a9e56e873ec90b39049196fa7" kindref="member">bme680_set_power_mode</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga631c33b35db1e3bcdc9dbeb3732e7e21" kindref="member">bme680_power_modes_t</ref><sp/>power_mode);</highlight></codeline>
+<codeline lineno="587"><highlight class="normal"></highlight></codeline>
+<codeline lineno="595"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gacb2dc88ee8756b1d878642755c578e64" kindref="member">bme680_get_pressure_oversampling</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kindref="member">bme680_pressure_oversampling_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>oversampling);</highlight></codeline>
+<codeline lineno="596"><highlight class="normal"></highlight></codeline>
+<codeline lineno="604"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaeaaa875bf00f30d1a8b3a7d0a56765a3" kindref="member">bme680_set_pressure_oversampling</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga7b38c1d35a8f7a27af3c264c46f78bbe" kindref="member">bme680_pressure_oversampling_t</ref><sp/>oversampling);</highlight></codeline>
+<codeline lineno="605"><highlight class="normal"></highlight></codeline>
+<codeline lineno="613"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad929ae529dd3a1ac96d70bbb57677c03" kindref="member">bme680_get_temperature_oversampling</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kindref="member">bme680_temperature_oversampling_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>oversampling);</highlight></codeline>
+<codeline lineno="614"><highlight class="normal"></highlight></codeline>
+<codeline lineno="622"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga469d38f764c34555d25bd3add78713ea" kindref="member">bme680_set_temperature_oversampling</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga5be0c6fd6abecc9e2e055f27ec0be79d" kindref="member">bme680_temperature_oversampling_t</ref><sp/>oversampling);</highlight></codeline>
+<codeline lineno="623"><highlight class="normal"></highlight></codeline>
+<codeline lineno="631"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga824c402878d6a0f4725b29d0a255075b" kindref="member">bme680_get_humidity_oversampling</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kindref="member">bme680_humidity_oversampling_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>oversampling);</highlight></codeline>
+<codeline lineno="632"><highlight class="normal"></highlight></codeline>
+<codeline lineno="640"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1714d1fac241515bc7482e33751b413f" kindref="member">bme680_set_humidity_oversampling</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga36a632407bbbcf95a69386b2240e981d" kindref="member">bme680_humidity_oversampling_t</ref><sp/>oversampling);</highlight></codeline>
+<codeline lineno="641"><highlight class="normal"></highlight></codeline>
+<codeline lineno="649"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gabcbd257633d63e36ceecfe5a3a9cd9ae" kindref="member">bme680_get_iir_filter</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kindref="member">bme680_iir_filters_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>iir_filter);</highlight></codeline>
+<codeline lineno="650"><highlight class="normal"></highlight></codeline>
+<codeline lineno="658"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga42d032ca7dca23fe748a5d386db89720" kindref="member">bme680_set_iir_filter</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga659bc184b62bd53670e369a09e6a315b" kindref="member">bme680_iir_filters_t</ref><sp/>iir_filter);</highlight></codeline>
+<codeline lineno="659"><highlight class="normal"></highlight></codeline>
+<codeline lineno="666"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga606c1061cf4c410083cd645dd379f19a" kindref="member">bme680_reset</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="667"><highlight class="normal"></highlight></codeline>
+<codeline lineno="674"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="group__drivers_1ga1035dfc4e91ae0606e10d9b6298ff96f" kindref="member">bme680_air_quality_to_string</ref>(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>iaq_score);</highlight></codeline>
+<codeline lineno="675"><highlight class="normal"></highlight></codeline>
+<codeline lineno="682"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga71deded33055c869346bef7d326cb4ec" kindref="member">bme680_remove</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="683"><highlight class="normal"></highlight></codeline>
+<codeline lineno="690"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga43ca650aa6143976272296a64313fe69" kindref="member">bme680_delete</ref>(<ref refid="group__drivers_1ga613796da4cb6da455381a179729e91f0" kindref="member">bme680_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="691"><highlight class="normal"></highlight></codeline>
+<codeline lineno="697"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1ga71a0175fc3b38bd5fb9530849ab78f94" kindref="member">bme680_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="698"><highlight class="normal"></highlight></codeline>
+<codeline lineno="704"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1ga0893a15c64ff19d7056a8ce9e9c81ac1" kindref="member">bme680_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="705"><highlight class="normal"></highlight></codeline>
+<codeline lineno="706"><highlight class="normal"></highlight></codeline>
+<codeline lineno="707"><highlight class="normal"></highlight></codeline>
+<codeline lineno="708"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="709"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="710"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="711"><highlight class="normal"></highlight></codeline>
+<codeline lineno="713"><highlight class="normal"></highlight></codeline>
+<codeline lineno="714"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__BME680_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_bme680/include/bme680.h"/>
+  </compounddef>
+</doxygen>

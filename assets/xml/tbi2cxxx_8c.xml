@@ -1,0 +1,872 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="tbi2cxxx_8c" kind="file" language="C++">
+    <compoundname>tbi2cxxx.c</compoundname>
+    <includes refid="tbi2cxxx_8h" local="yes">include/tbi2cxxx.h</includes>
+    <includes local="no">string.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">math.h</includes>
+    <includes local="no">esp_log.h</includes>
+    <includes local="no">esp_check.h</includes>
+    <includes local="no">esp_timer.h</includes>
+    <includes local="no">freertos/FreeRTOS.h</includes>
+    <includes local="no">freertos/task.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>include/tbi2cxxx.h</label>
+        <link refid="tbi2cxxx_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>tbi2cxxx_version.h</label>
+        <link refid="tbi2cxxx__version_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c</label>
+        <link refid="tbi2cxxx_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="15">
+        <label>esp_check.h</label>
+      </node>
+      <node id="5">
+        <label>esp_err.h</label>
+      </node>
+      <node id="14">
+        <label>esp_log.h</label>
+      </node>
+      <node id="8">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="16">
+        <label>esp_timer.h</label>
+      </node>
+      <node id="17">
+        <label>freertos/FreeRTOS.h</label>
+      </node>
+      <node id="18">
+        <label>freertos/task.h</label>
+      </node>
+      <node id="13">
+        <label>math.h</label>
+      </node>
+      <node id="4">
+        <label>stdbool.h</label>
+      </node>
+      <node id="3">
+        <label>stdint.h</label>
+      </node>
+      <node id="12">
+        <label>stdio.h</label>
+      </node>
+      <node id="11">
+        <label>string.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="tbi2cxxx_8c_1abaaf9edd7982931a2f13a0c7c1f23d8a" prot="public" static="no">
+        <name>TBI2CXXX_CMD_AMB_TEMP_R</name>
+        <initializer>UINT8_C(0x06)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="49" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1aa1cbbbf5ab07fff7f6771ca0836b75fc" prot="public" static="no">
+        <name>TBI2CXXX_CMD_OBJ_TEMP_R</name>
+        <initializer>UINT8_C(0x07)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="50" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1aea56a4362ba1a5a1e1cbaa5d34ab7a32" prot="public" static="no">
+        <name>TBI2CXXX_CMD_EMIS_COEF_RW</name>
+        <initializer>UINT8_C(0x24)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="51" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1ab066f837222f72d47efb56d8270639de" prot="public" static="no">
+        <name>TBI2CXXX_CMD_SLV_ADDR_RW</name>
+        <initializer>UINT8_C(0x2e)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="52" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1af2508f2640fc8862615ab6df571db47b" prot="public" static="no">
+        <name>TBI2CXXX_DATA_READY_DELAY_MS</name>
+        <initializer>UINT16_C(105)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="54" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1ade2adc2dd1d3ba8a30fc7fc18c594254" prot="public" static="no">
+        <name>TBI2CXXX_POWERUP_DELAY_MS</name>
+        <initializer>UINT16_C(205)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="55" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1a6a8e6c3d78de68dac4ee5885693bc428" prot="public" static="no">
+        <name>TBI2CXXX_APPSTART_DELAY_MS</name>
+        <initializer>UINT16_C(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>tbi2cxxx delay after initialization before application start-up </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="56" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1af70887738e3a449db292970227781e47" prot="public" static="no">
+        <name>TBI2CXXX_CMD_DELAY_MS</name>
+        <initializer>UINT16_C(5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>tbi2cxxx delay before attempting I2C transactions after a command is issued </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="57" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1aee7b193fcb571e0c3bc88c29f1662af4" prot="public" static="no">
+        <name>ESP_TIMEOUT_CHECK</name>
+        <param><defname>start</defname></param>
+        <param><defname>len</defname></param>
+        <initializer>((uint64_t)(esp_timer_get_time() - (start)) &gt;= (len))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="63" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tbi2cxxx_8c_1ac2bb3db0b37c9f45103fd513ca5158fe" prot="public" static="no">
+        <name>ESP_ARG_CHECK</name>
+        <param><defname>VAL</defname></param>
+        <initializer>do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="64" column="9" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="64" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="tbi2cxxx_8c_1a5a85b9c772bbeb480b209a3e6ea92b4c" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* TAG</definition>
+        <argsstring></argsstring>
+        <name>TAG</name>
+        <initializer>= &quot;tbi2cxxx&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="69" column="19" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="tbi2cxxx_8c_1a7fe6e1440f2134cb78e9afdbcd58387b" prot="public" static="yes" mutable="no">
+        <type>const uint8_t</type>
+        <definition>const uint8_t crc8_table[256]</definition>
+        <argsstring>[256]</argsstring>
+        <name>crc8_table</name>
+        <initializer>= { 
+    0x00, 0x07, 0x0E, 0x09, 0x1C, 0x1B, 0x12, 0x15,    0x38, 0x3F, 0x36, 0x31, 0x24, 0x23, 0x2A, 0x2D,
+    0x70, 0x77, 0x7E, 0x79, 0x6C, 0x6B, 0x62, 0x65,    0x48, 0x4F, 0x46, 0x41, 0x54, 0x53, 0x5A, 0x5D,
+    0xE0, 0xE7, 0xEE, 0xE9, 0xFC, 0xFB, 0xF2, 0xF5,    0xD8, 0xDF, 0xD6, 0xD1, 0xC4, 0xC3, 0xCA, 0xCD,
+    0x90, 0x97, 0x9E, 0x99, 0x8C, 0x8B, 0x82, 0x85,    0xA8, 0xAF, 0xA6, 0xA1, 0xB4, 0xB3, 0xBA, 0xBD,
+    0xC7, 0xC0, 0xC9, 0xCE, 0xDB, 0xDC, 0xD5, 0xD2,    0xFF, 0xF8, 0xF1, 0xF6, 0xE3, 0xE4, 0xED, 0xEA,
+    0xB7, 0xB0, 0xB9, 0xBE, 0xAB, 0xAC, 0xA5, 0xA2,    0x8F, 0x88, 0x81, 0x86, 0x93, 0x94, 0x9D, 0x9A,
+    0x27, 0x20, 0x29, 0x2E, 0x3B, 0x3C, 0x35, 0x32,    0x1F, 0x18, 0x11, 0x16, 0x03, 0x04, 0x0D, 0x0A,
+    0x57, 0x50, 0x59, 0x5E, 0x4B, 0x4C, 0x45, 0x42,    0x6F, 0x68, 0x61, 0x66, 0x73, 0x74, 0x7D, 0x7A,
+    0x89, 0x8E, 0x87, 0x80, 0x95, 0x92, 0x9B, 0x9C,    0xB1, 0xB6, 0xBF, 0xB8, 0xAD, 0xAA, 0xA3, 0xA4,
+    0xF9, 0xFE, 0xF7, 0xF0, 0xE5, 0xE2, 0xEB, 0xEC,    0xC1, 0xC6, 0xCF, 0xC8, 0xDD, 0xDA, 0xD3, 0xD4,
+    0x69, 0x6E, 0x67, 0x60, 0x75, 0x72, 0x7B, 0x7C,    0x51, 0x56, 0x5F, 0x58, 0x4D, 0x4A, 0x43, 0x44,
+    0x19, 0x1E, 0x17, 0x10, 0x05, 0x02, 0x0B, 0x0C,    0x21, 0x26, 0x2F, 0x28, 0x3D, 0x3A, 0x33, 0x34,
+    0x4E, 0x49, 0x40, 0x47, 0x52, 0x55, 0x5C, 0x5B,    0x76, 0x71, 0x78, 0x7F, 0x6A, 0x6D, 0x64, 0x63,
+    0x3E, 0x39, 0x30, 0x37, 0x22, 0x25, 0x2C, 0x2B,    0x06, 0x01, 0x08, 0x0F, 0x1A, 0x1D, 0x14, 0x13,
+    0xAE, 0xA9, 0xA0, 0xA7, 0xB2, 0xB5, 0xBC, 0xBB,    0x96, 0x91, 0x98, 0x9F, 0x8A, 0x8D, 0x84, 0x83,
+    0xDE, 0xD9, 0xD0, 0xD7, 0xC2, 0xC5, 0xCC, 0xCB,    0xE6, 0xE1, 0xE8, 0xEF, 0xFA, 0xFD, 0xF4, 0xF3  
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="71" column="22" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="71" bodyend="88"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="tbi2cxxx_8c_1ad68b2d09d8591aa15f8e0252334c472d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint8_t</type>
+        <definition>static uint8_t tbi2cxxx_calculate_pec</definition>
+        <argsstring>(uint8_t *crc, uint8_t size)</argsstring>
+        <name>tbi2cxxx_calculate_pec</name>
+        <param>
+          <type>uint8_t *</type>
+          <declname>crc</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+<para>Calculates PEC. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>crc</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Data buffer to calculate PEC against. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Size of data buffer. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>uint8_t Calculated PEC. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="99" column="23" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="99" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="tbi2cxxx_8c_1aca2eaf0cf0b3894fdb688accaa69b397" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>static float tbi2cxxx_decode_temperature</definition>
+        <argsstring>(uint16_t encoded_temperature)</argsstring>
+        <name>tbi2cxxx_decode_temperature</name>
+        <param>
+          <type>uint16_t</type>
+          <declname>encoded_temperature</declname>
+        </param>
+        <briefdescription>
+<para>Decodes raw <computeroutput>uint16_t</computeroutput> temperature to floating point temperature in degrees celsius. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>encoded_temperature</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Raw <computeroutput>uint16_t</computeroutput> temperature to decode. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>float Decoded floating point temperature in degrees celsius. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="115" column="21" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="115" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="tbi2cxxx_8c_1a495e240528574ffc57b8c5fb79d123a7" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>static esp_err_t tbi2cxxx_i2c_read_word_from</definition>
+        <argsstring>(tbi2cxxx_handle_t handle, const uint8_t reg_addr, uint16_t *const data)</argsstring>
+        <name>tbi2cxxx_i2c_read_word_from</name>
+        <param>
+          <type><ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <param>
+          <type>const uint8_t</type>
+          <declname>reg_addr</declname>
+        </param>
+        <param>
+          <type>uint16_t *const</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Reads a word (2-bytes) from TBI2CXXX. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TBI2CXXX device handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>reg_addr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TBI2CXXX device register address (1-byte). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint16_t</computeroutput> (2-byte) word read from TBI2CXXX. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+<para>&lt; i2c eeprom address</para>
+<para>&lt; low-byte</para>
+<para>&lt; high-bye</para>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="129" column="25" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="129" bodyend="158"/>
+      </memberdef>
+      <memberdef kind="function" id="tbi2cxxx_8c_1acb9bb0ba86d350005f9347a0b815ef78" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>static esp_err_t tbi2cxxx_i2c_write_word_to</definition>
+        <argsstring>(tbi2cxxx_handle_t handle, const uint8_t reg_addr, const uint16_t data)</argsstring>
+        <name>tbi2cxxx_i2c_write_word_to</name>
+        <param>
+          <type><ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <param>
+          <type>const uint8_t</type>
+          <declname>reg_addr</declname>
+        </param>
+        <param>
+          <type>const uint16_t</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+<para>Writes a word (2-bytes) to TBI2CXXX. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TBI2CXXX device handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>reg_addr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TBI2CXXX device register address (1-byte). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>uint16_t</computeroutput> (2-byte) word to write to TBI2CXXX. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+<para>&lt; i2c eeprom address</para>
+<para>&lt; low-byte</para>
+<para>&lt; high-bye</para>
+<para>&lt; pec</para>
+<para>&lt; i2c eeprom address</para>
+<para>&lt; low-byte</para>
+<para>&lt; high-bye</para>
+<para>&lt; pec</para>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="168" column="25" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="168" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="tbi2cxxx_8c_1ad60cf10f3d46d93de3e2b4fae25ac3e6" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>static esp_err_t tbi2cxxx_erase_register</definition>
+        <argsstring>(tbi2cxxx_handle_t handle, const uint8_t reg_addr)</argsstring>
+        <name>tbi2cxxx_erase_register</name>
+        <param>
+          <type><ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <param>
+          <type>const uint8_t</type>
+          <declname>reg_addr</declname>
+        </param>
+        <briefdescription>
+<para>Erases a register on TBI2CXXX. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TBI2CXXX device handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>reg_addr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TBI2CXXX device register address (1-byte). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" line="203" column="25" bodyfile="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c" bodystart="203" bodyend="211"/>
+      </memberdef>
+      <member refid="group__drivers_1ga25bdb3452c5b29a3ff49e264860dcf27" kind="function"><name>tbi2cxxx_init</name></member>
+      <member refid="group__drivers_1ga23bd65826ab6f55c5771b8d8d1d2f0e3" kind="function"><name>tbi2cxxx_get_temperatures</name></member>
+      <member refid="group__drivers_1gaae9dc6300d0137eed7bdb65dc740805c" kind="function"><name>tbi2cxxx_get_ambient_temperature</name></member>
+      <member refid="group__drivers_1gaa7ef08b34b225840d04ea8095e9542cd" kind="function"><name>tbi2cxxx_get_object_temperature</name></member>
+      <member refid="group__drivers_1ga6c77ae3eb92e74bb730086086cd0360c" kind="function"><name>tbi2cxxx_get_emissivity</name></member>
+      <member refid="group__drivers_1gadcf122994a10b87d6c8e876a2177ba8b" kind="function"><name>tbi2cxxx_set_emissivity</name></member>
+      <member refid="group__drivers_1ga22daa35b11224ec670f6d28e1a06915b" kind="function"><name>tbi2cxxx_remove</name></member>
+      <member refid="group__drivers_1ga16eab3ba0a07f5f5da98e91c74a86408" kind="function"><name>tbi2cxxx_delete</name></member>
+      <member refid="group__drivers_1ga33588fb965ff9d8a16b04998746a7d3c" kind="function"><name>tbi2cxxx_get_fw_version</name></member>
+      <member refid="group__drivers_1ga22484df6bb8c6fd727defc451d91a7c3" kind="function"><name>tbi2cxxx_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>ESP-IDF driver for TBI2CXXX ir temperature sensor</para>
+<para>Ported from esp-open-rtos</para>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tbi2cxxx_8h" kindref="compound">include/tbi2cxxx.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;math.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_log.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_check.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_timer.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/FreeRTOS.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/task.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>*<sp/>TBI2CXXX<sp/>definitions</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_CMD_AMB_TEMP_R<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x06)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_CMD_OBJ_TEMP_R<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x07)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_CMD_EMIS_COEF_RW<sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x24)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_CMD_SLV_ADDR_RW<sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x2e)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_DATA_READY_DELAY_MS<sp/><sp/><sp/>UINT16_C(105)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_POWERUP_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(205)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_APPSTART_DELAY_MS<sp/><sp/><sp/><sp/><sp/>UINT16_C(10)<sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TBI2CXXX_CMD_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(5)<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="62"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESP_TIMEOUT_CHECK(start,<sp/>len)<sp/>((uint64_t)(esp_timer_get_time()<sp/>-<sp/>(start))<sp/>&gt;=<sp/>(len))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESP_ARG_CHECK(VAL)<sp/>do<sp/>{<sp/>if<sp/>(!(VAL))<sp/>return<sp/>ESP_ERR_INVALID_ARG;<sp/>}<sp/>while<sp/>(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="67"><highlight class="comment">*<sp/>static<sp/>constant<sp/>declarations</highlight></codeline>
+<codeline lineno="68"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*TAG<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;tbi2cxxx&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>crc8_table[256]=<sp/>{<sp/></highlight><highlight class="comment">//<sp/>CRC<sp/>table</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>0x00,<sp/>0x07,<sp/>0x0E,<sp/>0x09,<sp/>0x1C,<sp/>0x1B,<sp/>0x12,<sp/>0x15,<sp/><sp/><sp/><sp/>0x38,<sp/>0x3F,<sp/>0x36,<sp/>0x31,<sp/>0x24,<sp/>0x23,<sp/>0x2A,<sp/>0x2D,</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>0x70,<sp/>0x77,<sp/>0x7E,<sp/>0x79,<sp/>0x6C,<sp/>0x6B,<sp/>0x62,<sp/>0x65,<sp/><sp/><sp/><sp/>0x48,<sp/>0x4F,<sp/>0x46,<sp/>0x41,<sp/>0x54,<sp/>0x53,<sp/>0x5A,<sp/>0x5D,</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>0xE0,<sp/>0xE7,<sp/>0xEE,<sp/>0xE9,<sp/>0xFC,<sp/>0xFB,<sp/>0xF2,<sp/>0xF5,<sp/><sp/><sp/><sp/>0xD8,<sp/>0xDF,<sp/>0xD6,<sp/>0xD1,<sp/>0xC4,<sp/>0xC3,<sp/>0xCA,<sp/>0xCD,</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>0x90,<sp/>0x97,<sp/>0x9E,<sp/>0x99,<sp/>0x8C,<sp/>0x8B,<sp/>0x82,<sp/>0x85,<sp/><sp/><sp/><sp/>0xA8,<sp/>0xAF,<sp/>0xA6,<sp/>0xA1,<sp/>0xB4,<sp/>0xB3,<sp/>0xBA,<sp/>0xBD,</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>0xC7,<sp/>0xC0,<sp/>0xC9,<sp/>0xCE,<sp/>0xDB,<sp/>0xDC,<sp/>0xD5,<sp/>0xD2,<sp/><sp/><sp/><sp/>0xFF,<sp/>0xF8,<sp/>0xF1,<sp/>0xF6,<sp/>0xE3,<sp/>0xE4,<sp/>0xED,<sp/>0xEA,</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>0xB7,<sp/>0xB0,<sp/>0xB9,<sp/>0xBE,<sp/>0xAB,<sp/>0xAC,<sp/>0xA5,<sp/>0xA2,<sp/><sp/><sp/><sp/>0x8F,<sp/>0x88,<sp/>0x81,<sp/>0x86,<sp/>0x93,<sp/>0x94,<sp/>0x9D,<sp/>0x9A,</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>0x27,<sp/>0x20,<sp/>0x29,<sp/>0x2E,<sp/>0x3B,<sp/>0x3C,<sp/>0x35,<sp/>0x32,<sp/><sp/><sp/><sp/>0x1F,<sp/>0x18,<sp/>0x11,<sp/>0x16,<sp/>0x03,<sp/>0x04,<sp/>0x0D,<sp/>0x0A,</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>0x57,<sp/>0x50,<sp/>0x59,<sp/>0x5E,<sp/>0x4B,<sp/>0x4C,<sp/>0x45,<sp/>0x42,<sp/><sp/><sp/><sp/>0x6F,<sp/>0x68,<sp/>0x61,<sp/>0x66,<sp/>0x73,<sp/>0x74,<sp/>0x7D,<sp/>0x7A,</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>0x89,<sp/>0x8E,<sp/>0x87,<sp/>0x80,<sp/>0x95,<sp/>0x92,<sp/>0x9B,<sp/>0x9C,<sp/><sp/><sp/><sp/>0xB1,<sp/>0xB6,<sp/>0xBF,<sp/>0xB8,<sp/>0xAD,<sp/>0xAA,<sp/>0xA3,<sp/>0xA4,</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>0xF9,<sp/>0xFE,<sp/>0xF7,<sp/>0xF0,<sp/>0xE5,<sp/>0xE2,<sp/>0xEB,<sp/>0xEC,<sp/><sp/><sp/><sp/>0xC1,<sp/>0xC6,<sp/>0xCF,<sp/>0xC8,<sp/>0xDD,<sp/>0xDA,<sp/>0xD3,<sp/>0xD4,</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>0x69,<sp/>0x6E,<sp/>0x67,<sp/>0x60,<sp/>0x75,<sp/>0x72,<sp/>0x7B,<sp/>0x7C,<sp/><sp/><sp/><sp/>0x51,<sp/>0x56,<sp/>0x5F,<sp/>0x58,<sp/>0x4D,<sp/>0x4A,<sp/>0x43,<sp/>0x44,</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>0x19,<sp/>0x1E,<sp/>0x17,<sp/>0x10,<sp/>0x05,<sp/>0x02,<sp/>0x0B,<sp/>0x0C,<sp/><sp/><sp/><sp/>0x21,<sp/>0x26,<sp/>0x2F,<sp/>0x28,<sp/>0x3D,<sp/>0x3A,<sp/>0x33,<sp/>0x34,</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>0x4E,<sp/>0x49,<sp/>0x40,<sp/>0x47,<sp/>0x52,<sp/>0x55,<sp/>0x5C,<sp/>0x5B,<sp/><sp/><sp/><sp/>0x76,<sp/>0x71,<sp/>0x78,<sp/>0x7F,<sp/>0x6A,<sp/>0x6D,<sp/>0x64,<sp/>0x63,</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>0x3E,<sp/>0x39,<sp/>0x30,<sp/>0x37,<sp/>0x22,<sp/>0x25,<sp/>0x2C,<sp/>0x2B,<sp/><sp/><sp/><sp/>0x06,<sp/>0x01,<sp/>0x08,<sp/>0x0F,<sp/>0x1A,<sp/>0x1D,<sp/>0x14,<sp/>0x13,</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>0xAE,<sp/>0xA9,<sp/>0xA0,<sp/>0xA7,<sp/>0xB2,<sp/>0xB5,<sp/>0xBC,<sp/>0xBB,<sp/><sp/><sp/><sp/>0x96,<sp/>0x91,<sp/>0x98,<sp/>0x9F,<sp/>0x8A,<sp/>0x8D,<sp/>0x84,<sp/>0x83,</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>0xDE,<sp/>0xD9,<sp/>0xD0,<sp/>0xD7,<sp/>0xC2,<sp/>0xC5,<sp/>0xCC,<sp/>0xCB,<sp/><sp/><sp/><sp/>0xE6,<sp/>0xE1,<sp/>0xE8,<sp/>0xEF,<sp/>0xFA,<sp/>0xFD,<sp/>0xF4,<sp/>0xF3<sp/><sp/></highlight></codeline>
+<codeline lineno="88"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>uint8_t<sp/>tbi2cxxx_calculate_pec(uint8_t<sp/>*crc,<sp/>uint8_t<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>data,<sp/>count;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>remainder<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(count=0;<sp/>count&lt;size;<sp/>++count)<sp/>{</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data<sp/>=<sp/>*(crc++)<sp/>^<sp/>remainder;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>remainder<sp/>=<sp/>crc8_table[data]<sp/>^<sp/>(remainder<sp/>&gt;&gt;<sp/>8);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>remainder;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>tbi2cxxx_decode_temperature(uint16_t<sp/>encoded_temperature)<sp/>{</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>decoded_temperature<sp/>=<sp/>(float)encoded_temperature<sp/>*<sp/>0.02f;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>decoded_temperature<sp/>-=<sp/>273.15f;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>decoded_temperature;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>esp_err_t<sp/>tbi2cxxx_i2c_read_word_from(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>reg_addr,<sp/>uint16_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>data)<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bit8_uint8_buffer_t<sp/>tx<sp/>=<sp/>{<sp/>reg_addr<sp/>};</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/>bit24_uint8_buffer_t<sp/><sp/><sp/><sp/><sp/><sp/>rx<sp/>=<sp/>{<sp/>};</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>and<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>i2c_master_transmit_receive(handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>,<sp/>tx,<sp/>BIT8_UINT8_BUFFER_SIZE,<sp/>rx,<sp/>BIT24_UINT8_BUFFER_SIZE,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>transmit<sp/>and<sp/>receive,<sp/>read<sp/>word<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>buffer<sp/>data<sp/>for<sp/>pec<sp/>validation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bit40_uint8_buffer_t<sp/>pec_buf<sp/>=<sp/>{<sp/></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>handle-&gt;dev_config.<ref refid="structtbi2cxxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref><sp/>&lt;&lt;<sp/>1,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*&lt;!<sp/>i2c<sp/>device<sp/>write<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reg_addr,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(handle-&gt;dev_config.<ref refid="structtbi2cxxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref><sp/>&lt;&lt;<sp/>1)<sp/>|<sp/>0x01,<sp/></highlight><highlight class="comment">/*&lt;!<sp/>i2c<sp/>device<sp/>read<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rx[0],<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rx[1]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>calculate<sp/>and<sp/>validate<sp/>pec<sp/>from<sp/>rx<sp/>data<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE((rx[2]<sp/>==<sp/>tbi2cxxx_calculate_pec(pec_buf,<sp/>BIT40_UINT8_BUFFER_SIZE)),<sp/>ESP_ERR_INVALID_CRC,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;invalid<sp/>pec<sp/>received,<sp/>read<sp/>word<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>output<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>*data<sp/>=<sp/>(rx[1]<sp/>&lt;&lt;<sp/>8)<sp/>|<sp/>rx[0];<sp/></highlight><highlight class="comment">//<sp/>high-byte<sp/>|<sp/>low-byte</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>task<sp/>before<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(<ref refid="tbi2cxxx_8c_1af70887738e3a449db292970227781e47" kindref="member">TBI2CXXX_CMD_DELAY_MS</ref>));</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>esp_err_t<sp/>tbi2cxxx_i2c_write_word_to(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>reg_addr,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>data)<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>bit32_uint8_buffer_t<sp/>tx<sp/>=<sp/>{<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>buffer<sp/>data<sp/>and<sp/>calculate<sp/>pec<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[0]<sp/>=<sp/>handle-&gt;dev_config.<ref refid="structtbi2cxxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref><sp/>&lt;&lt;<sp/>1;<sp/><sp/></highlight><highlight class="comment">/*&lt;!<sp/>i2c<sp/>device<sp/>write<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[1]<sp/>=<sp/>reg_addr;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[2]<sp/>=<sp/>data<sp/>&amp;<sp/>0xff;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[3]<sp/>=<sp/>(data<sp/>&gt;&gt;<sp/>8)<sp/>&amp;<sp/>0xff;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>pec<sp/>=<sp/>tbi2cxxx_calculate_pec(tx,<sp/>4);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>shift<sp/>buffer<sp/>data<sp/>index<sp/>up<sp/>by<sp/>one<sp/>and<sp/>set<sp/>tx<sp/>data<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[0]<sp/>=<sp/>tx[1];<sp/></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[1]<sp/>=<sp/>tx[2];<sp/></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[2]<sp/>=<sp/>tx[3];<sp/></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>tx[3]<sp/>=<sp/>pec;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>i2c_master_transmit(handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>,<sp/>tx,<sp/>BIT32_UINT8_BUFFER_SIZE,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>transmit,<sp/>write<sp/>word<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>task<sp/>before<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(<ref refid="tbi2cxxx_8c_1af70887738e3a449db292970227781e47" kindref="member">TBI2CXXX_CMD_DELAY_MS</ref>));</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>esp_err_t<sp/>tbi2cxxx_erase_register(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>reg_addr)<sp/>{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>tbi2cxxx_i2c_write_word_to(handle,<sp/>reg_addr,<sp/>0x0000),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>transmit,<sp/>erase<sp/>register<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga25bdb3452c5b29a3ff49e264860dcf27" kindref="member">tbi2cxxx_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gaa2c53e981afa7e2c33a020a1463a9f63" kindref="member">tbi2cxxx_config_t</ref><sp/>*tbi2cxxx_config,<sp/><ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>*tbi2cxxx_handle)<sp/>{</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>master_handle<sp/>&amp;&amp;<sp/>tbi2cxxx_config<sp/>);</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>task<sp/>before<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(TBI2CXXX_POWERUP_DELAY_MS));</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>device<sp/>exists<sp/>on<sp/>the<sp/>master<sp/>bus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>ret<sp/>=<sp/>i2c_master_probe(master_handle,<sp/>tbi2cxxx_config-&gt;<ref refid="structtbi2cxxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>);</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(ret,<sp/>err,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;device<sp/>does<sp/>not<sp/>exist<sp/>at<sp/>address<sp/>0x%02x,<sp/>tbi2cxxx<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">,<sp/>tbi2cxxx_config-&gt;<ref refid="structtbi2cxxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>memory<sp/>availability<sp/>for<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>out_handle;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/>out_handle<sp/>=<sp/>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref>)calloc(1,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(*out_handle));</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_FALSE(out_handle,<sp/>ESP_ERR_NO_MEM,<sp/>err,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;no<sp/>memory<sp/>for<sp/>i2c<sp/>tbi2cxxx<sp/>device,<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>configuration<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/>out_handle-&gt;dev_config<sp/>=<sp/>*tbi2cxxx_config;</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>i2c<sp/>device<sp/>configuration<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>i2c_device_config_t<sp/>i2c_dev_conf<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.dev_addr_length<sp/><sp/><sp/><sp/>=<sp/>I2C_ADDR_BIT_LEN_7,</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.device_address<sp/><sp/><sp/><sp/><sp/>=<sp/>out_handle-&gt;dev_config.<ref refid="structtbi2cxxx__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>,</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.scl_speed_hz<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>out_handle-&gt;dev_config.<ref refid="structtbi2cxxx__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>,</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref><sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle,<sp/>&amp;i2c_dev_conf,<sp/>&amp;out_handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;i2c<sp/>new<sp/>bus<sp/>for<sp/>init<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/>*tbi2cxxx_handle<sp/>=<sp/>out_handle;</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>task<sp/>before<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(<ref refid="tbi2cxxx_8c_1a6a8e6c3d78de68dac4ee5885693bc428" kindref="member">TBI2CXXX_APPSTART_DELAY_MS</ref>));</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/>err_handle:</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>clean<sp/>up<sp/>handle<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle<sp/>&amp;&amp;<sp/>out_handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i2c_master_bus_rm_device(out_handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>);</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(out_handle);</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/>err:</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ret;</highlight></codeline>
+<codeline lineno="260"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"></highlight></codeline>
+<codeline lineno="262"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga23bd65826ab6f55c5771b8d8d1d2f0e3" kindref="member">tbi2cxxx_get_temperatures</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ambient_temperature,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>object_temperature)<sp/>{</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/><ref refid="group__drivers_1gaae9dc6300d0137eed7bdb65dc740805c" kindref="member">tbi2cxxx_get_ambient_temperature</ref>(handle,<sp/>ambient_temperature),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>read<sp/>ambient<sp/>temperature<sp/>from<sp/>device,<sp/>get<sp/>temperatures<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/><ref refid="group__drivers_1gaa7ef08b34b225840d04ea8095e9542cd" kindref="member">tbi2cxxx_get_object_temperature</ref>(handle,<sp/>object_temperature),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>read<sp/>object<sp/>temperature<sp/>from<sp/>device,<sp/>get<sp/>temperatures<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="273"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaae9dc6300d0137eed7bdb65dc740805c" kindref="member">tbi2cxxx_get_ambient_temperature</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature)<sp/>{</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>encoded_temperature;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>tbi2cxxx_i2c_read_word_from(handle,<sp/>TBI2CXXX_CMD_AMB_TEMP_R,<sp/>&amp;encoded_temperature),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>read<sp/>word<sp/>from<sp/>device,<sp/>get<sp/>ambient<sp/>temperature<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>maximum<sp/>range<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE((encoded_temperature<sp/>&lt;<sp/>0x7fff),<sp/>ESP_ERR_INVALID_SIZE,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;received<sp/>word<sp/>from<sp/>device<sp/>is<sp/>out<sp/>of<sp/>range,<sp/>get<sp/>ambient<sp/>temperature<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>output<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/>*temperature<sp/>=<sp/>tbi2cxxx_decode_temperature(encoded_temperature);</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="291"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
+<codeline lineno="293"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa7ef08b34b225840d04ea8095e9542cd" kindref="member">tbi2cxxx_get_object_temperature</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature)<sp/>{</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>encoded_temperature;</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>tbi2cxxx_i2c_read_word_from(handle,<sp/>TBI2CXXX_CMD_OBJ_TEMP_R,<sp/>&amp;encoded_temperature),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>read<sp/>word<sp/>from<sp/>device,<sp/>get<sp/>object<sp/>temperature<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>maximum<sp/>range<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE((encoded_temperature<sp/>&lt;<sp/>0x7fff),<sp/>ESP_ERR_INVALID_SIZE,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;received<sp/>word<sp/>from<sp/>device<sp/>is<sp/>out<sp/>of<sp/>range,<sp/>get<sp/>object<sp/>temperature<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>msb<sp/>bit<sp/>for<sp/>error<sp/>flag<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE(!(encoded_temperature<sp/>&amp;<sp/>0x8000),<sp/>ESP_ERR_INVALID_RESPONSE,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;error<sp/>detected<sp/>with<sp/>received<sp/>word<sp/>from<sp/>device,<sp/>get<sp/>object<sp/>temperature<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>output<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/>*temperature<sp/>=<sp/>tbi2cxxx_decode_temperature(encoded_temperature);</highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="312"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga6c77ae3eb92e74bb730086086cd0360c" kindref="member">tbi2cxxx_get_emissivity</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>coefficient)<sp/>{</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>coefficient_e;</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>tbi2cxxx_i2c_read_word_from(handle,<sp/>TBI2CXXX_CMD_EMIS_COEF_RW,<sp/>&amp;coefficient_e),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>read<sp/>word<sp/>from<sp/>device,<sp/>get<sp/>emissivity<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="322"><highlight class="normal"></highlight></codeline>
+<codeline lineno="323"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>output<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"><sp/><sp/><sp/><sp/>*coefficient<sp/>=<sp/>((float)coefficient_e<sp/>+<sp/>1.0f)<sp/>/<sp/>65536.0f;</highlight></codeline>
+<codeline lineno="325"><highlight class="normal"></highlight></codeline>
+<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="327"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="328"><highlight class="normal"></highlight></codeline>
+<codeline lineno="329"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gadcf122994a10b87d6c8e876a2177ba8b" kindref="member">tbi2cxxx_set_emissivity</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>coefficient)<sp/>{</highlight></codeline>
+<codeline lineno="330"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>coefficient_e;</highlight></codeline>
+<codeline lineno="331"><highlight class="normal"></highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"></highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>emissivity<sp/>coefficient<sp/>range<sp/>is<sp/>between<sp/>0.1<sp/>and<sp/>1.0<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE((coefficient<sp/>&lt;=<sp/>1.0f),<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;emissivity<sp/>coefficient<sp/>range<sp/>must<sp/>be<sp/>between<sp/>0.1<sp/>and<sp/>1.0,<sp/>set<sp/>emissivity<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_FALSE((coefficient<sp/>&gt;=<sp/>0.1f),<sp/>ESP_ERR_INVALID_ARG,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;emissivity<sp/>coefficient<sp/>range<sp/>must<sp/>be<sp/>between<sp/>0.1<sp/>and<sp/>1.0,<sp/>set<sp/>emissivity<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"></highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>emissivity<sp/>coefficient<sp/>(round<sp/>down)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/>coefficient_e<sp/>=<sp/>(uint16_t)floorf(((coefficient<sp/>*<sp/>65536.0f)<sp/>-<sp/>1.0f));</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"></highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>to<sp/>erase<sp/>register<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>tbi2cxxx_erase_register(handle,<sp/>TBI2CXXX_CMD_EMIS_COEF_RW),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>erase<sp/>register<sp/>on<sp/>device,<sp/>set<sp/>emissivity<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>tbi2cxxx_i2c_write_word_to(handle,<sp/>TBI2CXXX_CMD_EMIS_COEF_RW,<sp/>coefficient_e),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>write<sp/>word<sp/>from<sp/>device,<sp/>set<sp/>emissivity<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"></highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="349"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"></highlight></codeline>
+<codeline lineno="351"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga22daa35b11224ec670f6d28e1a06915b" kindref="member">tbi2cxxx_remove</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"></highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>remove<sp/>device<sp/>from<sp/>i2c<sp/>master<sp/>bus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>i2c_master_bus_rm_device(handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>);</highlight></codeline>
+<codeline lineno="357"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="358"><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga16eab3ba0a07f5f5da98e91c74a86408" kindref="member">tbi2cxxx_delete</ref>(<ref refid="group__drivers_1gae94ca8f4dde9ba65a809b2482ac7ee39" kindref="member">tbi2cxxx_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="361"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="362"><highlight class="normal"></highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>remove<sp/>device<sp/>from<sp/>master<sp/>bus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/><ref refid="group__drivers_1ga22daa35b11224ec670f6d28e1a06915b" kindref="member">tbi2cxxx_remove</ref>(handle),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>remove<sp/>device<sp/>from<sp/>i2c<sp/>master<sp/>bus,<sp/>delete<sp/>handle<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>handle<sp/>instance<sp/>and<sp/>free<sp/>handles<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(handle-&gt;<ref refid="structtbi2cxxx__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>);</highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(handle);</highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="371"><highlight class="normal"></highlight></codeline>
+<codeline lineno="372"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="373"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"></highlight></codeline>
+<codeline lineno="375"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1ga33588fb965ff9d8a16b04998746a7d3c" kindref="member">tbi2cxxx_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga0a743668a9f0a8f172b4af4230e82179" kindref="member">TBI2CXXX_FW_VERSION_STR</ref>;</highlight></codeline>
+<codeline lineno="377"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="378"><highlight class="normal"></highlight></codeline>
+<codeline lineno="379"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1ga22484df6bb8c6fd727defc451d91a7c3" kindref="member">tbi2cxxx_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gae3131947f0845aad364fa21118816136" kindref="member">TBI2CXXX_FW_VERSION_INT32</ref>;</highlight></codeline>
+<codeline lineno="381"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_tbi2cxxx/tbi2cxxx.c"/>
+  </compounddef>
+</doxygen>

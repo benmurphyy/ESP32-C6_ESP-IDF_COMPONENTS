@@ -1,0 +1,146 @@
+\doxysection{ds18b20.\+h}
+\hypertarget{ds18b20_8h_source}{}\label{ds18b20_8h_source}\index{components/peripherals/owb/esp\_ds18b20/include/ds18b20.h@{components/peripherals/owb/esp\_ds18b20/include/ds18b20.h}}
+\mbox{\hyperlink{ds18b20_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#ifndef\ \_\_DS18B20\_H\_\_}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ \_\_DS18B20\_H\_\_}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ <onewire\_bus.h>}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <onewire\_device.h>}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}ds18b20\_version.h"{}}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00053\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00054\ \{}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ *\ DS18B20\ definitions}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ *\ DS18B20\ macro\ definitions}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ OWB\_DS18B20\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \ \ .resolution\ \ \ \ \ \ =\ DS18B20\_RESOLUTION\_10BIT,\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\ \ \ \ .trigger\_enabled\ =\ false\ \}}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gacf07a98756a425197bfab93e4d170eac}{ds18b20\_resolutions\_e}}\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggacf07a98756a425197bfab93e4d170eaca5333ef2c5e5ec44213bf3f40bd9aa50b}{DS18B20\_RESOLUTION\_9BIT}}\ \ =\ 0b00,\ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggacf07a98756a425197bfab93e4d170eaca6274d477f2d9d92a62050c3375c361a0}{DS18B20\_RESOLUTION\_10BIT}}\ =\ 0b01,\ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggacf07a98756a425197bfab93e4d170eaca0396bfa58a01fdd9922771715e1467f6}{DS18B20\_RESOLUTION\_11BIT}}\ =\ 0b10,\ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggacf07a98756a425197bfab93e4d170eacaf2f20b32fccc2658193d818188ae54ca}{DS18B20\_RESOLUTION\_12BIT}}\ =\ 0b11,\ \ }
+\DoxyCodeLine{00079\ \}\ \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\_resolutions\_t}};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ds18b20\_configuration\_register\_u\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{struct\ }DS18B20\_CFG\_REG\_BIT\_TAG\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:5;\ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\_resolutions\_t}}\ \ \ \ \ \ \ resolution:2;\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:1;\ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \}\ ds18b20\_configuration\_register\_t;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ds18b20\_scratchpad\_s\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ uint8\_t\ temp\_lsb;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ uint8\_t\ temp\_msb;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ uint8\_t\ trigger\_high;\ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ uint8\_t\ trigger\_low;\ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ uint8\_t\ configuration;\ \ }
+\DoxyCodeLine{00102\ \ \ \ \ uint8\_t\ reserved1;\ \ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ uint8\_t\ reserved2;\ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ uint8\_t\ reserved3;\ \ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ uint8\_t\ crc;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \}\ ds18b20\_scratchpad\_t;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structds18b20__config__s}{ds18b20\_config\_s}}\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\_resolutions\_t}}\ \ \ \ \ \mbox{\hyperlink{structds18b20__config__s_aa7602c81640839ef02acf8746634ad5b}{resolution}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structds18b20__config__s_a7b5b6baf3e80f4b262349b224d8544a4}{trigger\_enabled}};\ \ }
+\DoxyCodeLine{00114\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structds18b20__config__s_a70b7f2074281abe3b2d1c19b53f94eda}{trigger\_high}};\ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ int8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structds18b20__config__s_a97846b8d49751a38e58290abb9bc1a0c}{trigger\_low}};\ \ \ \ \ \ }
+\DoxyCodeLine{00116\ \}\ \mbox{\hyperlink{group__drivers_gaf0a7fbdb7b61aa0636778a6f5e22ce68}{ds18b20\_config\_t}};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00121\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structds18b20__context__t}{ds18b20\_context\_t}}\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{group__drivers_gaf0a7fbdb7b61aa0636778a6f5e22ce68}{ds18b20\_config\_t}}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structds18b20__context__t_a524a5612441638834ee8a317cd501a5d}{dev\_config}};\ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ onewire\_bus\_handle\_t\ \ \ \ \ \ \mbox{\hyperlink{structds18b20__context__t_a8354e70b6e2372059687a673d263f611}{owb\_handle}};\ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ onewire\_device\_address\_t\ \ \mbox{\hyperlink{structds18b20__context__t_a169149e2d09641fcaeb56b044cde7041}{owb\_address}};\ \ }
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00130\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structds18b20__context__t}{ds18b20\_context\_t}}\ \mbox{\hyperlink{structds18b20__context__t}{ds18b20\_context\_t}};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00135\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structds18b20__context__t}{ds18b20\_context\_t}}\ *\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00144\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__drivers_ga4a1fee0b059382bfe94cda53e3188348}{ods18b20\_validate\_address}}(\textcolor{keyword}{const}\ onewire\_device\_address\_t\ address);}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00155\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga92ed90eb99c6af8ced8ec60ded005e15}{ds18b20\_detect}}(onewire\_bus\_handle\_t\ \mbox{\hyperlink{structds18b20__context__t_a8354e70b6e2372059687a673d263f611}{owb\_handle}},\ \mbox{\hyperlink{structonewire__device__t}{onewire\_device\_t}}\ *\textcolor{keyword}{const}\ devices,\ \textcolor{keyword}{const}\ uint8\_t\ device\_size,\ uint8\_t\ *\textcolor{keyword}{const}\ device\_count);}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00164\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga2d2040a73e3947b56f4a0c5e5d436ddb}{ds18b20\_connected}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ connected);}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00176\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga873dc167ef31c19d2ed3c8aeb8858b40}{ds18b20\_init}}(\mbox{\hyperlink{structonewire__device__t}{onewire\_device\_t}}\ *device,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gaf0a7fbdb7b61aa0636778a6f5e22ce68}{ds18b20\_config\_t}}\ *ds18b20\_config,\ \mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ *ds18b20\_handle);}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00185\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga298fa035bc0b56a3f2aa1daef0902b6e}{ds18b20\_get\_temperature}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00196\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf171cc3cd419edf22b67bd05e6840bb9}{ds18b20\_get\_measurement}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00204\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafe53683bf83d76974c820feef41ecbe6}{ds18b20\_trigger\_temperature\_conversion}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00213\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7e59840ae488ec9c5d6f48449e3e9491}{ds18b20\_get\_resolution}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\_resolutions\_t}}\ *\textcolor{keyword}{const}\ resolution);}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00222\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3c7b35f59d1d0ef09399784a9bf4bb84}{ds18b20\_set\_resolution}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\_resolutions\_t}}\ resolution);}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00232\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac51c202feb63225d5548a5f3146bdbf9}{ds18b20\_get\_alarm\_thresholds}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ int8\_t\ *\textcolor{keyword}{const}\ high,\ int8\_t\ *\textcolor{keyword}{const}\ low);}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00242\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaeb16ae3d4dd775f6907f34d9da383317}{ds18b20\_set\_alarm\_thresholds}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ int8\_t\ high,\ \textcolor{keyword}{const}\ int8\_t\ low);}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00251\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac2527efa7875cafc957ee8af472c4837}{ds18b20\_alarm\_triggered}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ alarm);}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00261\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0e1dd9199e20fdd8883f397c42974375}{ds18b20\_get\_power\_supply\_mode}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ parasitic);}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00269\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gacbd8f069919bd0e81dfc2d5376bdd35f}{ds18b20\_delete}}(\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\_handle\_t}}\ handle);}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00276\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_gac6f57225a50cf6ae7b7594e3196e6cee}{ds18b20\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00283\ int32\_t\ \mbox{\hyperlink{group__drivers_ga4de608df5087d6bec0a2472089a04979}{ds18b20\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ }
+\DoxyCodeLine{00288\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00289\ \}}
+\DoxyCodeLine{00290\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_DS18B20\_H\_\_}}
+
+\end{DoxyCode}

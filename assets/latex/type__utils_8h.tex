@@ -1,0 +1,158 @@
+\doxysection{components/utilities/esp\+\_\+type\+\_\+utils/include/type\+\_\+utils.h File Reference}
+\hypertarget{type__utils_8h}{}\label{type__utils_8h}\index{components/utilities/esp\_type\_utils/include/type\_utils.h@{components/utilities/esp\_type\_utils/include/type\_utils.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+mac.\+h$>$}\newline
+{\ttfamily \#include "{}type\+\_\+utils\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{unionbytes__to__float__t}{bytes\+\_\+to\+\_\+float\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__double__t}{bytes\+\_\+to\+\_\+double\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__uint64__t}{bytes\+\_\+to\+\_\+uint64\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__int64__t}{bytes\+\_\+to\+\_\+int64\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__uint32__t}{bytes\+\_\+to\+\_\+uint32\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__int32__t}{bytes\+\_\+to\+\_\+int32\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__uint16__t}{bytes\+\_\+to\+\_\+uint16\+\_\+t}}
+\item 
+union \mbox{\hyperlink{unionbytes__to__int16__t}{bytes\+\_\+to\+\_\+int16\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries BIT8\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(1)
+\item 
+\#define {\bfseries BIT16\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(2)
+\item 
+\#define {\bfseries BIT24\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(3)
+\item 
+\#define {\bfseries BIT32\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(4)
+\item 
+\#define {\bfseries BIT40\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(5)
+\item 
+\#define {\bfseries BIT48\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(6)
+\item 
+\#define {\bfseries BIT56\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(7)
+\item 
+\#define {\bfseries BIT64\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(8)
+\item 
+\#define {\bfseries BIT72\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(9)
+\item 
+\#define {\bfseries BIT80\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(10)
+\item 
+\#define {\bfseries BIT88\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(11)
+\item 
+\#define {\bfseries BIT96\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(12)
+\item 
+\#define {\bfseries BIT104\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE}~(13)
+\item 
+\#define {\bfseries BIN8\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE}~(8 + 1)
+\item 
+\#define {\bfseries BIN16\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE}~(16 + 1)
+\item 
+\#define {\bfseries BIN32\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE}~(32 + 1)
+\item 
+\#define {\bfseries BIN64\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE}~(64 + 1)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint8\+\_\+t {\bfseries bit8\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT8\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit16\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT16\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit24\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT24\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit32\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT32\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit40\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT40\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit48\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT48\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit56\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT56\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit64\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT64\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit72\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT72\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit80\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT80\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit88\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT88\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit96\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT96\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef uint8\+\_\+t {\bfseries bit104\+\_\+uint8\+\_\+buffer\+\_\+t}\mbox{[}BIT104\+\_\+\+UINT8\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef char {\bfseries bin8\+\_\+char\+\_\+buffer\+\_\+t}\mbox{[}BIN8\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef char {\bfseries bin16\+\_\+char\+\_\+buffer\+\_\+t}\mbox{[}BIN16\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef char {\bfseries bin32\+\_\+char\+\_\+buffer\+\_\+t}\mbox{[}BIN32\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\item 
+typedef char {\bfseries bin64\+\_\+char\+\_\+buffer\+\_\+t}\mbox{[}BIN64\+\_\+\+CHAR\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{group__utilities_gaa4221834572879d4f0c074355c398f7c}{get\+\_\+uint32\+\_\+chip\+\_\+id}} (void)
+\begin{DoxyCompactList}\small\item\em Generates a unique {\ttfamily uint32\+\_\+t} chip identifier from e-\/fuse mac address. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group__utilities_ga53af0bb4b91bc34fbc5e72e8706b0bd3}{get\+\_\+uint64\+\_\+chip\+\_\+id}} (void)
+\begin{DoxyCompactList}\small\item\em Generates a unique {\ttfamily uint64\+\_\+t} chip identifier from e-\/fuse mac address. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group__utilities_ga02d6d016b948747dcd9ac341965b11e7}{get\+\_\+efuse\+\_\+mac}} (void)
+\begin{DoxyCompactList}\small\item\em Gets the e-\/fuse mac address. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\+\_\+to\+\_\+binary}} (const uint8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint8\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga2f80b461540976962acdece55f4c2539}{int8\+\_\+to\+\_\+binary}} (const int8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int8\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga83ba4e6a92abb94ff961114fc6338d6f}{uint16\+\_\+to\+\_\+binary}} (const uint16\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint16\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga7ed8cc5cd375f803b38a7fbb480e7d23}{int16\+\_\+to\+\_\+binary}} (const int16\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int16\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga28d2915394ebd3a7f838c7700d09a14a}{uint32\+\_\+to\+\_\+binary}} (const uint32\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint32\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga08cf13e715b06a322b3c865c14756af5}{int32\+\_\+to\+\_\+binary}} (const int32\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int32\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga93c75563c392ca0d8b77951982f993e4}{uint64\+\_\+to\+\_\+binary}} (const uint64\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint64\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga915ff6e345918ba361f0b8c74da9f34f}{int64\+\_\+to\+\_\+binary}} (const int64\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int64\+\_\+t} type to binary as a string. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__utilities_ga605b20edeec2b66a776c2a83b4781ff9}{bytes\+\_\+to\+\_\+uint16}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts byte array to {\ttfamily uint16\+\_\+t} data-\/type. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{group__utilities_gaa055c1b1c048a38d62e293d4eeeb5c80}{bytes\+\_\+to\+\_\+uint32}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts byte array to {\ttfamily uint32\+\_\+t} data-\/type. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group__utilities_gab62f44ce85772e99cf5210675216c5a3}{bytes\+\_\+to\+\_\+uint64}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts byte array to {\ttfamily uint64\+\_\+t} data-\/type. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{group__utilities_ga33d9aabd97bcb7b60e0a78442b2a72b7}{bytes\+\_\+to\+\_\+int16}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts byte array to {\ttfamily int16\+\_\+t} data-\/type. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__utilities_gac7858a718d06f472d758de11c508c911}{bytes\+\_\+to\+\_\+int32}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts byte array to {\ttfamily int32\+\_\+t} data-\/type. \end{DoxyCompactList}\item 
+int64\+\_\+t \mbox{\hyperlink{group__utilities_ga4b37473c1250634455d4b2b0e3e4d90a}{bytes\+\_\+to\+\_\+int64}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts byte array to {\ttfamily int64\+\_\+t} data-\/type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_gac54447af40b737a8be4021c5101c81cd}{uint16\+\_\+to\+\_\+bytes}} (const uint16\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint16\+\_\+t} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga54e47b002115c5793969900470f6af8f}{uint32\+\_\+to\+\_\+bytes}} (const uint32\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint32\+\_\+t} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga75f3e4044e67b3a8eb14d85ba691f37f}{uint64\+\_\+to\+\_\+bytes}} (const uint64\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily uint64\+\_\+t} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga9b368e02c0fe7796842760c30c58b3a7}{int16\+\_\+to\+\_\+bytes}} (const int16\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int16\+\_\+t} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga7c1e944b045d519a6b00199c78dfcf59}{int32\+\_\+to\+\_\+bytes}} (const int32\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int32\+\_\+t} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga99e9c88b8e41b8c546f0b459143f7cda}{int64\+\_\+to\+\_\+bytes}} (const int64\+\_\+t value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily int64\+\_\+t} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga3baa3c6459675c670651f2554d65c55c}{float\+\_\+to\+\_\+bytes}} (const float value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily float} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_gaf06471cb89408719d5e921ed2b0c5df0}{double\+\_\+to\+\_\+bytes}} (const double value, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, const bool little\+\_\+endian)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily double} data-\/type to a byte array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__utilities_ga662dadeba35a233c25d00622819ac24d}{copy\+\_\+bytes}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}source, uint8\+\_\+t \texorpdfstring{$\ast$}{*}destination, const size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Copies bytes from source byte array to destination byte array. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__utilities_ga44a16a18055e007ba0048cccf269b073}{type\+\_\+utils\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily type\+\_\+utils} firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__utilities_ga70df88e94f6150b2abb5e825907b8981}{type\+\_\+utils\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily type\+\_\+utils} firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}

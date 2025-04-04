@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_afa329a09be3ce633ca499b34cade58f" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_mmc56x3/include</compoundname>
+    <innerfile refid="mmc56x3_8h">mmc56x3.h</innerfile>
+    <innerfile refid="mmc56x3__version_8h">mmc56x3_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_mmc56x3/include/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,148 @@
+\doxysection{components/peripherals/owb/esp\+\_\+ds18b20/ds18b20.c File Reference}
+\hypertarget{ds18b20_8c}{}\label{ds18b20_8c}\index{components/peripherals/owb/esp\_ds18b20/ds18b20.c@{components/peripherals/owb/esp\_ds18b20/ds18b20.c}}
+{\ttfamily \#include "{}include/ds18b20.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+{\ttfamily \#include $<$onewire\+\_\+cmd.\+h$>$}\newline
+{\ttfamily \#include $<$onewire\+\_\+crc.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_ae7bccfd47647b76871bd766b586b5bf0}{DS18\+B20\+\_\+\+CMD\+\_\+\+TEMP\+\_\+\+CONVERT}}~UINT8\+\_\+C(0x44)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_abde29e941618d48bf31d4df92f88ec7d}{DS18\+B20\+\_\+\+CMD\+\_\+\+SCRATCHPAD\+\_\+\+WRITE}}~UINT8\+\_\+C(0x4E)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_a609b47df2a476d4523e1e4d18f93a38b}{DS18\+B20\+\_\+\+CMD\+\_\+\+SCRATCHPAD\+\_\+\+READ}}~UINT8\+\_\+C(0x\+BE)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_a8c7d6da69808310c950ef3abc4f67f4e}{DS18\+B20\+\_\+\+CMD\+\_\+\+SCRATCHPAD\+\_\+\+COPY}}~UINT8\+\_\+C(0x48)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_ac867472de842912c05f3d6a5dd7a9962}{DS18\+B20\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RECALL}}~UINT8\+\_\+C(0x\+B8)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_a12f97a58c6d54b2d736bdda7a60bc66e}{DS18\+B20\+\_\+\+CMD\+\_\+\+POWER\+\_\+\+SUPPLY\+\_\+\+READ}}~UINT8\+\_\+C(0x\+B4)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_a1df63badb4324c1252a251a49887740a}{DS18\+B20\+\_\+\+DEVICE\+\_\+\+MAX}}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{ds18b20_8c_af9a45ae5ca1aa574cc27080e4865b21e}\label{ds18b20_8c_af9a45ae5ca1aa574cc27080e4865b21e} 
+\#define {\bfseries DS18\+B20\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(20)
+\item 
+\Hypertarget{ds18b20_8c_ac666275b7d7862722386cce2702d6fae}\label{ds18b20_8c_ac666275b7d7862722386cce2702d6fae} 
+\#define {\bfseries DS18\+B20\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_a63cabbed4ffdf8b1813744e2613782cd}{DS18\+B20\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{ds18b20_8c_abf7ab1768e55c9bf0a29e834fe019679}\label{ds18b20_8c_abf7ab1768e55c9bf0a29e834fe019679} 
+\#define {\bfseries DS18\+B20\+\_\+\+EEPROM\+\_\+\+WRITE\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(15)
+\item 
+\#define \mbox{\hyperlink{ds18b20_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{ds18b20_8c_ac000ffbf247fb254f03e2ffd3ff7f637}\label{ds18b20_8c_ac000ffbf247fb254f03e2ffd3ff7f637} 
+bool {\bfseries ds18b20\+\_\+validate\+\_\+address} (const onewire\+\_\+device\+\_\+address\+\_\+t address)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga92ed90eb99c6af8ced8ec60ded005e15}{ds18b20\+\_\+detect}} (\mbox{\hyperlink{structonewire__bus__t}{onewire\+\_\+bus\+\_\+handle\+\_\+t}} owb\+\_\+handle, \mbox{\hyperlink{structonewire__device__t}{onewire\+\_\+device\+\_\+t}} \texorpdfstring{$\ast$}{*}const devices, const uint8\+\_\+t device\+\_\+size, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const device\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Detects up to 10 DS18\+B20 devices on the 1-\/wire bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2d2040a73e3947b56f4a0c5e5d436ddb}{ds18b20\+\_\+connected}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const connected)
+\begin{DoxyCompactList}\small\item\em Checks if the DS18\+B20 is connected to the 1-\/wire bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga873dc167ef31c19d2ed3c8aeb8858b40}{ds18b20\+\_\+init}} (\mbox{\hyperlink{structonewire__device__t}{onewire\+\_\+device\+\_\+t}} \texorpdfstring{$\ast$}{*}device, const \mbox{\hyperlink{group__drivers_gaf0a7fbdb7b61aa0636778a6f5e22ce68}{ds18b20\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}ds18b20\+\_\+config, \mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}ds18b20\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an DS18\+B20 device onto the 1-\/wire master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga298fa035bc0b56a3f2aa1daef0902b6e}{ds18b20\+\_\+get\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Triggers temperature conversion and reads temperature from DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf171cc3cd419edf22b67bd05e6840bb9}{ds18b20\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads temperature from DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafe53683bf83d76974c820feef41ecbe6}{ds18b20\+\_\+trigger\+\_\+temperature\+\_\+conversion}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Triggers DS18\+B20 temperature conversion. This function must be called before reading the temperature from DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7e59840ae488ec9c5d6f48449e3e9491}{ds18b20\+\_\+get\+\_\+resolution}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\+\_\+resolutions\+\_\+t}} \texorpdfstring{$\ast$}{*}const resolution)
+\begin{DoxyCompactList}\small\item\em Reads temperature conversion resolution from DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3c7b35f59d1d0ef09399784a9bf4bb84}{ds18b20\+\_\+set\+\_\+resolution}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga622b32418d99b0ae4feaf2e955f7a0f8}{ds18b20\+\_\+resolutions\+\_\+t}} resolution)
+\begin{DoxyCompactList}\small\item\em Writes temperature conversion resolution to DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac51c202feb63225d5548a5f3146bdbf9}{ds18b20\+\_\+get\+\_\+alarm\+\_\+thresholds}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, int8\+\_\+t \texorpdfstring{$\ast$}{*}const high, int8\+\_\+t \texorpdfstring{$\ast$}{*}const low)
+\begin{DoxyCompactList}\small\item\em Reads high and low temperature alarm thresholds from DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaeb16ae3d4dd775f6907f34d9da383317}{ds18b20\+\_\+set\+\_\+alarm\+\_\+thresholds}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, const int8\+\_\+t high, const int8\+\_\+t low)
+\begin{DoxyCompactList}\small\item\em Writes high and low temperature alarm thresholds to DS18\+B20. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0e1dd9199e20fdd8883f397c42974375}{ds18b20\+\_\+get\+\_\+power\+\_\+supply\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const parasitic)
+\begin{DoxyCompactList}\small\item\em Reads power supply mode setting from DS18\+B20. Parasitic-\/powered devices are powered by the data pin (DQ) and will pull the bus low during read time slot. Parasitic-\/powered devices are not supported at this time. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gacbd8f069919bd0e81dfc2d5376bdd35f}{ds18b20\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gaa0631d921e9f741ba8c1cd3696723ba6}{ds18b20\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an DS18\+B20 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gac6f57225a50cf6ae7b7594e3196e6cee}{ds18b20\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts DS18\+B20 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga4de608df5087d6bec0a2472089a04979}{ds18b20\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts DS18\+B20 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for DS18\+B20 temperature sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ds18b20_8c_a63cabbed4ffdf8b1813744e2613782cd}\index{ds18b20.c@{ds18b20.c}!DS18B20\_APPSTART\_DELAY\_MS@{DS18B20\_APPSTART\_DELAY\_MS}}
+\index{DS18B20\_APPSTART\_DELAY\_MS@{DS18B20\_APPSTART\_DELAY\_MS}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_APPSTART\_DELAY\_MS}{DS18B20\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{ds18b20_8c_a63cabbed4ffdf8b1813744e2613782cd} 
+\#define DS18\+B20\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+ds18b20 delay after initialization before application start-\/up \Hypertarget{ds18b20_8c_ac867472de842912c05f3d6a5dd7a9962}\index{ds18b20.c@{ds18b20.c}!DS18B20\_CMD\_EEPROM\_RECALL@{DS18B20\_CMD\_EEPROM\_RECALL}}
+\index{DS18B20\_CMD\_EEPROM\_RECALL@{DS18B20\_CMD\_EEPROM\_RECALL}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_CMD\_EEPROM\_RECALL}{DS18B20\_CMD\_EEPROM\_RECALL}}
+{\footnotesize\ttfamily \label{ds18b20_8c_ac867472de842912c05f3d6a5dd7a9962} 
+\#define DS18\+B20\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RECALL~UINT8\+\_\+C(0x\+B8)}
+
+restore alarm trigger values and configuration data from EEPROM to the scratchpad \Hypertarget{ds18b20_8c_a12f97a58c6d54b2d736bdda7a60bc66e}\index{ds18b20.c@{ds18b20.c}!DS18B20\_CMD\_POWER\_SUPPLY\_READ@{DS18B20\_CMD\_POWER\_SUPPLY\_READ}}
+\index{DS18B20\_CMD\_POWER\_SUPPLY\_READ@{DS18B20\_CMD\_POWER\_SUPPLY\_READ}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_CMD\_POWER\_SUPPLY\_READ}{DS18B20\_CMD\_POWER\_SUPPLY\_READ}}
+{\footnotesize\ttfamily \label{ds18b20_8c_a12f97a58c6d54b2d736bdda7a60bc66e} 
+\#define DS18\+B20\+\_\+\+CMD\+\_\+\+POWER\+\_\+\+SUPPLY\+\_\+\+READ~UINT8\+\_\+C(0x\+B4)}
+
+determine if a device is using parasitic power \Hypertarget{ds18b20_8c_a8c7d6da69808310c950ef3abc4f67f4e}\index{ds18b20.c@{ds18b20.c}!DS18B20\_CMD\_SCRATCHPAD\_COPY@{DS18B20\_CMD\_SCRATCHPAD\_COPY}}
+\index{DS18B20\_CMD\_SCRATCHPAD\_COPY@{DS18B20\_CMD\_SCRATCHPAD\_COPY}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_CMD\_SCRATCHPAD\_COPY}{DS18B20\_CMD\_SCRATCHPAD\_COPY}}
+{\footnotesize\ttfamily \label{ds18b20_8c_a8c7d6da69808310c950ef3abc4f67f4e} 
+\#define DS18\+B20\+\_\+\+CMD\+\_\+\+SCRATCHPAD\+\_\+\+COPY~UINT8\+\_\+C(0x48)}
+
+copy the contents of the scratchpad to the device EEPROM \Hypertarget{ds18b20_8c_a609b47df2a476d4523e1e4d18f93a38b}\index{ds18b20.c@{ds18b20.c}!DS18B20\_CMD\_SCRATCHPAD\_READ@{DS18B20\_CMD\_SCRATCHPAD\_READ}}
+\index{DS18B20\_CMD\_SCRATCHPAD\_READ@{DS18B20\_CMD\_SCRATCHPAD\_READ}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_CMD\_SCRATCHPAD\_READ}{DS18B20\_CMD\_SCRATCHPAD\_READ}}
+{\footnotesize\ttfamily \label{ds18b20_8c_a609b47df2a476d4523e1e4d18f93a38b} 
+\#define DS18\+B20\+\_\+\+CMD\+\_\+\+SCRATCHPAD\+\_\+\+READ~UINT8\+\_\+C(0x\+BE)}
+
+read 9 bytes of data (including CRC) from the device scratchpad \Hypertarget{ds18b20_8c_abde29e941618d48bf31d4df92f88ec7d}\index{ds18b20.c@{ds18b20.c}!DS18B20\_CMD\_SCRATCHPAD\_WRITE@{DS18B20\_CMD\_SCRATCHPAD\_WRITE}}
+\index{DS18B20\_CMD\_SCRATCHPAD\_WRITE@{DS18B20\_CMD\_SCRATCHPAD\_WRITE}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_CMD\_SCRATCHPAD\_WRITE}{DS18B20\_CMD\_SCRATCHPAD\_WRITE}}
+{\footnotesize\ttfamily \label{ds18b20_8c_abde29e941618d48bf31d4df92f88ec7d} 
+\#define DS18\+B20\+\_\+\+CMD\+\_\+\+SCRATCHPAD\+\_\+\+WRITE~UINT8\+\_\+C(0x4E)}
+
+write 3 bytes of data to the device scratchpad at positions 2, 3 and 4 \Hypertarget{ds18b20_8c_ae7bccfd47647b76871bd766b586b5bf0}\index{ds18b20.c@{ds18b20.c}!DS18B20\_CMD\_TEMP\_CONVERT@{DS18B20\_CMD\_TEMP\_CONVERT}}
+\index{DS18B20\_CMD\_TEMP\_CONVERT@{DS18B20\_CMD\_TEMP\_CONVERT}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_CMD\_TEMP\_CONVERT}{DS18B20\_CMD\_TEMP\_CONVERT}}
+{\footnotesize\ttfamily \label{ds18b20_8c_ae7bccfd47647b76871bd766b586b5bf0} 
+\#define DS18\+B20\+\_\+\+CMD\+\_\+\+TEMP\+\_\+\+CONVERT~UINT8\+\_\+C(0x44)}
+
+initiate a single temperature conversion \Hypertarget{ds18b20_8c_a1df63badb4324c1252a251a49887740a}\index{ds18b20.c@{ds18b20.c}!DS18B20\_DEVICE\_MAX@{DS18B20\_DEVICE\_MAX}}
+\index{DS18B20\_DEVICE\_MAX@{DS18B20\_DEVICE\_MAX}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{DS18B20\_DEVICE\_MAX}{DS18B20\_DEVICE\_MAX}}
+{\footnotesize\ttfamily \label{ds18b20_8c_a1df63badb4324c1252a251a49887740a} 
+\#define DS18\+B20\+\_\+\+DEVICE\+\_\+\+MAX~UINT16\+\_\+C(10)}
+
+maximum number of ds18b20 devices on the 1-\/wire bus \Hypertarget{ds18b20_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{ds18b20.c@{ds18b20.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!ds18b20.c@{ds18b20.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{ds18b20_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}

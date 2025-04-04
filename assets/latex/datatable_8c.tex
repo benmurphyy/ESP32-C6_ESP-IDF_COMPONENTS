@@ -1,0 +1,122 @@
+\doxysection{components/storage/esp\+\_\+datalogger/datatable.c File Reference}
+\hypertarget{datatable_8c}{}\label{datatable_8c}\index{components/storage/esp\_datalogger/datatable.c@{components/storage/esp\_datalogger/datatable.c}}
+{\ttfamily \#include "{}include/datatable.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/semphr.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{datatable_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{datatable_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf228d767bc9c583d19453d2cf62e9f54}{datatable\+\_\+init}} (const \mbox{\hyperlink{group__drivers_ga25f6266267983aec4306306da8a7a603}{datatable\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}datatable\+\_\+config, \mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}datatable\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes a data-\/table handle. A data-\/table handle instance is required before any other data-\/table functions can be called. Once the data-\/table is initialized the following functions are used to configure the data-\/table columns and within the sampling task. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga96036bfb5a146b525b61a7d9e637c8ff}{datatable\+\_\+add\+\_\+vector\+\_\+smp\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name\+\_\+uc, const char \texorpdfstring{$\ast$}{*}name\+\_\+vc, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a vector based data-\/type column as a sample to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab4a2d75f2a1ebece31490a9f26741b3c}{datatable\+\_\+add\+\_\+vector\+\_\+avg\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name\+\_\+uc, const char \texorpdfstring{$\ast$}{*}name\+\_\+vc, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a vector based data-\/type column as an average to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac10a4cdbe02a217a912349a763982edc}{datatable\+\_\+add\+\_\+vector\+\_\+min\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name\+\_\+uc, const char \texorpdfstring{$\ast$}{*}name\+\_\+vc, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a vector based data-\/type column as a v-\/component minimum to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga90322ed568e265370c8f7a53e946c6c6}{datatable\+\_\+add\+\_\+vector\+\_\+max\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name\+\_\+uc, const char \texorpdfstring{$\ast$}{*}name\+\_\+vc, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a vector based data-\/type column as a v-\/component maximum to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac4b19ea19a640bd715faf9c405b40859}{datatable\+\_\+add\+\_\+vector\+\_\+min\+\_\+ts\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name\+\_\+uc, const char \texorpdfstring{$\ast$}{*}name\+\_\+vc, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a vector based data-\/type column as a v-\/component minimum with timestamp to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gade3e8daf24aa6e6269da815631e7fd12}{datatable\+\_\+add\+\_\+vector\+\_\+max\+\_\+ts\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name\+\_\+uc, const char \texorpdfstring{$\ast$}{*}name\+\_\+vc, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a vector based data-\/type column as a v-\/component maximum with timestamp to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga09557ae27d0f6d3fc6202cfd2fabadeb}{datatable\+\_\+add\+\_\+bool\+\_\+smp\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a bool based data-\/type column as a sample process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7da2fc011a039f5db9777c2c09b29fc8}{datatable\+\_\+add\+\_\+float\+\_\+smp\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a float based data-\/type column as a sample process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga56f0b237df545f1070bfb12143f9877a}{datatable\+\_\+add\+\_\+float\+\_\+avg\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a float based data-\/type column as an average process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad8843f31fdde9c9795d9f77ea53442a4}{datatable\+\_\+add\+\_\+float\+\_\+min\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a float based data-\/type column as a minimum process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4ecd3999ab6aa5d0a1a3f960a6533a06}{datatable\+\_\+add\+\_\+float\+\_\+max\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a float based data-\/type column as a maximum process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga184886875546ee0dbe0b877e41dd9be3}{datatable\+\_\+add\+\_\+float\+\_\+min\+\_\+ts\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a float based data-\/type column as a minimum with timestamp process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3870b1e456b64288a70a7f3ed08839a1}{datatable\+\_\+add\+\_\+float\+\_\+max\+\_\+ts\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a float based data-\/type column as a maximum with timestamp process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2a8aa81c3300a3522c964f943e28935f}{datatable\+\_\+add\+\_\+int16\+\_\+smp\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a int16 based data-\/type column as a sample process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa4f45718ed9cd09b63deaae729608071}{datatable\+\_\+add\+\_\+int16\+\_\+avg\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a int16 based data-\/type column as an average process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad7aceeba318aa0da3ef1f7b12ef90fa6}{datatable\+\_\+add\+\_\+int16\+\_\+min\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a int16 based data-\/type column as a minimum process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac3346816fdd1ba267a16979a2f6dbde7}{datatable\+\_\+add\+\_\+int16\+\_\+max\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a int16 based data-\/type column as a maximum process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga360fe226f59ada63d29088875604715f}{datatable\+\_\+add\+\_\+int16\+\_\+min\+\_\+ts\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a int16 based data-\/type column as a minimum with timestamp process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf2d4c966cb901a85458639e90595b293}{datatable\+\_\+add\+\_\+int16\+\_\+max\+\_\+ts\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const char \texorpdfstring{$\ast$}{*}name, uint8\+\_\+t \texorpdfstring{$\ast$}{*}index)
+\begin{DoxyCompactList}\small\item\em Appends a int16 based data-\/type column as a maximum with timestamp process-\/type to the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gade35e6525e6de17850a18e8969692860}{datatable\+\_\+get\+\_\+columns\+\_\+count}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}count)
+\begin{DoxyCompactList}\small\item\em Gets the number of columns in the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9aae23bbbe40452b2fdbaccbc9f90dbf}{datatable\+\_\+get\+\_\+rows\+\_\+count}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}count)
+\begin{DoxyCompactList}\small\item\em Gets the number of rows in the data-\/table. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac1c9d4f1df62235b3fc0eafd2cd45f39}{datatable\+\_\+get\+\_\+column}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const uint8\+\_\+t index, \mbox{\hyperlink{group__drivers_ga5d1a7ffc0777ec12780e576d0a3a4e95}{datatable\+\_\+column\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}column)
+\begin{DoxyCompactList}\small\item\em Gets the column structure from the data-\/table based on the column index. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad59f6932721bd81ded6fadcc6c87350a}{datatable\+\_\+get\+\_\+row}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const uint8\+\_\+t index, \mbox{\hyperlink{group__drivers_ga9dff1bcb1f19fd9373a9662c6131d340}{datatable\+\_\+row\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}row)
+\begin{DoxyCompactList}\small\item\em Gets the row structure from the data-\/table based on the row index. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga00f230857143166e558bb74103d3c246}{datatable\+\_\+push\+\_\+vector\+\_\+sample}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const uint8\+\_\+t index, const float value\+\_\+uc, const float value\+\_\+vc)
+\begin{DoxyCompactList}\small\item\em Pushes a vector data-\/type sample onto the column sample data buffer stack for processing. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab83c7cb803b897d507b6a40fb0e29c92}{datatable\+\_\+push\+\_\+bool\+\_\+sample}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const uint8\+\_\+t index, const bool value)
+\begin{DoxyCompactList}\small\item\em Pushes a boolean data-\/type sample onto the column sample data buffer stack for processing. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\+\_\+push\+\_\+float\+\_\+sample}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const uint8\+\_\+t index, const float value)
+\begin{DoxyCompactList}\small\item\em Pushes a float data-\/type sample onto the column sample data buffer stack for processing. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga257d771d4952cb18bbd0c8dc9ba4f55d}{datatable\+\_\+push\+\_\+int16\+\_\+sample}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, const uint8\+\_\+t index, const int16\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Pushes an int16 data-\/type sample onto the column sample data buffer stack for processing. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf7216471d840ddce49979addde5497dd}{datatable\+\_\+sampling\+\_\+task\+\_\+delay}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Delays the data-\/table\textquotesingle{}s sampling task until the next scheduled task event. ~\newline
+ This function should be placed after the {\ttfamily for (;;) \{} syntax to delay the task based on the configured time-\/into-\/interval handle interval type, period, and offset parameters. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7dbd90ddf9ee3cc22e0cccd995744c55}{datatable\+\_\+process\+\_\+samples}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Processes data-\/table samples on the data buffer stack in each column based on the data-\/table\textquotesingle{}s ~\newline
+ configured processing interval. When the samples are processed, the data buffer stack is cleared for each column. This function must be called after data-\/table samples are pushed in the sampling task. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadefa4004e4db89244dab4be9c40d27bd}{datatable\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Deletes the data-\/table handle to frees up resources. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga73545915b25d01821b94cf0a1a93a171}{datatable\+\_\+to\+\_\+json}} (\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\+\_\+handle\+\_\+t}} datatable\+\_\+handle, c\+JSON \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}datatable)
+\begin{DoxyCompactList}\small\item\em Converts a data-\/table to a {\ttfamily c\+JSON} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF library for DATA-\/\+TABLE
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{datatable_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{datatable.c@{datatable.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!datatable.c@{datatable.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{datatable_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{datatable_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{datatable.c@{datatable.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!datatable.c@{datatable.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{datatable_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}

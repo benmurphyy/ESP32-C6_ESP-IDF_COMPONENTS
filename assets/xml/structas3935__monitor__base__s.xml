@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structas3935__monitor__base__s" kind="struct" language="C++" prot="public">
+    <compoundname>as3935_monitor_base_s</compoundname>
+    <includes refid="as3935_8h" local="no">as3935.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structas3935__monitor__base__s_1a7026b2a8a1aaa62546d82acce7a1fc04" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga225a265e70e9df5e37f4675415503e55" kindref="member">as3935_lightning_distances_t</ref></type>
+        <definition>as3935_lightning_distances_t lightning_distance</definition>
+        <argsstring></argsstring>
+        <name>lightning_distance</name>
+        <qualifiedname>as3935_monitor_base_s::lightning_distance</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="386" column="37" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="386" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__monitor__base__s_1a70f5a6a5bffcdcde96c92d92327378c3" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t lightning_energy</definition>
+        <argsstring></argsstring>
+        <name>lightning_energy</name>
+        <qualifiedname>as3935_monitor_base_s::lightning_energy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="387" column="37" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="387" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>AS3935 device event object structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="385" column="1" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="385" bodyend="388"/>
+    <listofallmembers>
+      <member refid="structas3935__monitor__base__s_1a7026b2a8a1aaa62546d82acce7a1fc04" prot="public" virt="non-virtual"><scope>as3935_monitor_base_s</scope><name>lightning_distance</name></member>
+      <member refid="structas3935__monitor__base__s_1a70f5a6a5bffcdcde96c92d92327378c3" prot="public" virt="non-virtual"><scope>as3935_monitor_base_s</scope><name>lightning_energy</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

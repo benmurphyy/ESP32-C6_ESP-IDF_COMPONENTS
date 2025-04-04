@@ -1,0 +1,175 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ina226/ina226.c File Reference}
+\hypertarget{ina226_8c}{}\label{ina226_8c}\index{components/peripherals/i2c/esp\_ina226/ina226.c@{components/peripherals/i2c/esp\_ina226/ina226.c}}
+{\ttfamily \#include "{}include/ina226.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{ina226_8c_aa6d9829fca677880951405b997a4e66d}\label{ina226_8c_aa6d9829fca677880951405b997a4e66d} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+CONFIG}~(0x00)
+\item 
+\Hypertarget{ina226_8c_a9909eb5d82c980a3cf8ec8de5c7f016e}\label{ina226_8c_a9909eb5d82c980a3cf8ec8de5c7f016e} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+SHUNT\+\_\+V}~(0x01)
+\item 
+\Hypertarget{ina226_8c_a438ce81dee72ec70bbe415f819387408}\label{ina226_8c_a438ce81dee72ec70bbe415f819387408} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+BUS\+\_\+V}~(0x02)
+\item 
+\Hypertarget{ina226_8c_a29af3dd488916f12790da6aa86b15106}\label{ina226_8c_a29af3dd488916f12790da6aa86b15106} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+POWER}~(0x03)
+\item 
+\Hypertarget{ina226_8c_af3f7a5c1575080bdafb7f5bef47ee250}\label{ina226_8c_af3f7a5c1575080bdafb7f5bef47ee250} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+CURRENT}~(0x04)
+\item 
+\Hypertarget{ina226_8c_ab2c84519624d58324e67e92a7427ebbd}\label{ina226_8c_ab2c84519624d58324e67e92a7427ebbd} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+CALIBRATION}~(0x05)
+\item 
+\Hypertarget{ina226_8c_a0ff2525771430fed783504306b2e6664}\label{ina226_8c_a0ff2525771430fed783504306b2e6664} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+MSK\+\_\+\+ENA}~(0x06)
+\item 
+\Hypertarget{ina226_8c_a2ede025193f97f32f4ba136ccd4ccaaf}\label{ina226_8c_a2ede025193f97f32f4ba136ccd4ccaaf} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+MANU\+\_\+\+ID}~(0xfe)
+\item 
+\Hypertarget{ina226_8c_ab771d433313c956e68fa1f325fb26209}\label{ina226_8c_ab771d433313c956e68fa1f325fb26209} 
+\#define {\bfseries INA226\+\_\+\+REG\+\_\+\+DIE\+\_\+\+ID}~(0xff)
+\item 
+\Hypertarget{ina226_8c_ab8a741f5f706eebbafffa9356c803e22}\label{ina226_8c_ab8a741f5f706eebbafffa9356c803e22} 
+\#define {\bfseries INA226\+\_\+\+DEF\+\_\+\+CONFIG}~0x399f
+\item 
+\Hypertarget{ina226_8c_a3376970388f854a049bdd6eb796bb031}\label{ina226_8c_a3376970388f854a049bdd6eb796bb031} 
+\#define {\bfseries INA226\+\_\+\+ASUKIAAA\+\_\+\+DEFAULT\+\_\+\+CONFIG}~0x4127
+\item 
+\#define \mbox{\hyperlink{ina226_8c_af9ce3462feb410b56a62aae4e7c8a904}{INA226\+\_\+\+MIN\+\_\+\+SHUNT\+\_\+\+RESISTANCE}}~(0.\+001)
+\item 
+\#define \mbox{\hyperlink{ina226_8c_a0d09057d9e1bcb9430695abb40a144ce}{INA226\+\_\+\+MAX\+\_\+\+SHUNT\+\_\+\+VOLTAGE}}~(81.\+92 / 1000)
+\item 
+\Hypertarget{ina226_8c_ad63ab7666ee6ef48e706be0785159fea}\label{ina226_8c_ad63ab7666ee6ef48e706be0785159fea} 
+\#define {\bfseries INA226\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(100)
+\item 
+\Hypertarget{ina226_8c_aca90ce0b2622462fa3f5419b0fc9e9e4}\label{ina226_8c_aca90ce0b2622462fa3f5419b0fc9e9e4} 
+\#define {\bfseries INA226\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\begin{DoxyCompactList}\small\item\em ina226 I2C start-\/up delay before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ina226_8c_a785533ec209c90d6faf3b32a0103f384}\label{ina226_8c_a785533ec209c90d6faf3b32a0103f384} 
+\#define {\bfseries INA226\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{ina226_8c_a7a4ea2725d982c60d16cb7003e6276d5}\label{ina226_8c_a7a4ea2725d982c60d16cb7003e6276d5} 
+\#define {\bfseries INA226\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(250)
+\begin{DoxyCompactList}\small\item\em ina226 I2C software reset delay before device accepts transactions \end{DoxyCompactList}\item 
+\Hypertarget{ina226_8c_a08263491faa064d504d33945212c0ad9}\label{ina226_8c_a08263491faa064d504d33945212c0ad9} 
+\#define {\bfseries INA226\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{ina226_8c_ad63ab7666ee6ef48e706be0785159fea}\label{ina226_8c_ad63ab7666ee6ef48e706be0785159fea} 
+\#define {\bfseries INA226\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(100)
+\item 
+\Hypertarget{ina226_8c_a8a8418ff7ba73bb6e544999cb2bbbe02}\label{ina226_8c_a8a8418ff7ba73bb6e544999cb2bbbe02} 
+\#define {\bfseries INA226\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{ina226_8c_aab192fb5e81153a06f8878c68dc673f4}\label{ina226_8c_aab192fb5e81153a06f8878c68dc673f4} 
+\#define {\bfseries INA226\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{ina226_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{ina226_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga874bf54050809918410d24a7716ab49d}{ina226\+\_\+get\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, ina226\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads the configuration register from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae437da62262dfe72003a49af0837fca3}{ina226\+\_\+set\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const ina226\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes the configuration register to the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga87e0c6dc6bcf9fb3630f3eb072290ead}{ina226\+\_\+get\+\_\+calibration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads the calibration register from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga15fbf992c0198f0796a94feb34ba27d2}{ina226\+\_\+set\+\_\+calibration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes the calibration register to the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab5a69559c93404d72986fea90cddd5ba}{ina226\+\_\+get\+\_\+mask\+\_\+enable\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, ina226\+\_\+mask\+\_\+enable\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads the mask/enable register from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8fa5583edc47339a2d2e11da22f37ede}{ina226\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga0f70616e438f7c5550604e0d4d0e5079}{ina226\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}ina226\+\_\+config, \mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}ina226\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em initializes an INA226 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8eea27ae0382d61f7c80bb4774c0c50c}{ina226\+\_\+calibrate}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const float max\+\_\+current, const float shunt\+\_\+resistance)
+\begin{DoxyCompactList}\small\item\em Calibrates the INA266. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3a3b0b1318c633222c93cecb44264d63}{ina226\+\_\+get\+\_\+shunt\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Reads shunt voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga68f7fcc45f14c1bf03185b8499ba3226}{ina226\+\_\+get\+\_\+triggered\+\_\+shunt\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Triggers and reads shunt voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1032dce6b1672ba3fc96c7101215d5b5}{ina226\+\_\+get\+\_\+bus\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Reads bus voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab0cd7952b9db1d15f522b1931ddbb9c0}{ina226\+\_\+get\+\_\+triggered\+\_\+bus\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Triggers and reads bus voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaab786a59b9cf01076a4e4cc5a508a52f}{ina226\+\_\+get\+\_\+current}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const current)
+\begin{DoxyCompactList}\small\item\em Reads current (A) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9ad8e8e43146aac88c11ec453d8627be}{ina226\+\_\+get\+\_\+triggered\+\_\+current}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const current)
+\begin{DoxyCompactList}\small\item\em Triggers and reads current (A) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafe669e8a9ae6777cb8d428f41139f078}{ina226\+\_\+get\+\_\+power}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const power)
+\begin{DoxyCompactList}\small\item\em Reads power (W) from INA226. \end{DoxyCompactList}\item 
+\Hypertarget{ina226_8c_a640f9778470a09f1d97a9766f1c99ed4}\label{ina226_8c_a640f9778470a09f1d97a9766f1c99ed4} 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+get\+\_\+mode} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\+\_\+operating\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\item 
+\Hypertarget{ina226_8c_a2fb377ae2baea3788aa3fcd8fafe6537}\label{ina226_8c_a2fb377ae2baea3788aa3fcd8fafe6537} 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+set\+\_\+mode} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\+\_\+operating\+\_\+modes\+\_\+t}} mode)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga411af4609160753897a5a58f29028c52}{ina226\+\_\+reset}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Resets the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadbb4cf932d249b9addb0a4d775c75222}{ina226\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an INA226 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4340968df777a40e1055e7fd696a5473}{ina226\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an INA226 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga1d811627c85d6ec2b884ebad0eeb62e3}{ina226\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts INA226 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gab02fa33d34919a5ef63b93b492f10e6d}{ina226\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts INA226 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for INA225 current, voltage, and power monitoring sensor
+
+\href{https://github.com/cybergear-robotics/ina226/blob/master/ina226.c}{\texttt{ https\+://github.\+com/cybergear-\/robotics/ina226/blob/master/ina226.\+c}}
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ina226_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{ina226.c@{ina226.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!ina226.c@{ina226.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{ina226_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{ina226_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{ina226.c@{ina226.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!ina226.c@{ina226.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{ina226_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}
+\Hypertarget{ina226_8c_a0d09057d9e1bcb9430695abb40a144ce}\index{ina226.c@{ina226.c}!INA226\_MAX\_SHUNT\_VOLTAGE@{INA226\_MAX\_SHUNT\_VOLTAGE}}
+\index{INA226\_MAX\_SHUNT\_VOLTAGE@{INA226\_MAX\_SHUNT\_VOLTAGE}!ina226.c@{ina226.c}}
+\doxysubsubsection{\texorpdfstring{INA226\_MAX\_SHUNT\_VOLTAGE}{INA226\_MAX\_SHUNT\_VOLTAGE}}
+{\footnotesize\ttfamily \label{ina226_8c_a0d09057d9e1bcb9430695abb40a144ce} 
+\#define INA226\+\_\+\+MAX\+\_\+\+SHUNT\+\_\+\+VOLTAGE~(81.\+92 / 1000)}
+
+maximum allowable shunt voltage in volts \Hypertarget{ina226_8c_af9ce3462feb410b56a62aae4e7c8a904}\index{ina226.c@{ina226.c}!INA226\_MIN\_SHUNT\_RESISTANCE@{INA226\_MIN\_SHUNT\_RESISTANCE}}
+\index{INA226\_MIN\_SHUNT\_RESISTANCE@{INA226\_MIN\_SHUNT\_RESISTANCE}!ina226.c@{ina226.c}}
+\doxysubsubsection{\texorpdfstring{INA226\_MIN\_SHUNT\_RESISTANCE}{INA226\_MIN\_SHUNT\_RESISTANCE}}
+{\footnotesize\ttfamily \label{ina226_8c_af9ce3462feb410b56a62aae4e7c8a904} 
+\#define INA226\+\_\+\+MIN\+\_\+\+SHUNT\+\_\+\+RESISTANCE~(0.\+001)}
+
+minimum allowable shunt resistance in ohms 

@@ -1,0 +1,30 @@
+\doxysection{onewire\+\_\+bus\+\_\+impl\+\_\+rmt.\+h}
+\hypertarget{onewire__bus__impl__rmt_8h_source}{}\label{onewire__bus__impl__rmt_8h_source}\index{components/peripherals/owb/onewire\_bus/include/onewire\_bus\_impl\_rmt.h@{components/peripherals/owb/onewire\_bus/include/onewire\_bus\_impl\_rmt.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ SPDX-\/FileCopyrightText:\ 2022-\/2023\ Espressif\ Systems\ (Shanghai)\ CO\ LTD}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}onewire\_types.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00020\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structonewire__bus__rmt__config__t_ad8f34eb6bb5033b2626849e9cc7d38b1}{max\_rx\_bytes}};\ }
+\DoxyCodeLine{00022\ \}\ \mbox{\hyperlink{structonewire__bus__rmt__config__t}{onewire\_bus\_rmt\_config\_t}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00038\ esp\_err\_t\ onewire\_new\_bus\_rmt(\textcolor{keyword}{const}\ \mbox{\hyperlink{structonewire__bus__config__t}{onewire\_bus\_config\_t}}\ *bus\_config,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structonewire__bus__rmt__config__t}{onewire\_bus\_rmt\_config\_t}}\ *rmt\_config,\ onewire\_bus\_handle\_t\ *ret\_bus);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00041\ \}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

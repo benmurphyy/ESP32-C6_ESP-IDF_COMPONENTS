@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structas7341__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>as7341_config_s</compoundname>
+    <includes refid="as7341_8h" local="no">as7341.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structas7341__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>as7341_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as7341 i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as7341/include/as7341.h" line="497" column="33" bodyfile="components/peripherals/i2c/esp_as7341/include/as7341.h" bodystart="497" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas7341__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>as7341_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as7341 i2c device scl clock speed in hz </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as7341/include/as7341.h" line="498" column="33" bodyfile="components/peripherals/i2c/esp_as7341/include/as7341.h" bodystart="498" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas7341__config__s_1a4861c4c20e28fae5b845f7b936d0fbaf" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t atime</definition>
+        <argsstring></argsstring>
+        <name>atime</name>
+        <qualifiedname>as7341_config_s::atime</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as7341/include/as7341.h" line="499" column="33" bodyfile="components/peripherals/i2c/esp_as7341/include/as7341.h" bodystart="499" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas7341__config__s_1a8a20afaa195f2ae8cd7f43f51320fb1b" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t astep</definition>
+        <argsstring></argsstring>
+        <name>astep</name>
+        <qualifiedname>as7341_config_s::astep</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as7341/include/as7341.h" line="500" column="33" bodyfile="components/peripherals/i2c/esp_as7341/include/as7341.h" bodystart="500" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas7341__config__s_1a62327de92b77115f2bc9ef7f78e64977" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga27b623acd6c033c0a6ffc1ed0244b502" kindref="member">as7341_spectral_gains_t</ref></type>
+        <definition>as7341_spectral_gains_t spectral_gain</definition>
+        <argsstring></argsstring>
+        <name>spectral_gain</name>
+        <qualifiedname>as7341_config_s::spectral_gain</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as7341/include/as7341.h" line="501" column="33" bodyfile="components/peripherals/i2c/esp_as7341/include/as7341.h" bodystart="501" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>AS7341 configuration structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_as7341/include/as7341.h" line="496" column="1" bodyfile="components/peripherals/i2c/esp_as7341/include/as7341.h" bodystart="496" bodyend="502"/>
+    <listofallmembers>
+      <member refid="structas7341__config__s_1a8a20afaa195f2ae8cd7f43f51320fb1b" prot="public" virt="non-virtual"><scope>as7341_config_s</scope><name>astep</name></member>
+      <member refid="structas7341__config__s_1a4861c4c20e28fae5b845f7b936d0fbaf" prot="public" virt="non-virtual"><scope>as7341_config_s</scope><name>atime</name></member>
+      <member refid="structas7341__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>as7341_config_s</scope><name>i2c_address</name></member>
+      <member refid="structas7341__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>as7341_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structas7341__config__s_1a62327de92b77115f2bc9ef7f78e64977" prot="public" virt="non-virtual"><scope>as7341_config_s</scope><name>spectral_gain</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,256 @@
+\doxysection{ina226.\+h}
+\hypertarget{ina226_8h_source}{}\label{ina226_8h_source}\index{components/peripherals/i2c/esp\_ina226/include/ina226.h@{components/peripherals/i2c/esp\_ina226/include/ina226.h}}
+\mbox{\hyperlink{ina226_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_INA226\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_INA226\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}ina226\_version.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ INA226\ definitions}}
+\DoxyCodeLine{00051\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ \ \ \ }}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_GND\_GND\ \ \ \ \ \ \ \ \ UINT8\_C(0x40)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_GND\_VS\ \ \ \ \ \ \ \ \ \ UINT8\_C(0x41)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_GND\_SDA\ \ \ \ \ \ \ \ \ UINT8\_C(0x42)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_GND\_SCL\ \ \ \ \ \ \ \ \ UINT8\_C(0x43)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_VS\_GND\ \ \ \ \ \ \ \ \ \ UINT8\_C(0x44)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_VS\_VS\ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x45)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_VS\_SDA\ \ \ \ \ \ \ \ \ \ UINT8\_C(0x46)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_VS\_SCL\ \ \ \ \ \ \ \ \ \ UINT8\_C(0x47)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SDA\_GND\ \ \ \ \ \ \ \ \ UINT8\_C(0x48)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SDA\_VS\ \ \ \ \ \ \ \ \ \ UINT8\_C(0x49)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SDA\_SDA\ \ \ \ \ \ \ \ \ UINT8\_C(0x4a)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SDA\_SCL\ \ \ \ \ \ \ \ \ UINT8\_C(0x4b)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SCL\_GND\ \ \ \ \ \ \ \ \ UINT8\_C(0x4c)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SCL\_VS\ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4d)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SCL\_SDA\ \ \ \ \ \ \ \ \ UINT8\_C(0x4e)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_ADDR\_SCL\_SCL\ \ \ \ \ \ \ \ \ UINT8\_C(0x4f)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00075\ \textcolor{comment}{}}
+\DoxyCodeLine{00076\ \textcolor{comment}{INA266\ Wiring\ for\ Voltage}}
+\DoxyCodeLine{00077\ \textcolor{comment}{-\/\ Source(+)\ to\ INA266\ Voltage(+)}}
+\DoxyCodeLine{00078\ \textcolor{comment}{-\/\ Source(-\/)\ to\ INA266\ Voltage(-\/)}}
+\DoxyCodeLine{00079\ \textcolor{comment}{}}
+\DoxyCodeLine{00080\ \textcolor{comment}{INA266\ Wiring\ for\ Current}}
+\DoxyCodeLine{00081\ \textcolor{comment}{-\/\ Source(+)\ to\ INA266\ Current(+)}}
+\DoxyCodeLine{00082\ \textcolor{comment}{-\/\ INA266\ Current(-\/)\ to\ Load(+)}}
+\DoxyCodeLine{00083\ \textcolor{comment}{}}
+\DoxyCodeLine{00084\ \textcolor{comment}{INA266\ Wiring\ for\ Voltage\ \&\ Current}}
+\DoxyCodeLine{00085\ \textcolor{comment}{-\/\ Source(+)\ to\ INA266\ Voltage(+)}}
+\DoxyCodeLine{00086\ \textcolor{comment}{-\/\ INA266\ Voltage(+)\ to\ INA266\ Current(+)}}
+\DoxyCodeLine{00087\ \textcolor{comment}{-\/\ INA266\ Current(-\/)\ to\ Load(+)}}
+\DoxyCodeLine{00088\ \textcolor{comment}{-\/\ Source(-\/)\ to\ INA266\ Voltage(-\/)}}
+\DoxyCodeLine{00089\ \textcolor{comment}{-\/\ INA266\ Voltage(-\/)\ to\ Load(-\/)}}
+\DoxyCodeLine{00090\ \textcolor{comment}{}}
+\DoxyCodeLine{00091\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ *\ INA226\ macro\ definitions}}
+\DoxyCodeLine{00095\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#define\ I2C\_INA226\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_INA226\_ADDR\_GND\_GND,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_INA226\_DEV\_CLK\_SPD,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\ \ \ \ .averaging\_mode\ \ \ \ \ \ \ \ \ \ \ \ \ =\ INA226\_AVG\_MODE\_1,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\ \ \ \ .shunt\_voltage\_conv\_time\ \ \ \ =\ INA226\_VOLT\_CONV\_TIME\_1\_1MS,\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\ \ \ \ .bus\_voltage\_conv\_time\ \ \ \ \ \ =\ INA226\_VOLT\_CONV\_TIME\_1\_1MS,\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\ \ \ \ .operating\_mode\ \ \ \ \ \ \ \ \ \ \ \ \ =\ INA226\_OP\_MODE\_CONT\_SHUNT\_BUS,\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\ \ \ \ .shunt\_resistance\ \ \ \ \ \ \ \ \ \ \ =\ 0.002,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\ \ \ \ .max\_current\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0.5\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ shunt\ resistor\ 0.002\ ohms}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00109\ \textcolor{comment}{\ *\ INA226\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00110\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga331987c52263d3232c0355c54284a98c}{ina226\_averaging\_modes\_e}}\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga331987c52263d3232c0355c54284a98ca63e4883a131990d4884d11274ff2584c}{INA226\_AVG\_MODE\_1}}\ \ \ \ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00122\ \ \ \ \ INA226\_AVG\_MODE\_4\ \ \ \ \ \ \ =\ (0b001),}
+\DoxyCodeLine{00123\ \ \ \ \ INA226\_AVG\_MODE\_16\ \ \ \ \ \ =\ (0b010),}
+\DoxyCodeLine{00124\ \ \ \ \ INA226\_AVG\_MODE\_64\ \ \ \ \ \ =\ (0b011),}
+\DoxyCodeLine{00125\ \ \ \ \ INA226\_AVG\_MODE\_128\ \ \ \ \ =\ (0b100),}
+\DoxyCodeLine{00126\ \ \ \ \ INA226\_AVG\_MODE\_256\ \ \ \ \ =\ (0b101),}
+\DoxyCodeLine{00127\ \ \ \ \ INA226\_AVG\_MODE\_512\ \ \ \ \ =\ (0b110),}
+\DoxyCodeLine{00128\ \ \ \ \ INA226\_AVG\_MODE\_1024\ \ \ \ =\ (0b111)}
+\DoxyCodeLine{00129\ \}\ \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\_averaging\_modes\_t}};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00134\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga0ff2d17cdd65de6c48164da40f545f30}{ina226\_volt\_conv\_times\_e}}\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_140US\ \ \ \ \ =\ (0b000),}
+\DoxyCodeLine{00136\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_204US\ \ \ \ \ =\ (0b001),}
+\DoxyCodeLine{00137\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_332US\ \ \ \ \ =\ (0b010),}
+\DoxyCodeLine{00138\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_588US\ \ \ \ \ =\ (0b011),}
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga0ff2d17cdd65de6c48164da40f545f30ad1265344ea7f32c52958b4d4a25d69be}{INA226\_VOLT\_CONV\_TIME\_1\_1MS}}\ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00140\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_2\_116MS\ \ \ =\ (0b101),}
+\DoxyCodeLine{00141\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_4\_156MS\ \ \ =\ (0b110),}
+\DoxyCodeLine{00142\ \ \ \ \ INA226\_VOLT\_CONV\_TIME\_8\_244MS\ \ \ =\ (0b111)}
+\DoxyCodeLine{00143\ \}\ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}};}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00148\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga5a5218c9d32b83def8dc014eb623dcb8}{ina226\_operating\_modes\_e}}\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8af6b26a9c672c20589cb734b63af6bfd5}{INA226\_OP\_MODE\_SHUTDOWN}}\ \ \ \ \ \ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a3293ba0081729be64055d568dc40158d}{INA226\_OP\_MODE\_TRIG\_SHUNT\_VOLT}}\ \ =\ (0b001),\ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a1fcde25b1e71bb3dba61d39a3b872726}{INA226\_OP\_MODE\_TRIG\_BUS\_VOLT}}\ \ \ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8aeee89fd6db62c7add799a438e040ebb8}{INA226\_OP\_MODE\_TRIG\_SHUNT\_BUS}}\ \ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a49a957afbbca75f55d71a28e2dc05657}{INA226\_OP\_MODE\_SHUTDOWN2}}\ \ \ \ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a920dee79f4bb9c412fae909979d44f6e}{INA226\_OP\_MODE\_CONT\_SHUNT\_VOLT}}\ \ =\ (0b101),\ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a2878f2a7c9d1734ccb6973da01e60808}{INA226\_OP\_MODE\_CONT\_BUS\_VOLT}}\ \ \ \ =\ (0b110),\ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a90d9863cfc37473007339c7934a08278}{INA226\_OP\_MODE\_CONT\_SHUNT\_BUS}}\ \ \ =\ (0b111)\ \ \ }
+\DoxyCodeLine{00157\ \}\ \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\_operating\_modes\_t}};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00163\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ina226\_config\_register\_u\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\_operating\_modes\_t}}\ \ \ \ operating\_mode:3;\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ \ \ \ shun\_volt\_conv\_time:3;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ \ \ \ bus\_volt\_conv\_time:3;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\_averaging\_modes\_t}}\ \ \ \ averaging\_mode:3;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved:3;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reset\_enabled:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00172\ \ \ \ \ uint16\_t\ reg;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00173\ \}\ ina226\_config\_register\_t;}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00178\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ina226\_mask\_enable\_register\_u\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ alert\_latch\_enable:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ alert\_polarity\_bit:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ math\_overflow\_flag:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ conversion\_ready\_flag:1;\ \ \ \ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ alert\_func\_flag:1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ reserved:5;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ conversion\_ready:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ power\_over\_limit:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ bus\_volt\_under\_volt:1;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ bus\_volt\_over\_volt:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ shunt\_volt\_under\_volt:1;\ \ \ \ \ \ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ shunt\_volt\_over\_volt:1;\ \ \ \ \ }
+\DoxyCodeLine{00192\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00193\ \ \ \ \ uint16\_t\ reg;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00194\ \}\ ina226\_mask\_enable\_register\_t;}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00200\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structina226__config__s}{ina226\_config\_s}}\ \{}
+\DoxyCodeLine{00201\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00202\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\_averaging\_modes\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a35e60d8a56efe8877967f507f69030f3}{averaging\_mode}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a1705b1b12ac5cfc7670c94a51379209f}{shunt\_voltage\_conv\_time}};\ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_add5bce001da6bfe86b81f760116cc88c}{bus\_voltage\_conv\_time}};\ \ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\_operating\_modes\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a551a3d6deab5ab7b0b1fd11cf21b1237}{operating\_mode}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a3f652b7132fb8bcc6a63d60d4a33595c}{shunt\_resistance}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a151533eebf3e1ce25e1e4d11229ed673}{shunt\_voltage}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__config__s_a854929d3dff33ea3ada6aa5ffa70dfa4}{max\_current}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00210\ \}\ \mbox{\hyperlink{group__drivers_ga0f70616e438f7c5550604e0d4d0e5079}{ina226\_config\_t}};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00216\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structina226__context__t}{ina226\_context\_t}}\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga0f70616e438f7c5550604e0d4d0e5079}{ina226\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__context__t_a05013a5902781e609f96dbc2d402ae64}{dev\_config}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00218\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structina226__context__t_aacc3ea52c3d90da0266ea548f6be4849}{current\_lsb}};\ \ \ \ \ \ }
+\DoxyCodeLine{00220\ \};}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00225\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structina226__context__t}{ina226\_context\_t}}\ \mbox{\hyperlink{structina226__context__t}{ina226\_context\_t}};}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00230\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structina226__context__t}{ina226\_context\_t}}\ *\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}};}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00239\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga874bf54050809918410d24a7716ab49d}{ina226\_get\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ ina226\_config\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00248\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae437da62262dfe72003a49af0837fca3}{ina226\_set\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ ina226\_config\_register\_t\ reg);}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00257\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga87e0c6dc6bcf9fb3630f3eb072290ead}{ina226\_get\_calibration\_register}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00266\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga15fbf992c0198f0796a94feb34ba27d2}{ina226\_set\_calibration\_register}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ uint16\_t\ reg);}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00275\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab5a69559c93404d72986fea90cddd5ba}{ina226\_get\_mask\_enable\_register}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ ina226\_mask\_enable\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00285\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8fa5583edc47339a2d2e11da22f37ede}{ina226\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga0f70616e438f7c5550604e0d4d0e5079}{ina226\_config\_t}}\ *ina226\_config,\ \mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ *ina226\_handle);}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00295\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8eea27ae0382d61f7c80bb4774c0c50c}{ina226\_calibrate}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ max\_current,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ shunt\_resistance);}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00304\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1032dce6b1672ba3fc96c7101215d5b5}{ina226\_get\_bus\_voltage}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ voltage);}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00313\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab0cd7952b9db1d15f522b1931ddbb9c0}{ina226\_get\_triggered\_bus\_voltage}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ voltage);}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00322\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3a3b0b1318c633222c93cecb44264d63}{ina226\_get\_shunt\_voltage}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ voltage);}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00331\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga68f7fcc45f14c1bf03185b8499ba3226}{ina226\_get\_triggered\_shunt\_voltage}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ voltage);}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00342\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaab786a59b9cf01076a4e4cc5a508a52f}{ina226\_get\_current}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ current);}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00353\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9ad8e8e43146aac88c11ec453d8627be}{ina226\_get\_triggered\_current}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ current);}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00364\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafe669e8a9ae6777cb8d428f41139f078}{ina226\_get\_power}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ power);}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00373\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3ae82d3e28d0e392fff54eea45091192}{ina226\_get\_operating\_mode}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\_operating\_modes\_t}}\ *\textcolor{keyword}{const}\ mode);}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00382\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4a98bd42626927a32be826d7f18dd7f5}{ina226\_set\_operating\_mode}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\_operating\_modes\_t}}\ mode);}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ esp\_err\_t\ ina226\_get\_averaging\_mode(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\_averaging\_modes\_t}}\ *\textcolor{keyword}{const}\ mode);}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ esp\_err\_t\ ina226\_set\_averaging\_mode(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\_averaging\_modes\_t}}\ mode);}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00388\ esp\_err\_t\ ina226\_get\_bus\_volt\_conv\_time(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ *\textcolor{keyword}{const}\ conv\_time);}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ esp\_err\_t\ ina226\_set\_bus\_volt\_conv\_time(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ *\textcolor{keyword}{const}\ conv\_time);}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ esp\_err\_t\ ina226\_get\_shunt\_volt\_conv\_time(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ *\textcolor{keyword}{const}\ conv\_time);}
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00394\ esp\_err\_t\ ina226\_set\_shunt\_volt\_conv\_time(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\_volt\_conv\_times\_t}}\ *\textcolor{keyword}{const}\ conv\_time);}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00405\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga411af4609160753897a5a58f29028c52}{ina226\_reset}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle);}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00413\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gadbb4cf932d249b9addb0a4d775c75222}{ina226\_remove}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle);}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00421\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4340968df777a40e1055e7fd696a5473}{ina226\_delete}}(\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\_handle\_t}}\ handle);}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00428\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_ga1d811627c85d6ec2b884ebad0eeb62e3}{ina226\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00435\ int32\_t\ \mbox{\hyperlink{group__drivers_gab02fa33d34919a5ef63b93b492f10e6d}{ina226\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ }
+\DoxyCodeLine{00438\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00439\ \}}
+\DoxyCodeLine{00440\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00444\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_INA226\_H\_\_}}
+
+\end{DoxyCode}

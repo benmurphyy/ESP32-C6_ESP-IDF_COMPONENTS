@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structsht4x__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>sht4x_config_s</compoundname>
+    <includes refid="sht4x_8h" local="no">sht4x.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsht4x__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>sht4x_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>sht4x i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="127" column="26" bodyfile="components/peripherals/i2c/esp_sht4x/include/sht4x.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsht4x__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>sht4x_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>sht4x i2c device scl clock speed </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="128" column="26" bodyfile="components/peripherals/i2c/esp_sht4x/include/sht4x.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsht4x__config__s_1abe9657480ce96adf824bdcd768461f9a" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaa3ca8d58b6772111c2fe9b2714691e74" kindref="member">sht4x_repeat_modes_t</ref></type>
+        <definition>sht4x_repeat_modes_t repeat_mode</definition>
+        <argsstring></argsstring>
+        <name>repeat_mode</name>
+        <qualifiedname>sht4x_config_s::repeat_mode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>sht4x measurement repeatability mode setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="129" column="26" bodyfile="components/peripherals/i2c/esp_sht4x/include/sht4x.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsht4x__config__s_1a112724262a59d9b7fc85ba06c753491a" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga172b07afab8f75e7f52efe0e5669461a" kindref="member">sht4x_heater_modes_t</ref></type>
+        <definition>sht4x_heater_modes_t heater_mode</definition>
+        <argsstring></argsstring>
+        <name>heater_mode</name>
+        <qualifiedname>sht4x_config_s::heater_mode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>sht4x measurement heater mode setting </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="130" column="26" bodyfile="components/peripherals/i2c/esp_sht4x/include/sht4x.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>SHT4X configuration structure definition. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_sht4x/include/sht4x.h" line="126" column="1" bodyfile="components/peripherals/i2c/esp_sht4x/include/sht4x.h" bodystart="126" bodyend="131"/>
+    <listofallmembers>
+      <member refid="structsht4x__config__s_1a112724262a59d9b7fc85ba06c753491a" prot="public" virt="non-virtual"><scope>sht4x_config_s</scope><name>heater_mode</name></member>
+      <member refid="structsht4x__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>sht4x_config_s</scope><name>i2c_address</name></member>
+      <member refid="structsht4x__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>sht4x_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structsht4x__config__s_1abe9657480ce96adf824bdcd768461f9a" prot="public" virt="non-virtual"><scope>sht4x_config_s</scope><name>repeat_mode</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

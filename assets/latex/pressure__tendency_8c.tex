@@ -1,0 +1,181 @@
+\doxysection{components/utilities/esp\+\_\+pressure\+\_\+tendency/pressure\+\_\+tendency.c File Reference}
+\hypertarget{pressure__tendency_8c}{}\label{pressure__tendency_8c}\index{components/utilities/esp\_pressure\_tendency/pressure\_tendency.c@{components/utilities/esp\_pressure\_tendency/pressure\_tendency.c}}
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+types.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include "{}include/pressure\+\_\+tendency.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pressure__tendency_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{pressure__tendency_8c_abdfc685f6f2abff2900a51ebef05df2d}{pressure\+\_\+tendency\+\_\+code\+\_\+to\+\_\+string}} (const \mbox{\hyperlink{pressure__tendency_8h_a10e8ef7107f8ea37166e4423e920cdaf}{pressure\+\_\+tendency\+\_\+codes\+\_\+t}} code)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily \doxylink{pressure__tendency_8h_a10e8ef7107f8ea37166e4423e920cdaf}{pressure\+\_\+tendency\+\_\+codes\+\_\+t}} enumerator pressure tendency code to string. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{pressure__tendency_8c_a4bcd677b48fd8bd6acad4e472e5ba31e}{pressure\+\_\+tendency\+\_\+init}} (const uint16\+\_\+t samples\+\_\+size, \mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}pressure\+\_\+tendency\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes a pressure tendency handle by size of the 3-\/hr samples to analyze. The size of the samples is calculated from the sampling rate. ~\newline
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 180 e.\+g., three (3) hours. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{pressure__tendency_8c_a8f25d3d3d856aa285b773760b8575b33}{pressure\+\_\+tendency\+\_\+analysis}} (\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}} pressure\+\_\+tendency\+\_\+handle, const float sample, \mbox{\hyperlink{pressure__tendency_8h_a10e8ef7107f8ea37166e4423e920cdaf}{pressure\+\_\+tendency\+\_\+codes\+\_\+t}} \texorpdfstring{$\ast$}{*}const code, float \texorpdfstring{$\ast$}{*}const change)
+\begin{DoxyCompactList}\small\item\em Analyzes historical samples and pressure tendency appears after three (3) hours of operation. The pressure tendency are based the 3-\/hr variance of the previous 3-\/hour history. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{pressure__tendency_8c_aececf3a09cfaba87373aa43313176277}{pressure\+\_\+tendency\+\_\+reset}} (\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}} pressure\+\_\+tendency\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Purges pressure tendency samples array and resets samples counter. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{pressure__tendency_8c_af7370f9b7e6c674b4b2317f81c7271da}{pressure\+\_\+tendency\+\_\+delete}} (\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}} pressure\+\_\+tendency\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Frees pressure tendency handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{pressure__tendency_8c_afb1937afb675db139a11ccc782236d76}{pressure\+\_\+tendency\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily pressure\+\_\+tendency} firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{pressure__tendency_8c_ad818989dd42eb2028a4c7b13b3080039}{pressure\+\_\+tendency\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts {\ttfamily pressure\+\_\+tendency} firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Air pressure tendency libary
+
+A air pressure tendency appears after three (3) hours of operation. The tendency codes and change are based on the 3-\/hr variance from the previous 3-\/hr history.
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{pressure__tendency_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{pressure\_tendency.c@{pressure\_tendency.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{pressure__tendency_8c_a8f25d3d3d856aa285b773760b8575b33}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_analysis@{pressure\_tendency\_analysis}}
+\index{pressure\_tendency\_analysis@{pressure\_tendency\_analysis}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_analysis()}{pressure\_tendency\_analysis()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_a8f25d3d3d856aa285b773760b8575b33} 
+esp\+\_\+err\+\_\+t pressure\+\_\+tendency\+\_\+analysis (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}}}]{pressure\+\_\+tendency\+\_\+handle}{, }\item[{const float}]{sample}{, }\item[{\mbox{\hyperlink{pressure__tendency_8h_a10e8ef7107f8ea37166e4423e920cdaf}{pressure\+\_\+tendency\+\_\+codes\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{code}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{change}{}\end{DoxyParamCaption})}
+
+
+
+Analyzes historical samples and pressure tendency appears after three (3) hours of operation. The pressure tendency are based the 3-\/hr variance of the previous 3-\/hour history. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pressure\+\_\+tendency\+\_\+handle} & Pressure tendency handle. \\
+\hline
+{\em sample} & Air pressure sample, in millibars or hecto-\/pascal, to push onto the samples stack. \\
+\hline
+{\em code} & Pressure tendency code of three (3) hour analysis. Pressure tendency code {\ttfamily PRESSURE\+\_\+\+TENDENCY\+\_\+\+UNKNOWN} is reported when there is an insufficient number of samples to analyze. \\
+\hline
+{\em change} & Pressure tendency variance over the past three (3) hours. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{pressure__tendency_8c_abdfc685f6f2abff2900a51ebef05df2d}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_code\_to\_string@{pressure\_tendency\_code\_to\_string}}
+\index{pressure\_tendency\_code\_to\_string@{pressure\_tendency\_code\_to\_string}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_code\_to\_string()}{pressure\_tendency\_code\_to\_string()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_abdfc685f6f2abff2900a51ebef05df2d} 
+const char \texorpdfstring{$\ast$}{*} pressure\+\_\+tendency\+\_\+code\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{pressure__tendency_8h_a10e8ef7107f8ea37166e4423e920cdaf}{pressure\+\_\+tendency\+\_\+codes\+\_\+t}}}]{code}{}\end{DoxyParamCaption})}
+
+
+
+Converts {\ttfamily \doxylink{pressure__tendency_8h_a10e8ef7107f8ea37166e4423e920cdaf}{pressure\+\_\+tendency\+\_\+codes\+\_\+t}} enumerator pressure tendency code to string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em code} & Pressure tendency code to convert to a string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+const char\texorpdfstring{$\ast$}{*} String representation of the pressure tendency code. 
+\end{DoxyReturn}
+\Hypertarget{pressure__tendency_8c_af7370f9b7e6c674b4b2317f81c7271da}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_delete@{pressure\_tendency\_delete}}
+\index{pressure\_tendency\_delete@{pressure\_tendency\_delete}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_delete()}{pressure\_tendency\_delete()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_af7370f9b7e6c674b4b2317f81c7271da} 
+esp\+\_\+err\+\_\+t pressure\+\_\+tendency\+\_\+delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}}}]{pressure\+\_\+tendency\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Frees pressure tendency handle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pressure\+\_\+tendency\+\_\+handle} & Pressure tendency handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{pressure__tendency_8c_afb1937afb675db139a11ccc782236d76}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_get\_fw\_version@{pressure\_tendency\_get\_fw\_version}}
+\index{pressure\_tendency\_get\_fw\_version@{pressure\_tendency\_get\_fw\_version}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_get\_fw\_version()}{pressure\_tendency\_get\_fw\_version()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_afb1937afb675db139a11ccc782236d76} 
+const char \texorpdfstring{$\ast$}{*} pressure\+\_\+tendency\+\_\+get\+\_\+fw\+\_\+version (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Converts {\ttfamily pressure\+\_\+tendency} firmware version numbers (major, minor, patch) into a string. 
+
+\begin{DoxyReturn}{Returns}
+char\texorpdfstring{$\ast$}{*} {\ttfamily pressure\+\_\+tendency} firmware version as a string that is formatted as X.\+X.\+X (e.\+g. 4.\+0.\+0). 
+\end{DoxyReturn}
+\Hypertarget{pressure__tendency_8c_ad818989dd42eb2028a4c7b13b3080039}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_get\_fw\_version\_number@{pressure\_tendency\_get\_fw\_version\_number}}
+\index{pressure\_tendency\_get\_fw\_version\_number@{pressure\_tendency\_get\_fw\_version\_number}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_get\_fw\_version\_number()}{pressure\_tendency\_get\_fw\_version\_number()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_ad818989dd42eb2028a4c7b13b3080039} 
+int32\+\_\+t pressure\+\_\+tendency\+\_\+get\+\_\+fw\+\_\+version\+\_\+number (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Converts {\ttfamily pressure\+\_\+tendency} firmware version numbers (major, minor, patch) into an integer value. 
+
+\begin{DoxyReturn}{Returns}
+int32\+\_\+t {\ttfamily pressure\+\_\+tendency} firmware version number. 
+\end{DoxyReturn}
+\Hypertarget{pressure__tendency_8c_a4bcd677b48fd8bd6acad4e472e5ba31e}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_init@{pressure\_tendency\_init}}
+\index{pressure\_tendency\_init@{pressure\_tendency\_init}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_init()}{pressure\_tendency\_init()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_a4bcd677b48fd8bd6acad4e472e5ba31e} 
+esp\+\_\+err\+\_\+t pressure\+\_\+tendency\+\_\+init (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t}]{samples\+\_\+size}{, }\item[{\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pressure\+\_\+tendency\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a pressure tendency handle by size of the 3-\/hr samples to analyze. The size of the samples is calculated from the sampling rate. ~\newline
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 180 e.\+g., three (3) hours. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em samples\+\_\+size} & Pressure tendency samples buffer size. \\
+\hline
+{\em pressure\+\_\+tendency\+\_\+handle} & Pressure tendency handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{pressure__tendency_8c_aececf3a09cfaba87373aa43313176277}\index{pressure\_tendency.c@{pressure\_tendency.c}!pressure\_tendency\_reset@{pressure\_tendency\_reset}}
+\index{pressure\_tendency\_reset@{pressure\_tendency\_reset}!pressure\_tendency.c@{pressure\_tendency.c}}
+\doxysubsubsection{\texorpdfstring{pressure\_tendency\_reset()}{pressure\_tendency\_reset()}}
+{\footnotesize\ttfamily \label{pressure__tendency_8c_aececf3a09cfaba87373aa43313176277} 
+esp\+\_\+err\+\_\+t pressure\+\_\+tendency\+\_\+reset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{pressure__tendency_8h_a14deb96a2b909bed7d689c1114c8b26f}{pressure\+\_\+tendency\+\_\+handle\+\_\+t}}}]{pressure\+\_\+tendency\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Purges pressure tendency samples array and resets samples counter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pressure\+\_\+tendency\+\_\+handle} & Pressure tendency handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}

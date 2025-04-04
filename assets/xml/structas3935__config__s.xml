@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structas3935__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>as3935_config_s</compoundname>
+    <includes refid="as3935_8h" local="no">as3935.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structas3935__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>as3935_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="351" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>as3935_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 i2c device scl clock speed in hz </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="352" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="352" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1a31f33263765ae3e6c1cc738450b8a7b5" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool irq_io_enabled</definition>
+        <argsstring></argsstring>
+        <name>irq_io_enabled</name>
+        <qualifiedname>as3935_config_s::irq_io_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 interrupt pin enabled when true </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="353" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="353" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1aa6ec08546b6f7e00c2e1ee2e814b1375" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t irq_io_num</definition>
+        <argsstring></argsstring>
+        <name>irq_io_num</name>
+        <qualifiedname>as3935_config_s::irq_io_num</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 pin number for mcu interrupt </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="354" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="354" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1a90ccd5d84d5d556d042ac812c3a1d5b2" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gafcdd75c9b18aa4151eed84cbae265196" kindref="member">as3935_analog_frontends_t</ref></type>
+        <definition>as3935_analog_frontends_t analog_frontend</definition>
+        <argsstring></argsstring>
+        <name>analog_frontend</name>
+        <qualifiedname>as3935_config_s::analog_frontend</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 indoor or outdoor exposure </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="355" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="355" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1a0a8b73caa7a8bc3eeb18f91c78781d84" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga2f7cf5db258dc86f6c91a06ebe1cfc47" kindref="member">as3935_minimum_lightnings_t</ref></type>
+        <definition>as3935_minimum_lightnings_t min_lightning_strikes</definition>
+        <argsstring></argsstring>
+        <name>min_lightning_strikes</name>
+        <qualifiedname>as3935_config_s::min_lightning_strikes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 minimum number of lightning strikes before an event is raised </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="356" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="356" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1a91bb72a7787be081deea1767176c5be3" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool calibrate_rco</definition>
+        <argsstring></argsstring>
+        <name>calibrate_rco</name>
+        <qualifiedname>as3935_config_s::calibrate_rco</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 rco is calibrated when true </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="357" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="357" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1a505a053caf2004a68fd46e6ee4217483" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool disturber_detection_enabled</definition>
+        <argsstring></argsstring>
+        <name>disturber_detection_enabled</name>
+        <qualifiedname>as3935_config_s::disturber_detection_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 disturber detection is enabled when true </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="358" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="358" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structas3935__config__s_1ac8d0220703ff58c52fdd67e4216ecda1" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga64db4a0d5e3024512fe00e5e5038453f" kindref="member">as3935_noise_levels_t</ref></type>
+        <definition>as3935_noise_levels_t noise_level_threshold</definition>
+        <argsstring></argsstring>
+        <name>noise_level_threshold</name>
+        <qualifiedname>as3935_config_s::noise_level_threshold</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>as3935 noise level threshold </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="359" column="41" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="359" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>I2C AS3935 device configuration structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_as3935/include/as3935.h" line="350" column="1" bodyfile="components/peripherals/i2c/esp_as3935/include/as3935.h" bodystart="350" bodyend="360"/>
+    <listofallmembers>
+      <member refid="structas3935__config__s_1a90ccd5d84d5d556d042ac812c3a1d5b2" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>analog_frontend</name></member>
+      <member refid="structas3935__config__s_1a91bb72a7787be081deea1767176c5be3" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>calibrate_rco</name></member>
+      <member refid="structas3935__config__s_1a505a053caf2004a68fd46e6ee4217483" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>disturber_detection_enabled</name></member>
+      <member refid="structas3935__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>i2c_address</name></member>
+      <member refid="structas3935__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structas3935__config__s_1a31f33263765ae3e6c1cc738450b8a7b5" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>irq_io_enabled</name></member>
+      <member refid="structas3935__config__s_1aa6ec08546b6f7e00c2e1ee2e814b1375" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>irq_io_num</name></member>
+      <member refid="structas3935__config__s_1a0a8b73caa7a8bc3eeb18f91c78781d84" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>min_lightning_strikes</name></member>
+      <member refid="structas3935__config__s_1ac8d0220703ff58c52fdd67e4216ecda1" prot="public" virt="non-virtual"><scope>as3935_config_s</scope><name>noise_level_threshold</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

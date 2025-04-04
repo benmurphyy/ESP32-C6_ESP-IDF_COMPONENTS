@@ -1,0 +1,37 @@
+\doxysection{components/utilities/esp\+\_\+math3d/vector\+\_\+float.h File Reference}
+\hypertarget{vector__float_8h}{}\label{vector__float_8h}\index{components/utilities/esp\_math3d/vector\_float.h@{components/utilities/esp\_math3d/vector\_float.h}}
+{\ttfamily \#include "{}quaternion.\+h"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvector__float__t}{vector\+\_\+float\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Vector float structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct vector\+\_\+float\+\_\+t {\bfseries vector\+\_\+float\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector float definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structvector__float__t}{vector\+\_\+float\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries vector\+\_\+float\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector float handle structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+init} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}vector\+\_\+float\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+init\+\_\+data} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, float nx, float ny, float nz)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+get\+\_\+magnitude} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, float \texorpdfstring{$\ast$}{*}magnitude)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+normalize} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+get\+\_\+normalized} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, \mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}normalized\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+rotate} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+get\+\_\+rotated} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}rotated\+\_\+handle)
+\end{DoxyCompactItemize}

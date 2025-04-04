@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="max31865_8h" kind="file" language="C++">
+    <compoundname>max31865.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/gpio.h</includes>
+    <includes local="no">driver/spi_common.h</includes>
+    <includes local="no">driver/spi_master.h</includes>
+    <includedby refid="max31865_8c" local="yes">components/peripherals/spi/esp_max31865/max31865.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/spi/esp_max31865/max31865.h</label>
+        <link refid="max31865_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/gpio.h</label>
+      </node>
+      <node id="6">
+        <label>driver/spi_common.h</label>
+      </node>
+      <node id="7">
+        <label>driver/spi_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>components/peripherals/spi/esp_max31865/max31865.c</label>
+        <link refid="max31865_8c"/>
+      </node>
+      <node id="1">
+        <label>components/peripherals/spi/esp_max31865/max31865.h</label>
+        <link refid="max31865_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structspi__max31865__config__t" prot="public">spi_max31865_config_t</innerclass>
+    <innerclass refid="structspi__max31865__t" prot="public">spi_max31865_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1gab26480a575786ee8b7ba1a0fef301dd1" kind="define"><name>I2C_MAX31865_SCL_SPEED_HZ</name></member>
+      <member refid="group__drivers_1gae10b8cdc6e47a84b1a3bb39994e2ad2a" kind="define"><name>SPI_MAX31865_DEV_ADDR</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1ga92074ef906c67e5618499f4bb24b8910" kind="enum"><name>spi_max31865_fault_detection_cycles_t</name></member>
+      <member refid="group__drivers_1ga98e0a496fe65e0e43f418cea4b22c7e0" kind="enum"><name>spi_max31865_modes_t</name></member>
+      <member refid="group__drivers_1gad5b862850f162f3a3fcddc3c51ed528a" kind="enum"><name>spi_max31865_filters_t</name></member>
+      <member refid="group__drivers_1ga1d19580fd4f7ad1cc6a72e14b3f55f13" kind="enum"><name>spi_max31865_connection_types_t</name></member>
+      <member refid="group__drivers_1ga0ec7f26460e9c80e771d01b2f78c8ce7" kind="enum"><name>spi_max31865_standards_t</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1gac3083b69c7df4abfe2ee7e528fe0e65e" kind="typedef"><name>spi_max31865_t</name></member>
+      <member refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kind="typedef"><name>spi_max31865_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1ga2a5a906bfe5641729118f9652501702f" kind="variable"><name>spi_max31865_configuration_register_t</name></member>
+      <member refid="group__drivers_1ga8851896d0af9e67e22033e22f08075dc" kind="variable"><name>spi_max31865_fault_status_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga6cf04e954900912884622a1fb1169d07" kind="function"><name>spi_max31865_get_configuration_register</name></member>
+      <member refid="group__drivers_1ga944a3daaf42a2cd1f121ce69d8d867df" kind="function"><name>spi_max31865_set_configuration_register</name></member>
+      <member refid="group__drivers_1gae4717b9e5fc1aa65d8caa6129979b4ca" kind="function"><name>spi_max31865_get_fault_status_register</name></member>
+      <member refid="group__drivers_1ga802f250a56d82b7f538421065bfd7c4d" kind="function"><name>spi_max31865_init</name></member>
+      <member refid="group__drivers_1ga103ed3d7bc0a27d45be4a067426caf6b" kind="function"><name>spi_max31865_get_measurement</name></member>
+      <member refid="group__drivers_1gaa4974de2659627b67439a6eb43b0a00b" kind="function"><name>spi_max31865_remove</name></member>
+      <member refid="group__drivers_1gaa99e2cf7b0d8f44c1982ce37d99c0bbd" kind="function"><name>spi_max31865_delete</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__MAX31865_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__MAX31865_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/gpio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/spi_common.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/spi_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*<sp/>MAX31865<sp/>definitions</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__drivers_1gab26480a575786ee8b7ba1a0fef301dd1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_MAX31865_SCL_SPEED_HZ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="group__drivers_1gae10b8cdc6e47a84b1a3bb39994e2ad2a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPI_MAX31865_DEV_ADDR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x38)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>MAX31865<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="63"><highlight class="comment">#define<sp/>I2C_MAX31865_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/><sp/>.dev_config.device_address<sp/>=<sp/>I2C_MAX31865_DEV_ADDR,<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/><sp/>.dev_config.scl_speed_hz<sp/><sp/><sp/>=<sp/>I2C_MAX31865_SCL_SPEED_HZ,\</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/><sp/><sp/><sp/>.aht_type<sp/>=<sp/>I2C_AHTXX_AHT2X<sp/>}</highlight></codeline>
+<codeline lineno="67"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>SPI_MAX31865_FAULT_DETECT_FINISHED<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b00),<sp/></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>SPI_MAX31865_FAULT_DETECT_STILL_RUNNING<sp/><sp/>=<sp/>(0b01),<sp/><sp/></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>SPI_MAX31865_FAULT_DETECT_CYCLE1_RUNNING<sp/>=<sp/>(0b10),</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>SPI_MAX31865_FAULT_DETECT_CYCLE2_RUNNING<sp/>=<sp/>(0b11)</highlight></codeline>
+<codeline lineno="74"><highlight class="normal">}<sp/>spi_max31865_fault_detection_cycles_t;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="group__drivers_1ga98e0a496fe65e0e43f418cea4b22c7e0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="77" refid="group__drivers_1gga98e0a496fe65e0e43f418cea4b22c7e0ac8e94fa02248e471db049658c4c8f69e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga98e0a496fe65e0e43f418cea4b22c7e0ac8e94fa02248e471db049658c4c8f69e" kindref="member">SPI_MAX31865_MODE_SINGLE</ref><sp/>=<sp/>0,<sp/></highlight></codeline>
+<codeline lineno="78" refid="group__drivers_1gga98e0a496fe65e0e43f418cea4b22c7e0aa783ce807ffc8518f05d587264fabb75" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga98e0a496fe65e0e43f418cea4b22c7e0aa783ce807ffc8518f05d587264fabb75" kindref="member">SPI_MAX31865_MODE_AUTO</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga98e0a496fe65e0e43f418cea4b22c7e0" kindref="member">spi_max31865_modes_t</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="group__drivers_1gad5b862850f162f3a3fcddc3c51ed528a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="82" refid="group__drivers_1ggad5b862850f162f3a3fcddc3c51ed528aabd3a37c19908b948019ae0af583161d8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad5b862850f162f3a3fcddc3c51ed528aabd3a37c19908b948019ae0af583161d8" kindref="member">SPI_MAX31865_FILTER_60HZ</ref><sp/>=<sp/>0,<sp/></highlight></codeline>
+<codeline lineno="83" refid="group__drivers_1ggad5b862850f162f3a3fcddc3c51ed528aa5fc0b423bd3ced40604e0f6038d94ed0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggad5b862850f162f3a3fcddc3c51ed528aa5fc0b423bd3ced40604e0f6038d94ed0" kindref="member">SPI_MAX31865_FILTER_50HZ</ref><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84"><highlight class="normal">}<sp/><ref refid="group__drivers_1gad5b862850f162f3a3fcddc3c51ed528a" kindref="member">spi_max31865_filters_t</ref>;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="group__drivers_1ga1d19580fd4f7ad1cc6a72e14b3f55f13" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="87" refid="group__drivers_1gga1d19580fd4f7ad1cc6a72e14b3f55f13af5014dcc06577502d7d2974cf2d78a97" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga1d19580fd4f7ad1cc6a72e14b3f55f13af5014dcc06577502d7d2974cf2d78a97" kindref="member">SPI_MAX31865_2WIRE_OR_4WIRE</ref><sp/>=<sp/>0,<sp/></highlight></codeline>
+<codeline lineno="88" refid="group__drivers_1gga1d19580fd4f7ad1cc6a72e14b3f55f13ad9075f38a3017d196785c921063c5e76" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga1d19580fd4f7ad1cc6a72e14b3f55f13ad9075f38a3017d196785c921063c5e76" kindref="member">SPI_MAX31865_3WIRE</ref><sp/>=<sp/>1,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga1d19580fd4f7ad1cc6a72e14b3f55f13" kindref="member">spi_max31865_connection_types_t</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="group__drivers_1ga0ec7f26460e9c80e771d01b2f78c8ce7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="92" refid="group__drivers_1gga0ec7f26460e9c80e771d01b2f78c8ce7a055cc2aa48486da615523f957dde1105" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga0ec7f26460e9c80e771d01b2f78c8ce7a055cc2aa48486da615523f957dde1105" kindref="member">SPI_MAX31865_ITS90</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93" refid="group__drivers_1gga0ec7f26460e9c80e771d01b2f78c8ce7add89532ce2f8598fad8d3f84af2bd1fa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga0ec7f26460e9c80e771d01b2f78c8ce7add89532ce2f8598fad8d3f84af2bd1fa" kindref="member">SPI_MAX31865_DIN43760</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94" refid="group__drivers_1gga0ec7f26460e9c80e771d01b2f78c8ce7ada0a12e5bfefb8a955113b90391010d7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga0ec7f26460e9c80e771d01b2f78c8ce7ada0a12e5bfefb8a955113b90391010d7" kindref="member">SPI_MAX31865_US_INDUSTRIAL</ref><sp/></highlight></codeline>
+<codeline lineno="95"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga0ec7f26460e9c80e771d01b2f78c8ce7" kindref="member">spi_max31865_standards_t</ref>;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>{</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gad5b862850f162f3a3fcddc3c51ed528a" kindref="member">spi_max31865_filters_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>filter:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>clear_fault_status:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>spi_max31865_fault_detection_cycles_t<sp/><sp/><sp/>fault_detection:2;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga1d19580fd4f7ad1cc6a72e14b3f55f13" kindref="member">spi_max31865_connection_types_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>connection:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>one_shot_enabled:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga98e0a496fe65e0e43f418cea4b22c7e0" kindref="member">spi_max31865_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mode:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>v_bias_enabled:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal">}<sp/>spi_max31865_configuration_register_t;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>{</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>voltage_fault:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>rtdin_open_fault:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>refin_open_fault:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>refin_fault:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>rtd_low_threshold_fault:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>rtd_high_threshold_fault:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal">}<sp/>spi_max31865_fault_status_register_t;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135" refid="structspi__max31865__config__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>clock_speed_hz;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>input_delay_ns;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga98e0a496fe65e0e43f418cea4b22c7e0" kindref="member">spi_max31865_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mode;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga1d19580fd4f7ad1cc6a72e14b3f55f13" kindref="member">spi_max31865_connection_types_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>connection;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>v_bias_enabled;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gad5b862850f162f3a3fcddc3c51ed528a" kindref="member">spi_max31865_filters_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>filter;</highlight></codeline>
+<codeline lineno="142" refid="structspi__max31865__config__t_1af2bc3d31ad0099123ad13e726b96cb8f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>spi_host_device_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__config__t_1af2bc3d31ad0099123ad13e726b96cb8f" kindref="member">host</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="143" refid="structspi__max31865__config__t_1ad5c5178be79dd4595aaf8a6e80317cec" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_num_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__config__t_1ad5c5178be79dd4595aaf8a6e80317cec" kindref="member">cs_io_num</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="144" refid="structspi__max31865__config__t_1abed2cffc0dcc04374d6f9b2a4c9f9aba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_num_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__config__t_1abed2cffc0dcc04374d6f9b2a4c9f9aba" kindref="member">miso_io_num</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="145" refid="structspi__max31865__config__t_1af76a23d5ea575f0b95d86d14d246c9a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__config__t_1af76a23d5ea575f0b95d86d14d246c9a7" kindref="member">irq_enabled</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="146" refid="structspi__max31865__config__t_1acbc6ecb435baad7dcd44b67adc24b822" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>gpio_num_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__config__t_1acbc6ecb435baad7dcd44b67adc24b822" kindref="member">irq_io_num</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="147"><highlight class="normal">}<sp/><ref refid="structspi__max31865__config__t" kindref="compound">spi_max31865_config_t</ref>;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="structspi__max31865__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspi__max31865__t" kindref="compound">spi_max31865_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="153" refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>SemaphoreHandle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__t_1a44404a968bfe87e248e0667fc13eb69c" kindref="member">spi_ready_sem</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="154" refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__config__t" kindref="compound">spi_max31865_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__t_1ae0bb7ae9f97206daa1e7988936da726f" kindref="member">spi_dev_config</ref>;<sp/></highlight></codeline>
+<codeline lineno="155" refid="structspi__max31865__t_1a7e11d30725e980842ce6d3b21899b3db" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>spi_device_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__t_1a7e11d30725e980842ce6d3b21899b3db" kindref="member">spi_dev_handle</ref>;<sp/></highlight></codeline>
+<codeline lineno="156" refid="structspi__max31865__t_1a4cd48286de49b9360e15a9d425e5d950" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>spi_max31865_configuration_register_t<sp/><sp/><sp/><ref refid="structspi__max31865__t_1a4cd48286de49b9360e15a9d425e5d950" kindref="member">config_reg</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="157" refid="structspi__max31865__t_1a492c7f08bf7ef00362e87e8cddf50625" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga0ec7f26460e9c80e771d01b2f78c8ce7" kindref="member">spi_max31865_standards_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__t_1a492c7f08bf7ef00362e87e8cddf50625" kindref="member">standard</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="158" refid="structspi__max31865__t_1a84819a8e858b1117348ac284f567d1cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__t_1a84819a8e858b1117348ac284f567d1cb" kindref="member">r_ref</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="159" refid="structspi__max31865__t_1ae45f841b63da97f469f5d8325eb2086f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structspi__max31865__t_1ae45f841b63da97f469f5d8325eb2086f" kindref="member">rtd_nominal</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="160"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="group__drivers_1gac3083b69c7df4abfe2ee7e528fe0e65e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspi__max31865__t" kindref="compound">spi_max31865_t</ref><sp/><ref refid="structspi__max31865__t" kindref="compound">spi_max31865_t</ref>;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170" refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspi__max31865__t" kindref="compound">spi_max31865_t</ref><sp/>*<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref>;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal">esp_err_t<sp/>spi_max31865_get_configuration_register(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal">esp_err_t<sp/>spi_max31865_set_configuration_register(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>spi_max31865_configuration_register_t<sp/><ref refid="structspi__max31865__t_1a4cd48286de49b9360e15a9d425e5d950" kindref="member">config_reg</ref>);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184" refid="group__drivers_1gae4717b9e5fc1aa65d8caa6129979b4ca" refkind="member"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae4717b9e5fc1aa65d8caa6129979b4ca" kindref="member">spi_max31865_get_fault_status_register</ref>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga802f250a56d82b7f538421065bfd7c4d" kindref="member">spi_max31865_init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structspi__max31865__config__t" kindref="compound">spi_max31865_config_t</ref><sp/>*max31865_config,<sp/><ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>*max31865_handle);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202" refid="group__drivers_1ga103ed3d7bc0a27d45be4a067426caf6b" refkind="member"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga103ed3d7bc0a27d45be4a067426caf6b" kindref="member">spi_max31865_get_measurement</ref>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa4974de2659627b67439a6eb43b0a00b" kindref="member">spi_max31865_remove</ref>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaa99e2cf7b0d8f44c1982ce37d99c0bbd" kindref="member">spi_max31865_delete</ref>(<ref refid="group__drivers_1gab7de7aa3b7f22bb305271068cd193f6f" kindref="member">spi_max31865_handle_t</ref><sp/>max31865_handle);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">//<sp/>__MAX31865_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/spi/esp_max31865/max31865.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,189 @@
+\doxysection{hdc1080.\+h}
+\hypertarget{hdc1080_8h_source}{}\label{hdc1080_8h_source}\index{components/peripherals/i2c/esp\_hdc1080/include/hdc1080.h@{components/peripherals/i2c/esp\_hdc1080/include/hdc1080.h}}
+\mbox{\hyperlink{hdc1080_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_HDC1080\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_HDC1080\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}hdc1080\_version.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ definitions}}
+\DoxyCodeLine{00051\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ I2C\_HDC1080\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ \ \ }}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ I2C\_HDC1080\_DEV\_ADDR\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x40)\ }}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ I2C\_HDC1080\_DEV\_ADDR\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x41)\ }}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ I2C\_HDC1080\_DEV\_ADDR\_2\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x42)\ }}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ I2C\_HDC1080\_DEV\_ADDR\_3\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x43)\ }}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ \ \ \ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *\ macro\ definitions}}
+\DoxyCodeLine{00063\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ I2C\_HDC1080\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_HDC1080\_DEV\_ADDR\_0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_HDC1080\_DEV\_CLK\_SPD,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .temperature\_resolution\ \ \ \ \ =\ HDC1080\_TEMPERATURE\_RESOLUTION\_14BIT,\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .humidity\_resolution\ \ \ \ \ \ \ \ =\ HDC1080\_HUMIDITY\_RESOLUTION\_14BIT,\ \ \ \ \}}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00077\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga1916160d74d5ce30f5508b7bcbc8928c}{hdc1080\_acquisition\_modes\_e}}\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga1916160d74d5ce30f5508b7bcbc8928cac2b3038fcf6beb733571b7b30f370f6f}{HDC1080\_ACQUISITION\_SINGLE}}\ \ \ \ \ =\ 0,\ }
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga1916160d74d5ce30f5508b7bcbc8928cadbc7d48f926d1f8d8d3fa30236b79497}{HDC1080\_ACQUISITION\_SEQUENCED}}\ \ =\ 1\ \ }
+\DoxyCodeLine{00086\ \}\ \mbox{\hyperlink{group__drivers_ga176f5a25487d02065834216ba3c2436c}{hdc1080\_acquisition\_modes\_t}};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gaa9046a79c6161e97ce6f4eedb2fabcbf}{hdc1080\_battery\_states\_e}}\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaa9046a79c6161e97ce6f4eedb2fabcbfaa4f5dbc0b640f9beb484a1af8a5c5582}{HDC1080\_BATT\_VOLT\_OVER\_2\_8V}}\ \ \ =\ 0,\ }
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaa9046a79c6161e97ce6f4eedb2fabcbfa75bf64388d9765e555f36bc0b735e86f}{HDC1080\_BATT\_VOLT\_UNDER\_2\_8V}}\ \ =\ 1\ \ }
+\DoxyCodeLine{00094\ \}\ \mbox{\hyperlink{group__drivers_ga126d151aef7991dffa944650fec31883}{hdc1080\_battery\_states\_t}};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga67668000949d016e559d46366831972c}{hdc1080\_temperature\_resolutions\_e}}\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga67668000949d016e559d46366831972ca28ef676034a8e76374410a20228782fe}{HDC1080\_TEMPERATURE\_RESOLUTION\_14BIT}}\ =\ 0,\ }
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga67668000949d016e559d46366831972ca2891414464804111773c6c31d5542b79}{HDC1080\_TEMPERATURE\_RESOLUTION\_11BIT}}\ =\ 1\ \ }
+\DoxyCodeLine{00102\ \}\ \mbox{\hyperlink{group__drivers_ga778ae16b2d80f624217c3a1a9fa94cc8}{hdc1080\_temperature\_resolutions\_t}};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gafebf60aee364b0512cc8b5dbc2e4acab}{hdc1080\_humidity\_resolutions\_e}}\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafebf60aee364b0512cc8b5dbc2e4acabaabc33facda545a62722e9afa5fb54eb0}{HDC1080\_HUMIDITY\_RESOLUTION\_14BIT}}\ =\ (0b00),\ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafebf60aee364b0512cc8b5dbc2e4acaba0fbb7b270d2575e47a1f613d417b5d72}{HDC1080\_HUMIDITY\_RESOLUTION\_11BIT}}\ =\ (0b01),\ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafebf60aee364b0512cc8b5dbc2e4acaba86d56e5e68f8c1a35d06f6aff2c0138c}{HDC1080\_HUMIDITY\_RESOLUTION\_8BIT}}\ \ =\ (0b10)\ \ }
+\DoxyCodeLine{00111\ \}\ \mbox{\hyperlink{group__drivers_gae67808de49aceb774fa76ef6f6277c5d}{hdc1080\_humidity\_resolutions\_t}};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ hdc1080\_configuration\_register\_u\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{struct\ }REG\_CFG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:8;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gae67808de49aceb774fa76ef6f6277c5d}{hdc1080\_humidity\_resolutions\_t}}\ \ \ \ humidity\_resolution:2;\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga778ae16b2d80f624217c3a1a9fa94cc8}{hdc1080\_temperature\_resolutions\_t}}\ temperature\_resolution:1;\ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga126d151aef7991dffa944650fec31883}{hdc1080\_battery\_states\_t}}\ \ \ \ \ \ \ \ \ \ battery\_state:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga176f5a25487d02065834216ba3c2436c}{hdc1080\_acquisition\_modes\_t}}\ \ \ \ \ \ \ acquisition\_mode:1;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ heater\_enabled:1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reset\_enabled:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ uint16\_t\ reg;\ \ \ }
+\DoxyCodeLine{00128\ \}\ hdc1080\_configuration\_register\_t;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ hdc1080\_measurement\_register\_u\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{struct\ }REG\_MEAS\_BITS\_TAG\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ reserved:2;\ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ value:14;\ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ uint16\_t\ reg;\ \ \ }
+\DoxyCodeLine{00139\ \}\ hdc1080\_measurement\_register\_t;}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00144\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ hdc1080\_serial\_number\_register\_u\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{struct\ }REG\_SN\_BITS\_TAG\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ reserved:7;\ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ serial\_id\_0:9;\ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ serial\_id\_1:16;\ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ serial\_id\_2:16;\ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ uint64\_t\ reg;\ \ \ }
+\DoxyCodeLine{00152\ \}\ hdc1080\_serial\_number\_register\_t;}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structhdc1080__config__s}{hdc1080\_config\_s}}\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga778ae16b2d80f624217c3a1a9fa94cc8}{hdc1080\_temperature\_resolutions\_t}}\ \ \ \mbox{\hyperlink{structhdc1080__config__s_ac80062b6a4a5ce0d409d1a3a432da327}{temperature\_resolution}};\ }
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{group__drivers_gae67808de49aceb774fa76ef6f6277c5d}{hdc1080\_humidity\_resolutions\_t}}\ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__config__s_abdf2923f09a7260e473789aea5a696a8}{humidity\_resolution}};\ \ \ \ }
+\DoxyCodeLine{00162\ \}\ \mbox{\hyperlink{group__drivers_ga7eaba97c9208eb971d02ddb6e51edf44}{hdc1080\_config\_t}};}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00167\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structhdc1080__context__t}{hdc1080\_context\_t}}\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga7eaba97c9208eb971d02ddb6e51edf44}{hdc1080\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__context__t_aa9370130df1269fd81f8ee70318abc7c}{dev\_config}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ uint64\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__context__t_a53f19d09e000917418746a4da0e2435a}{serial\_number}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__context__t_a4ad31fcb69f8aaca8f3c1820bb4d8594}{manufacturer\_id}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00172\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structhdc1080__context__t_adc401e0e7465eda38f9444eeb6169a10}{device\_id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00173\ \};}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00178\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structhdc1080__context__t}{hdc1080\_context\_t}}\ \mbox{\hyperlink{structhdc1080__context__t}{hdc1080\_context\_t}};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00183\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structhdc1080__context__t}{hdc1080\_context\_t}}*\ \mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}};}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00193\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga598773982b5b95887427e6ebf25fadc1}{hdc1080\_get\_serial\_number\_register}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ uint64\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00202\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae0190c50b172c2215d2b69e8c6b31f9f}{hdc1080\_get\_manufacturer\_id\_register}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00211\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0c580fea8f1a1557092369441b93657d}{hdc1080\_get\_device\_id\_register}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00220\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf2dfc58fb1171d3d61f3d40ef43b4da2}{hdc1080\_get\_configuration\_register}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ hdc1080\_configuration\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00229\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga960f5f63a539b9a280ba06f6049848cb}{hdc1080\_set\_configuration\_register}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ hdc1080\_configuration\_register\_t\ reg);}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00239\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga6a5911a91a065762df68d13b3eb9280f}{hdc1080\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga7eaba97c9208eb971d02ddb6e51edf44}{hdc1080\_config\_t}}\ *hdc1080\_config,\ \mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ *hdc1080\_handle);}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00249\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga166fa70a9efe0894a6b035aab66dc0b5}{hdc1080\_get\_measurement}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ humidity);}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00260\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga21935580fd6cb5932eb5e26ba3902027}{hdc1080\_get\_measurements}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ humidity,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ dewpoint);}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00268\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaefa457fda281744e300573dc2f8432fb}{hdc1080\_enable\_heater}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle);}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00276\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4e10cb9cebcf138c6fbc0a594833a314}{hdc1080\_disable\_heater}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle);}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00285\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga25b2ca82a8ce6cb8a7c57110e72129a2}{hdc1080\_get\_temperature\_resolution}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga778ae16b2d80f624217c3a1a9fa94cc8}{hdc1080\_temperature\_resolutions\_t}}\ *\textcolor{keyword}{const}\ resolution);}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00294\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga654f37c4e3fcfeb443c361a27f99ad19}{hdc1080\_set\_temperature\_resolution}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga778ae16b2d80f624217c3a1a9fa94cc8}{hdc1080\_temperature\_resolutions\_t}}\ resolution);}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00303\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae1b15dab767c8e06b0364a1c257366c9}{hdc1080\_get\_humidity\_resolution}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gae67808de49aceb774fa76ef6f6277c5d}{hdc1080\_humidity\_resolutions\_t}}\ *\textcolor{keyword}{const}\ resolution);}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00312\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga429a9d726fa78bbd9aa353a09dd9b0ef}{hdc1080\_set\_humidity\_resolution}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gae67808de49aceb774fa76ef6f6277c5d}{hdc1080\_humidity\_resolutions\_t}}\ resolution);}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00320\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga92ae9bbe2ebea4f9cf9be1bb44daaf97}{hdc1080\_reset}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle);}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00328\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5207bde071a956af28f94cec74af246e}{hdc1080\_remove}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle);}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00336\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga77348c1804725d85c11559113fe8f984}{hdc1080\_delete}}(\mbox{\hyperlink{group__drivers_gae7a6c4d039c3dca434589908c50186da}{hdc1080\_handle\_t}}\ handle);}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00343\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_ga5c7f0e308b22e2b0478e40200dd965f6}{hdc1080\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00350\ int32\_t\ \mbox{\hyperlink{group__drivers_gad4e28434f1ab602f3a07c5372fa07594}{hdc1080\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00353\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00354\ \}}
+\DoxyCodeLine{00355\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_HDC1080\_H\_\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structens160__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>ens160_config_s</compoundname>
+    <includes refid="ens160_8h" local="no">ens160.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structens160__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>ens160_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ens160 i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="250" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="250" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>ens160_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ens160 i2c device scl clock speed in hz </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="251" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="251" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__config__s_1af76a23d5ea575f0b95d86d14d246c9a7" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool irq_enabled</definition>
+        <argsstring></argsstring>
+        <name>irq_enabled</name>
+        <qualifiedname>ens160_config_s::irq_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>true indicates interrupt pin is enabled </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="252" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="252" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__config__s_1a786f332c027d34d43a33ac5735a03d71" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool irq_data_enabled</definition>
+        <argsstring></argsstring>
+        <name>irq_data_enabled</name>
+        <qualifiedname>ens160_config_s::irq_data_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>true indicates interrupt pin is asserted when new data is available in <computeroutput>DATA_XXX</computeroutput> registers </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="253" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="253" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__config__s_1a5385141f066d58d688327c44a8b24ab2" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool irq_gpr_enabled</definition>
+        <argsstring></argsstring>
+        <name>irq_gpr_enabled</name>
+        <qualifiedname>ens160_config_s::irq_gpr_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>true indicates interrupt pin is asserted when new data is available in general purpose registers </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="254" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="254" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__config__s_1a5350a306b418447ca3e8741da9554fef" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga9b85a4755141783e62806d5409559fe6" kindref="member">ens160_interrupt_pin_drivers_t</ref></type>
+        <definition>ens160_interrupt_pin_drivers_t irq_pin_driver</definition>
+        <argsstring></argsstring>
+        <name>irq_pin_driver</name>
+        <qualifiedname>ens160_config_s::irq_pin_driver</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>interrupt pin driver configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="255" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="255" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structens160__config__s_1afabc6379a8b4233103c83aa95a983dbe" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gac6754110d0d3ab4e720a7b9283289e88" kindref="member">ens160_interrupt_pin_polarities_t</ref></type>
+        <definition>ens160_interrupt_pin_polarities_t irq_pin_polarity</definition>
+        <argsstring></argsstring>
+        <name>irq_pin_polarity</name>
+        <qualifiedname>ens160_config_s::irq_pin_polarity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>interrupt pin polarity configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="256" column="41" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="256" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>ENS160 configuration structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ens160/include/ens160.h" line="249" column="1" bodyfile="components/peripherals/i2c/esp_ens160/include/ens160.h" bodystart="249" bodyend="257"/>
+    <listofallmembers>
+      <member refid="structens160__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>i2c_address</name></member>
+      <member refid="structens160__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structens160__config__s_1a786f332c027d34d43a33ac5735a03d71" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>irq_data_enabled</name></member>
+      <member refid="structens160__config__s_1af76a23d5ea575f0b95d86d14d246c9a7" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>irq_enabled</name></member>
+      <member refid="structens160__config__s_1a5385141f066d58d688327c44a8b24ab2" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>irq_gpr_enabled</name></member>
+      <member refid="structens160__config__s_1a5350a306b418447ca3e8741da9554fef" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>irq_pin_driver</name></member>
+      <member refid="structens160__config__s_1afabc6379a8b4233103c83aa95a983dbe" prot="public" virt="non-virtual"><scope>ens160_config_s</scope><name>irq_pin_polarity</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

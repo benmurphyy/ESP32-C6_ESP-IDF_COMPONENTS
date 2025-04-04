@@ -1,0 +1,471 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="pressure__tendency_8h" kind="file" language="C++">
+    <compoundname>pressure_tendency.h</compoundname>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">esp_check.h</includes>
+    <includes refid="pressure__tendency__version_8h" local="yes">pressure_tendency_version.h</includes>
+    <includedby refid="pressure__tendency_8c" local="yes">components/utilities/esp_pressure_tendency/pressure_tendency.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/utilities/esp_pressure_tendency/include/pressure_tendency.h</label>
+        <link refid="pressure__tendency_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>pressure_tendency_version.h</label>
+        <link refid="pressure__tendency__version_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>esp_check.h</label>
+      </node>
+      <node id="5">
+        <label>stdint.h</label>
+      </node>
+      <node id="2">
+        <label>stdio.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>components/utilities/esp_pressure_tendency/include/pressure_tendency.h</label>
+        <link refid="pressure__tendency_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>components/utilities/esp_pressure_tendency/pressure_tendency.c</label>
+        <link refid="pressure__tendency_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structpressure__tendency__t" prot="public">pressure_tendency_t</innerclass>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062a" prot="public" static="no" strong="no">
+        <type></type>
+        <name>pressure_tendency_codes_tag</name>
+        <enumvalue id="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa9fb97aacb59f862a9443de755c5dac99" prot="public">
+          <name>PRESSURE_TENDENCY_CODE_UNKNOWN</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>3-hr Change unknown </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aabfe2dfc6f354367d088a198d5787d9c1" prot="public">
+          <name>PRESSURE_TENDENCY_CODE_RISING</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>rising </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa78ecfbbe23c1c11a7a4fc5d2f10d336b" prot="public">
+          <name>PRESSURE_TENDENCY_CODE_STEADY</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>steady </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa7109e9900db9d55b4f3e74797b4dc80c" prot="public">
+          <name>PRESSURE_TENDENCY_CODE_FALLING</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>falling </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Pressure tendency codes enumerator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="50" column="1" bodyfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" bodystart="50" bodyend="55"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" prot="public" static="no">
+        <type>enum <ref refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062a" kindref="member">pressure_tendency_codes_tag</ref></type>
+        <definition>typedef enum pressure_tendency_codes_tag pressure_tendency_codes_t</definition>
+        <argsstring></argsstring>
+        <name>pressure_tendency_codes_t</name>
+        <briefdescription>
+<para>Pressure tendency codes enumerator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="55" column="27"/>
+      </memberdef>
+      <memberdef kind="typedef" id="pressure__tendency_8h_1ae5fefd4fb5f09f94660a435e09ad4ac2" prot="public" static="no">
+        <type>struct pressure_tendency_t</type>
+        <definition>typedef struct pressure_tendency_t pressure_tendency_t</definition>
+        <argsstring></argsstring>
+        <name>pressure_tendency_t</name>
+        <briefdescription>
+<para>Pressure tendency type definition. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="69" column="34" bodyfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" prot="public" static="no">
+        <type>struct <ref refid="structpressure__tendency__t" kindref="compound">pressure_tendency_t</ref> *</type>
+        <definition>typedef struct pressure_tendency_t* pressure_tendency_handle_t</definition>
+        <argsstring></argsstring>
+        <name>pressure_tendency_handle_t</name>
+        <briefdescription>
+<para>Pressure tendency handle definition. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="74" column="34" bodyfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="pressure__tendency_8h_1abdfc685f6f2abff2900a51ebef05df2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * pressure_tendency_code_to_string</definition>
+        <argsstring>(const pressure_tendency_codes_t code)</argsstring>
+        <name>pressure_tendency_code_to_string</name>
+        <param>
+          <type>const <ref refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" kindref="member">pressure_tendency_codes_t</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput><ref refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" kindref="member">pressure_tendency_codes_t</ref></computeroutput> enumerator pressure tendency code to string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>code</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency code to convert to a string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>const char* String representation of the pressure tendency code. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="82" column="12" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="55" bodyend="68" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="82" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="pressure__tendency_8h_1a4bcd677b48fd8bd6acad4e472e5ba31e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t pressure_tendency_init</definition>
+        <argsstring>(const uint16_t samples_size, pressure_tendency_handle_t *pressure_tendency_handle)</argsstring>
+        <name>pressure_tendency_init</name>
+        <param>
+          <type>const uint16_t</type>
+          <declname>samples_size</declname>
+        </param>
+        <param>
+          <type><ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref> *</type>
+          <declname>pressure_tendency_handle</declname>
+        </param>
+        <briefdescription>
+<para>Initializes a pressure tendency handle by size of the 3-hr samples to analyze. The size of the samples is calculated from the sampling rate. <linebreak/>
+ As an example, if the sampling rate is once every minute, the size of the samples buffer should be 180 e.g., three (3) hours. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>samples_size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency samples buffer size. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pressure_tendency_handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency handle. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="94" column="11" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="70" bodyend="96" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="94" declcolumn="11"/>
+      </memberdef>
+      <memberdef kind="function" id="pressure__tendency_8h_1a8f25d3d3d856aa285b773760b8575b33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t pressure_tendency_analysis</definition>
+        <argsstring>(pressure_tendency_handle_t pressure_tendency_handle, const float sample, pressure_tendency_codes_t *const code, float *const change)</argsstring>
+        <name>pressure_tendency_analysis</name>
+        <param>
+          <type><ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref></type>
+          <declname>pressure_tendency_handle</declname>
+        </param>
+        <param>
+          <type>const float</type>
+          <declname>sample</declname>
+        </param>
+        <param>
+          <type><ref refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" kindref="member">pressure_tendency_codes_t</ref> *const</type>
+          <declname>code</declname>
+        </param>
+        <param>
+          <type>float *const</type>
+          <declname>change</declname>
+        </param>
+        <briefdescription>
+<para>Analyzes historical samples and pressure tendency appears after three (3) hours of operation. The pressure tendency are based the 3-hr variance of the previous 3-hour history. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pressure_tendency_handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>sample</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Air pressure sample, in millibars or hecto-pascal, to push onto the samples stack. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>code</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency code of three (3) hour analysis. Pressure tendency code <computeroutput>PRESSURE_TENDENCY_UNKNOWN</computeroutput> is reported when there is an insufficient number of samples to analyze. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>change</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency variance over the past three (3) hours. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="109" column="11" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="98" bodyend="159" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="109" declcolumn="11"/>
+      </memberdef>
+      <memberdef kind="function" id="pressure__tendency_8h_1aececf3a09cfaba87373aa43313176277" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t pressure_tendency_reset</definition>
+        <argsstring>(pressure_tendency_handle_t pressure_tendency_handle)</argsstring>
+        <name>pressure_tendency_reset</name>
+        <param>
+          <type><ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref></type>
+          <declname>pressure_tendency_handle</declname>
+        </param>
+        <briefdescription>
+<para>Purges pressure tendency samples array and resets samples counter. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pressure_tendency_handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency handle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="120" column="11" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="161" bodyend="174" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="120" declcolumn="11"/>
+      </memberdef>
+      <memberdef kind="function" id="pressure__tendency_8h_1af7370f9b7e6c674b4b2317f81c7271da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>esp_err_t pressure_tendency_delete</definition>
+        <argsstring>(pressure_tendency_handle_t pressure_tendency_handle)</argsstring>
+        <name>pressure_tendency_delete</name>
+        <param>
+          <type><ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref></type>
+          <declname>pressure_tendency_handle</declname>
+        </param>
+        <briefdescription>
+<para>Frees pressure tendency handle. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pressure_tendency_handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pressure tendency handle. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="128" column="11" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="176" bodyend="183" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="128" declcolumn="11"/>
+      </memberdef>
+      <memberdef kind="function" id="pressure__tendency_8h_1afb1937afb675db139a11ccc782236d76" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * pressure_tendency_get_fw_version</definition>
+        <argsstring>(void)</argsstring>
+        <name>pressure_tendency_get_fw_version</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>pressure_tendency</computeroutput> firmware version numbers (major, minor, patch) into a string. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>char* <computeroutput>pressure_tendency</computeroutput> firmware version as a string that is formatted as X.X.X (e.g. 4.0.0). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="135" column="12" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="185" bodyend="187" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="135" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="pressure__tendency_8h_1ad818989dd42eb2028a4c7b13b3080039" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>int32_t pressure_tendency_get_fw_version_number</definition>
+        <argsstring>(void)</argsstring>
+        <name>pressure_tendency_get_fw_version_number</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Converts <computeroutput>pressure_tendency</computeroutput> firmware version numbers (major, minor, patch) into an integer value. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>int32_t <computeroutput>pressure_tendency</computeroutput> firmware version number. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" line="142" column="9" bodyfile="components/utilities/esp_pressure_tendency/pressure_tendency.c" bodystart="189" bodyend="191" declfile="components/utilities/esp_pressure_tendency/include/pressure_tendency.h" declline="142" declcolumn="9"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Air pressure tendency libary</para>
+<para>A air pressure tendency appears after three (3) hours of operation. The tendency codes and change are based on the 3-hr variance from the previous 3-hr history.</para>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__PRESSURE_TENDENCY_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__PRESSURE_TENDENCY_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_check.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;pressure_tendency_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062a" kindref="member">pressure_tendency_codes_tag</ref><sp/>{<sp/></highlight></codeline>
+<codeline lineno="51" refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa9fb97aacb59f862a9443de755c5dac99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa9fb97aacb59f862a9443de755c5dac99" kindref="member">PRESSURE_TENDENCY_CODE_UNKNOWN</ref><sp/><sp/><sp/>=<sp/>1,<sp/><sp/></highlight></codeline>
+<codeline lineno="52" refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aabfe2dfc6f354367d088a198d5787d9c1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aabfe2dfc6f354367d088a198d5787d9c1" kindref="member">PRESSURE_TENDENCY_CODE_RISING</ref><sp/><sp/><sp/><sp/>=<sp/>2,<sp/><sp/></highlight></codeline>
+<codeline lineno="53" refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa78ecfbbe23c1c11a7a4fc5d2f10d336b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa78ecfbbe23c1c11a7a4fc5d2f10d336b" kindref="member">PRESSURE_TENDENCY_CODE_STEADY</ref><sp/><sp/><sp/><sp/>=<sp/>3,<sp/><sp/></highlight></codeline>
+<codeline lineno="54" refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa7109e9900db9d55b4f3e74797b4dc80c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="pressure__tendency_8h_1ae6bc2231355a8c0fe05cc2b1fabb062aa7109e9900db9d55b4f3e74797b4dc80c" kindref="member">PRESSURE_TENDENCY_CODE_FALLING</ref><sp/><sp/><sp/>=<sp/>4<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55" refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" refkind="member"><highlight class="normal">}<sp/><ref refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" kindref="member">pressure_tendency_codes_t</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="structpressure__tendency__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpressure__tendency__t" kindref="compound">pressure_tendency_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="61" refid="structpressure__tendency__t_1a0e025ab0342d54f7a6c806d879b23051" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><ref refid="structpressure__tendency__t_1a0e025ab0342d54f7a6c806d879b23051" kindref="member">samples_count</ref>;<sp/></highlight></codeline>
+<codeline lineno="62" refid="structpressure__tendency__t_1ae98a41a4f5862e4f0c3afb40d75da0ae" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><ref refid="structpressure__tendency__t_1ae98a41a4f5862e4f0c3afb40d75da0ae" kindref="member">samples_size</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="63" refid="structpressure__tendency__t_1a7e88f0a7fee65306124ad95c12916751" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal">*<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structpressure__tendency__t_1a7e88f0a7fee65306124ad95c12916751" kindref="member">samples</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="64"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="pressure__tendency_8h_1ae5fefd4fb5f09f94660a435e09ad4ac2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpressure__tendency__t" kindref="compound">pressure_tendency_t</ref><sp/><ref refid="structpressure__tendency__t" kindref="compound">pressure_tendency_t</ref>;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpressure__tendency__t" kindref="compound">pressure_tendency_t</ref><sp/>*<ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref>;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="pressure__tendency_8h_1abdfc685f6f2abff2900a51ebef05df2d" kindref="member">pressure_tendency_code_to_string</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" kindref="member">pressure_tendency_codes_t</ref><sp/>code);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal">esp_err_t<sp/><ref refid="pressure__tendency_8h_1a4bcd677b48fd8bd6acad4e472e5ba31e" kindref="member">pressure_tendency_init</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/><ref refid="structpressure__tendency__t_1ae98a41a4f5862e4f0c3afb40d75da0ae" kindref="member">samples_size</ref>,<sp/></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref><sp/>*pressure_tendency_handle);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal">esp_err_t<sp/><ref refid="pressure__tendency_8h_1a8f25d3d3d856aa285b773760b8575b33" kindref="member">pressure_tendency_analysis</ref>(<ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref><sp/>pressure_tendency_handle,<sp/></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>sample,<sp/></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pressure__tendency_8h_1a10e8ef7107f8ea37166e4423e920cdaf" kindref="member">pressure_tendency_codes_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>code,</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>change);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal">esp_err_t<sp/><ref refid="pressure__tendency_8h_1aececf3a09cfaba87373aa43313176277" kindref="member">pressure_tendency_reset</ref>(<ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref><sp/>pressure_tendency_handle);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal">esp_err_t<sp/><ref refid="pressure__tendency_8h_1af7370f9b7e6c674b4b2317f81c7271da" kindref="member">pressure_tendency_delete</ref>(<ref refid="pressure__tendency_8h_1a14deb96a2b909bed7d689c1114c8b26f" kindref="member">pressure_tendency_handle_t</ref><sp/>pressure_tendency_handle);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="pressure__tendency_8h_1afb1937afb675db139a11ccc782236d76" kindref="member">pressure_tendency_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal">int32_t<sp/><ref refid="pressure__tendency_8h_1ad818989dd42eb2028a4c7b13b3080039" kindref="member">pressure_tendency_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">//<sp/>__PRESSURE_TENDENCY_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/utilities/esp_pressure_tendency/include/pressure_tendency.h"/>
+  </compounddef>
+</doxygen>

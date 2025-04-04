@@ -1,0 +1,199 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+bmp280/bmp280.c File Reference}
+\hypertarget{bmp280_8c}{}\label{bmp280_8c}\index{components/peripherals/i2c/esp\_bmp280/bmp280.c@{components/peripherals/i2c/esp\_bmp280/bmp280.c}}
+{\ttfamily \#include "{}include/bmp280.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$sdkconfig.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+types.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{bmp280_8c_a887f1b7dab20ccebe9b1c451f15d3c86}{BMP280\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+XLSB}}~UINT8\+\_\+C(0x\+FC)
+\item 
+\Hypertarget{bmp280_8c_a946474615d59dfab906fd7a7613e9b35}\label{bmp280_8c_a946474615d59dfab906fd7a7613e9b35} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+LSB}~UINT8\+\_\+C(0x\+FB)
+\item 
+\Hypertarget{bmp280_8c_a2cd2723c469cf7c1dfcdbd953593c474}\label{bmp280_8c_a2cd2723c469cf7c1dfcdbd953593c474} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+MSB}~UINT8\+\_\+C(0x\+FA)
+\item 
+\Hypertarget{bmp280_8c_af4a6f01e143b29bafc80592e9674f3d1}\label{bmp280_8c_af4a6f01e143b29bafc80592e9674f3d1} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+TEMP}~(BMP280\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+MSB)
+\item 
+\Hypertarget{bmp280_8c_aeaaf4fef06ddf4bea3d4181a450bccf9}\label{bmp280_8c_aeaaf4fef06ddf4bea3d4181a450bccf9} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+PRESS\+\_\+\+XLSB}~UINT8\+\_\+C(0x\+F9)
+\item 
+\Hypertarget{bmp280_8c_ac703068787eaa09f9dab28448412cfab}\label{bmp280_8c_ac703068787eaa09f9dab28448412cfab} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+PRESS\+\_\+\+LSB}~UINT8\+\_\+C(0x\+F8)
+\item 
+\Hypertarget{bmp280_8c_afa572b770b46ca3553cf4ed2de98d7f4}\label{bmp280_8c_afa572b770b46ca3553cf4ed2de98d7f4} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+PRESS\+\_\+\+MSB}~UINT8\+\_\+C(0x\+F7)
+\item 
+\Hypertarget{bmp280_8c_a93363115a09fa950669c5bb82c75732e}\label{bmp280_8c_a93363115a09fa950669c5bb82c75732e} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+PRESSURE}~(BMP280\+\_\+\+REG\+\_\+\+PRESS\+\_\+\+MSB)
+\item 
+\Hypertarget{bmp280_8c_a45694d6e3967184999c884d88a76178e}\label{bmp280_8c_a45694d6e3967184999c884d88a76178e} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+CONFIG}~UINT8\+\_\+C(0x\+F5)
+\item 
+\Hypertarget{bmp280_8c_a2a24df3774f7cead0831198a81222050}\label{bmp280_8c_a2a24df3774f7cead0831198a81222050} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+CTRL}~UINT8\+\_\+C(0x\+F4)
+\item 
+\Hypertarget{bmp280_8c_a51471f4c3ee565c77fdcca39802cc197}\label{bmp280_8c_a51471f4c3ee565c77fdcca39802cc197} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+STATUS}~UINT8\+\_\+C(0x\+F3)
+\item 
+\Hypertarget{bmp280_8c_a227f4b21f2c19e0697f2dbd6f59b08d7}\label{bmp280_8c_a227f4b21f2c19e0697f2dbd6f59b08d7} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+CTRL\+\_\+\+HUM}~UINT8\+\_\+C(0x\+F2)
+\item 
+\Hypertarget{bmp280_8c_a32455aa8a6c26667ef99d73fc02b662b}\label{bmp280_8c_a32455aa8a6c26667ef99d73fc02b662b} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+RESET}~UINT8\+\_\+C(0x\+E0)
+\item 
+\Hypertarget{bmp280_8c_a37f071326f27f31400e13cc00ff3faa4}\label{bmp280_8c_a37f071326f27f31400e13cc00ff3faa4} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+ID}~UINT8\+\_\+C(0x\+D0)
+\item 
+\Hypertarget{bmp280_8c_a68622050abfca784a2080b6edc8fc1e0}\label{bmp280_8c_a68622050abfca784a2080b6edc8fc1e0} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+CALIB}~UINT8\+\_\+C(0x88)
+\item 
+\Hypertarget{bmp280_8c_aad42639eb2dbea70ca2cbc93602d92cc}\label{bmp280_8c_aad42639eb2dbea70ca2cbc93602d92cc} 
+\#define {\bfseries BMP280\+\_\+\+REG\+\_\+\+HUM\+\_\+\+CALIB}~UINT8\+\_\+C(0x88)
+\item 
+\Hypertarget{bmp280_8c_a37118440f3eae833c1d99f5400d3f80e}\label{bmp280_8c_a37118440f3eae833c1d99f5400d3f80e} 
+\#define {\bfseries BMP280\+\_\+\+RESET\+\_\+\+VALUE}~UINT8\+\_\+C(0x\+B6)
+\item 
+\Hypertarget{bmp280_8c_aea1b324e2ffe3929e6df7f8f9fa49a44}\label{bmp280_8c_aea1b324e2ffe3929e6df7f8f9fa49a44} 
+\#define {\bfseries BMP280\+\_\+\+TYPE\+\_\+\+BMP280}~UINT8\+\_\+C(0x58)
+\begin{DoxyCompactList}\small\item\em BMP280. \end{DoxyCompactList}\item 
+\Hypertarget{bmp280_8c_a9645578c157ea26f04dda79b8f282a0e}\label{bmp280_8c_a9645578c157ea26f04dda79b8f282a0e} 
+\#define {\bfseries BMP280\+\_\+\+TYPE\+\_\+\+BME280}~UINT8\+\_\+C(0x60)
+\begin{DoxyCompactList}\small\item\em BME280. \end{DoxyCompactList}\item 
+\Hypertarget{bmp280_8c_af7cfe7994ee6da87d293b9c2be4e8ca6}\label{bmp280_8c_af7cfe7994ee6da87d293b9c2be4e8ca6} 
+\#define {\bfseries BMP280\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(250)
+\item 
+\Hypertarget{bmp280_8c_ae9c7bb03aa523be945fd5a730899aa58}\label{bmp280_8c_ae9c7bb03aa523be945fd5a730899aa58} 
+\#define {\bfseries BMP280\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(1)
+\item 
+\Hypertarget{bmp280_8c_a2a85f0edc1615a3c50ef488a8757d27b}\label{bmp280_8c_a2a85f0edc1615a3c50ef488a8757d27b} 
+\#define {\bfseries BMP280\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{bmp280_8c_a0dcdfee54c954e32333a4eebeef93eb0}\label{bmp280_8c_a0dcdfee54c954e32333a4eebeef93eb0} 
+\#define {\bfseries BMP280\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{bmp280_8c_a9f2506d06edef5c5fec2789be4c3e541}\label{bmp280_8c_a9f2506d06edef5c5fec2789be4c3e541} 
+\#define {\bfseries BMP280\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\item 
+\Hypertarget{bmp280_8c_aed208fa748148f099ec9e0d827778879}\label{bmp280_8c_aed208fa748148f099ec9e0d827778879} 
+\#define {\bfseries BMP280\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(5)
+\item 
+\Hypertarget{bmp280_8c_ab95af7ce4466efdd565a14066d02b09a}\label{bmp280_8c_ab95af7ce4466efdd565a14066d02b09a} 
+\#define {\bfseries BMP280\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{bmp280_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{bmp280_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf76cc4194a69a3305e80efc3a4a04f67}{bmp280\+\_\+get\+\_\+chip\+\_\+id\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads chip identification register from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0f819759aa334f52d78d16fc5bf66973}{bmp280\+\_\+get\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, bmp280\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads status register from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5ced8f2fb2f2eb30487333c486092f7d}{bmp280\+\_\+get\+\_\+control\+\_\+measurement\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, bmp280\+\_\+control\+\_\+measurement\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads control measurement register from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa9f0653ff6fdcb6df91be990e87f4324}{bmp280\+\_\+set\+\_\+control\+\_\+measurement\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const bmp280\+\_\+control\+\_\+measurement\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes control measurement register to BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga855ad80da01437df61e95e204a8f27a0}{bmp280\+\_\+get\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, bmp280\+\_\+configuration\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration register from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadc04372e8af742e060dd363e7b15b665}{bmp280\+\_\+set\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const bmp280\+\_\+configuration\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration register to BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0b4e560981ac807923e4943c7288f11b}{bmp280\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga683075794a68e847ac00880f3fbc5a1e}{bmp280\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}bmp280\+\_\+config, \mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}bmp280\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an BMP280 device onto the master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8b4019ea8a3aa82c3e14b69e311f05bc}{bmp280\+\_\+get\+\_\+measurements}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const pressure)
+\begin{DoxyCompactList}\small\item\em Reads temperature and pressure measurements from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga56e6e621f28b1aaae87ccf078582fc5c}{bmp280\+\_\+get\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads temperature measurement from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga15c360c34b843e3b827e202dbc64df6d}{bmp280\+\_\+get\+\_\+pressure}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const pressure)
+\begin{DoxyCompactList}\small\item\em Reads pressure measurement from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga676b9dec55adbe7be006ec44911e4ded}{bmp280\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads data status from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa3b1ed5dabfd33fb862a77c362e6916e}{bmp280\+\_\+get\+\_\+power\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\+\_\+power\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const power\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Reads power mode setting from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga42d45d4d0bc59f6892359139fab1be1c}{bmp280\+\_\+set\+\_\+power\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\+\_\+power\+\_\+modes\+\_\+t}} power\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Writes power mode setting to the BMP280. See datasheet, section 3.\+6, table 10. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6bf83bdbd14a94abb9460a8c158a0079}{bmp280\+\_\+get\+\_\+pressure\+\_\+oversampling}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\+\_\+pressure\+\_\+oversampling\+\_\+t}} \texorpdfstring{$\ast$}{*}const oversampling)
+\begin{DoxyCompactList}\small\item\em Reads pressure oversampling setting from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga08bd496a9b36a475125232ca3366e481}{bmp280\+\_\+set\+\_\+pressure\+\_\+oversampling}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\+\_\+pressure\+\_\+oversampling\+\_\+t}} oversampling)
+\begin{DoxyCompactList}\small\item\em Writes pressure oversampling setting to BMP280. See datasheet, section 3.\+3.\+1, table 4. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaeac31c3392f59747e6b59af99d4d141b}{bmp280\+\_\+get\+\_\+temperature\+\_\+oversampling}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\+\_\+temperature\+\_\+oversampling\+\_\+t}} \texorpdfstring{$\ast$}{*}const oversampling)
+\begin{DoxyCompactList}\small\item\em Reads temperature oversampling setting from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9bbfcf39651d3b9b6bc07bf426cd2ecc}{bmp280\+\_\+set\+\_\+temperature\+\_\+oversampling}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\+\_\+temperature\+\_\+oversampling\+\_\+t}} oversampling)
+\begin{DoxyCompactList}\small\item\em Writes temperature oversampling setting to BMP280. See datasheet, section 3.\+3.\+1, table 4. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga41810e5f04fe34b3d6b6d7a2f0ed6090}{bmp280\+\_\+get\+\_\+standby\+\_\+time}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\+\_\+standby\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const standby\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Reads stand-\/by time setting from BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0d7567352da5f0d2ae94a8975838733a}{bmp280\+\_\+set\+\_\+standby\+\_\+time}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\+\_\+standby\+\_\+times\+\_\+t}} standby\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Writes stand-\/by time setting to BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf3d52e45780f2336048c4fa6906a8972}{bmp280\+\_\+get\+\_\+iir\+\_\+filter}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\+\_\+iir\+\_\+filters\+\_\+t}} \texorpdfstring{$\ast$}{*}const iir\+\_\+filter)
+\begin{DoxyCompactList}\small\item\em Reads IIR filter setting to BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga49d702e3251bd23cfb8b5122cfe95a20}{bmp280\+\_\+set\+\_\+iir\+\_\+filter}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\+\_\+iir\+\_\+filters\+\_\+t}} iir\+\_\+filter)
+\begin{DoxyCompactList}\small\item\em Writes IIR filter setting to BMP280. See datasheet, section 3.\+4, table 7. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4cc4d2e4cc06abc7b1b56788e3526b86}{bmp280\+\_\+reset}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset sensor and initializes BMP280. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga29361ec23d39ce227eee5cbf49902160}{bmp280\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an BMP280 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga56d41e7e1d5e629206877e97cb556ccc}{bmp280\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an BMP280 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga987b258a57f3c4a4384e6aa865b326c6}{bmp280\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts BMP280 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga18945c7c6b94a2aa4187dfef889f7da8}{bmp280\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts BMP280 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for BMP280 temperature and pressure sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE
+
+ESP-\/\+IDF driver for BMP390 temperature and pressure sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{bmp280_8c_a887f1b7dab20ccebe9b1c451f15d3c86}\index{bmp280.c@{bmp280.c}!BMP280\_REG\_TEMP\_XLSB@{BMP280\_REG\_TEMP\_XLSB}}
+\index{BMP280\_REG\_TEMP\_XLSB@{BMP280\_REG\_TEMP\_XLSB}!bmp280.c@{bmp280.c}}
+\doxysubsubsection{\texorpdfstring{BMP280\_REG\_TEMP\_XLSB}{BMP280\_REG\_TEMP\_XLSB}}
+{\footnotesize\ttfamily \label{bmp280_8c_a887f1b7dab20ccebe9b1c451f15d3c86} 
+\#define BMP280\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+XLSB~UINT8\+\_\+C(0x\+FC)}
+
+possible BMP280 registers \Hypertarget{bmp280_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{bmp280.c@{bmp280.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!bmp280.c@{bmp280.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{bmp280_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{bmp280_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{bmp280.c@{bmp280.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!bmp280.c@{bmp280.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{bmp280_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}

@@ -1,0 +1,90 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ahtxx Directory Reference}
+\hypertarget{dir_a8a1053c2263418435b12a21f5507022}{}\label{dir_a8a1053c2263418435b12a21f5507022}\index{components/peripherals/i2c/esp\_ahtxx Directory Reference@{components/peripherals/i2c/esp\_ahtxx Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_bef80abf146ab2b2f9d995be9dd1a9cd}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{ahtxx_8c}{ahtxx.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_ahtxx}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_ahtxx}{\texttt{ }}
+
+This ESP32 espressif IoT development framework (esp-\/idf) i2c peripheral driver was developed for the Asair AHTXX series of temperature and humidity sensors (AHT10, AHT20, AHT21, AHT25, AND AHT30). Information on features and functionality are documented and can be found in the {\ttfamily \doxylink{ahtxx_8h}{ahtxx.\+h}} header file and in the {\ttfamily documentation} folder.\hypertarget{README.md_autotoc_md6}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md6}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ahtxx}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/peripherals/i2c/esp\+\_\+ahtxx}}\hypertarget{README.md_autotoc_md7}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md7}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{ahtxx_8h}{ahtxx.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_ahtxx}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ ahtxx\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ ahtxx.h}
+\DoxyCodeLine{\ \ \ \ └──\ ahtxx.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md8}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md8}
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example. This basic implementation of the driver utilizes default configuration settings for the AHT10, AHT20, AHT21, AHT25, AND AHT30 sensor types and makes a measurement request from the sensor at user defined interval and prints the results.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ahtxx_8h}{ahtxx.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ i2c0\_ahtxx\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ the\ xLastWakeTime\ variable\ with\ the\ current\ time.}}
+\DoxyCodeLine{\ \ \ \ TickType\_t\ \ \ \ \ \ \ \ \ last\_wake\_time\ \ \ =\ xTaskGetTickCount\ ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ i2c\ device\ configuration}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga4481478f7508935e24b98cf5027da6dd}{ahtxx\_config\_t}}\ dev\_cfg\ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{group__drivers_gafaf90a48857bdc123dbc7c3a145545f5}{I2C\_AHT20\_CONFIG\_DEFAULT}};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gab66af7e90e12339f8760c01abf09c759}{ahtxx\_handle\_t}}\ dev\_hdl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ init\ device}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga3a9d6c91fdd6cdc14ea60798524c9c4e}{ahtxx\_init}}(i2c0\_bus\_hdl,\ \&dev\_cfg,\ \&dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}ahtxx\ handle\ init\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assert(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ task\ loop\ entry\ point}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ AHTXX\ -\/\ START\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ handle\ sensor}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ temperature,\ humidity;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_gae4440d265f608195e5937336cd3582a4}{ahtxx\_get\_measurement}}(dev\_hdl,\ \&temperature,\ \&humidity);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}ahtxx\ device\ read\ failed\ (\%s)"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}air\ temperature:\ \ \ \ \ \%.2f\ °C"{}},\ temperature);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}relative\ humidity:\ \ \ \%.2f\ \%s"{}},\ humidity,\ \textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ AHTXX\ -\/\ END\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ pause\ the\ task\ per\ defined\ wait\ period}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelaySecUntil(\ \&last\_wake\_time,\ I2C0\_TASK\_SAMPLING\_RATE\ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ resources}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gac24744a484425cf1d9096994bebf0e4d}{ahtxx\_delete}}(\ dev\_hdl\ );}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

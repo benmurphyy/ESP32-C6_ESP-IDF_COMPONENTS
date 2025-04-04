@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_82ddb0f618609ea639bdcdfda3f28c50" kind="dir">
+    <compoundname>components/storage/esp_nvs_ext/include</compoundname>
+    <innerfile refid="nvs__ext_8h">nvs_ext.h</innerfile>
+    <innerfile refid="nvs__ext__version_8h">nvs_ext_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/storage/esp_nvs_ext/include/"/>
+  </compounddef>
+</doxygen>

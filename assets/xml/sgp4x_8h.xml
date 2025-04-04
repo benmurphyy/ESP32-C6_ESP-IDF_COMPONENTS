@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="sgp4x_8h" kind="file" language="C++">
+    <compoundname>sgp4x.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="sgp4x__version_8h" local="yes">sgp4x_version.h</includes>
+    <includedby refid="sgp4x_8c" local="yes">components/peripherals/i2c/esp_sgp4x/sgp4x.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_sgp4x/include/sgp4x.h</label>
+        <link refid="sgp4x_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sgp4x_version.h</label>
+        <link refid="sgp4x__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_sgp4x/include/sgp4x.h</label>
+        <link refid="sgp4x_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_sgp4x/sgp4x.c</label>
+        <link refid="sgp4x_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structsgp4x__config__t" prot="public">sgp4x_config_t</innerclass>
+    <innerclass refid="structsgp4x__context__t" prot="public">sgp4x_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1gafb547b4d4ed164690e1983e3adde69a6" kind="define"><name>I2C_SGP4X_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga23e755ac5f241adafb724d7970d2725d" kind="define"><name>I2C_SGP4X_DEV_ADDR</name></member>
+      <member refid="group__drivers_1ga0382382bb6f45ac5247eb66f95de7d58" kind="define"><name>I2C_SGP4X_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga5740bccde801d90d1b16127b61f2200d" kind="define"><name>I2C_SGP41_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1ga172a041d0029789cda43731ae5d58411" kind="enum"><name>sgp4x_versions_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1gab2c506f07b7bddbd098b2088b8dd7588" kind="typedef"><name>sgp4x_versions_t</name></member>
+      <member refid="group__drivers_1gab95ea1d287fff9ab6baf42f3c99b0a9b" kind="typedef"><name>sgp4x_context_t</name></member>
+      <member refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kind="typedef"><name>sgp4x_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1ga284476c9c82f5dfccf00778d2c381f1d" kind="variable"><name>sgp4x_self_test_result_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga0bec60b8c1ab24e8061a1d6dadeed8fc" kind="function"><name>sgp4x_init</name></member>
+      <member refid="group__drivers_1ga52efe21453b1d3606b14e49aefef9ae1" kind="function"><name>sgp4x_execute_compensated_conditioning</name></member>
+      <member refid="group__drivers_1ga12f002286cb3e1a07ee467160febf165" kind="function"><name>sgp4x_execute_conditioning</name></member>
+      <member refid="group__drivers_1gaadd5bf985665147c4d997b26120dd9aa" kind="function"><name>sgp4x_measure_compensated_signals</name></member>
+      <member refid="group__drivers_1ga4efe02574e8280c6d1f75e5d67c1c282" kind="function"><name>sgp4x_measure_signals</name></member>
+      <member refid="group__drivers_1ga74a5a683b3490a8aaf03b03539929fae" kind="function"><name>sgp4x_execute_self_test</name></member>
+      <member refid="group__drivers_1ga1a819671d1ed391a0666e7c8b3b0721e" kind="function"><name>sgp4x_turn_heater_off</name></member>
+      <member refid="group__drivers_1ga1dd9539587a9de55514ab1dbeeb5d705" kind="function"><name>sgp4x_reset</name></member>
+      <member refid="group__drivers_1ga05534062bf7f57eac9d0992fb788c4d7" kind="function"><name>sgp4x_remove</name></member>
+      <member refid="group__drivers_1gad0cd93f1a86d46ac471b1266854ad781" kind="function"><name>sgp4x_delete</name></member>
+      <member refid="group__drivers_1gaff4d0425f787cda12108abe40e286d37" kind="function"><name>sgp4x_get_fw_version</name></member>
+      <member refid="group__drivers_1ga2bf0031a0518fb0d4d8f1db8bf200dbb" kind="function"><name>sgp4x_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__SGP4X_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__SGP4X_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sgp4x_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*<sp/>SGP4X<sp/>definitions</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="group__drivers_1gafb547b4d4ed164690e1983e3adde69a6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_SGP4X_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__drivers_1ga23e755ac5f241adafb724d7970d2725d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_SGP4X_DEV_ADDR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x59)<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__drivers_1ga0382382bb6f45ac5247eb66f95de7d58" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_SGP4X_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>SGP4X<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_SGP41_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_SGP4X_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="64"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/>=<sp/>I2C_SGP4X_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="65"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.dev_version<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>SGP4X_VERSION_SGP41<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="group__drivers_1ga172a041d0029789cda43731ae5d58411" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga172a041d0029789cda43731ae5d58411" kindref="member">sgp4x_versions_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="72" refid="group__drivers_1gga172a041d0029789cda43731ae5d58411abd896d46b209f042add938b9449048a9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga172a041d0029789cda43731ae5d58411abd896d46b209f042add938b9449048a9" kindref="member">SGP4X_VERSION_SGP40</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>SGP4X_VERSION_SGP41</highlight></codeline>
+<codeline lineno="74" refid="group__drivers_1gab2c506f07b7bddbd098b2088b8dd7588" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gab2c506f07b7bddbd098b2088b8dd7588" kindref="member">sgp4x_versions_t</ref>;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>voc_pixel_failed:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>nox_pixel_failed:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/>reserved:6;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>pixels;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>integrity;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">}<sp/>sgp4x_self_test_result_t;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="structsgp4x__config__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="92" refid="structsgp4x__config__t_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsgp4x__config__t_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93" refid="structsgp4x__config__t_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsgp4x__config__t_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94" refid="structsgp4x__config__t_1adc67f2485918d7fdc2b9ee84efaf2a03" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gab2c506f07b7bddbd098b2088b8dd7588" kindref="member">sgp4x_versions_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsgp4x__config__t_1adc67f2485918d7fdc2b9ee84efaf2a03" kindref="member">dev_version</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95"><highlight class="normal">}<sp/><ref refid="structsgp4x__config__t" kindref="compound">sgp4x_config_t</ref>;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="structsgp4x__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsgp4x__context__t" kindref="compound">sgp4x_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="101" refid="structsgp4x__context__t_1ac615d923e5444b324962a3e5eeaf8c89" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structsgp4x__config__t" kindref="compound">sgp4x_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsgp4x__context__t_1ac615d923e5444b324962a3e5eeaf8c89" kindref="member">dev_config</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="102" refid="structsgp4x__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><ref refid="structsgp4x__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="103" refid="structsgp4x__context__t_1a53f19d09e000917418746a4da0e2435a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsgp4x__context__t_1a53f19d09e000917418746a4da0e2435a" kindref="member">serial_number</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="104"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="group__drivers_1gab95ea1d287fff9ab6baf42f3c99b0a9b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsgp4x__context__t" kindref="compound">sgp4x_context_t</ref><sp/><ref refid="structsgp4x__context__t" kindref="compound">sgp4x_context_t</ref>;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsgp4x__context__t" kindref="compound">sgp4x_context_t</ref><sp/>*<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref>;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga0bec60b8c1ab24e8061a1d6dadeed8fc" kindref="member">sgp4x_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structsgp4x__config__t" kindref="compound">sgp4x_config_t</ref><sp/>*sgp4x_config,<sp/><ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>*sgp4x_handle);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga52efe21453b1d3606b14e49aefef9ae1" kindref="member">sgp4x_execute_compensated_conditioning</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>humidity,<sp/>uint16_t<sp/>*sraw_voc);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga12f002286cb3e1a07ee467160febf165" kindref="member">sgp4x_execute_conditioning</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle,<sp/>uint16_t<sp/>*sraw_voc);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaadd5bf985665147c4d997b26120dd9aa" kindref="member">sgp4x_measure_compensated_signals</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>temperature,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>humidity,<sp/>uint16_t<sp/>*sraw_voc,<sp/>uint16_t<sp/>*sraw_nox);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4efe02574e8280c6d1f75e5d67c1c282" kindref="member">sgp4x_measure_signals</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle,<sp/>uint16_t<sp/>*sraw_voc,<sp/>uint16_t<sp/>*sraw_nox);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga74a5a683b3490a8aaf03b03539929fae" kindref="member">sgp4x_execute_self_test</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle,<sp/>sgp4x_self_test_result_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>result);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1a819671d1ed391a0666e7c8b3b0721e" kindref="member">sgp4x_turn_heater_off</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1dd9539587a9de55514ab1dbeeb5d705" kindref="member">sgp4x_reset</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga05534062bf7f57eac9d0992fb788c4d7" kindref="member">sgp4x_remove</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad0cd93f1a86d46ac471b1266854ad781" kindref="member">sgp4x_delete</ref>(<ref refid="group__drivers_1gac40d2deb3fe0027ff3588c50d583b0cd" kindref="member">sgp4x_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1gaff4d0425f787cda12108abe40e286d37" kindref="member">sgp4x_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1ga2bf0031a0518fb0d4d8f1db8bf200dbb" kindref="member">sgp4x_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">//<sp/>__SGP4X_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_sgp4x/include/sgp4x.h"/>
+  </compounddef>
+</doxygen>

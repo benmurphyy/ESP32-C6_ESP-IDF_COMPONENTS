@@ -1,0 +1,844 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="bh1750_8c" kind="file" language="C++">
+    <compoundname>bh1750.c</compoundname>
+    <includes refid="bh1750_8h" local="yes">include/bh1750.h</includes>
+    <includes local="no">string.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">esp_log.h</includes>
+    <includes local="no">esp_check.h</includes>
+    <includes local="no">freertos/FreeRTOS.h</includes>
+    <includes local="no">freertos/task.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_bh1750/bh1750.c</label>
+        <link refid="bh1750_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>include/bh1750.h</label>
+        <link refid="bh1750_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>bh1750_version.h</label>
+        <link refid="bh1750__version_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="14">
+        <label>esp_check.h</label>
+      </node>
+      <node id="5">
+        <label>esp_err.h</label>
+      </node>
+      <node id="13">
+        <label>esp_log.h</label>
+      </node>
+      <node id="8">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="15">
+        <label>freertos/FreeRTOS.h</label>
+      </node>
+      <node id="16">
+        <label>freertos/task.h</label>
+      </node>
+      <node id="4">
+        <label>stdbool.h</label>
+      </node>
+      <node id="3">
+        <label>stdint.h</label>
+      </node>
+      <node id="12">
+        <label>stdio.h</label>
+      </node>
+      <node id="11">
+        <label>string.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="bh1750_8c_1a829a6988a4de1fd531f3417432a67cc5" prot="public" static="no">
+        <name>BH1750_OPCODE_MT_HI</name>
+        <initializer>UINT8_C(0x40)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>measurement time hi-bit </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="46" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1ad2f5d03758acabdf071a96e9f1a2cf5e" prot="public" static="no">
+        <name>BH1750_OPCODE_MT_LO</name>
+        <initializer>UINT8_C(0x60)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>measurement time lo-bit </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="47" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1aa320927f81315a0ba9551eba27acd636" prot="public" static="no">
+        <name>BH1750_CMD_POWER_DOWN</name>
+        <initializer>UINT8_C(0b00000000)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="49" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1a959b4a504ca1b3a19451ae1ecdd00c62" prot="public" static="no">
+        <name>BH1750_CMD_POWER_UP</name>
+        <initializer>UINT8_C(0b00000001)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="50" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1acaf6541bf87e67537302fddb1cc823d8" prot="public" static="no">
+        <name>BH1750_CMD_RESET</name>
+        <initializer>UINT8_C(0b00000111)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="51" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1a3f79540a678337f54378bb90cd04ffc4" prot="public" static="no">
+        <name>BH1750_POWERUP_DELAY_MS</name>
+        <initializer>UINT16_C(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="53" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1aa207fdacf54803072cf1ea2dee554845" prot="public" static="no">
+        <name>BH1750_APPSTART_DELAY_MS</name>
+        <initializer>UINT16_C(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="54" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1a2d30c1eba7c16070679653984ee0916e" prot="public" static="no">
+        <name>BH1750_RESET_DELAY_MS</name>
+        <initializer>UINT16_C(25)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="55" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1a8f0ba638f91369313a01072f4072ca1d" prot="public" static="no">
+        <name>BH1750_CMD_DELAY_MS</name>
+        <initializer>UINT16_C(5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="56" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1a13d93db46ea4bdc2883569aae1f859ea" prot="public" static="no">
+        <name>BH1750_RETRY_DELAY_MS</name>
+        <initializer>UINT16_C(2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bh1750 delay between an I2C receive transaction retry </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="57" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1a8fa8c151b2884212b6ed54211745e819" prot="public" static="no">
+        <name>BH1750_TX_RX_DELAY_MS</name>
+        <initializer>UINT16_C(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bh1750 delay after attempting an I2C transmit transaction and attempting an I2C receive transaction </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="58" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="bh1750_8c_1ac2bb3db0b37c9f45103fd513ca5158fe" prot="public" static="no">
+        <name>ESP_ARG_CHECK</name>
+        <param><defname>VAL</defname></param>
+        <initializer>do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="63" column="9" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="63" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="bh1750_8c_1a5a85b9c772bbeb480b209a3e6ea92b4c" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* TAG</definition>
+        <argsstring></argsstring>
+        <name>TAG</name>
+        <initializer>= &quot;bh1750&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="69" column="19" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="69" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="bh1750_8c_1a11a8042a47bf980dd0c979976e27f250" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>static esp_err_t bh1750_i2c_read</definition>
+        <argsstring>(bh1750_handle_t handle, uint8_t *buffer, const uint8_t size)</argsstring>
+        <name>bh1750_i2c_read</name>
+        <param>
+          <type><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const uint8_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+<para>BH1750 I2C read transaction. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BH1750 device handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buffer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Buffer to store results from read transaction. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Length of buffer to store results from read transaction. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="84" column="25" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="84" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="bh1750_8c_1a657a47ae52dd213bb67116eb64592d9b" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>static esp_err_t bh1750_i2c_write</definition>
+        <argsstring>(bh1750_handle_t handle, const uint8_t *buffer, const uint8_t size)</argsstring>
+        <name>bh1750_i2c_write</name>
+        <param>
+          <type><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const uint8_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+<para>BH1750 I2C write transaction. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BH1750 device handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buffer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Buffer to write for write transaction. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Length of buffer to write for write transaction. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="102" column="25" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="102" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="bh1750_8c_1af2457a042467a18e04ae5278b6ed7b90" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>esp_err_t</type>
+        <definition>static esp_err_t bh1750_i2c_write_command</definition>
+        <argsstring>(bh1750_handle_t handle, const uint8_t reg_addr)</argsstring>
+        <name>bh1750_i2c_write_command</name>
+        <param>
+          <type><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <param>
+          <type>const uint8_t</type>
+          <declname>reg_addr</declname>
+        </param>
+        <briefdescription>
+<para>BH1750 I2C write command to register address transaction. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BH1750 device handle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>reg_addr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BH1750 command register address to write to. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>esp_err_t ESP_OK on success. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="119" column="25" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="119" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="bh1750_8c_1af6153a79f9fbc0b77549e7a8861d2d2a" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>static size_t bh1750_get_duration_ms</definition>
+        <argsstring>(bh1750_handle_t handle)</argsstring>
+        <name>bh1750_get_duration_ms</name>
+        <param>
+          <type><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <briefdescription>
+<para>Gets BH1750 duration in milli-seconds from device handle. See datasheet for details. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>bh1750 device handle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>duration in milliseconds. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="137" column="22" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="137" bodyend="157"/>
+      </memberdef>
+      <memberdef kind="function" id="bh1750_8c_1abe2c733c3bd00ac7b8c788e774ddb483" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>size_t</type>
+        <definition>static size_t bh1750_get_tick_duration</definition>
+        <argsstring>(bh1750_handle_t handle)</argsstring>
+        <name>bh1750_get_tick_duration</name>
+        <param>
+          <type><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref></type>
+          <declname>handle</declname>
+        </param>
+        <briefdescription>
+<para>Gets bh1750 tick duration from device handle. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>bh1750 device handle </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>duration in ticks. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bh1750/bh1750.c" line="165" column="22" bodyfile="components/peripherals/i2c/esp_bh1750/bh1750.c" bodystart="165" bodyend="170"/>
+      </memberdef>
+      <member refid="group__drivers_1ga7e476a2704b4a58413b2a7de316ef29d" kind="function"><name>bh1750_init</name></member>
+      <member refid="group__drivers_1gac577dd8a77cf737c5ef25add84188e01" kind="function"><name>bh1750_get_ambient_light</name></member>
+      <member refid="group__drivers_1ga2d4689f3f1c8bbc70b719b38f009c3ac" kind="function"><name>bh1750_set_measurement_mode</name></member>
+      <member refid="group__drivers_1ga4649a73b0eb65849d3e8b2d53d0e586f" kind="function"><name>bh1750_set_measurement_time</name></member>
+      <member refid="group__drivers_1gaed00b37e5bfd7819e2c81ef02a04268b" kind="function"><name>bh1750_enable_power</name></member>
+      <member refid="group__drivers_1ga1abd1351a7490b7dccc38ba2bc42dce2" kind="function"><name>bh1750_disable_power</name></member>
+      <member refid="group__drivers_1ga814dc723c84984e588504cab4a1b2552" kind="function"><name>bh1750_reset</name></member>
+      <member refid="group__drivers_1gadbed4b29cd5936e8df6767c128fa640f" kind="function"><name>bh1750_remove</name></member>
+      <member refid="group__drivers_1ga0922b011c6b1d2ce91933e71ea9158f9" kind="function"><name>bh1750_delete</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>ESP-IDF driver for BH1750 illuminance sensor.</para>
+<para>Ported from esp-open-rtos</para>
+<para>Copyright (c) 2024 Eric Gionet (<ulink url="mailto:gionet.c.eric@gmail.com">gionet.c.eric@gmail.com</ulink>)</para>
+<para>MIT Licensed as described in the file LICENSE </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="bh1750_8h" kindref="compound">include/bh1750.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_log.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_check.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/FreeRTOS.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;freertos/task.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*<sp/>BH1750<sp/>definitions</highlight></codeline>
+<codeline lineno="45"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_OPCODE_MT_HI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x40)<sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_OPCODE_MT_LO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x60)<sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_CMD_POWER_DOWN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0b00000000)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_CMD_POWER_UP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0b00000001)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_CMD_RESET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0b00000111)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_POWERUP_DELAY_MS<sp/><sp/><sp/><sp/><sp/>UINT16_C(10)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_APPSTART_DELAY_MS<sp/><sp/><sp/><sp/>UINT16_C(10)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_RESET_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(25)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_CMD_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(5)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_RETRY_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(2)<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BH1750_TX_RX_DELAY_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT16_C(10)<sp/><sp/><sp/><sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="62"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESP_ARG_CHECK(VAL)<sp/>do<sp/>{<sp/>if<sp/>(!(VAL))<sp/>return<sp/>ESP_ERR_INVALID_ARG;<sp/>}<sp/>while<sp/>(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="67"><highlight class="comment">*<sp/>static<sp/>constant<sp/>declarations</highlight></codeline>
+<codeline lineno="68"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*TAG<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;bh1750&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="72"><highlight class="comment">*<sp/>functions<sp/>and<sp/>subroutines</highlight></codeline>
+<codeline lineno="73"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>esp_err_t<sp/>bh1750_i2c_read(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*buffer,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>i2c_master_receive(handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>,<sp/>buffer,<sp/>size,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;i2c_master_receive,<sp/>i2c<sp/>read<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>esp_err_t<sp/>bh1750_i2c_write(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>*buffer,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>i2c_master_transmit(handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>,<sp/>buffer,<sp/>size,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;i2c_master_transmit,<sp/>i2c<sp/>write<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>esp_err_t<sp/>bh1750_i2c_write_command(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>reg_addr)<sp/>{</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bit8_uint8_buffer_t<sp/>tx<sp/>=<sp/>{<sp/>reg_addr<sp/>};</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>i2c_master_transmit(handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>,<sp/>tx,<sp/>BIT8_UINT8_BUFFER_SIZE,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;i2c_master_transmit,<sp/>i2c<sp/>write<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>bh1750_get_duration_ms(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!handle)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>180;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>todo<sp/>-<sp/>duration<sp/>when<sp/>measurement<sp/>time<sp/>is<sp/>modified<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a7f7bb6d23176ee157f6543f55a77e359" kindref="member">BH1750_MODE_OM_HI_RESOLUTION</ref>:</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>180;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a410482d12c5fdbdfc0921e3c8b24021a" kindref="member">BH1750_MODE_OM_HI2_RESOLUTION</ref>:</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>180;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7acdc33ad63cd65a7573c5802fdc547684" kindref="member">BH1750_MODE_OM_LO_RESOLUTION</ref>:</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>25;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a088345f3ccd93ad8a00d1963a7cc7d3c" kindref="member">BH1750_MODE_CM_HI_RESOLUTION</ref>:</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>180;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a1e5b71915290ad20b74a50e4215b30ce" kindref="member">BH1750_MODE_CM_HI2_RESOLUTION</ref>:</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>180;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7ac05789a192dcd720760050d89124cb21" kindref="member">BH1750_MODE_CM_LO_RESOLUTION</ref>:</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>25;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>180;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="157"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>bh1750_get_tick_duration(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!handle)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>res<sp/>=<sp/>pdMS_TO_TICKS(bh1750_get_duration_ms(handle));</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>res<sp/>==<sp/>0<sp/>?<sp/>1<sp/>:<sp/>res;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga7e476a2704b4a58413b2a7de316ef29d" kindref="member">bh1750_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga473a8d2e67b27ec75271fdda3b84dbba" kindref="member">bh1750_config_t</ref><sp/>*bh1750_config,<sp/><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>*bh1750_handle)<sp/>{</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>master_handle<sp/>&amp;&amp;<sp/>bh1750_config<sp/>);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>power-up<sp/>delay<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_POWERUP_DELAY_MS));</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>device<sp/>exists<sp/>on<sp/>the<sp/>master<sp/>bus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>ret<sp/>=<sp/>i2c_master_probe(master_handle,<sp/>bh1750_config-&gt;<ref refid="structbh1750__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>,<sp/><ref refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kindref="member">I2C_XFR_TIMEOUT_MS</ref>);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(ret,<sp/>err,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;device<sp/>does<sp/>not<sp/>exist<sp/>at<sp/>address<sp/>0x%02x,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">,<sp/>bh1750_config-&gt;<ref refid="structbh1750__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>memory<sp/>availability<sp/>for<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>out_handle;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>out_handle<sp/>=<sp/>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref>)calloc(1,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(*out_handle));</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_FALSE(out_handle,<sp/>ESP_ERR_NO_MEM,<sp/>err,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;no<sp/>memory<sp/>for<sp/>device,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>configuration<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref><sp/>=<sp/>*bh1750_config;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>device<sp/>configuration<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>i2c_device_config_t<sp/>i2c_dev_conf<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.dev_addr_length<sp/><sp/><sp/><sp/>=<sp/>I2C_ADDR_BIT_LEN_7,</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.device_address<sp/><sp/><sp/><sp/><sp/>=<sp/>out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>,</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.scl_speed_hz<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref><sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle,<sp/>&amp;i2c_dev_conf,<sp/>&amp;out_handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>add<sp/>device<sp/>to<sp/>master<sp/>bus,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_CMD_DELAY_MS));</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>reset<sp/>the<sp/>device<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(<ref refid="group__drivers_1ga814dc723c84984e588504cab4a1b2552" kindref="member">bh1750_reset</ref>(out_handle),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>soft-reset<sp/>device,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>power<sp/>status<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(bh1750_config-&gt;<ref refid="structbh1750__config__s_1ab3de6a2f149a9bffab11fd855329f12f" kindref="member">power_enabled</ref><sp/>==<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>power<sp/>up<sp/>device<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(<ref refid="group__drivers_1gaed00b37e5bfd7819e2c81ef02a04268b" kindref="member">bh1750_enable_power</ref>(out_handle),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>power-up<sp/>device,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>measurement<sp/>time<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1aa6fa4c88cf9f6eb809ae5cc80f41f8b1" kindref="member">set_timespan</ref><sp/>==<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1ab3de6a2f149a9bffab11fd855329f12f" kindref="member">power_enabled</ref><sp/>==<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>power<sp/>up<sp/>device<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(<ref refid="group__drivers_1gaed00b37e5bfd7819e2c81ef02a04268b" kindref="member">bh1750_enable_power</ref>(out_handle),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>power-up<sp/>device,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>write<sp/>measurement<sp/>time<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(<ref refid="group__drivers_1ga4649a73b0eb65849d3e8b2d53d0e586f" kindref="member">bh1750_set_measurement_time</ref>(out_handle,<sp/>out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a67c8a6b1b37fcf1a90c4f0f6429dc621" kindref="member">timespan</ref>),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>write<sp/>measurement<sp/>time<sp/>to<sp/>device,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>write<sp/>measurement<sp/>mode<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_GOTO_ON_ERROR(<ref refid="group__drivers_1ga2d4689f3f1c8bbc70b719b38f009c3ac" kindref="member">bh1750_set_measurement_mode</ref>(out_handle,<sp/>out_handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref>),<sp/>err_handle,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>write<sp/>measurement<sp/>mode<sp/>to<sp/>device,<sp/>bh1750<sp/>device<sp/>handle<sp/>initialization<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>device<sp/>handle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/>*bh1750_handle<sp/>=<sp/>out_handle;</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>application<sp/>start<sp/>delay<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_APPSTART_DELAY_MS));</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/>err_handle:</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out_handle<sp/>&amp;&amp;<sp/>out_handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i2c_master_bus_rm_device(out_handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>);</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(out_handle);</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/>err:</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ret;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac577dd8a77cf737c5ef25add84188e01" kindref="member">bh1750_get_ambient_light</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ambient_light)<sp/>{</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>rx_retry_max<sp/><sp/>=<sp/>5;</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>rx_retry_count<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>delay_ticks<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/>esp_err_t<sp/>ret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>bit8_uint8_buffer_t<sp/>tx<sp/>=<sp/>{<sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>};</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/>bit16_uint8_buffer_t<sp/>rx<sp/><sp/><sp/><sp/><sp/>=<sp/>{<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>delay<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/>delay_ticks<sp/>=<sp/>bh1750_get_tick_duration(handle);</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(bh1750_i2c_write(handle,<sp/>tx,<sp/>BIT8_UINT8_BUFFER_SIZE),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>write<sp/>measurement<sp/>mode<sp/>command<sp/>to<sp/>device,<sp/>get<sp/>measurement<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>task<sp/>-<sp/>allow<sp/>time<sp/>for<sp/>the<sp/>sensor<sp/>to<sp/>process<sp/>measurement<sp/>request<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(delay_ticks)<sp/>vTaskDelay(delay_ticks);</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>retry<sp/>needed<sp/>-<sp/>unexpected<sp/>nack<sp/>indicates<sp/>that<sp/>the<sp/>sensor<sp/>is<sp/>still<sp/>busy<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">do</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ret<sp/>=<sp/>bh1750_i2c_read(handle,<sp/>rx,<sp/>BIT16_UINT8_BUFFER_SIZE);</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>retry<sp/>attempt<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(<ref refid="bh1750_8c_1a13d93db46ea4bdc2883569aae1f859ea" kindref="member">BH1750_RETRY_DELAY_MS</ref>));</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(ret<sp/>!=<sp/>ESP_OK<sp/>&amp;&amp;<sp/>++rx_retry_count<sp/>&lt;=<sp/>rx_retry_max);</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>read<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/>ret,<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>read<sp/>to<sp/>i2c<sp/>device<sp/>handle,<sp/>get<sp/>measurement<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>convert<sp/>bh1750<sp/>results<sp/>to<sp/>engineering<sp/>units<sp/>of<sp/>measure<sp/>(lux)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>val<sp/>=<sp/>rx[0]<sp/>&lt;&lt;<sp/>8<sp/>|<sp/>rx[1];</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/>*ambient_light<sp/>=<sp/>(float)(val<sp/>*<sp/>10)<sp/>/<sp/>12;</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>handle<sp/>power<sp/>status<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>==<sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a7f7bb6d23176ee157f6543f55a77e359" kindref="member">BH1750_MODE_OM_HI_RESOLUTION</ref><sp/>||</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>==<sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a410482d12c5fdbdfc0921e3c8b24021a" kindref="member">BH1750_MODE_OM_HI2_RESOLUTION</ref><sp/>||</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>==<sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7acdc33ad63cd65a7573c5802fdc547684" kindref="member">BH1750_MODE_OM_LO_RESOLUTION</ref>)<sp/>ESP_RETURN_ON_ERROR(<ref refid="group__drivers_1ga1abd1351a7490b7dccc38ba2bc42dce2" kindref="member">bh1750_disable_power</ref>(handle),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;disable<sp/>power<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_CMD_DELAY_MS));</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="292"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga2d4689f3f1c8bbc70b719b38f009c3ac" kindref="member">bh1750_set_measurement_mode</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga76514573edf401f3839df07163bff37a" kindref="member">bh1750_measurement_modes_t</ref><sp/>mode)<sp/>{</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>write<sp/>measurement<sp/>mode<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(bh1750_i2c_write_command(handle,<sp/>mode),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;write<sp/>measurement<sp/>mode<sp/>command<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="300"><highlight class="normal"></highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>handle<sp/>measurement<sp/>mode<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>=<sp/>mode;</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_LOGD(TAG,<sp/></highlight><highlight class="stringliteral">&quot;i2c_bh1750_set_measurement_mode<sp/>(VAL<sp/>=<sp/>0x%02x)&quot;</highlight><highlight class="normal">,<sp/>mode);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>handle<sp/>power<sp/>status<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>==<sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a7f7bb6d23176ee157f6543f55a77e359" kindref="member">BH1750_MODE_OM_HI_RESOLUTION</ref><sp/>||</highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>==<sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7a410482d12c5fdbdfc0921e3c8b24021a" kindref="member">BH1750_MODE_OM_HI2_RESOLUTION</ref><sp/>||</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a09bf1ec8aebe11fb3339162eabc7befb" kindref="member">mode</ref><sp/>==<sp/><ref refid="group__drivers_1gga66416e4a883bd9a0719917edaeaae8a7acdc33ad63cd65a7573c5802fdc547684" kindref="member">BH1750_MODE_OM_LO_RESOLUTION</ref>)<sp/>ESP_RETURN_ON_ERROR(<ref refid="group__drivers_1ga1abd1351a7490b7dccc38ba2bc42dce2" kindref="member">bh1750_disable_power</ref>(handle),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;disable<sp/>power<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_CMD_DELAY_MS));</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="315"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4649a73b0eb65849d3e8b2d53d0e586f" kindref="member">bh1750_set_measurement_time</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t<sp/>timespan)<sp/>{</highlight></codeline>
+<codeline lineno="318"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="319"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="320"><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>timespan<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(timespan<sp/>&lt;<sp/>31<sp/>||<sp/>timespan<sp/>&gt;<sp/>254)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_ERR_INVALID_ARG;</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>to<sp/>write<sp/>measurement<sp/>hi<sp/>and<sp/>lo<sp/>timespan<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="325"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ERROR_CHECK(<sp/>bh1750_i2c_write_command(handle,<sp/><ref refid="bh1750_8c_1a829a6988a4de1fd531f3417432a67cc5" kindref="member">BH1750_OPCODE_MT_HI</ref><sp/>|<sp/>(timespan<sp/>&gt;&gt;<sp/>5))<sp/>);</highlight></codeline>
+<codeline lineno="326"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ERROR_CHECK(<sp/>bh1750_i2c_write_command(handle,<sp/><ref refid="bh1750_8c_1ad2f5d03758acabdf071a96e9f1a2cf5e" kindref="member">BH1750_OPCODE_MT_LO</ref><sp/>|<sp/>(timespan<sp/>&gt;&gt;<sp/>0x1f))<sp/>);</highlight></codeline>
+<codeline lineno="327"><highlight class="normal"></highlight></codeline>
+<codeline lineno="328"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>handle<sp/>measurement<sp/>timespan<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="329"><highlight class="normal"><sp/><sp/><sp/><sp/>handle-&gt;<ref refid="structbh1750__context__t_1ab118cd975ca577ce1ea785d5bb1ae616" kindref="member">dev_config</ref>.<ref refid="structbh1750__config__s_1a67c8a6b1b37fcf1a90c4f0f6429dc621" kindref="member">timespan</ref><sp/>=<sp/>timespan;</highlight></codeline>
+<codeline lineno="330"><highlight class="normal"></highlight></codeline>
+<codeline lineno="331"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>i2c<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_CMD_DELAY_MS));</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"></highlight></codeline>
+<codeline lineno="334"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="335"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"></highlight></codeline>
+<codeline lineno="337"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaed00b37e5bfd7819e2c81ef02a04268b" kindref="member">bh1750_enable_power</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"></highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(bh1750_i2c_write_command(handle,<sp/>BH1750_CMD_POWER_UP),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;write<sp/>power-up<sp/>command<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"></highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>command<sp/>-<sp/>power<sp/>cycle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_POWERUP_DELAY_MS));</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"></highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="348"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"></highlight></codeline>
+<codeline lineno="350"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1abd1351a7490b7dccc38ba2bc42dce2" kindref="member">bh1750_disable_power</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"></highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(bh1750_i2c_write_command(handle,<sp/>BH1750_CMD_POWER_DOWN),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;write<sp/>power-down<sp/>command<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="356"><highlight class="normal"></highlight></codeline>
+<codeline lineno="357"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>command<sp/>-<sp/>power<sp/>cycle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_POWERUP_DELAY_MS));</highlight></codeline>
+<codeline lineno="359"><highlight class="normal"></highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="361"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="362"><highlight class="normal"></highlight></codeline>
+<codeline lineno="363"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga814dc723c84984e588504cab4a1b2552" kindref="member">bh1750_reset</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="365"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="366"><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>attempt<sp/>i2c<sp/>write<sp/>transaction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="368"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(bh1750_i2c_write_command(handle,<sp/>BH1750_CMD_RESET),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;write<sp/>soft-reset<sp/>command<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="369"><highlight class="normal"></highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>delay<sp/>before<sp/>next<sp/>command<sp/>-<sp/>power<sp/>cycle<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="371"><highlight class="normal"><sp/><sp/><sp/><sp/>vTaskDelay(pdMS_TO_TICKS(BH1750_RESET_DELAY_MS));</highlight></codeline>
+<codeline lineno="372"><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="374"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="375"><highlight class="normal"></highlight></codeline>
+<codeline lineno="376"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gadbed4b29cd5936e8df6767c128fa640f" kindref="member">bh1750_remove</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="377"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="378"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="379"><highlight class="normal"></highlight></codeline>
+<codeline lineno="380"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>i2c_master_bus_rm_device(handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>);</highlight></codeline>
+<codeline lineno="381"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="382"><highlight class="normal"></highlight></codeline>
+<codeline lineno="383"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga0922b011c6b1d2ce91933e71ea9158f9" kindref="member">bh1750_delete</ref>(<ref refid="group__drivers_1gaf7d20c4f1eb201955b708b4d81779200" kindref="member">bh1750_handle_t</ref><sp/>handle)<sp/>{</highlight></codeline>
+<codeline lineno="384"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>arguments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="385"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_ARG_CHECK(<sp/>handle<sp/>);</highlight></codeline>
+<codeline lineno="386"><highlight class="normal"></highlight></codeline>
+<codeline lineno="387"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>remove<sp/>device<sp/>from<sp/>master<sp/>bus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="388"><highlight class="normal"><sp/><sp/><sp/><sp/>ESP_RETURN_ON_ERROR(<sp/><ref refid="group__drivers_1gadbed4b29cd5936e8df6767c128fa640f" kindref="member">bh1750_remove</ref>(handle),<sp/>TAG,<sp/></highlight><highlight class="stringliteral">&quot;unable<sp/>to<sp/>remove<sp/>device<sp/>from<sp/>i2c<sp/>master<sp/>bus,<sp/>delete<sp/>handle<sp/>failed&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="389"><highlight class="normal"></highlight></codeline>
+<codeline lineno="390"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>handle<sp/>instance<sp/>and<sp/>free<sp/>handles<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="391"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="392"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(handle-&gt;<ref refid="structbh1750__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>);</highlight></codeline>
+<codeline lineno="393"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(handle);</highlight></codeline>
+<codeline lineno="394"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="395"><highlight class="normal"></highlight></codeline>
+<codeline lineno="396"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ESP_OK;</highlight></codeline>
+<codeline lineno="397"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_bh1750/bh1750.c"/>
+  </compounddef>
+</doxygen>

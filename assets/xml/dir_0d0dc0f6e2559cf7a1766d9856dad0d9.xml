@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_0d0dc0f6e2559cf7a1766d9856dad0d9" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_mlx90614/include</compoundname>
+    <innerfile refid="mlx90614_8h">mlx90614.h</innerfile>
+    <innerfile refid="mlx90614__version_8h">mlx90614_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_mlx90614/include/"/>
+  </compounddef>
+</doxygen>

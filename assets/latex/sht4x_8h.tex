@@ -1,0 +1,97 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+sht4x/include/sht4x.h File Reference}
+\hypertarget{sht4x_8h}{}\label{sht4x_8h}\index{components/peripherals/i2c/esp\_sht4x/include/sht4x.h@{components/peripherals/i2c/esp\_sht4x/include/sht4x.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+{\ttfamily \#include "{}sht4x\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{unioni2c__sht4x__data______t}{i2c\+\_\+sht4x\+\_\+data\+\_\+\+\_\+\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structi2c__sht4x__data______t_1_1temperature__tag}{i2c\+\_\+sht4x\+\_\+data\+\_\+\+\_\+\+\_\+t\+::temperature\+\_\+tag}}
+\item 
+union \mbox{\hyperlink{unioni2c__sht4x__data______t_1_1temperature__tag_1_1temperature__data__tag}{i2c\+\_\+sht4x\+\_\+data\+\_\+\+\_\+\+\_\+t\+::temperature\+\_\+tag\+::temperature\+\_\+data\+\_\+tag}}
+\item 
+struct \mbox{\hyperlink{structi2c__sht4x__data______t_1_1humidity__tag}{i2c\+\_\+sht4x\+\_\+data\+\_\+\+\_\+\+\_\+t\+::humidity\+\_\+tag}}
+\item 
+union \mbox{\hyperlink{unioni2c__sht4x__data______t_1_1humidity__tag_1_1humidity__data__tag}{i2c\+\_\+sht4x\+\_\+data\+\_\+\+\_\+\+\_\+t\+::humidity\+\_\+tag\+::humidity\+\_\+data\+\_\+tag}}
+\item 
+struct \mbox{\hyperlink{structsht4x__config__s}{sht4x\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em SHT4X configuration structure definition. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structsht4x__context__t}{sht4x\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em SHT4X context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__drivers_ga97ee7016549a63f15305a591d4d1c130}{I2\+C\+\_\+\+SHT4\+X\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em sht4x i2c default scl clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+SHT4\+X\+\_\+\+DEV\+\_\+\+ADDR\+\_\+\+LO}~UINT8\+\_\+C(0x44)
+\begin{DoxyCompactList}\small\item\em sht4x i2c address when ADDR pin floating/low \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+SHT4\+X\+\_\+\+DEV\+\_\+\+ADDR\+\_\+\+HI}~UINT8\+\_\+C(0x45)
+\begin{DoxyCompactList}\small\item\em sht4x i2c address when ADDR pin high \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_ga3fd670aa7f05d6a67ef70f30f4b02fcb}{I2\+C\+\_\+\+SHT4\+X\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\begin{DoxyCompactList}\small\item\em Macro that initializes {\ttfamily i2c\+\_\+sht4x\+\_\+config\+\_\+t} to default configuration settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_gabdae5ef8438d30d79eb2d817cff393f5}{sht4x\+\_\+heater\+\_\+modes\+\_\+e}} {\bfseries sht4x\+\_\+heater\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SHT4X measurement heater modes enumerator definition. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga4302f128b226e236bedc8d9347c6c0db}{sht4x\+\_\+repeat\+\_\+modes\+\_\+e}} {\bfseries sht4x\+\_\+repeat\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SHT4X measurement repeatability modes enumerator definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structsht4x__config__s}{sht4x\+\_\+config\+\_\+s}} {\bfseries sht4x\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SHT4X configuration structure definition. \end{DoxyCompactList}\item 
+typedef struct sht4x\+\_\+context\+\_\+t {\bfseries sht4x\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SHT4X context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structsht4x__context__t}{sht4x\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries sht4x\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em SHT4X handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_gabdae5ef8438d30d79eb2d817cff393f5}{sht4x\+\_\+heater\+\_\+modes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5ae1759d62c6282914ff338f90c4fa78a2}{SHT4\+X\+\_\+\+HEATER\+\_\+\+OFF}} = 0
+, \mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5a9d5c66f9115bee09cc5da01230f83d2e}{SHT4\+X\+\_\+\+HEATER\+\_\+\+HIGH\+\_\+\+LONG}}
+, \mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5a0a1a957519bc723aa23c13149209a4cc}{SHT4\+X\+\_\+\+HEATER\+\_\+\+HIGH\+\_\+\+SHORT}}
+, \mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5ae3062ce05c98b888cab3f28520621c94}{SHT4\+X\+\_\+\+HEATER\+\_\+\+MEDIUM\+\_\+\+LONG}}
+, \newline
+\mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5a05a3b66525eee9b0d9979755f35aeed7}{SHT4\+X\+\_\+\+HEATER\+\_\+\+MEDIUM\+\_\+\+SHORT}}
+, \mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5ad847dbc812530568ac5e469b5e04e511}{SHT4\+X\+\_\+\+HEATER\+\_\+\+LOW\+\_\+\+LONG}}
+, \mbox{\hyperlink{group__drivers_ggabdae5ef8438d30d79eb2d817cff393f5a8bb53413f25e9310a24d725f90ea7b6f}{SHT4\+X\+\_\+\+HEATER\+\_\+\+LOW\+\_\+\+SHORT}}
+ \}
+\begin{DoxyCompactList}\small\item\em SHT4X measurement heater modes enumerator definition. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga4302f128b226e236bedc8d9347c6c0db}{sht4x\+\_\+repeat\+\_\+modes\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga4302f128b226e236bedc8d9347c6c0dba759060ab31ac2e2a5b069d8355a6d5cc}{SHT4\+X\+\_\+\+REPEAT\+\_\+\+HIGH}} = 0
+, \mbox{\hyperlink{group__drivers_gga4302f128b226e236bedc8d9347c6c0dba2dc4600e4a85ee7b75099f60d113a059}{SHT4\+X\+\_\+\+REPEAT\+\_\+\+MEDIUM}}
+, \mbox{\hyperlink{group__drivers_gga4302f128b226e236bedc8d9347c6c0dba66f245e9754d21246870746721be8c7a}{SHT4\+X\+\_\+\+REPEAT\+\_\+\+LOW}}
+ \}
+\begin{DoxyCompactList}\small\item\em SHT4X measurement repeatability modes enumerator definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga42d4a8ba981a9e27a2f06b779c06f1a9}{sht4x\+\_\+init}} (const i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga5ca6e3df86dcbbba4a2a65014de70423}{sht4x\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}sht4x\+\_\+config, \mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}const sht4x\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an SHT4X device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5c8a6cc7090c0cae8891b16d934d170d}{sht4x\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity)
+\begin{DoxyCompactList}\small\item\em Reads high-\/level measurements from SHT4X. This is a blocking function. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0b8e85efac9959659fb38381a0df33c3}{sht4x\+\_\+get\+\_\+measurements}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity, float \texorpdfstring{$\ast$}{*}const dewpoint)
+\begin{DoxyCompactList}\small\item\em Similar to {\ttfamily i2c\+\_\+sht4x\+\_\+read\+\_\+measurement} but it includes the dewpoint temperature in the results. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac560af9e65f325df1f1d28873826010d}{sht4x\+\_\+get\+\_\+repeat\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gaa3ca8d58b6772111c2fe9b2714691e74}{sht4x\+\_\+repeat\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads measurement repeatability mode setting from SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0310bc33c15029a3d6f99d60ca25beb5}{sht4x\+\_\+set\+\_\+repeat\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gaa3ca8d58b6772111c2fe9b2714691e74}{sht4x\+\_\+repeat\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes measurement repeatability mode setting to SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae74680f79f544896e2d63f12cec010c3}{sht4x\+\_\+get\+\_\+heater\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga172b07afab8f75e7f52efe0e5669461a}{sht4x\+\_\+heater\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads measurement heater mode setting from SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga84243f1723d1fc83cf804b0914681dec}{sht4x\+\_\+set\+\_\+heater\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga172b07afab8f75e7f52efe0e5669461a}{sht4x\+\_\+heater\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes measurement heater mode setting to SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab0576084424fabc85a793cca32e9dc7b}{sht4x\+\_\+reset}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset to SHT4X. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6559e247f4f3ddda5907d7e48100375e}{sht4x\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an SHT4X device from master I2C bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadc55d64648a9648100abe176dcbf6a94}{sht4x\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gadc26551d1aa695a4d05c3912bd035b8a}{sht4x\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an SHT4X device from master I2C bus and delete the handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga7dc2bdb1090f30af18882528f9c590bd}{sht4x\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts SHT4X firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga46afff26fb2c3d61420378265344fb2a}{sht4x\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts SHT4X firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}

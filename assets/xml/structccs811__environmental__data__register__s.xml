@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structccs811__environmental__data__register__s" kind="struct" language="C++" prot="public">
+    <compoundname>ccs811_environmental_data_register_s</compoundname>
+    <includes refid="ccs811_8h" local="no">ccs811.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structccs811__environmental__data__register__s_1afc1d28cfbce795d6ea954ebe725241f5" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float temperature</definition>
+        <argsstring></argsstring>
+        <name>temperature</name>
+        <qualifiedname>ccs811_environmental_data_register_s::temperature</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>temperature (25 C = 0x64, 0x00 default) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h" line="168" column="11" bodyfile="components/peripherals/i2c/esp_ccs811/include/ccs811.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structccs811__environmental__data__register__s_1a6a87b2b0cff24d38b367ccd34843a206" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float humidity</definition>
+        <argsstring></argsstring>
+        <name>humidity</name>
+        <qualifiedname>ccs811_environmental_data_register_s::humidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>humidity (50% = 0x64, 0x00 default) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h" line="169" column="11" bodyfile="components/peripherals/i2c/esp_ccs811/include/ccs811.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>CCS811 environmental data register structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h" line="167" column="1" bodyfile="components/peripherals/i2c/esp_ccs811/include/ccs811.h" bodystart="167" bodyend="170"/>
+    <listofallmembers>
+      <member refid="structccs811__environmental__data__register__s_1a6a87b2b0cff24d38b367ccd34843a206" prot="public" virt="non-virtual"><scope>ccs811_environmental_data_register_s</scope><name>humidity</name></member>
+      <member refid="structccs811__environmental__data__register__s_1afc1d28cfbce795d6ea954ebe725241f5" prot="public" virt="non-virtual"><scope>ccs811_environmental_data_register_s</scope><name>temperature</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

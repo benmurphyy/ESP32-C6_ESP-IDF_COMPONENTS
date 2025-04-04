@@ -1,0 +1,116 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+veml7700 Directory Reference}
+\hypertarget{dir_d9e14f58fe36a00951ee70a9f7b6f96c}{}\label{dir_d9e14f58fe36a00951ee70a9f7b6f96c}\index{components/peripherals/i2c/esp\_veml7700 Directory Reference@{components/peripherals/i2c/esp\_veml7700 Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_dc3e6fdda85e3172d9bdb82ccbd17a62}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{veml7700_8c}{veml7700.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_veml7700}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_veml7700}{\texttt{ }}
+
+This ESP32 espressif IoT development framework (esp-\/idf) i2c peripheral driver was developed for the Vishay VEML7700 I2C sensor. Information on features and functionality are documented and can be found in the {\ttfamily \doxylink{veml7700_8h}{veml7700.\+h}} header file and in the {\ttfamily documentation} folder.\hypertarget{README.md_autotoc_md90}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md90}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_veml7700}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/peripherals/i2c/esp\+\_\+veml7700}}\hypertarget{README.md_autotoc_md91}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md91}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{veml7700_8h}{veml7700.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+The auto-\/calibrate algorithms aren\textquotesingle{}t consistent and are still being worked on.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_veml7700}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ veml7700\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ veml7700.h}
+\DoxyCodeLine{\ \ \ \ └──\ veml7700.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md92}{}\doxysubsection{\texorpdfstring{Typical Luminance Values}{Typical Luminance Values}}\label{README.md_autotoc_md92}
+Luminance ranges with use-\/case examples\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily 10-\/5 lx}\+: Light from Sirius, the brightest star in the night sky
+\item {\ttfamily 10-\/4 lx}\+: Total starlight, overcast sky
+\item {\ttfamily 0.\+002 lx}\+: Moonless clear night sky with airglow
+\item {\ttfamily 0.\+01 lx}\+: Quarter moon, 0.\+27 lx; full moon on a clear night
+\item {\ttfamily 1 lx}\+: Full moon overhead at tropical latitudes
+\item {\ttfamily 3.\+4 lx}\+: Dark limit of civil twilight under a clear sky
+\item {\ttfamily 50 lx}\+: Family living room
+\item {\ttfamily 80 lx}\+: Hallway / bathroom
+\item {\ttfamily 100 lx}\+: Very dark overcast day
+\item {\ttfamily 320 lx to 500 lx}\+: Office lighting
+\item {\ttfamily 400 lx}\+: Sunrise or sunset on a clear day
+\item {\ttfamily 1,000 lx}\+: Overcast day; typical TV studio lighting
+\item {\ttfamily 10,000 lx to 25,000 lx}\+: Full daylight (not direct sun)
+\item {\ttfamily 32,000 lx to 130,000 lx}\+: Direct sunlight
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md93}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md93}
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{veml7700_8h}{veml7700.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ i2c0\_veml7700\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ the\ xLastWakeTime\ variable\ with\ the\ current\ time.}}
+\DoxyCodeLine{\ \ \ \ TickType\_t\ \ \ \ \ \ \ \ \ \ last\_wake\_time\ \ =\ xTaskGetTickCount\ ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ i2c\ device\ configuration}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga7d53219e1d496e47e273799a4c34cd97}{veml7700\_config\_t}}\ dev\_cfg\ \ \ \ \ \ \ =\ \mbox{\hyperlink{group__drivers_gaea3380b7ab5255329b7c2ac552bfc000}{I2C\_VEML7700\_CONFIG\_DEFAULT}};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ dev\_hdl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ init\ device}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga3df45aea74256b7236c66d3d603fe4ad}{veml7700\_init}}(i2c0\_bus\_hdl,\ \&dev\_cfg,\ \&dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}veml7700\ handle\ init\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assert(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ optimize\ sensor}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//veml7700\_optimize\_configuration(dev\_hdl);}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ task\ loop\ entry\ point}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ VEML7700\ -\/\ START\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ handle\ sensor}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ ambient\_light;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//uint16\_t\ als\_counts;}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_ga605226e520866ecd3b93fda8add8d5d5}{veml7700\_get\_ambient\_light}}(dev\_hdl,\ \&ambient\_light);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//esp\_err\_t\ result\ =\ veml7700\_get\_ambient\_light\_counts(dev\_hdl,\ \&als\_counts);}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}veml7700\ device\ read\ failed\ (\%s)"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}ambient\ light:\ \ \ \ \ \%.2f\ lux"{}},\ ambient\_light);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//ESP\_LOGI(APP\_TAG,\ "{}ambient\ light:\ \ \ \ \ \%u\ counts"{},\ als\_counts);}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ VEML7700\ -\/\ END\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ pause\ the\ task\ per\ defined\ wait\ period}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelaySecUntil(\ \&last\_wake\_time,\ I2C0\_TASK\_SAMPLING\_RATE\ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ resources}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga3d85934c16c7e75ad9a4db31bbf98a23}{veml7700\_delete}}(\ dev\_hdl\ );}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

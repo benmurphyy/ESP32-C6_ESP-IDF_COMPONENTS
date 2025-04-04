@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structbmp390__context__t" kind="struct" language="C++" prot="public">
+    <compoundname>bmp390_context_t</compoundname>
+    <includes refid="bmp390_8h" local="no">bmp390.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbmp390__context__t_1a0b755c8979bb096f92e086dbeac04e52" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga20d02eb65a21261e5d01ade14b047d92" kindref="member">bmp390_config_t</ref></type>
+        <definition>bmp390_config_t dev_config</definition>
+        <argsstring></argsstring>
+        <name>dev_config</name>
+        <qualifiedname>bmp390_context_t::dev_config</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp390 device configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp390/include/bmp390.h" line="296" column="45" bodyfile="components/peripherals/i2c/esp_bmp390/include/bmp390.h" bodystart="296" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp390__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" prot="public" static="no" mutable="no">
+        <type>i2c_master_dev_handle_t</type>
+        <definition>i2c_master_dev_handle_t i2c_handle</definition>
+        <argsstring></argsstring>
+        <name>i2c_handle</name>
+        <qualifiedname>bmp390_context_t::i2c_handle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp380 i2c device handle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp390/include/bmp390.h" line="297" column="45" bodyfile="components/peripherals/i2c/esp_bmp390/include/bmp390.h" bodystart="297" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp390__context__t_1a1f8e9b0166d469464c19bffd71deccff" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga7374d1ab55c2db33457ecf05b496cb05" kindref="member">bmp390_cal_factors_t</ref> *</type>
+        <definition>bmp390_cal_factors_t* dev_cal_factors</definition>
+        <argsstring></argsstring>
+        <name>dev_cal_factors</name>
+        <qualifiedname>bmp390_context_t::dev_cal_factors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp390 device calibration factors </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp390/include/bmp390.h" line="298" column="44" bodyfile="components/peripherals/i2c/esp_bmp390/include/bmp390.h" bodystart="298" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp390__context__t_1ac0e68cbae253ef86116f743cd02136b3" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga2c788db0abaebcfbc32448cd17d60237" kindref="member">bmp390_conv_cal_factors_t</ref> *</type>
+        <definition>bmp390_conv_cal_factors_t* dev_conv_cal_factors</definition>
+        <argsstring></argsstring>
+        <name>dev_conv_cal_factors</name>
+        <qualifiedname>bmp390_context_t::dev_conv_cal_factors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bmp390 device calibration factors converted to floating point numbers (section 8.4) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp390/include/bmp390.h" line="299" column="44" bodyfile="components/peripherals/i2c/esp_bmp390/include/bmp390.h" bodystart="299" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbmp390__context__t_1ace8b85a2a77b6b95bdd30d52574f4092" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t dev_type</definition>
+        <argsstring></argsstring>
+        <name>dev_type</name>
+        <qualifiedname>bmp390_context_t::dev_type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>device type, should be bmp390 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bmp390/include/bmp390.h" line="300" column="45" bodyfile="components/peripherals/i2c/esp_bmp390/include/bmp390.h" bodystart="300" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>BMP390 context structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>bmp390_cal_factors_s</label>
+        <link refid="structbmp390__cal__factors__s"/>
+      </node>
+      <node id="2">
+        <label>bmp390_config_s</label>
+        <link refid="structbmp390__config__s"/>
+      </node>
+      <node id="1">
+        <label>bmp390_context_t</label>
+        <link refid="structbmp390__context__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>dev_config</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>dev_cal_factors</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>dev_conv_cal_factors</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>bmp390_conv_cal_factors_s</label>
+        <link refid="structbmp390__conv__cal__factors__s"/>
+      </node>
+    </collaborationgraph>
+    <location file="components/peripherals/i2c/esp_bmp390/include/bmp390.h" line="295" column="1" bodyfile="components/peripherals/i2c/esp_bmp390/include/bmp390.h" bodystart="295" bodyend="301"/>
+    <listofallmembers>
+      <member refid="structbmp390__context__t_1a1f8e9b0166d469464c19bffd71deccff" prot="public" virt="non-virtual"><scope>bmp390_context_t</scope><name>dev_cal_factors</name></member>
+      <member refid="structbmp390__context__t_1a0b755c8979bb096f92e086dbeac04e52" prot="public" virt="non-virtual"><scope>bmp390_context_t</scope><name>dev_config</name></member>
+      <member refid="structbmp390__context__t_1ac0e68cbae253ef86116f743cd02136b3" prot="public" virt="non-virtual"><scope>bmp390_context_t</scope><name>dev_conv_cal_factors</name></member>
+      <member refid="structbmp390__context__t_1ace8b85a2a77b6b95bdd30d52574f4092" prot="public" virt="non-virtual"><scope>bmp390_context_t</scope><name>dev_type</name></member>
+      <member refid="structbmp390__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" prot="public" virt="non-virtual"><scope>bmp390_context_t</scope><name>i2c_handle</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,114 @@
+\doxysection{bme680\+\_\+data\+\_\+s Struct Reference}
+\hypertarget{structbme680__data__s}{}\label{structbme680__data__s}\index{bme680\_data\_s@{bme680\_data\_s}}
+
+
+BME680 data structure definition.  
+
+
+
+
+{\ttfamily \#include $<$bme680.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{structbme680__data__s_a708b12e594d183ba115f10e8aca0665b}{dewpoint\+\_\+temperature}}
+\item 
+float \mbox{\hyperlink{structbme680__data__s_a5cbb9c964da67812cd01b081c2fc6cd1}{air\+\_\+temperature}}
+\item 
+float \mbox{\hyperlink{structbme680__data__s_ad60830bc80efb7e8a11d6fb25518f55b}{relative\+\_\+humidity}}
+\item 
+float \mbox{\hyperlink{structbme680__data__s_ad2a540b7fffffcd5581c3d05d94df7f6}{barometric\+\_\+pressure}}
+\item 
+bool \mbox{\hyperlink{structbme680__data__s_a806fa5bc30520f84f87b8479ea263e04}{gas\+\_\+valid}}
+\item 
+float \mbox{\hyperlink{structbme680__data__s_ac30cebc4cd86ec13a739515a74105b50}{gas\+\_\+resistance}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbme680__data__s_a87b4540d7cba30cb7f7e184467b34394}{gas\+\_\+range}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbme680__data__s_ac9861af59182939c5f1d292857cc218c}{gas\+\_\+index}}
+\item 
+bool \mbox{\hyperlink{structbme680__data__s_a62791e77eacb0713ac8dd58380b791f4}{heater\+\_\+stable}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structbme680__data__s_acebbf28041a5672d184c08d6dd285509}{iaq\+\_\+score}}
+\item 
+\Hypertarget{structbme680__data__s_aac81154b2d3747e2e7399391bb03c4c8}\label{structbme680__data__s_aac81154b2d3747e2e7399391bb03c4c8} 
+float {\bfseries temperature\+\_\+score}
+\item 
+\Hypertarget{structbme680__data__s_a22a4553c5dab1b54039ed1b526e6a4fc}\label{structbme680__data__s_a22a4553c5dab1b54039ed1b526e6a4fc} 
+float {\bfseries humidity\+\_\+score}
+\item 
+\Hypertarget{structbme680__data__s_ad25dcc8011a0e9befd80aaa6ab21680e}\label{structbme680__data__s_ad25dcc8011a0e9befd80aaa6ab21680e} 
+float {\bfseries gas\+\_\+score}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+BME680 data structure definition. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structbme680__data__s_a5cbb9c964da67812cd01b081c2fc6cd1}\index{bme680\_data\_s@{bme680\_data\_s}!air\_temperature@{air\_temperature}}
+\index{air\_temperature@{air\_temperature}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{air\_temperature}{air\_temperature}}
+{\footnotesize\ttfamily \label{structbme680__data__s_a5cbb9c964da67812cd01b081c2fc6cd1} 
+float air\+\_\+temperature}
+
+air temperature in degrees celsius \Hypertarget{structbme680__data__s_ad2a540b7fffffcd5581c3d05d94df7f6}\index{bme680\_data\_s@{bme680\_data\_s}!barometric\_pressure@{barometric\_pressure}}
+\index{barometric\_pressure@{barometric\_pressure}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{barometric\_pressure}{barometric\_pressure}}
+{\footnotesize\ttfamily \label{structbme680__data__s_ad2a540b7fffffcd5581c3d05d94df7f6} 
+float barometric\+\_\+pressure}
+
+barometric pressure in hecto-\/pascal \Hypertarget{structbme680__data__s_a708b12e594d183ba115f10e8aca0665b}\index{bme680\_data\_s@{bme680\_data\_s}!dewpoint\_temperature@{dewpoint\_temperature}}
+\index{dewpoint\_temperature@{dewpoint\_temperature}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{dewpoint\_temperature}{dewpoint\_temperature}}
+{\footnotesize\ttfamily \label{structbme680__data__s_a708b12e594d183ba115f10e8aca0665b} 
+float dewpoint\+\_\+temperature}
+
+dew-\/point temperature in degrees celsius \Hypertarget{structbme680__data__s_ac9861af59182939c5f1d292857cc218c}\index{bme680\_data\_s@{bme680\_data\_s}!gas\_index@{gas\_index}}
+\index{gas\_index@{gas\_index}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{gas\_index}{gas\_index}}
+{\footnotesize\ttfamily \label{structbme680__data__s_ac9861af59182939c5f1d292857cc218c} 
+uint8\+\_\+t gas\+\_\+index}
+
+heater profile used (0..9) \Hypertarget{structbme680__data__s_a87b4540d7cba30cb7f7e184467b34394}\index{bme680\_data\_s@{bme680\_data\_s}!gas\_range@{gas\_range}}
+\index{gas\_range@{gas\_range}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{gas\_range}{gas\_range}}
+{\footnotesize\ttfamily \label{structbme680__data__s_a87b4540d7cba30cb7f7e184467b34394} 
+uint8\+\_\+t gas\+\_\+range}
+
+gas resistance range \Hypertarget{structbme680__data__s_ac30cebc4cd86ec13a739515a74105b50}\index{bme680\_data\_s@{bme680\_data\_s}!gas\_resistance@{gas\_resistance}}
+\index{gas\_resistance@{gas\_resistance}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{gas\_resistance}{gas\_resistance}}
+{\footnotesize\ttfamily \label{structbme680__data__s_ac30cebc4cd86ec13a739515a74105b50} 
+float gas\+\_\+resistance}
+
+gas resistance in ohms \Hypertarget{structbme680__data__s_a806fa5bc30520f84f87b8479ea263e04}\index{bme680\_data\_s@{bme680\_data\_s}!gas\_valid@{gas\_valid}}
+\index{gas\_valid@{gas\_valid}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{gas\_valid}{gas\_valid}}
+{\footnotesize\ttfamily \label{structbme680__data__s_a806fa5bc30520f84f87b8479ea263e04} 
+bool gas\+\_\+valid}
+
+indicates that the gas measurement results are valid \Hypertarget{structbme680__data__s_a62791e77eacb0713ac8dd58380b791f4}\index{bme680\_data\_s@{bme680\_data\_s}!heater\_stable@{heater\_stable}}
+\index{heater\_stable@{heater\_stable}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{heater\_stable}{heater\_stable}}
+{\footnotesize\ttfamily \label{structbme680__data__s_a62791e77eacb0713ac8dd58380b791f4} 
+bool heater\+\_\+stable}
+
+indicates that the heater temperature was stable \Hypertarget{structbme680__data__s_acebbf28041a5672d184c08d6dd285509}\index{bme680\_data\_s@{bme680\_data\_s}!iaq\_score@{iaq\_score}}
+\index{iaq\_score@{iaq\_score}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{iaq\_score}{iaq\_score}}
+{\footnotesize\ttfamily \label{structbme680__data__s_acebbf28041a5672d184c08d6dd285509} 
+uint16\+\_\+t iaq\+\_\+score}
+
+air quality index (0..500) \Hypertarget{structbme680__data__s_ad60830bc80efb7e8a11d6fb25518f55b}\index{bme680\_data\_s@{bme680\_data\_s}!relative\_humidity@{relative\_humidity}}
+\index{relative\_humidity@{relative\_humidity}!bme680\_data\_s@{bme680\_data\_s}}
+\doxysubsubsection{\texorpdfstring{relative\_humidity}{relative\_humidity}}
+{\footnotesize\ttfamily \label{structbme680__data__s_ad60830bc80efb7e8a11d6fb25518f55b} 
+float relative\+\_\+humidity}
+
+relative humidity in percent 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+bme680/include/\mbox{\hyperlink{bme680_8h}{bme680.\+h}}\end{DoxyCompactItemize}

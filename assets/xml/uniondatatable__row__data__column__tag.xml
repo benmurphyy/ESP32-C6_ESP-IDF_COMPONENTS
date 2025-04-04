@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="uniondatatable__row__data__column__tag" kind="union" language="C++" prot="public">
+    <compoundname>datatable_row_data_column_tag</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="uniondatatable__row__data__column__tag_1a4bf9f64e1d9ef4846a7855c84dbdc394" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gae3784df766248feae0c4317018d7e0af" kindref="member">datatable_id_column_data_type_t</ref></type>
+        <definition>datatable_id_column_data_type_t id_data</definition>
+        <argsstring></argsstring>
+        <name>id_data</name>
+        <qualifiedname>datatable_row_data_column_tag::id_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="236" column="45" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="236" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondatatable__row__data__column__tag_1a9d0db1750e64e60339f2de6b28cf6305" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaf6b323c1059f6a637a19a773b1b35aca" kindref="member">datatable_ts_column_data_type_t</ref></type>
+        <definition>datatable_ts_column_data_type_t ts_data</definition>
+        <argsstring></argsstring>
+        <name>ts_data</name>
+        <qualifiedname>datatable_row_data_column_tag::ts_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="237" column="45" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="237" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondatatable__row__data__column__tag_1ab3bb367af3b0129e94cd6ec072d81b1a" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaf22960c594220872d4ffba635f2ed885" kindref="member">datatable_vector_column_data_type_t</ref></type>
+        <definition>datatable_vector_column_data_type_t vector_data</definition>
+        <argsstring></argsstring>
+        <name>vector_data</name>
+        <qualifiedname>datatable_row_data_column_tag::vector_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="238" column="45" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="238" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondatatable__row__data__column__tag_1aa5fba48d8d983eebce237f09970e8b04" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gad65b0416634f3f308e459cb86245364a" kindref="member">datatable_bool_column_data_type_t</ref></type>
+        <definition>datatable_bool_column_data_type_t bool_data</definition>
+        <argsstring></argsstring>
+        <name>bool_data</name>
+        <qualifiedname>datatable_row_data_column_tag::bool_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="239" column="45" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="239" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondatatable__row__data__column__tag_1a7fe7b4038d838812ec83c4315dcc5bd7" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga91ce526b12f2b7685d7c29ac5e85b2b7" kindref="member">datatable_float_column_data_type_t</ref></type>
+        <definition>datatable_float_column_data_type_t float_data</definition>
+        <argsstring></argsstring>
+        <name>float_data</name>
+        <qualifiedname>datatable_row_data_column_tag::float_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="240" column="45" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="240" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondatatable__row__data__column__tag_1a1fddbefd6e5ee83684c3dc26228255d0" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaa5748e9b1c8d28ccb97cb0987271a644" kindref="member">datatable_int16_column_data_type_t</ref></type>
+        <definition>datatable_int16_column_data_type_t int16_data</definition>
+        <argsstring></argsstring>
+        <name>int16_data</name>
+        <qualifiedname>datatable_row_data_column_tag::int16_data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="241" column="45" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="241" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table row data column structure. This structure is a data model that represents data storage of the record based on the data-table&apos;s column column data-type. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="5">
+        <label>datatable_bool_column_data_type_tag</label>
+        <link refid="structdatatable__bool__column__data__type__tag"/>
+      </node>
+      <node id="6">
+        <label>datatable_float_column_data_type_tag</label>
+        <link refid="structdatatable__float__column__data__type__tag"/>
+      </node>
+      <node id="2">
+        <label>datatable_id_column_data_type_tag</label>
+        <link refid="structdatatable__id__column__data__type__tag"/>
+      </node>
+      <node id="7">
+        <label>datatable_int16_column_data_type_tag</label>
+        <link refid="structdatatable__int16__column__data__type__tag"/>
+      </node>
+      <node id="1">
+        <label>datatable_row_data_column_tag</label>
+        <link refid="uniondatatable__row__data__column__tag"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>id_data</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>ts_data</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>vector_data</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>bool_data</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>float_data</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>int16_data</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>datatable_ts_column_data_type_tag</label>
+        <link refid="structdatatable__ts__column__data__type__tag"/>
+      </node>
+      <node id="4">
+        <label>datatable_vector_column_data_type_tag</label>
+        <link refid="structdatatable__vector__column__data__type__tag"/>
+      </node>
+    </collaborationgraph>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="235" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="235" bodyend="242"/>
+    <listofallmembers>
+      <member refid="uniondatatable__row__data__column__tag_1aa5fba48d8d983eebce237f09970e8b04" prot="public" virt="non-virtual"><scope>datatable_row_data_column_tag</scope><name>bool_data</name></member>
+      <member refid="uniondatatable__row__data__column__tag_1a7fe7b4038d838812ec83c4315dcc5bd7" prot="public" virt="non-virtual"><scope>datatable_row_data_column_tag</scope><name>float_data</name></member>
+      <member refid="uniondatatable__row__data__column__tag_1a4bf9f64e1d9ef4846a7855c84dbdc394" prot="public" virt="non-virtual"><scope>datatable_row_data_column_tag</scope><name>id_data</name></member>
+      <member refid="uniondatatable__row__data__column__tag_1a1fddbefd6e5ee83684c3dc26228255d0" prot="public" virt="non-virtual"><scope>datatable_row_data_column_tag</scope><name>int16_data</name></member>
+      <member refid="uniondatatable__row__data__column__tag_1a9d0db1750e64e60339f2de6b28cf6305" prot="public" virt="non-virtual"><scope>datatable_row_data_column_tag</scope><name>ts_data</name></member>
+      <member refid="uniondatatable__row__data__column__tag_1ab3bb367af3b0129e94cd6ec072d81b1a" prot="public" virt="non-virtual"><scope>datatable_row_data_column_tag</scope><name>vector_data</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

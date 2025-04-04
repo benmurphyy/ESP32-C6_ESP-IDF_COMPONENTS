@@ -1,0 +1,90 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ccs811 Directory Reference}
+\hypertarget{dir_f9c34edc5fbca8f83767e0169852f9f6}{}\label{dir_f9c34edc5fbca8f83767e0169852f9f6}\index{components/peripherals/i2c/esp\_ccs811 Directory Reference@{components/peripherals/i2c/esp\_ccs811 Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_53babab70bc1a378bab189414ee054c7}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{ccs811_8c}{ccs811.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_ccs811}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_ccs811}{\texttt{ }}
+
+This ESP32 espressif IoT development framework (esp-\/idf) i2c peripheral driver was developed for the Scio\+Sense CCS811 digital metal-\/oxide multi-\/gas sensor. Information on features and functionality are documented and can be found in the {\ttfamily \doxylink{ccs811_8h}{ccs811.\+h}} header file and in the {\ttfamily documentation} folder.\hypertarget{README.md_autotoc_md38}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md38}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ccs811}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/peripherals/i2c/esp\+\_\+ccs811}}\hypertarget{README.md_autotoc_md39}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md39}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{ccs811_8h}{ccs811.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_ccs811}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ ccs811\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ ccs811.h}
+\DoxyCodeLine{\ \ \ \ └──\ ccs811.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md40}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md40}
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ccs811_8h}{ccs811.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ i2c0\_ccs811\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ the\ xLastWakeTime\ variable\ with\ the\ current\ time.}}
+\DoxyCodeLine{\ \ \ \ TickType\_t\ \ \ \ \ \ \ \ \ \ last\_wake\_time\ \ \ =\ xTaskGetTickCount\ ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ i2c\ device\ configuration}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structccs811__config__t}{ccs811\_config\_t}}\ dev\_cfg\ \ \ \ \ \ \ \ \ \ =\ I2C\_CCS811\_CONFIG\_DEFAULT;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga93f5ff3bbfd6b970a656de57f9ab5621}{ccs811\_handle\_t}}\ dev\_hdl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ init\ device}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gafb2476c99e169fab5776d8795fb2bfe7}{ccs811\_init}}(i2c0\_bus\_hdl,\ \&dev\_cfg,\ \&dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}ccs811\ handle\ init\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assert(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ task\ loop\ entry\ point}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ CCS811\ -\/\ START\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ handle\ sensor}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint16\_t\ eco2;\ uint16\_t\ etvoc;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_gaa02485dd45552bcdab58c102c0df56e7}{ccs811\_get\_measurement}}(dev\_hdl,\ \&eco2,\ \&etvoc);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}i2c0\ i2c\_ccs811\_get\_measurement\ failed:\ \%s"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}eCO2\ \ value:\ \%d\ ppm"{}},\ eco2);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}eTVOC\ value:\ \%d\ ppb"{}},\ etvoc);\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ CCS811\ -\/\ END\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ pause\ the\ task\ per\ defined\ wait\ period}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelaySecUntil(\ \&last\_wake\_time,\ I2C0\_TASK\_SAMPLING\_RATE\ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ resources}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga411b556cedc994f96c23259453c55d27}{ccs811\_delete}}(\ dev\_hdl\ );}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

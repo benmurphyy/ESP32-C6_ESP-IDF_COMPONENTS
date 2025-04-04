@@ -1,0 +1,132 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+sgp4x Directory Reference}
+\hypertarget{dir_10d77006f637115d2f048597fa4370a2}{}\label{dir_10d77006f637115d2f048597fa4370a2}\index{components/peripherals/i2c/esp\_sgp4x Directory Reference@{components/peripherals/i2c/esp\_sgp4x Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_a5c3bb1620af497364c23e70aecad81e}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{sgp4x_8c}{sgp4x.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{/LICENSE}{\texttt{ }} \href{https://visualstudio.microsoft.com}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://shields.io/}{\texttt{ }} \href{https://shields.io/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_sgp4x}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_sgp4x}{\texttt{ }}
+
+This ESP32 espressif IoT development framework (esp-\/idf) i2c peripheral driver was developed for the Sensirion SGP4X series of sensors (SGP40 and SGP41). Information on features and functionality are documented and can be found in the {\ttfamily \doxylink{sgp4x_8h}{sgp4x.\+h}} header file and in the {\ttfamily documentation} folder.\hypertarget{README.md_autotoc_md74}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md74}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_sgp4x}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/peripherals/i2c/esp\+\_\+sgp4x}}\hypertarget{README.md_autotoc_md75}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md75}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{sgp4x_8h}{sgp4x.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+The SGP40 is not fully implemented, support for the SGP40 will be revisited once a sensor is available to test with.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_sgp4x}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ sgp4x\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ sgp4x.h}
+\DoxyCodeLine{\ \ \ \ └──\ sgp4x.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md76}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md76}
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sgp4x_8h}{sgp4x.h}}>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <sensirion\_gas\_index\_algorithm.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ i2c0\_sgp4x\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ the\ xLastWakeTime\ variable\ with\ the\ current\ time.}}
+\DoxyCodeLine{\ \ \ \ TickType\_t\ \ \ \ \ \ \ \ \ last\_wake\_time\ \ \ =\ xTaskGetTickCount\ ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ i2c\ device\ configuration}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structsgp4x__config__t}{sgp4x\_config\_t}}\ dev\_cfg\ \ \ \ \ \ \ \ \ \ =\ I2C\_SGP41\_CONFIG\_DEFAULT;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ dev\_hdl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev\_self\_tested\ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev\_conditioned\ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ gas\ index\ parameters}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{struct_gas_index_algorithm_params}{GasIndexAlgorithmParams}}\ voc\_params;}
+\DoxyCodeLine{\ \ \ \ GasIndexAlgorithm\_init(\&voc\_params,\ GasIndexAlgorithm\_ALGORITHM\_TYPE\_VOC);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{struct_gas_index_algorithm_params}{GasIndexAlgorithmParams}}\ nox\_params;}
+\DoxyCodeLine{\ \ \ \ GasIndexAlgorithm\_init(\&nox\_params,\ GasIndexAlgorithm\_ALGORITHM\_TYPE\_NOX);}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ init\ device}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga0bec60b8c1ab24e8061a1d6dadeed8fc}{sgp4x\_init}}(i2c0\_bus\_hdl,\ \&dev\_cfg,\ \&dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}sgp4x\ handle\ init\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assert(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ task\ loop\ entry\ point}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ SGP4X\ -\/\ START\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ handle\ sensor}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(dev\_self\_tested\ ==\ \textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ sgp4x\_self\_test\_result\_t\ self\_test\_result;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_ga74a5a683b3490a8aaf03b03539929fae}{sgp4x\_execute\_self\_test}}(dev\_hdl,\ \&self\_test\_result);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}sgp4x\ device\ self-\/test\ failed\ (\%s)"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}VOC\ Pixel:\ \ \ \%d"{}},\ self\_test\_result.pixels.voc\_pixel\_failed);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}NOX\ Pixel:\ \ \ \%d"{}},\ self\_test\_result.pixels.nox\_pixel\_failed);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dev\_self\_tested\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ }}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(dev\_conditioned\ ==\ \textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 10;\ i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ sraw\_voc;\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_ga12f002286cb3e1a07ee467160febf165}{sgp4x\_execute\_conditioning}}(dev\_hdl,\ \&sraw\_voc);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}sgp4x\ device\ conditioning\ failed\ (\%s)"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}SRAW\ VOC:\ \%u"{}},\ sraw\_voc);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(1000));\ \textcolor{comment}{//\ 1-\/second\ *\ 10\ iterations\ =\ 10-\/seconds}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dev\_conditioned\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ sraw\_voc;\ uint16\_t\ sraw\_nox;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ int32\_t\ voc\_index;\ int32\_t\ nox\_index;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_ga4efe02574e8280c6d1f75e5d67c1c282}{sgp4x\_measure\_signals}}(dev\_hdl,\ \&sraw\_voc,\ \&sraw\_nox);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}sgp4x\ device\ conditioning\ failed\ (\%s)"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GasIndexAlgorithm\_process(\&voc\_params,\ sraw\_voc,\ \&voc\_index);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GasIndexAlgorithm\_process(\&nox\_params,\ sraw\_nox,\ \&nox\_index);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}SRAW\ VOC:\ \%u\ |\ VOC\ Index:\ \%li"{}},\ sraw\_voc,\ voc\_index);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}SRAW\ NOX:\ \%u\ |\ NOX\ Index:\ \%li"{}},\ sraw\_nox,\ nox\_index);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ SGP4X\ -\/\ END\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ pause\ the\ task\ per\ defined\ wait\ period}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelaySecUntil(\ \&last\_wake\_time,\ I2C0\_TASK\_SAMPLING\_RATE\ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ resources}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gad0cd93f1a86d46ac471b1266854ad781}{sgp4x\_delete}}(\ dev\_hdl\ );}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

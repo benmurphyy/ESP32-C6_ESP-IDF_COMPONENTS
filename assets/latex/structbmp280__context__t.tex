@@ -1,0 +1,57 @@
+\doxysection{bmp280\+\_\+context\+\_\+t Struct Reference}
+\hypertarget{structbmp280__context__t}{}\label{structbmp280__context__t}\index{bmp280\_context\_t@{bmp280\_context\_t}}
+
+
+BMP280 context structure.  
+
+
+
+
+{\ttfamily \#include $<$bmp280.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{group__drivers_ga683075794a68e847ac00880f3fbc5a1e}{bmp280\+\_\+config\+\_\+t}} \mbox{\hyperlink{structbmp280__context__t_ac412ae17d2b8c0f3e19957a5440b7198}{dev\+\_\+config}}
+\item 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t \mbox{\hyperlink{structbmp280__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\+\_\+handle}}
+\item 
+\mbox{\hyperlink{group__drivers_ga56de4c11f5b22c1d0cf373c243652b52}{bmp280\+\_\+cal\+\_\+factors\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structbmp280__context__t_af426a06322777dd303c01b6f98ec3981}{dev\+\_\+cal\+\_\+factors}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmp280__context__t_a137c97523d489997ecbb781789e28b20}{sensor\+\_\+type}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+BMP280 context structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structbmp280__context__t_af426a06322777dd303c01b6f98ec3981}\index{bmp280\_context\_t@{bmp280\_context\_t}!dev\_cal\_factors@{dev\_cal\_factors}}
+\index{dev\_cal\_factors@{dev\_cal\_factors}!bmp280\_context\_t@{bmp280\_context\_t}}
+\doxysubsubsection{\texorpdfstring{dev\_cal\_factors}{dev\_cal\_factors}}
+{\footnotesize\ttfamily \label{structbmp280__context__t_af426a06322777dd303c01b6f98ec3981} 
+\mbox{\hyperlink{group__drivers_ga56de4c11f5b22c1d0cf373c243652b52}{bmp280\+\_\+cal\+\_\+factors\+\_\+t}}\texorpdfstring{$\ast$}{*} dev\+\_\+cal\+\_\+factors}
+
+bmp280 device calibration factors \Hypertarget{structbmp280__context__t_ac412ae17d2b8c0f3e19957a5440b7198}\index{bmp280\_context\_t@{bmp280\_context\_t}!dev\_config@{dev\_config}}
+\index{dev\_config@{dev\_config}!bmp280\_context\_t@{bmp280\_context\_t}}
+\doxysubsubsection{\texorpdfstring{dev\_config}{dev\_config}}
+{\footnotesize\ttfamily \label{structbmp280__context__t_ac412ae17d2b8c0f3e19957a5440b7198} 
+\mbox{\hyperlink{group__drivers_ga683075794a68e847ac00880f3fbc5a1e}{bmp280\+\_\+config\+\_\+t}} dev\+\_\+config}
+
+bmp280 device configuration \Hypertarget{structbmp280__context__t_aebc33e9d9d97bc57c51d01fa39056a22}\index{bmp280\_context\_t@{bmp280\_context\_t}!i2c\_handle@{i2c\_handle}}
+\index{i2c\_handle@{i2c\_handle}!bmp280\_context\_t@{bmp280\_context\_t}}
+\doxysubsubsection{\texorpdfstring{i2c\_handle}{i2c\_handle}}
+{\footnotesize\ttfamily \label{structbmp280__context__t_aebc33e9d9d97bc57c51d01fa39056a22} 
+i2c\+\_\+master\+\_\+dev\+\_\+handle\+\_\+t i2c\+\_\+handle}
+
+bmp280 i2c device handle \Hypertarget{structbmp280__context__t_a137c97523d489997ecbb781789e28b20}\index{bmp280\_context\_t@{bmp280\_context\_t}!sensor\_type@{sensor\_type}}
+\index{sensor\_type@{sensor\_type}!bmp280\_context\_t@{bmp280\_context\_t}}
+\doxysubsubsection{\texorpdfstring{sensor\_type}{sensor\_type}}
+{\footnotesize\ttfamily \label{structbmp280__context__t_a137c97523d489997ecbb781789e28b20} 
+uint8\+\_\+t sensor\+\_\+type}
+
+sensor type, should be bmp280 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+bmp280/include/\mbox{\hyperlink{bmp280_8h}{bmp280.\+h}}\end{DoxyCompactItemize}

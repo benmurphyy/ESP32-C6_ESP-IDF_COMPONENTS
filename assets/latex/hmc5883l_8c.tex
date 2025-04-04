@@ -1,0 +1,183 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+hmc5883l/hmc5883l.c File Reference}
+\hypertarget{hmc5883l_8c}{}\label{hmc5883l_8c}\index{components/peripherals/i2c/esp\_hmc5883l/hmc5883l.c@{components/peripherals/i2c/esp\_hmc5883l/hmc5883l.c}}
+{\ttfamily \#include "{}include/hmc5883l.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+types.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{hmc5883l_8c_a00e8dc5f49fddd11b6105bacd5b3595a}\label{hmc5883l_8c_a00e8dc5f49fddd11b6105bacd5b3595a} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+CONFIG\+\_\+A}~UINT8\+\_\+C(0x00)
+\item 
+\Hypertarget{hmc5883l_8c_aca6b8542ea0c3e4a40af6367505b4370}\label{hmc5883l_8c_aca6b8542ea0c3e4a40af6367505b4370} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+CONFIG\+\_\+B}~UINT8\+\_\+C(0x01)
+\item 
+\Hypertarget{hmc5883l_8c_aea03b03a7eaf2aa0f7c28f1fd688993f}\label{hmc5883l_8c_aea03b03a7eaf2aa0f7c28f1fd688993f} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+MODE}~UINT8\+\_\+C(0x02)
+\item 
+\Hypertarget{hmc5883l_8c_a0b870129ceb5a3ed3b51d0c82cb3c0a9}\label{hmc5883l_8c_a0b870129ceb5a3ed3b51d0c82cb3c0a9} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+DATA\+\_\+\+OUT\+\_\+\+X\+\_\+\+MSB}~UINT8\+\_\+C(0x03)
+\item 
+\Hypertarget{hmc5883l_8c_aca8f3aeee0c7152003460e3200292163}\label{hmc5883l_8c_aca8f3aeee0c7152003460e3200292163} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+DATA\+\_\+\+OUT\+\_\+\+X\+\_\+\+LSB}~UINT8\+\_\+C(0x04)
+\item 
+\Hypertarget{hmc5883l_8c_a53189198987a0f2342b72d87c5f3cf90}\label{hmc5883l_8c_a53189198987a0f2342b72d87c5f3cf90} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+DATA\+\_\+\+OUT\+\_\+\+Z\+\_\+\+MSB}~UINT8\+\_\+C(0x05)
+\item 
+\Hypertarget{hmc5883l_8c_a81aa80cd8be27bcaaf09ecb498591a94}\label{hmc5883l_8c_a81aa80cd8be27bcaaf09ecb498591a94} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+DATA\+\_\+\+OUT\+\_\+\+Z\+\_\+\+LSB}~UINT8\+\_\+C(0x06)
+\item 
+\Hypertarget{hmc5883l_8c_a240e14e141a14c79537f05e6d2b29d64}\label{hmc5883l_8c_a240e14e141a14c79537f05e6d2b29d64} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+DATA\+\_\+\+OUT\+\_\+\+Y\+\_\+\+MSB}~UINT8\+\_\+C(0x07)
+\item 
+\Hypertarget{hmc5883l_8c_a035421c199ff369c1988d012ede4099f}\label{hmc5883l_8c_a035421c199ff369c1988d012ede4099f} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+DATA\+\_\+\+OUT\+\_\+\+Y\+\_\+\+LSB}~UINT8\+\_\+C(0x08)
+\item 
+\Hypertarget{hmc5883l_8c_a1fb3ec04979b9637e2bbc6dff001e13e}\label{hmc5883l_8c_a1fb3ec04979b9637e2bbc6dff001e13e} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+STATUS}~UINT8\+\_\+C(0x09)
+\item 
+\Hypertarget{hmc5883l_8c_ae8e7bb5532b7e41833be6170847a919f}\label{hmc5883l_8c_ae8e7bb5532b7e41833be6170847a919f} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+IDENT\+\_\+A}~UINT8\+\_\+C(0x0a)
+\item 
+\Hypertarget{hmc5883l_8c_ac15133722dcf59dac2b7c508af66bc4b}\label{hmc5883l_8c_ac15133722dcf59dac2b7c508af66bc4b} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+IDENT\+\_\+B}~UINT8\+\_\+C(0x0b)
+\item 
+\Hypertarget{hmc5883l_8c_ac984f44f44678dc0be9f20841fad8b90}\label{hmc5883l_8c_ac984f44f44678dc0be9f20841fad8b90} 
+\#define {\bfseries HMC5883\+L\+\_\+\+REG\+\_\+\+IDENT\+\_\+C}~UINT8\+\_\+C(0x0c)
+\item 
+\Hypertarget{hmc5883l_8c_a24afce8ce96db678a56dc945542e3c94}\label{hmc5883l_8c_a24afce8ce96db678a56dc945542e3c94} 
+\#define {\bfseries HMC5883\+L\+\_\+\+DEV\+\_\+\+ID}~UINT32\+\_\+C(0x00333448)
+\begin{DoxyCompactList}\small\item\em Chip ID, "{}\+H43"{}. \end{DoxyCompactList}\item 
+\Hypertarget{hmc5883l_8c_adaa2be9de7b194d75bebc20e4a17bf05}\label{hmc5883l_8c_adaa2be9de7b194d75bebc20e4a17bf05} 
+\#define {\bfseries HMC5883\+L\+\_\+\+XY\+\_\+\+EXCITATION}~(1160)
+\item 
+\Hypertarget{hmc5883l_8c_af81d1c61d9dc14ddb719bb77a9a92e70}\label{hmc5883l_8c_af81d1c61d9dc14ddb719bb77a9a92e70} 
+\#define {\bfseries HMC5883\+L\+\_\+\+Z\+\_\+\+EXCITATION}~(1080)
+\item 
+\Hypertarget{hmc5883l_8c_a2a81cea6f6c2299026c9ac6ad019b1c3}\label{hmc5883l_8c_a2a81cea6f6c2299026c9ac6ad019b1c3} 
+\#define {\bfseries HMC5883\+L\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(1)
+\item 
+\Hypertarget{hmc5883l_8c_a691f93168fed31913442dd04d7045e43}\label{hmc5883l_8c_a691f93168fed31913442dd04d7045e43} 
+\#define {\bfseries HMC5883\+L\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(50)
+\item 
+\Hypertarget{hmc5883l_8c_a86582eeaa207c235ffa89bd61f05476b}\label{hmc5883l_8c_a86582eeaa207c235ffa89bd61f05476b} 
+\#define {\bfseries HMC5883\+L\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(100)
+\item 
+\Hypertarget{hmc5883l_8c_a5e31e4a641db4990062287c4e466575e}\label{hmc5883l_8c_a5e31e4a641db4990062287c4e466575e} 
+\#define {\bfseries HMC5883\+L\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(20)
+\item 
+\Hypertarget{hmc5883l_8c_ab882a81ae1ead32c562bbef294600d21}\label{hmc5883l_8c_ab882a81ae1ead32c562bbef294600d21} 
+\#define {\bfseries HMC5883\+L\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(50)
+\item 
+\Hypertarget{hmc5883l_8c_a734d45fb92fbd81ca2392b412b282cdc}\label{hmc5883l_8c_a734d45fb92fbd81ca2392b412b282cdc} 
+\#define {\bfseries HMC5883\+L\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(5)
+\item 
+\Hypertarget{hmc5883l_8c_a1a936b7b96dfc2ae6035aa2c6746cdef}\label{hmc5883l_8c_a1a936b7b96dfc2ae6035aa2c6746cdef} 
+\#define {\bfseries HMC5883\+L\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{hmc5883l_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{hmc5883l_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{hmc5883l_8c_ac15c7e7b38e86ad7108b01e1eea1476e}\label{hmc5883l_8c_ac15c7e7b38e86ad7108b01e1eea1476e} 
+esp\+\_\+err\+\_\+t {\bfseries hmc5883l\+\_\+get\+\_\+identification\+\_\+register} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, uint32\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga713f54b9cbdadd2feb2b2a9746fe196b}{hmc5883l\+\_\+get\+\_\+configuration1\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, hmc5883l\+\_\+configuration1\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration 1 register from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2bd83c7ceee144c89eb2427fd5c3a9cd}{hmc5883l\+\_\+set\+\_\+configuration1\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const hmc5883l\+\_\+configuration1\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration 1 register to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafea2b4918336d1f6e644948fc84143fa}{hmc5883l\+\_\+get\+\_\+configuration2\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, hmc5883l\+\_\+configuration2\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration 2 register from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga27f2f1cca3fdb54735a86e41d2fb8ff2}{hmc5883l\+\_\+set\+\_\+configuration2\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const hmc5883l\+\_\+configuration2\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration 2 register to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga618765a90a170c921b3c889b280d3e82}{hmc5883l\+\_\+get\+\_\+mode\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, hmc5883l\+\_\+mode\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads mode register from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae4451b280bd7f5f547866cd50bec0aab}{hmc5883l\+\_\+set\+\_\+mode\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const hmc5883l\+\_\+mode\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes mode register to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gace3b5584b483339935245bb5aae9611b}{hmc5883l\+\_\+get\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, hmc5883l\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads status register from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab64e2db861e2d8fa17c72a5c75864a6b}{hmc5883l\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga8f35b67fc189ae7fc9aeb20cb5736dc8}{hmc5883l\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}hmc5883l\+\_\+config, \mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}hmc5883l\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an HMC5883L device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga15975e0d220e55d8046b081572dc1182}{hmc5883l\+\_\+get\+\_\+fixed\+\_\+magnetic\+\_\+axes}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga735831537ec6082a7ebdf2333153d5c0}{hmc5883l\+\_\+axes\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const axes\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Reads uncompensated axes measurements from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3c8adfcc5acd2dc42b379ea3bc36c3e0}{hmc5883l\+\_\+get\+\_\+magnetic\+\_\+axes}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga350add29bf7765c4323eb78a9a42cbfe}{hmc5883l\+\_\+magnetic\+\_\+axes\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const axes\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Reads compensated magnetic axes measurements from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t {\bfseries hmc5883l\+\_\+get\+\_\+calibrated\+\_\+offsets} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gaefa61370e32ccb29c52f64cf90d66568}{hmc5883l\+\_\+calibration\+\_\+options\+\_\+t}} option)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6f007b04073e182970429d360634a788}{hmc5883l\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready, bool \texorpdfstring{$\ast$}{*}const locked)
+\begin{DoxyCompactList}\small\item\em Reads data status from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa7b69f2df4dacc367ad0bfc905a90fdc}{hmc5883l\+\_\+get\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga227eea47f9b9be8f323edf19cbd31cc3}{hmc5883l\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads operating mode setting from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab3e81fd90d8fbfef290d18636dfcecc7}{hmc5883l\+\_\+set\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga227eea47f9b9be8f323edf19cbd31cc3}{hmc5883l\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes operating mode setting to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab1e00f8b1c41cd5e51ea27b237565b90}{hmc5883l\+\_\+get\+\_\+samples\+\_\+averaged}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga3a8535b0ae0bbcd4791d1ea82b2c7d95}{hmc5883l\+\_\+sample\+\_\+averages\+\_\+t}} \texorpdfstring{$\ast$}{*}const sample)
+\begin{DoxyCompactList}\small\item\em Reads samples averaged setting from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga161bf8f4f20408788ad69df0d45f442b}{hmc5883l\+\_\+set\+\_\+samples\+\_\+averaged}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga3a8535b0ae0bbcd4791d1ea82b2c7d95}{hmc5883l\+\_\+sample\+\_\+averages\+\_\+t}} sample)
+\begin{DoxyCompactList}\small\item\em Writes samples averaged setting to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab5131a11b9f9e12f6929e02932a00f22}{hmc5883l\+\_\+get\+\_\+data\+\_\+rate}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga599171517024a28b3792e0fd83ca90b6}{hmc5883l\+\_\+data\+\_\+rates\+\_\+t}} \texorpdfstring{$\ast$}{*}const rate)
+\begin{DoxyCompactList}\small\item\em Reads data rate setting from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac707eaa52efffa364e05024f2088fd53}{hmc5883l\+\_\+set\+\_\+data\+\_\+rate}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga599171517024a28b3792e0fd83ca90b6}{hmc5883l\+\_\+data\+\_\+rates\+\_\+t}} rate)
+\begin{DoxyCompactList}\small\item\em Writes data rate setting to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga63fbd882f5b97ef208f7fcbfa18df1dd}{hmc5883l\+\_\+get\+\_\+bias}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gad941291c3f369dcacd94d21562a79264}{hmc5883l\+\_\+biases\+\_\+t}} \texorpdfstring{$\ast$}{*}const bias)
+\begin{DoxyCompactList}\small\item\em Reads measurement mode bias setting from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gace4d5447e31fb068d09b48c3781515e9}{hmc5883l\+\_\+set\+\_\+bias}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gad941291c3f369dcacd94d21562a79264}{hmc5883l\+\_\+biases\+\_\+t}} bias)
+\begin{DoxyCompactList}\small\item\em Writes measurement mode bias setting to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga79c3f7b76e44c32e900a5cf7439ecfd1}{hmc5883l\+\_\+get\+\_\+gain}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga3cc0b9a961b1f08dde6a46499afb1235}{hmc5883l\+\_\+gains\+\_\+t}} \texorpdfstring{$\ast$}{*}const gain)
+\begin{DoxyCompactList}\small\item\em Reads gain setting from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaee5583e67bbf4ff99b3f7ba7f80cf458}{hmc5883l\+\_\+set\+\_\+gain}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga3cc0b9a961b1f08dde6a46499afb1235}{hmc5883l\+\_\+gains\+\_\+t}} gain)
+\begin{DoxyCompactList}\small\item\em Writes gain setting to HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5f459d0268b75e02c6a4ddd2aa4d80f6}{hmc5883l\+\_\+get\+\_\+gain\+\_\+sensitivity}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const sensitivity)
+\begin{DoxyCompactList}\small\item\em Reads gain sensitivity setting from HMC5883L. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac8f3908f11fa7d40e65cfd233f58a3d3}{hmc5883l\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an HMC5883L device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5843169d9ec7c6f48fae55240a563644}{hmc5883l\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gaf0841944691d27c897f212f90ebc9cb0}{hmc5883l\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an HMC5883L device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga2fd6c304896972c9be20325b8e518dd9}{hmc5883l\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts HMC5883L firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga179c8bb8c757bfa843836d05abde1b7c}{hmc5883l\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts HMC5883L firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for HMC5883L digital compass sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{hmc5883l_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{hmc5883l.c@{hmc5883l.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!hmc5883l.c@{hmc5883l.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{hmc5883l_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{hmc5883l_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{hmc5883l.c@{hmc5883l.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!hmc5883l.c@{hmc5883l.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{hmc5883l_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}

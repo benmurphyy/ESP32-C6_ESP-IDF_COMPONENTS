@@ -1,0 +1,118 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+bmp390 Directory Reference}
+\hypertarget{dir_091211d3afc6d873a5228179362b5915}{}\label{dir_091211d3afc6d873a5228179362b5915}\index{components/peripherals/i2c/esp\_bmp390 Directory Reference@{components/peripherals/i2c/esp\_bmp390 Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_b1b3bd139d69936d660cbea8039169fd}{include}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_bmp390}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_bmp390}{\texttt{ }}
+
+This ESP32 espressif IoT development framework (esp-\/idf) i2c peripheral driver was developed for the Bosch BMP390 pressure and temperature sensor. Information on features and functionality are documented and can be found in the {\ttfamily bmp290.\+h} header file and in the {\ttfamily documentation} folder.\hypertarget{README.md_autotoc_md34}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md34}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp390}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/peripherals/i2c/esp\+\_\+bmp390}}\hypertarget{README.md_autotoc_md35}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md35}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{bmp390_8h}{bmp390.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_bmp390}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ bmp390\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ bmp390.h}
+\DoxyCodeLine{\ \ \ \ └──\ bmp390.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md36}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md36}
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example. This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{bmp390_8h}{bmp390.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ i2c0\_bmp390\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ the\ xLastWakeTime\ variable\ with\ the\ current\ time.}}
+\DoxyCodeLine{\ \ \ \ TickType\_t\ \ \ \ \ \ \ \ \ \ last\_wake\_time\ \ =\ xTaskGetTickCount\ ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ i2c\ device\ configuration}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga20d02eb65a21261e5d01ade14b047d92}{bmp390\_config\_t}}\ dev\_cfg\ \ \ \ \ \ \ \ \ =\ I2C\_BMP390\_CONFIG\_DEFAULT;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga527bfd427c1d151b37b9f728b8378b70}{bmp390\_handle\_t}}\ dev\_hdl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ init\ device}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gabef86fd7af583c50bfc0e0ba734fc34d}{bmp390\_init}}(i2c0\_bus\_hdl,\ \&dev\_cfg,\ \&dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}bmp390\ handle\ init\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assert(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ configuration\ registers\ */}}
+\DoxyCodeLine{\ \ \ \ bmp390\_power\_control\_register\_t\ \ \ \ \ power\_ctrl\_reg;}
+\DoxyCodeLine{\ \ \ \ bmp390\_configuration\_register\_t\ \ \ \ \ config\_reg;}
+\DoxyCodeLine{\ \ \ \ bmp390\_oversampling\_register\_t\ \ \ \ \ \ oversampling\_reg;}
+\DoxyCodeLine{\ \ \ \ bmp390\_output\_data\_rate\_register\_t\ \ output\_data\_rate\_reg;}
+\DoxyCodeLine{\ \ \ \ bmp390\_interrupt\_control\_register\_t\ interrupt\_ctrl\_reg;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ read\ configuration\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga26aa82173911154896b13e39ee308609}{bmp390\_get\_configuration\_register}}(dev\_hdl,\ \&config\_reg);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ read\ oversampling\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gadb6f610efba976719b108ed21661b021}{bmp390\_get\_oversampling\_register}}(dev\_hdl,\ \&oversampling\_reg);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ read\ to\ power\ control\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga1f76c890b547c3b9cfd77a94ded9f691}{bmp390\_get\_power\_control\_register}}(dev\_hdl,\ \&power\_ctrl\_reg);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ read\ to\ output\ data\ rate\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga17dc1f46fd1454f5753e4113ef90df5a}{bmp390\_get\_output\_data\_rate\_register}}(dev\_hdl,\ \&output\_data\_rate\_reg);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ read\ to\ interrupt\ control\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga5859171d7008a7a9f4b7991bd664b2f9}{bmp390\_get\_interrupt\_control\_register}}(dev\_hdl,\ \&interrupt\_ctrl\_reg);}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Configuration\ (0x\%02x):\ \%s"{}},\ config\_reg.reg,\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(config\_reg.reg));}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Oversampling\ \ (0x\%02x):\ \%s"{}},\ oversampling\_reg.reg,\ \ \ \ \ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(oversampling\_reg.reg));}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Data\ Rate\ \ \ \ \ (0x\%02x):\ \%s"{}},\ output\_data\_rate\_reg.reg,\ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(output\_data\_rate\_reg.reg));}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Power\ Control\ (0x\%02x):\ \%s"{}},\ power\_ctrl\_reg.reg,\ \ \ \ \ \ \ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(power\_ctrl\_reg.reg));}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Int\ Control\ \ \ (0x\%02x):\ \%s"{}},\ interrupt\_ctrl\_reg.reg,\ \ \ \mbox{\hyperlink{group__utilities_gad5099995b3a7cf28d0daa6a503b98645}{uint8\_to\_binary}}(interrupt\_ctrl\_reg.reg));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(interrupt\_ctrl\_reg.bits.irq\_data\_ready\_enabled)\ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}bmp390\ irq\ data\ ready\ is\ enabled"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ task\ loop\ entry\ point}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ BMP390\ -\/\ START\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ handle\ sensor}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ temperature,\ pressure;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ esp\_err\_t\ result\ =\ \mbox{\hyperlink{group__drivers_gad218500e005b0b6a1f9f43c062c8b3c7}{bmp390\_get\_measurements}}(dev\_hdl,\ \&temperature,\ \&pressure);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(result\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}bmp390\ device\ read\ failed\ (\%s)"{}},\ esp\_err\_to\_name(result));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pressure\ =\ pressure\ /\ 100;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}air\ temperature:\ \ \ \ \ \%.2f\ °C"{}},\ temperature);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}barometric\ pressure:\ \%.2f\ hPa"{}},\ pressure);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ BMP390\ -\/\ END\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ pause\ the\ task\ per\ defined\ wait\ period}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelaySecUntil(\ \&last\_wake\_time,\ I2C0\_TASK\_SAMPLING\_RATE\ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ resources}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gacd7d12fcc1eb01f30d4baaf2ed050b19}{bmp390\_delete}}(\ dev\_hdl\ );}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

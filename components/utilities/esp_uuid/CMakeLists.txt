@@ -109,12 +109,12 @@ string( COMPARE EQUAL "${cmp_reg_sync}" "ENABLED" STR_CMP_RESULT )
 #if(STR_CMP_RESULT EQUAL 1)
 
 
-    add_custom_target(
-        my_component_sync ALL
-        COMMAND python ${CMAKE_SOURCE_DIR}/stg/esp_cmp_sync.py OK
-        DEPENDS ${CMAKE_SOURCE_DIR}/.pio/build/esp32s3box/esp-idf/esp_uuid/libesp_uuid.a
-        COMMENT "python testing with add_custom_command..."
-    )
+    #add_custom_target(
+    #    my_component_sync ALL
+    #    COMMAND python ${CMAKE_SOURCE_DIR}/staging/esp_cmp_sync.py OK
+    #    DEPENDS ${CMAKE_SOURCE_DIR}/.pio/build/esp32s3box/esp-idf/esp_uuid/libesp_uuid.a
+    #    COMMENT "python testing with add_custom_command..."
+    #)
     #add_dependencies( ${CMAKE_SOURCE_DIR}/.pio/build/esp32s3box/esp-idf/esp_uuid/libesp_uuid.a my_component_sync )
 
 # .pio\build\esp32s3box\components\peripherals\owb\esp_ds18b20\ds18b20.c.o

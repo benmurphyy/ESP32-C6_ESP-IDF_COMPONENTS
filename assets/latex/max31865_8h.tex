@@ -1,0 +1,82 @@
+\doxysection{components/peripherals/spi/esp\+\_\+max31865/max31865.h File Reference}
+\hypertarget{max31865_8h}{}\label{max31865_8h}\index{components/peripherals/spi/esp\_max31865/max31865.h@{components/peripherals/spi/esp\_max31865/max31865.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/gpio.\+h$>$}\newline
+{\ttfamily \#include $<$driver/spi\+\_\+common.\+h$>$}\newline
+{\ttfamily \#include $<$driver/spi\+\_\+master.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structspi__max31865__config__t}{spi\+\_\+max31865\+\_\+config\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em MAX31865 SPI device configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structspi__max31865__t}{spi\+\_\+max31865\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em MAX31865 SPI device structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+MAX31865\+\_\+\+SCL\+\_\+\+SPEED\+\_\+\+HZ}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em max31865 I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+DEV\+\_\+\+ADDR}~UINT8\+\_\+C(0x38)
+\begin{DoxyCompactList}\small\item\em max31865 I2C address \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct spi\+\_\+max31865\+\_\+t {\bfseries spi\+\_\+max31865\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX31865 SPI device structure definitions. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structspi__max31865__t}{spi\+\_\+max31865\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries spi\+\_\+max31865\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX31865 SPI device handle structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{group__drivers_ga92074ef906c67e5618499f4bb24b8910}\label{group__drivers_ga92074ef906c67e5618499f4bb24b8910} 
+enum {\bfseries spi\+\_\+max31865\+\_\+fault\+\_\+detection\+\_\+cycles\+\_\+t} \{ {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+FAULT\+\_\+\+DETECT\+\_\+\+FINISHED} = (0b00)
+, {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+FAULT\+\_\+\+DETECT\+\_\+\+STILL\+\_\+\+RUNNING} = (0b01)
+, {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+FAULT\+\_\+\+DETECT\+\_\+\+CYCLE1\+\_\+\+RUNNING} = (0b10)
+, {\bfseries SPI\+\_\+\+MAX31865\+\_\+\+FAULT\+\_\+\+DETECT\+\_\+\+CYCLE2\+\_\+\+RUNNING} = (0b11)
+ \}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga98e0a496fe65e0e43f418cea4b22c7e0}{spi\+\_\+max31865\+\_\+modes\+\_\+t}} \{ \mbox{\hyperlink{group__drivers_gga98e0a496fe65e0e43f418cea4b22c7e0ac8e94fa02248e471db049658c4c8f69e}{SPI\+\_\+\+MAX31865\+\_\+\+MODE\+\_\+\+SINGLE}} = 0
+, \mbox{\hyperlink{group__drivers_gga98e0a496fe65e0e43f418cea4b22c7e0aa783ce807ffc8518f05d587264fabb75}{SPI\+\_\+\+MAX31865\+\_\+\+MODE\+\_\+\+AUTO}}
+ \}
+\item 
+enum \mbox{\hyperlink{group__drivers_gad5b862850f162f3a3fcddc3c51ed528a}{spi\+\_\+max31865\+\_\+filters\+\_\+t}} \{ \mbox{\hyperlink{group__drivers_ggad5b862850f162f3a3fcddc3c51ed528aabd3a37c19908b948019ae0af583161d8}{SPI\+\_\+\+MAX31865\+\_\+\+FILTER\+\_\+60\+HZ}} = 0
+, \mbox{\hyperlink{group__drivers_ggad5b862850f162f3a3fcddc3c51ed528aa5fc0b423bd3ced40604e0f6038d94ed0}{SPI\+\_\+\+MAX31865\+\_\+\+FILTER\+\_\+50\+HZ}}
+ \}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga1d19580fd4f7ad1cc6a72e14b3f55f13}{spi\+\_\+max31865\+\_\+connection\+\_\+types\+\_\+t}} \{ \mbox{\hyperlink{group__drivers_gga1d19580fd4f7ad1cc6a72e14b3f55f13af5014dcc06577502d7d2974cf2d78a97}{SPI\+\_\+\+MAX31865\+\_\+2\+WIRE\+\_\+\+OR\+\_\+4\+WIRE}} = 0
+, \mbox{\hyperlink{group__drivers_gga1d19580fd4f7ad1cc6a72e14b3f55f13ad9075f38a3017d196785c921063c5e76}{SPI\+\_\+\+MAX31865\+\_\+3\+WIRE}} = 1
+ \}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga0ec7f26460e9c80e771d01b2f78c8ce7}{spi\+\_\+max31865\+\_\+standards\+\_\+t}} \{ \mbox{\hyperlink{group__drivers_gga0ec7f26460e9c80e771d01b2f78c8ce7a055cc2aa48486da615523f957dde1105}{SPI\+\_\+\+MAX31865\+\_\+\+ITS90}} = 0
+, \mbox{\hyperlink{group__drivers_gga0ec7f26460e9c80e771d01b2f78c8ce7add89532ce2f8598fad8d3f84af2bd1fa}{SPI\+\_\+\+MAX31865\+\_\+\+DIN43760}}
+, \mbox{\hyperlink{group__drivers_gga0ec7f26460e9c80e771d01b2f78c8ce7ada0a12e5bfefb8a955113b90391010d7}{SPI\+\_\+\+MAX31865\+\_\+\+US\+\_\+\+INDUSTRIAL}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t {\bfseries spi\+\_\+max31865\+\_\+get\+\_\+configuration\+\_\+register} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries spi\+\_\+max31865\+\_\+set\+\_\+configuration\+\_\+register} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle, const spi\+\_\+max31865\+\_\+configuration\+\_\+register\+\_\+t config\+\_\+reg)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae4717b9e5fc1aa65d8caa6129979b4ca}{spi\+\_\+max31865\+\_\+get\+\_\+fault\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Read fault status register from MAX31865. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga802f250a56d82b7f538421065bfd7c4d}{spi\+\_\+max31865\+\_\+init}} (const \mbox{\hyperlink{structspi__max31865__config__t}{spi\+\_\+max31865\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}max31865\+\_\+config, \mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an MAX31865 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga103ed3d7bc0a27d45be4a067426caf6b}{spi\+\_\+max31865\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads temperature from MAX31865. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa4974de2659627b67439a6eb43b0a00b}{spi\+\_\+max31865\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Removes an MAX31865 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa99e2cf7b0d8f44c1982ce37d99c0bbd}{spi\+\_\+max31865\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\+\_\+max31865\+\_\+handle\+\_\+t}} max31865\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Removes an MAX31865 device from master bus and frees handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries spi\+\_\+max31865\+\_\+configuration\+\_\+register\+\_\+t}
+\item 
+{\bfseries spi\+\_\+max31865\+\_\+fault\+\_\+status\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

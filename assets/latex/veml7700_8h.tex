@@ -1,0 +1,165 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+veml7700/include/veml7700.h File Reference}
+\hypertarget{veml7700_8h}{}\label{veml7700_8h}\index{components/peripherals/i2c/esp\_veml7700/include/veml7700.h@{components/peripherals/i2c/esp\_veml7700/include/veml7700.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+{\ttfamily \#include "{}veml7700\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structveml7700__config__s}{veml7700\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em VEML7700 device configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structveml7700__context__t}{veml7700\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em VEML7700 context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+VEML7700\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em veml7700 I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+VEML7700\+\_\+\+DEV\+\_\+\+ADDR}~UINT8\+\_\+C(0x10)
+\begin{DoxyCompactList}\small\item\em veml7700 I2C address \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_gaea3380b7ab5255329b7c2ac552bfc000}{I2\+C\+\_\+\+VEML7700\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\begin{DoxyCompactList}\small\item\em VEML7700 device configuration initialization default. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_gafa58f8a71ae5eef80d07b8fcf7b2cfde}{veml7700\+\_\+gains\+\_\+e}} {\bfseries veml7700\+\_\+gains\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 gains enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gadcd6105390bfa71aefb8729e525e499d}{veml7700\+\_\+integration\+\_\+times\+\_\+e}} {\bfseries veml7700\+\_\+integration\+\_\+times\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 integration times enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga9601a985c2253bf3aa279a4d28c2bdda}{veml7700\+\_\+persistence\+\_\+protections\+\_\+e}} {\bfseries veml7700\+\_\+persistence\+\_\+protections\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 persistence protections enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gacaed454ccb717d5cbabc902938c4abd1}{veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+e}} {\bfseries veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 power saving modes enumerator. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structveml7700__config__s}{veml7700\+\_\+config\+\_\+s}} {\bfseries veml7700\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 device configuration structure. \end{DoxyCompactList}\item 
+typedef struct veml7700\+\_\+context\+\_\+t {\bfseries veml7700\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structveml7700__context__t}{veml7700\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries veml7700\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em VEML7700 handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_gafa58f8a71ae5eef80d07b8fcf7b2cfde}{veml7700\+\_\+gains\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdeabeab0c3096e16b0da29aebabbfffa5df}{VEML7700\+\_\+\+GAIN\+\_\+1}} = (0b00)
+, \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdeaf93f1df542e02ed35638dc4bc3ce2cdf}{VEML7700\+\_\+\+GAIN\+\_\+2}} = (0b01)
+, \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdea73a976ef82d71ed587cede5f7cb543a0}{VEML7700\+\_\+\+GAIN\+\_\+\+DIV\+\_\+8}} = (0b10)
+, \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdea6eea1a8246afc202c4c70d9f98cc9e34}{VEML7700\+\_\+\+GAIN\+\_\+\+DIV\+\_\+4}} = (0b11)
+ \}
+\begin{DoxyCompactList}\small\item\em VEML7700 gains enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_gadcd6105390bfa71aefb8729e525e499d}\label{group__drivers_gadcd6105390bfa71aefb8729e525e499d} 
+enum \mbox{\hyperlink{group__drivers_gadcd6105390bfa71aefb8729e525e499d}{veml7700\+\_\+integration\+\_\+times\+\_\+e}} \{ \newline
+{\bfseries VEML7700\+\_\+\+INTEGRATION\+\_\+\+TIME\+\_\+25\+MS} = (0b1100)
+, {\bfseries VEML7700\+\_\+\+INTEGRATION\+\_\+\+TIME\+\_\+50\+MS} = (0b1000)
+, {\bfseries VEML7700\+\_\+\+INTEGRATION\+\_\+\+TIME\+\_\+100\+MS} = (0b0000)
+, {\bfseries VEML7700\+\_\+\+INTEGRATION\+\_\+\+TIME\+\_\+200\+MS} = (0b0001)
+, \newline
+{\bfseries VEML7700\+\_\+\+INTEGRATION\+\_\+\+TIME\+\_\+400\+MS} = (0b0010)
+, {\bfseries VEML7700\+\_\+\+INTEGRATION\+\_\+\+TIME\+\_\+800\+MS} = (0b0011)
+ \}
+\begin{DoxyCompactList}\small\item\em VEML7700 integration times enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_ga9601a985c2253bf3aa279a4d28c2bdda}\label{group__drivers_ga9601a985c2253bf3aa279a4d28c2bdda} 
+enum \mbox{\hyperlink{group__drivers_ga9601a985c2253bf3aa279a4d28c2bdda}{veml7700\+\_\+persistence\+\_\+protections\+\_\+e}} \{ {\bfseries VEML7700\+\_\+\+PERSISTENCE\+\_\+\+PROTECTION\+\_\+1} = (0b00)
+, {\bfseries VEML7700\+\_\+\+PERSISTENCE\+\_\+\+PROTECTION\+\_\+2} = (0b01)
+, {\bfseries VEML7700\+\_\+\+PERSISTENCE\+\_\+\+PROTECTION\+\_\+4} = (0b10)
+, {\bfseries VEML7700\+\_\+\+PERSISTENCE\+\_\+\+PROTECTION\+\_\+8} = (0b11)
+ \}
+\begin{DoxyCompactList}\small\item\em VEML7700 persistence protections enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_gacaed454ccb717d5cbabc902938c4abd1}\label{group__drivers_gacaed454ccb717d5cbabc902938c4abd1} 
+enum \mbox{\hyperlink{group__drivers_gacaed454ccb717d5cbabc902938c4abd1}{veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+e}} \{ {\bfseries VEML7700\+\_\+\+POWER\+\_\+\+SAVING\+\_\+\+MODE\+\_\+1} = (0b00)
+, {\bfseries VEML7700\+\_\+\+POWER\+\_\+\+SAVING\+\_\+\+MODE\+\_\+2} = (0b01)
+, {\bfseries VEML7700\+\_\+\+POWER\+\_\+\+SAVING\+\_\+\+MODE\+\_\+3} = (0b10)
+, {\bfseries VEML7700\+\_\+\+POWER\+\_\+\+SAVING\+\_\+\+MODE\+\_\+4} = (0b11)
+ \}
+\begin{DoxyCompactList}\small\item\em VEML7700 power saving modes enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4e377fc2a600efda16058451d67969fe}{veml7700\+\_\+get\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, veml7700\+\_\+configuration\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration register from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab9b3f48a573243e5807e2c1dc15b59bc}{veml7700\+\_\+set\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const veml7700\+\_\+configuration\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration register to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadab47413fd90263b4d8458ecab1ad1ad}{veml7700\+\_\+get\+\_\+threshold\+\_\+registers}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const hi\+\_\+threshold, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const lo\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Reads high and low threshold registers from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga22d6b29510514eaa79c476a3a221c416}{veml7700\+\_\+set\+\_\+threshold\+\_\+registers}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t hi\+\_\+threshold, const uint16\+\_\+t lo\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Writes high and low threshold registers to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga090fbfbb4faba01c1ee2521534bdeb78}{veml7700\+\_\+get\+\_\+power\+\_\+saving\+\_\+mode\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, veml7700\+\_\+power\+\_\+saving\+\_\+mode\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads power saving mode register from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga47c3ffa5576f5380ae52bbcf6aaffbb0}{veml7700\+\_\+set\+\_\+power\+\_\+saving\+\_\+mode\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const veml7700\+\_\+power\+\_\+saving\+\_\+mode\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes power saving mode register to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac9a54d751449430f74593b1ab18e91c3}{veml7700\+\_\+get\+\_\+interrupt\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, veml7700\+\_\+interrupt\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt status register from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gabc06af746ed00c91ef10303b3d9e3a13}{veml7700\+\_\+get\+\_\+identifier\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, veml7700\+\_\+identifier\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads identifier register from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0670c76ac75d85976ab8dd28952341ce}{veml7700\+\_\+optimize\+\_\+configuration}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Optimizes VEML7700 gain and integration time configuration. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t {\bfseries veml7700\+\_\+optimize\+\_\+configuration\+\_\+\+\_\+\+\_\+} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3df45aea74256b7236c66d3d603fe4ad}{veml7700\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga7d53219e1d496e47e273799a4c34cd97}{veml7700\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}veml7700\+\_\+config, \mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}veml7700\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an VEML7700 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7b92d7ef8b97fb3dd9ca11cd37ab521e}{veml7700\+\_\+get\+\_\+ambient\+\_\+light\+\_\+counts}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const counts)
+\begin{DoxyCompactList}\small\item\em Reads ambient light counts from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga605226e520866ecd3b93fda8add8d5d5}{veml7700\+\_\+get\+\_\+ambient\+\_\+light}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const ambient\+\_\+light)
+\begin{DoxyCompactList}\small\item\em Reads ambient light (0 lux to 140 klux) from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga08efbb4a6b4acdf2ae339c65e2a8d5c0}{veml7700\+\_\+get\+\_\+ambient\+\_\+light\+\_\+auto}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const ambient\+\_\+light)
+\begin{DoxyCompactList}\small\item\em Reads optimal ambient light (0 lux to 140 klux) from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga22d7d333457bfd18fb39b720fe776918}{veml7700\+\_\+get\+\_\+white\+\_\+channel\+\_\+counts}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const counts)
+\begin{DoxyCompactList}\small\item\em Reads white channel counts from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga356e53e172864f9b7c7cf155f2ec8d37}{veml7700\+\_\+get\+\_\+white\+\_\+channel}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const white\+\_\+light)
+\begin{DoxyCompactList}\small\item\em Reads white channel from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2882675e21eb29903ecea8de8947efdb}{veml7700\+\_\+get\+\_\+white\+\_\+channel\+\_\+auto}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const white\+\_\+light)
+\begin{DoxyCompactList}\small\item\em Reads optimal white channel from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa5b25167c5b2f9ca6f8517adbd781c3d}{veml7700\+\_\+get\+\_\+thresholds}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const hi\+\_\+threshold, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const lo\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Reads high and low als thresholds (lux) from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga95f7902914c1e7d6d9ea132eaaca5d73}{veml7700\+\_\+set\+\_\+thresholds}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t hi\+\_\+threshold, const uint16\+\_\+t lo\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Writes high and low als thresholds (lux) to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga97b407fc167caa9ae7a7bf066bbdd1f0}{veml7700\+\_\+get\+\_\+gain}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\+\_\+gains\+\_\+t}} \texorpdfstring{$\ast$}{*}const gain)
+\begin{DoxyCompactList}\small\item\em Reads als gain from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab5614a740cccfe9cc18874d6c8927b0d}{veml7700\+\_\+set\+\_\+gain}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\+\_\+gains\+\_\+t}} gain)
+\begin{DoxyCompactList}\small\item\em Writes als gain to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga286f62aaa9bb92d8b1edef4db4cbe28b}{veml7700\+\_\+get\+\_\+integration\+\_\+time}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\+\_\+integration\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const integration\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Reads als integration time from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaebf927dbf844aecff936da8151502318}{veml7700\+\_\+set\+\_\+integration\+\_\+time}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\+\_\+integration\+\_\+times\+\_\+t}} integration\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Writes als integration time to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga76bd429b05deb0df57215f14877dde21}{veml7700\+\_\+get\+\_\+persistence\+\_\+protection}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\+\_\+persistence\+\_\+protections\+\_\+t}} \texorpdfstring{$\ast$}{*}const persistence\+\_\+protection)
+\begin{DoxyCompactList}\small\item\em Reads als persistence protection from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4be6ec152108484d2dafb735806f321c}{veml7700\+\_\+set\+\_\+persistence\+\_\+protection}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\+\_\+persistence\+\_\+protections\+\_\+t}} persistence\+\_\+protection)
+\begin{DoxyCompactList}\small\item\em Writes als persistence protection to VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9799cdab16aa735712bae0a492b7d2fd}{veml7700\+\_\+get\+\_\+power\+\_\+saving\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const power\+\_\+saving\+\_\+mode, bool \texorpdfstring{$\ast$}{*}const power\+\_\+saving\+\_\+enabled)
+\begin{DoxyCompactList}\small\item\em Reads power saving mode from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaef0db61657096047281f6d1d07d76c26}{veml7700\+\_\+set\+\_\+power\+\_\+saving\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+t}} power\+\_\+saving\+\_\+mode, const bool power\+\_\+saving\+\_\+enabled)
+\begin{DoxyCompactList}\small\item\em Reads power saving mode from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga06912f4d8764246090c3a0248cda4df3}{veml7700\+\_\+enable\+\_\+irq}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables interrupt assertion. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1c38e9b091d65c8ab0a6986686fbef1e}{veml7700\+\_\+disable\+\_\+irq}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables interrupt assertion. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9da6f871b446c5b4d1e79e832268e036}{veml7700\+\_\+get\+\_\+interrupt\+\_\+status}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const hi\+\_\+threshold\+\_\+exceeded, bool \texorpdfstring{$\ast$}{*}const lo\+\_\+threshold\+\_\+exceeded)
+\begin{DoxyCompactList}\small\item\em Reads interrupt status from VEML7700. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8c2fbed8a6a32690409fd971152f90fc}{veml7700\+\_\+disable}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Shuts down VEML7700 until woken. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga19b84511cac9aba284a9730b57a8452c}{veml7700\+\_\+enable}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Wakes up VEML7700 from shut-\/down. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac02fe809c88d3260e4a2936ed6906aec}{veml7700\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an VEML7700 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3d85934c16c7e75ad9a4db31bbf98a23}{veml7700\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an VEML7700 device from master I2C bus and delete the handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga53e5fc530544c445a2e76009243e179d}{veml7700\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts VEML7700 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gadd58a901e3980ff65a7ecf7472e87c88}{veml7700\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts VEML7700 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries veml7700\+\_\+configuration\+\_\+register\+\_\+t}
+\item 
+{\bfseries veml7700\+\_\+power\+\_\+saving\+\_\+mode\+\_\+register\+\_\+t}
+\item 
+{\bfseries veml7700\+\_\+interrupt\+\_\+status\+\_\+register\+\_\+t}
+\item 
+{\bfseries veml7700\+\_\+identifier\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

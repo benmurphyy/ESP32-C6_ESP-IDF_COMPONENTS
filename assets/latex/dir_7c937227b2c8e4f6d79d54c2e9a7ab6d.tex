@@ -1,0 +1,97 @@
+\doxysection{components/peripherals/i2c Directory Reference}
+\hypertarget{dir_7c937227b2c8e4f6d79d54c2e9a7ab6d}{}\label{dir_7c937227b2c8e4f6d79d54c2e9a7ab6d}\index{components/peripherals/i2c Directory Reference@{components/peripherals/i2c Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_a8a1053c2263418435b12a21f5507022}{esp\+\_\+ahtxx}}
+\item 
+directory \mbox{\hyperlink{dir_731c49eadf56b7b4ba6af7fdd678e32a}{esp\+\_\+ak8975}}
+\item 
+directory \mbox{\hyperlink{dir_b2d0637434e792c1092933fc7a0c6285}{esp\+\_\+as3935}}
+\item 
+directory \mbox{\hyperlink{dir_25e9c30e58d65c1bb72368f8ed3d658c}{esp\+\_\+as7341}}
+\item 
+directory \mbox{\hyperlink{dir_dd5e50d346e998b1e8021afc7b358e4e}{esp\+\_\+bh1750}}
+\item 
+directory \mbox{\hyperlink{dir_b700eeff8defb630a5170885b5fd9e8b}{esp\+\_\+bme680}}
+\item 
+directory \mbox{\hyperlink{dir_673b586be87e3e954741b936980216ea}{esp\+\_\+bmp280}}
+\item 
+directory \mbox{\hyperlink{dir_091211d3afc6d873a5228179362b5915}{esp\+\_\+bmp390}}
+\item 
+directory \mbox{\hyperlink{dir_f9c34edc5fbca8f83767e0169852f9f6}{esp\+\_\+ccs811}}
+\item 
+directory \mbox{\hyperlink{dir_ac81e241761d79731505926a858216f7}{esp\+\_\+ens160}}
+\item 
+directory \mbox{\hyperlink{dir_ade884836a43b71c0228a09cd864be0b}{esp\+\_\+hdc1080}}
+\item 
+directory \mbox{\hyperlink{dir_39f0438a38d22b8a2fa5980e350a1fd3}{esp\+\_\+hmc5883l}}
+\item 
+directory \mbox{\hyperlink{dir_11880a88aeb17b720e7a8bebef9d2d71}{esp\+\_\+ina226}}
+\item 
+directory \mbox{\hyperlink{dir_c7a310725a3059d9520d59a5eaeb8f89}{esp\+\_\+ltr390uv}}
+\item 
+directory \mbox{\hyperlink{dir_ff4dab9b99b260782ff419b69ab28966}{esp\+\_\+max30105}}
+\item 
+directory \mbox{\hyperlink{dir_8ffb572770dced3506f8dd2cfed51672}{esp\+\_\+mlx90614}}
+\item 
+directory \mbox{\hyperlink{dir_4001934ab34017c225009c3d9eb35e59}{esp\+\_\+mmc56x3}}
+\item 
+directory \mbox{\hyperlink{dir_5430812418cacdfa16dc7e5c29a9b8b7}{esp\+\_\+mpu6050}}
+\item 
+directory \mbox{\hyperlink{dir_10d77006f637115d2f048597fa4370a2}{esp\+\_\+sgp4x}}
+\item 
+directory \mbox{\hyperlink{dir_79b86e610460d1eb2c5232f28124d773}{esp\+\_\+sht4x}}
+\item 
+directory \mbox{\hyperlink{dir_5c7520fad96f6dd32c4301b7d12e375a}{esp\+\_\+ssd1306}}
+\item 
+directory \mbox{\hyperlink{dir_4abd18f0a8610dd0f5af54a131136335}{esp\+\_\+tbi2cxxx}}
+\item 
+directory \mbox{\hyperlink{dir_ef51e198708ef06c8d5564d907f50927}{esp\+\_\+tlv493d}}
+\item 
+directory \mbox{\hyperlink{dir_71c3c471dddc77d46abc8647b1cac302}{esp\+\_\+veml6040}}
+\item 
+directory \mbox{\hyperlink{dir_d9e14f58fe36a00951ee70a9f7b6f96c}{esp\+\_\+veml7700}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }}
+
+Welcome to the I2C peripheral components library with ESP-\/\+IDF support. This library of components is relatively active and updated on a regular basis and a list of operational components and the state of each component under development is available below.
+
+ESP-\/\+IDF I2C device peripheral components supported at this time are listed as follows\+:
+
+
+\begin{DoxyItemize}
+\item ASAIR AHTXX
+\item AKM AK8975
+\item AMS AS3935
+\item OSRAM AS7341
+\item ROHM BH1750\+FVI
+\item Bosch BME680
+\item Bosch BMP280
+\item Bosch BMP390
+\item Scio\+Sense CCS811
+\item Scio\+Sense ENS160
+\item Texas Instruments HDC1080
+\item Honeywell HMC5883L
+\item Texas Instruments INA226
+\item Lite-\/\+On LTR390\+UV
+\item Maxim-\/\+Integrated MAX30105 -\/ Work in Progress
+\item Melexis MLX90614
+\item Memsic MMC56\+X3
+\item Inven\+Sense MPU6050
+\item Sensirion SGP4X
+\item Sensirion SHT4X
+\item Generic SSD1306 (128x32 and 128x64)
+\item Infineon TLV493D -\/ Work in Progress
+\item Vishay VEML6040
+\item Vishay VEML7700
+\end{DoxyItemize}
+
+The above components have a dependency on the {\ttfamily esp\+\_\+type\+\_\+utils} component that must be included in your project. This component includes transmit and receive buffers of various sizes, and byte manipulation features.
+
+Components are developed when needed for product development and/or prototyping purposes, and shared with the ESP32 community for ESP-\/\+IDF developers. Custom component development is available upon request, please contact me directly, and I would be happy to discuss the details of your component needs. If any problems arise please feel free to log an issue and if you would to contribute please contact me.
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

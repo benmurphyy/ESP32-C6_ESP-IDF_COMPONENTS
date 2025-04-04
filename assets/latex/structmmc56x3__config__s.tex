@@ -1,0 +1,81 @@
+\doxysection{mmc56x3\+\_\+config\+\_\+s Struct Reference}
+\hypertarget{structmmc56x3__config__s}{}\label{structmmc56x3__config__s}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+
+
+MMC56\+X3 configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$mmc56x3.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmmc56x3__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\+\_\+address}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmmc56x3__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\+\_\+clock\+\_\+speed}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmmc56x3__config__s_af7750329f3654d2f6fe5a20adeae49dd}{data\+\_\+rate}}
+\item 
+bool \mbox{\hyperlink{structmmc56x3__config__s_a891db58d07ac3e9fbc9996a6abe8f8b0}{continuous\+\_\+mode\+\_\+enabled}}
+\item 
+\mbox{\hyperlink{group__drivers_ga04eb0a8975116163a7527e4a3710d90d}{mmc56x3\+\_\+measurement\+\_\+times\+\_\+t}} \mbox{\hyperlink{structmmc56x3__config__s_aafaf2abf1915682509e867179857da42}{measurement\+\_\+bandwidth}}
+\item 
+bool \mbox{\hyperlink{structmmc56x3__config__s_af326e55edbb36a439897f07a49070610}{auto\+\_\+sr\+\_\+enabled}}
+\item 
+float \mbox{\hyperlink{structmmc56x3__config__s_a87088520682791495522a2e20bf06860}{declination}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MMC56\+X3 configuration structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structmmc56x3__config__s_af326e55edbb36a439897f07a49070610}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!auto\_sr\_enabled@{auto\_sr\_enabled}}
+\index{auto\_sr\_enabled@{auto\_sr\_enabled}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{auto\_sr\_enabled}{auto\_sr\_enabled}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_af326e55edbb36a439897f07a49070610} 
+bool auto\+\_\+sr\+\_\+enabled}
+
+mmc56x3 auto set-\/reset configuration \Hypertarget{structmmc56x3__config__s_a891db58d07ac3e9fbc9996a6abe8f8b0}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!continuous\_mode\_enabled@{continuous\_mode\_enabled}}
+\index{continuous\_mode\_enabled@{continuous\_mode\_enabled}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{continuous\_mode\_enabled}{continuous\_mode\_enabled}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_a891db58d07ac3e9fbc9996a6abe8f8b0} 
+bool continuous\+\_\+mode\+\_\+enabled}
+
+mmc56x3 device measurement mode configuration, data rate must be non-\/zero when enabled \Hypertarget{structmmc56x3__config__s_af7750329f3654d2f6fe5a20adeae49dd}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!data\_rate@{data\_rate}}
+\index{data\_rate@{data\_rate}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{data\_rate}{data\_rate}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_af7750329f3654d2f6fe5a20adeae49dd} 
+uint16\+\_\+t data\+\_\+rate}
+
+mmc56x3 device data rate (odr), 0-\/255 or 1000 for 1000Hz data rate configuration \Hypertarget{structmmc56x3__config__s_a87088520682791495522a2e20bf06860}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!declination@{declination}}
+\index{declination@{declination}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{declination}{declination}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_a87088520682791495522a2e20bf06860} 
+float declination}
+
+magnetic declination angle \href{http://www.magnetic-declination.com/}{\texttt{ http\+://www.\+magnetic-\/declination.\+com/}} \Hypertarget{structmmc56x3__config__s_a4fc512d568c2b72f6907c218205cf6c9}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!i2c\_address@{i2c\_address}}
+\index{i2c\_address@{i2c\_address}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_address}{i2c\_address}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_a4fc512d568c2b72f6907c218205cf6c9} 
+uint16\+\_\+t i2c\+\_\+address}
+
+mmc56x3 i2c device address \Hypertarget{structmmc56x3__config__s_a770b3ab4bba557baec88287d86832a34}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!i2c\_clock\_speed@{i2c\_clock\_speed}}
+\index{i2c\_clock\_speed@{i2c\_clock\_speed}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_clock\_speed}{i2c\_clock\_speed}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_a770b3ab4bba557baec88287d86832a34} 
+uint32\+\_\+t i2c\+\_\+clock\+\_\+speed}
+
+mmc56x3 i2c device scl clock speed \Hypertarget{structmmc56x3__config__s_aafaf2abf1915682509e867179857da42}\index{mmc56x3\_config\_s@{mmc56x3\_config\_s}!measurement\_bandwidth@{measurement\_bandwidth}}
+\index{measurement\_bandwidth@{measurement\_bandwidth}!mmc56x3\_config\_s@{mmc56x3\_config\_s}}
+\doxysubsubsection{\texorpdfstring{measurement\_bandwidth}{measurement\_bandwidth}}
+{\footnotesize\ttfamily \label{structmmc56x3__config__s_aafaf2abf1915682509e867179857da42} 
+\mbox{\hyperlink{group__drivers_ga04eb0a8975116163a7527e4a3710d90d}{mmc56x3\+\_\+measurement\+\_\+times\+\_\+t}} measurement\+\_\+bandwidth}
+
+mmc56x3 device measurement bandwith configuration 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+mmc56x3/include/\mbox{\hyperlink{mmc56x3_8h}{mmc56x3.\+h}}\end{DoxyCompactItemize}

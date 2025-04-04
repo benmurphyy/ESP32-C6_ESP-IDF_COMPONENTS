@@ -1,0 +1,176 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ina226/include/ina226.h File Reference}
+\hypertarget{ina226_8h}{}\label{ina226_8h}\index{components/peripherals/i2c/esp\_ina226/include/ina226.h@{components/peripherals/i2c/esp\_ina226/include/ina226.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+{\ttfamily \#include "{}ina226\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structina226__config__s}{ina226\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em INA226 device configuration. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structina226__context__t}{ina226\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em INA226 context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em ina226 I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+GND\+\_\+\+GND}~UINT8\+\_\+C(0x40)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ GND, A0 pin -\/ GND \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+GND\+\_\+\+VS}~UINT8\+\_\+C(0x41)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ GND, A0 pin -\/ VS+ \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+GND\+\_\+\+SDA}~UINT8\+\_\+C(0x42)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ GND, A0 pin -\/ SDA \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+GND\+\_\+\+SCL}~UINT8\+\_\+C(0x43)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ GND, A0 pin -\/ SCL \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+VS\+\_\+\+GND}~UINT8\+\_\+C(0x44)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ VS+, A0 pin -\/ GND \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+VS\+\_\+\+VS}~UINT8\+\_\+C(0x45)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ VS+, A0 pin -\/ VS+ \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+VS\+\_\+\+SDA}~UINT8\+\_\+C(0x46)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ VS+, A0 pin -\/ SDA \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+VS\+\_\+\+SCL}~UINT8\+\_\+C(0x47)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ VS+, A0 pin -\/ SCL \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SDA\+\_\+\+GND}~UINT8\+\_\+C(0x48)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SDA, A0 pin -\/ GND \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SDA\+\_\+\+VS}~UINT8\+\_\+C(0x49)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SDA, A0 pin -\/ VS+ \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SDA\+\_\+\+SDA}~UINT8\+\_\+C(0x4a)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SDA, A0 pin -\/ SDA \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SDA\+\_\+\+SCL}~UINT8\+\_\+C(0x4b)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SDA, A0 pin -\/ SCL \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SCL\+\_\+\+GND}~UINT8\+\_\+C(0x4c)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SCL, A0 pin -\/ GND \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SCL\+\_\+\+VS}~UINT8\+\_\+C(0x4d)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SCL, A0 pin -\/ VS+ \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SCL\+\_\+\+SDA}~UINT8\+\_\+C(0x4e)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SCL, A0 pin -\/ SDA \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+INA226\+\_\+\+ADDR\+\_\+\+SCL\+\_\+\+SCL}~UINT8\+\_\+C(0x4f)
+\begin{DoxyCompactList}\small\item\em ina226 I2C address, A1 pin -\/ SCL, A0 pin -\/ SCL \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_ga2c3581c4233795efd735d2653907ee74}{I2\+C\+\_\+\+INA226\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga331987c52263d3232c0355c54284a98c}{ina226\+\_\+averaging\+\_\+modes\+\_\+e}} \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\+\_\+averaging\+\_\+modes\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Averaging modes enumerator for ADC resolution/averaging. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga0ff2d17cdd65de6c48164da40f545f30}{ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+e}} {\bfseries ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Voltage conversion times enumerator for ADC resolution/averaging. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga5a5218c9d32b83def8dc014eb623dcb8}{ina226\+\_\+operating\+\_\+modes\+\_\+e}} {\bfseries ina226\+\_\+operating\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Current conversion times enumerator for ADC resolution/averaging. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structina226__config__s}{ina226\+\_\+config\+\_\+s}} {\bfseries ina226\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em INA226 device configuration. \end{DoxyCompactList}\item 
+typedef struct ina226\+\_\+context\+\_\+t {\bfseries ina226\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em INA226 context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structina226__context__t}{ina226\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries ina226\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em INA226 handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga331987c52263d3232c0355c54284a98c}{ina226\+\_\+averaging\+\_\+modes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_gga331987c52263d3232c0355c54284a98ca63e4883a131990d4884d11274ff2584c}{INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+1}} = (0b000)
+, {\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+4} = (0b001)
+, {\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+16} = (0b010)
+, {\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+64} = (0b011)
+, \newline
+{\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+128} = (0b100)
+, {\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+256} = (0b101)
+, {\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+512} = (0b110)
+, {\bfseries INA226\+\_\+\+AVG\+\_\+\+MODE\+\_\+1024} = (0b111)
+ \}
+\begin{DoxyCompactList}\small\item\em Averaging modes enumerator for ADC resolution/averaging. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga0ff2d17cdd65de6c48164da40f545f30}{ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+e}} \{ \newline
+{\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+140\+US} = (0b000)
+, {\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+204\+US} = (0b001)
+, {\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+332\+US} = (0b010)
+, {\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+588\+US} = (0b011)
+, \newline
+\mbox{\hyperlink{group__drivers_gga0ff2d17cdd65de6c48164da40f545f30ad1265344ea7f32c52958b4d4a25d69be}{INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+1\+\_\+1\+MS}} = (0b100)
+, {\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+2\+\_\+116\+MS} = (0b101)
+, {\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+4\+\_\+156\+MS} = (0b110)
+, {\bfseries INA226\+\_\+\+VOLT\+\_\+\+CONV\+\_\+\+TIME\+\_\+8\+\_\+244\+MS} = (0b111)
+ \}
+\begin{DoxyCompactList}\small\item\em Voltage conversion times enumerator for ADC resolution/averaging. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga5a5218c9d32b83def8dc014eb623dcb8}{ina226\+\_\+operating\+\_\+modes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8af6b26a9c672c20589cb734b63af6bfd5}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+SHUTDOWN}} = (0b000)
+, \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a3293ba0081729be64055d568dc40158d}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+TRIG\+\_\+\+SHUNT\+\_\+\+VOLT}} = (0b001)
+, \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a1fcde25b1e71bb3dba61d39a3b872726}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+TRIG\+\_\+\+BUS\+\_\+\+VOLT}} = (0b010)
+, \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8aeee89fd6db62c7add799a438e040ebb8}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+TRIG\+\_\+\+SHUNT\+\_\+\+BUS}} = (0b011)
+, \newline
+\mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a49a957afbbca75f55d71a28e2dc05657}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+SHUTDOWN2}} = (0b100)
+, \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a920dee79f4bb9c412fae909979d44f6e}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+CONT\+\_\+\+SHUNT\+\_\+\+VOLT}} = (0b101)
+, \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a2878f2a7c9d1734ccb6973da01e60808}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+CONT\+\_\+\+BUS\+\_\+\+VOLT}} = (0b110)
+, \mbox{\hyperlink{group__drivers_gga5a5218c9d32b83def8dc014eb623dcb8a90d9863cfc37473007339c7934a08278}{INA226\+\_\+\+OP\+\_\+\+MODE\+\_\+\+CONT\+\_\+\+SHUNT\+\_\+\+BUS}} = (0b111)
+ \}
+\begin{DoxyCompactList}\small\item\em Current conversion times enumerator for ADC resolution/averaging. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga874bf54050809918410d24a7716ab49d}{ina226\+\_\+get\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, ina226\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads the configuration register from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae437da62262dfe72003a49af0837fca3}{ina226\+\_\+set\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const ina226\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes the configuration register to the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga87e0c6dc6bcf9fb3630f3eb072290ead}{ina226\+\_\+get\+\_\+calibration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads the calibration register from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga15fbf992c0198f0796a94feb34ba27d2}{ina226\+\_\+set\+\_\+calibration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes the calibration register to the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab5a69559c93404d72986fea90cddd5ba}{ina226\+\_\+get\+\_\+mask\+\_\+enable\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, ina226\+\_\+mask\+\_\+enable\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads the mask/enable register from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8fa5583edc47339a2d2e11da22f37ede}{ina226\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga0f70616e438f7c5550604e0d4d0e5079}{ina226\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}ina226\+\_\+config, \mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}ina226\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em initializes an INA226 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8eea27ae0382d61f7c80bb4774c0c50c}{ina226\+\_\+calibrate}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const float max\+\_\+current, const float shunt\+\_\+resistance)
+\begin{DoxyCompactList}\small\item\em Calibrates the INA266. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1032dce6b1672ba3fc96c7101215d5b5}{ina226\+\_\+get\+\_\+bus\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Reads bus voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab0cd7952b9db1d15f522b1931ddbb9c0}{ina226\+\_\+get\+\_\+triggered\+\_\+bus\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Triggers and reads bus voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3a3b0b1318c633222c93cecb44264d63}{ina226\+\_\+get\+\_\+shunt\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Reads shunt voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga68f7fcc45f14c1bf03185b8499ba3226}{ina226\+\_\+get\+\_\+triggered\+\_\+shunt\+\_\+voltage}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const voltage)
+\begin{DoxyCompactList}\small\item\em Triggers and reads shunt voltage (V) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaab786a59b9cf01076a4e4cc5a508a52f}{ina226\+\_\+get\+\_\+current}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const current)
+\begin{DoxyCompactList}\small\item\em Reads current (A) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9ad8e8e43146aac88c11ec453d8627be}{ina226\+\_\+get\+\_\+triggered\+\_\+current}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const current)
+\begin{DoxyCompactList}\small\item\em Triggers and reads current (A) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafe669e8a9ae6777cb8d428f41139f078}{ina226\+\_\+get\+\_\+power}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const power)
+\begin{DoxyCompactList}\small\item\em Reads power (W) from INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3ae82d3e28d0e392fff54eea45091192}{ina226\+\_\+get\+\_\+operating\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\+\_\+operating\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads operating mode from the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4a98bd42626927a32be826d7f18dd7f5}{ina226\+\_\+set\+\_\+operating\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga18ff6bf61fd3856f69c1d767fcae6595}{ina226\+\_\+operating\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes operating mode to the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+get\+\_\+averaging\+\_\+mode} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\+\_\+averaging\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+set\+\_\+averaging\+\_\+mode} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga963e4501c0e67fbf3fdd7949d502bc07}{ina226\+\_\+averaging\+\_\+modes\+\_\+t}} mode)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+get\+\_\+bus\+\_\+volt\+\_\+conv\+\_\+time} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const conv\+\_\+time)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+set\+\_\+bus\+\_\+volt\+\_\+conv\+\_\+time} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const conv\+\_\+time)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+get\+\_\+shunt\+\_\+volt\+\_\+conv\+\_\+time} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const conv\+\_\+time)
+\item 
+esp\+\_\+err\+\_\+t {\bfseries ina226\+\_\+set\+\_\+shunt\+\_\+volt\+\_\+conv\+\_\+time} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga6473ec6acaf13b36c0fb1ca22c000a69}{ina226\+\_\+volt\+\_\+conv\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const conv\+\_\+time)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga411af4609160753897a5a58f29028c52}{ina226\+\_\+reset}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Resets the INA226. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadbb4cf932d249b9addb0a4d775c75222}{ina226\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an INA226 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4340968df777a40e1055e7fd696a5473}{ina226\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga3901c989e3581b1e9aec926f6c1a6bcc}{ina226\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an INA226 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga1d811627c85d6ec2b884ebad0eeb62e3}{ina226\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts INA226 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gab02fa33d34919a5ef63b93b492f10e6d}{ina226\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts INA226 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries ina226\+\_\+config\+\_\+register\+\_\+t}
+\item 
+{\bfseries ina226\+\_\+mask\+\_\+enable\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

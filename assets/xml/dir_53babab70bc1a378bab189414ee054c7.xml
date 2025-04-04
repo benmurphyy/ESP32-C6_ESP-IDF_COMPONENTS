@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_53babab70bc1a378bab189414ee054c7" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_ccs811/include</compoundname>
+    <innerfile refid="ccs811_8h">ccs811.h</innerfile>
+    <innerfile refid="ccs811__version_8h">ccs811_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ccs811/include/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structbme680__adc__data__s" kind="struct" language="C++" prot="public">
+    <compoundname>bme680_adc_data_s</compoundname>
+    <includes refid="bme680_8h" local="no">bme680.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbme680__adc__data__s_1a6460ae4ad1bf348486378ed1456f1cfa" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t temperature</definition>
+        <argsstring></argsstring>
+        <name>temperature</name>
+        <qualifiedname>bme680_adc_data_s::temperature</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="335" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="335" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1a16505294fc4a064075013682a4e8fe85" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t humidity</definition>
+        <argsstring></argsstring>
+        <name>humidity</name>
+        <qualifiedname>bme680_adc_data_s::humidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="336" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="336" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1a40802f00da9a5333c393554eec7d3912" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t pressure</definition>
+        <argsstring></argsstring>
+        <name>pressure</name>
+        <qualifiedname>bme680_adc_data_s::pressure</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="337" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="337" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1aa6ba61b659a7044892b777d436d52c53" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t gas</definition>
+        <argsstring></argsstring>
+        <name>gas</name>
+        <qualifiedname>bme680_adc_data_s::gas</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="338" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="338" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1a806fa5bc30520f84f87b8479ea263e04" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool gas_valid</definition>
+        <argsstring></argsstring>
+        <name>gas_valid</name>
+        <qualifiedname>bme680_adc_data_s::gas_valid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="339" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="339" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1a87b4540d7cba30cb7f7e184467b34394" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t gas_range</definition>
+        <argsstring></argsstring>
+        <name>gas_range</name>
+        <qualifiedname>bme680_adc_data_s::gas_range</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="340" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="340" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1ac9861af59182939c5f1d292857cc218c" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t gas_index</definition>
+        <argsstring></argsstring>
+        <name>gas_index</name>
+        <qualifiedname>bme680_adc_data_s::gas_index</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="341" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="341" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__adc__data__s_1a62791e77eacb0713ac8dd58380b791f4" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool heater_stable</definition>
+        <argsstring></argsstring>
+        <name>heater_stable</name>
+        <qualifiedname>bme680_adc_data_s::heater_stable</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="342" column="14" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="342" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>BME680 ADC data structure definition. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="334" column="1" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="334" bodyend="343"/>
+    <listofallmembers>
+      <member refid="structbme680__adc__data__s_1aa6ba61b659a7044892b777d436d52c53" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>gas</name></member>
+      <member refid="structbme680__adc__data__s_1ac9861af59182939c5f1d292857cc218c" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>gas_index</name></member>
+      <member refid="structbme680__adc__data__s_1a87b4540d7cba30cb7f7e184467b34394" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>gas_range</name></member>
+      <member refid="structbme680__adc__data__s_1a806fa5bc30520f84f87b8479ea263e04" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>gas_valid</name></member>
+      <member refid="structbme680__adc__data__s_1a62791e77eacb0713ac8dd58380b791f4" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>heater_stable</name></member>
+      <member refid="structbme680__adc__data__s_1a16505294fc4a064075013682a4e8fe85" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>humidity</name></member>
+      <member refid="structbme680__adc__data__s_1a40802f00da9a5333c393554eec7d3912" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>pressure</name></member>
+      <member refid="structbme680__adc__data__s_1a6460ae4ad1bf348486378ed1456f1cfa" prot="public" virt="non-virtual"><scope>bme680_adc_data_s</scope><name>temperature</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

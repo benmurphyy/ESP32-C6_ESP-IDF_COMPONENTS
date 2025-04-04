@@ -1,0 +1,287 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+as7341/include/as7341.h File Reference}
+\hypertarget{as7341_8h}{}\label{as7341_8h}\index{components/peripherals/i2c/esp\_as7341/include/as7341.h@{components/peripherals/i2c/esp\_as7341/include/as7341.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+{\ttfamily \#include "{}as7341\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structas7341__channels__basic__counts__data__s}{as7341\+\_\+channels\+\_\+basic\+\_\+counts\+\_\+data\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em AS7341 channels basic counts data structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structas7341__channels__spectral__data__s}{as7341\+\_\+channels\+\_\+spectral\+\_\+data\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em AS7341 channels spectral data structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structas7341__config__s}{as7341\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em AS7341 configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structas7341__context__t}{as7341\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em AS7341 context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+AS7341\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em as7341 I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+AS7341\+\_\+\+DEV\+\_\+\+ADDR}~UINT8\+\_\+C(0x39)
+\begin{DoxyCompactList}\small\item\em as7341 I2C address \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_ga922aa068dff9cdb160de2fd7b16b21df}{I2\+C\+\_\+\+AS7341\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga3380dc47e384e45764c545b3b7f4bf78}{as7341\+\_\+als\+\_\+modes\+\_\+e}} {\bfseries as7341\+\_\+als\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 ambient light sensing mode enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga7e619cf208ff5b9325d4853a03114f96}{as7341\+\_\+led\+\_\+drive\+\_\+strengths\+\_\+e}} {\bfseries as7341\+\_\+led\+\_\+drive\+\_\+strengths\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 led driving strengths enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga8528eb7af062b58f8c7da844bdb7aa8b}{as7341\+\_\+spectral\+\_\+gains\+\_\+e}} {\bfseries as7341\+\_\+spectral\+\_\+gains\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 allowable gain multipliers enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga69412adda5c99f4a8502dc9ca1f29376}{as7341\+\_\+flicker\+\_\+detection\+\_\+gains\+\_\+e}} {\bfseries as7341\+\_\+flicker\+\_\+detection\+\_\+gains\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 allowable flicker detection gain multipliers enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga7a2c8b2911ff3c7db880944f2cfe0c37}{as7341\+\_\+flicker\+\_\+detection\+\_\+states\+\_\+e}} {\bfseries as7341\+\_\+flicker\+\_\+detection\+\_\+states\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 flicker detection states enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga7f032ade17db7652f5be652c96877a72}{as7341\+\_\+smux\+\_\+commands\+\_\+e}} {\bfseries as7341\+\_\+smux\+\_\+commands\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 available SMUX commands enumerator. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structas7341__channels__basic__counts__data__s}{as7341\+\_\+channels\+\_\+basic\+\_\+counts\+\_\+data\+\_\+s}} {\bfseries as7341\+\_\+channels\+\_\+basic\+\_\+counts\+\_\+data\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 channels basic counts data structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structas7341__channels__spectral__data__s}{as7341\+\_\+channels\+\_\+spectral\+\_\+data\+\_\+s}} {\bfseries as7341\+\_\+channels\+\_\+spectral\+\_\+data\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 channels spectral data structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structas7341__config__s}{as7341\+\_\+config\+\_\+s}} {\bfseries as7341\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 configuration structure. \end{DoxyCompactList}\item 
+typedef struct as7341\+\_\+context\+\_\+t {\bfseries as7341\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 context structure definitions. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structas7341__context__t}{as7341\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries as7341\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em AS7341 handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga3380dc47e384e45764c545b3b7f4bf78}{as7341\+\_\+als\+\_\+modes\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga3380dc47e384e45764c545b3b7f4bf78ac2eb1e6f1813bc43b3c4a575efbeb1ad}{AS7341\+\_\+\+ALS\+\_\+\+SPM\+\_\+\+MODE}} = (0)
+, \mbox{\hyperlink{group__drivers_gga3380dc47e384e45764c545b3b7f4bf78ac1349a5ef8b19f2725af0c6284172256}{AS7341\+\_\+\+ALS\+\_\+\+SYNS\+\_\+\+MODE}} = (1)
+, \mbox{\hyperlink{group__drivers_gga3380dc47e384e45764c545b3b7f4bf78ae741ee522801cad7e65789612b796e0a}{AS7341\+\_\+\+ALS\+\_\+\+RESERVED\+\_\+\+MODE}} = (2)
+, \mbox{\hyperlink{group__drivers_gga3380dc47e384e45764c545b3b7f4bf78a77396906bdb867bd4ef3219cfa395b51}{AS7341\+\_\+\+ALS\+\_\+\+SYND\+\_\+\+MODE}} = (3)
+ \}
+\begin{DoxyCompactList}\small\item\em AS7341 ambient light sensing mode enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga7e619cf208ff5b9325d4853a03114f96}{as7341\+\_\+led\+\_\+drive\+\_\+strengths\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96abdf47825e25485f0868b03b36fb4f675}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+4\+MA}} = (0b0000000)
+, \mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96acdd84990385ebefaa626894a20d43b4f}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+6\+MA}} = (0b0000001)
+, \mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96acfceb5351c8b58bf9909b3782defe9c3}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+8\+MA}} = (0b0000010)
+, \mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96ae906dc4f397f1c412a9185046e85d58e}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+10\+MA}} = (0b0000011)
+, \newline
+\mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96ae1b93c613b39472f187aa07c2f340b83}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+12\+MA}} = (0b0000100)
+, \mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96abbd2a565625cab7be1da10b3b837fb8e}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+256\+MA}} = (0b1111110)
+, \mbox{\hyperlink{group__drivers_gga7e619cf208ff5b9325d4853a03114f96a1548eb46f6e4edea8fbefb5394873501}{AS7341\+\_\+\+LED\+\_\+\+DRIVE\+\_\+\+STRENGTH\+\_\+258\+MA}} = (0b1111111)
+ \}
+\begin{DoxyCompactList}\small\item\em AS7341 led driving strengths enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_ga8528eb7af062b58f8c7da844bdb7aa8b}\label{group__drivers_ga8528eb7af062b58f8c7da844bdb7aa8b} 
+enum \mbox{\hyperlink{group__drivers_ga8528eb7af062b58f8c7da844bdb7aa8b}{as7341\+\_\+spectral\+\_\+gains\+\_\+e}} \{ \newline
+{\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+0\+\_\+5X} = 0
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+1X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+2X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+4X}
+, \newline
+{\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+8X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+16X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+32X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+64X}
+, \newline
+{\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+128X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+256X}
+, {\bfseries AS7341\+\_\+\+SPECTRAL\+\_\+\+GAIN\+\_\+512X}
+ \}
+\begin{DoxyCompactList}\small\item\em AS7341 allowable gain multipliers enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group__drivers_ga69412adda5c99f4a8502dc9ca1f29376}\label{group__drivers_ga69412adda5c99f4a8502dc9ca1f29376} 
+enum \mbox{\hyperlink{group__drivers_ga69412adda5c99f4a8502dc9ca1f29376}{as7341\+\_\+flicker\+\_\+detection\+\_\+gains\+\_\+e}} \{ \newline
+{\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+0\+\_\+5X} = 0
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+1X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+2X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+4X}
+, \newline
+{\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+8X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+16X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+32X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+64X}
+, \newline
+{\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+128X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+256X}
+, {\bfseries AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+GAIN\+\_\+512X}
+ \}
+\begin{DoxyCompactList}\small\item\em AS7341 allowable flicker detection gain multipliers enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga7a2c8b2911ff3c7db880944f2cfe0c37}{as7341\+\_\+flicker\+\_\+detection\+\_\+states\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_gga7a2c8b2911ff3c7db880944f2cfe0c37ac9dc1ffb1c7cce6bdc967ab38bcf3fa7}{AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+INVALID}} = 0
+, \mbox{\hyperlink{group__drivers_gga7a2c8b2911ff3c7db880944f2cfe0c37abf4afc7aec706e16693843db9bc75710}{AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+UNKNOWN}}
+, \mbox{\hyperlink{group__drivers_gga7a2c8b2911ff3c7db880944f2cfe0c37a651a8836908bc9c7cd127f9828ef77e9}{AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+\+SATURATED}}
+, \mbox{\hyperlink{group__drivers_gga7a2c8b2911ff3c7db880944f2cfe0c37acafaf6cde212dc990377125130aed843}{AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+100\+HZ}}
+, \newline
+\mbox{\hyperlink{group__drivers_gga7a2c8b2911ff3c7db880944f2cfe0c37a6f917238f019fa6f87f6e8c3f38b90b3}{AS7341\+\_\+\+FLICKER\+\_\+\+DETECTION\+\_\+120\+HZ}}
+ \}
+\begin{DoxyCompactList}\small\item\em AS7341 flicker detection states enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga7f032ade17db7652f5be652c96877a72}{as7341\+\_\+smux\+\_\+commands\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga7f032ade17db7652f5be652c96877a72aa854e1bae51e3ca87fa9f28ba94526a1}{AS7341\+\_\+\+SMUX\+\_\+\+CMD\+\_\+\+ROM\+\_\+\+RESET}} = 0
+, \mbox{\hyperlink{group__drivers_gga7f032ade17db7652f5be652c96877a72afd01c377503e37832f3ac5752d3a0369}{AS7341\+\_\+\+SMUX\+\_\+\+CMD\+\_\+\+READ}}
+, \mbox{\hyperlink{group__drivers_gga7f032ade17db7652f5be652c96877a72ac22283e8974a4b2e45ce9410439845a1}{AS7341\+\_\+\+SMUX\+\_\+\+CMD\+\_\+\+WRITE}}
+ \}
+\begin{DoxyCompactList}\small\item\em AS7341 available SMUX commands enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga616a619c505b1e305eb93cb5b6649ad5}{as7341\+\_\+get\+\_\+led\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+led\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads LED register (0x74) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga985cd6f80b3360ef5ddb1b3c9333c6ff}{as7341\+\_\+set\+\_\+led\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+led\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes LED register (0x74) to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga967b930a0c139ab84bdd3b05e17f9a0f}{as7341\+\_\+get\+\_\+astatus\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+astatus\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads ASTATUS register (0x94) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae5f745494c5028adb1a6f3f12a9ed1e8}{as7341\+\_\+get\+\_\+status2\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+status2\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads status 2 register (0x\+A3) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gada15210baef6cc75808814f2b8552dac}{as7341\+\_\+disable\+\_\+enable\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables spectral readings, flicker detection, power, etc. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1d4995220569e78a732a6875b86864f3}{as7341\+\_\+get\+\_\+enable\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+enable\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads enable register (0x80) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae7759cb5e1b5e888a800c548ace96341}{as7341\+\_\+set\+\_\+enable\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+enable\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes enable register (0x80) to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad68b26538cd1d5fdae7e45d423fadc2e}{as7341\+\_\+get\+\_\+auxiliary\+\_\+id\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+auxiliary\+\_\+id\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads auxiliary id register (0x90) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga180d0f2987794ab39fd2a066b22ae824}{as7341\+\_\+get\+\_\+revision\+\_\+id\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+revision\+\_\+id\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads revision id register (0x91) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3a7aa8ee00b46e0999a5d6bb54ca6cf2}{as7341\+\_\+get\+\_\+part\+\_\+id\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+part\+\_\+id\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads part id register (0x92) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa4a221e2ea84c37bdd475b4e1a29bde4}{as7341\+\_\+get\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration register (0x70) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga55a833169ec9228fb2588afb774cc9fe}{as7341\+\_\+set\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration register (0x70) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2926857d23521a0e765273ecfafce5f8}{as7341\+\_\+get\+\_\+config0\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+config0\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration 0 register (0x\+A9) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga736d79b5349ff251798725e3cec9bce2}{as7341\+\_\+set\+\_\+config0\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+config0\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration 0 register (0x\+A9) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5931e4f655418d61a6bb764852dce6fb}{as7341\+\_\+get\+\_\+config1\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+config1\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration 1 (0x\+AA) register from AS7341. This register configures the 6 integrated ADC (CH0 to CH5). \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9188a6aac85800676506fb1b541e22bb}{as7341\+\_\+set\+\_\+config1\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+config1\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration 1 (0x\+AA) register to AS7341. This register configures the 6 integrated ADC (CH0 to CH5). \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae3f997f1c1ade0a7c913637a402d7175}{as7341\+\_\+get\+\_\+config6\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+config6\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration 6 register (0x\+AF) from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae0f278fd69005a486fef86c9b7bebf52}{as7341\+\_\+set\+\_\+config6\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+config6\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration 6 register (0x\+AF) to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9c9e05f39d2f3c031f453ae305648b36}{as7341\+\_\+get\+\_\+atime\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads ATIME (0x81) register from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga661b2e1fd733d3ccf71081e1dae7f97c}{as7341\+\_\+set\+\_\+atime\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const uint8\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes ATIME (0x81) register to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga13641fbc3ea284fffe6f7c4368aa218a}{as7341\+\_\+get\+\_\+astep\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads ASTEP (0x\+CA, 0x\+CB) register from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga018d2ed80444158d315800c763a54608}{as7341\+\_\+set\+\_\+astep\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes ASTEP (0x\+CA, 0x\+CB) register to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6f6e63de3091678f72f19d936f24245c}{as7341\+\_\+get\+\_\+flicker\+\_\+detection\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, as7341\+\_\+flicker\+\_\+detection\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads flicker detection status (0x\+DB) register from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9b094b6dd6806ff45f59a630e9f4d3f3}{as7341\+\_\+set\+\_\+flicker\+\_\+detection\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const as7341\+\_\+flicker\+\_\+detection\+\_\+status\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes flicker detection status (0x\+DB) register to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gabdd244dad2d26a3af946960952a8eaa9}{as7341\+\_\+clear\+\_\+flicker\+\_\+detection\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Clears flicker detection status (0x\+DB) register on AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaaeb8b18f5f952d58b3aaab21ee801e30}{as7341\+\_\+enable\+\_\+hi\+\_\+register\+\_\+bank}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables access to the AS7341 high register bank (0x80 to 0x\+FF). \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafab077360e6f7fbbf4b4316e63bae644}{as7341\+\_\+enable\+\_\+lo\+\_\+register\+\_\+bank}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables access to the AS7341 low register bank (0x60 to 0x74). \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9eeac4357ce227edd26bf3d3da0d7c2a}{as7341\+\_\+set\+\_\+smux\+\_\+command}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_gacd9eda447520eb4166bc70bf0d2e9f86}{as7341\+\_\+smux\+\_\+commands\+\_\+t}} command)
+\begin{DoxyCompactList}\small\item\em Writes SMUX command to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab069ad9220c8849d2b938047e9420af0}{as7341\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga927515039a6879c9453bd1eda2a49997}{as7341\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}as7341\+\_\+config, \mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}as7341\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an AS7341 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gacc971a23bd190321d109026f790e6d61}{as7341\+\_\+get\+\_\+spectral\+\_\+measurements}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga9102f9187825808d80bcf5f77dbdc426}{as7341\+\_\+channels\+\_\+spectral\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const spectral\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Reads spectral sensors measurements, F1 to F8, Clear and NIR, from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gabfdc2f461c3d2caedfcd2ae7af6e1741}{as7341\+\_\+get\+\_\+basic\+\_\+counts}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga9102f9187825808d80bcf5f77dbdc426}{as7341\+\_\+channels\+\_\+spectral\+\_\+data\+\_\+t}} spectral\+\_\+data, \mbox{\hyperlink{group__drivers_gad0cdfc4fec333ed2019e55fc8e1ebb24}{as7341\+\_\+channels\+\_\+basic\+\_\+counts\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const basic\+\_\+counts\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Converts AS7341 spectral sensors measurements to basic counts. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaec81d4f54832ea5edd3f95440972c54e}{as7341\+\_\+get\+\_\+flicker\+\_\+detection\+\_\+status}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga820a0faa02578e68ad310882a50af614}{as7341\+\_\+flicker\+\_\+detection\+\_\+states\+\_\+t}} \texorpdfstring{$\ast$}{*}const state)
+\begin{DoxyCompactList}\small\item\em Reads flicker detection status from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga507581339c88f7b4b985dead6443f6ca}{as7341\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads data status from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf9eda90f0593c0baafd52b856ceec2c1}{as7341\+\_\+get\+\_\+atime}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const atime)
+\begin{DoxyCompactList}\small\item\em Reads the number of integration steps for the ADC integration time from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3b7289ee6afbb585bb34cf86b8a78142}{as7341\+\_\+set\+\_\+atime}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const uint8\+\_\+t atime)
+\begin{DoxyCompactList}\small\item\em Writes the number of integration steps for the ADC integration time to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadb90fff059916b771d5ee2b4655d3936}{as7341\+\_\+get\+\_\+astep}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const astep)
+\begin{DoxyCompactList}\small\item\em Reads the number of integration time steps for the ADC integration time from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga4a9a9cc330e8120ff9f1c25d91b4f6fd}{as7341\+\_\+set\+\_\+astep}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const uint16\+\_\+t astep)
+\begin{DoxyCompactList}\small\item\em Writes the number of integration time steps for the ADC integration time to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9221fb2c4e5ba27119feab2a05b16b49}{as7341\+\_\+get\+\_\+spectral\+\_\+gain}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga27b623acd6c033c0a6ffc1ed0244b502}{as7341\+\_\+spectral\+\_\+gains\+\_\+t}} \texorpdfstring{$\ast$}{*}const gain)
+\begin{DoxyCompactList}\small\item\em Reads spectral gain setting from AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaba8a8ad4e703c319a2c2c717d3962b40}{as7341\+\_\+set\+\_\+spectral\+\_\+gain}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga27b623acd6c033c0a6ffc1ed0244b502}{as7341\+\_\+spectral\+\_\+gains\+\_\+t}} gain)
+\begin{DoxyCompactList}\small\item\em Writes spectral gain setting to AS7341. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa77f61c92d964558e829958fa90e256d}{as7341\+\_\+get\+\_\+ambient\+\_\+light\+\_\+sensing\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga22f338d9e4256e61c9cfa261878ea595}{as7341\+\_\+als\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads ambient light sensing mode from AS7341. SPM mode (spectral measurement), normal mode, is configured by default. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf7e18bf3570fd0f2c93a051ca3516fbf}{as7341\+\_\+set\+\_\+ambient\+\_\+light\+\_\+sensing\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga22f338d9e4256e61c9cfa261878ea595}{as7341\+\_\+als\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes ambient light sensing mode to AS7341. SPM mode (spectral measurement), normal mode, is configured by default. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga66320962a6ce241ffc3afac05ea82b7f}{as7341\+\_\+enable\+\_\+flicker\+\_\+detection}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables AS7341 flicker detection. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga433cb2029d0cef547b2549216bd66ae6}{as7341\+\_\+disable\+\_\+flicker\+\_\+detection}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables AS7341 flicker detection. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae68c609a68336f84f6ee2b39a3444cb6}{as7341\+\_\+enable\+\_\+smux}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables AS7341 supper multiplier (SMUX) special interrupt. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1b88d568d502616cdc8b242143b1154a}{as7341\+\_\+enable\+\_\+wait\+\_\+time}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables AS7341 wait time between two consecutive spectral measurements. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab318d5870f22cfb3cf0d4797f9acb3ec}{as7341\+\_\+disable\+\_\+wait\+\_\+time}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables AS7341 wait time between two consecutive spectral measurements. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaad1a1c083514ad5485899fae51327b51}{as7341\+\_\+enable\+\_\+spectral\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables AS7341 spectral measurement. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad59d118e1a7f4579c7516a9e09f2d302}{as7341\+\_\+disable\+\_\+spectral\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables AS7341 spectral measurement. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga621d23d292f922d0fb0bb5f1894f564a}{as7341\+\_\+enable\+\_\+power}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables AS7341 power. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3a8830ec467e67d084b3a3f66d4b12d6}{as7341\+\_\+disable\+\_\+power}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables AS7341 power. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga066a4742bb09b5e255edebff326d2dc5}{as7341\+\_\+enable\+\_\+led}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables AS7341 onboard LED. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga035f076f217294c33785c0f85455c729}{as7341\+\_\+disable\+\_\+led}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Disables AS7341 onboard LED. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga67e5f9b57a1f45354fb5140f11bd6071}{as7341\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an AS7341 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gabcff7a6cad0195e4915fa7fa61b7bdb4}{as7341\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gaca771a90491a159df8e5eaa1f23cb61f}{as7341\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an AS7341 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gad6425e71e4be7003ad1ee101dfc4e2eb}{as7341\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts AS7341 firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga212b77fd2a3d157f629f02f9165f4904}{as7341\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts AS7341 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries as7341\+\_\+enable\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+config\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+flicker\+\_\+detection\+\_\+time1\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+flicker\+\_\+detection\+\_\+time2\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+gpio1\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+gpio2\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+led\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+interrupt\+\_\+enable\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+interrupt\+\_\+status\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+device\+\_\+status\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+astatus\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+status2\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+status3\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+status5\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+status6\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+flicker\+\_\+detection\+\_\+status\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+auxiliary\+\_\+id\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+revision\+\_\+id\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+part\+\_\+id\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+config0\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+config1\+\_\+register\+\_\+t}
+\item 
+{\bfseries as7341\+\_\+config6\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

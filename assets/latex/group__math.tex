@@ -1,0 +1,372 @@
+\doxysection{kalman motion}
+\hypertarget{group__math}{}\label{group__math}\index{kalman motion@{kalman motion}}
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structkalman__motion__t}{kalman\+\_\+motion\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Kalman motion state structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structquaternion__t}{quaternion\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Quaternion structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvector__float__t}{vector\+\_\+float\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Vector float structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvector__int16__t}{vector\+\_\+int16\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Vector\+\_\+int16 structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{group__math_ga6d31b997dc9c289ec163713c393b8633}\label{group__math_ga6d31b997dc9c289ec163713c393b8633} 
+typedef struct kalman\+\_\+motion\+\_\+t {\bfseries kalman\+\_\+motion\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Kalman motion definition. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_ga8e6e217383a5bfe4456bf69120c9d385}\label{group__math_ga8e6e217383a5bfe4456bf69120c9d385} 
+typedef struct \mbox{\hyperlink{structkalman__motion__t}{kalman\+\_\+motion\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries kalman\+\_\+motion\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Kalman motion handle definition. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_ga775217090ec72fff4d0cf2ea6079dab5}\label{group__math_ga775217090ec72fff4d0cf2ea6079dab5} 
+typedef struct quaternion\+\_\+t {\bfseries quaternion\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Quaternion definitions. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}\label{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d} 
+typedef struct \mbox{\hyperlink{structquaternion__t}{quaternion\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries quaternion\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Quaternion handle structure. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_gacbaa79958d1343c5ed0a66678f75c797}\label{group__math_gacbaa79958d1343c5ed0a66678f75c797} 
+typedef struct vector\+\_\+float\+\_\+t {\bfseries vector\+\_\+float\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector float definition. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_gad9b2f0b37c74f7755b0455007f877fe8}\label{group__math_gad9b2f0b37c74f7755b0455007f877fe8} 
+typedef struct \mbox{\hyperlink{structvector__float__t}{vector\+\_\+float\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries vector\+\_\+float\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector float handle structure. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_gad6cef685a134de0bd3218ed7e4cf1e98}\label{group__math_gad6cef685a134de0bd3218ed7e4cf1e98} 
+typedef struct vector\+\_\+int16\+\_\+t {\bfseries vector\+\_\+int16\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector\+\_\+int16 definitions. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_ga5f5fde5891842906611f677974c861c1}\label{group__math_ga5f5fde5891842906611f677974c861c1} 
+typedef struct \mbox{\hyperlink{structvector__int16__t}{vector\+\_\+int16\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries vector\+\_\+int16\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Vector\+\_\+int16 handle structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_gab8d6766062e59a3b8ed1847cf492e189}{kalman\+\_\+motion\+\_\+init}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}kalman\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes a kalman motion handle instance to filter data from a gyroscope and/or accelerometer. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga17f69997e76e23b45334e8aaa7ad3b89}{kalman\+\_\+motion\+\_\+get\+\_\+angle}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, const float new\+\_\+angle, const float new\+\_\+rate, const float delta\+\_\+time, float \texorpdfstring{$\ast$}{*}const angle)
+\begin{DoxyCompactList}\small\item\em Calculates angle using a Kalman motion filter. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga693e2e87f1863b645f40a6e9a08c6406}{kalman\+\_\+motion\+\_\+set\+\_\+angle}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, const float angle)
+\begin{DoxyCompactList}\small\item\em Sets the angle and should be used to set the starting angle. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_gac632184217b2187694694a1503e82961}{kalman\+\_\+motion\+\_\+get\+\_\+rate}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, float \texorpdfstring{$\ast$}{*}const rate)
+\begin{DoxyCompactList}\small\item\em Gets the unbiased rate calculated from the rate and the calculated bias. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga5ea44db3e1c4e7567f473af587ebb596}{kalman\+\_\+motion\+\_\+set\+\_\+q\+\_\+angle}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, const float q\+\_\+angle)
+\begin{DoxyCompactList}\small\item\em Sets q\+\_\+angle noise variance for the accelerometer. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga2bf5dcacd095bba30f5ff747c300fcef}{kalman\+\_\+motion\+\_\+set\+\_\+q\+\_\+bias}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, const float q\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Sets q\+\_\+bias noise variance for the gyroscope. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga01f2d63cd90e5d9a735eb8dd98e528d0}{kalman\+\_\+motion\+\_\+set\+\_\+r\+\_\+measure}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, const float r\+\_\+measure)
+\begin{DoxyCompactList}\small\item\em Sets r\+\_\+measure noise variance for the measurement. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga364fbcba405034b6a97ba098310f0ebf}{kalman\+\_\+motion\+\_\+get\+\_\+q\+\_\+angle}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, float \texorpdfstring{$\ast$}{*}const q\+\_\+angle)
+\begin{DoxyCompactList}\small\item\em Gets q\+\_\+angle noise variance for the accelerometer. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga930391f0f7430d9f9deba0a475997d29}{kalman\+\_\+motion\+\_\+get\+\_\+q\+\_\+bias}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, float \texorpdfstring{$\ast$}{*}const q\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Gets q\+\_\+bias noise variance for the gyroscope. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga0a03899fa87e7d564396b03bc38d94b0}{kalman\+\_\+motion\+\_\+get\+\_\+r\+\_\+measure}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle, float \texorpdfstring{$\ast$}{*}const r\+\_\+measure)
+\begin{DoxyCompactList}\small\item\em Gets r\+\_\+measure noise variance for the measurement. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__math_ga058647dbc284327d7a40a199a5868b31}{kalman\+\_\+motion\+\_\+delete}} (\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} kalman\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Frees Kalman motion handle. \end{DoxyCompactList}\item 
+\Hypertarget{group__math_ga464c61a6239eeef359b1d42d0435999a}\label{group__math_ga464c61a6239eeef359b1d42d0435999a} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+init} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}quaternion\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga48d39c71ae3c43590d891584f3ee8879}\label{group__math_ga48d39c71ae3c43590d891584f3ee8879} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+init\+\_\+data} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, float nw, float nx, float ny, float nz)
+\item 
+\Hypertarget{group__math_gae86f454353d42ee457f03de11bf2a752}\label{group__math_gae86f454353d42ee457f03de11bf2a752} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+get\+\_\+product} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}product\+\_\+handle)
+\item 
+\Hypertarget{group__math_gac7c73aacb866072b6e09bc7068f6366b}\label{group__math_gac7c73aacb866072b6e09bc7068f6366b} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+get\+\_\+conjugate} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}conjugate\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga65a172a1945fe3a8db85d0d64b6dedc3}\label{group__math_ga65a172a1945fe3a8db85d0d64b6dedc3} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+get\+\_\+magnitude} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, float \texorpdfstring{$\ast$}{*}magnitude)
+\item 
+\Hypertarget{group__math_ga2efdf9b3cf728ca6d3585508013c8f6a}\label{group__math_ga2efdf9b3cf728ca6d3585508013c8f6a} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+normalize} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle)
+\item 
+\Hypertarget{group__math_gac67516b39fca057803685f8e32b8d244}\label{group__math_gac67516b39fca057803685f8e32b8d244} 
+esp\+\_\+err\+\_\+t {\bfseries quaternion\+\_\+get\+\_\+normalized} (\mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}normalized\+\_\+handle)
+\item 
+\Hypertarget{group__math_gaa5f47ffbeb65ced273790cfd55466432}\label{group__math_gaa5f47ffbeb65ced273790cfd55466432} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+init} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}vector\+\_\+float\+\_\+handle)
+\item 
+\Hypertarget{group__math_gae509844d22af4f52b528ef8b799b8966}\label{group__math_gae509844d22af4f52b528ef8b799b8966} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+init\+\_\+data} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, float nx, float ny, float nz)
+\item 
+\Hypertarget{group__math_ga4ebacdd8c2da290dc11ef58263cd00f8}\label{group__math_ga4ebacdd8c2da290dc11ef58263cd00f8} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+get\+\_\+magnitude} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, float \texorpdfstring{$\ast$}{*}magnitude)
+\item 
+\Hypertarget{group__math_gab771fc590cc1db8677e5bbfe9ec1a57e}\label{group__math_gab771fc590cc1db8677e5bbfe9ec1a57e} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+normalize} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga1b1fdccac5174060763498b263ac52b7}\label{group__math_ga1b1fdccac5174060763498b263ac52b7} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+get\+\_\+normalized} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, \mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}normalized\+\_\+handle)
+\item 
+\Hypertarget{group__math_gad32ced619893810a8dc2508762d25f44}\label{group__math_gad32ced619893810a8dc2508762d25f44} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+rotate} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle)
+\item 
+\Hypertarget{group__math_gaeb5eaaa526691fbc748c66004643b301}\label{group__math_gaeb5eaaa526691fbc748c66004643b301} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+float\+\_\+get\+\_\+rotated} (\mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} vector\+\_\+float\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_gad9b2f0b37c74f7755b0455007f877fe8}{vector\+\_\+float\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}rotated\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga5c47f8a6efbc32718747ae17169b5e74}\label{group__math_ga5c47f8a6efbc32718747ae17169b5e74} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+init} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}vector\+\_\+int16\+\_\+handle)
+\item 
+\Hypertarget{group__math_gaa53997f52a7ccb6d9713b2cd7358f0d6}\label{group__math_gaa53997f52a7ccb6d9713b2cd7358f0d6} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+init\+\_\+data} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, int16\+\_\+t nx, int16\+\_\+t ny, int16\+\_\+t nz)
+\item 
+\Hypertarget{group__math_gab0532ac738c75e41d148b51ac5f74e92}\label{group__math_gab0532ac738c75e41d148b51ac5f74e92} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+get\+\_\+magnitude} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, float \texorpdfstring{$\ast$}{*}magnitude)
+\item 
+\Hypertarget{group__math_ga77e6976ec895e38ac4c111916f477252}\label{group__math_ga77e6976ec895e38ac4c111916f477252} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+normalize} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga48cbd928f80f8182bc6bd06c51d94857}\label{group__math_ga48cbd928f80f8182bc6bd06c51d94857} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+get\+\_\+normalized} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, \mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}normalized\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga161ab11d769261cbb6306aa612258e14}\label{group__math_ga161ab11d769261cbb6306aa612258e14} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+rotate} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle)
+\item 
+\Hypertarget{group__math_ga57fb12b95beead847d4cb713974504f9}\label{group__math_ga57fb12b95beead847d4cb713974504f9} 
+esp\+\_\+err\+\_\+t {\bfseries vector\+\_\+int16\+\_\+get\+\_\+rotated} (\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} vector\+\_\+int16\+\_\+handle, \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\+\_\+handle\+\_\+t}} quaternion\+\_\+handle, \mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\+\_\+int16\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}rotated\+\_\+handle)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF kalman motion filter library
+
+Ported from esp-\/open-\/rtos
+
+\href{http://blog.tkjelectronics.dk/2012/09/a-practical-approach-to-kalman-filter-and-how-to-implement-it/}{\texttt{ http\+://blog.\+tkjelectronics.\+dk/2012/09/a-\/practical-\/approach-\/to-\/kalman-\/filter-\/and-\/how-\/to-\/implement-\/it/}} \href{https://github.com/TKJElectronics/KalmanFilter/blob/master/Kalman.cpp}{\texttt{ https\+://github.\+com/\+TKJElectronics/\+Kalman\+Filter/blob/master/\+Kalman.\+cpp}}
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE
+
+ESP-\/\+IDF 3d math library
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group__math_ga058647dbc284327d7a40a199a5868b31}\index{kalman motion@{kalman motion}!kalman\_motion\_delete@{kalman\_motion\_delete}}
+\index{kalman\_motion\_delete@{kalman\_motion\_delete}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_delete()}{kalman\_motion\_delete()}}
+{\footnotesize\ttfamily \label{group__math_ga058647dbc284327d7a40a199a5868b31} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Frees Kalman motion handle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga17f69997e76e23b45334e8aaa7ad3b89}\index{kalman motion@{kalman motion}!kalman\_motion\_get\_angle@{kalman\_motion\_get\_angle}}
+\index{kalman\_motion\_get\_angle@{kalman\_motion\_get\_angle}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_get\_angle()}{kalman\_motion\_get\_angle()}}
+{\footnotesize\ttfamily \label{group__math_ga17f69997e76e23b45334e8aaa7ad3b89} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+get\+\_\+angle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{const float}]{new\+\_\+angle}{, }\item[{const float}]{new\+\_\+rate}{, }\item[{const float}]{delta\+\_\+time}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{angle}{}\end{DoxyParamCaption})}
+
+
+
+Calculates angle using a Kalman motion filter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+angle} & New angle in degrees to process. \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+rate} & New rate in degrees per second to process. \\
+\hline
+\mbox{\texttt{ in}}  & {\em delta\+\_\+time} & Delta time in seconds. \\
+\hline
+\mbox{\texttt{ out}}  & {\em angle} & Calculated angle using Kalman filter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga364fbcba405034b6a97ba098310f0ebf}\index{kalman motion@{kalman motion}!kalman\_motion\_get\_q\_angle@{kalman\_motion\_get\_q\_angle}}
+\index{kalman\_motion\_get\_q\_angle@{kalman\_motion\_get\_q\_angle}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_get\_q\_angle()}{kalman\_motion\_get\_q\_angle()}}
+{\footnotesize\ttfamily \label{group__math_ga364fbcba405034b6a97ba098310f0ebf} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+get\+\_\+q\+\_\+angle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{q\+\_\+angle}{}\end{DoxyParamCaption})}
+
+
+
+Gets q\+\_\+angle noise variance for the accelerometer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ out}}  & {\em q\+\_\+angle} & Angle noise variance in degrees. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga930391f0f7430d9f9deba0a475997d29}\index{kalman motion@{kalman motion}!kalman\_motion\_get\_q\_bias@{kalman\_motion\_get\_q\_bias}}
+\index{kalman\_motion\_get\_q\_bias@{kalman\_motion\_get\_q\_bias}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_get\_q\_bias()}{kalman\_motion\_get\_q\_bias()}}
+{\footnotesize\ttfamily \label{group__math_ga930391f0f7430d9f9deba0a475997d29} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+get\+\_\+q\+\_\+bias (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{q\+\_\+bias}{}\end{DoxyParamCaption})}
+
+
+
+Gets q\+\_\+bias noise variance for the gyroscope. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ out}}  & {\em q\+\_\+bias} & Bias noise variance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga0a03899fa87e7d564396b03bc38d94b0}\index{kalman motion@{kalman motion}!kalman\_motion\_get\_r\_measure@{kalman\_motion\_get\_r\_measure}}
+\index{kalman\_motion\_get\_r\_measure@{kalman\_motion\_get\_r\_measure}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_get\_r\_measure()}{kalman\_motion\_get\_r\_measure()}}
+{\footnotesize\ttfamily \label{group__math_ga0a03899fa87e7d564396b03bc38d94b0} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+get\+\_\+r\+\_\+measure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{r\+\_\+measure}{}\end{DoxyParamCaption})}
+
+
+
+Gets r\+\_\+measure noise variance for the measurement. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ out}}  & {\em r\+\_\+measure} & Measurement noise variance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_gac632184217b2187694694a1503e82961}\index{kalman motion@{kalman motion}!kalman\_motion\_get\_rate@{kalman\_motion\_get\_rate}}
+\index{kalman\_motion\_get\_rate@{kalman\_motion\_get\_rate}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_get\_rate()}{kalman\_motion\_get\_rate()}}
+{\footnotesize\ttfamily \label{group__math_gac632184217b2187694694a1503e82961} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+get\+\_\+rate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{rate}{}\end{DoxyParamCaption})}
+
+
+
+Gets the unbiased rate calculated from the rate and the calculated bias. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ out}}  & {\em rate} & Rate in degrees per second. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_gab8d6766062e59a3b8ed1847cf492e189}\index{kalman motion@{kalman motion}!kalman\_motion\_init@{kalman\_motion\_init}}
+\index{kalman\_motion\_init@{kalman\_motion\_init}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_init()}{kalman\_motion\_init()}}
+{\footnotesize\ttfamily \label{group__math_gab8d6766062e59a3b8ed1847cf492e189} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{kalman\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a kalman motion handle instance to filter data from a gyroscope and/or accelerometer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga693e2e87f1863b645f40a6e9a08c6406}\index{kalman motion@{kalman motion}!kalman\_motion\_set\_angle@{kalman\_motion\_set\_angle}}
+\index{kalman\_motion\_set\_angle@{kalman\_motion\_set\_angle}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_set\_angle()}{kalman\_motion\_set\_angle()}}
+{\footnotesize\ttfamily \label{group__math_ga693e2e87f1863b645f40a6e9a08c6406} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+set\+\_\+angle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{const float}]{angle}{}\end{DoxyParamCaption})}
+
+
+
+Sets the angle and should be used to set the starting angle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em angle} & Angle in degrees. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga5ea44db3e1c4e7567f473af587ebb596}\index{kalman motion@{kalman motion}!kalman\_motion\_set\_q\_angle@{kalman\_motion\_set\_q\_angle}}
+\index{kalman\_motion\_set\_q\_angle@{kalman\_motion\_set\_q\_angle}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_set\_q\_angle()}{kalman\_motion\_set\_q\_angle()}}
+{\footnotesize\ttfamily \label{group__math_ga5ea44db3e1c4e7567f473af587ebb596} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+set\+\_\+q\+\_\+angle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{const float}]{q\+\_\+angle}{}\end{DoxyParamCaption})}
+
+
+
+Sets q\+\_\+angle noise variance for the accelerometer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em q\+\_\+angle} & Angle noise variance in degrees. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga2bf5dcacd095bba30f5ff747c300fcef}\index{kalman motion@{kalman motion}!kalman\_motion\_set\_q\_bias@{kalman\_motion\_set\_q\_bias}}
+\index{kalman\_motion\_set\_q\_bias@{kalman\_motion\_set\_q\_bias}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_set\_q\_bias()}{kalman\_motion\_set\_q\_bias()}}
+{\footnotesize\ttfamily \label{group__math_ga2bf5dcacd095bba30f5ff747c300fcef} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+set\+\_\+q\+\_\+bias (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{const float}]{q\+\_\+bias}{}\end{DoxyParamCaption})}
+
+
+
+Sets q\+\_\+bias noise variance for the gyroscope. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em q\+\_\+bias} & Bias noise variance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__math_ga01f2d63cd90e5d9a735eb8dd98e528d0}\index{kalman motion@{kalman motion}!kalman\_motion\_set\_r\_measure@{kalman\_motion\_set\_r\_measure}}
+\index{kalman\_motion\_set\_r\_measure@{kalman\_motion\_set\_r\_measure}!kalman motion@{kalman motion}}
+\doxysubsubsection{\texorpdfstring{kalman\_motion\_set\_r\_measure()}{kalman\_motion\_set\_r\_measure()}}
+{\footnotesize\ttfamily \label{group__math_ga01f2d63cd90e5d9a735eb8dd98e528d0} 
+esp\+\_\+err\+\_\+t kalman\+\_\+motion\+\_\+set\+\_\+r\+\_\+measure (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__math_ga8e6e217383a5bfe4456bf69120c9d385}{kalman\+\_\+motion\+\_\+handle\+\_\+t}}}]{kalman\+\_\+handle}{, }\item[{const float}]{r\+\_\+measure}{}\end{DoxyParamCaption})}
+
+
+
+Sets r\+\_\+measure noise variance for the measurement. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em kalman\+\_\+handle} & Kalman motion state handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em r\+\_\+measure} & Measurement noise variance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}

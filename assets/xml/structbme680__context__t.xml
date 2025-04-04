@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structbme680__context__t" kind="struct" language="C++" prot="public">
+    <compoundname>bme680_context_t</compoundname>
+    <includes refid="bme680_8h" local="no">bme680.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbme680__context__t_1aa4e93061bf25a3b8212915158f959fab" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga754b18e9f8c3f77d4c2738fa59403150" kindref="member">bme680_config_t</ref></type>
+        <definition>bme680_config_t dev_config</definition>
+        <argsstring></argsstring>
+        <name>dev_config</name>
+        <qualifiedname>bme680_context_t::dev_config</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 device configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="369" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="369" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" prot="public" static="no" mutable="no">
+        <type>i2c_master_dev_handle_t</type>
+        <definition>i2c_master_dev_handle_t i2c_handle</definition>
+        <argsstring></argsstring>
+        <name>i2c_handle</name>
+        <qualifiedname>bme680_context_t::i2c_handle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 I2C device handle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="370" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="370" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__context__t_1aee1baf73a44df48ffc18338303db75f4" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga1fcb18f07741a3e8b640e2d3ba059f12" kindref="member">bme680_cal_factors_t</ref> *</type>
+        <definition>bme680_cal_factors_t* dev_cal_factors</definition>
+        <argsstring></argsstring>
+        <name>dev_cal_factors</name>
+        <qualifiedname>bme680_context_t::dev_cal_factors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 device calibration factors </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="371" column="44" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="371" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__context__t_1a88e300db221e7a0382f2a4c289b9557d" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t chip_id</definition>
+        <argsstring></argsstring>
+        <name>chip_id</name>
+        <qualifiedname>bme680_context_t::chip_id</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>bme680 chip identification register </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="372" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="372" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__context__t_1a64d3df5dc5e14a88427da817563cdf51" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t ambient_temperature</definition>
+        <argsstring></argsstring>
+        <name>ambient_temperature</name>
+        <qualifiedname>bme680_context_t::ambient_temperature</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="373" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="373" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbme680__context__t_1a7d105d24424c3c1d7a35408223208c72" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t variant_id</definition>
+        <argsstring></argsstring>
+        <name>variant_id</name>
+        <qualifiedname>bme680_context_t::variant_id</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="374" column="45" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="374" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>BME680 context structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>bme680_cal_factors_s</label>
+        <link refid="structbme680__cal__factors__s"/>
+      </node>
+      <node id="2">
+        <label>bme680_config_s</label>
+        <link refid="structbme680__config__s"/>
+      </node>
+      <node id="1">
+        <label>bme680_context_t</label>
+        <link refid="structbme680__context__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>dev_config</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>dev_cal_factors</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="components/peripherals/i2c/esp_bme680/include/bme680.h" line="368" column="1" bodyfile="components/peripherals/i2c/esp_bme680/include/bme680.h" bodystart="368" bodyend="375"/>
+    <listofallmembers>
+      <member refid="structbme680__context__t_1a64d3df5dc5e14a88427da817563cdf51" prot="public" virt="non-virtual"><scope>bme680_context_t</scope><name>ambient_temperature</name></member>
+      <member refid="structbme680__context__t_1a88e300db221e7a0382f2a4c289b9557d" prot="public" virt="non-virtual"><scope>bme680_context_t</scope><name>chip_id</name></member>
+      <member refid="structbme680__context__t_1aee1baf73a44df48ffc18338303db75f4" prot="public" virt="non-virtual"><scope>bme680_context_t</scope><name>dev_cal_factors</name></member>
+      <member refid="structbme680__context__t_1aa4e93061bf25a3b8212915158f959fab" prot="public" virt="non-virtual"><scope>bme680_context_t</scope><name>dev_config</name></member>
+      <member refid="structbme680__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" prot="public" virt="non-virtual"><scope>bme680_context_t</scope><name>i2c_handle</name></member>
+      <member refid="structbme680__context__t_1a7d105d24424c3c1d7a35408223208c72" prot="public" virt="non-virtual"><scope>bme680_context_t</scope><name>variant_id</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

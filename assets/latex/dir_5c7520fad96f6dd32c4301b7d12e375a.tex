@@ -1,0 +1,257 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ssd1306 Directory Reference}
+\hypertarget{dir_5c7520fad96f6dd32c4301b7d12e375a}{}\label{dir_5c7520fad96f6dd32c4301b7d12e375a}\index{components/peripherals/i2c/esp\_ssd1306 Directory Reference@{components/peripherals/i2c/esp\_ssd1306 Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_e256716a914f3a139f052cac960a9f0b}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{ssd1306_8c}{ssd1306.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_ssd1306}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_ssd1306}{\texttt{ }}
+
+This esp-\/idf driver was developed for generic SSD1306 OLED displays. Information on features and functionality are documented and can be found in the {\ttfamily \doxylink{ssd1306_8h}{ssd1306.\+h}} header file. The SSD1306 component is a compact and simplified driver compatible with 128x64, 128x32, 128x128 OLED displays. There are three font sizes supported, hardware and software scrolling capabilities, bitmap visualization, and more. This component has one font implemented now (i.\+e. 8x8 basic Latin + control + extended Latin) but is ideal for most use cases.\hypertarget{README.md_autotoc_md82}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md82}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ssd1306}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/peripherals/i2c/esp\+\_\+ssd1306}}\hypertarget{README.md_autotoc_md83}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md83}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{ssd1306_8h}{ssd1306.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_ssd1306}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ ssd1306\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ ssd1306.h}
+\DoxyCodeLine{\ \ \ \ └──\ ssd1306.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md84}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md84}
+Once a driver instance is instantiated the display panel is ready for usage as shown in the below example. This basic implementation of the driver utilizes default configuration settings and displays a sequence of text messages and bitmaps at user defined interval and prints the results.
+
+The example initializes a 128x64 SSD1306 OLED display and demonstrates the following features\+:
+
+
+\begin{DoxyItemize}
+\item Display large text (x3)
+\item Display file receive and transmit bitmap icons
+\item Display medium text (x2)
+\item Display text
+\item Display countdown timer
+\item Display text scrolling up
+\item Display text scrolling down
+\item Display text paging down and up
+\item Display text scrolling horizontally from right and left
+\item Display text scrolling vertically downwards and upwards
+\item Display bitmap images
+\item Display inverted text and fadeout
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{ssd1306_8h}{ssd1306.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ i2c0\_ssd1306\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ the\ xLastWakeTime\ variable\ with\ the\ current\ time.}}
+\DoxyCodeLine{\ \ \ \ TickType\_t\ \ \ \ \ \ \ \ \ \ last\_wake\_time\ \ \ =\ xTaskGetTickCount\ ();}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ initialize\ i2c\ device\ configuration}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gac71b91b4b58813d41ceba1ac27ef9214}{ssd1306\_config\_t}}\ dev\_cfg\ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{group__drivers_ga4058c2bc49eb1fe09ca026568ec931b1}{I2C\_SSD1306\_128x64\_CONFIG\_DEFAULT}};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_gad00aae97f6e6ed7273b46e4b955d89bb}{ssd1306\_handle\_t}}\ dev\_hdl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ init\ device}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga8947dac422d7f16f608a3360b57de507}{ssd1306\_init}}(i2c0\_bus\_hdl,\ \&dev\_cfg,\ \&dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}ssd1306\ handle\ init\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assert(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ task\ loop\ entry\ point}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ SSD1306\ -\/\ START\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ center\ =\ 1,\ top\ =\ 1,\ bottom\ =\ 4;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ lineChar[16];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ uint8\_t\ image[24];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Panel\ is\ 128x64"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ x3\ text}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Display\ x3\ Text"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga70996f821857365b9ad33a6293f810c3}{ssd1306\_display\_text\_x3}}(dev\_hdl,\ 0,\ \textcolor{stringliteral}{"{}Hello"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ bitmap\ icons}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Display\ bitmap\ icons"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gafa66db38cf09253a7a3ad6779240c9d5}{ssd1306\_display\_bitmap}}(dev\_hdl,\ 31,\ 0,\ data\_rx\_img\_32x32,\ 32,\ 32,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(500\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gafa66db38cf09253a7a3ad6779240c9d5}{ssd1306\_display\_bitmap}}(dev\_hdl,\ 31,\ 0,\ data\_tx\_img\_32x32,\ 32,\ 32,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(1000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ x2\ text}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Display\ x2\ Text"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gae45808dfc11b5de6f993f5f800b31516}{ssd1306\_display\_text\_x2}}(dev\_hdl,\ 0,\ \textcolor{stringliteral}{"{}\{xTEXTx\}"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gae45808dfc11b5de6f993f5f800b31516}{ssd1306\_display\_text\_x2}}(dev\_hdl,\ 2,\ \textcolor{stringliteral}{"{}\ X2-\/X2"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ text}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Display\ Text"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 0,\ \textcolor{stringliteral}{"{}SSD1306\ 128x64"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 1,\ \textcolor{stringliteral}{"{}Hello\ World!!"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 2,\ \textcolor{stringliteral}{"{}SSD1306\ 128x64"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 3,\ \textcolor{stringliteral}{"{}Hello\ World!!"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Display\ Count\ Down}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Display\ Count\ Down"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ memset(image,\ 0,\ \textcolor{keyword}{sizeof}(image));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga995b3cf873461ff41db9499c11f24a18}{ssd1306\_display\_image}}(dev\_hdl,\ top,\ (6*8-\/1),\ image,\ \textcolor{keyword}{sizeof}(image));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga995b3cf873461ff41db9499c11f24a18}{ssd1306\_display\_image}}(dev\_hdl,\ top+1,\ (6*8-\/1),\ image,\ \textcolor{keyword}{sizeof}(image));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga995b3cf873461ff41db9499c11f24a18}{ssd1306\_display\_image}}(dev\_hdl,\ top+2,\ (6*8-\/1),\ image,\ \textcolor{keyword}{sizeof}(image));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ font\ =\ 0x39;\ font\ >\ 0x30;\ font-\/-\/)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ memset(image,\ 0,\ \textcolor{keyword}{sizeof}(image));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga995b3cf873461ff41db9499c11f24a18}{ssd1306\_display\_image}}(dev\_hdl,\ top+1,\ (7*8-\/1),\ image,\ 8);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ memcpy(image,\ font8x8\_latin\_tr[font],\ 8);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dev\_hdl-\/>\mbox{\hyperlink{structssd1306__context__t_af81d4993741fd00e29b1533b59ff9e33}{dev\_config}}.\mbox{\hyperlink{structssd1306__config__s_aa302042fbd2e10b55641d904db2a25a1}{flip\_enabled}})\ \mbox{\hyperlink{group__drivers_ga08bb51787b4f00ea189694a53b19b0c5}{ssd1306\_flip\_buffer}}(image,\ 8);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga995b3cf873461ff41db9499c11f24a18}{ssd1306\_display\_image}}(dev\_hdl,\ top+1,\ (7*8-\/1),\ image,\ 8);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ vTaskDelay(1000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scroll\ Up}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Scroll\ Up"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 0,\ \textcolor{stringliteral}{"{}-\/-\/-\/Scroll\ \ UP-\/-\/-\/"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5756410e01233fd698972eaa3514518f}{ssd1306\_set\_software\_scroll}}(dev\_hdl,\ (dev\_hdl-\/>\mbox{\hyperlink{structssd1306__context__t_a249087c071f547a50c74805580b39e71}{pages}}\ -\/\ 1),\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ line\ =\ 0;\ line\ <\ bottom+10;\ line++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ lineChar[0]\ =\ 0x01;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ sprintf(\&lineChar[1],\ \textcolor{stringliteral}{"{}\ Line\ \%02d"{}},\ line);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ssd1306\_display\_scroll\_text(dev\_hdl,\ lineChar,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ vTaskDelay(500\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scroll\ Down}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Scroll\ Down"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 0,\ \textcolor{stringliteral}{"{}-\/-\/Scroll\ \ DOWN-\/-\/"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5756410e01233fd698972eaa3514518f}{ssd1306\_set\_software\_scroll}}(dev\_hdl,\ 1,\ (dev\_hdl-\/>\mbox{\hyperlink{structssd1306__context__t_a249087c071f547a50c74805580b39e71}{pages}}\ -\/\ 1)\ );}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ page\ =\ 0;\ page\ <\ bottom+10;\ page++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ lineChar[0]\ =\ 0x02;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ sprintf(\&lineChar[1],\ \textcolor{stringliteral}{"{}\ Line\ \%02d"{}},\ page);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ssd1306\_display\_scroll\_text(dev\_hdl,\ lineChar,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ vTaskDelay(500\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Page\ Down}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Page\ Down"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 0,\ \textcolor{stringliteral}{"{}-\/-\/-\/Page\ \ \ DOWN-\/-\/-\/"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5756410e01233fd698972eaa3514518f}{ssd1306\_set\_software\_scroll}}(dev\_hdl,\ 1,\ (dev\_hdl-\/>\mbox{\hyperlink{structssd1306__context__t_a249087c071f547a50c74805580b39e71}{pages}}-\/1)\ );}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ page\ =\ 0;\ page\ <\ bottom+10;\ page++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ (page\ \%\ (dev\_hdl-\/>\mbox{\hyperlink{structssd1306__context__t_a249087c071f547a50c74805580b39e71}{pages}}-\/1))\ ==\ 0)\ ssd1306\_clear\_scroll\_display(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ lineChar[0]\ =\ 0x02;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ sprintf(\&lineChar[1],\ \textcolor{stringliteral}{"{}\ Line\ \%02d"{}},\ page);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ssd1306\_display\_scroll\_text(dev\_hdl,\ lineChar,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ vTaskDelay(500\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Horizontal\ Scroll}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Horizontal\ Scroll"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ center,\ \textcolor{stringliteral}{"{}Horizontal"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga94321a86e0690eff8f8d6c39862e6a20}{ssd1306\_set\_hardware\_scroll}}(dev\_hdl,\ SSD1306\_SCROLL\_RIGHT,\ SSD1306\_SCROLL\_2\_FRAMES);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(5000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga94321a86e0690eff8f8d6c39862e6a20}{ssd1306\_set\_hardware\_scroll}}(dev\_hdl,\ SSD1306\_SCROLL\_LEFT,\ SSD1306\_SCROLL\_2\_FRAMES);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(5000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga94321a86e0690eff8f8d6c39862e6a20}{ssd1306\_set\_hardware\_scroll}}(dev\_hdl,\ SSD1306\_SCROLL\_STOP,\ SSD1306\_SCROLL\_2\_FRAMES);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vertical\ Scroll}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Vertical\ Scroll"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ center,\ \textcolor{stringliteral}{"{}Vertical"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga94321a86e0690eff8f8d6c39862e6a20}{ssd1306\_set\_hardware\_scroll}}(dev\_hdl,\ SSD1306\_SCROLL\_DOWN,\ SSD1306\_SCROLL\_2\_FRAMES);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(5000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga94321a86e0690eff8f8d6c39862e6a20}{ssd1306\_set\_hardware\_scroll}}(dev\_hdl,\ SSD1306\_SCROLL\_UP,\ SSD1306\_SCROLL\_2\_FRAMES);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(5000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga94321a86e0690eff8f8d6c39862e6a20}{ssd1306\_set\_hardware\_scroll}}(dev\_hdl,\ SSD1306\_SCROLL\_STOP,\ SSD1306\_SCROLL\_2\_FRAMES);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bitmaps}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Bitmaps"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ 1,\ \textcolor{stringliteral}{"{}BATMAN"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ bitmapWidth\ =\ 4*8;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width\ =\ dev\_hdl-\/>\mbox{\hyperlink{structssd1306__context__t_a09a2a45f731b02946ff6d3cd15c1a476}{width}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ xpos\ =\ width\ /\ 2;\ \textcolor{comment}{//\ center\ of\ width}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xpos\ =\ xpos\ -\/\ bitmapWidth/2;\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ypos\ =\ 16;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGD(APP\_TAG,\ \textcolor{stringliteral}{"{}width=\%d\ xpos=\%d"{}},\ width,\ xpos);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gafa66db38cf09253a7a3ad6779240c9d5}{ssd1306\_display\_bitmap}}(dev\_hdl,\ xpos,\ ypos,\ batman,\ 32,\ 13,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(3000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<128;i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ssd1306\_set\_display\_wrap\_around(dev\_hdl,\ SSD1306\_SCROLL\_RIGHT,\ 2,\ 3,\ 0);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(2000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gafa66db38cf09253a7a3ad6779240c9d5}{ssd1306\_display\_bitmap}}(dev\_hdl,\ 0,\ 0,\ logo\_mischianti,\ 128,\ 64,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(2000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<64;i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ssd1306\_set\_display\_wrap\_around(dev\_hdl,\ SSD1306\_SCROLL\_UP,\ 0,\ 127,\ 0);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(2000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gafa66db38cf09253a7a3ad6779240c9d5}{ssd1306\_display\_bitmap}}(dev\_hdl,\ 0,\ 0,\ fleischer,\ 128,\ 64,\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(2000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Invert}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Invert"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4c23d69fc724593d58eb2cd04bbe2202}{ssd1306\_clear\_display}}(dev\_hdl,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_set\_display\_contrast(dev\_hdl,\ 0xff);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4e3e052294260fffa56f9dacc1ff0e4f}{ssd1306\_display\_text}}(dev\_hdl,\ center,\ \textcolor{stringliteral}{"{}\ \ Good\ Bye!!"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(5000\ /\ portTICK\_PERIOD\_MS);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fade\ Out}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}Fade\ Out"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssd1306\_fadeout\_display(dev\_hdl);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\ SSD1306\ -\/\ END\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ pause\ the\ task\ per\ defined\ wait\ period}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelaySecUntil(\ \&last\_wake\_time,\ I2C0\_TASK\_SAMPLING\_RATE\ +\ 10\ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ resources}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__drivers_ga53076408f712df3a9f7040032b8b64a5}{ssd1306\_delete}}(\ dev\_hdl\ );}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

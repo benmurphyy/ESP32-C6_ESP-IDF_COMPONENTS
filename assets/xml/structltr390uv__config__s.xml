@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structltr390uv__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>ltr390uv_config_s</compoundname>
+    <includes refid="ltr390uv_8h" local="no">ltr390uv.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structltr390uv__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t i2c_address</definition>
+        <argsstring></argsstring>
+        <name>i2c_address</name>
+        <qualifiedname>ltr390uv_config_s::i2c_address</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv i2c device address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="214" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="214" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t i2c_clock_speed</definition>
+        <argsstring></argsstring>
+        <name>i2c_clock_speed</name>
+        <qualifiedname>ltr390uv_config_s::i2c_clock_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv i2c device scl clock speed in hz </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="215" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="215" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1af314f67fb56fb994e335a69a77716a04" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t window_factor</definition>
+        <argsstring></argsstring>
+        <name>window_factor</name>
+        <qualifiedname>ltr390uv_config_s::window_factor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv window factor wfac = 1 for no window or clear window glass, wfac &gt; 1 when device is under tinted window glass, calibrate under white LED </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="216" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="216" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1a71e23bd34b1be491e4c904d8dab493ff" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga6e86bca5a4b2cc0f14a16764864b3210" kindref="member">ltr390uv_operation_modes_t</ref></type>
+        <definition>ltr390uv_operation_modes_t operation_mode</definition>
+        <argsstring></argsstring>
+        <name>operation_mode</name>
+        <qualifiedname>ltr390uv_config_s::operation_mode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv operation mode, als or uvs </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="217" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="217" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1aeb40ff58893b30a76ed24d13129f8a3e" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaa32e4995981a20b7d75b408afb944741" kindref="member">ltr390uv_sensor_resolutions_t</ref></type>
+        <definition>ltr390uv_sensor_resolutions_t als_sensor_resolution</definition>
+        <argsstring></argsstring>
+        <name>als_sensor_resolution</name>
+        <qualifiedname>ltr390uv_config_s::als_sensor_resolution</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv als sensor resolution </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="218" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="218" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1af4f10839395a3589d8afad28c3ebdc71" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga42a99fe430350963604a513012dcc091" kindref="member">ltr390uv_measurement_rates_t</ref></type>
+        <definition>ltr390uv_measurement_rates_t als_measurement_rate</definition>
+        <argsstring></argsstring>
+        <name>als_measurement_rate</name>
+        <qualifiedname>ltr390uv_config_s::als_measurement_rate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv als measurement rate </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="219" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="219" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1a2ca95336af5d44b22c8d207403821f2d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga7827e02d5538c097a4df71803ebd364d" kindref="member">ltr390uv_measurement_gains_t</ref></type>
+        <definition>ltr390uv_measurement_gains_t als_measurement_gain</definition>
+        <argsstring></argsstring>
+        <name>als_measurement_gain</name>
+        <qualifiedname>ltr390uv_config_s::als_measurement_gain</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv als measurement gain </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="220" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="220" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1a8720051bd6ee43d180f9ae79be60268d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1gaa32e4995981a20b7d75b408afb944741" kindref="member">ltr390uv_sensor_resolutions_t</ref></type>
+        <definition>ltr390uv_sensor_resolutions_t uvs_sensor_resolution</definition>
+        <argsstring></argsstring>
+        <name>uvs_sensor_resolution</name>
+        <qualifiedname>ltr390uv_config_s::uvs_sensor_resolution</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv uvs sensor resolution </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="221" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1a4a1185e9c62eea3e8d80dd4c10769e1b" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga42a99fe430350963604a513012dcc091" kindref="member">ltr390uv_measurement_rates_t</ref></type>
+        <definition>ltr390uv_measurement_rates_t uvs_measurement_rate</definition>
+        <argsstring></argsstring>
+        <name>uvs_measurement_rate</name>
+        <qualifiedname>ltr390uv_config_s::uvs_measurement_rate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv uvs measurement rate </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="222" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="222" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structltr390uv__config__s_1ad1f9e2e54a6d7523d7c3fbc8b670b27b" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga7827e02d5538c097a4df71803ebd364d" kindref="member">ltr390uv_measurement_gains_t</ref></type>
+        <definition>ltr390uv_measurement_gains_t uvs_measurement_gain</definition>
+        <argsstring></argsstring>
+        <name>uvs_measurement_gain</name>
+        <qualifiedname>ltr390uv_config_s::uvs_measurement_gain</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ltr390uv uvs measurement gain </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="223" column="37" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="223" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>LTR390UV configuration structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" line="213" column="1" bodyfile="components/peripherals/i2c/esp_ltr390uv/include/ltr390uv.h" bodystart="213" bodyend="224"/>
+    <listofallmembers>
+      <member refid="structltr390uv__config__s_1a2ca95336af5d44b22c8d207403821f2d" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>als_measurement_gain</name></member>
+      <member refid="structltr390uv__config__s_1af4f10839395a3589d8afad28c3ebdc71" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>als_measurement_rate</name></member>
+      <member refid="structltr390uv__config__s_1aeb40ff58893b30a76ed24d13129f8a3e" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>als_sensor_resolution</name></member>
+      <member refid="structltr390uv__config__s_1a4fc512d568c2b72f6907c218205cf6c9" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>i2c_address</name></member>
+      <member refid="structltr390uv__config__s_1a770b3ab4bba557baec88287d86832a34" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>i2c_clock_speed</name></member>
+      <member refid="structltr390uv__config__s_1a71e23bd34b1be491e4c904d8dab493ff" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>operation_mode</name></member>
+      <member refid="structltr390uv__config__s_1ad1f9e2e54a6d7523d7c3fbc8b670b27b" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>uvs_measurement_gain</name></member>
+      <member refid="structltr390uv__config__s_1a4a1185e9c62eea3e8d80dd4c10769e1b" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>uvs_measurement_rate</name></member>
+      <member refid="structltr390uv__config__s_1a8720051bd6ee43d180f9ae79be60268d" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>uvs_sensor_resolution</name></member>
+      <member refid="structltr390uv__config__s_1af314f67fb56fb994e335a69a77716a04" prot="public" virt="non-virtual"><scope>ltr390uv_config_s</scope><name>window_factor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

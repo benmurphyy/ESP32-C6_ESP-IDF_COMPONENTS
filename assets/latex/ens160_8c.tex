@@ -1,0 +1,256 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ens160/ens160.c File Reference}
+\hypertarget{ens160_8c}{}\label{ens160_8c}\index{components/peripherals/i2c/esp\_ens160/ens160.c@{components/peripherals/i2c/esp\_ens160/ens160.c}}
+{\ttfamily \#include "{}include/ens160.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/queue.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{ens160_8c_a6f205f5d6a2293f43c02ae0eece3abb4}\label{ens160_8c_a6f205f5d6a2293f43c02ae0eece3abb4} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+PART\+\_\+\+ID\+\_\+R}~UINT8\+\_\+C(0x00)
+\begin{DoxyCompactList}\small\item\em ens160 I2C part identifier (default id\+: 0x01, 0x60) \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_afa8a99be1bec446533b17fd645a695bd}\label{ens160_8c_afa8a99be1bec446533b17fd645a695bd} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+OPMODE\+\_\+\+RW}~UINT8\+\_\+C(0x10)
+\begin{DoxyCompactList}\small\item\em ens160 I2C operating mode \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a42650f883b287bacc642ef83e6911971}\label{ens160_8c_a42650f883b287bacc642ef83e6911971} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+INT\+\_\+\+CONFIG\+\_\+\+RW}~UINT8\+\_\+C(0x11)
+\begin{DoxyCompactList}\small\item\em ens160 I2C interrupt pin configuration \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ae825fb079b83fc51ee595fb03b365981}\label{ens160_8c_ae825fb079b83fc51ee595fb03b365981} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+COMMAND\+\_\+\+RW}~UINT8\+\_\+C(0x12)
+\begin{DoxyCompactList}\small\item\em ens160 I2C additional system commands \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ae9bc5d591c9ead6046a6020560f30b79}\label{ens160_8c_ae9bc5d591c9ead6046a6020560f30b79} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+TEMP\+\_\+\+IN\+\_\+\+RW}~UINT8\+\_\+C(0x13)
+\begin{DoxyCompactList}\small\item\em ens160 I2C host ambient temperature information \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a4e0f1c0de824cb62e2f4a7cb53829164}\label{ens160_8c_a4e0f1c0de824cb62e2f4a7cb53829164} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+RH\+\_\+\+IN\+\_\+\+RW}~UINT8\+\_\+C(0x15)
+\begin{DoxyCompactList}\small\item\em ens160 I2C host relative humidity information \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aef982e342c5fbaa31f4ccda47711c1a1}\label{ens160_8c_aef982e342c5fbaa31f4ccda47711c1a1} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DEVICE\+\_\+\+STATUS\+\_\+R}~UINT8\+\_\+C(0x20)
+\begin{DoxyCompactList}\small\item\em ens160 I2C operating status \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a25342e2cb65b1ab3d5e500d3b01c759b}\label{ens160_8c_a25342e2cb65b1ab3d5e500d3b01c759b} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+AQI\+\_\+R}~UINT8\+\_\+C(0x21)
+\begin{DoxyCompactList}\small\item\em ens160 I2C air quality index \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_afa58c03250b00d6e1273bd7a4f9540cd}\label{ens160_8c_afa58c03250b00d6e1273bd7a4f9540cd} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+TVOC\+\_\+R}~UINT8\+\_\+C(0x22)
+\begin{DoxyCompactList}\small\item\em ens160 I2C TVOC concentration (ppb) \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a3d13c165214a606f8257551f0349072c}\label{ens160_8c_a3d13c165214a606f8257551f0349072c} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+ETOH\+\_\+R}~UINT8\+\_\+C(0x22)
+\begin{DoxyCompactList}\small\item\em ens160 I2C ETOH concentration (ppb) \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a39b63db46ff7b36051248d14a7ace09f}\label{ens160_8c_a39b63db46ff7b36051248d14a7ace09f} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+ECO2\+\_\+R}~UINT8\+\_\+C(0x24)
+\begin{DoxyCompactList}\small\item\em ens160 I2C equivalent CO2 concentration (ppm) \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ad7e0d9f2c8154e59e42d1b052ca03df0}\label{ens160_8c_ad7e0d9f2c8154e59e42d1b052ca03df0} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+BL\+\_\+R}~UINT8\+\_\+C(0x28)
+\begin{DoxyCompactList}\small\item\em ens160 I2C baseline information \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_adb2abf7d5f062e3d23f355823fd0dc88}\label{ens160_8c_adb2abf7d5f062e3d23f355823fd0dc88} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+TEMP\+\_\+R}~UINT8\+\_\+C(0x30)
+\begin{DoxyCompactList}\small\item\em ens160 I2C temperature used in calculations \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a94758999c17d7f2350ca60b80f624f2a}\label{ens160_8c_a94758999c17d7f2350ca60b80f624f2a} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+RH\+\_\+R}~UINT8\+\_\+C(0x32)
+\begin{DoxyCompactList}\small\item\em ens160 I2C relative humidity used in calculations \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a4bccc0e8c1b05233fddab7e15ff7767b}\label{ens160_8c_a4bccc0e8c1b05233fddab7e15ff7767b} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+DATA\+\_\+\+MISR\+\_\+R}~UINT8\+\_\+C(0x38)
+\begin{DoxyCompactList}\small\item\em ens160 I2C data integrity field \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_abf6ca2107e17fc0dc09b5f1e2b61dbf7}\label{ens160_8c_abf6ca2107e17fc0dc09b5f1e2b61dbf7} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE0\+\_\+\+RW}~UINT8\+\_\+C(0x40)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write0 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aa58caef691026a7b0f5d5863d34b98ef}\label{ens160_8c_aa58caef691026a7b0f5d5863d34b98ef} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE1\+\_\+\+RW}~UINT8\+\_\+C(0x41)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write1 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a7dad400d167861ab2c5550e69d4cac17}\label{ens160_8c_a7dad400d167861ab2c5550e69d4cac17} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE2\+\_\+\+RW}~UINT8\+\_\+C(0x42)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write2 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ab61a343ac39cd4f463c1050df93fb35a}\label{ens160_8c_ab61a343ac39cd4f463c1050df93fb35a} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE3\+\_\+\+RW}~UINT8\+\_\+C(0x43)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write3 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aa4ce180da4e902de94e62fd5e2dfa798}\label{ens160_8c_aa4ce180da4e902de94e62fd5e2dfa798} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE4\+\_\+\+RW}~UINT8\+\_\+C(0x44)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write4 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a80603ce8f23a596a652f9d2b3d17efa1}\label{ens160_8c_a80603ce8f23a596a652f9d2b3d17efa1} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE5\+\_\+\+RW}~UINT8\+\_\+C(0x45)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write5 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ad68fd7da4c6e367bc16fe70d9492b92a}\label{ens160_8c_ad68fd7da4c6e367bc16fe70d9492b92a} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE6\+\_\+\+RW}~UINT8\+\_\+C(0x46)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write6 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a44c2736edf6f848f06cc983b029e1d12}\label{ens160_8c_a44c2736edf6f848f06cc983b029e1d12} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+WRITE7\+\_\+\+RW}~UINT8\+\_\+C(0x47)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose write7 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ae97a3b0849db21242e371b73c01df986}\label{ens160_8c_ae97a3b0849db21242e371b73c01df986} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ0\+\_\+R}~UINT8\+\_\+C(0x48)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read0 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a392840463f61fd96f39ba3e065c23b86}\label{ens160_8c_a392840463f61fd96f39ba3e065c23b86} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ1\+\_\+R}~UINT8\+\_\+C(0x49)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read1 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_acdfe757d55c924fa83cf5ed0e4fdb4a4}\label{ens160_8c_acdfe757d55c924fa83cf5ed0e4fdb4a4} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ2\+\_\+R}~UINT8\+\_\+C(0x4a)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read2 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aba9d22d8b11d33fa7a5e27c90de43c28}\label{ens160_8c_aba9d22d8b11d33fa7a5e27c90de43c28} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ3\+\_\+R}~UINT8\+\_\+C(0x4b)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read3 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aa4f2239c39014094a89059f662b44a02}\label{ens160_8c_aa4f2239c39014094a89059f662b44a02} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ4\+\_\+R}~UINT8\+\_\+C(0x4c)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read4 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ab0d20e2a8931b3460389b418477a53ce}\label{ens160_8c_ab0d20e2a8931b3460389b418477a53ce} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ5\+\_\+R}~UINT8\+\_\+C(0x4d)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read5 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aa42bec99edc8c957e0a2370c3a7aabb2}\label{ens160_8c_aa42bec99edc8c957e0a2370c3a7aabb2} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ6\+\_\+R}~UINT8\+\_\+C(0x4e)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read6 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a1ffb881f1c6940d1870b7a03fa1bd1a4}\label{ens160_8c_a1ffb881f1c6940d1870b7a03fa1bd1a4} 
+\#define {\bfseries ENS160\+\_\+\+REG\+\_\+\+GPR\+\_\+\+READ7\+\_\+R}~UINT8\+\_\+C(0x4f)
+\begin{DoxyCompactList}\small\item\em ens160 I2C general purpose read7 register \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a062268a034662854d6136cc24bd757a5}\label{ens160_8c_a062268a034662854d6136cc24bd757a5} 
+\#define {\bfseries ENS160\+\_\+\+TEMPERATURE\+\_\+\+MAX}~(float)(125.\+0)
+\begin{DoxyCompactList}\small\item\em ens160 maximum temperature range \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a62c5b739049e938769f7edcf34e7940d}\label{ens160_8c_a62c5b739049e938769f7edcf34e7940d} 
+\#define {\bfseries ENS160\+\_\+\+TEMPERATURE\+\_\+\+MIN}~(float)(-\/40.\+0)
+\begin{DoxyCompactList}\small\item\em ens160 minimum temperature range \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a5d19f149dbfcba7a16e6701b9e1566c2}\label{ens160_8c_a5d19f149dbfcba7a16e6701b9e1566c2} 
+\#define {\bfseries ENS160\+\_\+\+HUMIDITY\+\_\+\+MAX}~(float)(100.\+0)
+\begin{DoxyCompactList}\small\item\em ens160 maximum humidity range \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a8c71c78497a66d1c55136d904b71d5cd}\label{ens160_8c_a8c71c78497a66d1c55136d904b71d5cd} 
+\#define {\bfseries ENS160\+\_\+\+HUMIDITY\+\_\+\+MIN}~(float)(0.\+0)
+\begin{DoxyCompactList}\small\item\em ens160 minimum humidity range \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a07c3f3784bf29d6d0f60b2fdc1c73b41}\label{ens160_8c_a07c3f3784bf29d6d0f60b2fdc1c73b41} 
+\#define {\bfseries ENS160\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(15)
+\begin{DoxyCompactList}\small\item\em ens160 50ms delay before making i2c transactions \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a74816e78a7852fe153e60c9280533c26}\label{ens160_8c_a74816e78a7852fe153e60c9280533c26} 
+\#define {\bfseries ENS160\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(25)
+\begin{DoxyCompactList}\small\item\em ens160 25ms delay before making a measurement \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a94805e687650359592a1d1b4e10a5b82}\label{ens160_8c_a94805e687650359592a1d1b4e10a5b82} 
+\#define {\bfseries ENS160\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(5)
+\begin{DoxyCompactList}\small\item\em ens160 5ms delay before making the next i2c transaction \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ac2d1bd2e7e8374fe5b61a01d7ebb1cbe}\label{ens160_8c_ac2d1bd2e7e8374fe5b61a01d7ebb1cbe} 
+\#define {\bfseries ENS160\+\_\+\+MODE\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\begin{DoxyCompactList}\small\item\em ens160 10ms delay when updating the operating mode \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a31dca31d2ba79375b40c8ce153a69270}\label{ens160_8c_a31dca31d2ba79375b40c8ce153a69270} 
+\#define {\bfseries ENS160\+\_\+\+RESET\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(50)
+\begin{DoxyCompactList}\small\item\em ens160 50ms delay when resetting the device \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ada5b0cc3d91e567c8143d1076a95d6ee}\label{ens160_8c_ada5b0cc3d91e567c8143d1076a95d6ee} 
+\#define {\bfseries ENS160\+\_\+\+CLEAR\+\_\+\+GPR\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\begin{DoxyCompactList}\small\item\em ens160 10ms delay when clearing general purpose registers \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_af5ede772cb9081e63a80cf66e35ca80f}\label{ens160_8c_af5ede772cb9081e63a80cf66e35ca80f} 
+\#define {\bfseries ENS160\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(1)
+\begin{DoxyCompactList}\small\item\em ens160 1ms delay when checking data ready in a loop \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_aaf95a8fdd44419a1333e1f009cff2aff}\label{ens160_8c_aaf95a8fdd44419a1333e1f009cff2aff} 
+\#define {\bfseries ENS160\+\_\+\+DATA\+\_\+\+POLL\+\_\+\+TIMEOUT\+\_\+\+MS}~UINT16\+\_\+C(1500)
+\begin{DoxyCompactList}\small\item\em ens160 1.\+5s timeout when making a measurement \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_ad1e258e63a1cdc2942e688b13761ceec}\label{ens160_8c_ad1e258e63a1cdc2942e688b13761ceec} 
+\#define {\bfseries ENS160\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{ens160_8c_aa56c8c1d26a4ad59c3f2dc105d62dd08}{ENS160\+\_\+\+CONVERT\+\_\+\+RS\+\_\+\+RAW2\+OHMS\+\_\+F}}(x)
+\item 
+\#define \mbox{\hyperlink{ens160_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{ens160_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8a0c563398abbbd945a5811cf9f71d7f}{ens160\+\_\+get\+\_\+interrupt\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, ens160\+\_\+interrupt\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt configuration register from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad526a912dd144b02c82afc98f1dcb718}{ens160\+\_\+set\+\_\+interrupt\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, const ens160\+\_\+interrupt\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes interrupt configuration register to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad75c8c18e1e7e453d24a55a648636bd6}{ens160\+\_\+get\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, ens160\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads status register from ENS160. \end{DoxyCompactList}\item 
+\Hypertarget{ens160_8c_a17e65eb9d7f63590b36b468c960a6e39}\label{ens160_8c_a17e65eb9d7f63590b36b468c960a6e39} 
+esp\+\_\+err\+\_\+t {\bfseries ens160\+\_\+clear\+\_\+general\+\_\+purpose\+\_\+registers} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga15e778babf2f9768c9ce64cae25d66a7}{ens160\+\_\+get\+\_\+compensation\+\_\+registers}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity)
+\begin{DoxyCompactList}\small\item\em Reads temperature and humidity compensation registers from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafbc9dd389a2bea26048557c654df8834}{ens160\+\_\+set\+\_\+compensation\+\_\+registers}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity)
+\begin{DoxyCompactList}\small\item\em Writes temperature and humidity compensation registers to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafb9e5b096480b989c878d9063e4734ed}{ens160\+\_\+get\+\_\+part\+\_\+id\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads part identifier register from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac139f3a1dd540b59f58adcf7ef5770ad}{ens160\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_gadcf19e4502c842b6dbc749ed6e19ab96}{ens160\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}ens160\+\_\+config, \mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}ens160\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an ENS160 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6b3e7bd873aa221d7fa868356da85bc4}{ens160\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga9bf81e9124e5c07b24ebebc2dd141904}{ens160\+\_\+air\+\_\+quality\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const data)
+\begin{DoxyCompactList}\small\item\em Reads calculated air quality measurements from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1dd2b9036a23da1e0ca670bb48c70760}{ens160\+\_\+get\+\_\+raw\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gaff8f3f610bc3439129f39f314c4e4616}{ens160\+\_\+air\+\_\+quality\+\_\+raw\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const data)
+\begin{DoxyCompactList}\small\item\em Reads raw air quality measurements from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf391757408cbb0d1a6405665c8946480}{ens160\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads data ready status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga52ea3a75e26bf293045237fd418e7ebb}{ens160\+\_\+get\+\_\+gpr\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads general purpose registers data ready status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga159fd485dba74a5fc090875de79ad53f}{ens160\+\_\+get\+\_\+validity\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\+\_\+validity\+\_\+flags\+\_\+t}} \texorpdfstring{$\ast$}{*}const state)
+\begin{DoxyCompactList}\small\item\em Read validity flag status, device status and signal rating, from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab84c4ef88ae9937d2efc4f7469b39b87}{ens160\+\_\+get\+\_\+error\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const error)
+\begin{DoxyCompactList}\small\item\em Read error status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7a8c95d5dd4643a64269fc03f9462651}{ens160\+\_\+get\+\_\+mode\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Read operating mode status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga540f3af9bfb6c3742f775de124efee09}{ens160\+\_\+get\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const data\+\_\+ready, bool \texorpdfstring{$\ast$}{*}const gpr\+\_\+data\+\_\+ready, \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\+\_\+validity\+\_\+flags\+\_\+t}} \texorpdfstring{$\ast$}{*}const state, bool \texorpdfstring{$\ast$}{*}const error, bool \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads data ready, general purpose registers data ready, validity flag, and error status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf21d5703c00867c1eb297503d0518735}{ens160\+\_\+get\+\_\+compensation\+\_\+factors}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity)
+\begin{DoxyCompactList}\small\item\em Reads temperature and humidity compensation factors from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga252a99917dc015a7644c71fd217c4517}{ens160\+\_\+set\+\_\+compensation\+\_\+factors}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity)
+\begin{DoxyCompactList}\small\item\em Writes temperature and humidity compensation factors to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab98f3065fa594a8fb14b0cd348b9b604}{ens160\+\_\+enable\+\_\+standard\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables standard operating mode to ENS160 to operate as a gas sensor and respond to commands. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad641eb06f6dd6361c18371143ae2048d}{ens160\+\_\+enable\+\_\+idle\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables idle operating mode to ENS160 to respond to commands. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga99ce58785ce63a71409c90def02c46be}{ens160\+\_\+enable\+\_\+deep\+\_\+sleep\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables deep sleep operating mode to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5442321bbbbc8b7288f72a07c01ba8b9}{ens160\+\_\+reset}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset and initializes ENS160 to idle mode. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga37a6760bf7c1f54d04ab1adfbcc1146c}{ens160\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an ENS160 device from master I2C bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga40c349fa1fce998b90de2a9e14ed701d}{ens160\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an ENS160 device from master bus and frees handle. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group__drivers_ga160c5dbdb5e259518d2e997c49566e2b}{ens160\+\_\+aqi\+\_\+uba\+\_\+row\+\_\+t}} \mbox{\hyperlink{group__drivers_ga4d2de4eb0b2febd66f4abd03c3d853ea}{ens160\+\_\+aqi\+\_\+index\+\_\+to\+\_\+definition}} (const \mbox{\hyperlink{group__drivers_ga60912896ba51c5b7836e2e6705362d87}{ens160\+\_\+aqi\+\_\+uba\+\_\+indexes\+\_\+t}} index)
+\begin{DoxyCompactList}\small\item\em Decodes ENS160 air quality index to a uba definition row. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga0b117eabf6020f6022f158f40a986828}{ens160\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts ENS160 firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gabdc061a1dd5fc67a400eee28aa92991c}{ens160\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts ENS160 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for ENS160 Air Quality sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ens160_8c_aa56c8c1d26a4ad59c3f2dc105d62dd08}\index{ens160.c@{ens160.c}!ENS160\_CONVERT\_RS\_RAW2OHMS\_F@{ENS160\_CONVERT\_RS\_RAW2OHMS\_F}}
+\index{ENS160\_CONVERT\_RS\_RAW2OHMS\_F@{ENS160\_CONVERT\_RS\_RAW2OHMS\_F}!ens160.c@{ens160.c}}
+\doxysubsubsection{\texorpdfstring{ENS160\_CONVERT\_RS\_RAW2OHMS\_F}{ENS160\_CONVERT\_RS\_RAW2OHMS\_F}}
+{\footnotesize\ttfamily \label{ens160_8c_aa56c8c1d26a4ad59c3f2dc105d62dd08} 
+\#define ENS160\+\_\+\+CONVERT\+\_\+\+RS\+\_\+\+RAW2\+OHMS\+\_\+F(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(pow\ (2,\ (\textcolor{keywordtype}{float})(x)\ /\ 2048))}
+
+\end{DoxyCode}
+\Hypertarget{ens160_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{ens160.c@{ens160.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!ens160.c@{ens160.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{ens160_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{ens160_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{ens160.c@{ens160.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!ens160.c@{ens160.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{ens160_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}

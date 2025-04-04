@@ -1,0 +1,37 @@
+\doxysection{onewire\+\_\+bus.\+h}
+\hypertarget{onewire__bus_8h_source}{}\label{onewire__bus_8h_source}\index{components/peripherals/owb/onewire\_bus/include/onewire\_bus.h@{components/peripherals/owb/onewire\_bus/include/onewire\_bus.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ SPDX-\/FileCopyrightText:\ 2022-\/2023\ Espressif\ Systems\ (Shanghai)\ CO\ LTD}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}onewire\_types.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}onewire\_bus\_impl\_rmt.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00028\ esp\_err\_t\ onewire\_bus\_write\_bytes(onewire\_bus\_handle\_t\ bus,\ \textcolor{keyword}{const}\ uint8\_t\ *tx\_data,\ uint8\_t\ tx\_data\_size);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00041\ esp\_err\_t\ onewire\_bus\_read\_bytes(onewire\_bus\_handle\_t\ bus,\ uint8\_t\ *rx\_buf,\ \textcolor{keywordtype}{size\_t}\ rx\_buf\_size);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00052\ esp\_err\_t\ onewire\_bus\_write\_bit(onewire\_bus\_handle\_t\ bus,\ uint8\_t\ tx\_bit);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00063\ esp\_err\_t\ onewire\_bus\_read\_bit(onewire\_bus\_handle\_t\ bus,\ uint8\_t\ *rx\_bit);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00075\ esp\_err\_t\ onewire\_bus\_reset(onewire\_bus\_handle\_t\ bus);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00086\ esp\_err\_t\ onewire\_bus\_del(onewire\_bus\_handle\_t\ bus);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

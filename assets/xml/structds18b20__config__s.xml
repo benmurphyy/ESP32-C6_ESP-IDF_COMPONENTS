@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structds18b20__config__s" kind="struct" language="C++" prot="public">
+    <compoundname>ds18b20_config_s</compoundname>
+    <includes refid="ds18b20_8h" local="no">ds18b20.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structds18b20__config__s_1aa7602c81640839ef02acf8746634ad5b" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga622b32418d99b0ae4feaf2e955f7a0f8" kindref="member">ds18b20_resolutions_t</ref></type>
+        <definition>ds18b20_resolutions_t resolution</definition>
+        <argsstring></argsstring>
+        <name>resolution</name>
+        <qualifiedname>ds18b20_config_s::resolution</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ds18b20 temperature resolution </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" line="112" column="31" bodyfile="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structds18b20__config__s_1a7b5b6baf3e80f4b262349b224d8544a4" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool trigger_enabled</definition>
+        <argsstring></argsstring>
+        <name>trigger_enabled</name>
+        <qualifiedname>ds18b20_config_s::trigger_enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ds18b20 alarm trigger thresholds are configured when true </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" line="113" column="31" bodyfile="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structds18b20__config__s_1a70b7f2074281abe3b2d1c19b53f94eda" prot="public" static="no" mutable="no">
+        <type>int8_t</type>
+        <definition>int8_t trigger_high</definition>
+        <argsstring></argsstring>
+        <name>trigger_high</name>
+        <qualifiedname>ds18b20_config_s::trigger_high</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ds18b20 high alarm trigger threshold </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" line="114" column="31" bodyfile="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structds18b20__config__s_1a97846b8d49751a38e58290abb9bc1a0c" prot="public" static="no" mutable="no">
+        <type>int8_t</type>
+        <definition>int8_t trigger_low</definition>
+        <argsstring></argsstring>
+        <name>trigger_low</name>
+        <qualifiedname>ds18b20_config_s::trigger_low</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ds18b20 low alarm trigger threshold </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" line="115" column="31" bodyfile="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>DS18B20 device configuration structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" line="111" column="1" bodyfile="components/peripherals/owb/esp_ds18b20/include/ds18b20.h" bodystart="111" bodyend="116"/>
+    <listofallmembers>
+      <member refid="structds18b20__config__s_1aa7602c81640839ef02acf8746634ad5b" prot="public" virt="non-virtual"><scope>ds18b20_config_s</scope><name>resolution</name></member>
+      <member refid="structds18b20__config__s_1a7b5b6baf3e80f4b262349b224d8544a4" prot="public" virt="non-virtual"><scope>ds18b20_config_s</scope><name>trigger_enabled</name></member>
+      <member refid="structds18b20__config__s_1a70b7f2074281abe3b2d1c19b53f94eda" prot="public" virt="non-virtual"><scope>ds18b20_config_s</scope><name>trigger_high</name></member>
+      <member refid="structds18b20__config__s_1a97846b8d49751a38e58290abb9bc1a0c" prot="public" virt="non-virtual"><scope>ds18b20_config_s</scope><name>trigger_low</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

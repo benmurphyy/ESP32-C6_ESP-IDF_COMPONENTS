@@ -1,0 +1,172 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+mlx90614/mlx90614.c File Reference}
+\hypertarget{mlx90614_8c}{}\label{mlx90614_8c}\index{components/peripherals/i2c/esp\_mlx90614/mlx90614.c@{components/peripherals/i2c/esp\_mlx90614/mlx90614.c}}
+{\ttfamily \#include "{}include/mlx90614.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{mlx90614_8c_ac03dc5f8f0f430a9a315f46145683b74}\label{mlx90614_8c_ac03dc5f8f0f430a9a315f46145683b74} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+RAM\+\_\+\+READ\+\_\+\+AMB}~UINT8\+\_\+C(0x03)
+\item 
+\Hypertarget{mlx90614_8c_af2405def5fff2b1d19d31877c6d5ae19}\label{mlx90614_8c_af2405def5fff2b1d19d31877c6d5ae19} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+RAM\+\_\+\+READ\+\_\+\+RAWIR1}~UINT8\+\_\+C(0x04)
+\item 
+\Hypertarget{mlx90614_8c_a47e5f1a545d4d6a7f8e0db91b23d51ee}\label{mlx90614_8c_a47e5f1a545d4d6a7f8e0db91b23d51ee} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+RAM\+\_\+\+READ\+\_\+\+RAWIR2}~UINT8\+\_\+C(0x05)
+\item 
+\Hypertarget{mlx90614_8c_ac90b9cf9921a614189728e0f1cff057d}\label{mlx90614_8c_ac90b9cf9921a614189728e0f1cff057d} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+RAM\+\_\+\+READ\+\_\+\+TA}~UINT8\+\_\+C(0x06)
+\item 
+\Hypertarget{mlx90614_8c_a85f6a8353d00e9c859c219961d04f3e1}\label{mlx90614_8c_a85f6a8353d00e9c859c219961d04f3e1} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+RAM\+\_\+\+READ\+\_\+\+TOBJ1}~UINT8\+\_\+C(0x07)
+\item 
+\Hypertarget{mlx90614_8c_abb8fce1fe6f9c34bc841d3a3c198bbb2}\label{mlx90614_8c_abb8fce1fe6f9c34bc841d3a3c198bbb2} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+RAM\+\_\+\+READ\+\_\+\+TOBJ2}~UINT8\+\_\+C(0x08)
+\item 
+\Hypertarget{mlx90614_8c_af73fe5fde4553d668c19a4f9de4b3ffe}\label{mlx90614_8c_af73fe5fde4553d668c19a4f9de4b3ffe} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+TOMAX}~UINT8\+\_\+C(0x20)
+\item 
+\Hypertarget{mlx90614_8c_aefb14be0ec5f441a8d6276aa4aeaf4f4}\label{mlx90614_8c_aefb14be0ec5f441a8d6276aa4aeaf4f4} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+TOMIN}~UINT8\+\_\+C(0x21)
+\item 
+\Hypertarget{mlx90614_8c_a916841770e69b57ec2b2ef470bb9d818}\label{mlx90614_8c_a916841770e69b57ec2b2ef470bb9d818} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+PWMCTRL}~UINT8\+\_\+C(0x22)
+\item 
+\Hypertarget{mlx90614_8c_ab9e6a3a265c29bdba15ed61b2689cf98}\label{mlx90614_8c_ab9e6a3a265c29bdba15ed61b2689cf98} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+TARANGE}~UINT8\+\_\+C(0x23)
+\item 
+\Hypertarget{mlx90614_8c_ab74b7f490780e5a00759da3485df625c}\label{mlx90614_8c_ab74b7f490780e5a00759da3485df625c} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+EMISS}~UINT8\+\_\+C(0x24)
+\item 
+\Hypertarget{mlx90614_8c_aece28585a30bbf0c5521f0f596d21a1e}\label{mlx90614_8c_aece28585a30bbf0c5521f0f596d21a1e} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+CFGREG}~UINT8\+\_\+C(0x25)
+\item 
+\Hypertarget{mlx90614_8c_a0b33183e46d41897183e0f2219c489f5}\label{mlx90614_8c_a0b33183e46d41897183e0f2219c489f5} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+SMBADDR}~UINT8\+\_\+C(0x2E)
+\item 
+\Hypertarget{mlx90614_8c_abdb18d0fb5796d094a19b6f71551d24d}\label{mlx90614_8c_abdb18d0fb5796d094a19b6f71551d24d} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RD\+\_\+\+IDNUM1}~UINT8\+\_\+C(0x3C)
+\item 
+\Hypertarget{mlx90614_8c_acbffbe0209687236dca8e5bb8ff41c7b}\label{mlx90614_8c_acbffbe0209687236dca8e5bb8ff41c7b} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RD\+\_\+\+IDNUM2}~UINT8\+\_\+C(0x3D)
+\item 
+\Hypertarget{mlx90614_8c_a95510b5ab11757828f5e0df27e978e37}\label{mlx90614_8c_a95510b5ab11757828f5e0df27e978e37} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RD\+\_\+\+IDNUM3}~UINT8\+\_\+C(0x3E)
+\item 
+\Hypertarget{mlx90614_8c_a2dedb78dd0fad4be39e354ab94786b34}\label{mlx90614_8c_a2dedb78dd0fad4be39e354ab94786b34} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+RD\+\_\+\+IDNUM4}~UINT8\+\_\+C(0x3F)
+\item 
+\Hypertarget{mlx90614_8c_aeb02f8d9a397bfc4675ca9603d719a53}\label{mlx90614_8c_aeb02f8d9a397bfc4675ca9603d719a53} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+READ\+\_\+\+FLAGS\+\_\+\+REG}~UINT8\+\_\+C(0x\+F0)
+\item 
+\Hypertarget{mlx90614_8c_a2e56820e415f1674886bf7287979090d}\label{mlx90614_8c_a2e56820e415f1674886bf7287979090d} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+SLEEP}~UINT8\+\_\+C(0x\+FF)
+\item 
+\Hypertarget{mlx90614_8c_a9f8f6dbc719c63ff264fec89a3c70929}\label{mlx90614_8c_a9f8f6dbc719c63ff264fec89a3c70929} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+EEPROM\+\_\+\+CLR\+\_\+\+CELL}~UINT8\+\_\+C(0x00)
+\item 
+\Hypertarget{mlx90614_8c_ae45a61740f69209879f2999d74dc9845}\label{mlx90614_8c_ae45a61740f69209879f2999d74dc9845} 
+\#define {\bfseries MLX90614\+\_\+\+CRC8\+\_\+\+POLYNOM}~UINT8\+\_\+C(7)
+\begin{DoxyCompactList}\small\item\em mlx90614 I2C CRC8 polynomial \end{DoxyCompactList}\item 
+\Hypertarget{mlx90614_8c_a473872dd94074e3008fcca5ad85dea83}\label{mlx90614_8c_a473872dd94074e3008fcca5ad85dea83} 
+\#define {\bfseries MLX90614\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{mlx90614_8c_a519d3bfe17ee04eb5493bcd496dff7ce}\label{mlx90614_8c_a519d3bfe17ee04eb5493bcd496dff7ce} 
+\#define {\bfseries MLX90614\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{mlx90614_8c_ac7f3811993327a93b41cf2d19435f6d4}\label{mlx90614_8c_ac7f3811993327a93b41cf2d19435f6d4} 
+\#define {\bfseries MLX90614\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(5)
+\item 
+\Hypertarget{mlx90614_8c_aeb9f248b9512b899784a72530e949e8a}\label{mlx90614_8c_aeb9f248b9512b899784a72530e949e8a} 
+\#define {\bfseries MLX90614\+\_\+\+EEPROM\+\_\+\+RDWR\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\Hypertarget{mlx90614_8c_ae7a2b5a67eed53b9802911a4df550e13}\label{mlx90614_8c_ae7a2b5a67eed53b9802911a4df550e13} 
+\#define {\bfseries MLX90614\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{mlx90614_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae6c00386c02dc6fd22b98c05aefc6aaf}{mlx90614\+\_\+get\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, mlx90614\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration register from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac3ee11d9d16b30bac90034bf9ecd7f39}{mlx90614\+\_\+set\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, const mlx90614\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration register to MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf1f2b115bc0503fb641fa762e993c192}{mlx90614\+\_\+get\+\_\+pwmctrl\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, mlx90614\+\_\+pwmctrl\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads PWM control register from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafb9ca0c03095af27fbeeb39efe5a39fc}{mlx90614\+\_\+set\+\_\+pwmctrl\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, const mlx90614\+\_\+pwmctrl\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes PWM control register to MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8e56470ea2abd177657bf997bab22a6c}{mlx90614\+\_\+get\+\_\+flags\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, mlx90614\+\_\+flags\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads flags register from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa9533b016553667f1a3bc24657888623}{mlx90614\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga3b89cb540f8756eaa8561b0803944261}{mlx90614\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}mlx90614\+\_\+config, \mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}mlx90614\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an MLX90614 device onto the master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2ed8901aaa44892d12a3d3ddb491a5a3}{mlx90614\+\_\+get\+\_\+temperatures}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const ambient\+\_\+temperature, float \texorpdfstring{$\ast$}{*}const object1\+\_\+temperature, float \texorpdfstring{$\ast$}{*}const object2\+\_\+temperature)
+\begin{DoxyCompactList}\small\item\em Reads all three temperatures (ambient, object 1 and object 2) from the MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa53b297cab26b1204884f542d2cd13e0}{mlx90614\+\_\+get\+\_\+ambient\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const ambient\+\_\+temperature)
+\begin{DoxyCompactList}\small\item\em Reads the ambient temperature from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9adc8ce95a84866b6d5eb783f400750f}{mlx90614\+\_\+get\+\_\+object1\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const object1\+\_\+temperature)
+\begin{DoxyCompactList}\small\item\em Reads object 1 temperature from mlx90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3fa1330f26dc797efba1165c1c1b3c89}{mlx90614\+\_\+get\+\_\+object2\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const object2\+\_\+temperature)
+\begin{DoxyCompactList}\small\item\em Reads object 2 temperature from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga29c2f952a2c5456614c69444bbb6b761}{mlx90614\+\_\+get\+\_\+ir\+\_\+channel1}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, int16\+\_\+t \texorpdfstring{$\ast$}{*}const ir\+\_\+channel1)
+\begin{DoxyCompactList}\small\item\em Reads IR channel 1 from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf68ce13d1a00f65eeca56ed12c8b168c}{mlx90614\+\_\+get\+\_\+ir\+\_\+channel2}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, int16\+\_\+t \texorpdfstring{$\ast$}{*}const ir\+\_\+channel2)
+\begin{DoxyCompactList}\small\item\em Reads IR channel 2 from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae9e9b5674e87016d3ab86924f14e18a8}{mlx90614\+\_\+get\+\_\+ambient\+\_\+temperature\+\_\+range}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const ambient\+\_\+temperature\+\_\+range)
+\begin{DoxyCompactList}\small\item\em Reads ambient temperature range from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7bbd918f23b1fd6a743e00617b743761}{mlx90614\+\_\+get\+\_\+emissivity}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const coefficient)
+\begin{DoxyCompactList}\small\item\em Reads emissivity coefficient (0.\+1 to 1.\+0) setting from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gabc92065ed27424a5f72c9fbbb1843221}{mlx90614\+\_\+set\+\_\+emissivity}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, const float coefficient)
+\begin{DoxyCompactList}\small\item\em Writes emissivity coefficient (0.\+1 to 1.\+0) setting to MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga198317e5b867179de548f3fcb2c87906}{mlx90614\+\_\+get\+\_\+object\+\_\+maximum\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads maximum object temperature setting from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafe59944841793f6ec6dec8bdfbf6c06f}{mlx90614\+\_\+set\+\_\+object\+\_\+maximum\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, const float temperature)
+\begin{DoxyCompactList}\small\item\em Writes maximum object temperature setting to MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga2409170ee5b22a5f6f464d55a45e485d}{mlx90614\+\_\+get\+\_\+object\+\_\+minimum\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads minimum object temperature setting from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaad3c280185e3590a17b088cb183131d9}{mlx90614\+\_\+set\+\_\+object\+\_\+minimum\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, const float temperature)
+\begin{DoxyCompactList}\small\item\em Writes minimum object temperature setting to MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaaa6cba838ea2747ce873eb89bd1b8c2a}{mlx90614\+\_\+get\+\_\+address}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, uint8\+\_\+t \texorpdfstring{$\ast$}{*}const address)
+\begin{DoxyCompactList}\small\item\em Reads I2C address setting from MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga9d62fd88b1a133af4c6849e0b6affb90}{mlx90614\+\_\+set\+\_\+address}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle, const uint8\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em Writes I2C address setting to MLX90614. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5bd6555a149d3542970c66fe7dbd9aa6}{mlx90614\+\_\+sleep}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Puts the MLX90614 into sleep mode. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6084ae9316aa34a499c35607caad73e6}{mlx90614\+\_\+wakeup}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Wakes-\/up the MLX90614 from sleep mode. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga538c2e4ce54941d0276df342a5ff3c16}{mlx90614\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an MLX90614 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga14e6bf68c0f1ec63183ec07978cba91f}{mlx90614\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga5cb6e6c62eec0b78a6e74bc7d9a0c186}{mlx90614\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an MLX90614 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_gae95f6be3a0ece48094e6752fa798248c}{mlx90614\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts MLX90614 firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gaf441a9689a95cb859df7035940e009f0}{mlx90614\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts MLX90614 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for MLX90614 IR sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{mlx90614_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{mlx90614.c@{mlx90614.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!mlx90614.c@{mlx90614.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{mlx90614_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}

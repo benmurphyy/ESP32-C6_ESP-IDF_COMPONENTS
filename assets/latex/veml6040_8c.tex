@@ -1,0 +1,197 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+veml6040/veml6040.c File Reference}
+\hypertarget{veml6040_8c}{}\label{veml6040_8c}\index{components/peripherals/i2c/esp\_veml6040/veml6040.c@{components/peripherals/i2c/esp\_veml6040/veml6040.c}}
+{\ttfamily \#include "{}include/veml6040.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{veml6040_8c_a13e62a8690e7601b5a78b35819a9bd55}\label{veml6040_8c_a13e62a8690e7601b5a78b35819a9bd55} 
+\#define {\bfseries VEML6040\+\_\+\+POLY\+\_\+\+COEF\+\_\+A}~(6.\+0135e-\/13)
+\item 
+\Hypertarget{veml6040_8c_a4cd6353110786f5adeb1dff85fc63aac}\label{veml6040_8c_a4cd6353110786f5adeb1dff85fc63aac} 
+\#define {\bfseries VEML6040\+\_\+\+POLY\+\_\+\+COEF\+\_\+B}~(-\/9.\+3924e-\/9)
+\item 
+\Hypertarget{veml6040_8c_a7a432fb7594b4ba0147867fe9212cfdc}\label{veml6040_8c_a7a432fb7594b4ba0147867fe9212cfdc} 
+\#define {\bfseries VEML6040\+\_\+\+POLY\+\_\+\+COEF\+\_\+C}~(8.\+1488e-\/5)
+\item 
+\Hypertarget{veml6040_8c_a91ad5fe94230129fe8cefb5eb6526ebd}\label{veml6040_8c_a91ad5fe94230129fe8cefb5eb6526ebd} 
+\#define {\bfseries VEML6040\+\_\+\+POLY\+\_\+\+COEF\+\_\+D}~(1.\+0023)
+\item 
+\Hypertarget{veml6040_8c_a6718162b2801f34bbb998356c1f2e00b}\label{veml6040_8c_a6718162b2801f34bbb998356c1f2e00b} 
+\#define {\bfseries VEML6040\+\_\+\+CMD\+\_\+\+CONF}~UINT8\+\_\+C(0x00)
+\item 
+\Hypertarget{veml6040_8c_ade2a25557f6856db72c452e13f61b11a}\label{veml6040_8c_ade2a25557f6856db72c452e13f61b11a} 
+\#define {\bfseries VEML6040\+\_\+\+CMD\+\_\+\+R\+\_\+\+DATA}~UINT8\+\_\+C(0x08)
+\item 
+\Hypertarget{veml6040_8c_ab58a3f0c23c720842d3c49080f744b6e}\label{veml6040_8c_ab58a3f0c23c720842d3c49080f744b6e} 
+\#define {\bfseries VEML6040\+\_\+\+CMD\+\_\+\+G\+\_\+\+DATA}~UINT8\+\_\+C(0x09)
+\item 
+\Hypertarget{veml6040_8c_a56fe12eea1c61a7fde40009d1b7c5b19}\label{veml6040_8c_a56fe12eea1c61a7fde40009d1b7c5b19} 
+\#define {\bfseries VEML6040\+\_\+\+CMD\+\_\+\+B\+\_\+\+DATA}~UINT8\+\_\+C(0x0a)
+\item 
+\Hypertarget{veml6040_8c_a25f1337363f86a0f99105d2c1e32e5a3}\label{veml6040_8c_a25f1337363f86a0f99105d2c1e32e5a3} 
+\#define {\bfseries VEML6040\+\_\+\+CMD\+\_\+\+W\+\_\+\+DATA}~UINT8\+\_\+C(0x0b)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a2137107b4381dc3cdcf5c7c1b1f97830}{VEML6040\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_aa825b916fff36a4a37a9f57010d22457}{VEML6040\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a5fff630fbab91cb2d5c12fdea87ba2d5}{VEML6040\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a648005824eab84f5df8d7dde0c508616}{VEML6040\+\_\+\+RETRY\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(2)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a6a273c67b3b1079f8c621d3601df9539}{VEML6040\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a94efccdc1c6e932c10e7af89a27d2cb7}{VEML6040\+\_\+\+IT\+\_\+\+TIMES\+\_\+\+COUNT}}~UINT8\+\_\+C(6)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a763c785c506ec94899bae2f615922861}{VEML6040\+\_\+\+IT\+\_\+\+OPTIONS\+\_\+\+COUNT}}~UINT8\+\_\+C(4)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a30688edaefe4f8f31bfad4a6136982a2}{VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+ENUM\+\_\+\+INDEX}}~UINT8\+\_\+C(0)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_ab1efe7443eaff46439c6b9356ff32a31}{VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+IT\+\_\+\+INDEX}}~UINT8\+\_\+C(1)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a45471f7ccce979b80e22f873ce9dabde}{VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+SVTY\+\_\+\+INDEX}}~UINT8\+\_\+C(2)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_a508713280263a5d4eaeffea75e6a7811}{VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+MXLX\+\_\+\+INDEX}}~UINT8\+\_\+C(3)
+\item 
+\#define \mbox{\hyperlink{veml6040_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6a23c26a1961c5d210bf32053cf9ce96}{veml6040\+\_\+get\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, veml6040\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads configuration register from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga26a52a85e81b397f77d2a633ffb11b91}{veml6040\+\_\+set\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, const veml6040\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes configuration register to VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa870815f17f869e2b196a33dddb6273d}{veml6040\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_gad40ef4055e142e70775987b4dcc2babd}{veml6040\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}veml6040\+\_\+config, \mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}veml6040\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an VEML6040 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaaa40c9711ad3fb40fd67ad6c17383229}{veml6040\+\_\+get\+\_\+red\+\_\+als}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const als)
+\begin{DoxyCompactList}\small\item\em Reads red illuminance channel from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad2075ef7be54945ef3388a3055a0b58c}{veml6040\+\_\+get\+\_\+green\+\_\+als}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const als)
+\begin{DoxyCompactList}\small\item\em Reads green illuminance channel from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0867046ddc001e337573a10b9b96b2d6}{veml6040\+\_\+get\+\_\+blue\+\_\+als}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const als)
+\begin{DoxyCompactList}\small\item\em Reads blue illuminance channel from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0d3ff53326663c7d643b01abb4e9c0b0}{veml6040\+\_\+get\+\_\+white\+\_\+als}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const als)
+\begin{DoxyCompactList}\small\item\em Reads white illuminance channel from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga73af38b41ecc11b9e7895f248ac9adf6}{veml6040\+\_\+get\+\_\+als}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const red\+\_\+als, float \texorpdfstring{$\ast$}{*}const green\+\_\+als, float \texorpdfstring{$\ast$}{*}const blue\+\_\+als, float \texorpdfstring{$\ast$}{*}const white\+\_\+als)
+\begin{DoxyCompactList}\small\item\em Reads red, green, blue, and white illuminance channels from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga598c23cc671ed472dae347258e9ae420}{veml6040\+\_\+get\+\_\+integration\+\_\+time}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga965474f5a3cc90e59052034af367a774}{veml6040\+\_\+integration\+\_\+times\+\_\+t}} \texorpdfstring{$\ast$}{*}const integration\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Reads integration time from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7bb9690cdbdbb57b3faeaa10d31d3382}{veml6040\+\_\+set\+\_\+integration\+\_\+time}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga965474f5a3cc90e59052034af367a774}{veml6040\+\_\+integration\+\_\+times\+\_\+t}} integration\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Writes integration time to VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab9a54cc7db60ebe995d9aeaa899ad4fe}{veml6040\+\_\+get\+\_\+trigger\+\_\+method}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga80b746ffca4da5b50952601d10cce4a8}{veml6040\+\_\+triggers\+\_\+t}} \texorpdfstring{$\ast$}{*}const trigger\+\_\+method)
+\begin{DoxyCompactList}\small\item\em Reads trigger method from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga30117ae62fd513c2ec56d51d358ff404}{veml6040\+\_\+set\+\_\+trigger\+\_\+method}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga80b746ffca4da5b50952601d10cce4a8}{veml6040\+\_\+triggers\+\_\+t}} trigger\+\_\+method)
+\begin{DoxyCompactList}\small\item\em Write trigger method to VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga067d3823a15e94ba31ebc860d4ff027c}{veml6040\+\_\+get\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga9d3ce83e852049877f395e14bc449799}{veml6040\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads mode from VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac9990614b78b5fb0c12af14949ffd278}{veml6040\+\_\+set\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga9d3ce83e852049877f395e14bc449799}{veml6040\+\_\+modes\+\_\+t}} mode)
+\begin{DoxyCompactList}\small\item\em Writes mode to VEML6040. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga576aa4f19376f58e42facf56a6e793c5}{veml6040\+\_\+disable}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Shuts down VEML6040 until woken. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga02a231de273876f832ff49e0b4f77b8b}{veml6040\+\_\+enable}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Wakes up VEML6040 from shutdown. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf8046d8916700879d5618cbc5e8570a7}{veml6040\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an VEML6040 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5010c3ba013060596795aa384df1e0d2}{veml6040\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga5138a917680071ae02ee47c3caa2a447}{veml6040\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an VEML6040 device from master I2C bus and delete the handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga014ca37ccf96d146020c0b298c11ef95}{veml6040\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts VEML6040 firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gaaab06871d262e2320e6de4f1b378a6cb}{veml6040\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts VEML6040 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for VEML6040 colour sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{veml6040_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{veml6040.c@{veml6040.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{veml6040_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{veml6040_8c_aa825b916fff36a4a37a9f57010d22457}\index{veml6040.c@{veml6040.c}!VEML6040\_APPSTART\_DELAY\_MS@{VEML6040\_APPSTART\_DELAY\_MS}}
+\index{VEML6040\_APPSTART\_DELAY\_MS@{VEML6040\_APPSTART\_DELAY\_MS}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_APPSTART\_DELAY\_MS}{VEML6040\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{veml6040_8c_aa825b916fff36a4a37a9f57010d22457} 
+\#define VEML6040\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+veml7700 delay after initialization before application start-\/up \Hypertarget{veml6040_8c_a5fff630fbab91cb2d5c12fdea87ba2d5}\index{veml6040.c@{veml6040.c}!VEML6040\_CMD\_DELAY\_MS@{VEML6040\_CMD\_DELAY\_MS}}
+\index{VEML6040\_CMD\_DELAY\_MS@{VEML6040\_CMD\_DELAY\_MS}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_CMD\_DELAY\_MS}{VEML6040\_CMD\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{veml6040_8c_a5fff630fbab91cb2d5c12fdea87ba2d5} 
+\#define VEML6040\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+veml7700 delay before attempting I2C transactions after a command is issued \Hypertarget{veml6040_8c_a30688edaefe4f8f31bfad4a6136982a2}\index{veml6040.c@{veml6040.c}!VEML6040\_IT\_OPT\_ENUM\_INDEX@{VEML6040\_IT\_OPT\_ENUM\_INDEX}}
+\index{VEML6040\_IT\_OPT\_ENUM\_INDEX@{VEML6040\_IT\_OPT\_ENUM\_INDEX}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_IT\_OPT\_ENUM\_INDEX}{VEML6040\_IT\_OPT\_ENUM\_INDEX}}
+{\footnotesize\ttfamily \label{veml6040_8c_a30688edaefe4f8f31bfad4a6136982a2} 
+\#define VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+ENUM\+\_\+\+INDEX~UINT8\+\_\+C(0)}
+
+integration time enumerator \Hypertarget{veml6040_8c_ab1efe7443eaff46439c6b9356ff32a31}\index{veml6040.c@{veml6040.c}!VEML6040\_IT\_OPT\_IT\_INDEX@{VEML6040\_IT\_OPT\_IT\_INDEX}}
+\index{VEML6040\_IT\_OPT\_IT\_INDEX@{VEML6040\_IT\_OPT\_IT\_INDEX}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_IT\_OPT\_IT\_INDEX}{VEML6040\_IT\_OPT\_IT\_INDEX}}
+{\footnotesize\ttfamily \label{veml6040_8c_ab1efe7443eaff46439c6b9356ff32a31} 
+\#define VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+IT\+\_\+\+INDEX~UINT8\+\_\+C(1)}
+
+integration time in milliseconds \Hypertarget{veml6040_8c_a508713280263a5d4eaeffea75e6a7811}\index{veml6040.c@{veml6040.c}!VEML6040\_IT\_OPT\_MXLX\_INDEX@{VEML6040\_IT\_OPT\_MXLX\_INDEX}}
+\index{VEML6040\_IT\_OPT\_MXLX\_INDEX@{VEML6040\_IT\_OPT\_MXLX\_INDEX}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_IT\_OPT\_MXLX\_INDEX}{VEML6040\_IT\_OPT\_MXLX\_INDEX}}
+{\footnotesize\ttfamily \label{veml6040_8c_a508713280263a5d4eaeffea75e6a7811} 
+\#define VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+MXLX\+\_\+\+INDEX~UINT8\+\_\+C(3)}
+
+integration time maximum lux value \Hypertarget{veml6040_8c_a45471f7ccce979b80e22f873ce9dabde}\index{veml6040.c@{veml6040.c}!VEML6040\_IT\_OPT\_SVTY\_INDEX@{VEML6040\_IT\_OPT\_SVTY\_INDEX}}
+\index{VEML6040\_IT\_OPT\_SVTY\_INDEX@{VEML6040\_IT\_OPT\_SVTY\_INDEX}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_IT\_OPT\_SVTY\_INDEX}{VEML6040\_IT\_OPT\_SVTY\_INDEX}}
+{\footnotesize\ttfamily \label{veml6040_8c_a45471f7ccce979b80e22f873ce9dabde} 
+\#define VEML6040\+\_\+\+IT\+\_\+\+OPT\+\_\+\+SVTY\+\_\+\+INDEX~UINT8\+\_\+C(2)}
+
+integration time gain sensitivity \Hypertarget{veml6040_8c_a763c785c506ec94899bae2f615922861}\index{veml6040.c@{veml6040.c}!VEML6040\_IT\_OPTIONS\_COUNT@{VEML6040\_IT\_OPTIONS\_COUNT}}
+\index{VEML6040\_IT\_OPTIONS\_COUNT@{VEML6040\_IT\_OPTIONS\_COUNT}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_IT\_OPTIONS\_COUNT}{VEML6040\_IT\_OPTIONS\_COUNT}}
+{\footnotesize\ttfamily \label{veml6040_8c_a763c785c506ec94899bae2f615922861} 
+\#define VEML6040\+\_\+\+IT\+\_\+\+OPTIONS\+\_\+\+COUNT~UINT8\+\_\+C(4)}
+
+Possible integration time values count \Hypertarget{veml6040_8c_a94efccdc1c6e932c10e7af89a27d2cb7}\index{veml6040.c@{veml6040.c}!VEML6040\_IT\_TIMES\_COUNT@{VEML6040\_IT\_TIMES\_COUNT}}
+\index{VEML6040\_IT\_TIMES\_COUNT@{VEML6040\_IT\_TIMES\_COUNT}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_IT\_TIMES\_COUNT}{VEML6040\_IT\_TIMES\_COUNT}}
+{\footnotesize\ttfamily \label{veml6040_8c_a94efccdc1c6e932c10e7af89a27d2cb7} 
+\#define VEML6040\+\_\+\+IT\+\_\+\+TIMES\+\_\+\+COUNT~UINT8\+\_\+C(6)}
+
+Possible integration time values count \Hypertarget{veml6040_8c_a2137107b4381dc3cdcf5c7c1b1f97830}\index{veml6040.c@{veml6040.c}!VEML6040\_POWERUP\_DELAY\_MS@{VEML6040\_POWERUP\_DELAY\_MS}}
+\index{VEML6040\_POWERUP\_DELAY\_MS@{VEML6040\_POWERUP\_DELAY\_MS}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_POWERUP\_DELAY\_MS}{VEML6040\_POWERUP\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{veml6040_8c_a2137107b4381dc3cdcf5c7c1b1f97830} 
+\#define VEML6040\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+veml7700 delay on power-\/up before attempting I2C transactions \Hypertarget{veml6040_8c_a648005824eab84f5df8d7dde0c508616}\index{veml6040.c@{veml6040.c}!VEML6040\_RETRY\_DELAY\_MS@{VEML6040\_RETRY\_DELAY\_MS}}
+\index{VEML6040\_RETRY\_DELAY\_MS@{VEML6040\_RETRY\_DELAY\_MS}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_RETRY\_DELAY\_MS}{VEML6040\_RETRY\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{veml6040_8c_a648005824eab84f5df8d7dde0c508616} 
+\#define VEML6040\+\_\+\+RETRY\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(2)}
+
+veml7700 delay between an I2C receive transaction retry \Hypertarget{veml6040_8c_a6a273c67b3b1079f8c621d3601df9539}\index{veml6040.c@{veml6040.c}!VEML6040\_TX\_RX\_DELAY\_MS@{VEML6040\_TX\_RX\_DELAY\_MS}}
+\index{VEML6040\_TX\_RX\_DELAY\_MS@{VEML6040\_TX\_RX\_DELAY\_MS}!veml6040.c@{veml6040.c}}
+\doxysubsubsection{\texorpdfstring{VEML6040\_TX\_RX\_DELAY\_MS}{VEML6040\_TX\_RX\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{veml6040_8c_a6a273c67b3b1079f8c621d3601df9539} 
+\#define VEML6040\+\_\+\+TX\+\_\+\+RX\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+veml7700 delay after attempting an I2C transmit transaction and attempting an I2C receive transaction 

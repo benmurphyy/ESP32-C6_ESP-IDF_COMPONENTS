@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_e256716a914f3a139f052cac960a9f0b" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_ssd1306/include</compoundname>
+    <innerfile refid="bdf__font__emoticon__22x21_8h">bdf_font_emoticon_22x21.h</innerfile>
+    <innerfile refid="bdf__font__nenr12__21x26_8h">bdf_font_nenr12_21x26.h</innerfile>
+    <innerfile refid="bitmap__icon_8h">bitmap_icon.h</innerfile>
+    <innerfile refid="font__latin__8x8_8h">font_latin_8x8.h</innerfile>
+    <innerfile refid="ssd1306_8h">ssd1306.h</innerfile>
+    <innerfile refid="ssd1306__version_8h">ssd1306_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ssd1306/include/"/>
+  </compounddef>
+</doxygen>

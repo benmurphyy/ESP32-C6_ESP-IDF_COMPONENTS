@@ -1,0 +1,49 @@
+\doxysection{ccs811\+\_\+thresholds\+\_\+register\+\_\+s Struct Reference}
+\hypertarget{structccs811__thresholds__register__s}{}\label{structccs811__thresholds__register__s}\index{ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}}
+
+
+CCS811 thresholds register structure.  
+
+
+
+
+{\ttfamily \#include $<$ccs811.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+ccs811\+\_\+threshold\+\_\+value\+\_\+t \mbox{\hyperlink{structccs811__thresholds__register__s_a3cca275727de956cf1c4074c578f733e}{low\+\_\+to\+\_\+med}}
+\item 
+ccs811\+\_\+threshold\+\_\+value\+\_\+t \mbox{\hyperlink{structccs811__thresholds__register__s_ab15e9e78bd14a6158d8902e39ed853e2}{med\+\_\+to\+\_\+high}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structccs811__thresholds__register__s_a161e08a7c91bc23fa80f36171adead3f}{hysteresis}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+CCS811 thresholds register structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structccs811__thresholds__register__s_a161e08a7c91bc23fa80f36171adead3f}\index{ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}!hysteresis@{hysteresis}}
+\index{hysteresis@{hysteresis}!ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}}
+\doxysubsubsection{\texorpdfstring{hysteresis}{hysteresis}}
+{\footnotesize\ttfamily \label{structccs811__thresholds__register__s_a161e08a7c91bc23fa80f36171adead3f} 
+uint8\+\_\+t hysteresis}
+
+threshold hysteresis value (50ppm = 0x default) \Hypertarget{structccs811__thresholds__register__s_a3cca275727de956cf1c4074c578f733e}\index{ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}!low\_to\_med@{low\_to\_med}}
+\index{low\_to\_med@{low\_to\_med}!ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}}
+\doxysubsubsection{\texorpdfstring{low\_to\_med}{low\_to\_med}}
+{\footnotesize\ttfamily \label{structccs811__thresholds__register__s_a3cca275727de956cf1c4074c578f733e} 
+ccs811\+\_\+threshold\+\_\+value\+\_\+t low\+\_\+to\+\_\+med}
+
+low to medium threshold (1500ppm = 0x05\+DC default) \Hypertarget{structccs811__thresholds__register__s_ab15e9e78bd14a6158d8902e39ed853e2}\index{ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}!med\_to\_high@{med\_to\_high}}
+\index{med\_to\_high@{med\_to\_high}!ccs811\_thresholds\_register\_s@{ccs811\_thresholds\_register\_s}}
+\doxysubsubsection{\texorpdfstring{med\_to\_high}{med\_to\_high}}
+{\footnotesize\ttfamily \label{structccs811__thresholds__register__s_ab15e9e78bd14a6158d8902e39ed853e2} 
+ccs811\+\_\+threshold\+\_\+value\+\_\+t med\+\_\+to\+\_\+high}
+
+medium to high threshold (2500ppm = 0x09\+C4 default) 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+ccs811/include/\mbox{\hyperlink{ccs811_8h}{ccs811.\+h}}\end{DoxyCompactItemize}

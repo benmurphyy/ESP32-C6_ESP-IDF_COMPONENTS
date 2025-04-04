@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structmpu6050__attitude__s" kind="struct" language="C++" prot="public">
+    <compoundname>mpu6050_attitude_s</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1ad0da36b2558901e21e7a30f6c227a45e" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>mpu6050_attitude_s::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="394" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="394" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1aa4f0d3eebc3c443f9be81bf48561a217" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <qualifiedname>mpu6050_attitude_s::y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="395" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="395" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1af73583b1e980b0aa03f9884812e9fd4d" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float z</definition>
+        <argsstring></argsstring>
+        <name>z</name>
+        <qualifiedname>mpu6050_attitude_s::z</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="396" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="396" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1a56eca241e2896b9f57a79589e76fd24b" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float w</definition>
+        <argsstring></argsstring>
+        <name>w</name>
+        <qualifiedname>mpu6050_attitude_s::w</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="397" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="397" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1a26fd84d522945b6038221d9e38c7cc39" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float roll</definition>
+        <argsstring></argsstring>
+        <name>roll</name>
+        <qualifiedname>mpu6050_attitude_s::roll</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="398" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="398" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1a282e7d4378d4a18a805b8980295ac86c" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float pitch</definition>
+        <argsstring></argsstring>
+        <name>pitch</name>
+        <qualifiedname>mpu6050_attitude_s::pitch</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="399" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="399" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmpu6050__attitude__s_1a7efc219781df4a1e281cb5d348b7fbf9" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float yaw</definition>
+        <argsstring></argsstring>
+        <name>yaw</name>
+        <qualifiedname>mpu6050_attitude_s::yaw</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="400" column="7" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="400" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" line="393" column="1" bodyfile="components/peripherals/i2c/esp_mpu6050/include/mpu6050.h" bodystart="393" bodyend="401"/>
+    <listofallmembers>
+      <member refid="structmpu6050__attitude__s_1a282e7d4378d4a18a805b8980295ac86c" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>pitch</name></member>
+      <member refid="structmpu6050__attitude__s_1a26fd84d522945b6038221d9e38c7cc39" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>roll</name></member>
+      <member refid="structmpu6050__attitude__s_1a56eca241e2896b9f57a79589e76fd24b" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>w</name></member>
+      <member refid="structmpu6050__attitude__s_1ad0da36b2558901e21e7a30f6c227a45e" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>x</name></member>
+      <member refid="structmpu6050__attitude__s_1aa4f0d3eebc3c443f9be81bf48561a217" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>y</name></member>
+      <member refid="structmpu6050__attitude__s_1a7efc219781df4a1e281cb5d348b7fbf9" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>yaw</name></member>
+      <member refid="structmpu6050__attitude__s_1af73583b1e980b0aa03f9884812e9fd4d" prot="public" virt="non-virtual"><scope>mpu6050_attitude_s</scope><name>z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

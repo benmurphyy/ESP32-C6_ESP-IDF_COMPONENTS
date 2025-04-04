@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="mmc56x3_8h" kind="file" language="C++">
+    <compoundname>mmc56x3.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="mmc56x3__version_8h" local="yes">mmc56x3_version.h</includes>
+    <includedby refid="mmc56x3_8c" local="yes">components/peripherals/i2c/esp_mmc56x3/mmc56x3.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_mmc56x3/include/mmc56x3.h</label>
+        <link refid="mmc56x3_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>mmc56x3_version.h</label>
+        <link refid="mmc56x3__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_mmc56x3/include/mmc56x3.h</label>
+        <link refid="mmc56x3_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_mmc56x3/mmc56x3.c</label>
+        <link refid="mmc56x3_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structmmc56x3__magnetic__axes__data__s" prot="public">mmc56x3_magnetic_axes_data_s</innerclass>
+    <innerclass refid="structmmc56x3__selftest__axes__data__s" prot="public">mmc56x3_selftest_axes_data_s</innerclass>
+    <innerclass refid="structmmc56x3__config__s" prot="public">mmc56x3_config_s</innerclass>
+    <innerclass refid="structmmc56x3__context__t" prot="public">mmc56x3_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1ga0e974bdfbde8a2f7078a6f4692c9bc9d" kind="define"><name>I2C_MMC56X3_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga0ee101cf41be46df59b782fe2bd13326" kind="define"><name>I2C_MMC56X3_DEV_ADDR</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga4ec238b9dd3974e34a91847a5917ff13" kind="define"><name>I2C_MMC56X3_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1gaf4e61285cf550d22e9e3e3ec620410d0" kind="enum"><name>mmc56x3_measurement_times_e</name></member>
+      <member refid="group__drivers_1ga71668da0f8cf8f448a8f211da3ded77e" kind="enum"><name>mmc56x3_measurement_samples_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1ga04eb0a8975116163a7527e4a3710d90d" kind="typedef"><name>mmc56x3_measurement_times_t</name></member>
+      <member refid="group__drivers_1ga6a8e469cb5a690f8bcb7a6163f01b490" kind="typedef"><name>mmc56x3_measurement_samples_t</name></member>
+      <member refid="group__drivers_1ga4f12cc6fde28c182e28c53d82ebbddbb" kind="typedef"><name>mmc56x3_magnetic_axes_data_t</name></member>
+      <member refid="group__drivers_1ga6d0ea50e620e218d585d9a966d012eb2" kind="typedef"><name>mmc56x3_selftest_axes_data_t</name></member>
+      <member refid="group__drivers_1gace8f7bf433f0bfc89754ddbfb7a7d2d3" kind="typedef"><name>mmc56x3_config_t</name></member>
+      <member refid="group__drivers_1ga306c7721699bc0c650c17044d6573cdb" kind="typedef"><name>mmc56x3_context_t</name></member>
+      <member refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kind="typedef"><name>mmc56x3_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1ga1752207dcc7463810925a7eeab480dc4" kind="variable"><name>mmc56x3_status_register_t</name></member>
+      <member refid="group__drivers_1ga29266c8e3281a54b288dda98738a5e74" kind="variable"><name>mmc56x3_control0_register_t</name></member>
+      <member refid="group__drivers_1ga1921f4e58df587fde29aaf580c8ab5e5" kind="variable"><name>mmc56x3_control1_register_t</name></member>
+      <member refid="group__drivers_1ga6a2d437974d0e524a81459f76215f012" kind="variable"><name>mmc56x3_control2_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga95b426b6a4a1eee47247f74923ba0d31" kind="function"><name>mmc56x3_get_status_register</name></member>
+      <member refid="group__drivers_1ga08666e92f36f0f6e78be2862a918fe4a" kind="function"><name>mmc56x3_set_control0_register</name></member>
+      <member refid="group__drivers_1ga31aaa5bbe130a6163869667a60fb5301" kind="function"><name>mmc56x3_set_control1_register</name></member>
+      <member refid="group__drivers_1ga3a0d8f3ad1db51aa0da6ff9223204a85" kind="function"><name>mmc56x3_set_control2_register</name></member>
+      <member refid="group__drivers_1gabdaf66829842997beb2ab5f424bc812f" kind="function"><name>mmc56x3_get_product_id_register</name></member>
+      <member refid="group__drivers_1ga5a09995eaf74096e065a6c6a39dc80dc" kind="function"><name>mmc56x3_init</name></member>
+      <member refid="group__drivers_1ga7b84f50c19f98870bb3882bd985897c9" kind="function"><name>mmc56x3_get_temperature</name></member>
+      <member refid="group__drivers_1gab38f0a15f1b7b3fb06d56ea38848faf1" kind="function"><name>mmc56x3_get_magnetic_axes</name></member>
+      <member refid="group__drivers_1gae8cb97b4b73bdffb4039f0c8e5696336" kind="function"><name>mmc56x3_get_temperature_data_status</name></member>
+      <member refid="group__drivers_1ga01592af2fb75a9bc6e8b7c1950614d7e" kind="function"><name>mmc56x3_get_magnetic_data_status</name></member>
+      <member refid="group__drivers_1ga8dbb902d661c9a70ecf82d879ed4a347" kind="function"><name>mmc56x3_get_data_status</name></member>
+      <member refid="group__drivers_1ga5bc08a2ff58554dbd8c3a2d4be7c4425" kind="function"><name>mmc56x3_set_measure_mode</name></member>
+      <member refid="group__drivers_1gafbdbe7f46092beec4d619ed26b39e977" kind="function"><name>mmc56x3_set_data_rate</name></member>
+      <member refid="group__drivers_1ga2fd05ad31f960373b8c910767f6a2509" kind="function"><name>mmc56x3_set_measure_bandwidth</name></member>
+      <member refid="group__drivers_1gae937947ec4d01f005121f209fd4be69b" kind="function"><name>mmc56x3_enable_periodical_set</name></member>
+      <member refid="group__drivers_1gac62ab6cc87a701845290de9c018624d8" kind="function"><name>mmc56x3_disable_periodical_set</name></member>
+      <member refid="group__drivers_1ga25ffeac2e62c1c699b18cb23f26f5738" kind="function"><name>mmc56x3_set_selftest_thresholds</name></member>
+      <member refid="group__drivers_1ga29e31e967c1c0c97a030c37a99f9d5a7" kind="function"><name>mmc56x3_get_selftest_set_values</name></member>
+      <member refid="group__drivers_1gaad5b583f33c13a5758f47d7af49f140a" kind="function"><name>mmc56x3_set_selftest_set_values</name></member>
+      <member refid="group__drivers_1ga185f6a5fad7af2805cc348c9080a1d1e" kind="function"><name>mmc56x3_magnetic_set_reset</name></member>
+      <member refid="group__drivers_1gaabd21a2191ea0580ebab958771176f0c" kind="function"><name>mmc56x3_reset</name></member>
+      <member refid="group__drivers_1ga0ffa7e19030a3f3dbda3976917e8bb9c" kind="function"><name>mmc56x3_remove</name></member>
+      <member refid="group__drivers_1gaefb47ac2a1fc3f36261564629968afe8" kind="function"><name>mmc56x3_delete</name></member>
+      <member refid="group__drivers_1ga9d3fb9eeea0d3e1d7adc40d5b6869012" kind="function"><name>mmc56x3_convert_to_heading</name></member>
+      <member refid="group__drivers_1ga739d5135d3a55245ee3913ef5f50786b" kind="function"><name>mmc56x3_convert_to_true_heading</name></member>
+      <member refid="group__drivers_1gadd1eb86a2cff452be43a3a0b4ea821c0" kind="function"><name>mmc56x3_get_fw_version</name></member>
+      <member refid="group__drivers_1ga001f3587d6aaa24e5e2e18444f980a4c" kind="function"><name>mmc56x3_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__MMC56X3_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__MMC56X3_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;mmc56x3_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>MMC56X3<sp/>definitions</highlight></codeline>
+<codeline lineno="51"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="group__drivers_1ga0e974bdfbde8a2f7078a6f4692c9bc9d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_MMC56X3_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__drivers_1ga0ee101cf41be46df59b782fe2bd13326" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_MMC56X3_DEV_ADDR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x30)<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>MMC56X3<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="61"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="group__drivers_1ga4ec238b9dd3974e34a91847a5917ff13" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_MMC56X3_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_MMC56X3_DEV_ADDR,<sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="68"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_MMC56X3_DEV_CLK_SPD,<sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.data_rate<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.continuous_mode_enabled<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>false,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.declination<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-16.0f<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>*<sp/>MMC56X3<sp/>enumerator<sp/>and<sp/>structure<sp/>declarations</highlight></codeline>
+<codeline lineno="75"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="group__drivers_1gaf4e61285cf550d22e9e3e3ec620410d0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gaf4e61285cf550d22e9e3e3ec620410d0" kindref="member">mmc56x3_measurement_times_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_TIME_6_6MS<sp/>=<sp/>(0b00),</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_TIME_3_5MS<sp/>=<sp/>(0b01),</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_TIME_2MS<sp/><sp/><sp/>=<sp/>(0b10),</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_TIME_1_2MS<sp/>=<sp/>(0b11),</highlight></codeline>
+<codeline lineno="85" refid="group__drivers_1ga04eb0a8975116163a7527e4a3710d90d" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga04eb0a8975116163a7527e4a3710d90d" kindref="member">mmc56x3_measurement_times_t</ref>;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="group__drivers_1ga71668da0f8cf8f448a8f211da3ded77e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga71668da0f8cf8f448a8f211da3ded77e" kindref="member">mmc56x3_measurement_samples_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_1<sp/><sp/><sp/><sp/>=<sp/>(0b000),</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_25<sp/><sp/><sp/>=<sp/>(0b001),</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_75<sp/><sp/><sp/>=<sp/>(0b010),</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_100<sp/><sp/>=<sp/>(0b011),</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_250<sp/><sp/>=<sp/>(0b100),</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_500<sp/><sp/>=<sp/>(0b101),</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_1000<sp/>=<sp/>(0b110),</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>MMC56X3_MEAS_SAMPLE_2000<sp/>=<sp/>(0b111),</highlight></codeline>
+<codeline lineno="99" refid="group__drivers_1ga6a8e469cb5a690f8bcb7a6163f01b490" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga6a8e469cb5a690f8bcb7a6163f01b490" kindref="member">mmc56x3_measurement_samples_t</ref>;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>mmc56x3_status_register_u<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">MMC56X3_STS_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:4;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>otp_read_done:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>selftest:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data_ready_m:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data_ready_t:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="113"><highlight class="normal">}<sp/>mmc56x3_status_register_t;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>mmc56x3_control0_register_u<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CTRL0_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sample_m:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sample_t:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>do_set:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>do_reset:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>auto_sr_enabled:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>auto_st_enabled:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>continuous_freq_enabled:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="130"><highlight class="normal">}<sp/>mmc56x3_control0_register_t;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>mmc56x3_control1_register_u<sp/>{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CTRL1_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga04eb0a8975116163a7527e4a3710d90d" kindref="member">mmc56x3_measurement_times_t</ref><sp/><sp/><sp/><sp/><sp/>bandwidth:2;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x_disabled:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>y_disabled:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>z_disabled:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>st_enp_enabled:1;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>st_enm_enabled:1;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sw_reset:1;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="146"><highlight class="normal">}<sp/>mmc56x3_control1_register_t;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>mmc56x3_control2_register_u<sp/>{</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CTRL2_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga6a8e469cb5a690f8bcb7a6163f01b490" kindref="member">mmc56x3_measurement_samples_t</ref><sp/>periodical_set_samples:3;<sp/><sp/></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>periodical_set_enabled:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>continuous_enabled:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>h_power_enabled:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="160"><highlight class="normal">}<sp/>mmc56x3_control2_register_t;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="structmmc56x3__magnetic__axes__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmc56x3__magnetic__axes__data__s" kindref="compound">mmc56x3_magnetic_axes_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x_axis;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y_axis;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z_axis;</highlight></codeline>
+<codeline lineno="169" refid="group__drivers_1ga4f12cc6fde28c182e28c53d82ebbddbb" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga4f12cc6fde28c182e28c53d82ebbddbb" kindref="member">mmc56x3_magnetic_axes_data_t</ref>;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174" refid="structmmc56x3__selftest__axes__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmc56x3__selftest__axes__data__s" kindref="compound">mmc56x3_selftest_axes_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>x_axis;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>y_axis;</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>z_axis;</highlight></codeline>
+<codeline lineno="178" refid="group__drivers_1ga6d0ea50e620e218d585d9a966d012eb2" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga6d0ea50e620e218d585d9a966d012eb2" kindref="member">mmc56x3_selftest_axes_data_t</ref>;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183" refid="structmmc56x3__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmc56x3__config__s" kindref="compound">mmc56x3_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="184" refid="structmmc56x3__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="185" refid="structmmc56x3__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="186" refid="structmmc56x3__config__s_1af7750329f3654d2f6fe5a20adeae49dd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1af7750329f3654d2f6fe5a20adeae49dd" kindref="member">data_rate</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="187" refid="structmmc56x3__config__s_1a891db58d07ac3e9fbc9996a6abe8f8b0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1a891db58d07ac3e9fbc9996a6abe8f8b0" kindref="member">continuous_mode_enabled</ref>;</highlight></codeline>
+<codeline lineno="188" refid="structmmc56x3__config__s_1aafaf2abf1915682509e867179857da42" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga04eb0a8975116163a7527e4a3710d90d" kindref="member">mmc56x3_measurement_times_t</ref><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1aafaf2abf1915682509e867179857da42" kindref="member">measurement_bandwidth</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="189" refid="structmmc56x3__config__s_1af326e55edbb36a439897f07a49070610" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1af326e55edbb36a439897f07a49070610" kindref="member">auto_sr_enabled</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="190" refid="structmmc56x3__config__s_1a87088520682791495522a2e20bf06860" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__config__s_1a87088520682791495522a2e20bf06860" kindref="member">declination</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="191" refid="group__drivers_1gace8f7bf433f0bfc89754ddbfb7a7d2d3" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gace8f7bf433f0bfc89754ddbfb7a7d2d3" kindref="member">mmc56x3_config_t</ref>;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196" refid="structmmc56x3__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmc56x3__context__t" kindref="compound">mmc56x3_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gace8f7bf433f0bfc89754ddbfb7a7d2d3" kindref="member">mmc56x3_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dev_config;</highlight></codeline>
+<codeline lineno="198" refid="structmmc56x3__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="199" refid="structmmc56x3__context__t_1a2f201f2615803611c4ab8ee402dd022f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmmc56x3__context__t_1a2f201f2615803611c4ab8ee402dd022f" kindref="member">product_id</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="200"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205" refid="group__drivers_1ga306c7721699bc0c650c17044d6573cdb" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmc56x3__context__t" kindref="compound">mmc56x3_context_t</ref><sp/><ref refid="structmmc56x3__context__t" kindref="compound">mmc56x3_context_t</ref>;</highlight></codeline>
+<codeline lineno="209" refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmc56x3__context__t" kindref="compound">mmc56x3_context_t</ref><sp/>*<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref>;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga95b426b6a4a1eee47247f74923ba0d31" kindref="member">mmc56x3_get_status_register</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/>mmc56x3_status_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga08666e92f36f0f6e78be2862a918fe4a" kindref="member">mmc56x3_set_control0_register</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mmc56x3_control0_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga31aaa5bbe130a6163869667a60fb5301" kindref="member">mmc56x3_set_control1_register</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mmc56x3_control1_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga3a0d8f3ad1db51aa0da6ff9223204a85" kindref="member">mmc56x3_set_control2_register</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mmc56x3_control2_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gabdaf66829842997beb2ab5f424bc812f" kindref="member">mmc56x3_get_product_id_register</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga5a09995eaf74096e065a6c6a39dc80dc" kindref="member">mmc56x3_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gace8f7bf433f0bfc89754ddbfb7a7d2d3" kindref="member">mmc56x3_config_t</ref><sp/>*mmc56x3_config,<sp/><ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>*mmc56x3_handle);</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga7b84f50c19f98870bb3882bd985897c9" kindref="member">mmc56x3_get_temperature</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gab38f0a15f1b7b3fb06d56ea38848faf1" kindref="member">mmc56x3_get_magnetic_axes</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga4f12cc6fde28c182e28c53d82ebbddbb" kindref="member">mmc56x3_magnetic_axes_data_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>axes_data);</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight></codeline>
+<codeline lineno="293"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae8cb97b4b73bdffb4039f0c8e5696336" kindref="member">mmc56x3_get_temperature_data_status</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ready);</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga01592af2fb75a9bc6e8b7c1950614d7e" kindref="member">mmc56x3_get_magnetic_data_status</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ready);</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga8dbb902d661c9a70ecf82d879ed4a347" kindref="member">mmc56x3_get_data_status</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>magnetic_ready,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>temperature_ready);</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga5bc08a2ff58554dbd8c3a2d4be7c4425" kindref="member">mmc56x3_set_measure_mode</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>continuous);</highlight></codeline>
+<codeline lineno="322"><highlight class="normal"></highlight></codeline>
+<codeline lineno="330"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gafbdbe7f46092beec4d619ed26b39e977" kindref="member">mmc56x3_set_data_rate</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>rate);</highlight></codeline>
+<codeline lineno="331"><highlight class="normal"></highlight></codeline>
+<codeline lineno="339"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga2fd05ad31f960373b8c910767f6a2509" kindref="member">mmc56x3_set_measure_bandwidth</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga04eb0a8975116163a7527e4a3710d90d" kindref="member">mmc56x3_measurement_times_t</ref><sp/>bandwidth);</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"></highlight></codeline>
+<codeline lineno="348"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae937947ec4d01f005121f209fd4be69b" kindref="member">mmc56x3_enable_periodical_set</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga6a8e469cb5a690f8bcb7a6163f01b490" kindref="member">mmc56x3_measurement_samples_t</ref><sp/>samples);</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gac62ab6cc87a701845290de9c018624d8" kindref="member">mmc56x3_disable_periodical_set</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"></highlight><highlight class="comment">//esp_err_t<sp/>mmc56x3_set_magnetic_axes(mmc56x3_handle_t<sp/>handle,<sp/>const<sp/>bool<sp/>x_axis_disabled,<sp/>const<sp/>bool<sp/>y_axis_disabled,<sp/>const<sp/>bool<sp/>z_axis_disabled);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="368"><highlight class="normal"></highlight></codeline>
+<codeline lineno="376"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga25ffeac2e62c1c699b18cb23f26f5738" kindref="member">mmc56x3_set_selftest_thresholds</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga6d0ea50e620e218d585d9a966d012eb2" kindref="member">mmc56x3_selftest_axes_data_t</ref><sp/>axes_data);</highlight></codeline>
+<codeline lineno="377"><highlight class="normal"></highlight></codeline>
+<codeline lineno="385"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga29e31e967c1c0c97a030c37a99f9d5a7" kindref="member">mmc56x3_get_selftest_set_values</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga6d0ea50e620e218d585d9a966d012eb2" kindref="member">mmc56x3_selftest_axes_data_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>axes_data);</highlight></codeline>
+<codeline lineno="386"><highlight class="normal"></highlight></codeline>
+<codeline lineno="394"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaad5b583f33c13a5758f47d7af49f140a" kindref="member">mmc56x3_set_selftest_set_values</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga6d0ea50e620e218d585d9a966d012eb2" kindref="member">mmc56x3_selftest_axes_data_t</ref><sp/>axes_data);</highlight></codeline>
+<codeline lineno="395"><highlight class="normal"></highlight></codeline>
+<codeline lineno="402"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga185f6a5fad7af2805cc348c9080a1d1e" kindref="member">mmc56x3_magnetic_set_reset</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="403"><highlight class="normal"></highlight></codeline>
+<codeline lineno="410"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaabd21a2191ea0580ebab958771176f0c" kindref="member">mmc56x3_reset</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="411"><highlight class="normal"></highlight></codeline>
+<codeline lineno="418"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga0ffa7e19030a3f3dbda3976917e8bb9c" kindref="member">mmc56x3_remove</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="419"><highlight class="normal"></highlight></codeline>
+<codeline lineno="426"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaefb47ac2a1fc3f36261564629968afe8" kindref="member">mmc56x3_delete</ref>(<ref refid="group__drivers_1gad7010c389e7821d1ed37ec2be5341039" kindref="member">mmc56x3_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="427"><highlight class="normal"></highlight></codeline>
+<codeline lineno="434"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga9d3fb9eeea0d3e1d7adc40d5b6869012" kindref="member">mmc56x3_convert_to_heading</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga4f12cc6fde28c182e28c53d82ebbddbb" kindref="member">mmc56x3_magnetic_axes_data_t</ref><sp/>axes_data);</highlight></codeline>
+<codeline lineno="435"><highlight class="normal"></highlight></codeline>
+<codeline lineno="443"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga739d5135d3a55245ee3913ef5f50786b" kindref="member">mmc56x3_convert_to_true_heading</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>declination,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga4f12cc6fde28c182e28c53d82ebbddbb" kindref="member">mmc56x3_magnetic_axes_data_t</ref><sp/>axes_data);</highlight></codeline>
+<codeline lineno="444"><highlight class="normal"></highlight></codeline>
+<codeline lineno="450" refid="group__drivers_1gadd1eb86a2cff452be43a3a0b4ea821c0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1gadd1eb86a2cff452be43a3a0b4ea821c0" kindref="member">mmc56x3_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="451"><highlight class="normal"></highlight></codeline>
+<codeline lineno="457" refid="group__drivers_1ga001f3587d6aaa24e5e2e18444f980a4c" refkind="member"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1ga001f3587d6aaa24e5e2e18444f980a4c" kindref="member">mmc56x3_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="458"><highlight class="normal"></highlight></codeline>
+<codeline lineno="459"><highlight class="normal"></highlight></codeline>
+<codeline lineno="460"><highlight class="normal"></highlight></codeline>
+<codeline lineno="461"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="462"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="463"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="464"><highlight class="normal"></highlight></codeline>
+<codeline lineno="466"><highlight class="normal"></highlight></codeline>
+<codeline lineno="467"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__MMC56X3_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_mmc56x3/include/mmc56x3.h"/>
+  </compounddef>
+</doxygen>

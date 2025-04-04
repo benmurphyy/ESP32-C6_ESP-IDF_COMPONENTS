@@ -1,0 +1,328 @@
+\doxysection{task extension}
+\hypertarget{group___free_r_t_o_s}{}\label{group___free_r_t_o_s}\index{task extension@{task extension}}
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtime__into__interval__config__tag}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+tag}}
+\begin{DoxyCompactList}\small\item\em Time-\/into-\/interval configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtime__into__interval__t}{time\+\_\+into\+\_\+interval\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Time-\/into-\/interval structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}\label{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d} 
+typedef enum \mbox{\hyperlink{group___free_r_t_o_s_gada504a9c0f0f4dfe0f199664315cf03e}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+tag}} {\bfseries time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Time into interval types enumerator. \end{DoxyCompactList}\item 
+\Hypertarget{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}\label{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98} 
+typedef struct \mbox{\hyperlink{structtime__into__interval__config__tag}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+tag}} {\bfseries time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Time-\/into-\/interval configuration structure. \end{DoxyCompactList}\item 
+\Hypertarget{group___free_r_t_o_s_gae4e15ab69f530a7e83dcdf3af9aeba46}\label{group___free_r_t_o_s_gae4e15ab69f530a7e83dcdf3af9aeba46} 
+typedef struct time\+\_\+into\+\_\+interval\+\_\+t {\bfseries time\+\_\+into\+\_\+interval\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Time-\/into-\/interval definition. \end{DoxyCompactList}\item 
+\Hypertarget{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}\label{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023} 
+typedef struct \mbox{\hyperlink{structtime__into__interval__t}{time\+\_\+into\+\_\+interval\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Time-\/into-\/interval handle definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group___free_r_t_o_s_gada504a9c0f0f4dfe0f199664315cf03e}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+tag}} \{ \mbox{\hyperlink{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b}{TIME\+\_\+\+INTO\+\_\+\+INTERVAL\+\_\+\+SEC}}
+, \mbox{\hyperlink{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea2c749b9f8d47709452ae742faac5b425}{TIME\+\_\+\+INTO\+\_\+\+INTERVAL\+\_\+\+MIN}}
+, \mbox{\hyperlink{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea9d879915b4d045c4ada8b90c4001eb04}{TIME\+\_\+\+INTO\+\_\+\+INTERVAL\+\_\+\+HR}}
+ \}
+\begin{DoxyCompactList}\small\item\em Time into interval types enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga8839638585a6027c6b6004269ce33332}{time\+\_\+into\+\_\+interval\+\_\+normalize\+\_\+interval\+\_\+to\+\_\+sec}} (const \mbox{\hyperlink{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}} interval\+\_\+type, const uint16\+\_\+t interval)
+\begin{DoxyCompactList}\small\item\em Normalizes time-\/into-\/interval period or offset to seconds. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga4ea58aff92e03e0999e13b9059db560c}{time\+\_\+into\+\_\+interval\+\_\+normalize\+\_\+interval\+\_\+to\+\_\+msec}} (const \mbox{\hyperlink{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}} interval\+\_\+type, const uint16\+\_\+t interval)
+\begin{DoxyCompactList}\small\item\em Normalizes time-\/into-\/interval period or offset to milliseconds. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9}{time\+\_\+into\+\_\+interval\+\_\+get\+\_\+epoch\+\_\+timestamp}} (void)
+\begin{DoxyCompactList}\small\item\em Gets unix epoch timestamp (UTC) in seconds from system clock. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga19bb96065ad640e8015b423a6ddb5203}{time\+\_\+into\+\_\+interval\+\_\+get\+\_\+epoch\+\_\+timestamp\+\_\+msec}} (void)
+\begin{DoxyCompactList}\small\item\em Gets unix epoch timestamp (UTC) in milliseconds from system clock. \end{DoxyCompactList}\item 
+uint64\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga6522ff46a3f8f569a093fbe0c843e733}{time\+\_\+into\+\_\+interval\+\_\+get\+\_\+epoch\+\_\+timestamp\+\_\+usec}} (void)
+\begin{DoxyCompactList}\small\item\em Gets unix epoch timestamp (UTC) in micro-\/seconds from system clock. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga5a8f66c96d678209be13d05551e03b41}{time\+\_\+into\+\_\+interval\+\_\+set\+\_\+epoch\+\_\+timestamp\+\_\+event}} (const \mbox{\hyperlink{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}} interval\+\_\+type, const uint16\+\_\+t interval\+\_\+period, const uint16\+\_\+t interval\+\_\+offset, uint64\+\_\+t \texorpdfstring{$\ast$}{*}epoch\+\_\+timestamp)
+\begin{DoxyCompactList}\small\item\em Sets the next epoch event timestamp in milli-\/seconds from system clock based on the time interval type, period, and offset. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_gaea97dc6faeb6a62d513f1770a047e84f}{time\+\_\+into\+\_\+interval\+\_\+init}} (const \mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}time\+\_\+into\+\_\+interval\+\_\+config, \mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}time\+\_\+into\+\_\+interval\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes a time-\/into-\/interval handle. A time-\/into-\/interval is used within a Free\+RTOS task subroutine for conditional or task delay based on the configured interval type, period, and offset that is synchronized to the system clock. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group___free_r_t_o_s_gad8797044bf62fb81d63b0641eb69d0d0}{time\+\_\+into\+\_\+interval}} (\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}} time\+\_\+into\+\_\+interval\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Validates time-\/into-\/interval condition based on the configured interval type, period, and offset parameters that is synchronized to the system clock and returns true when the interval has elapsed. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_gaff5bdae2635f1eef5f2a5b2b4f15ed70}{time\+\_\+into\+\_\+interval\+\_\+delay}} (\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}} time\+\_\+into\+\_\+interval\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Delays the task until the next scheduled task event. This function should be placed after the {\ttfamily for (;;) \{} syntax to delay the task based on the configured interval type, period, and offset parameters. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga67a2453e7554521bf2433e6c7dc97d89}{time\+\_\+into\+\_\+interval\+\_\+get\+\_\+last\+\_\+event}} (\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}} time\+\_\+into\+\_\+interval\+\_\+handle, uint64\+\_\+t \texorpdfstring{$\ast$}{*}epoch\+\_\+timestamp)
+\begin{DoxyCompactList}\small\item\em Gets epoch timestamp (UTC) of the last event in milli-\/seconds. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_gaf78af531a43da234d76d18bd625e2f61}{time\+\_\+into\+\_\+interval\+\_\+delete}} (\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}} time\+\_\+into\+\_\+interval\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Deletes the time-\/into-\/interval handle and frees up resources. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group___free_r_t_o_s_ga2c01efdfcdc21973ae44337092dd43d9}{time\+\_\+into\+\_\+interval\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts time-\/into-\/interval firmware version numbers (major, minor, patch) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group___free_r_t_o_s_ga6e7164d22748e5d4e5a486a2679ba124}{time\+\_\+into\+\_\+interval\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts time-\/into-\/interval firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF Free\+RTOS task extension
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{group___free_r_t_o_s_gada504a9c0f0f4dfe0f199664315cf03e}\index{task extension@{task extension}!time\_into\_interval\_types\_tag@{time\_into\_interval\_types\_tag}}
+\index{time\_into\_interval\_types\_tag@{time\_into\_interval\_types\_tag}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_types\_tag}{time\_into\_interval\_types\_tag}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_gada504a9c0f0f4dfe0f199664315cf03e} 
+enum \mbox{\hyperlink{group___free_r_t_o_s_gada504a9c0f0f4dfe0f199664315cf03e}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+tag}}}
+
+
+
+Time into interval types enumerator. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIME\_INTO\_INTERVAL\_SEC@{TIME\_INTO\_INTERVAL\_SEC}!task extension@{task extension}}\index{task extension@{task extension}!TIME\_INTO\_INTERVAL\_SEC@{TIME\_INTO\_INTERVAL\_SEC}}}\Hypertarget{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b}\label{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b} 
+TIME\+\_\+\+INTO\+\_\+\+INTERVAL\+\_\+\+SEC&Time-\/into-\/interval in seconds. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIME\_INTO\_INTERVAL\_MIN@{TIME\_INTO\_INTERVAL\_MIN}!task extension@{task extension}}\index{task extension@{task extension}!TIME\_INTO\_INTERVAL\_MIN@{TIME\_INTO\_INTERVAL\_MIN}}}\Hypertarget{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea2c749b9f8d47709452ae742faac5b425}\label{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea2c749b9f8d47709452ae742faac5b425} 
+TIME\+\_\+\+INTO\+\_\+\+INTERVAL\+\_\+\+MIN&Time-\/into-\/interval in minutes. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TIME\_INTO\_INTERVAL\_HR@{TIME\_INTO\_INTERVAL\_HR}!task extension@{task extension}}\index{task extension@{task extension}!TIME\_INTO\_INTERVAL\_HR@{TIME\_INTO\_INTERVAL\_HR}}}\Hypertarget{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea9d879915b4d045c4ada8b90c4001eb04}\label{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea9d879915b4d045c4ada8b90c4001eb04} 
+TIME\+\_\+\+INTO\+\_\+\+INTERVAL\+\_\+\+HR&Time-\/into-\/interval in hours. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group___free_r_t_o_s_gad8797044bf62fb81d63b0641eb69d0d0}\index{task extension@{task extension}!time\_into\_interval@{time\_into\_interval}}
+\index{time\_into\_interval@{time\_into\_interval}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval()}{time\_into\_interval()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_gad8797044bf62fb81d63b0641eb69d0d0} 
+bool time\+\_\+into\+\_\+interval (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}}}]{time\+\_\+into\+\_\+interval\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Validates time-\/into-\/interval condition based on the configured interval type, period, and offset parameters that is synchronized to the system clock and returns true when the interval has elapsed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em time\+\_\+into\+\_\+interval\+\_\+handle} & Time-\/into-\/interval handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true when time-\/into-\/interval condition is valid. 
+
+false when time-\/into-\/interval handle or condition is not valid. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_gaff5bdae2635f1eef5f2a5b2b4f15ed70}\index{task extension@{task extension}!time\_into\_interval\_delay@{time\_into\_interval\_delay}}
+\index{time\_into\_interval\_delay@{time\_into\_interval\_delay}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_delay()}{time\_into\_interval\_delay()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_gaff5bdae2635f1eef5f2a5b2b4f15ed70} 
+esp\+\_\+err\+\_\+t time\+\_\+into\+\_\+interval\+\_\+delay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}}}]{time\+\_\+into\+\_\+interval\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Delays the task until the next scheduled task event. This function should be placed after the {\ttfamily for (;;) \{} syntax to delay the task based on the configured interval type, period, and offset parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+into\+\_\+interval\+\_\+handle} & Time-\/into-\/interval handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_gaf78af531a43da234d76d18bd625e2f61}\index{task extension@{task extension}!time\_into\_interval\_delete@{time\_into\_interval\_delete}}
+\index{time\_into\_interval\_delete@{time\_into\_interval\_delete}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_delete()}{time\_into\_interval\_delete()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_gaf78af531a43da234d76d18bd625e2f61} 
+esp\+\_\+err\+\_\+t time\+\_\+into\+\_\+interval\+\_\+delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}}}]{time\+\_\+into\+\_\+interval\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Deletes the time-\/into-\/interval handle and frees up resources. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+into\+\_\+interval\+\_\+handle} & Time-\/into-\/interval handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9}\index{task extension@{task extension}!time\_into\_interval\_get\_epoch\_timestamp@{time\_into\_interval\_get\_epoch\_timestamp}}
+\index{time\_into\_interval\_get\_epoch\_timestamp@{time\_into\_interval\_get\_epoch\_timestamp}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_get\_epoch\_timestamp()}{time\_into\_interval\_get\_epoch\_timestamp()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9} 
+uint64\+\_\+t time\+\_\+into\+\_\+interval\+\_\+get\+\_\+epoch\+\_\+timestamp (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Gets unix epoch timestamp (UTC) in seconds from system clock. 
+
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t Unix epoch timestamp (UTC) in seconds or it will return 0-\/seconds when there is an issue accessing the system clock. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga19bb96065ad640e8015b423a6ddb5203}\index{task extension@{task extension}!time\_into\_interval\_get\_epoch\_timestamp\_msec@{time\_into\_interval\_get\_epoch\_timestamp\_msec}}
+\index{time\_into\_interval\_get\_epoch\_timestamp\_msec@{time\_into\_interval\_get\_epoch\_timestamp\_msec}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_get\_epoch\_timestamp\_msec()}{time\_into\_interval\_get\_epoch\_timestamp\_msec()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga19bb96065ad640e8015b423a6ddb5203} 
+uint64\+\_\+t time\+\_\+into\+\_\+interval\+\_\+get\+\_\+epoch\+\_\+timestamp\+\_\+msec (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Gets unix epoch timestamp (UTC) in milliseconds from system clock. 
+
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t Unix epoch timestamp (UTC) in milliseconds or it will return 0-\/milli-\/seconds when there is an issue accessing the system clock. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga6522ff46a3f8f569a093fbe0c843e733}\index{task extension@{task extension}!time\_into\_interval\_get\_epoch\_timestamp\_usec@{time\_into\_interval\_get\_epoch\_timestamp\_usec}}
+\index{time\_into\_interval\_get\_epoch\_timestamp\_usec@{time\_into\_interval\_get\_epoch\_timestamp\_usec}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_get\_epoch\_timestamp\_usec()}{time\_into\_interval\_get\_epoch\_timestamp\_usec()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga6522ff46a3f8f569a093fbe0c843e733} 
+uint64\+\_\+t time\+\_\+into\+\_\+interval\+\_\+get\+\_\+epoch\+\_\+timestamp\+\_\+usec (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Gets unix epoch timestamp (UTC) in micro-\/seconds from system clock. 
+
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t Unix epoch timestamp (UTC) in micro-\/seconds or it will return 0-\/micro-\/seconds when there is an issue accessing the system clock. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga2c01efdfcdc21973ae44337092dd43d9}\index{task extension@{task extension}!time\_into\_interval\_get\_fw\_version@{time\_into\_interval\_get\_fw\_version}}
+\index{time\_into\_interval\_get\_fw\_version@{time\_into\_interval\_get\_fw\_version}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_get\_fw\_version()}{time\_into\_interval\_get\_fw\_version()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga2c01efdfcdc21973ae44337092dd43d9} 
+const char \texorpdfstring{$\ast$}{*} time\+\_\+into\+\_\+interval\+\_\+get\+\_\+fw\+\_\+version (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Converts time-\/into-\/interval firmware version numbers (major, minor, patch) into a string. 
+
+\begin{DoxyReturn}{Returns}
+char\texorpdfstring{$\ast$}{*} time-\/into-\/interval firmware version as a string that is formatted as X.\+X.\+X (e.\+g. 4.\+0.\+0). 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga6e7164d22748e5d4e5a486a2679ba124}\index{task extension@{task extension}!time\_into\_interval\_get\_fw\_version\_number@{time\_into\_interval\_get\_fw\_version\_number}}
+\index{time\_into\_interval\_get\_fw\_version\_number@{time\_into\_interval\_get\_fw\_version\_number}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_get\_fw\_version\_number()}{time\_into\_interval\_get\_fw\_version\_number()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga6e7164d22748e5d4e5a486a2679ba124} 
+int32\+\_\+t time\+\_\+into\+\_\+interval\+\_\+get\+\_\+fw\+\_\+version\+\_\+number (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Converts time-\/into-\/interval firmware version numbers (major, minor, patch) into an integer value. 
+
+\begin{DoxyReturn}{Returns}
+int32\+\_\+t time-\/into-\/interval firmware version number. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga67a2453e7554521bf2433e6c7dc97d89}\index{task extension@{task extension}!time\_into\_interval\_get\_last\_event@{time\_into\_interval\_get\_last\_event}}
+\index{time\_into\_interval\_get\_last\_event@{time\_into\_interval\_get\_last\_event}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_get\_last\_event()}{time\_into\_interval\_get\_last\_event()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga67a2453e7554521bf2433e6c7dc97d89} 
+esp\+\_\+err\+\_\+t time\+\_\+into\+\_\+interval\+\_\+get\+\_\+last\+\_\+event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}}}]{time\+\_\+into\+\_\+interval\+\_\+handle}{, }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{epoch\+\_\+timestamp}{}\end{DoxyParamCaption})}
+
+
+
+Gets epoch timestamp (UTC) of the last event in milli-\/seconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+into\+\_\+interval\+\_\+handle} & Time-\/into-\/interval handle. \\
+\hline
+{\em epoch\+\_\+timestamp} & Unix epoch timestamp (UTC) in milli-\/seconds of the last event. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_gaea97dc6faeb6a62d513f1770a047e84f}\index{task extension@{task extension}!time\_into\_interval\_init@{time\_into\_interval\_init}}
+\index{time\_into\_interval\_init@{time\_into\_interval\_init}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_init()}{time\_into\_interval\_init()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_gaea97dc6faeb6a62d513f1770a047e84f} 
+esp\+\_\+err\+\_\+t time\+\_\+into\+\_\+interval\+\_\+init (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{time\+\_\+into\+\_\+interval\+\_\+config}{, }\item[{\mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\+\_\+into\+\_\+interval\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{time\+\_\+into\+\_\+interval\+\_\+handle}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a time-\/into-\/interval handle. A time-\/into-\/interval is used within a Free\+RTOS task subroutine for conditional or task delay based on the configured interval type, period, and offset that is synchronized to the system clock. 
+
+As an example, if a 5-\/second interval is configured, the {\ttfamily time\+\_\+into\+\_\+interval} function will return true every 5-\/seconds based on the system clock i.\+e. 12\+:00\+:00, 12\+:00\+:05, 12\+:00\+:10, etc. The {\ttfamily time\+\_\+into\+\_\+interval\+\_\+delay} would delay a task for 5-\/seconds and behaves like a task scheduler that is synchronized to the system clock.
+
+The interval offset is used to offset the start of the interval period. As an example, if a 5-\/minute interval with 1-\/minute offset is configured, the {\ttfamily time\+\_\+into\+\_\+interval} function will return true every 5-\/minutes at 1-\/minute into the interval based on the system clock i.\+e. 12\+:01\+:00, 12\+:06\+:00, 12\+:11\+:00, etc.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em \doxylink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} & Time-\/into-\/interval configuration. \\
+\hline
+\mbox{\texttt{ out}}  & {\em time\+\_\+into\+\_\+interval\+\_\+handle} & Time-\/into-\/interval handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga4ea58aff92e03e0999e13b9059db560c}\index{task extension@{task extension}!time\_into\_interval\_normalize\_interval\_to\_msec@{time\_into\_interval\_normalize\_interval\_to\_msec}}
+\index{time\_into\_interval\_normalize\_interval\_to\_msec@{time\_into\_interval\_normalize\_interval\_to\_msec}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_normalize\_interval\_to\_msec()}{time\_into\_interval\_normalize\_interval\_to\_msec()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga4ea58aff92e03e0999e13b9059db560c} 
+uint64\+\_\+t time\+\_\+into\+\_\+interval\+\_\+normalize\+\_\+interval\+\_\+to\+\_\+msec (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}}}]{interval\+\_\+type}{, }\item[{const uint16\+\_\+t}]{interval}{}\end{DoxyParamCaption})}
+
+
+
+Normalizes time-\/into-\/interval period or offset to milliseconds. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em interval\+\_\+type} & Time-\/into-\/interval type of interval period or offset. \\
+\hline
+\mbox{\texttt{ in}}  & {\em interval} & Time-\/into-\/interval period or offset for interval type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t Normalized time-\/into-\/interval period or offset in milli-\/seconds. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga8839638585a6027c6b6004269ce33332}\index{task extension@{task extension}!time\_into\_interval\_normalize\_interval\_to\_sec@{time\_into\_interval\_normalize\_interval\_to\_sec}}
+\index{time\_into\_interval\_normalize\_interval\_to\_sec@{time\_into\_interval\_normalize\_interval\_to\_sec}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_normalize\_interval\_to\_sec()}{time\_into\_interval\_normalize\_interval\_to\_sec()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga8839638585a6027c6b6004269ce33332} 
+uint64\+\_\+t time\+\_\+into\+\_\+interval\+\_\+normalize\+\_\+interval\+\_\+to\+\_\+sec (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}}}]{interval\+\_\+type}{, }\item[{const uint16\+\_\+t}]{interval}{}\end{DoxyParamCaption})}
+
+
+
+Normalizes time-\/into-\/interval period or offset to seconds. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em interval\+\_\+type} & Time-\/into-\/interval type of interval period or offset. \\
+\hline
+\mbox{\texttt{ in}}  & {\em interval} & Time-\/into-\/interval period or offset for interval type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t Normalized time-\/into-\/interval period or offset in seconds. 
+\end{DoxyReturn}
+\Hypertarget{group___free_r_t_o_s_ga5a8f66c96d678209be13d05551e03b41}\index{task extension@{task extension}!time\_into\_interval\_set\_epoch\_timestamp\_event@{time\_into\_interval\_set\_epoch\_timestamp\_event}}
+\index{time\_into\_interval\_set\_epoch\_timestamp\_event@{time\_into\_interval\_set\_epoch\_timestamp\_event}!task extension@{task extension}}
+\doxysubsubsection{\texorpdfstring{time\_into\_interval\_set\_epoch\_timestamp\_event()}{time\_into\_interval\_set\_epoch\_timestamp\_event()}}
+{\footnotesize\ttfamily \label{group___free_r_t_o_s_ga5a8f66c96d678209be13d05551e03b41} 
+esp\+\_\+err\+\_\+t time\+\_\+into\+\_\+interval\+\_\+set\+\_\+epoch\+\_\+timestamp\+\_\+event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{group___free_r_t_o_s_gad0a6a2a318069e1eb5bb480541532a4d}{time\+\_\+into\+\_\+interval\+\_\+types\+\_\+t}}}]{interval\+\_\+type}{, }\item[{const uint16\+\_\+t}]{interval\+\_\+period}{, }\item[{const uint16\+\_\+t}]{interval\+\_\+offset}{, }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{epoch\+\_\+timestamp}{}\end{DoxyParamCaption})}
+
+
+
+Sets the next epoch event timestamp in milli-\/seconds from system clock based on the time interval type, period, and offset. 
+
+The interval should be divisible by 60 i.\+e. no remainder if the interval type and period is every 10-\/seconds, the event will trigger on-\/time with the system clock i.\+e. 09\+:00\+:00, 09\+:00\+:10, 09\+:00\+:20, etc.
+
+The interval offset is used to offset the start of the interval period. If the interval type and period is every 5-\/minutes with a 1-\/minute offset, the event will trigger on-\/time with the system clock i.\+e. 09\+:01\+:00, 09\+:06\+:00, 09\+:11\+:00, etc.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em interval\+\_\+type} & Time into interval type (seconds, minutes, hours, etc.). \\
+\hline
+\mbox{\texttt{ in}}  & {\em interval\+\_\+period} & Time into interval period for interval type. \\
+\hline
+\mbox{\texttt{ in}}  & {\em interval\+\_\+offset} & Time into interval offset for interval type. \\
+\hline
+\mbox{\texttt{ out}}  & {\em epoch\+\_\+timestamp} & Unix epoch timestamp (UTC) of next event in milli-\/seconds. \\
+\hline
+\end{DoxyParams}

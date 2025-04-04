@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="ak8975_8h" kind="file" language="C++">
+    <compoundname>ak8975.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="ak8975__version_8h" local="yes">ak8975_version.h</includes>
+    <includedby refid="ak8975_8c" local="yes">components/peripherals/i2c/esp_ak8975/ak8975.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ak8975/include/ak8975.h</label>
+        <link refid="ak8975_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ak8975_version.h</label>
+        <link refid="ak8975__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structak8975__magnetic__axes__data__s" prot="public">ak8975_magnetic_axes_data_s</innerclass>
+    <innerclass refid="structak8975__axes__data__s" prot="public">ak8975_axes_data_s</innerclass>
+    <innerclass refid="structak8975__config__s" prot="public">ak8975_config_s</innerclass>
+    <innerclass refid="structak8975__context__t" prot="public">ak8975_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1ga2fd4a3cecefd41ebf3ad98392aadb9fa" kind="define"><name>I2C_AK8975_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga2d07a0e495cfebfb5e56e9a5a62607ce" kind="define"><name>I2C_AK8975_DEV_ADDR_CAD1_0_CAD0_0</name></member>
+      <member refid="group__drivers_1ga965b23a9ecbe9a24d295a1a7c069f8c9" kind="define"><name>I2C_AK8975_DEV_ADDR_CAD1_0_CAD0_1</name></member>
+      <member refid="group__drivers_1ga2a65ae19f0407d84810ab3565b1529db" kind="define"><name>I2C_AK8975_DEV_ADDR_CAD1_1_CAD0_0</name></member>
+      <member refid="group__drivers_1gaa3945f334089841dc25b1a0e7eaae7b7" kind="define"><name>I2C_AK8975_DEV_ADDR_CAD1_1_CAD0_1</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1gae5925f3fe9c3bd9a0237e62704f6269c" kind="define"><name>I2C_AK8975_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1gaa4cd7940a46bd75fcf1bcf0ddc1254dc" kind="enum"><name>ak8975_operating_modes_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1gacfe2f1f091a67cbc516f4df50ef69e00" kind="typedef"><name>ak8975_operating_modes_t</name></member>
+      <member refid="group__drivers_1gae81add8ce1a1a058e64e53db692711b0" kind="typedef"><name>ak8975_magnetic_axes_data_t</name></member>
+      <member refid="group__drivers_1gaf99bb3c94a024a483845a4d71adb1500" kind="typedef"><name>ak8975_axes_data_t</name></member>
+      <member refid="group__drivers_1ga357954982de125a621354044159b20be" kind="typedef"><name>ak8975_config_t</name></member>
+      <member refid="group__drivers_1gaabbf49a0a495d836aeac7741ae14323b" kind="typedef"><name>ak8975_context_t</name></member>
+      <member refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kind="typedef"><name>ak8975_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1gaa52243530b8fb5ebd65c22156ee445c0" kind="variable"><name>ak8975_control_register_t</name></member>
+      <member refid="group__drivers_1gaa181e1ef21b4b1ecd7f01fb05d38fb27" kind="variable"><name>ak8975_status1_register_t</name></member>
+      <member refid="group__drivers_1ga448dba23aa679a47666d94da58912a41" kind="variable"><name>ak8975_status2_register_t</name></member>
+      <member refid="group__drivers_1ga6871d5d20f971162e4cdc025c3054cf3" kind="variable"><name>ak8975_selftest_control_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga12da599a35eb44da6b902f2f37ebe273" kind="function"><name>ak8975_get_control_register</name></member>
+      <member refid="group__drivers_1ga2c7d6d034b7d06e9aa2e14b4e6fc6dc0" kind="function"><name>ak8975_set_control_register</name></member>
+      <member refid="group__drivers_1ga86226c1bfc95f774412f55b140f9c2da" kind="function"><name>ak8975_get_selftest_control_register</name></member>
+      <member refid="group__drivers_1ga85a711ea67335e72f5203a76688327ed" kind="function"><name>ak8975_get_status1_register</name></member>
+      <member refid="group__drivers_1gafa04bd6a6d409f2325a09e52dafd6902" kind="function"><name>ak8975_get_status2_register</name></member>
+      <member refid="group__drivers_1gab6c812960e8ce3a4063dd229b7e40e1b" kind="function"><name>ak8975_get_asa_registers</name></member>
+      <member refid="group__drivers_1ga6a81614c7f5afe335df5211c8555af9f" kind="function"><name>ak8975_convert_to_heading</name></member>
+      <member refid="group__drivers_1gaba674ae4afa135da63a0159abe21077b" kind="function"><name>ak8975_init</name></member>
+      <member refid="group__drivers_1gad55f2dbf0c7a975cf186f9bc33f37b5c" kind="function"><name>ak8975_get_magnetic_axes</name></member>
+      <member refid="group__drivers_1gaeff4649a4193d33e8b0a973621a4bffe" kind="function"><name>ak8975_selftest</name></member>
+      <member refid="group__drivers_1ga0c7645058971940c9055bbb152cb0662" kind="function"><name>ak8975_get_data_status</name></member>
+      <member refid="group__drivers_1gab13362ebe3f37734253045838d7e0d65" kind="function"><name>ak8975_get_error_status</name></member>
+      <member refid="group__drivers_1ga1b3b677fcb4815ff1847aaa950b43d08" kind="function"><name>ak8975_get_overflow_status</name></member>
+      <member refid="group__drivers_1gac4ef488c807aed6d83faedd6a5945eab" kind="function"><name>ak8975_power_down</name></member>
+      <member refid="group__drivers_1gaba0f1e560fecb3dc448af0dd816e7ec0" kind="function"><name>ak8975_remove</name></member>
+      <member refid="group__drivers_1ga9eddb81530aec426bbe587f7fa10e0d8" kind="function"><name>ak8975_delete</name></member>
+      <member refid="group__drivers_1gaf701a57ffdd3b1821b3fdf4a8b8c73ef" kind="function"><name>ak8975_get_fw_version</name></member>
+      <member refid="group__drivers_1gaaffd2f4b5fba4019d501d2473991c4ec" kind="function"><name>ak8975_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__AK8975_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__AK8975_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ak8975_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>AK8975<sp/>definitions</highlight></codeline>
+<codeline lineno="51"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="group__drivers_1ga2fd4a3cecefd41ebf3ad98392aadb9fa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AK8975_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__drivers_1ga2d07a0e495cfebfb5e56e9a5a62607ce" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AK8975_DEV_ADDR_CAD1_0_CAD0_0<sp/><sp/><sp/>UINT8_C(0x0c)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__drivers_1ga965b23a9ecbe9a24d295a1a7c069f8c9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AK8975_DEV_ADDR_CAD1_0_CAD0_1<sp/><sp/><sp/>UINT8_C(0x0d)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="group__drivers_1ga2a65ae19f0407d84810ab3565b1529db" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AK8975_DEV_ADDR_CAD1_1_CAD0_0<sp/><sp/><sp/>UINT8_C(0x0e)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__drivers_1gaa3945f334089841dc25b1a0e7eaae7b7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AK8975_DEV_ADDR_CAD1_1_CAD0_1<sp/><sp/><sp/>UINT8_C(0x0f)<sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>*<sp/>AK8975<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="63"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="group__drivers_1gae5925f3fe9c3bd9a0237e62704f6269c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_AK8975_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/>=<sp/>I2C_AK8975_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_AK8975_DEV_ADDR_CAD1_0_CAD0_0,<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>*<sp/>AK8975<sp/>enumerator<sp/>and<sp/>structure<sp/>declarations</highlight></codeline>
+<codeline lineno="74"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="group__drivers_1gaa4cd7940a46bd75fcf1bcf0ddc1254dc" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gaa4cd7940a46bd75fcf1bcf0ddc1254dc" kindref="member">ak8975_operating_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="80" refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dcab2cea80c8918e054d4d1f352fb322ed1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dcab2cea80c8918e054d4d1f352fb322ed1" kindref="member">AK8975_OPMODE_POWER_DOWN</ref><sp/><sp/><sp/><sp/>=<sp/>(0b0000),<sp/></highlight></codeline>
+<codeline lineno="81" refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dcaa0222614031659a26ca2d501626afdbe" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dcaa0222614031659a26ca2d501626afdbe" kindref="member">AK8975_OPMODE_SINGLE_MEAS</ref><sp/><sp/><sp/>=<sp/>(0b0001),<sp/></highlight></codeline>
+<codeline lineno="82" refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dca64bdb034c5ddd0a9cb61c831503d04de" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dca64bdb034c5ddd0a9cb61c831503d04de" kindref="member">AK8975_OPMODE_SELF_TEST</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b1000),<sp/></highlight></codeline>
+<codeline lineno="83" refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dcac8468040236abeafcfa7e2afe35dd051" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ggaa4cd7940a46bd75fcf1bcf0ddc1254dcac8468040236abeafcfa7e2afe35dd051" kindref="member">AK8975_OPMODE_FUSE_ROM</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b1111)<sp/><sp/></highlight></codeline>
+<codeline lineno="84" refid="group__drivers_1gacfe2f1f091a67cbc516f4df50ef69e00" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gacfe2f1f091a67cbc516f4df50ef69e00" kindref="member">ak8975_operating_modes_t</ref>;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ak8975_control_register_e<sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CTRL_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gacfe2f1f091a67cbc516f4df50ef69e00" kindref="member">ak8975_operating_modes_t</ref><sp/><sp/><sp/><sp/>mode:4;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:4;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95"><highlight class="normal">}<sp/>ak8975_control_register_t;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ak8975_status1_register_e<sp/>{</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">STS1_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data_ready:1;<sp/><sp/></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:7;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal">}<sp/>ak8975_status1_register_t;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ak8975_status2_register_e<sp/>{</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">STS2_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:2;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data_error:1;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sensor_overflow:1;<sp/></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:4;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="119"><highlight class="normal">}<sp/>ak8975_status2_register_t;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ak8975_selftest_control_register_e<sp/>{</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">STCTRL_REG_BITS_TAG<sp/>{</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved1:6;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>selftest_state:1;<sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved2:1;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="131"><highlight class="normal">}<sp/>ak8975_selftest_control_register_t;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="structak8975__magnetic__axes__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structak8975__magnetic__axes__data__s" kindref="compound">ak8975_magnetic_axes_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>x_axis;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y_axis;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>z_axis;</highlight></codeline>
+<codeline lineno="144" refid="group__drivers_1gae81add8ce1a1a058e64e53db692711b0" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gae81add8ce1a1a058e64e53db692711b0" kindref="member">ak8975_magnetic_axes_data_t</ref>;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149" refid="structak8975__axes__data__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structak8975__axes__data__s" kindref="compound">ak8975_axes_data_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="unionbytes__to__int16__t" kindref="compound">bytes_to_int16_t</ref><sp/>x_axis;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="unionbytes__to__int16__t" kindref="compound">bytes_to_int16_t</ref><sp/>y_axis;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="unionbytes__to__int16__t" kindref="compound">bytes_to_int16_t</ref><sp/>z_axis;</highlight></codeline>
+<codeline lineno="153" refid="group__drivers_1gaf99bb3c94a024a483845a4d71adb1500" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1gaf99bb3c94a024a483845a4d71adb1500" kindref="member">ak8975_axes_data_t</ref>;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158" refid="structak8975__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structak8975__config__s" kindref="compound">ak8975_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="159" refid="structak8975__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="160" refid="structak8975__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="161" refid="group__drivers_1ga357954982de125a621354044159b20be" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga357954982de125a621354044159b20be" kindref="member">ak8975_config_t</ref>;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166" refid="structak8975__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structak8975__context__t" kindref="compound">ak8975_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="167" refid="structak8975__context__t_1ad1800211231ed003ee7dadcc0c3c3ad0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga357954982de125a621354044159b20be" kindref="member">ak8975_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1ad1800211231ed003ee7dadcc0c3c3ad0" kindref="member">dev_config</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="168" refid="structak8975__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="169" refid="structak8975__context__t_1aebf6cf4331fcc15f0d3ed0890e01a380" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1aebf6cf4331fcc15f0d3ed0890e01a380" kindref="member">device_id</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="170" refid="structak8975__context__t_1aec587deef32a52ddb8f0bb7887ec1aa8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1aec587deef32a52ddb8f0bb7887ec1aa8" kindref="member">device_info</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="171" refid="structak8975__context__t_1a68e8c596005f324cbacc9968b2787907" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1a68e8c596005f324cbacc9968b2787907" kindref="member">asa_x_value</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="172" refid="structak8975__context__t_1a8ab8d94561eeb5addce76d846e915551" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1a8ab8d94561eeb5addce76d846e915551" kindref="member">asa_y_value</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="173" refid="structak8975__context__t_1a4b0f7b0e7d0441d238ff71c37c12c938" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structak8975__context__t_1a4b0f7b0e7d0441d238ff71c37c12c938" kindref="member">asa_z_value</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="174"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179" refid="group__drivers_1gaabbf49a0a495d836aeac7741ae14323b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structak8975__context__t" kindref="compound">ak8975_context_t</ref><sp/><ref refid="structak8975__context__t" kindref="compound">ak8975_context_t</ref>;</highlight></codeline>
+<codeline lineno="183" refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structak8975__context__t" kindref="compound">ak8975_context_t</ref><sp/>*<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref>;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga12da599a35eb44da6b902f2f37ebe273" kindref="member">ak8975_get_control_register</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/>ak8975_control_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga2c7d6d034b7d06e9aa2e14b4e6fc6dc0" kindref="member">ak8975_set_control_register</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ak8975_control_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga86226c1bfc95f774412f55b140f9c2da" kindref="member">ak8975_get_selftest_control_register</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/>ak8975_selftest_control_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga85a711ea67335e72f5203a76688327ed" kindref="member">ak8975_get_status1_register</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/>ak8975_status1_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gafa04bd6a6d409f2325a09e52dafd6902" kindref="member">ak8975_get_status2_register</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/>ak8975_status2_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gab6c812960e8ce3a4063dd229b7e40e1b" kindref="member">ak8975_get_asa_registers</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asa_x_reg,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asa_y_reg,<sp/>uint8_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>asa_z_reg);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga6a81614c7f5afe335df5211c8555af9f" kindref="member">ak8975_convert_to_heading</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1gae81add8ce1a1a058e64e53db692711b0" kindref="member">ak8975_magnetic_axes_data_t</ref><sp/>axes_data);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaba674ae4afa135da63a0159abe21077b" kindref="member">ak8975_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga357954982de125a621354044159b20be" kindref="member">ak8975_config_t</ref><sp/>*ak8975_config,<sp/><ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>*ak8975_handle);</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gad55f2dbf0c7a975cf186f9bc33f37b5c" kindref="member">ak8975_get_magnetic_axes</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1gae81add8ce1a1a058e64e53db692711b0" kindref="member">ak8975_magnetic_axes_data_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>axes_data);</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaeff4649a4193d33e8b0a973621a4bffe" kindref="member">ak8975_selftest</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1gae81add8ce1a1a058e64e53db692711b0" kindref="member">ak8975_magnetic_axes_data_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>axes_data);</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal">esp_err_t<sp/>ak8975_get_data_status(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ready);</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal">esp_err_t<sp/>ak8975_get_error_status(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>error);</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal">esp_err_t<sp/>ak8975_get_overflow_status(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>overflow);</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal">esp_err_t<sp/>ak8975_power_down(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaba0f1e560fecb3dc448af0dd816e7ec0" kindref="member">ak8975_remove</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga9eddb81530aec426bbe587f7fa10e0d8" kindref="member">ak8975_delete</ref>(<ref refid="group__drivers_1ga0210b1c72185499916196ef2f5d77bc7" kindref="member">ak8975_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight></codeline>
+<codeline lineno="305" refid="group__drivers_1gaf701a57ffdd3b1821b3fdf4a8b8c73ef" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1gaf701a57ffdd3b1821b3fdf4a8b8c73ef" kindref="member">ak8975_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"></highlight></codeline>
+<codeline lineno="312" refid="group__drivers_1gaaffd2f4b5fba4019d501d2473991c4ec" refkind="member"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1gaaffd2f4b5fba4019d501d2473991c4ec" kindref="member">ak8975_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__AK8975_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h"/>
+  </compounddef>
+</doxygen>

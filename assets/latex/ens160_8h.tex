@@ -1,0 +1,187 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+ens160/include/ens160.h File Reference}
+\hypertarget{ens160_8h}{}\label{ens160_8h}\index{components/peripherals/i2c/esp\_ens160/include/ens160.h@{components/peripherals/i2c/esp\_ens160/include/ens160.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+{\ttfamily \#include "{}ens160\+\_\+version.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{unionens160__app__version__u}{ens160\+\_\+app\+\_\+version\+\_\+u}}
+\begin{DoxyCompactList}\small\item\em ENS160 application version register structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structens160__air__quality__data__s}{ens160\+\_\+air\+\_\+quality\+\_\+data\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality data structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structens160__air__quality__raw__data__s}{ens160\+\_\+air\+\_\+quality\+\_\+raw\+\_\+data\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality raw data structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structens160__aqi__uba__row__s}{ens160\+\_\+aqi\+\_\+uba\+\_\+row\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality index of the UBA row definition structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structens160__config__s}{ens160\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em ENS160 configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structens160__context__t}{ens160\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em ENS160 context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+ENS160\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em ens160 I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+ENS160\+\_\+\+DEV\+\_\+\+ADDR\+\_\+\+LO}~UINT8\+\_\+C(0x52)
+\begin{DoxyCompactList}\small\item\em ens160 I2C address ADDR pin low \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+ENS160\+\_\+\+DEV\+\_\+\+ADDR\+\_\+\+HI}~UINT8\+\_\+C(0x53)
+\begin{DoxyCompactList}\small\item\em ens160 I2C address ADDR pin high \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_ga9c04a31b15b5c42ee99b62f4cdbba115}{ENS160\+\_\+\+TVOC\+\_\+\+MIN}}~UINT16\+\_\+C(0)
+\item 
+\#define \mbox{\hyperlink{group__drivers_gaddd9b48801e35f641da743ede92e11ca}{ENS160\+\_\+\+TVOC\+\_\+\+MAX}}~UINT16\+\_\+C(65000)
+\item 
+\#define \mbox{\hyperlink{group__drivers_gadc86cead2f984939ffcb9970f2b56f3d}{ENS160\+\_\+\+ECO2\+\_\+\+MIN}}~UINT16\+\_\+C(400)
+\item 
+\#define \mbox{\hyperlink{group__drivers_gac1c00b2fba2706f0a3b1d1e6b660fb9f}{ENS160\+\_\+\+ECO2\+\_\+\+MAX}}~UINT16\+\_\+C(65000)
+\item 
+\#define \mbox{\hyperlink{group__drivers_ga0ff1c026ea27fdfd823abebe22c9252c}{ENS160\+\_\+\+AQI\+\_\+\+MIN}}~UINT16\+\_\+C(1)
+\item 
+\#define \mbox{\hyperlink{group__drivers_ga0366e30fcd40a9d3bd484dec9096b02b}{ENS160\+\_\+\+AQI\+\_\+\+MAX}}~UINT16\+\_\+C(5)
+\item 
+\#define {\bfseries ENS160\+\_\+\+ERROR\+\_\+\+MSG\+\_\+\+SIZE}~(80)
+\begin{DoxyCompactList}\small\item\em ens160 I2C error message size \end{DoxyCompactList}\item 
+\#define {\bfseries ENS160\+\_\+\+ERROR\+\_\+\+MSG\+\_\+\+TABLE\+\_\+\+SIZE}~(7)
+\begin{DoxyCompactList}\small\item\em ens160 I2C error message table size \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_gab6760dc29adf5219230214535464b500}{I2\+C\+\_\+\+ENS160\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\begin{DoxyCompactList}\small\item\em Macro that initializes {\ttfamily i2c\+\_\+ens160\+\_\+config\+\_\+t} to default configuration settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_gade3afdceb8405d3b657d92d4abd60217}{ens160\+\_\+aqi\+\_\+uba\+\_\+indexes\+\_\+e}} {\bfseries ens160\+\_\+aqi\+\_\+uba\+\_\+indexes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality index of the uba enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga85829c5c19d6ec9d3ea8643d3d2627a6}{ens160\+\_\+interrupt\+\_\+pin\+\_\+polarities\+\_\+e}} {\bfseries ens160\+\_\+interrupt\+\_\+pin\+\_\+polarities\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 interrupt pin polarities enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga75c593a0cc73463325240b4024666622}{ens160\+\_\+interrupt\+\_\+pin\+\_\+drivers\+\_\+e}} {\bfseries ens160\+\_\+interrupt\+\_\+pin\+\_\+drivers\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 interrupt pin drivers enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gae268b5469d64277325caa3f5fc989850}{ens160\+\_\+operating\+\_\+modes\+\_\+e}} {\bfseries ens160\+\_\+operating\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 operating modes enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gaf2a9ed5d8ac048fb5697822bb1694523}{ens160\+\_\+commands\+\_\+e}} {\bfseries ens160\+\_\+commands\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 commands enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga5af0eb865fa92927dfd16523bb653742}{ens160\+\_\+validity\+\_\+flags\+\_\+e}} {\bfseries ens160\+\_\+validity\+\_\+flags\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 validity flags enumerator. \end{DoxyCompactList}\item 
+typedef union \mbox{\hyperlink{unionens160__app__version__u}{ens160\+\_\+app\+\_\+version\+\_\+u}} {\bfseries ens160\+\_\+app\+\_\+version\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 application version register structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structens160__air__quality__data__s}{ens160\+\_\+air\+\_\+quality\+\_\+data\+\_\+s}} {\bfseries ens160\+\_\+air\+\_\+quality\+\_\+data\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality data structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structens160__air__quality__raw__data__s}{ens160\+\_\+air\+\_\+quality\+\_\+raw\+\_\+data\+\_\+s}} {\bfseries ens160\+\_\+air\+\_\+quality\+\_\+raw\+\_\+data\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality raw data structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structens160__aqi__uba__row__s}{ens160\+\_\+aqi\+\_\+uba\+\_\+row\+\_\+s}} {\bfseries ens160\+\_\+aqi\+\_\+uba\+\_\+row\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality index of the UBA row definition structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structens160__config__s}{ens160\+\_\+config\+\_\+s}} {\bfseries ens160\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 configuration structure. \end{DoxyCompactList}\item 
+typedef struct ens160\+\_\+context\+\_\+t {\bfseries ens160\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structens160__context__t}{ens160\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries ens160\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em ENS160 handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_gade3afdceb8405d3b657d92d4abd60217}{ens160\+\_\+aqi\+\_\+uba\+\_\+indexes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a810b422dd7f1e8eb4a9d6d3c2956503c}{ENS160\+\_\+\+AQI\+\_\+\+UBA\+\_\+\+INDEX\+\_\+\+UNKNOWN}} = 0
+, \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a9d8fb3a52c953b8011b4d461042f9d80}{ENS160\+\_\+\+AQI\+\_\+\+UBA\+\_\+\+INDEX\+\_\+1}} = 1
+, \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a49d52089490f4e2a9386936251aab04c}{ENS160\+\_\+\+AQI\+\_\+\+UBA\+\_\+\+INDEX\+\_\+2}} = 2
+, \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a732ff3e985bc45ba109fe52f4c5ef6a6}{ENS160\+\_\+\+AQI\+\_\+\+UBA\+\_\+\+INDEX\+\_\+3}} = 3
+, \newline
+\mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a2afaa2fa6e4eb4b2ee1a57019ad5e762}{ENS160\+\_\+\+AQI\+\_\+\+UBA\+\_\+\+INDEX\+\_\+4}} = 4
+, \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a2bef77054e8955a0d03316217c3787f9}{ENS160\+\_\+\+AQI\+\_\+\+UBA\+\_\+\+INDEX\+\_\+5}} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em ENS160 air quality index of the uba enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga85829c5c19d6ec9d3ea8643d3d2627a6}{ens160\+\_\+interrupt\+\_\+pin\+\_\+polarities\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga85829c5c19d6ec9d3ea8643d3d2627a6a450b74eae6c7bc01837114e36e257bd5}{ENS160\+\_\+\+INT\+\_\+\+PIN\+\_\+\+POLARITY\+\_\+\+ACTIVE\+\_\+\+LO}} = 0
+, \mbox{\hyperlink{group__drivers_gga85829c5c19d6ec9d3ea8643d3d2627a6a55f4e0769b8ad914c0399b3af272a945}{ENS160\+\_\+\+INT\+\_\+\+PIN\+\_\+\+POLARITY\+\_\+\+ACTIVE\+\_\+\+HI}} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em ENS160 interrupt pin polarities enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga75c593a0cc73463325240b4024666622}{ens160\+\_\+interrupt\+\_\+pin\+\_\+drivers\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga75c593a0cc73463325240b4024666622ab7c98b25f90dd5005f51895aaf07f456}{ENS160\+\_\+\+INT\+\_\+\+PIN\+\_\+\+DRIVE\+\_\+\+OPEN\+\_\+\+DRAIN}} = 0
+, \mbox{\hyperlink{group__drivers_gga75c593a0cc73463325240b4024666622a06dc38f3dfb05f5f5b74bbffc98f7970}{ENS160\+\_\+\+INT\+\_\+\+PIN\+\_\+\+DRIVE\+\_\+\+PUSH\+\_\+\+PULL}} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em ENS160 interrupt pin drivers enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_gae268b5469d64277325caa3f5fc989850}{ens160\+\_\+operating\+\_\+modes\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850a6aa8e1b080be1957ba87d3c10f424951}{ENS160\+\_\+\+OPMODE\+\_\+\+DEEP\+\_\+\+SLEEP}} = 0x00
+, \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850a99235d15a08bdeff5ff011c5bb9ebd81}{ENS160\+\_\+\+OPMODE\+\_\+\+IDLE}} = 0x01
+, \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850a126972f1631eade3a26360e45d1c94e1}{ENS160\+\_\+\+OPMODE\+\_\+\+STANDARD}} = 0x02
+, \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850aaf93f073c29ed1b0772e2563c567e383}{ENS160\+\_\+\+OPMODE\+\_\+\+RESET}} = 0xf0
+ \}
+\begin{DoxyCompactList}\small\item\em ENS160 operating modes enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_gaf2a9ed5d8ac048fb5697822bb1694523}{ens160\+\_\+commands\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_ggaf2a9ed5d8ac048fb5697822bb1694523a7057edf1edff9b6c33d6706a8d8e9305}{ENS160\+\_\+\+CMD\+\_\+\+NORMAL}} = 0x00
+, \mbox{\hyperlink{group__drivers_ggaf2a9ed5d8ac048fb5697822bb1694523a1075d08e6fb45b770613308d61865d99}{ENS160\+\_\+\+CMD\+\_\+\+GET\+\_\+\+FW\+\_\+\+APPVER}} = 0x0e
+, \mbox{\hyperlink{group__drivers_ggaf2a9ed5d8ac048fb5697822bb1694523a774e685b4aedaaabbc52542f66089e93}{ENS160\+\_\+\+CMD\+\_\+\+CLEAR\+\_\+\+GPR}} = 0xcc
+ \}
+\begin{DoxyCompactList}\small\item\em ENS160 commands enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga5af0eb865fa92927dfd16523bb653742}{ens160\+\_\+validity\+\_\+flags\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742a26345bcbbdfacd24a06cd0ec33038ae7}{ENS160\+\_\+\+VALFLAG\+\_\+\+NORMAL}} = 0x00
+, \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742a46de0ca9c1984f11ace5fe5fe7445cc6}{ENS160\+\_\+\+VALFLAG\+\_\+\+WARMUP}} = 0x01
+, \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742ae12feb5e210c38c99a621d7856858a4c}{ENS160\+\_\+\+VALFLAG\+\_\+\+INITIAL\+\_\+\+STARTUP}} = 0x02
+, \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742a5e1a92acf9a54d6aec0d4dbc1fe47193}{ENS160\+\_\+\+VALFLAG\+\_\+\+INVALID\+\_\+\+OUTPUT}} = 0x03
+ \}
+\begin{DoxyCompactList}\small\item\em ENS160 validity flags enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8a0c563398abbbd945a5811cf9f71d7f}{ens160\+\_\+get\+\_\+interrupt\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, ens160\+\_\+interrupt\+\_\+config\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt configuration register from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad526a912dd144b02c82afc98f1dcb718}{ens160\+\_\+set\+\_\+interrupt\+\_\+config\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, const ens160\+\_\+interrupt\+\_\+config\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes interrupt configuration register to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad75c8c18e1e7e453d24a55a648636bd6}{ens160\+\_\+get\+\_\+status\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, ens160\+\_\+status\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads status register from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga37fcec04ff84eccc9f809c9c4307dc78}{ens160\+\_\+clear\+\_\+command\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Resets command to operate normal and clears general purpose registers on ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga15e778babf2f9768c9ce64cae25d66a7}{ens160\+\_\+get\+\_\+compensation\+\_\+registers}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity)
+\begin{DoxyCompactList}\small\item\em Reads temperature and humidity compensation registers from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafbc9dd389a2bea26048557c654df8834}{ens160\+\_\+set\+\_\+compensation\+\_\+registers}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity)
+\begin{DoxyCompactList}\small\item\em Writes temperature and humidity compensation registers to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gafb9e5b096480b989c878d9063e4734ed}{ens160\+\_\+get\+\_\+part\+\_\+id\+\_\+register}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, uint16\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads part identifier register from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gac139f3a1dd540b59f58adcf7ef5770ad}{ens160\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_gadcf19e4502c842b6dbc749ed6e19ab96}{ens160\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}ens160\+\_\+config, \mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}ens160\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an ENS160 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6b3e7bd873aa221d7fa868356da85bc4}{ens160\+\_\+get\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga9bf81e9124e5c07b24ebebc2dd141904}{ens160\+\_\+air\+\_\+quality\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const data)
+\begin{DoxyCompactList}\small\item\em Reads calculated air quality measurements from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1dd2b9036a23da1e0ca670bb48c70760}{ens160\+\_\+get\+\_\+raw\+\_\+measurement}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gaff8f3f610bc3439129f39f314c4e4616}{ens160\+\_\+air\+\_\+quality\+\_\+raw\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}const data)
+\begin{DoxyCompactList}\small\item\em Reads raw air quality measurements from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf391757408cbb0d1a6405665c8946480}{ens160\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads data ready status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga52ea3a75e26bf293045237fd418e7ebb}{ens160\+\_\+get\+\_\+gpr\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads general purpose registers data ready status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga159fd485dba74a5fc090875de79ad53f}{ens160\+\_\+get\+\_\+validity\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\+\_\+validity\+\_\+flags\+\_\+t}} \texorpdfstring{$\ast$}{*}const state)
+\begin{DoxyCompactList}\small\item\em Read validity flag status, device status and signal rating, from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab84c4ef88ae9937d2efc4f7469b39b87}{ens160\+\_\+get\+\_\+error\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const error)
+\begin{DoxyCompactList}\small\item\em Read error status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7a8c95d5dd4643a64269fc03f9462651}{ens160\+\_\+get\+\_\+mode\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Read operating mode status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga540f3af9bfb6c3742f775de124efee09}{ens160\+\_\+get\+\_\+status}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const data\+\_\+ready, bool \texorpdfstring{$\ast$}{*}const gpr\+\_\+data\+\_\+ready, \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\+\_\+validity\+\_\+flags\+\_\+t}} \texorpdfstring{$\ast$}{*}const state, bool \texorpdfstring{$\ast$}{*}const error, bool \texorpdfstring{$\ast$}{*}const mode)
+\begin{DoxyCompactList}\small\item\em Reads data ready, general purpose registers data ready, validity flag, and error status from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaf21d5703c00867c1eb297503d0518735}{ens160\+\_\+get\+\_\+compensation\+\_\+factors}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature, float \texorpdfstring{$\ast$}{*}const humidity)
+\begin{DoxyCompactList}\small\item\em Reads temperature and humidity compensation factors from ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga252a99917dc015a7644c71fd217c4517}{ens160\+\_\+set\+\_\+compensation\+\_\+factors}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle, const float temperature, const float humidity)
+\begin{DoxyCompactList}\small\item\em Writes temperature and humidity compensation factors to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gab98f3065fa594a8fb14b0cd348b9b604}{ens160\+\_\+enable\+\_\+standard\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables standard operating mode to ENS160 to operate as a gas sensor and respond to commands. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad641eb06f6dd6361c18371143ae2048d}{ens160\+\_\+enable\+\_\+idle\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables idle operating mode to ENS160 to respond to commands. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga99ce58785ce63a71409c90def02c46be}{ens160\+\_\+enable\+\_\+deep\+\_\+sleep\+\_\+mode}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Enables deep sleep operating mode to ENS160. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5442321bbbbc8b7288f72a07c01ba8b9}{ens160\+\_\+reset}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Issues soft-\/reset and initializes ENS160 to idle mode. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga37a6760bf7c1f54d04ab1adfbcc1146c}{ens160\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an ENS160 device from master I2C bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga40c349fa1fce998b90de2a9e14ed701d}{ens160\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an ENS160 device from master bus and frees handle. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group__drivers_ga160c5dbdb5e259518d2e997c49566e2b}{ens160\+\_\+aqi\+\_\+uba\+\_\+row\+\_\+t}} \mbox{\hyperlink{group__drivers_ga4d2de4eb0b2febd66f4abd03c3d853ea}{ens160\+\_\+aqi\+\_\+index\+\_\+to\+\_\+definition}} (const \mbox{\hyperlink{group__drivers_ga60912896ba51c5b7836e2e6705362d87}{ens160\+\_\+aqi\+\_\+uba\+\_\+indexes\+\_\+t}} index)
+\begin{DoxyCompactList}\small\item\em Decodes ENS160 air quality index to a uba definition row. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga0b117eabf6020f6022f158f40a986828}{ens160\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts ENS160 firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gabdc061a1dd5fc67a400eee28aa92991c}{ens160\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts ENS160 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries ens160\+\_\+status\+\_\+register\+\_\+t}
+\item 
+{\bfseries ens160\+\_\+interrupt\+\_\+config\+\_\+register\+\_\+t}
+\item 
+{\bfseries ens160\+\_\+caqi\+\_\+data\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

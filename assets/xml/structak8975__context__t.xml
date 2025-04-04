@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structak8975__context__t" kind="struct" language="C++" prot="public">
+    <compoundname>ak8975_context_t</compoundname>
+    <includes refid="ak8975_8h" local="no">ak8975.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structak8975__context__t_1ad1800211231ed003ee7dadcc0c3c3ad0" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga357954982de125a621354044159b20be" kindref="member">ak8975_config_t</ref></type>
+        <definition>ak8975_config_t dev_config</definition>
+        <argsstring></argsstring>
+        <name>dev_config</name>
+        <qualifiedname>ak8975_context_t::dev_config</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 device configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="167" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structak8975__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" prot="public" static="no" mutable="no">
+        <type>i2c_master_dev_handle_t</type>
+        <definition>i2c_master_dev_handle_t i2c_handle</definition>
+        <argsstring></argsstring>
+        <name>i2c_handle</name>
+        <qualifiedname>ak8975_context_t::i2c_handle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 I2C master device handle </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="168" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structak8975__context__t_1aebf6cf4331fcc15f0d3ed0890e01a380" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t device_id</definition>
+        <argsstring></argsstring>
+        <name>device_id</name>
+        <qualifiedname>ak8975_context_t::device_id</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 device identifier </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="169" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structak8975__context__t_1aec587deef32a52ddb8f0bb7887ec1aa8" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t device_info</definition>
+        <argsstring></argsstring>
+        <name>device_info</name>
+        <qualifiedname>ak8975_context_t::device_info</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 device information </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="170" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structak8975__context__t_1a68e8c596005f324cbacc9968b2787907" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t asa_x_value</definition>
+        <argsstring></argsstring>
+        <name>asa_x_value</name>
+        <qualifiedname>ak8975_context_t::asa_x_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 x-axis sensitivity adjustment value </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="171" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structak8975__context__t_1a8ab8d94561eeb5addce76d846e915551" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t asa_y_value</definition>
+        <argsstring></argsstring>
+        <name>asa_y_value</name>
+        <qualifiedname>ak8975_context_t::asa_y_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 y-axis sensitivity adjustment value </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="172" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structak8975__context__t_1a4b0f7b0e7d0441d238ff71c37c12c938" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t asa_z_value</definition>
+        <argsstring></argsstring>
+        <name>asa_z_value</name>
+        <qualifiedname>ak8975_context_t::asa_z_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ak8975 z-axis sensitivity adjustment value </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="173" column="37" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>AK8975 context structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>ak8975_config_s</label>
+        <link refid="structak8975__config__s"/>
+      </node>
+      <node id="1">
+        <label>ak8975_context_t</label>
+        <link refid="structak8975__context__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>dev_config</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="components/peripherals/i2c/esp_ak8975/include/ak8975.h" line="166" column="1" bodyfile="components/peripherals/i2c/esp_ak8975/include/ak8975.h" bodystart="166" bodyend="174"/>
+    <listofallmembers>
+      <member refid="structak8975__context__t_1a68e8c596005f324cbacc9968b2787907" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>asa_x_value</name></member>
+      <member refid="structak8975__context__t_1a8ab8d94561eeb5addce76d846e915551" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>asa_y_value</name></member>
+      <member refid="structak8975__context__t_1a4b0f7b0e7d0441d238ff71c37c12c938" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>asa_z_value</name></member>
+      <member refid="structak8975__context__t_1ad1800211231ed003ee7dadcc0c3c3ad0" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>dev_config</name></member>
+      <member refid="structak8975__context__t_1aebf6cf4331fcc15f0d3ed0890e01a380" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>device_id</name></member>
+      <member refid="structak8975__context__t_1aec587deef32a52ddb8f0bb7887ec1aa8" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>device_info</name></member>
+      <member refid="structak8975__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" prot="public" virt="non-virtual"><scope>ak8975_context_t</scope><name>i2c_handle</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

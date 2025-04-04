@@ -1,0 +1,276 @@
+\doxysection{ens160.\+h}
+\hypertarget{ens160_8h_source}{}\label{ens160_8h_source}\index{components/peripherals/i2c/esp\_ens160/include/ens160.h@{components/peripherals/i2c/esp\_ens160/include/ens160.h}}
+\mbox{\hyperlink{ens160_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_ENS160\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_ENS160\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}ens160\_version.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ *\ ENS160\ definitions}}
+\DoxyCodeLine{00052\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ I2C\_ENS160\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ \ }}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ I2C\_ENS160\_DEV\_ADDR\_LO\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x52)\ \ \ }}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ I2C\_ENS160\_DEV\_ADDR\_HI\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x53)\ \ \ }}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ \ \ \ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ ENS160\_TVOC\_MIN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(0)\ \ \ \ \ \ \ \ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ ENS160\_TVOC\_MAX\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(65000)\ \ \ \ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ ENS160\_ECO2\_MIN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(400)\ \ \ \ \ \ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ ENS160\_ECO2\_MAX\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(65000)\ \ \ \ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ ENS160\_AQI\_MIN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(1)\ \ \ \ \ \ \ \ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ ENS160\_AQI\_MAX\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(5)\ \ \ \ \ \ \ \ \ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ ENS160\_ERROR\_MSG\_SIZE\ \ \ \ \ \ \ \ \ \ (80)\ \ \ }}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ ENS160\_ERROR\_MSG\_TABLE\_SIZE\ \ \ \ (7)\ \ \ \ }}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *\ ENS160\ macro\ definitions}}
+\DoxyCodeLine{00081\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#define\ I2C\_ENS160\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_ENS160\_DEV\_ADDR\_HI,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_ENS160\_DEV\_CLK\_SPD,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .irq\_enabled\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ false,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .irq\_data\_enabled\ \ \ \ \ \ \ \ \ \ \ =\ false,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .irq\_gpr\_enabled\ \ \ \ \ \ \ \ \ \ \ \ =\ false,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .irq\_pin\_driver\ \ \ \ \ \ \ \ \ \ \ \ \ =\ ENS160\_INT\_PIN\_DRIVE\_OPEN\_DRAIN,\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .irq\_pin\_polarity\ \ \ \ \ \ \ \ \ \ \ =\ ENS160\_INT\_PIN\_POLARITY\_ACTIVE\_LO\ \}}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ *\ ENS160\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00098\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gade3afdceb8405d3b657d92d4abd60217}{ens160\_aqi\_uba\_indexes\_e}}\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a810b422dd7f1e8eb4a9d6d3c2956503c}{ENS160\_AQI\_UBA\_INDEX\_UNKNOWN}}\ \ \ \ =\ 0,\ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a9d8fb3a52c953b8011b4d461042f9d80}{ENS160\_AQI\_UBA\_INDEX\_1}}\ \ \ \ \ \ \ \ \ \ =\ 1,\ }
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a49d52089490f4e2a9386936251aab04c}{ENS160\_AQI\_UBA\_INDEX\_2}}\ \ \ \ \ \ \ \ \ \ =\ 2,\ }
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a732ff3e985bc45ba109fe52f4c5ef6a6}{ENS160\_AQI\_UBA\_INDEX\_3}}\ \ \ \ \ \ \ \ \ \ =\ 3,\ }
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a2afaa2fa6e4eb4b2ee1a57019ad5e762}{ENS160\_AQI\_UBA\_INDEX\_4}}\ \ \ \ \ \ \ \ \ \ =\ 4,\ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggade3afdceb8405d3b657d92d4abd60217a2bef77054e8955a0d03316217c3787f9}{ENS160\_AQI\_UBA\_INDEX\_5}}\ \ \ \ \ \ \ \ \ \ =\ 5\ \ }
+\DoxyCodeLine{00110\ \}\ \mbox{\hyperlink{group__drivers_ga60912896ba51c5b7836e2e6705362d87}{ens160\_aqi\_uba\_indexes\_t}};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga85829c5c19d6ec9d3ea8643d3d2627a6}{ens160\_interrupt\_pin\_polarities\_e}}\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga85829c5c19d6ec9d3ea8643d3d2627a6a450b74eae6c7bc01837114e36e257bd5}{ENS160\_INT\_PIN\_POLARITY\_ACTIVE\_LO}}\ \ =\ 0,\ }
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga85829c5c19d6ec9d3ea8643d3d2627a6a55f4e0769b8ad914c0399b3af272a945}{ENS160\_INT\_PIN\_POLARITY\_ACTIVE\_HI}}\ \ =\ 1\ \ }
+\DoxyCodeLine{00118\ \}\ \mbox{\hyperlink{group__drivers_gac6754110d0d3ab4e720a7b9283289e88}{ens160\_interrupt\_pin\_polarities\_t}};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga75c593a0cc73463325240b4024666622}{ens160\_interrupt\_pin\_drivers\_e}}\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga75c593a0cc73463325240b4024666622ab7c98b25f90dd5005f51895aaf07f456}{ENS160\_INT\_PIN\_DRIVE\_OPEN\_DRAIN}}\ \ =\ 0,\ }
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga75c593a0cc73463325240b4024666622a06dc38f3dfb05f5f5b74bbffc98f7970}{ENS160\_INT\_PIN\_DRIVE\_PUSH\_PULL}}\ \ \ =\ 1,\ }
+\DoxyCodeLine{00126\ \}\ \mbox{\hyperlink{group__drivers_ga9b85a4755141783e62806d5409559fe6}{ens160\_interrupt\_pin\_drivers\_t}};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gae268b5469d64277325caa3f5fc989850}{ens160\_operating\_modes\_e}}\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850a6aa8e1b080be1957ba87d3c10f424951}{ENS160\_OPMODE\_DEEP\_SLEEP}}\ \ \ \ =\ 0x00,\ }
+\DoxyCodeLine{00133\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850a99235d15a08bdeff5ff011c5bb9ebd81}{ENS160\_OPMODE\_IDLE}}\ \ \ \ \ \ \ \ \ \ =\ 0x01,\ }
+\DoxyCodeLine{00134\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850a126972f1631eade3a26360e45d1c94e1}{ENS160\_OPMODE\_STANDARD}}\ \ \ \ \ \ =\ 0x02,\ }
+\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggae268b5469d64277325caa3f5fc989850aaf93f073c29ed1b0772e2563c567e383}{ENS160\_OPMODE\_RESET}}\ \ \ \ \ \ \ \ \ =\ 0xf0\ \ }
+\DoxyCodeLine{00136\ \}\ \mbox{\hyperlink{group__drivers_ga6d531eebb2d3fc8bc6de830bfb2aaaf4}{ens160\_operating\_modes\_t}};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00141\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gaf2a9ed5d8ac048fb5697822bb1694523}{ens160\_commands\_e}}\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf2a9ed5d8ac048fb5697822bb1694523a7057edf1edff9b6c33d6706a8d8e9305}{ENS160\_CMD\_NORMAL}}\ \ \ \ \ \ \ \ \ =\ 0x00,\ }
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf2a9ed5d8ac048fb5697822bb1694523a1075d08e6fb45b770613308d61865d99}{ENS160\_CMD\_GET\_FW\_APPVER}}\ \ =\ 0x0e,\ }
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf2a9ed5d8ac048fb5697822bb1694523a774e685b4aedaaabbc52542f66089e93}{ENS160\_CMD\_CLEAR\_GPR}}\ \ \ \ \ \ =\ 0xcc\ \ }
+\DoxyCodeLine{00145\ \}\ \mbox{\hyperlink{group__drivers_gaa5184b5f2bb84de6f76b86821d1dada9}{ens160\_commands\_t}};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00150\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga5af0eb865fa92927dfd16523bb653742}{ens160\_validity\_flags\_e}}\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742a26345bcbbdfacd24a06cd0ec33038ae7}{ENS160\_VALFLAG\_NORMAL}}\ \ \ \ \ \ \ \ \ \ \ =\ 0x00,\ }
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742a46de0ca9c1984f11ace5fe5fe7445cc6}{ENS160\_VALFLAG\_WARMUP}}\ \ \ \ \ \ \ \ \ \ \ =\ 0x01,\ }
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742ae12feb5e210c38c99a621d7856858a4c}{ENS160\_VALFLAG\_INITIAL\_STARTUP}}\ \ =\ 0x02,\ }
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga5af0eb865fa92927dfd16523bb653742a5e1a92acf9a54d6aec0d4dbc1fe47193}{ENS160\_VALFLAG\_INVALID\_OUTPUT}}\ \ \ =\ 0x03\ \ }
+\DoxyCodeLine{00155\ \}\ \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\_validity\_flags\_t}};}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00160\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ens160\_status\_register\_u\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{struct\ }STS\_REG\_BIT\_TAG\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_gpr\_data:1;\ \ \ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_data:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\_validity\_flags\_t}}\ \ \ \ \ state:2;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved:2;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error:1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mode:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00168\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \}\ ens160\_status\_register\_t;}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ens160\_interrupt\_config\_register\_u\ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keyword}{struct\ }CFG\_REG\_BIT\_TAG\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ irq\_enabled:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ irq\_data\_enabled:1;\ \ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ irq\_gpr\_enabled:1;\ \ \ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga9b85a4755141783e62806d5409559fe6}{ens160\_interrupt\_pin\_drivers\_t}}\ irq\_pin\_driver:1;\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gac6754110d0d3ab4e720a7b9283289e88}{ens160\_interrupt\_pin\_polarities\_t}}\ irq\_pin\_polarity:1;\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved3:1;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00186\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00187\ \}\ ens160\_interrupt\_config\_register\_t;}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00192\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionens160__app__version__u}{ens160\_app\_version\_u}}\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{unionens160__app__version__u_a5bd4e4c943762926c8f653b6224cced2}{major}};\ \ \ \ \ \ }
+\DoxyCodeLine{00194\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{unionens160__app__version__u_ae2f416b0a34b7beb4ed3873d791ac393}{minor}};\ \ \ \ \ \ }
+\DoxyCodeLine{00195\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{unionens160__app__version__u_add4c887e71286ff439152f14a491d84b}{release}};\ \ \ \ }
+\DoxyCodeLine{00196\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{unionens160__app__version__u_a89fe01e2d4cf73b27993d65029aff235}{bytes}}[3];\ \ \ }
+\DoxyCodeLine{00197\ \}\ \mbox{\hyperlink{group__drivers_gad4000dc9360128d86e30a75d36a78349}{ens160\_app\_version\_t}};}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00202\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ ens160\_caqi\_data\_register\_u\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keyword}{struct\ }CAL\_AQI\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ aqi\_uba:3;\ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ reserved:5;\ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ uint8\_t\ value;\ }
+\DoxyCodeLine{00208\ \}\ ens160\_caqi\_data\_register\_t;}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00213\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__air__quality__data__s}{ens160\_air\_quality\_data\_s}}\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga60912896ba51c5b7836e2e6705362d87}{ens160\_aqi\_uba\_indexes\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__air__quality__data__s_aa5d3fed2da33a5ecbbfb2204ab5012a7}{uba\_aqi}};\ \ \ \ }
+\DoxyCodeLine{00215\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__air__quality__data__s_a26fd892e05117ff980a779acfac83982}{tvoc}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00216\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__air__quality__data__s_a7dd62fb3d78b66bd1e649ba2f702811b}{etoh}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__air__quality__data__s_a6ae8195dcd841d5d5a27361dbe594a5d}{eco2}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00218\ \}\ \mbox{\hyperlink{group__drivers_ga9bf81e9124e5c07b24ebebc2dd141904}{ens160\_air\_quality\_data\_t}};}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00223\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__air__quality__raw__data__s}{ens160\_air\_quality\_raw\_data\_s}}\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp0\_ri;\ \ \ \ \ }
+\DoxyCodeLine{00225\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp1\_ri;\ \ \ \ \ }
+\DoxyCodeLine{00226\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp2\_ri;\ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp3\_ri;\ \ \ \ \ }
+\DoxyCodeLine{00228\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp0\_bl;\ \ \ \ \ }
+\DoxyCodeLine{00229\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp1\_bl;\ \ \ \ \ }
+\DoxyCodeLine{00230\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp2\_bl;\ \ \ \ \ }
+\DoxyCodeLine{00231\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hp3\_bl;\ \ \ \ \ }
+\DoxyCodeLine{00232\ \}\ \mbox{\hyperlink{group__drivers_gaff8f3f610bc3439129f39f314c4e4616}{ens160\_air\_quality\_raw\_data\_t}};}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00237\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__aqi__uba__row__s}{ens160\_aqi\_uba\_row\_s}}\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga60912896ba51c5b7836e2e6705362d87}{ens160\_aqi\_uba\_indexes\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__aqi__uba__row__s_ac888512e835d9c26524c55a22de09e53}{index}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__aqi__uba__row__s_ad9e3757cd62fe48563a89c5c31340344}{rating}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__aqi__uba__row__s_a0a6a8fdd99594aad0ba3e397a424397e}{hygienic\_rating}};\ \ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__aqi__uba__row__s_a04f35c763f776ae94a41baf18d3db330}{recommendation}};\ \ \ }
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__aqi__uba__row__s_a1c2a54cac5e2017afd246d23e44150bb}{exposure\_limit}};\ \ \ }
+\DoxyCodeLine{00243\ \}\ \mbox{\hyperlink{group__drivers_ga160c5dbdb5e259518d2e997c49566e2b}{ens160\_aqi\_uba\_row\_t}};}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00249\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__config__s}{ens160\_config\_s}}\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00251\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__config__s_af76a23d5ea575f0b95d86d14d246c9a7}{irq\_enabled}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__config__s_a786f332c027d34d43a33ac5735a03d71}{irq\_data\_enabled}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__config__s_a5385141f066d58d688327c44a8b24ab2}{irq\_gpr\_enabled}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga9b85a4755141783e62806d5409559fe6}{ens160\_interrupt\_pin\_drivers\_t}}\ \ \ \ \ \ \mbox{\hyperlink{structens160__config__s_a5350a306b418447ca3e8741da9554fef}{irq\_pin\_driver}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00256\ \ \ \ \ \mbox{\hyperlink{group__drivers_gac6754110d0d3ab4e720a7b9283289e88}{ens160\_interrupt\_pin\_polarities\_t}}\ \ \ \mbox{\hyperlink{structens160__config__s_afabc6379a8b4233103c83aa95a983dbe}{irq\_pin\_polarity}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00257\ \}\ \mbox{\hyperlink{group__drivers_gadcf19e4502c842b6dbc749ed6e19ab96}{ens160\_config\_t}};}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00262\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__context__t}{ens160\_context\_t}}\ \{}
+\DoxyCodeLine{00263\ \ \ \ \ \mbox{\hyperlink{group__drivers_gadcf19e4502c842b6dbc749ed6e19ab96}{ens160\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__context__t_a45942407f35a17914c2a5f1d1fb4591e}{dev\_config}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00264\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00265\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structens160__context__t_a8f36447f67acb1e89e69ddd04fb0f1fb}{part\_id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//i2c\_ens160\_operating\_modes\_t\ \ \ \ \ \ \ \ \ \ \ \ mode;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /*!<\ ens160\ operating\ mode\ */}}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{comment}{//float\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temperature\_comp;\ \ \ /*!<\ ens160\ temperature\ compensation\ in\ degrees\ Celsius\ */}}
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{comment}{//float\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ humidity\_comp;\ \ \ \ \ \ /*!<\ ens160\ humidity\ compensation\ in\ percentage\ */}}
+\DoxyCodeLine{00269\ \};}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00274\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__context__t}{ens160\_context\_t}}\ \mbox{\hyperlink{structens160__context__t}{ens160\_context\_t}};}
+\DoxyCodeLine{00278\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structens160__context__t}{ens160\_context\_t}}\ *\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}};}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00288\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8a0c563398abbbd945a5811cf9f71d7f}{ens160\_get\_interrupt\_config\_register}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ ens160\_interrupt\_config\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00297\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad526a912dd144b02c82afc98f1dcb718}{ens160\_set\_interrupt\_config\_register}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ ens160\_interrupt\_config\_register\_t\ reg);}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00306\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad75c8c18e1e7e453d24a55a648636bd6}{ens160\_get\_status\_register}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ ens160\_status\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00314\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga37fcec04ff84eccc9f809c9c4307dc78}{ens160\_clear\_command\_register}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00324\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga15e778babf2f9768c9ce64cae25d66a7}{ens160\_get\_compensation\_registers}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ humidity);}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00334\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafbc9dd389a2bea26048557c654df8834}{ens160\_set\_compensation\_registers}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ temperature,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ humidity);}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00343\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafb9e5b096480b989c878d9063e4734ed}{ens160\_get\_part\_id\_register}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00353\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac139f3a1dd540b59f58adcf7ef5770ad}{ens160\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gadcf19e4502c842b6dbc749ed6e19ab96}{ens160\_config\_t}}\ *ens160\_config,\ \mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ *ens160\_handle);}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00362\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga6b3e7bd873aa221d7fa868356da85bc4}{ens160\_get\_measurement}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga9bf81e9124e5c07b24ebebc2dd141904}{ens160\_air\_quality\_data\_t}}\ *\textcolor{keyword}{const}\ data);}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00371\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1dd2b9036a23da1e0ca670bb48c70760}{ens160\_get\_raw\_measurement}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gaff8f3f610bc3439129f39f314c4e4616}{ens160\_air\_quality\_raw\_data\_t}}\ *\textcolor{keyword}{const}\ data);}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00380\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf391757408cbb0d1a6405665c8946480}{ens160\_get\_data\_status}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ ready);}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00389\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga52ea3a75e26bf293045237fd418e7ebb}{ens160\_get\_gpr\_data\_status}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ ready);}
+\DoxyCodeLine{00390\ }
+\DoxyCodeLine{00398\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga159fd485dba74a5fc090875de79ad53f}{ens160\_get\_validity\_status}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\_validity\_flags\_t}}\ *\textcolor{keyword}{const}\ state);}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00407\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab84c4ef88ae9937d2efc4f7469b39b87}{ens160\_get\_error\_status}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ error);}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00416\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7a8c95d5dd4643a64269fc03f9462651}{ens160\_get\_mode\_status}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ mode);}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00429\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga540f3af9bfb6c3742f775de124efee09}{ens160\_get\_status}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ data\_ready,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ gpr\_data\_ready,\ \mbox{\hyperlink{group__drivers_gac81c26d5b704c609e33b6f4ba7057201}{ens160\_validity\_flags\_t}}\ *\textcolor{keyword}{const}\ state,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ error,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ mode);}
+\DoxyCodeLine{00430\ }
+\DoxyCodeLine{00439\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf21d5703c00867c1eb297503d0518735}{ens160\_get\_compensation\_factors}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ humidity);}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00449\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga252a99917dc015a7644c71fd217c4517}{ens160\_set\_compensation\_factors}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ temperature,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ humidity);}
+\DoxyCodeLine{00450\ }
+\DoxyCodeLine{00457\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab98f3065fa594a8fb14b0cd348b9b604}{ens160\_enable\_standard\_mode}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00465\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad641eb06f6dd6361c18371143ae2048d}{ens160\_enable\_idle\_mode}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00466\ }
+\DoxyCodeLine{00475\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga99ce58785ce63a71409c90def02c46be}{ens160\_enable\_deep\_sleep\_mode}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00476\ }
+\DoxyCodeLine{00485\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5442321bbbbc8b7288f72a07c01ba8b9}{ens160\_reset}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00486\ }
+\DoxyCodeLine{00493\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga37a6760bf7c1f54d04ab1adfbcc1146c}{ens160\_remove}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00494\ }
+\DoxyCodeLine{00501\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga40c349fa1fce998b90de2a9e14ed701d}{ens160\_delete}}(\mbox{\hyperlink{group__drivers_gafdcb747a70da714654218fbcd1d1e2c9}{ens160\_handle\_t}}\ handle);}
+\DoxyCodeLine{00502\ }
+\DoxyCodeLine{00509\ \mbox{\hyperlink{group__drivers_ga160c5dbdb5e259518d2e997c49566e2b}{ens160\_aqi\_uba\_row\_t}}\ \mbox{\hyperlink{group__drivers_ga4d2de4eb0b2febd66f4abd03c3d853ea}{ens160\_aqi\_index\_to\_definition}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga60912896ba51c5b7836e2e6705362d87}{ens160\_aqi\_uba\_indexes\_t}}\ index);}
+\DoxyCodeLine{00510\ }
+\DoxyCodeLine{00516\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_ga0b117eabf6020f6022f158f40a986828}{ens160\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00517\ }
+\DoxyCodeLine{00523\ int32\_t\ \mbox{\hyperlink{group__drivers_gabdc061a1dd5fc67a400eee28aa92991c}{ens160\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00525\ }
+\DoxyCodeLine{00526\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00527\ \}}
+\DoxyCodeLine{00528\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00529\ }
+\DoxyCodeLine{00531\ }
+\DoxyCodeLine{00532\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_ENS160\_H\_\_}}
+
+\end{DoxyCode}

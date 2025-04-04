@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="dir_3bb305561bc72575bafc60f9e585ae12" kind="dir">
+    <compoundname>components/peripherals/i2c/esp_ak8975/include</compoundname>
+    <innerfile refid="ak8975_8h">ak8975.h</innerfile>
+    <innerfile refid="ak8975__version_8h">ak8975_version.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ak8975/include/"/>
+  </compounddef>
+</doxygen>

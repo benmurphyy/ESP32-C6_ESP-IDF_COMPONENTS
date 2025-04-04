@@ -1,0 +1,76 @@
+\doxysection{datatable\+\_\+config\+\_\+tag Struct Reference}
+\hypertarget{structdatatable__config__tag}{}\label{structdatatable__config__tag}\index{datatable\_config\_tag@{datatable\_config\_tag}}
+
+
+Data-\/table configuration structure definition.  
+
+
+
+
+{\ttfamily \#include $<$datatable.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structdatatable__config__tag_a8f8f80d37794cde9472343e4487ba3eb}{name}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structdatatable__config__tag_a963305ee188090a9c65c00e7f523e9ad}{columns\+\_\+size}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structdatatable__config__tag_a99c296f51bfaf092b06e326955cd35ca}{rows\+\_\+size}}
+\item 
+\mbox{\hyperlink{group__drivers_gafea26979a663f28e185180413d2a0657}{datatable\+\_\+data\+\_\+storage\+\_\+types\+\_\+t}} \mbox{\hyperlink{structdatatable__config__tag_af755c8b1d5e46192e79cab2dd18013a4}{data\+\_\+storage\+\_\+type}}
+\item 
+\mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} \mbox{\hyperlink{structdatatable__config__tag_a9fe77da4995b091dfe4be506b659e46f}{sampling\+\_\+config}}
+\item 
+\mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} \mbox{\hyperlink{structdatatable__config__tag_aef3d5afa8e23e16dde07e37a0be1162c}{processing\+\_\+config}}
+\item 
+\Hypertarget{structdatatable__config__tag_addda5be8c7d72058a6f6ef2f261d8186}\label{structdatatable__config__tag_addda5be8c7d72058a6f6ef2f261d8186} 
+\mbox{\hyperlink{group__drivers_gae397b383bdf6cba570a50642a798b17b}{datatable\+\_\+event}} {\bfseries event\+\_\+handler}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data-\/table configuration structure definition. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structdatatable__config__tag_a963305ee188090a9c65c00e7f523e9ad}\index{datatable\_config\_tag@{datatable\_config\_tag}!columns\_size@{columns\_size}}
+\index{columns\_size@{columns\_size}!datatable\_config\_tag@{datatable\_config\_tag}}
+\doxysubsubsection{\texorpdfstring{columns\_size}{columns\_size}}
+{\footnotesize\ttfamily \label{structdatatable__config__tag_a963305ee188090a9c65c00e7f523e9ad} 
+uint8\+\_\+t columns\+\_\+size}
+
+data-\/table column array size, 1..255, this setting cannot be 0 \Hypertarget{structdatatable__config__tag_af755c8b1d5e46192e79cab2dd18013a4}\index{datatable\_config\_tag@{datatable\_config\_tag}!data\_storage\_type@{data\_storage\_type}}
+\index{data\_storage\_type@{data\_storage\_type}!datatable\_config\_tag@{datatable\_config\_tag}}
+\doxysubsubsection{\texorpdfstring{data\_storage\_type}{data\_storage\_type}}
+{\footnotesize\ttfamily \label{structdatatable__config__tag_af755c8b1d5e46192e79cab2dd18013a4} 
+\mbox{\hyperlink{group__drivers_gafea26979a663f28e185180413d2a0657}{datatable\+\_\+data\+\_\+storage\+\_\+types\+\_\+t}} data\+\_\+storage\+\_\+type}
+
+data-\/table data storage type, defines handling of records when the data-\/table is full \Hypertarget{structdatatable__config__tag_a8f8f80d37794cde9472343e4487ba3eb}\index{datatable\_config\_tag@{datatable\_config\_tag}!name@{name}}
+\index{name@{name}!datatable\_config\_tag@{datatable\_config\_tag}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{structdatatable__config__tag_a8f8f80d37794cde9472343e4487ba3eb} 
+const char\texorpdfstring{$\ast$}{*} name}
+
+data-\/table textual name, maximum of 15 characters \Hypertarget{structdatatable__config__tag_aef3d5afa8e23e16dde07e37a0be1162c}\index{datatable\_config\_tag@{datatable\_config\_tag}!processing\_config@{processing\_config}}
+\index{processing\_config@{processing\_config}!datatable\_config\_tag@{datatable\_config\_tag}}
+\doxysubsubsection{\texorpdfstring{processing\_config}{processing\_config}}
+{\footnotesize\ttfamily \label{structdatatable__config__tag_aef3d5afa8e23e16dde07e37a0be1162c} 
+\mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} processing\+\_\+config}
+
+data-\/table processing time-\/into-\/interval configuration, configures the processing interval \Hypertarget{structdatatable__config__tag_a99c296f51bfaf092b06e326955cd35ca}\index{datatable\_config\_tag@{datatable\_config\_tag}!rows\_size@{rows\_size}}
+\index{rows\_size@{rows\_size}!datatable\_config\_tag@{datatable\_config\_tag}}
+\doxysubsubsection{\texorpdfstring{rows\_size}{rows\_size}}
+{\footnotesize\ttfamily \label{structdatatable__config__tag_a99c296f51bfaf092b06e326955cd35ca} 
+uint16\+\_\+t rows\+\_\+size}
+
+data-\/table row array size, 1..65535, this setting cannot be 0 \Hypertarget{structdatatable__config__tag_a9fe77da4995b091dfe4be506b659e46f}\index{datatable\_config\_tag@{datatable\_config\_tag}!sampling\_config@{sampling\_config}}
+\index{sampling\_config@{sampling\_config}!datatable\_config\_tag@{datatable\_config\_tag}}
+\doxysubsubsection{\texorpdfstring{sampling\_config}{sampling\_config}}
+{\footnotesize\ttfamily \label{structdatatable__config__tag_a9fe77da4995b091dfe4be506b659e46f} 
+\mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\+\_\+into\+\_\+interval\+\_\+config\+\_\+t}} sampling\+\_\+config}
+
+data-\/table sampling time-\/into-\/interval configuration, configures the sampling interval 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/storage/esp\+\_\+datalogger/include/\mbox{\hyperlink{datatable_8h}{datatable.\+h}}\end{DoxyCompactItemize}

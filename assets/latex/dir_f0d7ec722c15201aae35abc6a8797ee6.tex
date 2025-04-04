@@ -1,0 +1,252 @@
+\doxysection{components/storage/esp\+\_\+datalogger Directory Reference}
+\hypertarget{dir_f0d7ec722c15201aae35abc6a8797ee6}{}\label{dir_f0d7ec722c15201aae35abc6a8797ee6}\index{components/storage/esp\_datalogger Directory Reference@{components/storage/esp\_datalogger Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_dbf2d5d942a9a4956579ead161f9c495}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{datatable_8c}{datatable.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_datalogger}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_datalogger}{\texttt{ }}
+
+The ESP data-\/logger component simplifies in-\/situ data processing and recording for measurement and control use-\/cases. The ESP data-\/logger component integrates with Free\+RTOS and synchronizes tasks with the system clock for temporal based task execution with a typical resolution of approximately +/-\/ 50 micro-\/seconds. If you have applied experience (i.\+e. systems design, systems integrations, instrumentation, etc.) with commercial measurement and control products for use-\/cases that require on-\/board real-\/time analytics for in-\/situ processing, then you are most likely familiar with the terms used in the ESP data-\/logger component and know how it can be applied.
+
+The ESP data-\/logger component includes the following common helper components\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Data-\/\+Table}}\+: table based data storage with user-\/defined columns, scalar and vector data-\/types, and basic analytics (i.\+e. average, minimum, and maximum).
+\item {\bfseries{Time Into Interval}}\+: synchronizes a Free\+RTOS task with the system clock with user-\/defined time interval for temporal conditional scenarios.
+\end{DoxyEnumerate}
+
+The working example included was developed in Visual Studio Code and requires an internet connection to synchronize the system clock using Simple Network Time Protocol (SNTP) over Wi-\/\+Fi. Likewise, you can comment out the Wi-\/\+Fi connect and ntp start routines and enable the get and set time routines. The set time routine provides a user configurable date and time structure to initialize the system clock to a base date-\/time. Otherwise, the included example may not run as expected.
+
+\begin{quote}
+Please keep in mind that this is still under development but if you have any suggestions or would like to contribute please contact me. \end{quote}
+\hypertarget{README.md_autotoc_md114}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md114}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/storage/esp_datalogger}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/main/components/storage/esp\+\_\+datalogger}}\hypertarget{README.md_autotoc_md115}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md115}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{datatable_8h}{datatable.\+h}} header file as an include.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_datatable}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datatable\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datatable.h}
+\DoxyCodeLine{\ \ \ \ └──\ datatable.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md116}{}\doxysubsection{\texorpdfstring{Data-\/\+Table Example}{Data-\/\+Table Example}}\label{README.md_autotoc_md116}
+Declare the data-\/table\textquotesingle{}s handle, data-\/table configuration, and column indexes for columns that will be added. A data-\/table will have one task-\/schedule handle declared for sampling purposes and one time-\/into-\/interval handle declared for processing purpose and referenced internally to manage temporal based sampling and processing within the data-\/table.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ data-\/table\ variables\ for\ the\ example}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ \ \ \ \ \ \ dt\_1min\_hdl;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ example\ data-\/table\ handle\ */}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \mbox{\hyperlink{group__drivers_ga25f6266267983aec4306306da8a7a603}{datatable\_config\_t}}\ \ \ \ \ \ \ dt\_1min\_cfg\ =\ \{\ \ \ \ \ \ \ \textcolor{comment}{/*\ example\ data-\/table\ configuration\ */}}
+\DoxyCodeLine{\ \ \ \ .name\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}1min\_tbl"{}},}
+\DoxyCodeLine{\ \ \ \ .data\_storage\_type\ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{group__drivers_ggaf718dc8c4c330cd71f59550b5cb469afa0857f605c93e66b2472dc7565d7c2cc5}{DATATABLE\_DATA\_STORAGE\_MEMORY\_RING}},}
+\DoxyCodeLine{\ \ \ \ .columns\_size\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 5,}
+\DoxyCodeLine{\ \ \ \ .rows\_size\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 10,}
+\DoxyCodeLine{\ \ \ \ .sampling\_config\ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_type\ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b}{TIME\_INTO\_INTERVAL\_SEC}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_period\ \ \ \ \ \ \ \ =\ 10,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_offset\ \ \ \ \ \ \ \ =\ 0}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ .processing\_config\ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_type\ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03ea2c749b9f8d47709452ae742faac5b425}{TIME\_INTO\_INTERVAL\_MIN}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_period\ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_offset\ \ \ \ \ \ \ \ =\ 0}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{\textcolor{keyword}{static}\ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\_1min\_pa\_avg\_col\_index;\ \ \ \ \ \textcolor{comment}{/*\ data-\/table\ average\ atmospheric\ pressure\ (pa-\/avg)\ column\ index\ reference\ */}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\_1min\_ta\_avg\_col\_index;\ \ \ \ \ \textcolor{comment}{/*\ data-\/table\ average\ air\ temperature\ (ta-\/avg)\ column\ index\ reference\ */}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\_1min\_ta\_max\_col\_index;\ \ \ \ \ \textcolor{comment}{/*\ data-\/table\ minimum\ air\ temperature\ (ta-\/min)\ column\ index\ reference\ */}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\_1min\_ta\_min\_col\_index;\ \ \ \ \ \textcolor{comment}{/*\ data-\/table\ maximum\ air\ temperature\ (ta-\/max)\ column\ index\ reference\ */}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ dt\_1min\_td\_avg\_col\_index;\ \ \ \ \ \textcolor{comment}{/*\ data-\/table\ average\ dew-\/point\ temperature\ (td-\/avg)\ column\ index\ reference\ */}}
+
+\end{DoxyCode}
+
+
+The textual name of the data-\/table cannot exceed 15-\/characters, a data-\/table can have a maximum of 255 columns and a maximum of 65535 rows, size of columns and rows must be larger than 0. The data-\/table sampling interval must be smaller than the data-\/table processing interval. For this example, the data-\/table data storage type is configured to ring memory, first-\/in-\/first-\/out (FIFO), which will pop the oldest record in the data-\/table for the next record when the data-\/table becomes full.
+
+\begin{quote}
+In this case, the data-\/table sampling task will execute once every 10-\/seconds with 0-\/seconds into the interval (i.\+e. 12\+:00\+:00, 12\+:00\+:10, 12\+:00\+:20, etc.), and the data-\/table will process samples in the data-\/table column data buffer once every minute. ~\newline
+ The example averages, and determines the minimum and maximum, from the samples in data-\/table column data buffer over a one minute period. The first column added to the data-\/table will return an index of 2 because the record identifier and timestamp columns are automatically added when the data-\/table is created. \end{quote}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ create\ a\ new\ data-\/table\ handle\ for\ the\ example}}
+\DoxyCodeLine{datatable\_new(\&dt\_1min\_cfg,\ \&dt\_1min\_hdl);\ \ \ }
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (dt\_1min\_hdl\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}datatable\_new,\ new\ data-\/table\ handle\ failed"{}});}
+\DoxyCodeLine{\ \ \ \ abort();}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ configure\ data-\/table\ columns}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ add\ float\ average\ column\ to\ data-\/table}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga56f0b237df545f1070bfb12143f9877a}{datatable\_add\_float\_avg\_column}}(dt\_1min\_hdl,\ \textcolor{stringliteral}{"{}Pa\_1-\/Min"{}},\ \&dt\_1min\_pa\_avg\_col\_index);\ \textcolor{comment}{//\ column\ index\ 2}}
+\DoxyCodeLine{\textcolor{comment}{//\ add\ float\ average\ column\ to\ data-\/table}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga56f0b237df545f1070bfb12143f9877a}{datatable\_add\_float\_avg\_column}}(dt\_1min\_hdl,\ \textcolor{stringliteral}{"{}Ta\_1-\/Min"{}},\ \&dt\_1min\_ta\_avg\_col\_index);\ \textcolor{comment}{//\ column\ index\ 3}}
+\DoxyCodeLine{\textcolor{comment}{//\ add\ float\ minimum\ column\ to\ data-\/table}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_gad8843f31fdde9c9795d9f77ea53442a4}{datatable\_add\_float\_min\_column}}(dt\_1min\_hdl,\ \textcolor{stringliteral}{"{}Ta\_1-\/Min"{}},\ \&dt\_1min\_ta\_min\_col\_index);\ \textcolor{comment}{//\ column\ index\ 4}}
+\DoxyCodeLine{\textcolor{comment}{//\ add\ float\ maximum\ column\ to\ data-\/table}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga4ecd3999ab6aa5d0a1a3f960a6533a06}{datatable\_add\_float\_max\_column}}(dt\_1min\_hdl,\ \textcolor{stringliteral}{"{}Ta\_1-\/Min"{}},\ \&dt\_1min\_ta\_max\_col\_index);\ \textcolor{comment}{//\ column\ index\ 5}}
+\DoxyCodeLine{\textcolor{comment}{//\ add\ float\ average\ column\ to\ data-\/table}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga56f0b237df545f1070bfb12143f9877a}{datatable\_add\_float\_avg\_column}}(dt\_1min\_hdl,\ \textcolor{stringliteral}{"{}Td\_1-\/Min"{}},\ \&dt\_1min\_td\_avg\_col\_index);\ \textcolor{comment}{//\ column\ index\ 6}}
+
+\end{DoxyCode}
+
+
+The task execution time is accounted for in the data-\/table sampling task delay sub-\/routine ({\ttfamily datatable\+\_\+sampling\+\_\+task\+\_\+delay}). If the data-\/table sampling task duration exceeds the data-\/table sampling interval, a skipped sampling event will be generated, indicating that data-\/table was unable to process the samples within the defined sampling interval. This is an indication that the data-\/table sampling task takes longer to execute then the configured sampling interval and the data-\/table sampling interval must be increased to avoid skipped samples and/or records.
+
+The final step is to push samples into the data-\/table\textquotesingle{}s data buffer stack, process the samples, and store the record. In this example, i.\+e. 10-\/second sampling and a 1-\/min storage interval is configured, a total of 6 samples must be pushed onto the data-\/table\textquotesingle{}s buffer stack for a processing period to be valid. Otherwise, the data-\/table\textquotesingle{}s data buffer stack is purged, record is skipped, and the next sampling period will restart based on the data-\/table\textquotesingle{}s configured processing interval.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ dt\_1min\_smp\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ delay\ data-\/table\ sampling\ task\ until\ sampling\ interval\ has\ elapsed\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaf7216471d840ddce49979addde5497dd}{datatable\_sampling\_task\_delay}}(dt\_1min\_hdl);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ measure\ samples\ from\ sensors\ and\ set\ sensor\ variables\ (pa,\ ta,\ td)\ \ */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ push\ samples\ onto\ the\ data\ buffer\ stack\ for\ processing}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_pa\_avg\_col\_index,\ pa\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_ta\_avg\_col\_index,\ ta\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_ta\_min\_col\_index,\ ta\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_ta\_max\_col\_index,\ ta\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_td\_avg\_col\_index,\ td\_samples[samples\_index]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ process\ data\ buffer\ stack\ samples\ (i.e.\ data-\/table's\ configured\ processing\ interval)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga7dbd90ddf9ee3cc22e0cccd995744c55}{datatable\_process\_samples}}(dt\_1min\_hdl);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ up\ task\ resources}}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+The data-\/table records can be extracted by row index or the entire data-\/table can be rendered to json format. ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ print\ data-\/table\ as\ a\ string\ in\ json\ format}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ create\ root\ object\ for\ data-\/table}}
+\DoxyCodeLine{cJSON\ *dt\_1min\_json\ =\ cJSON\_CreateObject();}
+\DoxyCodeLine{\textcolor{comment}{//\ convert\ the\ data-\/table\ to\ json\ object}}
+\DoxyCodeLine{\mbox{\hyperlink{group__drivers_ga73545915b25d01821b94cf0a1a93a171}{datatable\_to\_json}}(dt\_1min\_hdl,\ \&dt\_1min\_json);}
+\DoxyCodeLine{\textcolor{comment}{//\ render\ json\ data-\/table\ object\ to\ text\ and\ print}}
+\DoxyCodeLine{\textcolor{keywordtype}{char}\ *dt\_1min\_json\_str\ =\ cJSON\_Print(dt\_1min\_json);}
+\DoxyCodeLine{ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}JSON\ Data-\/Table:\(\backslash\)n\%s"{}},dt\_1min\_json\_str);}
+\DoxyCodeLine{\textcolor{comment}{//\ free-\/up\ json\ resources}}
+\DoxyCodeLine{cJSON\_free(dt\_1min\_json\_str);}
+\DoxyCodeLine{cJSON\_Delete(dt\_1min\_json);}
+
+\end{DoxyCode}
+
+
+Sample data-\/table in json format\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}name"{}}:\ \textcolor{stringliteral}{"{}1min\_tbl"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}process-\/interval"{}}:\ \ \ \ \ \textcolor{stringliteral}{"{}minute"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}process-\/period"{}}:\ \ \ \ \ \ \ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}columns"{}}:\ \ \ \ \ \ [\textcolor{stringliteral}{"{}Record\ ID"{}},\ \textcolor{stringliteral}{"{}TS"{}},\ \textcolor{stringliteral}{"{}Pa\_1-\/Min\_Avg"{}},\ \textcolor{stringliteral}{"{}Ta\_1-\/Min\_Avg"{}},\ \textcolor{stringliteral}{"{}Ta\_1-\/Min\_Min"{}},\ \textcolor{stringliteral}{"{}Ta\_1-\/Min\_Max"{}},\ \textcolor{stringliteral}{"{}Hr\_1-\/Min\_Avg"{}},\ \textcolor{stringliteral}{"{}Td\_1-\/Min\_Avg"{}},\ \textcolor{stringliteral}{"{}Wd\_1-\/Min\_Avg"{}},\ \textcolor{stringliteral}{"{}Ws\_1-\/Min\_Avg"{}}],}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}types"{}}:\ \ \ \ \ \ \ \ [\textcolor{stringliteral}{"{}id"{}},\ \textcolor{stringliteral}{"{}ts"{}},\ \textcolor{stringliteral}{"{}float"{}},\ \textcolor{stringliteral}{"{}float"{}},\ \textcolor{stringliteral}{"{}float"{}},\ \textcolor{stringliteral}{"{}float"{}},\ \textcolor{stringliteral}{"{}int16"{}},\ \textcolor{stringliteral}{"{}float"{}},\ \textcolor{stringliteral}{"{}float"{}},\ \textcolor{stringliteral}{"{}float"{}}],}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}processes"{}}:\ \ \ \ [\textcolor{stringliteral}{"{}sample"{}},\ \textcolor{stringliteral}{"{}sample"{}},\ \textcolor{stringliteral}{"{}average"{}},\ \textcolor{stringliteral}{"{}average"{}},\ \textcolor{stringliteral}{"{}minimum"{}},\ \textcolor{stringliteral}{"{}maximum"{}},\ \textcolor{stringliteral}{"{}average"{}},\ \textcolor{stringliteral}{"{}average"{}},\ \textcolor{stringliteral}{"{}average"{}},\ \textcolor{stringliteral}{"{}average"{}}],}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}rows"{}}:\ [}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [1,\ 61684380120,\ 1001.3500366210938,\ 22.350000381469727,\ 22.340000152587891,\ 22.360000610351562,\ 51,\ 20.350000381469727,\ 210,\ 1.4500000476837158],\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [2,\ 61684380180,\ 1001.3533325195312,\ 22.35333251953125,\ 22.340000152587891,\ 22.360000610351562,\ 53,\ 20.353334426879883,\ 210,\ 1.4500000476837158],\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [3,\ 61684380240,\ 1001.3583374023438,\ 22.358335494995117,\ 22.350000381469727,\ 22.3700008392334,\ 55,\ 20.358333587646484,\ 210,\ 1.4500000476837158],\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [4,\ 61684380300,\ 1001.3417358398438,\ 22.341667175292969,\ 22.329999923706055,\ 22.350000381469727,\ 57,\ 20.341667175292969,\ 210,\ 1.4500000476837158]]}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+See data-\/table component and review documentation on features implemented to date.\hypertarget{README.md_autotoc_md117}{}\doxysubsection{\texorpdfstring{Time-\/\+Into-\/\+Interval Example}{Time-\/\+Into-\/\+Interval Example}}\label{README.md_autotoc_md117}
+Let\textquotesingle{}s extend the {\bfseries{Data-\/\+Table Example}}, declare a time-\/into-\/interval handle within the data-\/table sampling task sub-\/routine, and create a time-\/into-\/interval instance. The time-\/into-\/interval instance interval is every 5-\/minutes with 0-\/minutes into the interval.
+
+The next step is declaring a conditional statement leveraging the {\ttfamily time\+\_\+into\+\_\+interval} function. This function returns true when the configured interval condition is valid, otherwise, it returns false. In this example, the time-\/into-\/interval function will output the data-\/table in json format every 5-\/minutes with a 10-\/second offset into the interval (i.\+e. 12\+:00\+:10, 12\+:05\+:10, 12\+:10\+:10, etc.).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ dt\_1min\_smp\_task(\ \textcolor{keywordtype}{void}\ *pvParameters\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\_into\_interval\_handle\_t}}\ dt\_1min\_tii\_5min\_hdl;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\_into\_interval\_config\_t}}\ dt\_1min\_tii\_5min\_cfg\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_type\ \ \ \ \ \ =\ \mbox{\hyperlink{group___free_r_t_o_s_ggada504a9c0f0f4dfe0f199664315cf03eaebd695763de7ab8ba195c5714c94248b}{TIME\_INTO\_INTERVAL\_SEC}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_period\ \ \ \ =\ 5\ *\ 60,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .interval\_offset\ \ \ \ =\ 10}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ create\ a\ new\ time-\/into-\/interval\ handle\ -\/\ task\ system\ clock\ synchronization}}
+\DoxyCodeLine{\ \ \ \ time\_into\_interval\_new(\&dt\_1min\_tii\_5min\_cfg,\ \&dt\_1min\_tii\_5min\_hdl);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (dt\_1min\_tii\_5min\_hdl\ ==\ NULL)\ ESP\_LOGE(APP\_TAG,\ \textcolor{stringliteral}{"{}time\_into\_interval\_new,\ new\ time-\/into-\/interval\ handle\ failed"{}});\ }
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\ ;;\ )\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ delay\ data-\/table\ sampling\ task\ until\ sampling\ interval\ has\ lapsed\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaf7216471d840ddce49979addde5497dd}{datatable\_sampling\_task\_delay}}(dt\_1min\_hdl);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ get\ measurement\ samples\ from\ sensors\ and\ set\ sensor\ variables\ (pa\ and\ ta)\ \ */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ push\ samples\ onto\ the\ data\ buffer\ stack\ for\ processing}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_pa\_avg\_col\_index,\ pa\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_ta\_avg\_col\_index,\ ta\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_ta\_min\_col\_index,\ ta\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_ta\_max\_col\_index,\ ta\_samples[samples\_index]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(dt\_1min\_hdl,\ dt\_1min\_td\_avg\_col\_index,\ td\_samples[samples\_index]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ process\ data\ buffer\ stack\ samples\ (i.e.\ data-\/table's\ configured\ processing\ interval)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga7dbd90ddf9ee3cc22e0cccd995744c55}{datatable\_process\_samples}}(dt\_1min\_hdl);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ serialize\ data-\/table\ and\ output\ in\ json\ format\ every\ 5-\/minutes\ (i.e.\ 12:00:00,\ 12:05:00,\ 12:10:00,\ etc.)\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{group___free_r_t_o_s_gad8797044bf62fb81d63b0641eb69d0d0}{time\_into\_interval}}(dt\_1min\_tii\_5min\_hdl))\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ create\ root\ object\ for\ data-\/table}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ cJSON\ *dt\_1min\_json\ =\ cJSON\_CreateObject();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ convert\ the\ data-\/table\ to\ json\ object}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga73545915b25d01821b94cf0a1a93a171}{datatable\_to\_json}}(dt\_1min\_hdl,\ \&dt\_1min\_json);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ render\ json\ data-\/table\ object\ to\ text\ and\ print}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *dt\_1min\_json\_str\ =\ cJSON\_Print(dt\_1min\_json);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ ESP\_LOGI(APP\_TAG,\ \textcolor{stringliteral}{"{}JSON\ Data-\/Table:\(\backslash\)n\%s"{}},dt\_1min\_json\_str);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ free-\/up\ json\ resources}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ cJSON\_free(dt\_1min\_json\_str);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ cJSON\_Delete(dt\_1min\_json);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ free\ up\ task\ resources}}
+\DoxyCodeLine{\ \ \ \ time\_into\_interval\_del(\ dt\_1min\_tii\_5min\_hdl\ );\ \textcolor{comment}{//delete\ time-\/into-\/interval\ handle}}
+\DoxyCodeLine{\ \ \ \ vTaskDelete(\ NULL\ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+You can declare as many time-\/into-\/interval handles as needed, or as memory permits, to sychronize real-\/time events with the system clock. See time-\/into-\/interval component and review documentation on features implemented to date.
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

@@ -1,0 +1,121 @@
+\doxysection{veml7700\+\_\+config\+\_\+s Struct Reference}
+\hypertarget{structveml7700__config__s}{}\label{structveml7700__config__s}\index{veml7700\_config\_s@{veml7700\_config\_s}}
+
+
+VEML7700 device configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$veml7700.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structveml7700__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\+\_\+address}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structveml7700__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\+\_\+clock\+\_\+speed}}
+\item 
+\mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\+\_\+gains\+\_\+t}} \mbox{\hyperlink{structveml7700__config__s_a6ffec4c8ef9edca941b6bd0d6e81cdcf}{gain}}
+\item 
+\mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\+\_\+integration\+\_\+times\+\_\+t}} \mbox{\hyperlink{structveml7700__config__s_ae6ba9ac24427e36e70ec463efedbc139}{integration\+\_\+time}}
+\item 
+\mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\+\_\+persistence\+\_\+protections\+\_\+t}} \mbox{\hyperlink{structveml7700__config__s_ab8ba2c1c022a8af72b5b65f743a5e844}{persistence\+\_\+protect}}
+\item 
+bool \mbox{\hyperlink{structveml7700__config__s_af76a23d5ea575f0b95d86d14d246c9a7}{irq\+\_\+enabled}}
+\item 
+bool \mbox{\hyperlink{structveml7700__config__s_a03b99e97a623392e82265275bf047d71}{power\+\_\+disabled}}
+\item 
+bool \mbox{\hyperlink{structveml7700__config__s_a4097f52a3fd8eb99f758b206ae28985f}{power\+\_\+saving\+\_\+enabled}}
+\item 
+\mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+t}} \mbox{\hyperlink{structveml7700__config__s_a2901fb1d98281a42a26756b85cca8933}{power\+\_\+saving\+\_\+mode}}
+\item 
+bool \mbox{\hyperlink{structveml7700__config__s_a25eaba40e130bc63790103ebd43b1d67}{set\+\_\+thresholds}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structveml7700__config__s_a66dfda18df66fd8b4a0994c024d9afb5}{hi\+\_\+threshold}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structveml7700__config__s_a34fd5725df917e4cd4e183ecec0671e3}{lo\+\_\+threshold}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+VEML7700 device configuration structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structveml7700__config__s_a6ffec4c8ef9edca941b6bd0d6e81cdcf}\index{veml7700\_config\_s@{veml7700\_config\_s}!gain@{gain}}
+\index{gain@{gain}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{gain}{gain}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a6ffec4c8ef9edca941b6bd0d6e81cdcf} 
+\mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\+\_\+gains\+\_\+t}} gain}
+
+veml7700 gain sensitivity \Hypertarget{structveml7700__config__s_a66dfda18df66fd8b4a0994c024d9afb5}\index{veml7700\_config\_s@{veml7700\_config\_s}!hi\_threshold@{hi\_threshold}}
+\index{hi\_threshold@{hi\_threshold}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{hi\_threshold}{hi\_threshold}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a66dfda18df66fd8b4a0994c024d9afb5} 
+uint16\+\_\+t hi\+\_\+threshold}
+
+veml7700 high threshold register for the interrupt \Hypertarget{structveml7700__config__s_a4fc512d568c2b72f6907c218205cf6c9}\index{veml7700\_config\_s@{veml7700\_config\_s}!i2c\_address@{i2c\_address}}
+\index{i2c\_address@{i2c\_address}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_address}{i2c\_address}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a4fc512d568c2b72f6907c218205cf6c9} 
+uint16\+\_\+t i2c\+\_\+address}
+
+veml7700 i2c device address \Hypertarget{structveml7700__config__s_a770b3ab4bba557baec88287d86832a34}\index{veml7700\_config\_s@{veml7700\_config\_s}!i2c\_clock\_speed@{i2c\_clock\_speed}}
+\index{i2c\_clock\_speed@{i2c\_clock\_speed}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{i2c\_clock\_speed}{i2c\_clock\_speed}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a770b3ab4bba557baec88287d86832a34} 
+uint32\+\_\+t i2c\+\_\+clock\+\_\+speed}
+
+veml7700 i2c device scl clock speed \Hypertarget{structveml7700__config__s_ae6ba9ac24427e36e70ec463efedbc139}\index{veml7700\_config\_s@{veml7700\_config\_s}!integration\_time@{integration\_time}}
+\index{integration\_time@{integration\_time}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{integration\_time}{integration\_time}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_ae6ba9ac24427e36e70ec463efedbc139} 
+\mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\+\_\+integration\+\_\+times\+\_\+t}} integration\+\_\+time}
+
+veml7700 integration time to measure \Hypertarget{structveml7700__config__s_af76a23d5ea575f0b95d86d14d246c9a7}\index{veml7700\_config\_s@{veml7700\_config\_s}!irq\_enabled@{irq\_enabled}}
+\index{irq\_enabled@{irq\_enabled}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{irq\_enabled}{irq\_enabled}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_af76a23d5ea575f0b95d86d14d246c9a7} 
+bool irq\+\_\+enabled}
+
+veml7700 interrupt enabled when true \Hypertarget{structveml7700__config__s_a34fd5725df917e4cd4e183ecec0671e3}\index{veml7700\_config\_s@{veml7700\_config\_s}!lo\_threshold@{lo\_threshold}}
+\index{lo\_threshold@{lo\_threshold}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{lo\_threshold}{lo\_threshold}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a34fd5725df917e4cd4e183ecec0671e3} 
+uint16\+\_\+t lo\+\_\+threshold}
+
+veml7700 low threshold register for the interrupt \Hypertarget{structveml7700__config__s_ab8ba2c1c022a8af72b5b65f743a5e844}\index{veml7700\_config\_s@{veml7700\_config\_s}!persistence\_protect@{persistence\_protect}}
+\index{persistence\_protect@{persistence\_protect}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{persistence\_protect}{persistence\_protect}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_ab8ba2c1c022a8af72b5b65f743a5e844} 
+\mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\+\_\+persistence\+\_\+protections\+\_\+t}} persistence\+\_\+protect}
+
+veml7700 persistence protection \Hypertarget{structveml7700__config__s_a03b99e97a623392e82265275bf047d71}\index{veml7700\_config\_s@{veml7700\_config\_s}!power\_disabled@{power\_disabled}}
+\index{power\_disabled@{power\_disabled}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{power\_disabled}{power\_disabled}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a03b99e97a623392e82265275bf047d71} 
+bool power\+\_\+disabled}
+
+veml7700 power disabled when true \Hypertarget{structveml7700__config__s_a4097f52a3fd8eb99f758b206ae28985f}\index{veml7700\_config\_s@{veml7700\_config\_s}!power\_saving\_enabled@{power\_saving\_enabled}}
+\index{power\_saving\_enabled@{power\_saving\_enabled}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{power\_saving\_enabled}{power\_saving\_enabled}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a4097f52a3fd8eb99f758b206ae28985f} 
+bool power\+\_\+saving\+\_\+enabled}
+
+veml7700 power saving enabled when true \Hypertarget{structveml7700__config__s_a2901fb1d98281a42a26756b85cca8933}\index{veml7700\_config\_s@{veml7700\_config\_s}!power\_saving\_mode@{power\_saving\_mode}}
+\index{power\_saving\_mode@{power\_saving\_mode}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{power\_saving\_mode}{power\_saving\_mode}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a2901fb1d98281a42a26756b85cca8933} 
+\mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\+\_\+power\+\_\+saving\+\_\+modes\+\_\+t}} power\+\_\+saving\+\_\+mode}
+
+veml7700 power mode register \Hypertarget{structveml7700__config__s_a25eaba40e130bc63790103ebd43b1d67}\index{veml7700\_config\_s@{veml7700\_config\_s}!set\_thresholds@{set\_thresholds}}
+\index{set\_thresholds@{set\_thresholds}!veml7700\_config\_s@{veml7700\_config\_s}}
+\doxysubsubsection{\texorpdfstring{set\_thresholds}{set\_thresholds}}
+{\footnotesize\ttfamily \label{structveml7700__config__s_a25eaba40e130bc63790103ebd43b1d67} 
+bool set\+\_\+thresholds}
+
+veml7700 configures interrupt thresholds 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/i2c/esp\+\_\+veml7700/include/\mbox{\hyperlink{veml7700_8h}{veml7700.\+h}}\end{DoxyCompactItemize}

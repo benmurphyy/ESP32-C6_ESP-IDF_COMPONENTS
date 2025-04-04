@@ -1,0 +1,83 @@
+\doxysection{spi\+\_\+max31865\+\_\+config\+\_\+t Struct Reference}
+\hypertarget{structspi__max31865__config__t}{}\label{structspi__max31865__config__t}\index{spi\_max31865\_config\_t@{spi\_max31865\_config\_t}}
+
+
+MAX31865 SPI device configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$max31865.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structspi__max31865__config__t_ad95718fd4cc91c282583d67c767dea61}\label{structspi__max31865__config__t_ad95718fd4cc91c282583d67c767dea61} 
+int {\bfseries clock\+\_\+speed\+\_\+hz}
+\item 
+\Hypertarget{structspi__max31865__config__t_a78bbb8a371c4cf70b3f3ecc27a54d4c5}\label{structspi__max31865__config__t_a78bbb8a371c4cf70b3f3ecc27a54d4c5} 
+int {\bfseries input\+\_\+delay\+\_\+ns}
+\item 
+\Hypertarget{structspi__max31865__config__t_a598061879fd7e13445c775659834ed13}\label{structspi__max31865__config__t_a598061879fd7e13445c775659834ed13} 
+\mbox{\hyperlink{group__drivers_ga98e0a496fe65e0e43f418cea4b22c7e0}{spi\+\_\+max31865\+\_\+modes\+\_\+t}} {\bfseries mode}
+\item 
+\Hypertarget{structspi__max31865__config__t_a80fdd77ac5abf740d2ff8148e4ba6a12}\label{structspi__max31865__config__t_a80fdd77ac5abf740d2ff8148e4ba6a12} 
+\mbox{\hyperlink{group__drivers_ga1d19580fd4f7ad1cc6a72e14b3f55f13}{spi\+\_\+max31865\+\_\+connection\+\_\+types\+\_\+t}} {\bfseries connection}
+\item 
+\Hypertarget{structspi__max31865__config__t_a3076865fc5c874f030ff0a7533ce761c}\label{structspi__max31865__config__t_a3076865fc5c874f030ff0a7533ce761c} 
+bool {\bfseries v\+\_\+bias\+\_\+enabled}
+\item 
+\Hypertarget{structspi__max31865__config__t_a9fd65088f2469578d25f2bc3bed9006b}\label{structspi__max31865__config__t_a9fd65088f2469578d25f2bc3bed9006b} 
+\mbox{\hyperlink{group__drivers_gad5b862850f162f3a3fcddc3c51ed528a}{spi\+\_\+max31865\+\_\+filters\+\_\+t}} {\bfseries filter}
+\item 
+spi\+\_\+host\+\_\+device\+\_\+t \mbox{\hyperlink{structspi__max31865__config__t_af2bc3d31ad0099123ad13e726b96cb8f}{host}}
+\item 
+gpio\+\_\+num\+\_\+t \mbox{\hyperlink{structspi__max31865__config__t_ad5c5178be79dd4595aaf8a6e80317cec}{cs\+\_\+io\+\_\+num}}
+\item 
+gpio\+\_\+num\+\_\+t \mbox{\hyperlink{structspi__max31865__config__t_abed2cffc0dcc04374d6f9b2a4c9f9aba}{miso\+\_\+io\+\_\+num}}
+\item 
+bool \mbox{\hyperlink{structspi__max31865__config__t_af76a23d5ea575f0b95d86d14d246c9a7}{irq\+\_\+enabled}}
+\item 
+gpio\+\_\+num\+\_\+t \mbox{\hyperlink{structspi__max31865__config__t_acbc6ecb435baad7dcd44b67adc24b822}{irq\+\_\+io\+\_\+num}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+MAX31865 SPI device configuration structure. 
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structspi__max31865__config__t_ad5c5178be79dd4595aaf8a6e80317cec}\index{spi\_max31865\_config\_t@{spi\_max31865\_config\_t}!cs\_io\_num@{cs\_io\_num}}
+\index{cs\_io\_num@{cs\_io\_num}!spi\_max31865\_config\_t@{spi\_max31865\_config\_t}}
+\doxysubsubsection{\texorpdfstring{cs\_io\_num}{cs\_io\_num}}
+{\footnotesize\ttfamily \label{structspi__max31865__config__t_ad5c5178be79dd4595aaf8a6e80317cec} 
+gpio\+\_\+num\+\_\+t cs\+\_\+io\+\_\+num}
+
+CS gpio number, set before calling {\ttfamily spi\+\_\+eeprom\+\_\+init()} \Hypertarget{structspi__max31865__config__t_af2bc3d31ad0099123ad13e726b96cb8f}\index{spi\_max31865\_config\_t@{spi\_max31865\_config\_t}!host@{host}}
+\index{host@{host}!spi\_max31865\_config\_t@{spi\_max31865\_config\_t}}
+\doxysubsubsection{\texorpdfstring{host}{host}}
+{\footnotesize\ttfamily \label{structspi__max31865__config__t_af2bc3d31ad0099123ad13e726b96cb8f} 
+spi\+\_\+host\+\_\+device\+\_\+t host}
+
+The SPI host used, set before calling {\ttfamily spi\+\_\+eeprom\+\_\+init()} \Hypertarget{structspi__max31865__config__t_af76a23d5ea575f0b95d86d14d246c9a7}\index{spi\_max31865\_config\_t@{spi\_max31865\_config\_t}!irq\_enabled@{irq\_enabled}}
+\index{irq\_enabled@{irq\_enabled}!spi\_max31865\_config\_t@{spi\_max31865\_config\_t}}
+\doxysubsubsection{\texorpdfstring{irq\_enabled}{irq\_enabled}}
+{\footnotesize\ttfamily \label{structspi__max31865__config__t_af76a23d5ea575f0b95d86d14d246c9a7} 
+bool irq\+\_\+enabled}
+
+Whether to use polling or interrupt when waiting for write to be done. Set before calling {\ttfamily spi\+\_\+eeprom\+\_\+init()}. \Hypertarget{structspi__max31865__config__t_acbc6ecb435baad7dcd44b67adc24b822}\index{spi\_max31865\_config\_t@{spi\_max31865\_config\_t}!irq\_io\_num@{irq\_io\_num}}
+\index{irq\_io\_num@{irq\_io\_num}!spi\_max31865\_config\_t@{spi\_max31865\_config\_t}}
+\doxysubsubsection{\texorpdfstring{irq\_io\_num}{irq\_io\_num}}
+{\footnotesize\ttfamily \label{structspi__max31865__config__t_acbc6ecb435baad7dcd44b67adc24b822} 
+gpio\+\_\+num\+\_\+t irq\+\_\+io\+\_\+num}
+
+interrupt gpio number \Hypertarget{structspi__max31865__config__t_abed2cffc0dcc04374d6f9b2a4c9f9aba}\index{spi\_max31865\_config\_t@{spi\_max31865\_config\_t}!miso\_io\_num@{miso\_io\_num}}
+\index{miso\_io\_num@{miso\_io\_num}!spi\_max31865\_config\_t@{spi\_max31865\_config\_t}}
+\doxysubsubsection{\texorpdfstring{miso\_io\_num}{miso\_io\_num}}
+{\footnotesize\ttfamily \label{structspi__max31865__config__t_abed2cffc0dcc04374d6f9b2a4c9f9aba} 
+gpio\+\_\+num\+\_\+t miso\+\_\+io\+\_\+num}
+
+MISO gpio number, set before calling {\ttfamily spi\+\_\+eeprom\+\_\+init()} 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+components/peripherals/spi/esp\+\_\+max31865/\mbox{\hyperlink{max31865_8h}{max31865.\+h}}\end{DoxyCompactItemize}

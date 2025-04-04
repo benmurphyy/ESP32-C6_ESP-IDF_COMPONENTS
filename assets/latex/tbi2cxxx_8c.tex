@@ -1,0 +1,110 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+tbi2cxxx/tbi2cxxx.c File Reference}
+\hypertarget{tbi2cxxx_8c}{}\label{tbi2cxxx_8c}\index{components/peripherals/i2c/esp\_tbi2cxxx/tbi2cxxx.c@{components/peripherals/i2c/esp\_tbi2cxxx/tbi2cxxx.c}}
+{\ttfamily \#include "{}include/tbi2cxxx.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+log.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+check.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+timer.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/task.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{tbi2cxxx_8c_abaaf9edd7982931a2f13a0c7c1f23d8a}\label{tbi2cxxx_8c_abaaf9edd7982931a2f13a0c7c1f23d8a} 
+\#define {\bfseries TBI2\+CXXX\+\_\+\+CMD\+\_\+\+AMB\+\_\+\+TEMP\+\_\+R}~UINT8\+\_\+C(0x06)
+\item 
+\Hypertarget{tbi2cxxx_8c_aa1cbbbf5ab07fff7f6771ca0836b75fc}\label{tbi2cxxx_8c_aa1cbbbf5ab07fff7f6771ca0836b75fc} 
+\#define {\bfseries TBI2\+CXXX\+\_\+\+CMD\+\_\+\+OBJ\+\_\+\+TEMP\+\_\+R}~UINT8\+\_\+C(0x07)
+\item 
+\Hypertarget{tbi2cxxx_8c_aea56a4362ba1a5a1e1cbaa5d34ab7a32}\label{tbi2cxxx_8c_aea56a4362ba1a5a1e1cbaa5d34ab7a32} 
+\#define {\bfseries TBI2\+CXXX\+\_\+\+CMD\+\_\+\+EMIS\+\_\+\+COEF\+\_\+\+RW}~UINT8\+\_\+C(0x24)
+\item 
+\Hypertarget{tbi2cxxx_8c_ab066f837222f72d47efb56d8270639de}\label{tbi2cxxx_8c_ab066f837222f72d47efb56d8270639de} 
+\#define {\bfseries TBI2\+CXXX\+\_\+\+CMD\+\_\+\+SLV\+\_\+\+ADDR\+\_\+\+RW}~UINT8\+\_\+C(0x2e)
+\item 
+\Hypertarget{tbi2cxxx_8c_af2508f2640fc8862615ab6df571db47b}\label{tbi2cxxx_8c_af2508f2640fc8862615ab6df571db47b} 
+\#define {\bfseries TBI2\+CXXX\+\_\+\+DATA\+\_\+\+READY\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(105)
+\item 
+\Hypertarget{tbi2cxxx_8c_ade2adc2dd1d3ba8a30fc7fc18c594254}\label{tbi2cxxx_8c_ade2adc2dd1d3ba8a30fc7fc18c594254} 
+\#define {\bfseries TBI2\+CXXX\+\_\+\+POWERUP\+\_\+\+DELAY\+\_\+\+MS}~UINT16\+\_\+C(205)
+\item 
+\#define \mbox{\hyperlink{tbi2cxxx_8c_a6a8e6c3d78de68dac4ee5885693bc428}{TBI2\+CXXX\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(10)
+\item 
+\#define \mbox{\hyperlink{tbi2cxxx_8c_af70887738e3a449db292970227781e47}{TBI2\+CXXX\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS}}~UINT16\+\_\+C(5)
+\item 
+\#define \mbox{\hyperlink{tbi2cxxx_8c_aee7b193fcb571e0c3bc88c29f1662af4}{ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK}}(start,  len)
+\item 
+\#define \mbox{\hyperlink{tbi2cxxx_8c_ac2bb3db0b37c9f45103fd513ca5158fe}{ESP\+\_\+\+ARG\+\_\+\+CHECK}}(VAL)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga25bdb3452c5b29a3ff49e264860dcf27}{tbi2cxxx\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_gaa2c53e981afa7e2c33a020a1463a9f63}{tbi2cxxx\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}tbi2cxxx\+\_\+config, \mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}tbi2cxxx\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an TBI2\+CXXX device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga23bd65826ab6f55c5771b8d8d1d2f0e3}{tbi2cxxx\+\_\+get\+\_\+temperatures}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const ambient\+\_\+temperature, float \texorpdfstring{$\ast$}{*}const object\+\_\+temperature)
+\begin{DoxyCompactList}\small\item\em Reads ambient and object temperatures from TBI2\+CXXX. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaae9dc6300d0137eed7bdb65dc740805c}{tbi2cxxx\+\_\+get\+\_\+ambient\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads ambient temperature from TBI2\+CXXX. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa7ef08b34b225840d04ea8095e9542cd}{tbi2cxxx\+\_\+get\+\_\+object\+\_\+temperature}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const temperature)
+\begin{DoxyCompactList}\small\item\em Reads object temperature from TBI2\+CXXX. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga6c77ae3eb92e74bb730086086cd0360c}{tbi2cxxx\+\_\+get\+\_\+emissivity}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const coefficient)
+\begin{DoxyCompactList}\small\item\em Reads emissivity coefficient setting from TBI2\+CXXX. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gadcf122994a10b87d6c8e876a2177ba8b}{tbi2cxxx\+\_\+set\+\_\+emissivity}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle, const float coefficient)
+\begin{DoxyCompactList}\small\item\em Writes emissivity coefficient setting to TBI2\+CXXX. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga22daa35b11224ec670f6d28e1a06915b}{tbi2cxxx\+\_\+remove}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an TBI2\+CXXX device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga16eab3ba0a07f5f5da98e91c74a86408}{tbi2cxxx\+\_\+delete}} (\mbox{\hyperlink{group__drivers_gae94ca8f4dde9ba65a809b2482ac7ee39}{tbi2cxxx\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an TBI2\+CXXX device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga33588fb965ff9d8a16b04998746a7d3c}{tbi2cxxx\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts TBI2\+CXXX firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_ga22484df6bb8c6fd727defc451d91a7c3}{tbi2cxxx\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts TBI2\+CXXX firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF driver for TBI2\+CXXX ir temperature sensor
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{tbi2cxxx_8c_ac2bb3db0b37c9f45103fd513ca5158fe}\index{tbi2cxxx.c@{tbi2cxxx.c}!ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}}
+\index{ESP\_ARG\_CHECK@{ESP\_ARG\_CHECK}!tbi2cxxx.c@{tbi2cxxx.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_ARG\_CHECK}{ESP\_ARG\_CHECK}}
+{\footnotesize\ttfamily \label{tbi2cxxx_8c_ac2bb3db0b37c9f45103fd513ca5158fe} 
+\#define ESP\+\_\+\+ARG\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{VAL}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do}\ \{\ \textcolor{keywordflow}{if}\ (!(VAL))\ \textcolor{keywordflow}{return}\ ESP\_ERR\_INVALID\_ARG;\ \}\ \textcolor{keywordflow}{while}\ (0)}
+
+\end{DoxyCode}
+\Hypertarget{tbi2cxxx_8c_aee7b193fcb571e0c3bc88c29f1662af4}\index{tbi2cxxx.c@{tbi2cxxx.c}!ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}}
+\index{ESP\_TIMEOUT\_CHECK@{ESP\_TIMEOUT\_CHECK}!tbi2cxxx.c@{tbi2cxxx.c}}
+\doxysubsubsection{\texorpdfstring{ESP\_TIMEOUT\_CHECK}{ESP\_TIMEOUT\_CHECK}}
+{\footnotesize\ttfamily \label{tbi2cxxx_8c_aee7b193fcb571e0c3bc88c29f1662af4} 
+\#define ESP\+\_\+\+TIMEOUT\+\_\+\+CHECK(\begin{DoxyParamCaption}\item[{}]{start}{, }\item[{}]{len}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((uint64\_t)(esp\_timer\_get\_time()\ -\/\ (start))\ >=\ (len))}
+
+\end{DoxyCode}
+\Hypertarget{tbi2cxxx_8c_a6a8e6c3d78de68dac4ee5885693bc428}\index{tbi2cxxx.c@{tbi2cxxx.c}!TBI2CXXX\_APPSTART\_DELAY\_MS@{TBI2CXXX\_APPSTART\_DELAY\_MS}}
+\index{TBI2CXXX\_APPSTART\_DELAY\_MS@{TBI2CXXX\_APPSTART\_DELAY\_MS}!tbi2cxxx.c@{tbi2cxxx.c}}
+\doxysubsubsection{\texorpdfstring{TBI2CXXX\_APPSTART\_DELAY\_MS}{TBI2CXXX\_APPSTART\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{tbi2cxxx_8c_a6a8e6c3d78de68dac4ee5885693bc428} 
+\#define TBI2\+CXXX\+\_\+\+APPSTART\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(10)}
+
+tbi2cxxx delay after initialization before application start-\/up \Hypertarget{tbi2cxxx_8c_af70887738e3a449db292970227781e47}\index{tbi2cxxx.c@{tbi2cxxx.c}!TBI2CXXX\_CMD\_DELAY\_MS@{TBI2CXXX\_CMD\_DELAY\_MS}}
+\index{TBI2CXXX\_CMD\_DELAY\_MS@{TBI2CXXX\_CMD\_DELAY\_MS}!tbi2cxxx.c@{tbi2cxxx.c}}
+\doxysubsubsection{\texorpdfstring{TBI2CXXX\_CMD\_DELAY\_MS}{TBI2CXXX\_CMD\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{tbi2cxxx_8c_af70887738e3a449db292970227781e47} 
+\#define TBI2\+CXXX\+\_\+\+CMD\+\_\+\+DELAY\+\_\+\+MS~UINT16\+\_\+C(5)}
+
+tbi2cxxx delay before attempting I2C transactions after a command is issued 

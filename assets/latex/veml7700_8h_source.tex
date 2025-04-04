@@ -1,0 +1,249 @@
+\doxysection{veml7700.\+h}
+\hypertarget{veml7700_8h_source}{}\label{veml7700_8h_source}\index{components/peripherals/i2c/esp\_veml7700/include/veml7700.h@{components/peripherals/i2c/esp\_veml7700/include/veml7700.h}}
+\mbox{\hyperlink{veml7700_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_VEML7700\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_VEML7700\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}veml7700\_version.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ VEML7700\ definitions}}
+\DoxyCodeLine{00051\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ I2C\_VEML7700\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ \ \ \ }}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ I2C\_VEML7700\_DEV\_ADDR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x10)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ VEML7700\ macro\ definitions}}
+\DoxyCodeLine{00061\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ I2C\_VEML7700\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_VEML7700\_DEV\_ADDR,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_VEML7700\_DEV\_CLK\_SPD,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .gain\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ VEML7700\_GAIN\_DIV\_4,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .integration\_time\ \ \ \ \ \ \ \ \ \ \ =\ VEML7700\_INTEGRATION\_TIME\_400MS,\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .persistence\_protect\ \ \ \ \ \ \ \ =\ VEML7700\_PERSISTENCE\_PROTECTION\_4,\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .irq\_enabled\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ true,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .power\_disabled\ \ \ \ \ \ \ \ \ \ \ \ \ =\ false,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .power\_saving\_enabled\ \ \ \ \ \ \ =\ false,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ .power\_saving\_mode\ \ \ \ \ \ \ \ \ \ =\ VEML7700\_POWER\_SAVING\_MODE\_1\ \}}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ *\ VEML7700\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00079\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gafa58f8a71ae5eef80d07b8fcf7b2cfde}{veml7700\_gains\_e}}\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdeabeab0c3096e16b0da29aebabbfffa5df}{VEML7700\_GAIN\_1}}\ \ \ \ \ =\ (0b00),\ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdeaf93f1df542e02ed35638dc4bc3ce2cdf}{VEML7700\_GAIN\_2}}\ \ \ \ \ =\ (0b01),\ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdea73a976ef82d71ed587cede5f7cb543a0}{VEML7700\_GAIN\_DIV\_8}}\ =\ (0b10),\ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggafa58f8a71ae5eef80d07b8fcf7b2cfdea6eea1a8246afc202c4c70d9f98cc9e34}{VEML7700\_GAIN\_DIV\_4}}\ =\ (0b11),\ \ \ }
+\DoxyCodeLine{00089\ \}\ \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\_gains\_t}};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gadcd6105390bfa71aefb8729e525e499d}{veml7700\_integration\_times\_e}}\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ VEML7700\_INTEGRATION\_TIME\_25MS\ \ =\ (0b1100),}
+\DoxyCodeLine{00096\ \ \ \ \ VEML7700\_INTEGRATION\_TIME\_50MS\ \ =\ (0b1000),}
+\DoxyCodeLine{00097\ \ \ \ \ VEML7700\_INTEGRATION\_TIME\_100MS\ =\ (0b0000),}
+\DoxyCodeLine{00098\ \ \ \ \ VEML7700\_INTEGRATION\_TIME\_200MS\ =\ (0b0001),}
+\DoxyCodeLine{00099\ \ \ \ \ VEML7700\_INTEGRATION\_TIME\_400MS\ =\ (0b0010),}
+\DoxyCodeLine{00100\ \ \ \ \ VEML7700\_INTEGRATION\_TIME\_800MS\ =\ (0b0011),}
+\DoxyCodeLine{00101\ \}\ \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\_integration\_times\_t}};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga9601a985c2253bf3aa279a4d28c2bdda}{veml7700\_persistence\_protections\_e}}\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ VEML7700\_PERSISTENCE\_PROTECTION\_1\ =\ (0b00),}
+\DoxyCodeLine{00108\ \ \ \ \ VEML7700\_PERSISTENCE\_PROTECTION\_2\ =\ (0b01),}
+\DoxyCodeLine{00109\ \ \ \ \ VEML7700\_PERSISTENCE\_PROTECTION\_4\ =\ (0b10),}
+\DoxyCodeLine{00110\ \ \ \ \ VEML7700\_PERSISTENCE\_PROTECTION\_8\ =\ (0b11),}
+\DoxyCodeLine{00111\ \}\ \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\_persistence\_protections\_t}};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gacaed454ccb717d5cbabc902938c4abd1}{veml7700\_power\_saving\_modes\_e}}\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ VEML7700\_POWER\_SAVING\_MODE\_1\ =\ (0b00),}
+\DoxyCodeLine{00118\ \ \ \ \ VEML7700\_POWER\_SAVING\_MODE\_2\ =\ (0b01),}
+\DoxyCodeLine{00119\ \ \ \ \ VEML7700\_POWER\_SAVING\_MODE\_3\ =\ (0b10),}
+\DoxyCodeLine{00120\ \ \ \ \ VEML7700\_POWER\_SAVING\_MODE\_4\ =\ (0b11),}
+\DoxyCodeLine{00121\ \}\ \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\_power\_saving\_modes\_t}};}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00138\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ veml7700\_configuration\_register\_u\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{struct\ }CFG\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shutdown:1;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ irq\_enabled:1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved1:2;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\_persistence\_protections\_t}}\ \ persistence\_protect:2;\ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\_integration\_times\_t}}\ \ \ \ \ \ \ \ integration\_time:4;\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved2:1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\_gains\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gain:2;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved3:3;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00149\ \ \ \ \ uint16\_t\ reg;}
+\DoxyCodeLine{00150\ \}\ veml7700\_configuration\_register\_t;}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00162\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ veml7700\_power\_saving\_mode\_register\_u\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{struct\ }PSM\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ power\_saving\_enabled:1;\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\_power\_saving\_modes\_t}}\ \ \ \ \ \ \ power\_saving\_mode:2;\ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved:13;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00168\ \ \ \ \ uint16\_t\ reg;}
+\DoxyCodeLine{00169\ \}\ veml7700\_power\_saving\_mode\_register\_t;}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00179\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ veml7700\_interrupt\_status\_register\_u\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{struct\ }IRQ\_STS\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved:14;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hi\_threshold\_exceeded:1;\ \ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lo\_threshold\_exceeded:1;\ \ }
+\DoxyCodeLine{00184\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00185\ \ \ \ \ uint16\_t\ reg;}
+\DoxyCodeLine{00186\ \}\ veml7700\_interrupt\_status\_register\_t;}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00191\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ veml7700\_identifier\_register\_u\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{struct\ }ID\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ device\_id\_code:8;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ slave\_option\_code:8;\ \ \ \ }
+\DoxyCodeLine{00195\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00196\ \ \ \ \ uint16\_t\ reg;}
+\DoxyCodeLine{00197\ \}\ veml7700\_identifier\_register\_t;}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00202\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structveml7700__config__s}{veml7700\_config\_s}}\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\_gains\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a6ffec4c8ef9edca941b6bd0d6e81cdcf}{gain}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\_integration\_times\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_ae6ba9ac24427e36e70ec463efedbc139}{integration\_time}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\_persistence\_protections\_t}}\ \ \mbox{\hyperlink{structveml7700__config__s_ab8ba2c1c022a8af72b5b65f743a5e844}{persistence\_protect}};\ \ \ \ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_af76a23d5ea575f0b95d86d14d246c9a7}{irq\_enabled}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a03b99e97a623392e82265275bf047d71}{power\_disabled}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a4097f52a3fd8eb99f758b206ae28985f}{power\_saving\_enabled}};\ \ \ }
+\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\_power\_saving\_modes\_t}}\ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a2901fb1d98281a42a26756b85cca8933}{power\_saving\_mode}};\ \ \ \ \ \ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a25eaba40e130bc63790103ebd43b1d67}{set\_thresholds}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00213\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a66dfda18df66fd8b4a0994c024d9afb5}{hi\_threshold}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__config__s_a34fd5725df917e4cd4e183ecec0671e3}{lo\_threshold}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00215\ \}\ \mbox{\hyperlink{group__drivers_ga7d53219e1d496e47e273799a4c34cd97}{veml7700\_config\_t}};}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00220\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structveml7700__context__t}{veml7700\_context\_t}}\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga7d53219e1d496e47e273799a4c34cd97}{veml7700\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__context__t_ae218c6a8c3445cd4876a56d99a825f04}{dev\_config}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structveml7700__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{comment}{//float\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resolution;\ \ \ \ \ \ \ \ \ \ \ \ \ /*!<\ Current\ resolution\ and\ multiplier\ */}}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{comment}{//uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maximum\_lux;\ \ \ \ \ \ \ \ \ \ \ \ /*!<\ Current\ maximum\ lux\ limit\ */}}
+\DoxyCodeLine{00225\ \};}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00230\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structveml7700__context__t}{veml7700\_context\_t}}\ \mbox{\hyperlink{structveml7700__context__t}{veml7700\_context\_t}};}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00235\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structveml7700__context__t}{veml7700\_context\_t}}\ *\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}};}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00244\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4e377fc2a600efda16058451d67969fe}{veml7700\_get\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ veml7700\_configuration\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00253\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab9b3f48a573243e5807e2c1dc15b59bc}{veml7700\_set\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ veml7700\_configuration\_register\_t\ reg);}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00263\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gadab47413fd90263b4d8458ecab1ad1ad}{veml7700\_get\_threshold\_registers}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ hi\_threshold,\ uint16\_t\ *\textcolor{keyword}{const}\ lo\_threshold);}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00273\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga22d6b29510514eaa79c476a3a221c416}{veml7700\_set\_threshold\_registers}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ uint16\_t\ hi\_threshold,\ \textcolor{keyword}{const}\ uint16\_t\ lo\_threshold);}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00282\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga090fbfbb4faba01c1ee2521534bdeb78}{veml7700\_get\_power\_saving\_mode\_register}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ veml7700\_power\_saving\_mode\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00291\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga47c3ffa5576f5380ae52bbcf6aaffbb0}{veml7700\_set\_power\_saving\_mode\_register}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ veml7700\_power\_saving\_mode\_register\_t\ reg);}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00300\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac9a54d751449430f74593b1ab18e91c3}{veml7700\_get\_interrupt\_status\_register}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ veml7700\_interrupt\_status\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00309\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gabc06af746ed00c91ef10303b3d9e3a13}{veml7700\_get\_identifier\_register}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ veml7700\_identifier\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00317\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0670c76ac75d85976ab8dd28952341ce}{veml7700\_optimize\_configuration}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00318\ esp\_err\_t\ veml7700\_optimize\_configuration\_\_\_(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ }
+\DoxyCodeLine{00329\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3df45aea74256b7236c66d3d603fe4ad}{veml7700\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga7d53219e1d496e47e273799a4c34cd97}{veml7700\_config\_t}}\ *veml7700\_config,\ \mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ *veml7700\_handle);}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00338\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7b92d7ef8b97fb3dd9ca11cd37ab521e}{veml7700\_get\_ambient\_light\_counts}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ counts);}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00349\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga605226e520866ecd3b93fda8add8d5d5}{veml7700\_get\_ambient\_light}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ ambient\_light);}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00362\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga08efbb4a6b4acdf2ae339c65e2a8d5c0}{veml7700\_get\_ambient\_light\_auto}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ ambient\_light);}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00371\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga22d7d333457bfd18fb39b720fe776918}{veml7700\_get\_white\_channel\_counts}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ counts);}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00382\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga356e53e172864f9b7c7cf155f2ec8d37}{veml7700\_get\_white\_channel}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ white\_light);}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00395\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga2882675e21eb29903ecea8de8947efdb}{veml7700\_get\_white\_channel\_auto}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ white\_light);}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00405\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa5b25167c5b2f9ca6f8517adbd781c3d}{veml7700\_get\_thresholds}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ uint16\_t\ *\textcolor{keyword}{const}\ hi\_threshold,\ uint16\_t\ *\textcolor{keyword}{const}\ lo\_threshold);}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00415\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga95f7902914c1e7d6d9ea132eaaca5d73}{veml7700\_set\_thresholds}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ uint16\_t\ hi\_threshold,\ \textcolor{keyword}{const}\ uint16\_t\ lo\_threshold);}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00424\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga97b407fc167caa9ae7a7bf066bbdd1f0}{veml7700\_get\_gain}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\_gains\_t}}\ *\textcolor{keyword}{const}\ gain);}
+\DoxyCodeLine{00425\ }
+\DoxyCodeLine{00433\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab5614a740cccfe9cc18874d6c8927b0d}{veml7700\_set\_gain}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga147216bbdea3f623352b8f1e4f65a88e}{veml7700\_gains\_t}}\ gain);}
+\DoxyCodeLine{00434\ }
+\DoxyCodeLine{00442\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga286f62aaa9bb92d8b1edef4db4cbe28b}{veml7700\_get\_integration\_time}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\_integration\_times\_t}}\ *\textcolor{keyword}{const}\ integration\_time);}
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00451\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaebf927dbf844aecff936da8151502318}{veml7700\_set\_integration\_time}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gafac680c13034d3d5f1a9c422f9e7cbfa}{veml7700\_integration\_times\_t}}\ integration\_time);}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00460\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga76bd429b05deb0df57215f14877dde21}{veml7700\_get\_persistence\_protection}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\_persistence\_protections\_t}}\ *\textcolor{keyword}{const}\ persistence\_protection);}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00469\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4be6ec152108484d2dafb735806f321c}{veml7700\_set\_persistence\_protection}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gaeeb143d2beee98ad2a2ff5c989edb913}{veml7700\_persistence\_protections\_t}}\ persistence\_protection);}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00479\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9799cdab16aa735712bae0a492b7d2fd}{veml7700\_get\_power\_saving\_mode}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\_power\_saving\_modes\_t}}\ *\textcolor{keyword}{const}\ power\_saving\_mode,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ power\_saving\_enabled);}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00489\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaef0db61657096047281f6d1d07d76c26}{veml7700\_set\_power\_saving\_mode}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gad31166a451080a6684c80980ade4a1f4}{veml7700\_power\_saving\_modes\_t}}\ power\_saving\_mode,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ power\_saving\_enabled);}
+\DoxyCodeLine{00490\ }
+\DoxyCodeLine{00497\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga06912f4d8764246090c3a0248cda4df3}{veml7700\_enable\_irq}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00505\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1c38e9b091d65c8ab0a6986686fbef1e}{veml7700\_disable\_irq}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00506\ }
+\DoxyCodeLine{00515\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9da6f871b446c5b4d1e79e832268e036}{veml7700\_get\_interrupt\_status}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ hi\_threshold\_exceeded,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ lo\_threshold\_exceeded);}
+\DoxyCodeLine{00516\ }
+\DoxyCodeLine{00523\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8c2fbed8a6a32690409fd971152f90fc}{veml7700\_disable}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00531\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga19b84511cac9aba284a9730b57a8452c}{veml7700\_enable}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00532\ }
+\DoxyCodeLine{00539\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac02fe809c88d3260e4a2936ed6906aec}{veml7700\_remove}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00547\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3d85934c16c7e75ad9a4db31bbf98a23}{veml7700\_delete}}(\mbox{\hyperlink{group__drivers_ga15f981acc0edb18aed9c141c822210e8}{veml7700\_handle\_t}}\ handle);}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00549\ }
+\DoxyCodeLine{00555\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_ga53e5fc530544c445a2e76009243e179d}{veml7700\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00562\ int32\_t\ \mbox{\hyperlink{group__drivers_gadd58a901e3980ff65a7ecf7472e87c88}{veml7700\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00563\ }
+\DoxyCodeLine{00564\ }
+\DoxyCodeLine{00565\ }
+\DoxyCodeLine{00566\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00567\ \}}
+\DoxyCodeLine{00568\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00571\ }
+\DoxyCodeLine{00572\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_VEML7700\_H\_\_}}
+
+\end{DoxyCode}

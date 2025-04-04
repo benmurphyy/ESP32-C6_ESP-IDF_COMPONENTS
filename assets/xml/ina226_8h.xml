@@ -1,0 +1,409 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="ina226_8h" kind="file" language="C++">
+    <compoundname>ina226.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">esp_err.h</includes>
+    <includes local="no">driver/i2c_master.h</includes>
+    <includes refid="type__utils_8h" local="no">type_utils.h</includes>
+    <includes refid="ina226__version_8h" local="yes">ina226_version.h</includes>
+    <includedby refid="ina226_8c" local="yes">components/peripherals/i2c/esp_ina226/ina226.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ina226/include/ina226.h</label>
+        <link refid="ina226_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ina226_version.h</label>
+        <link refid="ina226__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>type_utils.h</label>
+        <link refid="type__utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>type_utils_version.h</label>
+        <link refid="type__utils__version_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>driver/i2c_master.h</label>
+      </node>
+      <node id="4">
+        <label>esp_err.h</label>
+      </node>
+      <node id="7">
+        <label>esp_mac.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>components/peripherals/i2c/esp_ina226/ina226.c</label>
+        <link refid="ina226_8c"/>
+      </node>
+      <node id="1">
+        <label>components/peripherals/i2c/esp_ina226/include/ina226.h</label>
+        <link refid="ina226_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structina226__config__s" prot="public">ina226_config_s</innerclass>
+    <innerclass refid="structina226__context__t" prot="public">ina226_context_t</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__drivers_1ga66d1cad7c693e0c6cb4c3d5a4a296083" kind="define"><name>I2C_INA226_DEV_CLK_SPD</name></member>
+      <member refid="group__drivers_1ga3fa5ddc0f501ef9b38891eb9261df91a" kind="define"><name>I2C_INA226_ADDR_GND_GND</name></member>
+      <member refid="group__drivers_1gabb75fad4789bdf0a5626bbce8e79840b" kind="define"><name>I2C_INA226_ADDR_GND_VS</name></member>
+      <member refid="group__drivers_1gacc4308b03267791c103e05ffa4ca1a7f" kind="define"><name>I2C_INA226_ADDR_GND_SDA</name></member>
+      <member refid="group__drivers_1ga15e7b1c115c30ec4703720500f3e9b0b" kind="define"><name>I2C_INA226_ADDR_GND_SCL</name></member>
+      <member refid="group__drivers_1ga3540c291ede07fefba487557aee0fabd" kind="define"><name>I2C_INA226_ADDR_VS_GND</name></member>
+      <member refid="group__drivers_1gae5dc28849473a7febf0495e870d2510a" kind="define"><name>I2C_INA226_ADDR_VS_VS</name></member>
+      <member refid="group__drivers_1ga2c412a20e2d3025a0ce57a0c61a2d96e" kind="define"><name>I2C_INA226_ADDR_VS_SDA</name></member>
+      <member refid="group__drivers_1ga04169aa087af270fddef6b513e783ad4" kind="define"><name>I2C_INA226_ADDR_VS_SCL</name></member>
+      <member refid="group__drivers_1gaf80f8467d6d7cf6aa23329679ee13234" kind="define"><name>I2C_INA226_ADDR_SDA_GND</name></member>
+      <member refid="group__drivers_1ga197456d4a6466107990e5a4e79d147a9" kind="define"><name>I2C_INA226_ADDR_SDA_VS</name></member>
+      <member refid="group__drivers_1gaf1319353544a18432195d2f1369572d6" kind="define"><name>I2C_INA226_ADDR_SDA_SDA</name></member>
+      <member refid="group__drivers_1ga3075ed08edad12a4bd138fd03dadca7e" kind="define"><name>I2C_INA226_ADDR_SDA_SCL</name></member>
+      <member refid="group__drivers_1ga518117172f035dd25a741f9f79768751" kind="define"><name>I2C_INA226_ADDR_SCL_GND</name></member>
+      <member refid="group__drivers_1ga1f6b604f4fb2d9a4bddec1482c0e3835" kind="define"><name>I2C_INA226_ADDR_SCL_VS</name></member>
+      <member refid="group__drivers_1ga7c8c34144f0c5926fed6977f52e40fe0" kind="define"><name>I2C_INA226_ADDR_SCL_SDA</name></member>
+      <member refid="group__drivers_1gada941bb5334f71359aee08177238a17c" kind="define"><name>I2C_INA226_ADDR_SCL_SCL</name></member>
+      <member refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" kind="define"><name>I2C_XFR_TIMEOUT_MS</name></member>
+      <member refid="group__drivers_1ga2c3581c4233795efd735d2653907ee74" kind="define"><name>I2C_INA226_CONFIG_DEFAULT</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__drivers_1ga331987c52263d3232c0355c54284a98c" kind="enum"><name>ina226_averaging_modes_e</name></member>
+      <member refid="group__drivers_1ga0ff2d17cdd65de6c48164da40f545f30" kind="enum"><name>ina226_volt_conv_times_e</name></member>
+      <member refid="group__drivers_1ga5a5218c9d32b83def8dc014eb623dcb8" kind="enum"><name>ina226_operating_modes_e</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" kind="typedef"><name>ina226_averaging_modes_t</name></member>
+      <member refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kind="typedef"><name>ina226_volt_conv_times_t</name></member>
+      <member refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" kind="typedef"><name>ina226_operating_modes_t</name></member>
+      <member refid="group__drivers_1ga0f70616e438f7c5550604e0d4d0e5079" kind="typedef"><name>ina226_config_t</name></member>
+      <member refid="group__drivers_1gad799f647ac6105b466d07e9e3a4ca27c" kind="typedef"><name>ina226_context_t</name></member>
+      <member refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kind="typedef"><name>ina226_handle_t</name></member>
+    </sectiondef>
+    <sectiondef kind="var">
+      <member refid="group__drivers_1ga0b771c073300330aebdefb1d5d51e55f" kind="variable"><name>ina226_config_register_t</name></member>
+      <member refid="group__drivers_1ga72512d6995ff674111d57959775780ab" kind="variable"><name>ina226_mask_enable_register_t</name></member>
+    </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kind="function"><name>__attribute__</name></member>
+      <member refid="group__drivers_1ga874bf54050809918410d24a7716ab49d" kind="function"><name>ina226_get_configuration_register</name></member>
+      <member refid="group__drivers_1gae437da62262dfe72003a49af0837fca3" kind="function"><name>ina226_set_configuration_register</name></member>
+      <member refid="group__drivers_1ga87e0c6dc6bcf9fb3630f3eb072290ead" kind="function"><name>ina226_get_calibration_register</name></member>
+      <member refid="group__drivers_1ga15fbf992c0198f0796a94feb34ba27d2" kind="function"><name>ina226_set_calibration_register</name></member>
+      <member refid="group__drivers_1gab5a69559c93404d72986fea90cddd5ba" kind="function"><name>ina226_get_mask_enable_register</name></member>
+      <member refid="group__drivers_1ga8fa5583edc47339a2d2e11da22f37ede" kind="function"><name>ina226_init</name></member>
+      <member refid="group__drivers_1ga8eea27ae0382d61f7c80bb4774c0c50c" kind="function"><name>ina226_calibrate</name></member>
+      <member refid="group__drivers_1ga1032dce6b1672ba3fc96c7101215d5b5" kind="function"><name>ina226_get_bus_voltage</name></member>
+      <member refid="group__drivers_1gab0cd7952b9db1d15f522b1931ddbb9c0" kind="function"><name>ina226_get_triggered_bus_voltage</name></member>
+      <member refid="group__drivers_1ga3a3b0b1318c633222c93cecb44264d63" kind="function"><name>ina226_get_shunt_voltage</name></member>
+      <member refid="group__drivers_1ga68f7fcc45f14c1bf03185b8499ba3226" kind="function"><name>ina226_get_triggered_shunt_voltage</name></member>
+      <member refid="group__drivers_1gaab786a59b9cf01076a4e4cc5a508a52f" kind="function"><name>ina226_get_current</name></member>
+      <member refid="group__drivers_1ga9ad8e8e43146aac88c11ec453d8627be" kind="function"><name>ina226_get_triggered_current</name></member>
+      <member refid="group__drivers_1gafe669e8a9ae6777cb8d428f41139f078" kind="function"><name>ina226_get_power</name></member>
+      <member refid="group__drivers_1ga3ae82d3e28d0e392fff54eea45091192" kind="function"><name>ina226_get_operating_mode</name></member>
+      <member refid="group__drivers_1ga4a98bd42626927a32be826d7f18dd7f5" kind="function"><name>ina226_set_operating_mode</name></member>
+      <member refid="group__drivers_1ga9a754e2bd5b2f770dd76d43d4919cac3" kind="function"><name>ina226_get_averaging_mode</name></member>
+      <member refid="group__drivers_1ga563c8c8a46c5c108bbc04cdc90c435ad" kind="function"><name>ina226_set_averaging_mode</name></member>
+      <member refid="group__drivers_1gaf5cbf9e61c46b5b9039b31d19ebc85bb" kind="function"><name>ina226_get_bus_volt_conv_time</name></member>
+      <member refid="group__drivers_1ga5539b5599f53dc67f95588100f37c890" kind="function"><name>ina226_set_bus_volt_conv_time</name></member>
+      <member refid="group__drivers_1ga8714dfa1c1a9af9df59da2485532f030" kind="function"><name>ina226_get_shunt_volt_conv_time</name></member>
+      <member refid="group__drivers_1ga91077c3eb7316bdbd5cb956bcc93ac7d" kind="function"><name>ina226_set_shunt_volt_conv_time</name></member>
+      <member refid="group__drivers_1ga411af4609160753897a5a58f29028c52" kind="function"><name>ina226_reset</name></member>
+      <member refid="group__drivers_1gadbb4cf932d249b9addb0a4d775c75222" kind="function"><name>ina226_remove</name></member>
+      <member refid="group__drivers_1ga4340968df777a40e1055e7fd696a5473" kind="function"><name>ina226_delete</name></member>
+      <member refid="group__drivers_1ga1d811627c85d6ec2b884ebad0eeb62e3" kind="function"><name>ina226_get_fw_version</name></member>
+      <member refid="group__drivers_1gab02fa33d34919a5ef63b93b492f10e6d" kind="function"><name>ina226_get_fw_version_number</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>The<sp/>MIT<sp/>License<sp/>(MIT)</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2024<sp/>Eric<sp/>Gionet<sp/>(gionet.c.eric@gmail.com)</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Permission<sp/>is<sp/>hereby<sp/>granted,<sp/>free<sp/>of<sp/>charge,<sp/>to<sp/>any<sp/>person<sp/>obtaining<sp/>a<sp/>copy</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>of<sp/>this<sp/>software<sp/>and<sp/>associated<sp/>documentation<sp/>files<sp/>(the<sp/>&quot;Software&quot;),<sp/>to<sp/>deal</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>Software<sp/>without<sp/>restriction,<sp/>including<sp/>without<sp/>limitation<sp/>the<sp/>rights</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>to<sp/>use,<sp/>copy,<sp/>modify,<sp/>merge,<sp/>publish,<sp/>distribute,<sp/>sublicense,<sp/>and/or<sp/>sell</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>copies<sp/>of<sp/>the<sp/>Software,<sp/>and<sp/>to<sp/>permit<sp/>persons<sp/>to<sp/>whom<sp/>the<sp/>Software<sp/>is</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>furnished<sp/>to<sp/>do<sp/>so,<sp/>subject<sp/>to<sp/>the<sp/>following<sp/>conditions:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>The<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>permission<sp/>notice<sp/>shall<sp/>be<sp/>included<sp/>in<sp/>all</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>copies<sp/>or<sp/>substantial<sp/>portions<sp/>of<sp/>the<sp/>Software.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THE<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>&quot;AS<sp/>IS&quot;,<sp/>WITHOUT<sp/>WARRANTY<sp/>OF<sp/>ANY<sp/>KIND,<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED,<sp/>INCLUDING<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO<sp/>THE<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>AND<sp/>NONINFRINGEMENT.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>AUTHORS<sp/>OR<sp/>COPYRIGHT<sp/>HOLDERS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>CLAIM,<sp/>DAMAGES<sp/>OR<sp/>OTHER</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>AN<sp/>ACTION<sp/>OF<sp/>CONTRACT,<sp/>TORT<sp/>OR<sp/>OTHERWISE,<sp/>ARISING<sp/>FROM,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>OR<sp/>IN<sp/>CONNECTION<sp/>WITH<sp/>THE<sp/>SOFTWARE<sp/>OR<sp/>THE<sp/>USE<sp/>OR<sp/>OTHER<sp/>DEALINGS<sp/>IN<sp/>THE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>SOFTWARE.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__INA226_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__INA226_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;esp_err.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;driver/i2c_master.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="type__utils_8h" kindref="compound">type_utils.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ina226_version.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>INA226<sp/>definitions</highlight></codeline>
+<codeline lineno="51"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="group__drivers_1ga66d1cad7c693e0c6cb4c3d5a4a296083" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_DEV_CLK_SPD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT32_C(100000)<sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__drivers_1ga3fa5ddc0f501ef9b38891eb9261df91a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_GND_GND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x40)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="group__drivers_1gabb75fad4789bdf0a5626bbce8e79840b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_GND_VS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x41)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__drivers_1gacc4308b03267791c103e05ffa4ca1a7f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_GND_SDA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x42)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="group__drivers_1ga15e7b1c115c30ec4703720500f3e9b0b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_GND_SCL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x43)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__drivers_1ga3540c291ede07fefba487557aee0fabd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_VS_GND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x44)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="group__drivers_1gae5dc28849473a7febf0495e870d2510a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_VS_VS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x45)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="group__drivers_1ga2c412a20e2d3025a0ce57a0c61a2d96e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_VS_SDA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x46)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="group__drivers_1ga04169aa087af270fddef6b513e783ad4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_VS_SCL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x47)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="group__drivers_1gaf80f8467d6d7cf6aa23329679ee13234" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SDA_GND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x48)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="group__drivers_1ga197456d4a6466107990e5a4e79d147a9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SDA_VS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x49)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="group__drivers_1gaf1319353544a18432195d2f1369572d6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SDA_SDA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x4a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="group__drivers_1ga3075ed08edad12a4bd138fd03dadca7e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SDA_SCL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x4b)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="group__drivers_1ga518117172f035dd25a741f9f79768751" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SCL_GND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x4c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="group__drivers_1ga1f6b604f4fb2d9a4bddec1482c0e3835" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SCL_VS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x4d)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="group__drivers_1ga7c8c34144f0c5926fed6977f52e40fe0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SCL_SDA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x4e)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="group__drivers_1gada941bb5334f71359aee08177238a17c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_ADDR_SCL_SCL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>UINT8_C(0x4f)<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="group__drivers_1ga90c8e7d8c3b6158111d7b35d1a8fec50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_XFR_TIMEOUT_MS<sp/><sp/><sp/><sp/><sp/><sp/>(500)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"></highlight></codeline>
+<codeline lineno="76"><highlight class="comment">INA266<sp/>Wiring<sp/>for<sp/>Voltage</highlight></codeline>
+<codeline lineno="77"><highlight class="comment">-<sp/>Source(+)<sp/>to<sp/>INA266<sp/>Voltage(+)</highlight></codeline>
+<codeline lineno="78"><highlight class="comment">-<sp/>Source(-)<sp/>to<sp/>INA266<sp/>Voltage(-)</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"></highlight></codeline>
+<codeline lineno="80"><highlight class="comment">INA266<sp/>Wiring<sp/>for<sp/>Current</highlight></codeline>
+<codeline lineno="81"><highlight class="comment">-<sp/>Source(+)<sp/>to<sp/>INA266<sp/>Current(+)</highlight></codeline>
+<codeline lineno="82"><highlight class="comment">-<sp/>INA266<sp/>Current(-)<sp/>to<sp/>Load(+)</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"></highlight></codeline>
+<codeline lineno="84"><highlight class="comment">INA266<sp/>Wiring<sp/>for<sp/>Voltage<sp/>&amp;<sp/>Current</highlight></codeline>
+<codeline lineno="85"><highlight class="comment">-<sp/>Source(+)<sp/>to<sp/>INA266<sp/>Voltage(+)</highlight></codeline>
+<codeline lineno="86"><highlight class="comment">-<sp/>INA266<sp/>Voltage(+)<sp/>to<sp/>INA266<sp/>Current(+)</highlight></codeline>
+<codeline lineno="87"><highlight class="comment">-<sp/>INA266<sp/>Current(-)<sp/>to<sp/>Load(+)</highlight></codeline>
+<codeline lineno="88"><highlight class="comment">-<sp/>Source(-)<sp/>to<sp/>INA266<sp/>Voltage(-)</highlight></codeline>
+<codeline lineno="89"><highlight class="comment">-<sp/>INA266<sp/>Voltage(-)<sp/>to<sp/>Load(-)</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"></highlight></codeline>
+<codeline lineno="91"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="94"><highlight class="comment"><sp/>*<sp/>INA226<sp/>macro<sp/>definitions</highlight></codeline>
+<codeline lineno="95"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>I2C_INA226_CONFIG_DEFAULT<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="97"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_INA226_ADDR_GND_GND,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="98"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.i2c_clock_speed<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>I2C_INA226_DEV_CLK_SPD,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="99"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.averaging_mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>INA226_AVG_MODE_1,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="100"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.shunt_voltage_conv_time<sp/><sp/><sp/><sp/>=<sp/>INA226_VOLT_CONV_TIME_1_1MS,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="101"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.bus_voltage_conv_time<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>INA226_VOLT_CONV_TIME_1_1MS,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="102"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.operating_mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>INA226_OP_MODE_CONT_SHUNT_BUS,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="103"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.shunt_resistance<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0.002,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="104"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>.max_current<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0.5<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="105"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="comment">//<sp/>shunt<sp/>resistor<sp/>0.002<sp/>ohms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>*<sp/>INA226<sp/>enumerator<sp/>and<sp/>structure<sp/>declarations</highlight></codeline>
+<codeline lineno="110"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="group__drivers_1ga331987c52263d3232c0355c54284a98c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga331987c52263d3232c0355c54284a98c" kindref="member">ina226_averaging_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="121" refid="group__drivers_1gga331987c52263d3232c0355c54284a98ca63e4883a131990d4884d11274ff2584c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga331987c52263d3232c0355c54284a98ca63e4883a131990d4884d11274ff2584c" kindref="member">INA226_AVG_MODE_1</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b000),<sp/><sp/></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_4<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b001),</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_16<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b010),</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_64<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b011),</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_128<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100),</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_256<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b101),</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_512<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b110),</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_AVG_MODE_1024<sp/><sp/><sp/><sp/>=<sp/>(0b111)</highlight></codeline>
+<codeline lineno="129" refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" kindref="member">ina226_averaging_modes_t</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="group__drivers_1ga0ff2d17cdd65de6c48164da40f545f30" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga0ff2d17cdd65de6c48164da40f545f30" kindref="member">ina226_volt_conv_times_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_140US<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b000),</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_204US<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b001),</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_332US<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b010),</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_588US<sp/><sp/><sp/><sp/><sp/>=<sp/>(0b011),</highlight></codeline>
+<codeline lineno="139" refid="group__drivers_1gga0ff2d17cdd65de6c48164da40f545f30ad1265344ea7f32c52958b4d4a25d69be" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga0ff2d17cdd65de6c48164da40f545f30ad1265344ea7f32c52958b4d4a25d69be" kindref="member">INA226_VOLT_CONV_TIME_1_1MS</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100),<sp/><sp/></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_2_116MS<sp/><sp/><sp/>=<sp/>(0b101),</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_4_156MS<sp/><sp/><sp/>=<sp/>(0b110),</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>INA226_VOLT_CONV_TIME_8_244MS<sp/><sp/><sp/>=<sp/>(0b111)</highlight></codeline>
+<codeline lineno="143" refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref>;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="group__drivers_1ga5a5218c9d32b83def8dc014eb623dcb8" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga5a5218c9d32b83def8dc014eb623dcb8" kindref="member">ina226_operating_modes_e</ref><sp/>{</highlight></codeline>
+<codeline lineno="149" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8af6b26a9c672c20589cb734b63af6bfd5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8af6b26a9c672c20589cb734b63af6bfd5" kindref="member">INA226_OP_MODE_SHUTDOWN</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b000),<sp/><sp/></highlight></codeline>
+<codeline lineno="150" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a3293ba0081729be64055d568dc40158d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a3293ba0081729be64055d568dc40158d" kindref="member">INA226_OP_MODE_TRIG_SHUNT_VOLT</ref><sp/><sp/>=<sp/>(0b001),<sp/><sp/></highlight></codeline>
+<codeline lineno="151" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a1fcde25b1e71bb3dba61d39a3b872726" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a1fcde25b1e71bb3dba61d39a3b872726" kindref="member">INA226_OP_MODE_TRIG_BUS_VOLT</ref><sp/><sp/><sp/><sp/>=<sp/>(0b010),<sp/><sp/></highlight></codeline>
+<codeline lineno="152" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8aeee89fd6db62c7add799a438e040ebb8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8aeee89fd6db62c7add799a438e040ebb8" kindref="member">INA226_OP_MODE_TRIG_SHUNT_BUS</ref><sp/><sp/><sp/>=<sp/>(0b011),<sp/><sp/></highlight></codeline>
+<codeline lineno="153" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a49a957afbbca75f55d71a28e2dc05657" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a49a957afbbca75f55d71a28e2dc05657" kindref="member">INA226_OP_MODE_SHUTDOWN2</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(0b100),<sp/><sp/></highlight></codeline>
+<codeline lineno="154" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a920dee79f4bb9c412fae909979d44f6e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a920dee79f4bb9c412fae909979d44f6e" kindref="member">INA226_OP_MODE_CONT_SHUNT_VOLT</ref><sp/><sp/>=<sp/>(0b101),<sp/><sp/></highlight></codeline>
+<codeline lineno="155" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a2878f2a7c9d1734ccb6973da01e60808" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a2878f2a7c9d1734ccb6973da01e60808" kindref="member">INA226_OP_MODE_CONT_BUS_VOLT</ref><sp/><sp/><sp/><sp/>=<sp/>(0b110),<sp/><sp/></highlight></codeline>
+<codeline lineno="156" refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a90d9863cfc37473007339c7934a08278" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1gga5a5218c9d32b83def8dc014eb623dcb8a90d9863cfc37473007339c7934a08278" kindref="member">INA226_OP_MODE_CONT_SHUNT_BUS</ref><sp/><sp/><sp/>=<sp/>(0b111)<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="157" refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" kindref="member">ina226_operating_modes_t</ref>;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ina226_config_register_u<sp/>{</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" kindref="member">ina226_operating_modes_t</ref><sp/><sp/><sp/><sp/>operating_mode:3;<sp/></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/><sp/><sp/><sp/>shun_volt_conv_time:3;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/><sp/><sp/><sp/>bus_volt_conv_time:3;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" kindref="member">ina226_averaging_modes_t</ref><sp/><sp/><sp/><sp/>averaging_mode:3;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved:3;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reset_enabled:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="173"><highlight class="normal">}<sp/>ina226_config_register_t;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="group__drivers_1gad642cb1b7454d7bc92b753b37ccd7111" kindref="member">__attribute__</ref>((packed))<sp/>ina226_mask_enable_register_u<sp/>{</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>alert_latch_enable:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>alert_polarity_bit:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>math_overflow_flag:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>conversion_ready_flag:1;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>alert_func_flag:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/>reserved:5;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>conversion_ready:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>power_over_limit:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bus_volt_under_volt:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bus_volt_over_volt:1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>shunt_volt_under_volt:1;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>shunt_volt_over_volt:1;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>bits;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/>reg;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="194"><highlight class="normal">}<sp/>ina226_mask_enable_register_t;</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="200" refid="structina226__config__s" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structina226__config__s" kindref="compound">ina226_config_s</ref><sp/>{</highlight></codeline>
+<codeline lineno="201" refid="structina226__config__s_1a4fc512d568c2b72f6907c218205cf6c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a4fc512d568c2b72f6907c218205cf6c9" kindref="member">i2c_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="202" refid="structina226__config__s_1a770b3ab4bba557baec88287d86832a34" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a770b3ab4bba557baec88287d86832a34" kindref="member">i2c_clock_speed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="203" refid="structina226__config__s_1a35e60d8a56efe8877967f507f69030f3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" kindref="member">ina226_averaging_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a35e60d8a56efe8877967f507f69030f3" kindref="member">averaging_mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="204" refid="structina226__config__s_1a1705b1b12ac5cfc7670c94a51379209f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a1705b1b12ac5cfc7670c94a51379209f" kindref="member">shunt_voltage_conv_time</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="205" refid="structina226__config__s_1add5bce001da6bfe86b81f760116cc88c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1add5bce001da6bfe86b81f760116cc88c" kindref="member">bus_voltage_conv_time</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="206" refid="structina226__config__s_1a551a3d6deab5ab7b0b1fd11cf21b1237" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" kindref="member">ina226_operating_modes_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a551a3d6deab5ab7b0b1fd11cf21b1237" kindref="member">operating_mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="207" refid="structina226__config__s_1a3f652b7132fb8bcc6a63d60d4a33595c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a3f652b7132fb8bcc6a63d60d4a33595c" kindref="member">shunt_resistance</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="208" refid="structina226__config__s_1a151533eebf3e1ce25e1e4d11229ed673" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a151533eebf3e1ce25e1e4d11229ed673" kindref="member">shunt_voltage</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="209" refid="structina226__config__s_1a854929d3dff33ea3ada6aa5ffa70dfa4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__config__s_1a854929d3dff33ea3ada6aa5ffa70dfa4" kindref="member">max_current</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="210" refid="group__drivers_1ga0f70616e438f7c5550604e0d4d0e5079" refkind="member"><highlight class="normal">}<sp/><ref refid="group__drivers_1ga0f70616e438f7c5550604e0d4d0e5079" kindref="member">ina226_config_t</ref>;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216" refid="structina226__context__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structina226__context__t" kindref="compound">ina226_context_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="217" refid="structina226__context__t_1a05013a5902781e609f96dbc2d402ae64" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__drivers_1ga0f70616e438f7c5550604e0d4d0e5079" kindref="member">ina226_config_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__context__t_1a05013a5902781e609f96dbc2d402ae64" kindref="member">dev_config</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="218" refid="structina226__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>i2c_master_dev_handle_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__context__t_1aebc33e9d9d97bc57c51d01fa39056a22" kindref="member">i2c_handle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="219" refid="structina226__context__t_1aacc3ea52c3d90da0266ea548f6be4849" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structina226__context__t_1aacc3ea52c3d90da0266ea548f6be4849" kindref="member">current_lsb</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="220"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="225" refid="group__drivers_1gad799f647ac6105b466d07e9e3a4ca27c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structina226__context__t" kindref="compound">ina226_context_t</ref><sp/><ref refid="structina226__context__t" kindref="compound">ina226_context_t</ref>;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230" refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structina226__context__t" kindref="compound">ina226_context_t</ref><sp/>*<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref>;</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga874bf54050809918410d24a7716ab49d" kindref="member">ina226_get_configuration_register</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/>ina226_config_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gae437da62262dfe72003a49af0837fca3" kindref="member">ina226_set_configuration_register</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ina226_config_register_t<sp/>reg);</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga87e0c6dc6bcf9fb3630f3eb072290ead" kindref="member">ina226_get_calibration_register</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/>uint16_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga15fbf992c0198f0796a94feb34ba27d2" kindref="member">ina226_set_calibration_register</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint16_t<sp/>reg);</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gab5a69559c93404d72986fea90cddd5ba" kindref="member">ina226_get_mask_enable_register</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/>ina226_mask_enable_register_t<sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>reg);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga8fa5583edc47339a2d2e11da22f37ede" kindref="member">ina226_init</ref>(i2c_master_bus_handle_t<sp/>master_handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga0f70616e438f7c5550604e0d4d0e5079" kindref="member">ina226_config_t</ref><sp/>*ina226_config,<sp/><ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>*ina226_handle);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga8eea27ae0382d61f7c80bb4774c0c50c" kindref="member">ina226_calibrate</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>max_current,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>shunt_resistance);</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga1032dce6b1672ba3fc96c7101215d5b5" kindref="member">ina226_get_bus_voltage</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>voltage);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight></codeline>
+<codeline lineno="313"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gab0cd7952b9db1d15f522b1931ddbb9c0" kindref="member">ina226_get_triggered_bus_voltage</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>voltage);</highlight></codeline>
+<codeline lineno="314"><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga3a3b0b1318c633222c93cecb44264d63" kindref="member">ina226_get_shunt_voltage</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>voltage);</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight></codeline>
+<codeline lineno="331"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga68f7fcc45f14c1bf03185b8499ba3226" kindref="member">ina226_get_triggered_shunt_voltage</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>voltage);</highlight></codeline>
+<codeline lineno="332"><highlight class="normal"></highlight></codeline>
+<codeline lineno="342"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gaab786a59b9cf01076a4e4cc5a508a52f" kindref="member">ina226_get_current</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>current);</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"></highlight></codeline>
+<codeline lineno="353"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga9ad8e8e43146aac88c11ec453d8627be" kindref="member">ina226_get_triggered_current</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>current);</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"></highlight></codeline>
+<codeline lineno="364"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gafe669e8a9ae6777cb8d428f41139f078" kindref="member">ina226_get_power</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>power);</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight></codeline>
+<codeline lineno="373" refid="group__drivers_1ga3ae82d3e28d0e392fff54eea45091192" refkind="member"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga3ae82d3e28d0e392fff54eea45091192" kindref="member">ina226_get_operating_mode</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" kindref="member">ina226_operating_modes_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mode);</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"></highlight></codeline>
+<codeline lineno="382" refid="group__drivers_1ga4a98bd42626927a32be826d7f18dd7f5" refkind="member"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4a98bd42626927a32be826d7f18dd7f5" kindref="member">ina226_set_operating_mode</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga18ff6bf61fd3856f69c1d767fcae6595" kindref="member">ina226_operating_modes_t</ref><sp/>mode);</highlight></codeline>
+<codeline lineno="383"><highlight class="normal"></highlight></codeline>
+<codeline lineno="384"><highlight class="normal">esp_err_t<sp/>ina226_get_averaging_mode(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" kindref="member">ina226_averaging_modes_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>mode);</highlight></codeline>
+<codeline lineno="385"><highlight class="normal"></highlight></codeline>
+<codeline lineno="386"><highlight class="normal">esp_err_t<sp/>ina226_set_averaging_mode(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__drivers_1ga963e4501c0e67fbf3fdd7949d502bc07" kindref="member">ina226_averaging_modes_t</ref><sp/>mode);</highlight></codeline>
+<codeline lineno="387"><highlight class="normal"></highlight></codeline>
+<codeline lineno="388"><highlight class="normal">esp_err_t<sp/>ina226_get_bus_volt_conv_time(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>conv_time);</highlight></codeline>
+<codeline lineno="389"><highlight class="normal"></highlight></codeline>
+<codeline lineno="390"><highlight class="normal">esp_err_t<sp/>ina226_set_bus_volt_conv_time(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>conv_time);</highlight></codeline>
+<codeline lineno="391"><highlight class="normal"></highlight></codeline>
+<codeline lineno="392"><highlight class="normal">esp_err_t<sp/>ina226_get_shunt_volt_conv_time(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>conv_time);</highlight></codeline>
+<codeline lineno="393"><highlight class="normal"></highlight></codeline>
+<codeline lineno="394"><highlight class="normal">esp_err_t<sp/>ina226_set_shunt_volt_conv_time(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle,<sp/><ref refid="group__drivers_1ga6473ec6acaf13b36c0fb1ca22c000a69" kindref="member">ina226_volt_conv_times_t</ref><sp/>*</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>conv_time);</highlight></codeline>
+<codeline lineno="395"><highlight class="normal"></highlight></codeline>
+<codeline lineno="405"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga411af4609160753897a5a58f29028c52" kindref="member">ina226_reset</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"></highlight></codeline>
+<codeline lineno="413"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1gadbb4cf932d249b9addb0a4d775c75222" kindref="member">ina226_remove</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="414"><highlight class="normal"></highlight></codeline>
+<codeline lineno="421"><highlight class="normal">esp_err_t<sp/><ref refid="group__drivers_1ga4340968df777a40e1055e7fd696a5473" kindref="member">ina226_delete</ref>(<ref refid="group__drivers_1ga3901c989e3581b1e9aec926f6c1a6bcc" kindref="member">ina226_handle_t</ref><sp/>handle);</highlight></codeline>
+<codeline lineno="422"><highlight class="normal"></highlight></codeline>
+<codeline lineno="428"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="group__drivers_1ga1d811627c85d6ec2b884ebad0eeb62e3" kindref="member">ina226_get_fw_version</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="429"><highlight class="normal"></highlight></codeline>
+<codeline lineno="435"><highlight class="normal">int32_t<sp/><ref refid="group__drivers_1gab02fa33d34919a5ef63b93b492f10e6d" kindref="member">ina226_get_fw_version_number</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="436"><highlight class="normal"></highlight></codeline>
+<codeline lineno="437"><highlight class="normal"></highlight></codeline>
+<codeline lineno="438"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="439"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="440"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="441"><highlight class="normal"></highlight></codeline>
+<codeline lineno="443"><highlight class="normal"></highlight></codeline>
+<codeline lineno="444"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>__INA226_H__</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="components/peripherals/i2c/esp_ina226/include/ina226.h"/>
+  </compounddef>
+</doxygen>

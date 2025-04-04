@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structccs811__error__row__s" kind="struct" language="C++" prot="public">
+    <compoundname>ccs811_error_row_s</compoundname>
+    <includes refid="ccs811_8h" local="no">ccs811.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structccs811__error__row__s_1ad0e6b406ad1011f626536339fb6427dc" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* code</definition>
+        <argsstring></argsstring>
+        <name>code</name>
+        <qualifiedname>ccs811_error_row_s::code</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>error code </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h" line="205" column="16" bodyfile="components/peripherals/i2c/esp_ccs811/include/ccs811.h" bodystart="205" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structccs811__error__row__s_1a2c3cb87d009c003069b9a90f020f8a9f" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* msg</definition>
+        <argsstring></argsstring>
+        <name>msg</name>
+        <qualifiedname>ccs811_error_row_s::msg</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>error message </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h" line="206" column="16" bodyfile="components/peripherals/i2c/esp_ccs811/include/ccs811.h" bodystart="206" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>CCS811 error row definition structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/i2c/esp_ccs811/include/ccs811.h" line="204" column="1" bodyfile="components/peripherals/i2c/esp_ccs811/include/ccs811.h" bodystart="204" bodyend="207"/>
+    <listofallmembers>
+      <member refid="structccs811__error__row__s_1ad0e6b406ad1011f626536339fb6427dc" prot="public" virt="non-virtual"><scope>ccs811_error_row_s</scope><name>code</name></member>
+      <member refid="structccs811__error__row__s_1a2c3cb87d009c003069b9a90f020f8a9f" prot="public" virt="non-virtual"><scope>ccs811_error_row_s</scope><name>msg</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

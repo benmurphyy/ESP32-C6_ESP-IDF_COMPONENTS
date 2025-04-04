@@ -1,0 +1,342 @@
+\doxysection{Wx\+\_\+utils}
+\hypertarget{group__wx__utils}{}\label{group__wx__utils}\index{Wx\_utils@{Wx\_utils}}
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structwx__scalar__range__t}{wx\+\_\+scalar\+\_\+range\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__wx__utils_ga007944c60d61949b8d9f3961d4efe263}{wx\+\_\+set\+\_\+temperature\+\_\+range}} (const float maximum, const float minimum)
+\begin{DoxyCompactList}\small\item\em Sets the global weather utilities maximum and minimum temperature range ({\ttfamily wx\+\_\+temperature\+\_\+range}) in degrees Celsius. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__wx__utils_ga729e8446a82e36e3889e88f251620a79}{wx\+\_\+set\+\_\+humidity\+\_\+range}} (const float maximum, const float minimum)
+\begin{DoxyCompactList}\small\item\em Sets the global weather utilities humidity maximum and minimum range ({\ttfamily wx\+\_\+humidity\+\_\+range}) in percent. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__wx__utils_gaf9560dbeb2376204ae455a7e71407e04}{wx\+\_\+td\+\_\+range}} (const float temperature, const float humidity, float \texorpdfstring{$\ast$}{*}const dewpoint)
+\begin{DoxyCompactList}\small\item\em Calculates dewpoint temperature from air temperature and relative humidity with range validation. The default temperature range is from -\/40 to 125 degrees Celsius and default humidity range is from 0 to 100 percent. ~\newline
+ The default ranges can be adjusted through the set range functions. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga6f8a84895a0f475d4850db1f31bc4a84}{wx\+\_\+c\+\_\+to\+\_\+k}} (const double t)
+\begin{DoxyCompactList}\small\item\em Converts degrees celsius to kelvin. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga931c1bcd4eaa1ed9f1058c9bb3641071}{wx\+\_\+k\+\_\+to\+\_\+c}} (const double t)
+\begin{DoxyCompactList}\small\item\em Converts kelvin to degrees celsius. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga1566153b847245076c2be30f76a741c6}{wx\+\_\+v}} (const double t)
+\begin{DoxyCompactList}\small\item\em Calculates v at temperature. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga75bd4d837c1f829e0d896a0960b4032c}{wx\+\_\+pwi}} (const double t)
+\begin{DoxyCompactList}\small\item\em Calculates aqueous vapor pressure of ice at temperature. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga72dbbedce71f89709a492598e5157820}{wx\+\_\+pws}} (const double t)
+\begin{DoxyCompactList}\small\item\em Calculates aqueous vapor pressure of water at temperature. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga53a05dd931fd2c3146d6f8f41893d9a3}{wx\+\_\+pressure\+\_\+at\+\_\+sea\+\_\+level}} (const double pa, const double l, const double ta)
+\begin{DoxyCompactList}\small\item\em Calculates the reduced air pressure QFF (pressure at sea level) without QFE. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_gaeafc3b5dd9c7cb6bd5a98ca488c78a07}{wx\+\_\+qfe}} (const double pa, const double l, const double ta)
+\begin{DoxyCompactList}\small\item\em Calculates the reduced air pressure QFE (pressure at a certain level). \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_gafd8d946905a578427cb9abc3643ecd73}{wx\+\_\+qff}} (const double qfe, const double l, const double ta)
+\begin{DoxyCompactList}\small\item\em Calculates the reduced air pressure QFF (pressure at sea level). \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_gaca9294993c7bf81f641a8f3d53c16191}{wx\+\_\+qnh}} (const double qfe, const double h, const double a)
+\begin{DoxyCompactList}\small\item\em Calculates the reduced air pressure QNH (pressure at sea level according to ICAO standard atmospheric). \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_ga0b1ca2c46ff5cfef33fd5831beddaf08}{wx\+\_\+td}} (const double ta, const double hr)
+\begin{DoxyCompactList}\small\item\em Calculates dewpoint temperature from air temperature and relative humidity. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{group__wx__utils_gae159e7e1938651f641ddaf776c24c08c}{wx\+\_\+tw}} (const double ta, const double hr, const double td, const double pa)
+\begin{DoxyCompactList}\small\item\em Calculates wetbulb temperature from air temperature, relative humidity, and dewpoint temperature. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ESP-\/\+IDF weather utilities
+
+Ported from esp-\/open-\/rtos
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}})
+
+MIT Licensed as described in the file LICENSE 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group__wx__utils_ga6f8a84895a0f475d4850db1f31bc4a84}\index{Wx\_utils@{Wx\_utils}!wx\_c\_to\_k@{wx\_c\_to\_k}}
+\index{wx\_c\_to\_k@{wx\_c\_to\_k}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_c\_to\_k()}{wx\_c\_to\_k()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga6f8a84895a0f475d4850db1f31bc4a84} 
+const double wx\+\_\+c\+\_\+to\+\_\+k (\begin{DoxyParamCaption}\item[{const double}]{t}{}\end{DoxyParamCaption})}
+
+
+
+Converts degrees celsius to kelvin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Temperature in degrees celsius. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Temperature in kelvin. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga931c1bcd4eaa1ed9f1058c9bb3641071}\index{Wx\_utils@{Wx\_utils}!wx\_k\_to\_c@{wx\_k\_to\_c}}
+\index{wx\_k\_to\_c@{wx\_k\_to\_c}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_k\_to\_c()}{wx\_k\_to\_c()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga931c1bcd4eaa1ed9f1058c9bb3641071} 
+const double wx\+\_\+k\+\_\+to\+\_\+c (\begin{DoxyParamCaption}\item[{const double}]{t}{}\end{DoxyParamCaption})}
+
+
+
+Converts kelvin to degrees celsius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Temperature in kelvin. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Temperature in degrees celsius. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga53a05dd931fd2c3146d6f8f41893d9a3}\index{Wx\_utils@{Wx\_utils}!wx\_pressure\_at\_sea\_level@{wx\_pressure\_at\_sea\_level}}
+\index{wx\_pressure\_at\_sea\_level@{wx\_pressure\_at\_sea\_level}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_pressure\_at\_sea\_level()}{wx\_pressure\_at\_sea\_level()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga53a05dd931fd2c3146d6f8f41893d9a3} 
+const double wx\+\_\+pressure\+\_\+at\+\_\+sea\+\_\+level (\begin{DoxyParamCaption}\item[{const double}]{pa}{, }\item[{const double}]{l}{, }\item[{const double}]{ta}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the reduced air pressure QFF (pressure at sea level) without QFE. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pa} & Air pressure at this altitude in hecto-\/pascal. \\
+\hline
+{\em l} & Reduction level at this altitude in meters. \\
+\hline
+{\em ta} & Air temperature at this altitude in degrees celsius. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float Reduced air pressure QFF in hecto-\/pascal. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga75bd4d837c1f829e0d896a0960b4032c}\index{Wx\_utils@{Wx\_utils}!wx\_pwi@{wx\_pwi}}
+\index{wx\_pwi@{wx\_pwi}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_pwi()}{wx\_pwi()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga75bd4d837c1f829e0d896a0960b4032c} 
+const double wx\+\_\+pwi (\begin{DoxyParamCaption}\item[{const double}]{t}{}\end{DoxyParamCaption})}
+
+
+
+Calculates aqueous vapor pressure of ice at temperature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Temperature in kelvin. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Aqueous vapor pressure of ice 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga72dbbedce71f89709a492598e5157820}\index{Wx\_utils@{Wx\_utils}!wx\_pws@{wx\_pws}}
+\index{wx\_pws@{wx\_pws}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_pws()}{wx\_pws()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga72dbbedce71f89709a492598e5157820} 
+const double wx\+\_\+pws (\begin{DoxyParamCaption}\item[{const double}]{t}{}\end{DoxyParamCaption})}
+
+
+
+Calculates aqueous vapor pressure of water at temperature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Temperature in kelvin. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Aqueous vapor pressure of water. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_gaeafc3b5dd9c7cb6bd5a98ca488c78a07}\index{Wx\_utils@{Wx\_utils}!wx\_qfe@{wx\_qfe}}
+\index{wx\_qfe@{wx\_qfe}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_qfe()}{wx\_qfe()}}
+{\footnotesize\ttfamily \label{group__wx__utils_gaeafc3b5dd9c7cb6bd5a98ca488c78a07} 
+const double wx\+\_\+qfe (\begin{DoxyParamCaption}\item[{const double}]{pa}{, }\item[{const double}]{l}{, }\item[{const double}]{ta}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the reduced air pressure QFE (pressure at a certain level). 
+
+\begin{DoxyNote}{Note}
+The reduction level for QFE processing is the elevation difference of the pressure sensor and the QFE level into which the pressure will be reduced. If the pressure sensor is above the QFE level, the reduction level to get the QFE level pressure is a positive value. If the sensor is below the QFE level, the reduction level is a negative value.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em pa} & Air pressure at this altitude in hecto-\/pascal. \\
+\hline
+{\em l} & Reduction level in meters. \\
+\hline
+{\em ta} & Air temperature at this altitude in degrees celsius. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float Reduced air pressure QFE in hecto-\/pascal. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_gafd8d946905a578427cb9abc3643ecd73}\index{Wx\_utils@{Wx\_utils}!wx\_qff@{wx\_qff}}
+\index{wx\_qff@{wx\_qff}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_qff()}{wx\_qff()}}
+{\footnotesize\ttfamily \label{group__wx__utils_gafd8d946905a578427cb9abc3643ecd73} 
+const double wx\+\_\+qff (\begin{DoxyParamCaption}\item[{const double}]{qfe}{, }\item[{const double}]{l}{, }\item[{const double}]{ta}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the reduced air pressure QFF (pressure at sea level). 
+
+\begin{DoxyNote}{Note}
+The reduction level is the elevation difference of the station altitude and the mean sea level.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em qfe} & Field elevation aire pressure in hecto-\/pascal. \\
+\hline
+{\em l} & Reduction level at this altitude in meters. \\
+\hline
+{\em ta} & Air temperature at this altitude in degrees celsius. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float Reduced air pressure QFF in hecto-\/pascal. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_gaca9294993c7bf81f641a8f3d53c16191}\index{Wx\_utils@{Wx\_utils}!wx\_qnh@{wx\_qnh}}
+\index{wx\_qnh@{wx\_qnh}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_qnh()}{wx\_qnh()}}
+{\footnotesize\ttfamily \label{group__wx__utils_gaca9294993c7bf81f641a8f3d53c16191} 
+const double wx\+\_\+qnh (\begin{DoxyParamCaption}\item[{const double}]{qfe}{, }\item[{const double}]{h}{, }\item[{const double}]{a}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the reduced air pressure QNH (pressure at sea level according to ICAO standard atmospheric). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em qfe} & Staion level air pressure in hecto-\/pascal. \\
+\hline
+{\em h} & Elevation of pressure QFE in International Standard Atmosphere (ISA). \\
+\hline
+{\em a} & Station altitude in meters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float Reduced air pressure QNH in hecto-\/pascal. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga729e8446a82e36e3889e88f251620a79}\index{Wx\_utils@{Wx\_utils}!wx\_set\_humidity\_range@{wx\_set\_humidity\_range}}
+\index{wx\_set\_humidity\_range@{wx\_set\_humidity\_range}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_set\_humidity\_range()}{wx\_set\_humidity\_range()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga729e8446a82e36e3889e88f251620a79} 
+esp\+\_\+err\+\_\+t wx\+\_\+set\+\_\+humidity\+\_\+range (\begin{DoxyParamCaption}\item[{const float}]{maximum}{, }\item[{const float}]{minimum}{}\end{DoxyParamCaption})}
+
+
+
+Sets the global weather utilities humidity maximum and minimum range ({\ttfamily wx\+\_\+humidity\+\_\+range}) in percent. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em maximum} & Maximum humidity range in percent. \\
+\hline
+{\em minimum} & Minimum humidity range in percent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga007944c60d61949b8d9f3961d4efe263}\index{Wx\_utils@{Wx\_utils}!wx\_set\_temperature\_range@{wx\_set\_temperature\_range}}
+\index{wx\_set\_temperature\_range@{wx\_set\_temperature\_range}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_set\_temperature\_range()}{wx\_set\_temperature\_range()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga007944c60d61949b8d9f3961d4efe263} 
+esp\+\_\+err\+\_\+t wx\+\_\+set\+\_\+temperature\+\_\+range (\begin{DoxyParamCaption}\item[{const float}]{maximum}{, }\item[{const float}]{minimum}{}\end{DoxyParamCaption})}
+
+
+
+Sets the global weather utilities maximum and minimum temperature range ({\ttfamily wx\+\_\+temperature\+\_\+range}) in degrees Celsius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em maximum} & Maximum temperature range in degrees Celsius. \\
+\hline
+{\em minimum} & Minimum temperature range in degrees Celsius. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga0b1ca2c46ff5cfef33fd5831beddaf08}\index{Wx\_utils@{Wx\_utils}!wx\_td@{wx\_td}}
+\index{wx\_td@{wx\_td}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_td()}{wx\_td()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga0b1ca2c46ff5cfef33fd5831beddaf08} 
+const double wx\+\_\+td (\begin{DoxyParamCaption}\item[{const double}]{ta}{, }\item[{const double}]{hr}{}\end{DoxyParamCaption})}
+
+
+
+Calculates dewpoint temperature from air temperature and relative humidity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ta} & Air temperature in degrees celsius. \\
+\hline
+{\em hr} & Relative humidity in percent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Dewpoint temperature in degrees celsius. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_gaf9560dbeb2376204ae455a7e71407e04}\index{Wx\_utils@{Wx\_utils}!wx\_td\_range@{wx\_td\_range}}
+\index{wx\_td\_range@{wx\_td\_range}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_td\_range()}{wx\_td\_range()}}
+{\footnotesize\ttfamily \label{group__wx__utils_gaf9560dbeb2376204ae455a7e71407e04} 
+esp\+\_\+err\+\_\+t wx\+\_\+td\+\_\+range (\begin{DoxyParamCaption}\item[{const float}]{temperature}{, }\item[{const float}]{humidity}{, }\item[{float \texorpdfstring{$\ast$}{*}const}]{dewpoint}{}\end{DoxyParamCaption})}
+
+
+
+Calculates dewpoint temperature from air temperature and relative humidity with range validation. The default temperature range is from -\/40 to 125 degrees Celsius and default humidity range is from 0 to 100 percent. ~\newline
+ The default ranges can be adjusted through the set range functions. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em temperature} & Air temperature in degrees Celsius. \\
+\hline
+\mbox{\texttt{ in}}  & {\em humidity} & Relative humidity in percent. \\
+\hline
+\mbox{\texttt{ out}}  & {\em dewpoint} & Calculated dewpoint temperature in degrees Celsius. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+esp\+\_\+err\+\_\+t ESP\+\_\+\+OK on success. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_gae159e7e1938651f641ddaf776c24c08c}\index{Wx\_utils@{Wx\_utils}!wx\_tw@{wx\_tw}}
+\index{wx\_tw@{wx\_tw}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_tw()}{wx\_tw()}}
+{\footnotesize\ttfamily \label{group__wx__utils_gae159e7e1938651f641ddaf776c24c08c} 
+const double wx\+\_\+tw (\begin{DoxyParamCaption}\item[{const double}]{ta}{, }\item[{const double}]{hr}{, }\item[{const double}]{td}{, }\item[{const double}]{pa}{}\end{DoxyParamCaption})}
+
+
+
+Calculates wetbulb temperature from air temperature, relative humidity, and dewpoint temperature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ta} & Air temperature in degrees celsius. \\
+\hline
+{\em hr} & Relative humidity in percent. \\
+\hline
+{\em td} & Dewpoint temperature in degrees celsius. \\
+\hline
+{\em pa} & Air pressure in hecto-\/pascal. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Wetbulb temperature in degrees celsius. 
+\end{DoxyReturn}
+\Hypertarget{group__wx__utils_ga1566153b847245076c2be30f76a741c6}\index{Wx\_utils@{Wx\_utils}!wx\_v@{wx\_v}}
+\index{wx\_v@{wx\_v}!Wx\_utils@{Wx\_utils}}
+\doxysubsubsection{\texorpdfstring{wx\_v()}{wx\_v()}}
+{\footnotesize\ttfamily \label{group__wx__utils_ga1566153b847245076c2be30f76a741c6} 
+const double wx\+\_\+v (\begin{DoxyParamCaption}\item[{const double}]{t}{}\end{DoxyParamCaption})}
+
+
+
+Calculates v at temperature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Temperature in kelvin. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double v at temperature. 
+\end{DoxyReturn}

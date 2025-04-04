@@ -1,0 +1,164 @@
+\doxysection{components/peripherals/i2c/esp\+\_\+max30105/include/max30105.h File Reference}
+\hypertarget{max30105_8h}{}\label{max30105_8h}\index{components/peripherals/i2c/esp\_max30105/include/max30105.h@{components/peripherals/i2c/esp\_max30105/include/max30105.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$esp\+\_\+err.\+h$>$}\newline
+{\ttfamily \#include $<$driver/i2c\+\_\+master.\+h$>$}\newline
+{\ttfamily \#include $<$type\+\_\+utils.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmax30105__config__s}{max30105\+\_\+config\+\_\+s}}
+\begin{DoxyCompactList}\small\item\em MAX30105 configuration structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmax30105__context__t}{max30105\+\_\+context\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em MAX30105 context structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries I2\+C\+\_\+\+MAX30105\+\_\+\+DEV\+\_\+\+CLK\+\_\+\+SPD}~UINT32\+\_\+C(100000)
+\begin{DoxyCompactList}\small\item\em max30105 I2C default clock frequency (100KHz) \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+MAX30105\+\_\+\+DEV\+\_\+\+ADDR}~UINT8\+\_\+C(0x38)
+\begin{DoxyCompactList}\small\item\em max30105 I2C address \end{DoxyCompactList}\item 
+\#define {\bfseries I2\+C\+\_\+\+XFR\+\_\+\+TIMEOUT\+\_\+\+MS}~(500)
+\begin{DoxyCompactList}\small\item\em I2C transaction timeout in milliseconds. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__drivers_gadd59f6adc5a3d114f55cf5e313df936a}{I2\+C\+\_\+\+MAX30105\+\_\+\+CONFIG\+\_\+\+DEFAULT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga98bf6ef762aa82d3a01c0d42169f0224}{max30105\+\_\+adc\+\_\+range\+\_\+controls\+\_\+e}} {\bfseries max30105\+\_\+adc\+\_\+range\+\_\+controls\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 particle-\/sensing ADC range controls (18-\/bit resolution) enumerator (register 0x0a). \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gaf3d372d9d9a63fe1bc8b70e59180476a}{max30105\+\_\+sample\+\_\+rate\+\_\+controls\+\_\+e}} {\bfseries max30105\+\_\+sample\+\_\+rate\+\_\+controls\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 particle-\/sensing sample rate control enumerator (register 0x0a). \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga0c696bd78787c0c17489d990a4a7342a}{max30105\+\_\+led\+\_\+pulse\+\_\+width\+\_\+controls\+\_\+e}} {\bfseries max30105\+\_\+led\+\_\+pulse\+\_\+width\+\_\+controls\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 LED pulse width controls enumerator (register 0x0a). \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gacd9ab5ee398b718652084d7527c11afd}{max30105\+\_\+control\+\_\+modes\+\_\+e}} {\bfseries max30105\+\_\+control\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 control modes enumerator. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_gad2d631b3ded4311c550b7bc4e1d97daa}{max30105\+\_\+multi\+\_\+led\+\_\+control\+\_\+modes\+\_\+e}} {\bfseries max30105\+\_\+multi\+\_\+led\+\_\+control\+\_\+modes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 multi-\/\+LED control modes enumerator (registers 0x11-\/0x12). \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{group__drivers_ga91713d91ba70b980968ce118b795aa86}{max30105\+\_\+led\+\_\+pulse\+\_\+amplitudes\+\_\+e}} {\bfseries max30105\+\_\+led\+\_\+pulse\+\_\+amplitudes\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 LED pulse amplitudes enumerator (registers 0x0c-\/0x10). \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structmax30105__config__s}{max30105\+\_\+config\+\_\+s}} {\bfseries max30105\+\_\+config\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 configuration structure. \end{DoxyCompactList}\item 
+typedef struct max30105\+\_\+context\+\_\+t {\bfseries max30105\+\_\+context\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 context structure definition. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structmax30105__context__t}{max30105\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries max30105\+\_\+handle\+\_\+t}
+\begin{DoxyCompactList}\small\item\em MAX30105 handle structure definition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__drivers_ga98bf6ef762aa82d3a01c0d42169f0224}{max30105\+\_\+adc\+\_\+range\+\_\+controls\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga98bf6ef762aa82d3a01c0d42169f0224a950e031b8efb6b2bcb3a032a1ffe3c9a}{MAX30105\+\_\+\+ARC\+\_\+7\+\_\+81\+LSB}} = (0x00)
+, \mbox{\hyperlink{group__drivers_gga98bf6ef762aa82d3a01c0d42169f0224ada2a14a32fe8b5046bd4bb2b8d464ca6}{MAX30105\+\_\+\+ARC\+\_\+15\+\_\+63\+LSB}} = (0x01)
+, \mbox{\hyperlink{group__drivers_gga98bf6ef762aa82d3a01c0d42169f0224a0b354b163122215d457fce377a776b7f}{MAX30105\+\_\+\+ARC\+\_\+31\+\_\+25\+LSB}} = (0x02)
+, \mbox{\hyperlink{group__drivers_gga98bf6ef762aa82d3a01c0d42169f0224a0d5d6188a4d4d1f325950eb976723b63}{MAX30105\+\_\+\+ARC\+\_\+62\+\_\+5\+LSB}} = (0x03)
+ \}
+\begin{DoxyCompactList}\small\item\em MAX30105 particle-\/sensing ADC range controls (18-\/bit resolution) enumerator (register 0x0a). \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_gaf3d372d9d9a63fe1bc8b70e59180476a}{max30105\+\_\+sample\+\_\+rate\+\_\+controls\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aa883ea5322e3fc73152e2312c8178cd53}{MAX30105\+\_\+\+SRC\+\_\+50\+SPS}} = (0b000)
+, \mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aa7330a5d4d8260f8816620d2803a5b90e}{MAX30105\+\_\+\+SRC\+\_\+100\+SPS}} = (0b001)
+, \mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aa31c9d99a5419ca04e0621f84efe42e05}{MAX30105\+\_\+\+SRC\+\_\+200\+SPS}} = (0b010)
+, \mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aa28d7707283cbb411977e4c93d99b58af}{MAX30105\+\_\+\+SRC\+\_\+400\+SPS}} = (0b011)
+, \newline
+\mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aa8cdf90d10ad2ba8eb22d3644f0fdc192}{MAX30105\+\_\+\+SRC\+\_\+800\+SPS}} = (0b100)
+, \mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aab0de5e8296d4e3a3cf61bcc6b4072f27}{MAX30105\+\_\+\+SRC\+\_\+1000\+SPS}} = (0b101)
+, \mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aafcbbfee8e59cdb99830ba22f22f39b59}{MAX30105\+\_\+\+SRC\+\_\+1600\+SPS}} = (0b110)
+, \mbox{\hyperlink{group__drivers_ggaf3d372d9d9a63fe1bc8b70e59180476aa5227294c6f94cd37705eb8d95bc85fcc}{MAX30105\+\_\+\+SRC\+\_\+3200\+SPS}} = (0b111)
+ \}
+\begin{DoxyCompactList}\small\item\em MAX30105 particle-\/sensing sample rate control enumerator (register 0x0a). \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga0c696bd78787c0c17489d990a4a7342a}{max30105\+\_\+led\+\_\+pulse\+\_\+width\+\_\+controls\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_gga0c696bd78787c0c17489d990a4a7342aae79b1a0726270b44bf2c9f025d3538e8}{MAX30105\+\_\+\+LPWC\+\_\+69\+US\+\_\+15\+BITS}} = (0b00)
+, \mbox{\hyperlink{group__drivers_gga0c696bd78787c0c17489d990a4a7342aa0b5af1fa2526ab1fe2000d82e1454f2c}{MAX30105\+\_\+\+LPWC\+\_\+118\+US\+\_\+16\+BITS}} = (0b01)
+, \mbox{\hyperlink{group__drivers_gga0c696bd78787c0c17489d990a4a7342aac46a74e2e57c68b4578b33a25699cc1a}{MAX30105\+\_\+\+LPWC\+\_\+215\+US\+\_\+17\+BITS}} = (0b10)
+, \mbox{\hyperlink{group__drivers_gga0c696bd78787c0c17489d990a4a7342aa7d6370e7f116e13b5016a9d0833a8913}{MAX30105\+\_\+\+LPWC\+\_\+411\+US\+\_\+18\+BITS}} = (0b11)
+ \}
+\begin{DoxyCompactList}\small\item\em MAX30105 LED pulse width controls enumerator (register 0x0a). \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_gacd9ab5ee398b718652084d7527c11afd}{max30105\+\_\+control\+\_\+modes\+\_\+e}} \{ \mbox{\hyperlink{group__drivers_ggacd9ab5ee398b718652084d7527c11afdac4c048b6756fd485251330b285b9b92f}{MAX30105\+\_\+\+CM\+\_\+\+PARTICLE\+\_\+\+SENSING\+\_\+1\+LED}} = (0b010)
+, \mbox{\hyperlink{group__drivers_ggacd9ab5ee398b718652084d7527c11afdaf65173d7f758929d4113cde78a57f11a}{MAX30105\+\_\+\+CM\+\_\+\+PARTICLE\+\_\+\+SENSING\+\_\+2\+LED}} = (0b011)
+, \mbox{\hyperlink{group__drivers_ggacd9ab5ee398b718652084d7527c11afdaabfaa28f1aa038d7a396ea6c0da46eaf}{MAX30105\+\_\+\+CM\+\_\+\+MULTIPLE\+\_\+\+LED}} = (0b111)
+ \}
+\begin{DoxyCompactList}\small\item\em MAX30105 control modes enumerator. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_gad2d631b3ded4311c550b7bc4e1d97daa}{max30105\+\_\+multi\+\_\+led\+\_\+control\+\_\+modes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaab32ce692d3fa747acce1cb9751c7d30a}{MAX30105\+\_\+\+MLCM\+\_\+\+DISABLED}} = (0b000)
+, \mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaa34b34f34411fe4ff2ecdef54fdd7db3e}{MAX30105\+\_\+\+MLCM\+\_\+\+RED\+\_\+\+LED}} = (0b001)
+, \mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaaf58bcd000b256f7033cecd1adade10c8}{MAX30105\+\_\+\+MLCM\+\_\+\+IR\+\_\+\+LED}} = (0b010)
+, \mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaa7e12856c57f72a6d8ce847df8fbb168a}{MAX30105\+\_\+\+MLCM\+\_\+\+GREEN\+\_\+\+LED}} = (0b011)
+, \newline
+\mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaa5eecddf4b253176e3d50948033a55dfa}{MAX30105\+\_\+\+MLCM\+\_\+\+NONE}} = (0b100)
+, \mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaa1dfbfc6f8ffb57c469f77c092a1ba491}{MAX30105\+\_\+\+MLCM\+\_\+\+RED\+\_\+\+PILOT}} = (0b101)
+, \mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaa8e9040f90abfd6476351ae2d39cdbbe6}{MAX30105\+\_\+\+MLCM\+\_\+\+IR\+\_\+\+PILOT}} = (0b110)
+, \mbox{\hyperlink{group__drivers_ggad2d631b3ded4311c550b7bc4e1d97daaa0f751522ea16846dd74a4f1dd042080b}{MAX30105\+\_\+\+MLCM\+\_\+\+GREEN\+\_\+\+PILOT}} = (0b111)
+ \}
+\begin{DoxyCompactList}\small\item\em MAX30105 multi-\/\+LED control modes enumerator (registers 0x11-\/0x12). \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__drivers_ga91713d91ba70b980968ce118b795aa86}{max30105\+\_\+led\+\_\+pulse\+\_\+amplitudes\+\_\+e}} \{ \newline
+\mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86a85f3dd602feabbe8d99cfd116d35f465}{MAX30105\+\_\+\+LPA\+\_\+0\+\_\+0\+MA}} = (0x00)
+, \mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86af292deff4d4e49dffbc6c212c2629b22}{MAX30105\+\_\+\+LPA\+\_\+0\+\_\+2\+MA}} = (0x01)
+, \mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86a52a28b7773aa19e59e60d8793b93ab9b}{MAX30105\+\_\+\+LPA\+\_\+0\+\_\+4\+MA}} = (0x02)
+, \mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86afe812b4d8bdffe4dbe47a54636fdcd95}{MAX30105\+\_\+\+LPA\+\_\+3\+\_\+1\+MA}} = (0x0f)
+, \newline
+\mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86aa0f4e7a263429beb7bf1b5bd6f48f8b4}{MAX30105\+\_\+\+LPA\+\_\+6\+\_\+4\+MA}} = (0x1f)
+, \mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86a99f31ff8467cdca2bc7533f28ef5c93c}{MAX30105\+\_\+\+LPA\+\_\+12\+\_\+5\+MA}} = (0x3f)
+, \mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86a41238e5ff923626531300fc667ba0ae8}{MAX30105\+\_\+\+LPA\+\_\+25\+\_\+4\+MA}} = (0x7f)
+, \mbox{\hyperlink{group__drivers_gga91713d91ba70b980968ce118b795aa86a00a6cc342d8cd8a2329ea6df7fe1ddfd}{MAX30105\+\_\+\+LPA\+\_\+50\+\_\+0\+MA}} = (0xff)
+ \}
+\begin{DoxyCompactList}\small\item\em MAX30105 LED pulse amplitudes enumerator (registers 0x0c-\/0x10). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed)) ahtxx\+\_\+status\+\_\+register\+\_\+u
+\begin{DoxyCompactList}\small\item\em AHTXX status register structure definition. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaabc9f71c22edd8f86e30f4c8f272f3ed}{max30105\+\_\+get\+\_\+interrupt\+\_\+status1\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+status1\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt status 1 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa7d230779617843339697177a2e9539a}{max30105\+\_\+get\+\_\+interrupt\+\_\+status2\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+status2\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt status 2 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad7d0f67365ce70618b141ed3fd6dc420}{max30105\+\_\+get\+\_\+interrupt\+\_\+enable1\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+enable1\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt enable 1 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga5c4b439eb292fd8a1a27dca8e64cac24}{max30105\+\_\+set\+\_\+interrupt\+\_\+enable1\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const max30105\+\_\+interrupt\+\_\+enable1\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes interrupt enable 1 register to MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gacdf531a20c00a19f39f46e49ed4b5195}{max30105\+\_\+get\+\_\+interrupt\+\_\+enable2\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+interrupt\+\_\+enable2\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads interrupt enable 2 register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8e9655185febb88a4922f6d36ff5286e}{max30105\+\_\+set\+\_\+interrupt\+\_\+enable2\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const max30105\+\_\+interrupt\+\_\+enable2\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes interrupt enable 2 register to MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga825dd4dccb365826ec6a5dc4a8a4b2b3}{max30105\+\_\+get\+\_\+mode\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, max30105\+\_\+mode\+\_\+configuration\+\_\+register\+\_\+t \texorpdfstring{$\ast$}{*}const reg)
+\begin{DoxyCompactList}\small\item\em Reads mode configuration register from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gad8b44bbc555adccc623edb3b23fa1ea9}{max30105\+\_\+set\+\_\+mode\+\_\+configuration\+\_\+register}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const max30105\+\_\+mode\+\_\+configuration\+\_\+register\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Writes mode configuration register to MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga3528f8e9cdfe960abf96013bbde6889e}{max30105\+\_\+init}} (i2c\+\_\+master\+\_\+bus\+\_\+handle\+\_\+t master\+\_\+handle, const \mbox{\hyperlink{group__drivers_ga4c7293592ca99025e76fc2e23044deb9}{max30105\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}max30105\+\_\+config, \mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} \texorpdfstring{$\ast$}{*}max30105\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Initializes an MAX30105 device onto the I2C master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga7b5e70ace64d9d8e770f0d695e482aee}{max30105\+\_\+get\+\_\+optical\+\_\+counts}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, float \texorpdfstring{$\ast$}{*}const red\+\_\+count, float \texorpdfstring{$\ast$}{*}const ir\+\_\+count, float \texorpdfstring{$\ast$}{*}const green\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Reads red, IR, and green LED ADC counts from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga8252e18dfc51a11a7ae20c34b9b15569}{max30105\+\_\+get\+\_\+data\+\_\+status}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, bool \texorpdfstring{$\ast$}{*}const ready)
+\begin{DoxyCompactList}\small\item\em Reads data status from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga0dba28e603b862b5f22728677adbb638}{max30105\+\_\+get\+\_\+control\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, \mbox{\hyperlink{group__drivers_ga6b290cee329e4df021ed1672555998b0}{max30105\+\_\+control\+\_\+modes\+\_\+t}} \texorpdfstring{$\ast$}{*}const control\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Reads control mode setting from MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_ga1ef26a5ecf32e21555d465ca229db89a}{max30105\+\_\+set\+\_\+control\+\_\+mode}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle, const \mbox{\hyperlink{group__drivers_ga6b290cee329e4df021ed1672555998b0}{max30105\+\_\+control\+\_\+modes\+\_\+t}} control\+\_\+mode)
+\begin{DoxyCompactList}\small\item\em Writes control mode setting to MAX30105. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gaa0018e4145cc859d754c5a0ee4e74d55}{max30105\+\_\+remove}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an MAX30105 device from master bus. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{group__drivers_gae40192a97f0b0f979803d1aed0ff4160}{max30105\+\_\+delete}} (\mbox{\hyperlink{group__drivers_ga871d59246e5c9f84ce0edb737276caab}{max30105\+\_\+handle\+\_\+t}} handle)
+\begin{DoxyCompactList}\small\item\em Removes an MAX30105 device from master bus and frees handle. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{group__drivers_ga1f5fea0ebb6e2221eae5fe7bc111be2d}{max30105\+\_\+get\+\_\+fw\+\_\+version}} (void)
+\begin{DoxyCompactList}\small\item\em Converts MAX30105 firmware version numbers (major, minor, patch, build) into a string. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{group__drivers_gafe981f8324a0dc170718bfdd77fa89d5}{max30105\+\_\+get\+\_\+fw\+\_\+version\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Converts MAX30105 firmware version numbers (major, minor, patch) into an integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries max30105\+\_\+interrupt\+\_\+status1\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+interrupt\+\_\+status2\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+interrupt\+\_\+enable1\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+interrupt\+\_\+enable2\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+mode\+\_\+configuration\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+multi\+\_\+led\+\_\+mode\+\_\+control\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+fifo\+\_\+write\+\_\+pointer\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+fifo\+\_\+overflow\+\_\+counter\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+fifo\+\_\+read\+\_\+pointer\+\_\+register\+\_\+t}
+\item 
+{\bfseries max30105\+\_\+fifo\+\_\+data\+\_\+register\+\_\+t}
+\end{DoxyCompactItemize}

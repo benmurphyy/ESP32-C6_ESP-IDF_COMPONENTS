@@ -1,0 +1,238 @@
+\doxysection{bmp280.\+h}
+\hypertarget{bmp280_8h_source}{}\label{bmp280_8h_source}\index{components/peripherals/i2c/esp\_bmp280/include/bmp280.h@{components/peripherals/i2c/esp\_bmp280/include/bmp280.h}}
+\mbox{\hyperlink{bmp280_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_BMP280\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_BMP280\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}bmp280\_version.h"{}}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00050\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ I2C\_BMP280\_DEV\_CLK\_SPD\ \ \ \ \ \ UINT32\_C(100000)\ }}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ I2C\_BMP280\_DEV\_ADDR\_LO\ \ \ \ \ \ UINT8\_C(0x76)\ }}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ I2C\_BMP280\_DEV\_ADDR\_HI\ \ \ \ \ \ UINT8\_C(0x77)\ }}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ I2C\_BMP280\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_BMP280\_DEV\_ADDR\_HI,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_BMP280\_DEV\_CLK\_SPD,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .power\_mode\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ BMP280\_POWER\_MODE\_NORMAL,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .iir\_filter\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ BMP280\_IIR\_FILTER\_OFF,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .pressure\_oversampling\ \ \ \ \ \ =\ BMP280\_PRESSURE\_OVERSAMPLING\_4X,\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .temperature\_oversampling\ \ \ =\ BMP280\_TEMPERATURE\_OVERSAMPLING\_4X,\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .standby\_time\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ BMP280\_STANDBY\_TIME\_250MS\ \}}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga43c86457744677ce2fe05bf08c31ce5d}{bmp280\_iir\_filters\_e}}\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ BMP280\_IIR\_FILTER\_OFF\ =\ (0b000),}
+\DoxyCodeLine{00090\ \ \ \ \ BMP280\_IIR\_FILTER\_2\ \ \ =\ (0b001),}
+\DoxyCodeLine{00091\ \ \ \ \ BMP280\_IIR\_FILTER\_4\ \ \ =\ (0b010),}
+\DoxyCodeLine{00092\ \ \ \ \ BMP280\_IIR\_FILTER\_8\ \ \ =\ (0b011),}
+\DoxyCodeLine{00093\ \ \ \ \ BMP280\_IIR\_FILTER\_16\ \ =\ (0b100)}
+\DoxyCodeLine{00094\ \}\ \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\_iir\_filters\_t}};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gad9ece41b3c809c1942a598a8776f6e12}{bmp280\_standby\_times\_e}}\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12a16ac5a13b9c1674379b5b9588ef4617d}{BMP280\_STANDBY\_TIME\_0\_5MS}}\ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12a55a7231e0d2439283fdd72923454d19b}{BMP280\_STANDBY\_TIME\_62\_5MS}}\ =\ (0b001),\ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12afaa775feed35c6363c59fe18ea15c9d6}{BMP280\_STANDBY\_TIME\_125MS}}\ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12ae383c92942e0ff076a11a0ff339a2951}{BMP280\_STANDBY\_TIME\_250MS}}\ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12a0b73ea5a06d0680b77880ef99b063e0b}{BMP280\_STANDBY\_TIME\_500MS}}\ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12ad2d4272c1caaa676f0e74027df84344f}{BMP280\_STANDBY\_TIME\_1000MS}}\ =\ (0b101),\ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12ae0efb5e334fdcb511900168b448345c0}{BMP280\_STANDBY\_TIME\_2000MS}}\ =\ (0b110),\ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad9ece41b3c809c1942a598a8776f6e12a896cf4ff00c390e5cc5c48d067aff79f}{BMP280\_STANDBY\_TIME\_4000MS}}\ =\ (0b111)\ \ \ }
+\DoxyCodeLine{00108\ \}\ \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\_standby\_times\_t}};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gaa4f8d7bff4d2100e147454563eb16712}{bmp280\_power\_modes\_e}}\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaa4f8d7bff4d2100e147454563eb16712a0b80523bc1870d9646beec02645266b6}{BMP280\_POWER\_MODE\_SLEEP}}\ \ \ =\ (0b00),\ }
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaa4f8d7bff4d2100e147454563eb16712a0a5eaa62779bf8c3021ec9b387eb4683}{BMP280\_POWER\_MODE\_FORCED}}\ \ =\ (0b01),\ }
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaa4f8d7bff4d2100e147454563eb16712adecf4b4ef1718a47831b2fb1ad887b50}{BMP280\_POWER\_MODE\_FORCED1}}\ =\ (0b10),\ }
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaa4f8d7bff4d2100e147454563eb16712aa3b65aa6ea4fbbe841c075e580c6c91c}{BMP280\_POWER\_MODE\_NORMAL}}\ \ =\ (0b11)\ \ }
+\DoxyCodeLine{00118\ \}\ \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\_power\_modes\_t}};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga4cb3c585b3e9d393ee0b44b8ec0b8dbc}{bmp280\_pressure\_oversampling\_e}}\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga4cb3c585b3e9d393ee0b44b8ec0b8dbca21ec85d301fed2cf591da189b5a4d7d8}{BMP280\_PRESSURE\_OVERSAMPLING\_SKIPPED}}\ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga4cb3c585b3e9d393ee0b44b8ec0b8dbcaef3c492f37e800c99ac5e3437f801487}{BMP280\_PRESSURE\_OVERSAMPLING\_1X}}\ \ \ \ \ \ \ \ \ =\ (0b001),\ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga4cb3c585b3e9d393ee0b44b8ec0b8dbca98685fcb7e2a7cc8d6ae829ee0f63527}{BMP280\_PRESSURE\_OVERSAMPLING\_2X}}\ \ \ \ \ \ \ \ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga4cb3c585b3e9d393ee0b44b8ec0b8dbca6439ab95093d6b22fd6c8b537839d4bc}{BMP280\_PRESSURE\_OVERSAMPLING\_4X}}\ \ \ \ \ \ \ \ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga4cb3c585b3e9d393ee0b44b8ec0b8dbcacaa42658a36e7c69db177f293182c1bf}{BMP280\_PRESSURE\_OVERSAMPLING\_8X}}\ \ \ \ \ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00129\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga4cb3c585b3e9d393ee0b44b8ec0b8dbca045959d703bb7473fab0fc940f667a88}{BMP280\_PRESSURE\_OVERSAMPLING\_16X}}\ \ \ \ \ \ \ \ =\ (0b101)\ \ \ }
+\DoxyCodeLine{00130\ \}\ \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\_pressure\_oversampling\_t}};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00135\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gaf7580026dc3ad627fe0fc505fd1d24cd}{bmp280\_temperature\_oversampling\_e}}\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cdacb8f23f526fc880c97afff9e4b93cfda}{BMP280\_TEMPERATURE\_OVERSAMPLING\_SKIPPED}}\ \ \ \ =\ (0b000),\ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cda4efcc2ff5dbce510faae2c95d6fb41f4}{BMP280\_TEMPERATURE\_OVERSAMPLING\_1X}}\ \ \ \ \ \ \ \ \ =\ (0b001),\ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cda828ec22274f1657192dc39495bca7d66}{BMP280\_TEMPERATURE\_OVERSAMPLING\_2X}}\ \ \ \ \ \ \ \ \ =\ (0b010),\ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cda103c5373a9615ebac3f9b8b8a1889015}{BMP280\_TEMPERATURE\_OVERSAMPLING\_4X}}\ \ \ \ \ \ \ \ \ =\ (0b011),\ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cda749bdc2ee25bfe8c61295f0473175c3b}{BMP280\_TEMPERATURE\_OVERSAMPLING\_8X}}\ \ \ \ \ \ \ \ \ =\ (0b100),\ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cda77cd8646d18928db489319cd48370b15}{BMP280\_TEMPERATURE\_OVERSAMPLING\_16X}}\ \ \ \ \ \ \ \ =\ (0b101),\ \ }
+\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cdaf1fe0c9ca3beac7c3e9e953a0370f8ac}{BMP280\_TEMPERATURE\_OVERSAMPLING\_16X1}}\ \ \ \ \ \ \ =\ (0b110),\ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf7580026dc3ad627fe0fc505fd1d24cda97c354a87daa130229295a8dec8d4d0d}{BMP280\_TEMPERATURE\_OVERSAMPLING\_16X2}}\ \ \ \ \ \ \ =\ (0b111)\ \ \ }
+\DoxyCodeLine{00144\ \}\ \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\_temperature\_oversampling\_t}};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00149\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bmp280\_status\_register\_u\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ image\_update:1;\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ uint8\_t\ reserved1:2;\ \ \ \ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ measuring:1;\ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ uint8\_t\ reserved2:4;\ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00156\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00157\ \}\ bmp280\_status\_register\_t;}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00162\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bmp280\_control\_measurement\_register\_u\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\_power\_modes\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ power\_mode:2;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\_pressure\_oversampling\_t}}\ \ \ \ \ \ pressure\_oversampling:3;\ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\_temperature\_oversampling\_t}}\ \ \ temperature\_oversampling:3;\ }
+\DoxyCodeLine{00167\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00168\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00169\ \}\ bmp280\_control\_measurement\_register\_t;}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00174\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ bmp280\_configuration\_register\_u\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spi\_enabled:1;\ \ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reserved:1;\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\_iir\_filters\_t}}\ \ \ \ iir\_filter:3;\ \ \ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\_standby\_times\_t}}\ \ standby\_time:3;\ }
+\DoxyCodeLine{00180\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00181\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00182\ \}\ bmp280\_configuration\_register\_t;}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00188\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmp280__cal__factors__s}{bmp280\_cal\_factors\_s}}\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{/*\ temperature\ and\ pressure\ compensation\ */}}
+\DoxyCodeLine{00190\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_T1;}
+\DoxyCodeLine{00191\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_T2;}
+\DoxyCodeLine{00192\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_T3;}
+\DoxyCodeLine{00193\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P1;}
+\DoxyCodeLine{00194\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P2;}
+\DoxyCodeLine{00195\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P3;}
+\DoxyCodeLine{00196\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P4;}
+\DoxyCodeLine{00197\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P5;}
+\DoxyCodeLine{00198\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P6;}
+\DoxyCodeLine{00199\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P7;}
+\DoxyCodeLine{00200\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P8;}
+\DoxyCodeLine{00201\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dig\_P9;}
+\DoxyCodeLine{00202\ \ \ \ \ int32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t\_fine;}
+\DoxyCodeLine{00203\ \}\ \mbox{\hyperlink{group__drivers_ga56de4c11f5b22c1d0cf373c243652b52}{bmp280\_cal\_factors\_t}};}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00208\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmp280__config__s}{bmp280\_config\_s}}\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00210\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\_power\_modes\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_a12241bc86e835299ae12611b56b7e246}{power\_mode}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00212\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\_iir\_filters\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_a57e6b0c4dacd2ca29ad4c3c71a98f728}{iir\_filter}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00213\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\_pressure\_oversampling\_t}}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_ae73fa5c593d834c2e39a628b574ae876}{pressure\_oversampling}};\ \ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\_temperature\_oversampling\_t}}\ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_a378ce448d1df2ee325ce28239a946b02}{temperature\_oversampling}};\ \ \ }
+\DoxyCodeLine{00215\ \ \ \ \ \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\_standby\_times\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__config__s_a0d5af9bb0a15a2c61d91fb67231f8feb}{standby\_time}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00216\ \}\ \mbox{\hyperlink{group__drivers_ga683075794a68e847ac00880f3fbc5a1e}{bmp280\_config\_t}};}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00221\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmp280__context__t}{bmp280\_context\_t}}\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga683075794a68e847ac00880f3fbc5a1e}{bmp280\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__context__t_ac412ae17d2b8c0f3e19957a5440b7198}{dev\_config}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00223\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00224\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga56de4c11f5b22c1d0cf373c243652b52}{bmp280\_cal\_factors\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structbmp280__context__t_af426a06322777dd303c01b6f98ec3981}{dev\_cal\_factors}};\ \ \ \ }
+\DoxyCodeLine{00225\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structbmp280__context__t_a137c97523d489997ecbb781789e28b20}{sensor\_type}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00226\ \};}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00231\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmp280__context__t}{bmp280\_context\_t}}\ \mbox{\hyperlink{structbmp280__context__t}{bmp280\_context\_t}};}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00236\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmp280__context__t}{bmp280\_context\_t}}*\ \mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}};}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00249\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf76cc4194a69a3305e80efc3a4a04f67}{bmp280\_get\_chip\_id\_register}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ uint8\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00258\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0f819759aa334f52d78d16fc5bf66973}{bmp280\_get\_status\_register}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ bmp280\_status\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00267\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5ced8f2fb2f2eb30487333c486092f7d}{bmp280\_get\_control\_measurement\_register}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ bmp280\_control\_measurement\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00276\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa9f0653ff6fdcb6df91be990e87f4324}{bmp280\_set\_control\_measurement\_register}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bmp280\_control\_measurement\_register\_t\ reg);}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00285\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga855ad80da01437df61e95e204a8f27a0}{bmp280\_get\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ bmp280\_configuration\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00294\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gadc04372e8af742e060dd363e7b15b665}{bmp280\_set\_configuration\_register}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ bmp280\_configuration\_register\_t\ reg);}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00304\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0b4e560981ac807923e4943c7288f11b}{bmp280\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga683075794a68e847ac00880f3fbc5a1e}{bmp280\_config\_t}}\ *bmp280\_config,\ \mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ *bmp280\_handle);}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00314\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8b4019ea8a3aa82c3e14b69e311f05bc}{bmp280\_get\_measurements}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ pressure);}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00323\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga56e6e621f28b1aaae87ccf078582fc5c}{bmp280\_get\_temperature}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00332\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga15c360c34b843e3b827e202dbc64df6d}{bmp280\_get\_pressure}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ pressure);}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00341\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga676b9dec55adbe7be006ec44911e4ded}{bmp280\_get\_data\_status}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ ready);}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00350\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa3b1ed5dabfd33fb862a77c362e6916e}{bmp280\_get\_power\_mode}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\_power\_modes\_t}}\ *\textcolor{keyword}{const}\ power\_mode);}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00359\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga42d45d4d0bc59f6892359139fab1be1c}{bmp280\_set\_power\_mode}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga09b778eb79ca4059180c508483dd7426}{bmp280\_power\_modes\_t}}\ power\_mode);}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00368\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga6bf83bdbd14a94abb9460a8c158a0079}{bmp280\_get\_pressure\_oversampling}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\_pressure\_oversampling\_t}}\ *\textcolor{keyword}{const}\ oversampling);}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00377\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga08bd496a9b36a475125232ca3366e481}{bmp280\_set\_pressure\_oversampling}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga21e2402ff8bbe587f1c9564f68de0561}{bmp280\_pressure\_oversampling\_t}}\ oversampling);}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00386\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaeac31c3392f59747e6b59af99d4d141b}{bmp280\_get\_temperature\_oversampling}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\_temperature\_oversampling\_t}}\ *\textcolor{keyword}{const}\ oversampling);}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00395\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9bbfcf39651d3b9b6bc07bf426cd2ecc}{bmp280\_set\_temperature\_oversampling}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga5cfc950126ecbc2ac018615da7ed9448}{bmp280\_temperature\_oversampling\_t}}\ oversampling);}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00404\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga41810e5f04fe34b3d6b6d7a2f0ed6090}{bmp280\_get\_standby\_time}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\_standby\_times\_t}}\ *\textcolor{keyword}{const}\ standby\_time);}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00413\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0d7567352da5f0d2ae94a8975838733a}{bmp280\_set\_standby\_time}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gaa9766737a9535054ecb73ff34d467dbd}{bmp280\_standby\_times\_t}}\ standby\_time);}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00422\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf3d52e45780f2336048c4fa6906a8972}{bmp280\_get\_iir\_filter}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\_iir\_filters\_t}}\ *\textcolor{keyword}{const}\ iir\_filter);}
+\DoxyCodeLine{00423\ }
+\DoxyCodeLine{00431\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga49d702e3251bd23cfb8b5122cfe95a20}{bmp280\_set\_iir\_filter}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga6f4e9c7fd7225c16ee96a6f9df8b9719}{bmp280\_iir\_filters\_t}}\ iir\_filter);}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00439\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4cc4d2e4cc06abc7b1b56788e3526b86}{bmp280\_reset}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle);}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00447\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga29361ec23d39ce227eee5cbf49902160}{bmp280\_remove}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle);}
+\DoxyCodeLine{00448\ }
+\DoxyCodeLine{00455\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga56d41e7e1d5e629206877e97cb556ccc}{bmp280\_delete}}(\mbox{\hyperlink{group__drivers_ga4ba5e63f50d3e97eabf7bdb5491420f4}{bmp280\_handle\_t}}\ handle);}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00462\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_ga987b258a57f3c4a4384e6aa865b326c6}{bmp280\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00469\ int32\_t\ \mbox{\hyperlink{group__drivers_ga18945c7c6b94a2aa4187dfef889f7da8}{bmp280\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ }
+\DoxyCodeLine{00472\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00473\ \}}
+\DoxyCodeLine{00474\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00478\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_BMP280\_H\_\_}}
+
+\end{DoxyCode}

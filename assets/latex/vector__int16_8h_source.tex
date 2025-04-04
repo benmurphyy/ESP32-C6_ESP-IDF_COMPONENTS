@@ -1,0 +1,67 @@
+\doxysection{vector\+\_\+int16.\+h}
+\hypertarget{vector__int16_8h_source}{}\label{vector__int16_8h_source}\index{components/utilities/esp\_math3d/vector\_int16.h@{components/utilities/esp\_math3d/vector\_int16.h}}
+\mbox{\hyperlink{vector__int16_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#ifndef\ \_\_VECTOR\_INT16\_H\_\_}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ \_\_VECTOR\_INT16\_H\_\_}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{quaternion_8h}{quaternion.h}}"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <esp\_log.h>}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ <esp\_check.h>}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00048\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvector__int16__t}{vector\_int16\_t}}\ \mbox{\hyperlink{structvector__int16__t}{vector\_int16\_t}};}
+\DoxyCodeLine{00061\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvector__int16__t}{vector\_int16\_t}}\ *\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}};}
+\DoxyCodeLine{00066\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvector__int16__t}{vector\_int16\_t}}\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ int16\_t\ x;}
+\DoxyCodeLine{00068\ \ \ \ \ int16\_t\ y;}
+\DoxyCodeLine{00069\ \ \ \ \ int16\_t\ z;}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ esp\_err\_t\ vector\_int16\_init(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ *vector\_int16\_handle);}
+\DoxyCodeLine{00073\ esp\_err\_t\ vector\_int16\_init\_data(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ vector\_int16\_handle,\ int16\_t\ nx,\ int16\_t\ ny,\ int16\_t\ nz);}
+\DoxyCodeLine{00074\ esp\_err\_t\ vector\_int16\_get\_magnitude(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ vector\_int16\_handle,\ \textcolor{keywordtype}{float}\ *magnitude);}
+\DoxyCodeLine{00075\ esp\_err\_t\ vector\_int16\_normalize(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ vector\_int16\_handle);}
+\DoxyCodeLine{00076\ esp\_err\_t\ vector\_int16\_get\_normalized(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ vector\_int16\_handle,\ \mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ *normalized\_handle);}
+\DoxyCodeLine{00077\ esp\_err\_t\ vector\_int16\_rotate(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ vector\_int16\_handle,\ \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\_handle\_t}}\ quaternion\_handle);}
+\DoxyCodeLine{00078\ esp\_err\_t\ vector\_int16\_get\_rotated(\mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ vector\_int16\_handle,\ \mbox{\hyperlink{group__math_ga3d64bf7c6d1ad9b5716481246362dc8d}{quaternion\_handle\_t}}\ quaternion\_handle,\ \mbox{\hyperlink{group__math_ga5f5fde5891842906611f677974c861c1}{vector\_int16\_handle\_t}}\ *rotated\_handle);}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00082\ \}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_VECTOR\_INT16\_H\_\_}}
+
+\end{DoxyCode}

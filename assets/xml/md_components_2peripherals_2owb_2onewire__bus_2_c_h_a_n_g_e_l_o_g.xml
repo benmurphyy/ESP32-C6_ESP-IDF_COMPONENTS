@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="md_components_2peripherals_2owb_2onewire__bus_2_c_h_a_n_g_e_l_o_g" kind="page">
+    <compoundname>md_components_2peripherals_2owb_2onewire__bus_2_c_h_a_n_g_e_l_o_g</compoundname>
+    <title>1.0.2</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><anchor id="md_components_2peripherals_2owb_2onewire__bus_2_c_h_a_n_g_e_l_o_g_1autotoc_md99"/></para>
+<para><itemizedlist>
+<listitem><para>raise recovery time to support more sensor on longer wire (d0b2b52)</para>
+</listitem></itemizedlist>
+</para>
+<sect1 id="md_components_2peripherals_2owb_2onewire__bus_2_c_h_a_n_g_e_l_o_g_1autotoc_md100">
+<title>1.0.0</title><para><itemizedlist>
+<listitem><para>Initial driver version, with the RMT driver as backend controller </para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+    </detaileddescription>
+    <location file="components/peripherals/owb/onewire_bus/CHANGELOG.md"/>
+  </compounddef>
+</doxygen>

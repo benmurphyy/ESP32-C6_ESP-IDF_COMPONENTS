@@ -1,0 +1,298 @@
+\doxysection{datatable.\+h}
+\hypertarget{datatable_8h_source}{}\label{datatable_8h_source}\index{components/storage/esp\_datalogger/include/datatable.h@{components/storage/esp\_datalogger/include/datatable.h}}
+\mbox{\hyperlink{datatable_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_DATATABLE\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_DATATABLE\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <freertos/FreeRTOS.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <freertos/task.h>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <freertos/semphr.h>}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ <cJSON.h>}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{time__into__interval_8h}{time\_into\_interval.h}}>}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ "{}datalogger\_version.h"{}}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ *\ ESP\ DATA-\/TABLE\ definitions}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ DATATABLE\_NAME\_MAX\_SIZE\ \ \ \ \ \ \ \ \ (15)\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMN\_NAME\_SIZE\ \ \ \ \ \ (15)\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMN\_NAME\_MAX\_SIZE\ \ (25)\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMNS\_MAX\ \ \ \ \ \ \ \ \ \ \ (255)\ \ \ \ \ \ \ }}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ DATATABLE\_ROWS\_MAX\ \ \ \ \ \ \ \ \ \ \ \ \ \ (65535)\ \ \ \ \ }}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMN\_ID\_NAME\ \ \ \ \ \ \ \ "{}Record\ ID"{}}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMN\_TS\_NAME\ \ \ \ \ \ \ \ "{}TS"{}}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMN\_TII\_SMP\_NAME\ \ \ "{}\_tii\_smp"{}}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ DATATABLE\_COLUMN\_TII\_PRC\_NAME\ \ \ "{}\_tii\_prc"{}}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ *\ ESP\ DATA-\/TABLE\ macro\ definitions}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ *\ ESP\ DATA-\/TABLE\ enum\ and\ struct\ definitions}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga7c19f6649ac85eab8edb7dd5a4377816}{datatable\_event\_types\_tag}}\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a8869cf7adcc7fdd5f3300a9696d780c8}{DATATABLE\_EVENT\_INIT}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a793d57136675d356e1c112cddf99ea5f}{DATATABLE\_EVENT\_RESET\_ROWS}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a541d420238237767fab406a135551676}{DATATABLE\_EVENT\_RESET\_SAMPLES}},\ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a2559ec83d7dbbec515a6684211dee26b}{DATATABLE\_EVENT\_FIFO\_ROWS}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816aef3aeeb31e701efd2efed36ddc13eae1}{DATATABLE\_EVENT\_FIFO\_SAMPLES}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a4890066fa2eae4f743ba90bbe8806bb1}{DATATABLE\_EVENT\_SAMPLE\_PUSHED}},\ \ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a4d53c4bf4ed7e94e5cf5468f88cdae01}{DATATABLE\_EVENT\_PROCESS}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga7c19f6649ac85eab8edb7dd5a4377816a68e7042e3fd410efa73e46c91859cf06}{DATATABLE\_EVENT\_PROCESS\_ELAPSED}},\ \ \ \ }
+\DoxyCodeLine{00088\ \}\ \mbox{\hyperlink{group__drivers_ga6bb009d09ad1eda55a1a49e1f3271921}{datatable\_event\_types\_t}};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gaf718dc8c4c330cd71f59550b5cb469af}{datatable\_data\_storage\_types\_tag}}\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf718dc8c4c330cd71f59550b5cb469afa0857f605c93e66b2472dc7565d7c2cc5}{DATATABLE\_DATA\_STORAGE\_MEMORY\_RING}},\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf718dc8c4c330cd71f59550b5cb469afae4b664843cd621669a41c5d4a712727a}{DATATABLE\_DATA\_STORAGE\_MEMORY\_RESET}},\ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggaf718dc8c4c330cd71f59550b5cb469afae4d50177bffb1045a0575bed52e8248f}{DATATABLE\_DATA\_STORAGE\_MEMORY\_STOP}}\ \ \ \ \ \ }
+\DoxyCodeLine{00097\ \}\ \mbox{\hyperlink{group__drivers_gafea26979a663f28e185180413d2a0657}{datatable\_data\_storage\_types\_t}};}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga6e629cedb8ec22b387bc6b930698bb08}{datatable\_column\_process\_types\_tag}}\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga6e629cedb8ec22b387bc6b930698bb08a704c6c89f5218bb80a109881e2839574}{DATATABLE\_COLUMN\_PROCESS\_SMP}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga6e629cedb8ec22b387bc6b930698bb08a321e6164c50d0a8605331fdc706149fc}{DATATABLE\_COLUMN\_PROCESS\_AVG}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga6e629cedb8ec22b387bc6b930698bb08ad538e886017b3bc0a4f00f17ff704448}{DATATABLE\_COLUMN\_PROCESS\_MIN}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga6e629cedb8ec22b387bc6b930698bb08a24bb34cdfd6189640dce73b519eb2731}{DATATABLE\_COLUMN\_PROCESS\_MAX}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga6e629cedb8ec22b387bc6b930698bb08a95d3977427bee323bf70182ccaf54de7}{DATATABLE\_COLUMN\_PROCESS\_MIN\_TS}},\ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga6e629cedb8ec22b387bc6b930698bb08a549957c321cd2044e7bfcc2144f167b1}{DATATABLE\_COLUMN\_PROCESS\_MAX\_TS}},\ \ \ \ }
+\DoxyCodeLine{00109\ \}\ \mbox{\hyperlink{group__drivers_ga487a0c36cd9fb41c6e507bb73f850d48}{datatable\_column\_process\_types\_t}};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00114\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga48dcf880194f2d005e1fcaa1f6aeb363}{datatable\_column\_data\_types\_tag}}\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga48dcf880194f2d005e1fcaa1f6aeb363a693fb46f0ae61991a4aadb1b789a3301}{DATATABLE\_COLUMN\_DATA\_ID}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga48dcf880194f2d005e1fcaa1f6aeb363adb0b516990763d63fa4d0494cbb77746}{DATATABLE\_COLUMN\_DATA\_TS}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga48dcf880194f2d005e1fcaa1f6aeb363a5467991e33a1658bd4744f52655d0bcd}{DATATABLE\_COLUMN\_DATA\_VECTOR}},\ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga48dcf880194f2d005e1fcaa1f6aeb363a64962d281c779d5a99d222c5347a7719}{DATATABLE\_COLUMN\_DATA\_BOOL}},\ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga48dcf880194f2d005e1fcaa1f6aeb363a402158cdbaef98f852bed0f38fee1768}{DATATABLE\_COLUMN\_DATA\_FLOAT}},\ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//DATATABLE\_COLUMN\_DATA\_FP16,\ \ \ \ \ /*!<\ float\ 16-\/bit\ column\ data\ type,\ user-\/defined,\ see\ \`{}datatable\_fp16\_data\_type\_t`\ for\ data-\/type\ structure.\ */}}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga48dcf880194f2d005e1fcaa1f6aeb363ab7253b2357a606713ede490a8e883cb0}{DATATABLE\_COLUMN\_DATA\_INT16}}\ \ \ \ \ }
+\DoxyCodeLine{00122\ \}\ \mbox{\hyperlink{group__drivers_ga99852941e2ac190b9cb243918bb56cbe}{datatable\_column\_data\_types\_t}};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__event__tag}{datatable\_event\_tag}}\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6bb009d09ad1eda55a1a49e1f3271921}{datatable\_event\_types\_t}}\ type;}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ message;}
+\DoxyCodeLine{00132\ \}\ \mbox{\hyperlink{group__drivers_gaeda2d59cb27fb56357d98ba4335156ae}{datatable\_event\_t}};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00138\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{group__drivers_gae397b383bdf6cba570a50642a798b17b}{datatable\_event}})(\textcolor{keywordtype}{void}\ *handle,\ \mbox{\hyperlink{group__drivers_gaeda2d59cb27fb56357d98ba4335156ae}{datatable\_event\_t}});}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00143\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__id__column__data__type__tag}{datatable\_id\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value;\ \ \ \ \ \ \textcolor{comment}{//\ record\ id\ value\ \ \ }}
+\DoxyCodeLine{00145\ \}\ \mbox{\hyperlink{group__drivers_gae3784df766248feae0c4317018d7e0af}{datatable\_id\_column\_data\_type\_t}};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00150\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__ts__column__data__type__tag}{datatable\_ts\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ time\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value;\ \ \ \ \ \ \textcolor{comment}{//\ timestamp\ value\ \ \ \ }}
+\DoxyCodeLine{00152\ \}\ \mbox{\hyperlink{group__drivers_gaf6b323c1059f6a637a19a773b1b35aca}{datatable\_ts\_column\_data\_type\_t}};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__vector__column__data__type__tag}{datatable\_vector\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\_uc;\ \ \ \textcolor{comment}{//\ u-\/component\ (angle)\ value\ }}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\_vc;\ \ \ \textcolor{comment}{//\ v-\/component\ (velocity)\ value}}
+\DoxyCodeLine{00160\ \ \ \ \ time\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\_ts;\ \ \ \textcolor{comment}{//\ timestamp\ of\ values,\ used\ for\ time\ of\ max\ or\ min}}
+\DoxyCodeLine{00161\ \}\ \mbox{\hyperlink{group__drivers_gaf22960c594220872d4ffba635f2ed885}{datatable\_vector\_column\_data\_type\_t}};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00166\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__bool__column__data__type__tag}{datatable\_bool\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value;\ \ \ \ \ \ \textcolor{comment}{//\ boolean\ value\ }}
+\DoxyCodeLine{00168\ \}\ \mbox{\hyperlink{group__drivers_gad65b0416634f3f308e459cb86245364a}{datatable\_bool\_column\_data\_type\_t}};}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00173\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__float__column__data__type__tag}{datatable\_float\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value;\ \ \ \ \ \ \textcolor{comment}{//\ float\ 32-\/bit\ value}}
+\DoxyCodeLine{00175\ \ \ \ \ time\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\_ts;\ \ \ \textcolor{comment}{//\ timestamp\ of\ value,\ used\ for\ time\ of\ max\ or\ min\ \ }}
+\DoxyCodeLine{00176\ \}\ \mbox{\hyperlink{group__drivers_ga91ce526b12f2b7685d7c29ac5e85b2b7}{datatable\_float\_column\_data\_type\_t}};}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00181\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__fp16__column__data__type__tag}{datatable\_fp16\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value;\ \ \ \ \ \ \textcolor{comment}{//\ float\ 16-\/bit\ value\ (stored\ as\ a\ uint16\_t)}}
+\DoxyCodeLine{00183\ \ \ \ \ time\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\_ts;\ \ \ \textcolor{comment}{//\ timestamp\ of\ value,\ used\ for\ time\ of\ max\ or\ min\ \ }}
+\DoxyCodeLine{00184\ \}\ \mbox{\hyperlink{group__drivers_ga65022271d03b52fb6fb744ae2a89b4bf}{datatable\_fp16\_column\_data\_type\_t}};}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00189\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__int16__column__data__type__tag}{datatable\_int16\_column\_data\_type\_tag}}\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ int16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value;\ \ \ \ \ \ \textcolor{comment}{//\ int16\ value}}
+\DoxyCodeLine{00191\ \ \ \ \ time\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\_ts;\ \ \ \textcolor{comment}{//\ timestamp\ of\ value,\ used\ for\ time\ of\ max\ or\ min\ \ \ }}
+\DoxyCodeLine{00192\ \}\ \mbox{\hyperlink{group__drivers_gaa5748e9b1c8d28ccb97cb0987271a644}{datatable\_int16\_column\_data\_type\_t}};}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00197\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__column__name__tag}{datatable\_column\_name\_tag}}\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ name;\ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ name,\ maximum\ 15\ characters.}}
+\DoxyCodeLine{00199\ \}\ \mbox{\hyperlink{group__drivers_ga4cab61e7d0a437c5256a034e1ac012ad}{datatable\_column\_name\_t}};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__column__tag}{datatable\_column\_tag}}\ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga4cab61e7d0a437c5256a034e1ac012ad}{datatable\_column\_name\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ names[3];\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ names,\ index\ 0\ and\ 1\ for\ vector\ data-\/type\ or\ index\ 0,\ 1,\ and\ 2\ for\ max\ and\ min\ with\ timestamp\ process-\/types,\ and\ index\ 0\ for\ all\ other\ scenarios.}}
+\DoxyCodeLine{00208\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga99852941e2ac190b9cb243918bb56cbe}{datatable\_column\_data\_types\_t}}\ \ \ \ \ \ \ data\_type;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ data-\/type,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00209\ \}\ \mbox{\hyperlink{group__drivers_ga5d1a7ffc0777ec12780e576d0a3a4e95}{datatable\_column\_t}};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00214\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__process__tag}{datatable\_process\_tag}}\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ samples\_size;\ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ size\ of\ data\ buffer\ samples,\ automatically\ populated\ when\ column\ is\ created}}
+\DoxyCodeLine{00216\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ samples\_count;\ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ number\ of\ samples\ in\ the\ data\ buffer,\ automatically\ populated\ when\ data-\/table\ is\ processed}}
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga487a0c36cd9fb41c6e507bb73f850d48}{datatable\_column\_process\_types\_t}}\ \ \ \ process\_type;\ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ statistical\ data\ processing\ type\ setting.}}
+\DoxyCodeLine{00218\ \}\ \mbox{\hyperlink{group__drivers_ga1b4136f3a54eecfa26399e3ad68c340d}{datatable\_process\_t}};}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00223\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{uniondatatable__buffer__tag}{datatable\_buffer\_tag}}\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \mbox{\hyperlink{group__drivers_gaf22960c594220872d4ffba635f2ed885}{datatable\_vector\_column\_data\_type\_t}}**\ vector\_samples;\ \ \ \ \ \textcolor{comment}{//\ data-\/table\ vector\ samples\ data\ buffer,\ automatic\ array\ sizing\ when\ column\ is\ created\ based\ configured\ column\ data-\/type}}
+\DoxyCodeLine{00225\ \ \ \ \ \mbox{\hyperlink{group__drivers_gad65b0416634f3f308e459cb86245364a}{datatable\_bool\_column\_data\_type\_t}}**\ \ \ bool\_samples;\ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ boolean\ samples\ data\ buffer,\ automatic\ array\ sizing\ when\ column\ is\ created\ based\ configured\ column\ data-\/type}}
+\DoxyCodeLine{00226\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga91ce526b12f2b7685d7c29ac5e85b2b7}{datatable\_float\_column\_data\_type\_t}}**\ \ float\_samples;\ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ float\ samples\ data\ buffer,\ automatic\ array\ sizing\ when\ column\ is\ created\ based\ configured\ column\ data-\/type}}
+\DoxyCodeLine{00227\ \ \ \ \ \mbox{\hyperlink{group__drivers_gaa5748e9b1c8d28ccb97cb0987271a644}{datatable\_int16\_column\_data\_type\_t}}**\ \ int16\_samples;\ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ int16\ samples\ data\ buffer,\ automatic\ array\ sizing\ when\ column\ is\ created\ based\ configured\ column\ data-\/type}}
+\DoxyCodeLine{00228\ \}\ \mbox{\hyperlink{group__drivers_ga58b94d6f9e1be1eaf4584002e1905058}{datatable\_buffer\_t}};}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00235\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{uniondatatable__row__data__column__tag}{datatable\_row\_data\_column\_tag}}\ \{}
+\DoxyCodeLine{00236\ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gae3784df766248feae0c4317018d7e0af}{datatable\_id\_column\_data\_type\_t}}\ \ \ \ \ \ \ \ id\_data;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ record\ identifier\ data-\/type\ structure,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaf6b323c1059f6a637a19a773b1b35aca}{datatable\_ts\_column\_data\_type\_t}}\ \ \ \ \ \ \ \ ts\_data;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ record\ timestamp\ data-\/type\ structure,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaf22960c594220872d4ffba635f2ed885}{datatable\_vector\_column\_data\_type\_t}}\ \ \ \ vector\_data;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ unit-\/vector\ data-\/type\ structure,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gad65b0416634f3f308e459cb86245364a}{datatable\_bool\_column\_data\_type\_t}}\ \ \ \ \ \ bool\_data;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ boolean\ data-\/type\ structure,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga91ce526b12f2b7685d7c29ac5e85b2b7}{datatable\_float\_column\_data\_type\_t}}\ \ \ \ \ float\_data;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ float\ data-\/type\ structure,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00241\ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gaa5748e9b1c8d28ccb97cb0987271a644}{datatable\_int16\_column\_data\_type\_t}}\ \ \ \ \ int16\_data;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ column\ int16\ data-\/type\ structure,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00242\ \}\ \mbox{\hyperlink{group__drivers_gafdf46b5183ba6678a79453181aff427c}{datatable\_row\_data\_column\_t}};}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00248\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__row__tag}{datatable\_row\_tag}}\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \mbox{\hyperlink{group__drivers_gafdf46b5183ba6678a79453181aff427c}{datatable\_row\_data\_column\_t}}**\ \ \ data\_columns;\ \ \ \ \ \ \ \textcolor{comment}{//\ data-\/table\ data\ for\ each\ column\ of\ the\ record\ contained\ in\ the\ row,\ automatically\ populated\ when\ row\ is\ created.}}
+\DoxyCodeLine{00250\ \}\ \mbox{\hyperlink{group__drivers_ga9dff1bcb1f19fd9373a9662c6131d340}{datatable\_row\_t}};}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00256\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__config__tag}{datatable\_config\_tag}}\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__config__tag_a8f8f80d37794cde9472343e4487ba3eb}{name}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00258\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__config__tag_a963305ee188090a9c65c00e7f523e9ad}{columns\_size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00259\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__config__tag_a99c296f51bfaf092b06e326955cd35ca}{rows\_size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00260\ \ \ \ \ \mbox{\hyperlink{group__drivers_gafea26979a663f28e185180413d2a0657}{datatable\_data\_storage\_types\_t}}\ \ \ \ \ \ \mbox{\hyperlink{structdatatable__config__tag_af755c8b1d5e46192e79cab2dd18013a4}{data\_storage\_type}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00261\ \ \ \ \ \mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\_into\_interval\_config\_t}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__config__tag_a9fe77da4995b091dfe4be506b659e46f}{sampling\_config}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00262\ \ \ \ \ \mbox{\hyperlink{group___free_r_t_o_s_ga6e978e77c6c540b23118c566330e5c98}{time\_into\_interval\_config\_t}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__config__tag_aef3d5afa8e23e16dde07e37a0be1162c}{processing\_config}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00263\ \ \ \ \ \mbox{\hyperlink{group__drivers_gae397b383bdf6cba570a50642a798b17b}{datatable\_event}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ event\_handler;}
+\DoxyCodeLine{00264\ \}\ \mbox{\hyperlink{group__drivers_ga25f6266267983aec4306306da8a7a603}{datatable\_config\_t}};}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00270\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__t}{datatable\_t}}\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{group__drivers_gafea26979a663f28e185180413d2a0657}{datatable\_data\_storage\_types\_t}}\ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_af755c8b1d5e46192e79cab2dd18013a4}{data\_storage\_type}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00273\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_af66d20eb4152fa62fb3f09a6fbb4c066}{sampling\_count}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00274\ \ \ \ \ \mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\_into\_interval\_handle\_t}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a059747cf18649b21a0f7ba9669445f72}{sampling\_tii\_handle}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00275\ \ \ \ \ \mbox{\hyperlink{group___free_r_t_o_s_gaa862ccd8f6519ec10b85b169d3018023}{time\_into\_interval\_handle\_t}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a0bbbfc4ee38bf6c2c6fe47d82c2a28c4}{processing\_tii\_handle}};\ \ \ \ \ \ }
+\DoxyCodeLine{00276\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a6f91e4291d2d54d3a839775ff28b74c4}{record\_id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00277\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_ac3e1907e6b26de76919e4630e516f600}{columns\_count}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00278\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a963305ee188090a9c65c00e7f523e9ad}{columns\_size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00279\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga5d1a7ffc0777ec12780e576d0a3a4e95}{datatable\_column\_t}}**\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_ab6f2aaaf1a1ec185d4696db440451969}{columns}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00280\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga1b4136f3a54eecfa26399e3ad68c340d}{datatable\_process\_t}}**\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a5182df0f5a4ab561b1d4f42302dc7dbf}{processes}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00281\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga58b94d6f9e1be1eaf4584002e1905058}{datatable\_buffer\_t}}**\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a3c6d8f7c16d9799f4e1b2e83bba5e35d}{buffers}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00282\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_ad5b794b2cc15ece43d5bcd77db6ebee4}{rows\_count}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00283\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a99c296f51bfaf092b06e326955cd35ca}{rows\_size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00284\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga9dff1bcb1f19fd9373a9662c6131d340}{datatable\_row\_t}}**\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a7740fae811610362533237d45f002aa6}{rows}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00285\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a2b8bd4b3a1e51cb9ee321f448ca8b5fa}{samples\_maximum\_size}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00286\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structdatatable__t_a0a1d9d7263f576adb1f197ef6b817614}{hash\_code}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00287\ \ \ \ \ SemaphoreHandle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mutex\_handle;}
+\DoxyCodeLine{00288\ \ \ \ \ \mbox{\hyperlink{group__drivers_gae397b383bdf6cba570a50642a798b17b}{datatable\_event}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ event\_handler;}
+\DoxyCodeLine{00289\ \};}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00294\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__t}{datatable\_t}}\ \mbox{\hyperlink{structdatatable__t}{datatable\_t}};}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00299\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structdatatable__t}{datatable\_t}}\ *\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}};}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00304\ \textcolor{comment}{\ *\ ESP\ DATA-\/TABLE\ sub-\/routine\ and\ function\ definitions}}
+\DoxyCodeLine{00305\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00334\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf228d767bc9c583d19453d2cf62e9f54}{datatable\_init}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga25f6266267983aec4306306da8a7a603}{datatable\_config\_t}}\ *datatable\_config,\ \mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ *datatable\_handle);}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00345\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga96036bfb5a146b525b61a7d9e637c8ff}{datatable\_add\_vector\_smp\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_vc,\ uint8\_t\ *index);}
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00356\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab4a2d75f2a1ebece31490a9f26741b3c}{datatable\_add\_vector\_avg\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_vc,\ uint8\_t\ *index);}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00369\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac10a4cdbe02a217a912349a763982edc}{datatable\_add\_vector\_min\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_vc,\ uint8\_t\ *index);}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00382\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga90322ed568e265370c8f7a53e946c6c6}{datatable\_add\_vector\_max\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_vc,\ uint8\_t\ *index);}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00395\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac4b19ea19a640bd715faf9c405b40859}{datatable\_add\_vector\_min\_ts\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_vc,\ uint8\_t\ *index);}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00408\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gade3e8daf24aa6e6269da815631e7fd12}{datatable\_add\_vector\_max\_ts\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_uc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\_vc,\ uint8\_t\ *index);}
+\DoxyCodeLine{00409\ }
+\DoxyCodeLine{00418\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga09557ae27d0f6d3fc6202cfd2fabadeb}{datatable\_add\_bool\_smp\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00428\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7da2fc011a039f5db9777c2c09b29fc8}{datatable\_add\_float\_smp\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00438\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga56f0b237df545f1070bfb12143f9877a}{datatable\_add\_float\_avg\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00439\ }
+\DoxyCodeLine{00448\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad8843f31fdde9c9795d9f77ea53442a4}{datatable\_add\_float\_min\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00458\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4ecd3999ab6aa5d0a1a3f960a6533a06}{datatable\_add\_float\_max\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00468\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga184886875546ee0dbe0b877e41dd9be3}{datatable\_add\_float\_min\_ts\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00469\ }
+\DoxyCodeLine{00478\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3870b1e456b64288a70a7f3ed08839a1}{datatable\_add\_float\_max\_ts\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00488\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga2a8aa81c3300a3522c964f943e28935f}{datatable\_add\_int16\_smp\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00489\ }
+\DoxyCodeLine{00498\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa4f45718ed9cd09b63deaae729608071}{datatable\_add\_int16\_avg\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00499\ }
+\DoxyCodeLine{00508\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad7aceeba318aa0da3ef1f7b12ef90fa6}{datatable\_add\_int16\_min\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00509\ }
+\DoxyCodeLine{00518\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac3346816fdd1ba267a16979a2f6dbde7}{datatable\_add\_int16\_max\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00528\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga360fe226f59ada63d29088875604715f}{datatable\_add\_int16\_min\_ts\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00529\ }
+\DoxyCodeLine{00538\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf2d4c966cb901a85458639e90595b293}{datatable\_add\_int16\_max\_ts\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structdatatable__t_a8f8f80d37794cde9472343e4487ba3eb}{name}},\ uint8\_t\ *index);}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00547\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gade35e6525e6de17850a18e8969692860}{datatable\_get\_columns\_count}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ uint8\_t\ *count);}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00556\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga9aae23bbbe40452b2fdbaccbc9f90dbf}{datatable\_get\_rows\_count}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ uint8\_t\ *count);}
+\DoxyCodeLine{00557\ }
+\DoxyCodeLine{00566\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac1c9d4f1df62235b3fc0eafd2cd45f39}{datatable\_get\_column}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ uint8\_t\ index,\ \mbox{\hyperlink{group__drivers_ga5d1a7ffc0777ec12780e576d0a3a4e95}{datatable\_column\_t}}**\ column);}
+\DoxyCodeLine{00567\ }
+\DoxyCodeLine{00576\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad59f6932721bd81ded6fadcc6c87350a}{datatable\_get\_row}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ uint8\_t\ index,\ \mbox{\hyperlink{group__drivers_ga9dff1bcb1f19fd9373a9662c6131d340}{datatable\_row\_t}}**\ row);}
+\DoxyCodeLine{00577\ }
+\DoxyCodeLine{00587\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga00f230857143166e558bb74103d3c246}{datatable\_push\_vector\_sample}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ uint8\_t\ index,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ uc\_value,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ vc\_value);}
+\DoxyCodeLine{00588\ }
+\DoxyCodeLine{00597\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab83c7cb803b897d507b6a40fb0e29c92}{datatable\_push\_bool\_sample}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ uint8\_t\ index,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00598\ }
+\DoxyCodeLine{00607\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8766983d0abc8827db4de6c427cac380}{datatable\_push\_float\_sample}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ uint8\_t\ index,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00608\ }
+\DoxyCodeLine{00617\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga257d771d4952cb18bbd0c8dc9ba4f55d}{datatable\_push\_int16\_sample}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ \textcolor{keyword}{const}\ uint8\_t\ index,\ \textcolor{keyword}{const}\ int16\_t\ value);}
+\DoxyCodeLine{00618\ }
+\DoxyCodeLine{00627\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaf7216471d840ddce49979addde5497dd}{datatable\_sampling\_task\_delay}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle);}
+\DoxyCodeLine{00628\ }
+\DoxyCodeLine{00640\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7dbd90ddf9ee3cc22e0cccd995744c55}{datatable\_process\_samples}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle);}
+\DoxyCodeLine{00641\ }
+\DoxyCodeLine{00648\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gadefa4004e4db89244dab4be9c40d27bd}{datatable\_delete}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle);}
+\DoxyCodeLine{00649\ }
+\DoxyCodeLine{00673\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga73545915b25d01821b94cf0a1a93a171}{datatable\_to\_json}}(\mbox{\hyperlink{group__drivers_ga85af77872c8413dc5845585b11a246cc}{datatable\_handle\_t}}\ datatable\_handle,\ cJSON\ **datatable);}
+\DoxyCodeLine{00674\ }
+\DoxyCodeLine{00675\ }
+\DoxyCodeLine{00676\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00677\ \}}
+\DoxyCodeLine{00678\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00679\ }
+\DoxyCodeLine{00681\ }
+\DoxyCodeLine{00682\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_DATATABLE\_H\_\_}}
+
+\end{DoxyCode}

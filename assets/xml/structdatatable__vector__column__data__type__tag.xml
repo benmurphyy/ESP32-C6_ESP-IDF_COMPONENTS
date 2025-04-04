@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structdatatable__vector__column__data__type__tag" kind="struct" language="C++" prot="public">
+    <compoundname>datatable_vector_column_data_type_tag</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdatatable__vector__column__data__type__tag_1a9f26807cb508184233164b58f4ad389f" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float value_uc</definition>
+        <argsstring></argsstring>
+        <name>value_uc</name>
+        <qualifiedname>datatable_vector_column_data_type_tag::value_uc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="158" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__vector__column__data__type__tag_1af5040fbf92941b0bae3b2fd4c11a86f7" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float value_vc</definition>
+        <argsstring></argsstring>
+        <name>value_vc</name>
+        <qualifiedname>datatable_vector_column_data_type_tag::value_vc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="159" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__vector__column__data__type__tag_1a794b799939275df893a7f36aba6e5d20" prot="public" static="no" mutable="no">
+        <type>time_t</type>
+        <definition>time_t value_ts</definition>
+        <argsstring></argsstring>
+        <name>value_ts</name>
+        <qualifiedname>datatable_vector_column_data_type_tag::value_ts</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="160" column="41" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table vector data-type column structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="157" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="157" bodyend="161"/>
+    <listofallmembers>
+      <member refid="structdatatable__vector__column__data__type__tag_1a794b799939275df893a7f36aba6e5d20" prot="public" virt="non-virtual"><scope>datatable_vector_column_data_type_tag</scope><name>value_ts</name></member>
+      <member refid="structdatatable__vector__column__data__type__tag_1a9f26807cb508184233164b58f4ad389f" prot="public" virt="non-virtual"><scope>datatable_vector_column_data_type_tag</scope><name>value_uc</name></member>
+      <member refid="structdatatable__vector__column__data__type__tag_1af5040fbf92941b0bae3b2fd4c11a86f7" prot="public" virt="non-virtual"><scope>datatable_vector_column_data_type_tag</scope><name>value_vc</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

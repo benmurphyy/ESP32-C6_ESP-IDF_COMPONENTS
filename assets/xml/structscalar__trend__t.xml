@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structscalar__trend__t" kind="struct" language="C++" prot="public">
+    <compoundname>scalar_trend_t</compoundname>
+    <includes refid="scalar__trend_8h" local="no">scalar_trend.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structscalar__trend__t_1acdf8d68bb16f8752607d6b3069873e51" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double critical_t</definition>
+        <argsstring></argsstring>
+        <name>critical_t</name>
+        <qualifiedname>scalar_trend_t::critical_t</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>scalar trend samples absolute critical t value, state machine variable </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_scalar_trend/scalar_trend.h" line="65" column="17" bodyfile="components/utilities/esp_scalar_trend/scalar_trend.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structscalar__trend__t_1a0e025ab0342d54f7a6c806d879b23051" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t samples_count</definition>
+        <argsstring></argsstring>
+        <name>samples_count</name>
+        <qualifiedname>scalar_trend_t::samples_count</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>scalar trend samples count, state machine variable </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_scalar_trend/scalar_trend.h" line="66" column="17" bodyfile="components/utilities/esp_scalar_trend/scalar_trend.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structscalar__trend__t_1ae98a41a4f5862e4f0c3afb40d75da0ae" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t samples_size</definition>
+        <argsstring></argsstring>
+        <name>samples_size</name>
+        <qualifiedname>scalar_trend_t::samples_size</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>scalar trend samples size, state machine variable </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_scalar_trend/scalar_trend.h" line="67" column="17" bodyfile="components/utilities/esp_scalar_trend/scalar_trend.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structscalar__trend__t_1a7e88f0a7fee65306124ad95c12916751" prot="public" static="no" mutable="no">
+        <type>float *</type>
+        <definition>float* samples</definition>
+        <argsstring></argsstring>
+        <name>samples</name>
+        <qualifiedname>scalar_trend_t::samples</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>scalar trend samples array, state machine variable </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/utilities/esp_scalar_trend/scalar_trend.h" line="68" column="16" bodyfile="components/utilities/esp_scalar_trend/scalar_trend.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Scalar trend structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/utilities/esp_scalar_trend/scalar_trend.h" line="64" column="1" bodyfile="components/utilities/esp_scalar_trend/scalar_trend.h" bodystart="64" bodyend="69"/>
+    <listofallmembers>
+      <member refid="structscalar__trend__t_1acdf8d68bb16f8752607d6b3069873e51" prot="public" virt="non-virtual"><scope>scalar_trend_t</scope><name>critical_t</name></member>
+      <member refid="structscalar__trend__t_1a7e88f0a7fee65306124ad95c12916751" prot="public" virt="non-virtual"><scope>scalar_trend_t</scope><name>samples</name></member>
+      <member refid="structscalar__trend__t_1a0e025ab0342d54f7a6c806d879b23051" prot="public" virt="non-virtual"><scope>scalar_trend_t</scope><name>samples_count</name></member>
+      <member refid="structscalar__trend__t_1ae98a41a4f5862e4f0c3afb40d75da0ae" prot="public" virt="non-virtual"><scope>scalar_trend_t</scope><name>samples_size</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

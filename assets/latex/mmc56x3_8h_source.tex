@@ -1,0 +1,232 @@
+\doxysection{mmc56x3.\+h}
+\hypertarget{mmc56x3_8h_source}{}\label{mmc56x3_8h_source}\index{components/peripherals/i2c/esp\_mmc56x3/include/mmc56x3.h@{components/peripherals/i2c/esp\_mmc56x3/include/mmc56x3.h}}
+\mbox{\hyperlink{mmc56x3_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_MMC56X3\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_MMC56X3\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}mmc56x3\_version.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ MMC56X3\ definitions}}
+\DoxyCodeLine{00051\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ I2C\_MMC56X3\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ \ }}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ I2C\_MMC56X3\_DEV\_ADDR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x30)\ \ \ \ \ }}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ I2C\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ \ \ \ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ MMC56X3\ macro\ definitions}}
+\DoxyCodeLine{00061\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ I2C\_MMC56X3\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_MMC56X3\_DEV\_ADDR,\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .i2c\_clock\_speed\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ I2C\_MMC56X3\_DEV\_CLK\_SPD,\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .data\_rate\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .continuous\_mode\_enabled\ \ \ \ \ \ \ \ =\ false,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ .declination\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ -\/16.0f\ \}}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ *\ MMC56X3\ enumerator\ and\ structure\ declarations}}
+\DoxyCodeLine{00075\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_gaf4e61285cf550d22e9e3e3ec620410d0}{mmc56x3\_measurement\_times\_e}}\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ MMC56X3\_MEAS\_TIME\_6\_6MS\ =\ (0b00),}
+\DoxyCodeLine{00082\ \ \ \ \ MMC56X3\_MEAS\_TIME\_3\_5MS\ =\ (0b01),}
+\DoxyCodeLine{00083\ \ \ \ \ MMC56X3\_MEAS\_TIME\_2MS\ \ \ =\ (0b10),}
+\DoxyCodeLine{00084\ \ \ \ \ MMC56X3\_MEAS\_TIME\_1\_2MS\ =\ (0b11),}
+\DoxyCodeLine{00085\ \}\ \mbox{\hyperlink{group__drivers_ga04eb0a8975116163a7527e4a3710d90d}{mmc56x3\_measurement\_times\_t}};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga71668da0f8cf8f448a8f211da3ded77e}{mmc56x3\_measurement\_samples\_e}}\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_1\ \ \ \ =\ (0b000),}
+\DoxyCodeLine{00092\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_25\ \ \ =\ (0b001),}
+\DoxyCodeLine{00093\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_75\ \ \ =\ (0b010),}
+\DoxyCodeLine{00094\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_100\ \ =\ (0b011),}
+\DoxyCodeLine{00095\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_250\ \ =\ (0b100),}
+\DoxyCodeLine{00096\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_500\ \ =\ (0b101),}
+\DoxyCodeLine{00097\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_1000\ =\ (0b110),}
+\DoxyCodeLine{00098\ \ \ \ \ MMC56X3\_MEAS\_SAMPLE\_2000\ =\ (0b111),}
+\DoxyCodeLine{00099\ \}\ \mbox{\hyperlink{group__drivers_ga6a8e469cb5a690f8bcb7a6163f01b490}{mmc56x3\_measurement\_samples\_t}};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00104\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mmc56x3\_status\_register\_u\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{struct\ }MMC56X3\_STS\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ reserved:4;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otp\_read\_done:1;\ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ selftest:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\_ready\_m:1;\ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\_ready\_t:1;\ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00112\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00113\ \}\ mmc56x3\_status\_register\_t;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00118\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mmc56x3\_control0\_register\_u\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{struct\ }CTRL0\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sample\_m:1;\ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sample\_t:1;\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ reserved:1;\ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ do\_set:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ do\_reset:1;\ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ auto\_sr\_enabled:1;\ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ auto\_st\_enabled:1;\ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ continuous\_freq\_enabled:1;\ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00129\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00130\ \}\ mmc56x3\_control0\_register\_t;}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00135\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mmc56x3\_control1\_register\_u\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{struct\ }CTRL1\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga04eb0a8975116163a7527e4a3710d90d}{mmc56x3\_measurement\_times\_t}}\ \ \ \ \ bandwidth:2;\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\_disabled:1;\ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y\_disabled:1;\ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ z\_disabled:1;\ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st\_enp\_enabled:1;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ st\_enm\_enabled:1;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sw\_reset:1;\ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00146\ \}\ mmc56x3\_control1\_register\_t;}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00151\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ mmc56x3\_control2\_register\_u\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{struct\ }CTRL2\_REG\_BITS\_TAG\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga6a8e469cb5a690f8bcb7a6163f01b490}{mmc56x3\_measurement\_samples\_t}}\ periodical\_set\_samples:3;\ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ periodical\_set\_enabled:1;\ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ continuous\_enabled:1;\ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ reserved:2;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\_power\_enabled:1;\ \ \ \ \ }
+\DoxyCodeLine{00158\ \ \ \ \ \}\ bits;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ uint8\_t\ reg;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \}\ mmc56x3\_control2\_register\_t;}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00165\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmmc56x3__magnetic__axes__data__s}{mmc56x3\_magnetic\_axes\_data\_s}}\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{float}\ x\_axis;}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{float}\ y\_axis;}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{float}\ z\_axis;}
+\DoxyCodeLine{00169\ \}\ \mbox{\hyperlink{group__drivers_ga4f12cc6fde28c182e28c53d82ebbddbb}{mmc56x3\_magnetic\_axes\_data\_t}};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00174\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmmc56x3__selftest__axes__data__s}{mmc56x3\_selftest\_axes\_data\_s}}\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ uint8\_t\ x\_axis;}
+\DoxyCodeLine{00176\ \ \ \ \ uint8\_t\ y\_axis;}
+\DoxyCodeLine{00177\ \ \ \ \ uint8\_t\ z\_axis;}
+\DoxyCodeLine{00178\ \}\ \mbox{\hyperlink{group__drivers_ga6d0ea50e620e218d585d9a966d012eb2}{mmc56x3\_selftest\_axes\_data\_t}};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00183\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmmc56x3__config__s}{mmc56x3\_config\_s}}\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00186\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_af7750329f3654d2f6fe5a20adeae49dd}{data\_rate}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_a891db58d07ac3e9fbc9996a6abe8f8b0}{continuous\_mode\_enabled}};}
+\DoxyCodeLine{00188\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga04eb0a8975116163a7527e4a3710d90d}{mmc56x3\_measurement\_times\_t}}\ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_aafaf2abf1915682509e867179857da42}{measurement\_bandwidth}};\ \ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_af326e55edbb36a439897f07a49070610}{auto\_sr\_enabled}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__config__s_a87088520682791495522a2e20bf06860}{declination}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00191\ \}\ \mbox{\hyperlink{group__drivers_gace8f7bf433f0bfc89754ddbfb7a7d2d3}{mmc56x3\_config\_t}};}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00196\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmmc56x3__context__t}{mmc56x3\_context\_t}}\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \mbox{\hyperlink{group__drivers_gace8f7bf433f0bfc89754ddbfb7a7d2d3}{mmc56x3\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev\_config;}
+\DoxyCodeLine{00198\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structmmc56x3__context__t_a2f201f2615803611c4ab8ee402dd022f}{product\_id}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00200\ \};}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00205\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmmc56x3__context__t}{mmc56x3\_context\_t}}\ \mbox{\hyperlink{structmmc56x3__context__t}{mmc56x3\_context\_t}};}
+\DoxyCodeLine{00209\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmmc56x3__context__t}{mmc56x3\_context\_t}}\ *\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00220\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga95b426b6a4a1eee47247f74923ba0d31}{mmc56x3\_get\_status\_register}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ mmc56x3\_status\_register\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00229\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga08666e92f36f0f6e78be2862a918fe4a}{mmc56x3\_set\_control0\_register}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ mmc56x3\_control0\_register\_t\ reg);}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00238\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga31aaa5bbe130a6163869667a60fb5301}{mmc56x3\_set\_control1\_register}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ mmc56x3\_control1\_register\_t\ reg);}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00247\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga3a0d8f3ad1db51aa0da6ff9223204a85}{mmc56x3\_set\_control2\_register}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ mmc56x3\_control2\_register\_t\ reg);}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00256\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gabdaf66829842997beb2ab5f424bc812f}{mmc56x3\_get\_product\_id\_register}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ uint8\_t\ *\textcolor{keyword}{const}\ reg);}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00266\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5a09995eaf74096e065a6c6a39dc80dc}{mmc56x3\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_gace8f7bf433f0bfc89754ddbfb7a7d2d3}{mmc56x3\_config\_t}}\ *mmc56x3\_config,\ \mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ *mmc56x3\_handle);}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00275\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga7b84f50c19f98870bb3882bd985897c9}{mmc56x3\_get\_temperature}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00284\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gab38f0a15f1b7b3fb06d56ea38848faf1}{mmc56x3\_get\_magnetic\_axes}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga4f12cc6fde28c182e28c53d82ebbddbb}{mmc56x3\_magnetic\_axes\_data\_t}}\ *\textcolor{keyword}{const}\ axes\_data);}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00293\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae8cb97b4b73bdffb4039f0c8e5696336}{mmc56x3\_get\_temperature\_data\_status}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ ready);}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00302\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga01592af2fb75a9bc6e8b7c1950614d7e}{mmc56x3\_get\_magnetic\_data\_status}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ ready);}
+\DoxyCodeLine{00303\ }
+\DoxyCodeLine{00312\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga8dbb902d661c9a70ecf82d879ed4a347}{mmc56x3\_get\_data\_status}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ magnetic\_ready,\ \textcolor{keywordtype}{bool}\ *\textcolor{keyword}{const}\ temperature\_ready);}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00321\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga5bc08a2ff58554dbd8c3a2d4be7c4425}{mmc56x3\_set\_measure\_mode}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ continuous);}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00330\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gafbdbe7f46092beec4d619ed26b39e977}{mmc56x3\_set\_data\_rate}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ uint16\_t\ rate);}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00339\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga2fd05ad31f960373b8c910767f6a2509}{mmc56x3\_set\_measure\_bandwidth}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga04eb0a8975116163a7527e4a3710d90d}{mmc56x3\_measurement\_times\_t}}\ bandwidth);}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00348\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae937947ec4d01f005121f209fd4be69b}{mmc56x3\_enable\_periodical\_set}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga6a8e469cb5a690f8bcb7a6163f01b490}{mmc56x3\_measurement\_samples\_t}}\ samples);}
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00356\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gac62ab6cc87a701845290de9c018624d8}{mmc56x3\_disable\_periodical\_set}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle);}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00367\ \textcolor{comment}{//esp\_err\_t\ mmc56x3\_set\_magnetic\_axes(mmc56x3\_handle\_t\ handle,\ const\ bool\ x\_axis\_disabled,\ const\ bool\ y\_axis\_disabled,\ const\ bool\ z\_axis\_disabled);}}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00376\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga25ffeac2e62c1c699b18cb23f26f5738}{mmc56x3\_set\_selftest\_thresholds}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga6d0ea50e620e218d585d9a966d012eb2}{mmc56x3\_selftest\_axes\_data\_t}}\ axes\_data);}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00385\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga29e31e967c1c0c97a030c37a99f9d5a7}{mmc56x3\_get\_selftest\_set\_values}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \mbox{\hyperlink{group__drivers_ga6d0ea50e620e218d585d9a966d012eb2}{mmc56x3\_selftest\_axes\_data\_t}}\ *\textcolor{keyword}{const}\ axes\_data);}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00394\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaad5b583f33c13a5758f47d7af49f140a}{mmc56x3\_set\_selftest\_set\_values}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga6d0ea50e620e218d585d9a966d012eb2}{mmc56x3\_selftest\_axes\_data\_t}}\ axes\_data);}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00402\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga185f6a5fad7af2805cc348c9080a1d1e}{mmc56x3\_magnetic\_set\_reset}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle);}
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00410\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaabd21a2191ea0580ebab958771176f0c}{mmc56x3\_reset}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle);}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00418\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0ffa7e19030a3f3dbda3976917e8bb9c}{mmc56x3\_remove}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle);}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00426\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaefb47ac2a1fc3f36261564629968afe8}{mmc56x3\_delete}}(\mbox{\hyperlink{group__drivers_gad7010c389e7821d1ed37ec2be5341039}{mmc56x3\_handle\_t}}\ handle);}
+\DoxyCodeLine{00427\ }
+\DoxyCodeLine{00434\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{group__drivers_ga9d3fb9eeea0d3e1d7adc40d5b6869012}{mmc56x3\_convert\_to\_heading}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga4f12cc6fde28c182e28c53d82ebbddbb}{mmc56x3\_magnetic\_axes\_data\_t}}\ axes\_data);}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00443\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{group__drivers_ga739d5135d3a55245ee3913ef5f50786b}{mmc56x3\_convert\_to\_true\_heading}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ declination,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group__drivers_ga4f12cc6fde28c182e28c53d82ebbddbb}{mmc56x3\_magnetic\_axes\_data\_t}}\ axes\_data);}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00450\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_gadd1eb86a2cff452be43a3a0b4ea821c0}{mmc56x3\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00451\ }
+\DoxyCodeLine{00457\ int32\_t\ \mbox{\hyperlink{group__drivers_ga001f3587d6aaa24e5e2e18444f980a4c}{mmc56x3\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00460\ }
+\DoxyCodeLine{00461\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00462\ \}}
+\DoxyCodeLine{00463\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00466\ }
+\DoxyCodeLine{00467\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_\_MMC56X3\_H\_\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,106 @@
+\doxysection{components/storage/esp\+\_\+nvs\+\_\+ext Directory Reference}
+\hypertarget{dir_4e167f5b80ffa36143b3af8f51a1deb5}{}\label{dir_4e167f5b80ffa36143b3af8f51a1deb5}\index{components/storage/esp\_nvs\_ext Directory Reference@{components/storage/esp\_nvs\_ext Directory Reference}}
+\doxysubsubsection*{Directories}
+\begin{DoxyCompactItemize}
+\item 
+directory \mbox{\hyperlink{dir_82ddb0f618609ea639bdcdfda3f28c50}{include}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{nvs__ext_8c}{nvs\+\_\+ext.\+c}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\href{https://github.com/K0I05}{\texttt{ }} \href{/LICENSE}{\texttt{ }} \href{https://en.wikipedia.org/wiki/C_(programming_language)}{\texttt{ }} \href{https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html}{\texttt{ }} \href{https://code.visualstudio.com/}{\texttt{ }} \href{https://platformio.org/}{\texttt{ }} \href{https://registry.platformio.org/libraries/k0i05/esp_nvs_ext}{\texttt{ }} \href{https://components.espressif.com/components/k0i05/esp_nvs_ext}{\texttt{ }}
+
+The NVS extension simplifies the process of reading and writing information to non-\/volatile storage. The NVS extension supports common data-\/types such as {\ttfamily uint8\+\_\+t} to {\ttfamily uint64\+\_\+t}, {\ttfamily int8\+\_\+t} to {\ttfamily int64\+\_\+t}, {\ttfamily float} and {\ttfamily double}, {\ttfamily string}, and {\ttfamily struct}. The library can be used as is but you can implement wrappers if the information will be stored to a common key to reference the key-\/value pairs.\hypertarget{README.md_autotoc_md119}{}\doxysubsection{\texorpdfstring{Repository}{Repository}}\label{README.md_autotoc_md119}
+The component is hosted on github and is located here\+: \href{https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/b34d78b383ce366b4954c946b7181bafb1c9ebb3/components/storage/esp_nvs_ext}{\texttt{ https\+://github.\+com/\+K0\+I05/\+ESP32-\/\+S3\+\_\+\+ESP-\/\+IDF\+\_\+\+COMPONENTS/tree/b34d78b383ce366b4954c946b7181bafb1c9ebb3/components/storage/esp\+\_\+nvs\+\_\+ext}}\hypertarget{README.md_autotoc_md120}{}\doxysubsection{\texorpdfstring{General Usage}{General Usage}}\label{README.md_autotoc_md120}
+To get started, simply copy the component to your project\textquotesingle{}s {\ttfamily components} folder and reference the {\ttfamily \doxylink{nvs__ext_8h}{nvs\+\_\+ext.\+h}} header file as an include. The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{components}
+\DoxyCodeLine{└──\ esp\_nvs\_ext}
+\DoxyCodeLine{\ \ \ \ ├──\ CMakeLists.txt}
+\DoxyCodeLine{\ \ \ \ ├──\ README.md}
+\DoxyCodeLine{\ \ \ \ ├──\ LICENSE}
+\DoxyCodeLine{\ \ \ \ ├──\ idf\_component.yml}
+\DoxyCodeLine{\ \ \ \ ├──\ library.json}
+\DoxyCodeLine{\ \ \ \ ├──\ documentation}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ datasheets,\ etc.}
+\DoxyCodeLine{\ \ \ \ ├──\ include}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ nvs\_ext\_version.h}
+\DoxyCodeLine{\ \ \ \ │\ \ \ └──\ nvs\_ext.h}
+\DoxyCodeLine{\ \ \ \ └──\ nvs\_ext.c}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md121}{}\doxysubsection{\texorpdfstring{Basic Example}{Basic Example}}\label{README.md_autotoc_md121}
+Once the component is referenced as an include, the extended i2c functions should be visible and available for usage. A wrapper example for a {\ttfamily struct} data-\/type is presented below. The example uses a {\ttfamily struct} to preserve system state information that is updated on system boot-\/up.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{nvs__ext_8h}{nvs\_ext.h}}>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*\ System\ state\ structure\ */}}
+\DoxyCodeLine{\textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }system\_state\_tag\ \{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ \ \ \ reboot\_counter;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ uint64\_t\ \ \ \ reboot\_timestamp;\ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ uint64\_t\ \ \ \ system\_uptime;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\}\ system\_state\_t;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*\ global\ variables\ */}}
+\DoxyCodeLine{\textcolor{keyword}{static}\ system\_state\_t\ \ *s\_system\_state\ =\ NULL;}
+
+\end{DoxyCode}
+
+
+The {\ttfamily struct} wrapper functions are declared below using a common key named {\ttfamily system\+\_\+state}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ esp\_err\_t\ nvs\_write\_system\_state(system\_state\_t\ *system\_state)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group__drivers_ga3234840e000e4fc89baf6e3c9b49b071}{nvs\_write\_struct}}(\textcolor{stringliteral}{"{}system\_state"{}},\ system\_state,\ \textcolor{keyword}{sizeof}(system\_state\_t));}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ esp\_err\_t\ nvs\_read\_system\_state(system\_state\_t\ **system\_state)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group__drivers_gae2d3381d7c7f182a4d08b3649fd88414}{nvs\_read\_struct}}(\textcolor{stringliteral}{"{}system\_state"{}},\ (\textcolor{keywordtype}{void}\ **)system\_state,\ \textcolor{keyword}{sizeof}(system\_state\_t));}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+The system state {\ttfamily struct} is initialized and saved to NVS on system boot-\/up as shown below.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ init\_system\_state(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\ \ \ \ s\_system\_state\ =\ (system\_state\_t*)calloc(1,\ \textcolor{keyword}{sizeof}(system\_state\_t));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ read\ system\ state\ structure\ from\ nvs\ */}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(nvs\_read\_system\_state(\&s\_system\_state)\ !=\ ESP\_OK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ assume\ system\ state\ structure\ doesn't\ exist\ -\/\ initialize\ attributes\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ s\_system\_state-\/>reboot\_counter\ \ +=\ 1;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ s\_system\_state-\/>system\_uptime\ \ \ \ =\ \mbox{\hyperlink{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9}{time\_into\_interval\_get\_epoch\_timestamp}}();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ s\_system\_state-\/>reboot\_timestamp\ =\ \mbox{\hyperlink{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9}{time\_into\_interval\_get\_epoch\_timestamp}}();}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ assume\ system\ state\ structure\ exists\ -\/\ update\ attributes\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ s\_system\_state-\/>reboot\_counter\ \ +=\ 1;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ s\_system\_state-\/>system\_uptime\ \ \ \ =\ \mbox{\hyperlink{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9}{time\_into\_interval\_get\_epoch\_timestamp}}()\ -\/\ s\_system\_state-\/>reboot\_timestamp;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ s\_system\_state-\/>reboot\_timestamp\ =\ \mbox{\hyperlink{group___free_r_t_o_s_ga982c2457f6151d440ce678d7cfcbc6e9}{time\_into\_interval\_get\_epoch\_timestamp}}();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ attempt\ to\ write\ system\ state\ structure\ to\ nvs\ */}}
+\DoxyCodeLine{\ \ \ \ nvs\_write\_system\_state(s\_system\_state);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ print\ system\ state\ structure\ */}}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Boot\ Count:\ \%u"{}},\ s\_system\_state-\/>reboot\_counter);}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Up-\/Time:\ \ \ \ \%llu"{}},\ s\_system\_state-\/>system\_uptime);}
+\DoxyCodeLine{\ \ \ \ ESP\_LOGW(TAG,\ \textcolor{stringliteral}{"{}Timestamp:\ \ \%llu"{}},\ s\_system\_state-\/>reboot\_timestamp);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Copyright (c) 2024 Eric Gionet (\href{mailto:gionet.c.eric@gmail.com}{\texttt{ gionet.\+c.\+eric@gmail.\+com}}) 

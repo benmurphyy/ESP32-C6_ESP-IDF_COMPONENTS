@@ -1,0 +1,170 @@
+\doxysection{max31865.\+h}
+\hypertarget{max31865_8h_source}{}\label{max31865_8h_source}\index{components/peripherals/spi/esp\_max31865/max31865.h@{components/peripherals/spi/esp\_max31865/max31865.h}}
+\mbox{\hyperlink{max31865_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_MAX31865\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_MAX31865\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/gpio.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <driver/spi\_common.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <driver/spi\_master.h>}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ MAX31865\ definitions}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ I2C\_MAX31865\_SCL\_SPEED\_HZ\ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ }}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ SPI\_MAX31865\_DEV\_ADDR\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x38)\ }}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ MAX31865\ macro\ definitions}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00062\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\#define\ I2C\_MAX31865\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ \ \ \ .dev\_config.device\_address\ =\ I2C\_MAX31865\_DEV\_ADDR,\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ \ \ \ .dev\_config.scl\_speed\_hz\ \ \ =\ I2C\_MAX31865\_SCL\_SPEED\_HZ,\(\backslash\)}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ .aht\_type\ =\ I2C\_AHTXX\_AHT2X\ \}}}
+\DoxyCodeLine{00067\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ SPI\_MAX31865\_FAULT\_DETECT\_FINISHED\ \ \ \ \ \ \ =\ (0b00),\ }
+\DoxyCodeLine{00071\ \ \ \ \ SPI\_MAX31865\_FAULT\_DETECT\_STILL\_RUNNING\ \ =\ (0b01),\ \ }
+\DoxyCodeLine{00072\ \ \ \ \ SPI\_MAX31865\_FAULT\_DETECT\_CYCLE1\_RUNNING\ =\ (0b10),}
+\DoxyCodeLine{00073\ \ \ \ \ SPI\_MAX31865\_FAULT\_DETECT\_CYCLE2\_RUNNING\ =\ (0b11)}
+\DoxyCodeLine{00074\ \}\ spi\_max31865\_fault\_detection\_cycles\_t;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga98e0a496fe65e0e43f418cea4b22c7e0ac8e94fa02248e471db049658c4c8f69e}{SPI\_MAX31865\_MODE\_SINGLE}}\ =\ 0,\ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga98e0a496fe65e0e43f418cea4b22c7e0aa783ce807ffc8518f05d587264fabb75}{SPI\_MAX31865\_MODE\_AUTO}}\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00079\ \}\ \mbox{\hyperlink{group__drivers_ga98e0a496fe65e0e43f418cea4b22c7e0}{spi\_max31865\_modes\_t}};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad5b862850f162f3a3fcddc3c51ed528aabd3a37c19908b948019ae0af583161d8}{SPI\_MAX31865\_FILTER\_60HZ}}\ =\ 0,\ }
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{group__drivers_ggad5b862850f162f3a3fcddc3c51ed528aa5fc0b423bd3ced40604e0f6038d94ed0}{SPI\_MAX31865\_FILTER\_50HZ}}\ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \}\ \mbox{\hyperlink{group__drivers_gad5b862850f162f3a3fcddc3c51ed528a}{spi\_max31865\_filters\_t}};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga1d19580fd4f7ad1cc6a72e14b3f55f13af5014dcc06577502d7d2974cf2d78a97}{SPI\_MAX31865\_2WIRE\_OR\_4WIRE}}\ =\ 0,\ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga1d19580fd4f7ad1cc6a72e14b3f55f13ad9075f38a3017d196785c921063c5e76}{SPI\_MAX31865\_3WIRE}}\ =\ 1,\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00089\ \}\ \mbox{\hyperlink{group__drivers_ga1d19580fd4f7ad1cc6a72e14b3f55f13}{spi\_max31865\_connection\_types\_t}};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga0ec7f26460e9c80e771d01b2f78c8ce7a055cc2aa48486da615523f957dde1105}{SPI\_MAX31865\_ITS90}}\ =\ 0,\ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga0ec7f26460e9c80e771d01b2f78c8ce7add89532ce2f8598fad8d3f84af2bd1fa}{SPI\_MAX31865\_DIN43760}},\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga0ec7f26460e9c80e771d01b2f78c8ce7ada0a12e5bfefb8a955113b90391010d7}{SPI\_MAX31865\_US\_INDUSTRIAL}}\ }
+\DoxyCodeLine{00095\ \}\ \mbox{\hyperlink{group__drivers_ga0ec7f26460e9c80e771d01b2f78c8ce7}{spi\_max31865\_standards\_t}};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_gad5b862850f162f3a3fcddc3c51ed528a}{spi\_max31865\_filters\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filter:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clear\_fault\_status:1;\ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ spi\_max31865\_fault\_detection\_cycles\_t\ \ \ fault\_detection:2;\ \ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga1d19580fd4f7ad1cc6a72e14b3f55f13}{spi\_max31865\_connection\_types\_t}}\ \ \ \ \ \ \ \ \ connection:1;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ one\_shot\_enabled:1;\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group__drivers_ga98e0a496fe65e0e43f418cea4b22c7e0}{spi\_max31865\_modes\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mode:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_bias\_enabled:1;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00112\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00113\ \}\ spi\_max31865\_configuration\_register\_t;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00119\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ uint8\_t\ reserved:2;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ voltage\_fault:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ rtdin\_open\_fault:1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ refin\_open\_fault:1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ refin\_fault:1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ rtd\_low\_threshold\_fault:1;\ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ rtd\_high\_threshold\_fault:1;\ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \}\ bits;}
+\DoxyCodeLine{00129\ \ \ \ \ uint8\_t\ reg;}
+\DoxyCodeLine{00130\ \}\ spi\_max31865\_fault\_status\_register\_t;}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00135\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clock\_speed\_hz;}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ input\_delay\_ns;}
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga98e0a496fe65e0e43f418cea4b22c7e0}{spi\_max31865\_modes\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mode;}
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga1d19580fd4f7ad1cc6a72e14b3f55f13}{spi\_max31865\_connection\_types\_t}}\ \ \ \ \ \ \ \ \ connection;}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_bias\_enabled;}
+\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{group__drivers_gad5b862850f162f3a3fcddc3c51ed528a}{spi\_max31865\_filters\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filter;}
+\DoxyCodeLine{00142\ \ \ \ \ spi\_host\_device\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__config__t_af2bc3d31ad0099123ad13e726b96cb8f}{host}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ gpio\_num\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__config__t_ad5c5178be79dd4595aaf8a6e80317cec}{cs\_io\_num}};\ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ gpio\_num\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__config__t_abed2cffc0dcc04374d6f9b2a4c9f9aba}{miso\_io\_num}};\ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__config__t_af76a23d5ea575f0b95d86d14d246c9a7}{irq\_enabled}};\ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ gpio\_num\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__config__t_acbc6ecb435baad7dcd44b67adc24b822}{irq\_io\_num}};\ \ \ \ \ }
+\DoxyCodeLine{00147\ \}\ \mbox{\hyperlink{structspi__max31865__config__t}{spi\_max31865\_config\_t}};}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00152\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structspi__max31865__t}{spi\_max31865\_t}}\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ SemaphoreHandle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__t_a44404a968bfe87e248e0667fc13eb69c}{spi\_ready\_sem}};\ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{structspi__max31865__config__t}{spi\_max31865\_config\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__t_ae0bb7ae9f97206daa1e7988936da726f}{spi\_dev\_config}};\ }
+\DoxyCodeLine{00155\ \ \ \ \ spi\_device\_handle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__t_a7e11d30725e980842ce6d3b21899b3db}{spi\_dev\_handle}};\ }
+\DoxyCodeLine{00156\ \ \ \ \ spi\_max31865\_configuration\_register\_t\ \ \ \mbox{\hyperlink{structspi__max31865__t_a4cd48286de49b9360e15a9d425e5d950}{config\_reg}};\ \ \ \ \ }
+\DoxyCodeLine{00157\ \ \ \ \ \mbox{\hyperlink{group__drivers_ga0ec7f26460e9c80e771d01b2f78c8ce7}{spi\_max31865\_standards\_t}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__t_a492c7f08bf7ef00362e87e8cddf50625}{standard}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__t_a84819a8e858b1117348ac284f567d1cb}{r\_ref}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structspi__max31865__t_ae45f841b63da97f469f5d8325eb2086f}{rtd\_nominal}};\ \ \ \ }
+\DoxyCodeLine{00160\ \};}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00165\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structspi__max31865__t}{spi\_max31865\_t}}\ \mbox{\hyperlink{structspi__max31865__t}{spi\_max31865\_t}};}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00170\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structspi__max31865__t}{spi\_max31865\_t}}\ *\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ esp\_err\_t\ spi\_max31865\_get\_configuration\_register(\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ max31865\_handle);}
+\DoxyCodeLine{00175\ esp\_err\_t\ spi\_max31865\_set\_configuration\_register(\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ max31865\_handle,\ \textcolor{keyword}{const}\ spi\_max31865\_configuration\_register\_t\ \mbox{\hyperlink{structspi__max31865__t_a4cd48286de49b9360e15a9d425e5d950}{config\_reg}});}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00184\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gae4717b9e5fc1aa65d8caa6129979b4ca}{spi\_max31865\_get\_fault\_status\_register}}(\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ max31865\_handle);}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00193\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga802f250a56d82b7f538421065bfd7c4d}{spi\_max31865\_init}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structspi__max31865__config__t}{spi\_max31865\_config\_t}}\ *max31865\_config,\ \mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ *max31865\_handle);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00202\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga103ed3d7bc0a27d45be4a067426caf6b}{spi\_max31865\_get\_measurement}}(\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ max31865\_handle,\ \textcolor{keywordtype}{float}\ *\textcolor{keyword}{const}\ temperature);}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00211\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa4974de2659627b67439a6eb43b0a00b}{spi\_max31865\_remove}}(\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ max31865\_handle);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00219\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaa99e2cf7b0d8f44c1982ce37d99c0bbd}{spi\_max31865\_delete}}(\mbox{\hyperlink{group__drivers_gab7de7aa3b7f22bb305271068cd193f6f}{spi\_max31865\_handle\_t}}\ max31865\_handle);}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00223\ \}}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_MAX31865\_H\_\_}}
+
+\end{DoxyCode}

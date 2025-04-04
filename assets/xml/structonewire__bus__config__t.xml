@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structonewire__bus__config__t" kind="struct" language="C++" prot="public">
+    <compoundname>onewire_bus_config_t</compoundname>
+    <includes refid="onewire__types_8h" local="no">onewire_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structonewire__bus__config__t_1a1eeb7fc5219f943547ecae0ff890a367" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int bus_gpio_num</definition>
+        <argsstring></argsstring>
+        <name>bus_gpio_num</name>
+        <qualifiedname>onewire_bus_config_t::bus_gpio_num</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>GPIO number that used by the 1-Wire bus </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/peripherals/owb/onewire_bus/include/onewire_types.h" line="33" column="9" bodyfile="components/peripherals/owb/onewire_bus/include/onewire_types.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>1-Wire bus configuration </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/peripherals/owb/onewire_bus/include/onewire_types.h" line="32" column="1" bodyfile="components/peripherals/owb/onewire_bus/include/onewire_types.h" bodystart="32" bodyend="34"/>
+    <listofallmembers>
+      <member refid="structonewire__bus__config__t_1a1eeb7fc5219f943547ecae0ff890a367" prot="public" virt="non-virtual"><scope>onewire_bus_config_t</scope><name>bus_gpio_num</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

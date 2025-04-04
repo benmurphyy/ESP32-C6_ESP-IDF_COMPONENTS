@@ -1,0 +1,124 @@
+\doxysection{sgp4x.\+h}
+\hypertarget{sgp4x_8h_source}{}\label{sgp4x_8h_source}\index{components/peripherals/i2c/esp\_sgp4x/include/sgp4x.h@{components/peripherals/i2c/esp\_sgp4x/include/sgp4x.h}}
+\mbox{\hyperlink{sgp4x_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ The\ MIT\ License\ (MIT)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2024\ Eric\ Gionet\ (gionet.c.eric@gmail.com)}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ \_\_SGP4X\_H\_\_}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ \_\_SGP4X\_H\_\_}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <esp\_err.h>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <driver/i2c\_master.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{type__utils_8h}{type\_utils.h}}>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}sgp4x\_version.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ *\ SGP4X\ definitions}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ I2C\_SGP4X\_DEV\_CLK\_SPD\ \ \ \ \ \ \ \ \ \ \ UINT32\_C(100000)\ }}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ I2C\_SGP4X\_DEV\_ADDR\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x59)\ }}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ I2C\_SGP4X\_XFR\_TIMEOUT\_MS\ \ \ \ \ \ (500)\ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ SGP4X\ macro\ definitions}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ I2C\_SGP41\_CONFIG\_DEFAULT\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ \ \ .i2c\_address\ \ \ \ \ \ \ \ =\ I2C\_SGP4X\_DEV\_ADDR,\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ \ \ .i2c\_clock\_speed\ \ \ \ =\ I2C\_SGP4X\_DEV\_CLK\_SPD,\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\ \ \ \ .dev\_version\ \ \ \ \ \ \ \ =\ SGP4X\_VERSION\_SGP41\ \}}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{group__drivers_ga172a041d0029789cda43731ae5d58411}{sgp4x\_versions\_e}}\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{group__drivers_gga172a041d0029789cda43731ae5d58411abd896d46b209f042add938b9449048a9}{SGP4X\_VERSION\_SGP40}},\ \ }
+\DoxyCodeLine{00073\ \ \ \ \ SGP4X\_VERSION\_SGP41}
+\DoxyCodeLine{00074\ \}\ \mbox{\hyperlink{group__drivers_gab2c506f07b7bddbd098b2088b8dd7588}{sgp4x\_versions\_t}};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{group__drivers_gad642cb1b7454d7bc92b753b37ccd7111}{\_\_attribute\_\_}}((packed))\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ voc\_pixel\_failed:1;\ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ nox\_pixel\_failed:1;\ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ uint8\_t\ reserved:6;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \}\ pixels;}
+\DoxyCodeLine{00085\ \ \ \ \ uint8\_t\ integrity;}
+\DoxyCodeLine{00086\ \}\ sgp4x\_self\_test\_result\_t;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00092\ \ \ \ \ uint16\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structsgp4x__config__t_a4fc512d568c2b72f6907c218205cf6c9}{i2c\_address}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structsgp4x__config__t_a770b3ab4bba557baec88287d86832a34}{i2c\_clock\_speed}};\ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{group__drivers_gab2c506f07b7bddbd098b2088b8dd7588}{sgp4x\_versions\_t}}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structsgp4x__config__t_adc67f2485918d7fdc2b9ee84efaf2a03}{dev\_version}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ \}\ \mbox{\hyperlink{structsgp4x__config__t}{sgp4x\_config\_t}};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsgp4x__context__t}{sgp4x\_context\_t}}\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{structsgp4x__config__t}{sgp4x\_config\_t}}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structsgp4x__context__t_ac615d923e5444b324962a3e5eeaf8c89}{dev\_config}};\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ i2c\_master\_dev\_handle\_t\ \mbox{\hyperlink{structsgp4x__context__t_aebc33e9d9d97bc57c51d01fa39056a22}{i2c\_handle}};\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ uint64\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structsgp4x__context__t_a53f19d09e000917418746a4da0e2435a}{serial\_number}};\ \ }
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsgp4x__context__t}{sgp4x\_context\_t}}\ \mbox{\hyperlink{structsgp4x__context__t}{sgp4x\_context\_t}};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00114\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structsgp4x__context__t}{sgp4x\_context\_t}}\ *\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00125\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga0bec60b8c1ab24e8061a1d6dadeed8fc}{sgp4x\_init}}(i2c\_master\_bus\_handle\_t\ master\_handle,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structsgp4x__config__t}{sgp4x\_config\_t}}\ *sgp4x\_config,\ \mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ *sgp4x\_handle);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00139\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga52efe21453b1d3606b14e49aefef9ae1}{sgp4x\_execute\_compensated\_conditioning}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ temperature,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ humidity,\ uint16\_t\ *sraw\_voc);}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00151\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga12f002286cb3e1a07ee467160febf165}{sgp4x\_execute\_conditioning}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle,\ uint16\_t\ *sraw\_voc);}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00163\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gaadd5bf985665147c4d997b26120dd9aa}{sgp4x\_measure\_compensated\_signals}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ temperature,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ humidity,\ uint16\_t\ *sraw\_voc,\ uint16\_t\ *sraw\_nox);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00173\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga4efe02574e8280c6d1f75e5d67c1c282}{sgp4x\_measure\_signals}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle,\ uint16\_t\ *sraw\_voc,\ uint16\_t\ *sraw\_nox);}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00183\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga74a5a683b3490a8aaf03b03539929fae}{sgp4x\_execute\_self\_test}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle,\ sgp4x\_self\_test\_result\_t\ *\textcolor{keyword}{const}\ result);}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00191\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1a819671d1ed391a0666e7c8b3b0721e}{sgp4x\_turn\_heater\_off}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle);}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00199\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga1dd9539587a9de55514ab1dbeeb5d705}{sgp4x\_reset}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle);}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00207\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_ga05534062bf7f57eac9d0992fb788c4d7}{sgp4x\_remove}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle);}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00215\ esp\_err\_t\ \mbox{\hyperlink{group__drivers_gad0cd93f1a86d46ac471b1266854ad781}{sgp4x\_delete}}(\mbox{\hyperlink{group__drivers_gac40d2deb3fe0027ff3588c50d583b0cd}{sgp4x\_handle\_t}}\ handle);}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00222\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{group__drivers_gaff4d0425f787cda12108abe40e286d37}{sgp4x\_get\_fw\_version}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00229\ int32\_t\ \mbox{\hyperlink{group__drivers_ga2bf0031a0518fb0d4d8f1db8bf200dbb}{sgp4x\_get\_fw\_version\_number}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00233\ \}}
+\DoxyCodeLine{00234\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_SGP4X\_H\_\_}}
+
+\end{DoxyCode}

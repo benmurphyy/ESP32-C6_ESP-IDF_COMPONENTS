@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.13.2" xml:lang="en-US">
+  <compounddef id="structdatatable__event__tag" kind="struct" language="C++" prot="public">
+    <compoundname>datatable_event_tag</compoundname>
+    <includes refid="datatable_8h" local="no">datatable.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdatatable__event__tag_1af157922316db21a101469be7f09d14f5" prot="public" static="no" mutable="no">
+        <type><ref refid="group__drivers_1ga6bb009d09ad1eda55a1a49e1f3271921" kindref="member">datatable_event_types_t</ref></type>
+        <definition>datatable_event_types_t type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>datatable_event_tag::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="130" column="29" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdatatable__event__tag_1a254bf0858da09c96a48daf64404eb4f8" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* message</definition>
+        <argsstring></argsstring>
+        <name>message</name>
+        <qualifiedname>datatable_event_tag::message</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="components/storage/esp_datalogger/include/datatable.h" line="131" column="28" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="131" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Data-table event structure. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="components/storage/esp_datalogger/include/datatable.h" line="129" column="1" bodyfile="components/storage/esp_datalogger/include/datatable.h" bodystart="129" bodyend="132"/>
+    <listofallmembers>
+      <member refid="structdatatable__event__tag_1a254bf0858da09c96a48daf64404eb4f8" prot="public" virt="non-virtual"><scope>datatable_event_tag</scope><name>message</name></member>
+      <member refid="structdatatable__event__tag_1af157922316db21a101469be7f09d14f5" prot="public" virt="non-virtual"><scope>datatable_event_tag</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
