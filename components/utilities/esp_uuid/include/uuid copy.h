@@ -35,6 +35,7 @@
 #ifndef __UUID_H__
 #define __UUID_H__
 
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "uuid_version.h"
@@ -42,6 +43,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
+
 
 /**
  * @brief UUID modes enumerator definition.
@@ -57,49 +61,52 @@ typedef enum uuid_modes_e {
 void uuid_init(void);
 
 /**
- * @brief Seed the UUID generator with a variable number of arguments.
- * The total number of arguments must be between 1 and 2.  Otherwise,
+ * @brief Seed the UUID generator with a variable number of arguments. 
+ * The total number of arguments must be between 1 and 2.  Otherwise, 
  * the generator will be seeded with default values (1 and 2).
- *
+ * 
  * @param size Number of arguments to seed the generator.
  * @param ... Variable number of arguments (1 to 2, 2 seedlings is ideal).
  */
-void uuid_seed(uint8_t size, ...);
+void uuid_seed(uint8_t size, ... );
 
 /**
  * @brief Generate a UUID (i.e. d29b226d-04b5-e3ae-cd63-e6ec0d5611ab).
- *
+ * 
  * @return const char* Pointer to the UUID string.
  */
 const char* uuid_generate(void);
 
 /**
  * @brief Set the UUID mode to either variant-4 or random.
- *
+ * 
  * @param mode The UUID mode to set.
  */
 void uuid_set_mode(const uuid_modes_t mode);
 
 /**
  * @brief Get the current UUID mode.
- *
+ * 
  * @return uuid_modes_t The current UUID mode.
  */
 uuid_modes_t uuid_get_mode(void);
 
 /**
  * @brief Converts `uuid` firmware version numbers (major, minor, patch) into a string.
- *
+ * 
  * @return char* `uuid` firmware version as a string that is formatted as X.X.X (e.g. 4.0.0).
  */
 const char* uuid_get_fw_version(void);
 
 /**
  * @brief Converts `uuid` firmware version numbers (major, minor, patch) into an integer value.
- *
+ * 
  * @return int32_t `uuid` firmware version number.
  */
 int32_t uuid_get_fw_version_number(void);
+
+
+
 
 #ifdef __cplusplus
 }
