@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define SGP4X_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define SGP4X_FW_SEMANTIC_VERSION         "1.2.6-12"
+#define SGP4X_FW_SEMANTIC_VERSION         "1.2.6-13"
 /** Git version hash */
-#define SGP4X_FW_GIT_SHORT_SHA            "13a63bc"
+#define SGP4X_FW_GIT_SHORT_SHA            "d3a11bf"
 
 
 /**
