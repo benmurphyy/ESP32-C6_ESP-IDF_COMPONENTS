@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['ens160_5faqi_5fuba_5findex_5f1_0',['ENS160_AQI_UBA_INDEX_1',['../group__drivers.html#ggade3afdceb8405d3b657d92d4abd60217a9d8fb3a52c953b8011b4d461042f9d80',1,'ens160.h']]],
+  ['ens160_5faqi_5fuba_5findex_5f2_1',['ENS160_AQI_UBA_INDEX_2',['../group__drivers.html#ggade3afdceb8405d3b657d92d4abd60217a49d52089490f4e2a9386936251aab04c',1,'ens160.h']]],
+  ['ens160_5faqi_5fuba_5findex_5f3_2',['ENS160_AQI_UBA_INDEX_3',['../group__drivers.html#ggade3afdceb8405d3b657d92d4abd60217a732ff3e985bc45ba109fe52f4c5ef6a6',1,'ens160.h']]],
+  ['ens160_5faqi_5fuba_5findex_5f4_3',['ENS160_AQI_UBA_INDEX_4',['../group__drivers.html#ggade3afdceb8405d3b657d92d4abd60217a2afaa2fa6e4eb4b2ee1a57019ad5e762',1,'ens160.h']]],
+  ['ens160_5faqi_5fuba_5findex_5f5_4',['ENS160_AQI_UBA_INDEX_5',['../group__drivers.html#ggade3afdceb8405d3b657d92d4abd60217a2bef77054e8955a0d03316217c3787f9',1,'ens160.h']]],
+  ['ens160_5faqi_5fuba_5findex_5funknown_5',['ENS160_AQI_UBA_INDEX_UNKNOWN',['../group__drivers.html#ggade3afdceb8405d3b657d92d4abd60217a810b422dd7f1e8eb4a9d6d3c2956503c',1,'ens160.h']]],
+  ['ens160_5fcmd_5fclear_5fgpr_6',['ENS160_CMD_CLEAR_GPR',['../group__drivers.html#ggaf2a9ed5d8ac048fb5697822bb1694523a774e685b4aedaaabbc52542f66089e93',1,'ens160.h']]],
+  ['ens160_5fcmd_5fget_5ffw_5fappver_7',['ENS160_CMD_GET_FW_APPVER',['../group__drivers.html#ggaf2a9ed5d8ac048fb5697822bb1694523a1075d08e6fb45b770613308d61865d99',1,'ens160.h']]],
+  ['ens160_5fcmd_5fnormal_8',['ENS160_CMD_NORMAL',['../group__drivers.html#ggaf2a9ed5d8ac048fb5697822bb1694523a7057edf1edff9b6c33d6706a8d8e9305',1,'ens160.h']]],
+  ['ens160_5fint_5fpin_5fdrive_5fopen_5fdrain_9',['ENS160_INT_PIN_DRIVE_OPEN_DRAIN',['../group__drivers.html#gga75c593a0cc73463325240b4024666622ab7c98b25f90dd5005f51895aaf07f456',1,'ens160.h']]],
+  ['ens160_5fint_5fpin_5fdrive_5fpush_5fpull_10',['ENS160_INT_PIN_DRIVE_PUSH_PULL',['../group__drivers.html#gga75c593a0cc73463325240b4024666622a06dc38f3dfb05f5f5b74bbffc98f7970',1,'ens160.h']]],
+  ['ens160_5fint_5fpin_5fpolarity_5factive_5fhi_11',['ENS160_INT_PIN_POLARITY_ACTIVE_HI',['../group__drivers.html#gga85829c5c19d6ec9d3ea8643d3d2627a6a55f4e0769b8ad914c0399b3af272a945',1,'ens160.h']]],
+  ['ens160_5fint_5fpin_5fpolarity_5factive_5flo_12',['ENS160_INT_PIN_POLARITY_ACTIVE_LO',['../group__drivers.html#gga85829c5c19d6ec9d3ea8643d3d2627a6a450b74eae6c7bc01837114e36e257bd5',1,'ens160.h']]],
+  ['ens160_5fopmode_5fdeep_5fsleep_13',['ENS160_OPMODE_DEEP_SLEEP',['../group__drivers.html#ggae268b5469d64277325caa3f5fc989850a6aa8e1b080be1957ba87d3c10f424951',1,'ens160.h']]],
+  ['ens160_5fopmode_5fidle_14',['ENS160_OPMODE_IDLE',['../group__drivers.html#ggae268b5469d64277325caa3f5fc989850a99235d15a08bdeff5ff011c5bb9ebd81',1,'ens160.h']]],
+  ['ens160_5fopmode_5freset_15',['ENS160_OPMODE_RESET',['../group__drivers.html#ggae268b5469d64277325caa3f5fc989850aaf93f073c29ed1b0772e2563c567e383',1,'ens160.h']]],
+  ['ens160_5fopmode_5fstandard_16',['ENS160_OPMODE_STANDARD',['../group__drivers.html#ggae268b5469d64277325caa3f5fc989850a126972f1631eade3a26360e45d1c94e1',1,'ens160.h']]],
+  ['ens160_5fvalflag_5finitial_5fstartup_17',['ENS160_VALFLAG_INITIAL_STARTUP',['../group__drivers.html#gga5af0eb865fa92927dfd16523bb653742ae12feb5e210c38c99a621d7856858a4c',1,'ens160.h']]],
+  ['ens160_5fvalflag_5finvalid_5foutput_18',['ENS160_VALFLAG_INVALID_OUTPUT',['../group__drivers.html#gga5af0eb865fa92927dfd16523bb653742a5e1a92acf9a54d6aec0d4dbc1fe47193',1,'ens160.h']]],
+  ['ens160_5fvalflag_5fnormal_19',['ENS160_VALFLAG_NORMAL',['../group__drivers.html#gga5af0eb865fa92927dfd16523bb653742a26345bcbbdfacd24a06cd0ec33038ae7',1,'ens160.h']]],
+  ['ens160_5fvalflag_5fwarmup_20',['ENS160_VALFLAG_WARMUP',['../group__drivers.html#gga5af0eb865fa92927dfd16523bb653742a46de0ca9c1984f11ace5fe5fe7445cc6',1,'ens160.h']]]
+];

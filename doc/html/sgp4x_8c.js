@@ -1,0 +1,25 @@
+var sgp4x_8c =
+[
+    [ "SGP4X_APPSTART_DELAY_MS", "sgp4x_8c.html#add529d5290434285094487f46697ac6a", null ],
+    [ "SGP4X_CMD_DELAY_MS", "sgp4x_8c.html#a8854136b0d6a520e0e3ed20c7fe8a8a2", null ],
+    [ "SGP4X_CMD_EXEC_CONDITIONING", "sgp4x_8c.html#aafcb455fae4531a0f4fb064d297ce376", null ],
+    [ "SGP4X_CMD_EXEC_SELF_TEST", "sgp4x_8c.html#a6a8d982a8c99deec6f2fc73126612466", null ],
+    [ "SGP4X_CMD_MEAS_RAW_SIGNALS", "sgp4x_8c.html#ae334971aa1dde59e09802d080c33c18d", null ],
+    [ "SGP4X_CMD_RESET_", "sgp4x_8c.html#a6a0235a5480efbe0a7cb5a838277e5ec", null ],
+    [ "SGP4X_CMD_SERIAL_NUMBER", "sgp4x_8c.html#a18dc072f9640fb68a76cedd0b4f0c28f", null ],
+    [ "SGP4X_CMD_TURN_HEATER_OFF", "sgp4x_8c.html#a6d2e2a4f53c2ad0d687f3efc1d0826ab", null ],
+    [ "SGP4X_CONDITIONING_TIMEOUT_MS", "sgp4x_8c.html#ae2f1001caef83315b2751d0fe0def8aa", null ],
+    [ "SGP4X_CRC8_G_POLYNOM", "sgp4x_8c.html#aeb90f1b78249ed18ba648a80ff425a7e", null ],
+    [ "sgp4x_delete", "group__drivers.html#gad0cd93f1a86d46ac471b1266854ad781", null ],
+    [ "sgp4x_execute_compensated_conditioning", "group__drivers.html#ga52efe21453b1d3606b14e49aefef9ae1", null ],
+    [ "sgp4x_execute_conditioning", "group__drivers.html#ga12f002286cb3e1a07ee467160febf165", null ],
+    [ "sgp4x_execute_self_test", "group__drivers.html#ga74a5a683b3490a8aaf03b03539929fae", null ],
+    [ "sgp4x_get_fw_version", "group__drivers.html#gaff4d0425f787cda12108abe40e286d37", null ],
+    [ "sgp4x_get_fw_version_number", "group__drivers.html#ga2bf0031a0518fb0d4d8f1db8bf200dbb", null ],
+    [ "sgp4x_init", "group__drivers.html#ga0bec60b8c1ab24e8061a1d6dadeed8fc", null ],
+    [ "sgp4x_measure_compensated_signals", "group__drivers.html#gaadd5bf985665147c4d997b26120dd9aa", null ],
+    [ "sgp4x_measure_signals", "group__drivers.html#ga4efe02574e8280c6d1f75e5d67c1c282", null ],
+    [ "sgp4x_remove", "group__drivers.html#ga05534062bf7f57eac9d0992fb788c4d7", null ],
+    [ "sgp4x_reset", "group__drivers.html#ga1dd9539587a9de55514ab1dbeeb5d705", null ],
+    [ "sgp4x_turn_heater_off", "group__drivers.html#ga1a819671d1ed391a0666e7c8b3b0721e", null ]
+];
