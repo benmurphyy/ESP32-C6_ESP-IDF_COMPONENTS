@@ -1,0 +1,10 @@
+digraph "mmc56x3_context_t"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [id="Node000001",label="mmc56x3_context_t",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="MMC56X3 context structure."];
+  Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" dev_config",fontcolor="grey" ];
+  Node2 [id="Node000002",label="mmc56x3_config_s",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$structmmc56x3__config__s.html",tooltip="MMC56X3 configuration structure."];
+}
