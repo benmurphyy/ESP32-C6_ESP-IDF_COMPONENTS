@@ -143,7 +143,7 @@ typedef union __attribute__((packed)) ahtxx_status_register_u {
 typedef struct ahtxx_config_s {
     uint16_t          i2c_address;          /*!< ahtxx i2c device address */
     uint32_t          i2c_clock_speed;      /*!< ahtxx i2c device scl clock speed in hz */
-    ahtxx_sensor_types_t sensor_type;   /*!< aht sensor type, see `i2c_ahtxx_sensor_types_t` enumerator for support sensor types */
+    ahtxx_sensor_types_t sensor_type;   /*!< aht sensor type, see `ahtxx_sensor_types_t` enumerator for support sensor types */
 } ahtxx_config_t;
 
 /**

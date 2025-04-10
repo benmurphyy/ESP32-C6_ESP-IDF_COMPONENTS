@@ -169,7 +169,7 @@ static inline esp_err_t ccs811_i2c_read_from(ccs811_handle_t handle, const uint8
  * 
  * @param handle CCS811 device handle.
  * @param reg_addr CCS811 register address to read from.
- * @param word CCS811 read transaction return halfword.
+ * @param word CCS811 read transaction return word.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t ccs811_i2c_read_word_from(ccs811_handle_t handle, const uint8_t reg_addr, uint16_t *const word) {
@@ -252,7 +252,7 @@ static inline esp_err_t ccs811_i2c_write(ccs811_handle_t handle, const uint8_t *
  * 
  * @param handle CCS811 device handle.
  * @param reg_addr CCS811 register address to write to.
- * @param word CCS811 write transaction input halfword.
+ * @param word CCS811 write transaction input word.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t ccs811_i2c_write_word_to(ccs811_handle_t handle, const uint8_t reg_addr, const uint16_t word) {

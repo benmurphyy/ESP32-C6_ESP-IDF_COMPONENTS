@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define BMP280_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define BMP280_FW_SEMANTIC_VERSION         "1.2.6-21"
+#define BMP280_FW_SEMANTIC_VERSION         "1.2.6-22"
 /** Git version hash */
-#define BMP280_FW_GIT_SHORT_SHA            "03cda0f"
+#define BMP280_FW_GIT_SHORT_SHA            "1de286d"
 
 
 /**

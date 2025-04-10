@@ -17,7 +17,8 @@
         "span": "c",
         "string": "c",
         "random": "c",
-        "cstdint": "c"
+        "cstdint": "c",
+        "at24cxxx.h": "c"
     },
     "sonarlint.pathToCompileCommands": "${workspaceFolder}\\.pio\\build\\esp32s3box\\compile_commands.json",
     "idf.customExtraVars": {

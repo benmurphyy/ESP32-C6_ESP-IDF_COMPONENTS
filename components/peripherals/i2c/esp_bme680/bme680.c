@@ -148,7 +148,7 @@ static inline esp_err_t bme680_i2c_read_from(bme680_handle_t handle, const uint8
  * 
  * @param handle BME680 device handle.
  * @param reg_addr BME680 register address to read from.
- * @param halfword BME680 read transaction return halfword.
+ * @param word BME680 read transaction return word.
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t bme680_i2c_read_word_from(bme680_handle_t handle, const uint8_t reg_addr, uint16_t *const word) {
@@ -204,7 +204,7 @@ static inline esp_err_t bme680_i2c_write_byte_to(bme680_handle_t handle, const u
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c write transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "i2c_master_transmit, i2c write failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "bme680_i2c_write_byte_to, i2c write failed" );
                         
     return ESP_OK;
 }
