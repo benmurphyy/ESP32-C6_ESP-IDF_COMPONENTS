@@ -206,7 +206,7 @@ typedef struct ina226_config_s {
     ina226_volt_conv_times_t        bus_voltage_conv_time;      /*!< ina226 bus voltage conversion time */
     ina226_operating_modes_t        operating_mode;             /*!< ina226 operating mode */
     float                           shunt_resistance;           /*!< ina226 shunt resistance, Ohm */
-    float                           shunt_voltage;              /*!< ina226 shunt voltage, V */
+    //float                           shunt_voltage;              /*!< ina226 shunt voltage, V */
     float                           max_current;                /*!< ina226 maximum expected current, A */
 } ina226_config_t;
 

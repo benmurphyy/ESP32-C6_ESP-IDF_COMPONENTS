@@ -81,11 +81,56 @@ extern "C" {
         .heater_duration            = 300,                                      \
         .heater_profile_size        = 1                                         \
     }
-    
+
+    #define I2C_BME680_FORCED_CONFIG_DEFAULT {                                              \
+        .i2c_address                = I2C_BME680_DEV_ADDR_HI,                               \
+        .i2c_clock_speed            = I2C_BME680_DEV_CLK_SPD,                               \
+        .power_mode                 = BME680_POWER_MODE_FORCED,                             \
+        .iir_filter                 = BME680_IIR_FILTER_3,                                  \
+        .standby_time               = BME680_STANDBY_TIME_500MS,                            \
+        .pressure_oversampling      = BME680_PRESSURE_OVERSAMPLING_8X,                      \
+        .temperature_oversampling   = BME680_TEMPERATURE_OVERSAMPLING_8X,                   \
+        .humidity_oversampling      = BME680_HUMIDITY_OVERSAMPLING_8X,                      \
+        .gas_enabled                = true,                                                 \
+        .heater_temperature_profile = { 200, 240, 280, 320, 360, 360, 320, 280, 240, 200 }, \
+        .heater_duration_profile    = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 }, \
+        .heater_profile_size        = 10                                                    \
+    }
+
+#define I2C_BME680_SEQUENTIAL_CONFIG_DEFAULT {                                              \
+        .i2c_address                = I2C_BME680_DEV_ADDR_HI,                               \
+        .i2c_clock_speed            = I2C_BME680_DEV_CLK_SPD,                               \
+        .power_mode                 = BME680_POWER_MODE_SEQUENTIAL,                         \
+        .iir_filter                 = BME680_IIR_FILTER_3,                                  \
+        .standby_time               = BME680_STANDBY_TIME_500MS,                            \
+        .pressure_oversampling      = BME680_PRESSURE_OVERSAMPLING_8X,                      \
+        .temperature_oversampling   = BME680_TEMPERATURE_OVERSAMPLING_8X,                   \
+        .humidity_oversampling      = BME680_HUMIDITY_OVERSAMPLING_8X,                      \
+        .gas_enabled                = true,                                                 \
+        .heater_temperature_profile = { 200, 240, 280, 320, 360, 360, 320, 280, 240, 200 }, \
+        .heater_duration_profile    = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 }, \
+        .heater_profile_size        = 10                                                    \
+    }
 
 /*
  * BME680 enumerator and structure declarations
 */
+
+/**
+ * @brief BME680 stand-by times (ODR) enumerator definition.
+ * Standby time between sequential mode measurement profiles.
+ */
+typedef enum bme680_standby_times_e {
+    BME680_STANDBY_TIME_0_5MS  = 0,  //!< stand by time 0.5ms
+    BME680_STANDBY_TIME_62_5MS = 1,  //!< stand by time 62.5ms
+    BME680_STANDBY_TIME_125MS  = 2,  //!< stand by time 125ms
+    BME680_STANDBY_TIME_250MS  = 3,  //!< stand by time 250ms
+    BME680_STANDBY_TIME_500MS  = 4,  //!< stand by time 500ms
+    BME680_STANDBY_TIME_1000MS = 5,  //!< stand by time 1s
+    BME680_STANDBY_TIME_10MS   = 6,  //!< stand by time 10ms
+    BME680_STANDBY_TIME_20MS   = 7,  //!< stand by time 20ms
+    BME680_STANDBY_TIME_NONE   = 8   //!< stand by time none
+} bme680_standby_times_t;
 
 
 /**
@@ -223,9 +268,10 @@ typedef union __attribute__((packed)) bme680_control_humidity_register_u {
  */
 typedef union __attribute__((packed)) bme680_control_gas1_register_u {
     struct {
-        bme680_heater_setpoints_t   heater_setpoint:4;   /*!< bme680           (bit:0-3)  */
-        bool                        gas_conversion_enabled:1;/*!< bme680 gas conversions are started only appropriate mode when true (bit:4)  */
-        uint8_t                     reserved:3;          /*!< bme680 reserved                               (bit:5-7) */
+        bme680_heater_setpoints_t   heater_setpoint:4;        /*!< bme680           (bit:0-3)  */
+        bool                        gas_conversion_enabled:1; /*!< bme680 gas conversions are started only appropriate mode when true (bit:4)  */
+        uint8_t                     reserved:2;               /*!< bme680 reserved                               (bit:5-6) */
+        uint8_t                     standby_period_msb:1;     /*!< bme680 standby time MSB (ODR)                 (bit:7) */
     } bits;
     uint8_t reg;
 } bme680_control_gas1_register_t;
@@ -266,7 +312,7 @@ typedef union __attribute__((packed)) bme680_configuration_register_u {
         bool                    spi_enabled:1;  /*!< bme680 3-wire SPI interface enabled when true  (bit:0)  */
         uint8_t                 reserved1:1;    /*!< bme680 reserved                                (bit:1) */
         bme680_iir_filters_t    iir_filter:3;   /*!< bme680 time constant of the IIR filter         (bit:2-4) */
-        uint8_t                 reserved2:3;    /*!< bme680 reserved                                (bit:5-7) */
+        uint8_t                 standby_period_lsb:3; /*!< bme680 standby time LSB (ODR)             (bit:5-7) */
     } bits;
     uint8_t reg;
 } bme680_config_register_t;
@@ -350,6 +396,7 @@ typedef struct bme680_config_s {
     uint32_t                                i2c_clock_speed;                /*!< bme680 i2c device scl clock speed  */
     bme680_power_modes_t                    power_mode;                     /*!< bme680 power mode */
     bme680_iir_filters_t                    iir_filter;
+    bme680_standby_times_t                  standby_time;
     bme680_pressure_oversampling_t          pressure_oversampling;
     bme680_temperature_oversampling_t       temperature_oversampling;
     bme680_humidity_oversampling_t          humidity_oversampling;
@@ -540,14 +587,18 @@ esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config
  */
 esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *const data);
 
+esp_err_t bme680_get_adc_signals_by_heater_profile(bme680_handle_t handle, uint8_t profile_index, bme680_adc_data_t *const data);
+
 /**
- * @brief Reads humidity, temperature, and pressure measurements from BME680
+ * @brief Reads humidity, temperature, and pressure measurements from BME680.
  *
  * @param[in] handle BME680 device handle.
  * @param[out] data BME680 data structure.
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t bme680_get_data(bme680_handle_t handle, bme680_data_t *const data);
+
+esp_err_t bme680_get_data_by_heater_profile(bme680_handle_t handle, const uint8_t profile_index, bme680_data_t *const data);
 
 /**
  * @brief Reads data status of the BME680.
@@ -656,6 +707,24 @@ esp_err_t bme680_get_iir_filter(bme680_handle_t handle, bme680_iir_filters_t *co
  * @return esp_err_t ESP_OK on success.
  */
 esp_err_t bme680_set_iir_filter(bme680_handle_t handle, const bme680_iir_filters_t iir_filter);
+
+/**
+ * @brief Reads stand-by time (ODR) setting from BME680.
+ * 
+ * @param handle BME680 device handle.
+ * @param standby_time BME680 stand-by time (ODR) setting.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_get_standby_time(bme680_handle_t handle, bme680_standby_times_t *const standby_time);
+
+/**
+ * @brief Writes stand-by time (ODR) setting to BME680.
+ * 
+ * @param handle BME680 device handle.
+ * @param standby_time BME680 stand-by time (ODR) setting.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t bme680_set_standby_time(bme680_handle_t handle, const bme680_standby_times_t standby_time);
 
 /**
  * @brief Issues soft-reset sensor and initializes registers for BME680.

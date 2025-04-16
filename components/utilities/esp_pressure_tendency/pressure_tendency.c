@@ -119,8 +119,8 @@ esp_err_t pressure_tendency_analysis(pressure_tendency_handle_t pressure_tendenc
         pressure_tendency_handle->samples[pressure_tendency_handle->samples_size-1] = sample;
     }
 
-    // is the array full yet?
-    if (pressure_tendency_handle->samples_count < pressure_tendency_handle->samples_size) {
+    // does the array have an hour of samples
+    if (pressure_tendency_handle->samples_count < (pressure_tendency_handle->samples_size / 3)) {
         // no! we are still training
         *code = PRESSURE_TENDENCY_CODE_UNKNOWN;
         *change = NAN;
@@ -128,8 +128,8 @@ esp_err_t pressure_tendency_analysis(pressure_tendency_handle_t pressure_tendenc
         return ESP_OK;
     }
 
-    /* subtract pressure from 3-hrs ago from latest pressure */
-    float delta = pressure_tendency_handle->samples[pressure_tendency_handle->samples_size-1] - pressure_tendency_handle->samples[0];
+    /* subtract oldest pressure sample from latest pressure sample */
+    float delta = sample - pressure_tendency_handle->samples[0];
 
     /* evaluate delta aka 3-hr change in pressure */
     /* if the absolute variance is less than 1 hPa, air pressure is steady */

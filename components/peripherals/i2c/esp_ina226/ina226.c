@@ -24,7 +24,7 @@
 /**
  * @file ina226.c
  *
- * ESP-IDF driver for INA225 current, voltage, and power monitoring sensor
+ * ESP-IDF driver for INA226 current, voltage, and power monitoring sensor
  * 
  * 
  *
@@ -104,7 +104,6 @@ static inline esp_err_t ina226_i2c_read_word_from(ina226_handle_t handle, const 
     ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT16_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ina226_i2c_read_word_from failed" );
 
     /* set output parameter */
-    //*word = (uint16_t)rx[0] | ((uint16_t)rx[1] << 8);
     *word = ((uint16_t)rx[0] << 8) | (uint16_t)rx[1];
 
     return ESP_OK;
@@ -119,7 +118,6 @@ static inline esp_err_t ina226_i2c_read_word_from(ina226_handle_t handle, const 
  * @return esp_err_t ESP_OK on success.
  */
 static inline esp_err_t ina226_i2c_write_word_to(ina226_handle_t handle, const uint8_t reg_addr, const uint16_t word) {
-    //const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)(word & 0xff), (uint8_t)((word >> 8) & 0xff) }; // register, lsb, msb
     const bit24_uint8_buffer_t tx = { reg_addr, (uint8_t)((word >> 8) & 0xff), (uint8_t)(word & 0xff) }; // register, lsb, msb
 
     /* validate arguments */

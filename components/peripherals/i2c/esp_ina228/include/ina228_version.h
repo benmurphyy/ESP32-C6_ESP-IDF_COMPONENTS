@@ -27,8 +27,8 @@
  * MIT Licensed as described in the file LICENSE
  */
 
-#ifndef __MPU6050_FW_VERSION_H__
-#define __MPU6050_FW_VERSION_H__
+#ifndef __INA228_FW_VERSION_H__
+#define __INA228_FW_VERSION_H__
 
 #include <stdint.h>
 
@@ -41,19 +41,19 @@ extern "C" {
  * public constant definitions
  */
 
-#define MPU6050_COMPONENT_NAME              "esp_mpu6050"
+#define INA228_COMPONENT_NAME              "esp_ina228"
 /** Version release date  */
-#define MPU6050_FW_VERSION_DATE             "2025-04-10"
+#define INA228_FW_VERSION_DATE             "2025-04-10"
 /** Major version number (X.x.x) */
-#define MPU6050_FW_VERSION_MAJOR            1
+#define INA228_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
-#define MPU6050_FW_VERSION_MINOR            2
+#define INA228_FW_VERSION_MINOR            2
 /** Patch version number (x.x.X) */
-#define MPU6050_FW_VERSION_PATCH            6
+#define INA228_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define MPU6050_FW_SEMANTIC_VERSION         "1.2.6-23"
+#define INA228_FW_SEMANTIC_VERSION         "1.2.6-23"
 /** Git version hash */
-#define MPU6050_FW_GIT_SHORT_SHA            "856d8ae"
+#define INA228_FW_GIT_SHORT_SHA            "856d8ae"
 
 
 /**
@@ -73,10 +73,10 @@ extern "C" {
 /** 
  * Macro to generate current firmware version numbers (major, minor, patch) into a string that is formatted as X.X.X (e.g. 4.0.0). 
  */
-#define MPU6050_FW_VERSION_STR                        \
-        STR( MPU6050_FW_VERSION_MAJOR ) "." \
-        STR( MPU6050_FW_VERSION_MINOR ) "." \
-        STR( MPU6050_FW_VERSION_PATCH )
+#define INA228_FW_VERSION_STR                        \
+        STR( INA228_FW_VERSION_MAJOR ) "." \
+        STR( INA228_FW_VERSION_MINOR ) "." \
+        STR( INA228_FW_VERSION_PATCH )
 
 /** 
  * Macro to convert firmware version parameters (major, minor, patch numbers) into an integer (`int32_t`) 
@@ -84,7 +84,7 @@ extern "C" {
  * 
  * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define MPU6050_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
+#define INA228_FW_VERSION_PARAMS_INT32( major, minor, patch )        \
         ((major << 16) | (minor << 8) | (patch))
 
 /**
@@ -93,11 +93,11 @@ extern "C" {
  * 
  * As an example, FW_VERSION_INT32 >= FW_VERSION_PARAMS_INT32(4, 0, 0).
  */
-#define MPU6050_FW_VERSION_INT32            \
-        MPU6050_FW_VERSION_PARAMS_INT32(    \
-                MPU6050_FW_VERSION_MAJOR,   \
-                MPU6050_FW_VERSION_MINOR,   \
-                MPU6050_FW_VERSION_PATCH)
+#define INA228_FW_VERSION_INT32            \
+        INA228_FW_VERSION_PARAMS_INT32(    \
+                INA228_FW_VERSION_MAJOR,   \
+                INA228_FW_VERSION_MINOR,   \
+                INA228_FW_VERSION_PATCH)
 
 #ifdef __cplusplus
 }
@@ -105,4 +105,4 @@ extern "C" {
 
 /**@}*/
 
-#endif //__MPU6050_FW_VERSION_H__
+#endif //__INA228_FW_VERSION_H__

@@ -104,7 +104,6 @@ void i2c0_ina226_task( void *pvParameters ) {
     ina226_delete( dev_hdl );
     vTaskDelete( NULL );
 }
-}
 ```
 
 Copyright (c) 2024 Eric Gionet (<gionet.c.eric@gmail.com>)

@@ -73,27 +73,26 @@ typedef struct time_into_interval_config_tag {
 
 
 /**
- * @brief Time-into-interval structure.
+ * @brief Time-into-interval context structure.
  */
-struct time_into_interval_t {
+struct time_into_interval_context_t {
     const char*                      name;               /*!< time-into-interval, name, maximum of 25-characters */
     uint64_t                         epoch_timestamp;    /*!< time-into-interval, next event unix epoch timestamp (UTC) in milli-seconds */
     time_into_interval_types_t       interval_type;      /*!< time-into-interval, interval type setting */
     uint16_t                         interval_period;    /*!< time-into-interval, a non-zero interval period setting per interval type setting */
     uint16_t                         interval_offset;    /*!< time-into-interval, interval offset setting, per interval type setting, that must be less than the interval period */
-    uint16_t                         hash_code;          /*!< hash-code of the time-into-interval handle */
     SemaphoreHandle_t                mutex_handle;       /*!< mutex handle of the time-into-interval handle */
 };
 
 /**
- * @brief Time-into-interval definition.
+ * @brief Time-into-interval context definition.
  */
-typedef struct time_into_interval_t time_into_interval_t;
+typedef struct time_into_interval_context_t time_into_interval_context_t;
 
 /**
  * @brief Time-into-interval handle definition.
  */
-typedef struct time_into_interval_t *time_into_interval_handle_t;
+typedef struct time_into_interval_context_t *time_into_interval_handle_t;
 
 // https://lloydrochester.com/post/c/c-timestamp-epoch/
 
@@ -111,7 +110,7 @@ uint64_t time_into_interval_normalize_interval_to_sec(const time_into_interval_t
  * 
  * @param[in] interval_type Time-into-interval type of interval period or offset.
  * @param[in] interval Time-into-interval period or offset for interval type.
- * @return uint64_t Normalized time-into-interval period or offset in milli-seconds.
+ * @return uint64_t Normalized time-into-interval period or offset in milliseconds.
  */
 uint64_t time_into_interval_normalize_interval_to_msec(const time_into_interval_types_t interval_type, const uint16_t interval);
 
@@ -126,37 +125,18 @@ uint64_t time_into_interval_get_epoch_timestamp(void);
 /**
  * @brief Gets unix epoch timestamp (UTC) in milliseconds from system clock.
  * 
- * @return uint64_t Unix epoch timestamp (UTC) in milliseconds or it will return 0-milli-seconds 
- * when there is an issue accessing the system clock.
+ * @return uint64_t Unix epoch timestamp (UTC) in milliseconds or it will return 
+ * 0-milliseconds when there is an issue accessing the system clock.
  */
 uint64_t time_into_interval_get_epoch_timestamp_msec(void);
 
 /**
- * @brief Gets unix epoch timestamp (UTC) in micro-seconds from system clock.
+ * @brief Gets unix epoch timestamp (UTC) in microseconds from system clock.
  * 
- * @return uint64_t Unix epoch timestamp (UTC) in micro-seconds or it will return 0-micro-seconds 
+ * @return uint64_t Unix epoch timestamp (UTC) in microseconds or it will return 0-microseconds 
  * when there is an issue accessing the system clock.
  */
 uint64_t time_into_interval_get_epoch_timestamp_usec(void);
-
-/**
- * @brief Sets the next epoch event timestamp in milli-seconds from system clock based on 
- * the time interval type, period, and offset. 
- * 
- * The interval should be divisible by 60 i.e. no remainder if the interval type and period
- * is every 10-seconds, the event will trigger on-time with the system clock i.e. 09:00:00, 
- * 09:00:10, 09:00:20, etc.
- * 
- * The interval offset is used to offset the start of the interval period.  If the interval type
- * and period is every 5-minutes with a 1-minute offset, the event will trigger on-time with the
- * system clock i.e. 09:01:00, 09:06:00, 09:11:00, etc.
- * 
- * @param[in] interval_type Time into interval type (seconds, minutes, hours, etc.).
- * @param[in] interval_period Time into interval period for interval type.
- * @param[in] interval_offset Time into interval offset for interval type.
- * @param[out] epoch_timestamp Unix epoch timestamp (UTC) of next event in milli-seconds.
- */
-esp_err_t time_into_interval_set_epoch_timestamp_event(const time_into_interval_types_t interval_type, const uint16_t interval_period, const uint16_t interval_offset, uint64_t *epoch_timestamp);
 
 /**
  * @brief Initializes a time-into-interval handle.  A time-into-interval is used 
@@ -165,7 +145,7 @@ esp_err_t time_into_interval_set_epoch_timestamp_event(const time_into_interval_
  * 
  * As an example, if a 5-second interval is configured, the `time_into_interval` function 
  * will return true every 5-seconds based on the system clock i.e. 12:00:00, 12:00:05, 12:00:10, etc.
- * The `time_into_interval_delay` would delay a task for 5-seconds and behaves like a task
+ * The `time_into_interval_delay` delays a task for 5-seconds and behaves like a task
  * scheduler that is synchronized to the system clock.
  * 
  * The interval offset is used to offset the start of the interval period. As an example,
@@ -185,38 +165,47 @@ esp_err_t time_into_interval_init(const time_into_interval_config_t *time_into_i
  * type, period, and offset parameters that is synchronized to the system clock and
  * returns true when the interval has elapsed.
  * 
- * @param[in] time_into_interval_handle Time-into-interval handle.
+ * @param[in] handle Time-into-interval handle.
  * @return true when time-into-interval condition is valid.
  * @return false when time-into-interval handle or condition is not valid.
  */
-bool time_into_interval(time_into_interval_handle_t time_into_interval_handle);
+bool time_into_interval(time_into_interval_handle_t handle);
 
 /**
  * @brief Delays the task until the next scheduled task event.  This function should
  * be placed after the `for (;;) {` syntax to delay the task based on the configured
  * interval type, period, and offset parameters.
  * 
- * @param time_into_interval_handle Time-into-interval handle.
+ * @param handle Time-into-interval handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t time_into_interval_delay(time_into_interval_handle_t time_into_interval_handle);
+esp_err_t time_into_interval_delay(time_into_interval_handle_t handle);
 
 /**
- * @brief Gets epoch timestamp (UTC) of the last event in milli-seconds.
+ * @brief Gets epoch timestamp (UTC) of the last event in milliseconds.
  * 
- * @param time_into_interval_handle Time-into-interval handle.
- * @param epoch_timestamp Unix epoch timestamp (UTC) in milli-seconds of the last event.
+ * @param handle Time-into-interval handle.
+ * @param epoch_timestamp Unix epoch timestamp (UTC) in milliseconds of the last event.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t time_into_interval_get_last_event(time_into_interval_handle_t time_into_interval_handle, uint64_t *epoch_timestamp);
+esp_err_t time_into_interval_get_last_event(time_into_interval_handle_t handle, uint64_t *epoch_timestamp);
+
+/**
+ * @brief Gets epoch timestamp (UTC) of the next event in milliseconds.
+ * 
+ * @param handle Time-into-interval handle.
+ * @param epoch_timestamp Unix epoch timestamp (UTC) in milliseconds of the next event.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t time_into_interval_get_next_event(time_into_interval_handle_t handle, uint64_t *epoch_timestamp);
 
 /**
  * @brief Deletes the time-into-interval handle and frees up resources.
  * 
- * @param time_into_interval_handle Time-into-interval handle.
+ * @param handle Time-into-interval handle.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t time_into_interval_delete(time_into_interval_handle_t time_into_interval_handle);
+esp_err_t time_into_interval_delete(time_into_interval_handle_t handle);
 
 
 /**

@@ -103,7 +103,7 @@
                                                 // http://bmcnoldy.rsmas.miami.edu/Humidity.html
 
 
-#define BME680_DATA_POLL_TIMEOUT_MS UINT16_C(250) // ? see datasheet tables 13 and 14, standby-time could be 2-seconds (2000ms)
+#define BME680_DATA_POLL_TIMEOUT_MS UINT16_C(1500) // ? see datasheet tables 13 and 14, standby-time could be 2-seconds (2000ms)
 #define BME680_DATA_READY_DELAY_MS  UINT16_C(1)
 #define BME680_POWERUP_DELAY_MS     UINT16_C(25)
 #define BME680_APPSTART_DELAY_MS    UINT16_C(25)
@@ -506,13 +506,32 @@ static inline esp_err_t bme680_setup_heater_profiles(bme680_handle_t handle, bme
 
     switch(handle->dev_config.power_mode) {
         case BME680_POWER_MODE_FORCED:
-            rh_reg_addr[0] = BME680_REG_RES_HEAT;
-            rh_reg_data[0] = bme680_compensate_heater_resistance(handle, handle->dev_config.heater_temperature);
-            gw_reg_addr[0] = BME680_REG_GAS_WAIT;
-            gw_reg_data[0] = bme680_compute_gas_wait(handle->dev_config.heater_duration);
+            //rh_reg_addr[0] = BME680_REG_RES_HEAT;
+            //rh_reg_data[0] = bme680_compensate_heater_resistance(handle, handle->dev_config.heater_temperature);
+            //gw_reg_addr[0] = BME680_REG_GAS_WAIT;
+            //gw_reg_data[0] = bme680_compute_gas_wait(handle->dev_config.heater_duration);
+            //(*heater_setpoint) = handle->dev_config.heater_profile_size - 1;
+            //write_len = handle->dev_config.heater_profile_size;
+            if ((handle->dev_config.heater_profile_size == 0) || (handle->dev_config.heater_profile_size > 10)) {
+                ESP_RETURN_ON_FALSE( false, ESP_ERR_INVALID_ARG, TAG, "heater duration or temperature profile are empty and cannot be larger than 10, setup heater setpoints failed");
+            }
+
+            if(handle->dev_config.heater_profile_size == 1) {
+                rh_reg_addr[0] = BME680_REG_RES_HEAT;
+                rh_reg_data[0] = bme680_compensate_heater_resistance(handle, handle->dev_config.heater_temperature);
+                gw_reg_addr[0] = BME680_REG_GAS_WAIT;
+                gw_reg_data[0] = bme680_compute_gas_wait(handle->dev_config.heater_duration);
+            } else {
+                for (i = 0; i < handle->dev_config.heater_profile_size; i++) {
+                    rh_reg_addr[i] = BME680_REG_RES_HEAT + i;
+                    rh_reg_data[i] = bme680_compensate_heater_resistance(handle, handle->dev_config.heater_temperature_profile[i]);
+                    gw_reg_addr[i] = BME680_REG_GAS_WAIT + i;
+                    gw_reg_data[i] = bme680_compute_gas_wait(handle->dev_config.heater_duration_profile[i]);
+                }
+            }
 
             (*heater_setpoint) = handle->dev_config.heater_profile_size - 1;
-            write_len = handle->dev_config.heater_profile_size;;
+            write_len = handle->dev_config.heater_profile_size;
             break;
         case BME680_POWER_MODE_SEQUENTIAL:
             if ((handle->dev_config.heater_profile_size == 0) || (handle->dev_config.heater_profile_size > 10)) {
@@ -528,6 +547,7 @@ static inline esp_err_t bme680_setup_heater_profiles(bme680_handle_t handle, bme
 
             (*heater_setpoint) = handle->dev_config.heater_profile_size - 1;
             write_len = handle->dev_config.heater_profile_size;
+
             break;
         case BME680_POWER_MODE_PARALLEL:
             if ((handle->dev_config.heater_profile_size == 0) || (handle->dev_config.heater_profile_size > 10)) {
@@ -659,6 +679,9 @@ static inline esp_err_t bme680_setup(bme680_handle_t handle) {
 
     /* attempt to write configuration register */
     ESP_RETURN_ON_ERROR(bme680_set_configuration_register(handle, config_reg), TAG, "write configuration register for setup failed");
+
+    /* attempt to write stand-by time */
+    ESP_RETURN_ON_ERROR(bme680_set_standby_time(handle, handle->dev_config.standby_time), TAG, "write stand-by time for setup failed");
 
     return ESP_OK;
 }
@@ -913,7 +936,6 @@ esp_err_t bme680_set_configuration_register(bme680_handle_t handle, const bme680
 
     /* set reserved to 0 */
     config.bits.reserved1 = 0;
-    config.bits.reserved2 = 0;
 
     /* attempt i2c write transaction */
     ESP_RETURN_ON_ERROR( bme680_i2c_write_byte_to(handle, BME680_REG_CONFIG, config.reg), TAG, "write configuration register failed" );
@@ -933,7 +955,7 @@ esp_err_t bme680_init(i2c_master_bus_handle_t master_handle, const bme680_config
 
     /* validate device exists on the master bus */
     esp_err_t ret = i2c_master_probe(master_handle, bme680_config->i2c_address, I2C_XFR_TIMEOUT_MS);
-    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, bmp280 device handle initialization failed", bme680_config->i2c_address);
+    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, bme680 device handle initialization failed", bme680_config->i2c_address);
 
     /* validate memory availability for handle */
     bme680_handle_t out_handle;
@@ -1013,7 +1035,7 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
 
     /* trigger measurement when in forced mode */
     if(handle->dev_config.power_mode == BME680_POWER_MODE_FORCED) {
-        bme680_set_power_mode(handle, BME680_POWER_MODE_FORCED);
+        bme680_set_power_mode(handle, handle->dev_config.power_mode);
     }
 
     /* set start time for timeout monitoring */
@@ -1048,10 +1070,11 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
     adc_humi  = ((uint16_t)rx[6] << 8) | (uint16_t)rx[7];
     adc_gas_r = ((uint16_t)rx[11] << 2) | ((uint16_t)rx[12] >> 6);
 
-    ESP_LOGD(TAG, "ADC humidity:    %" PRIu16, adc_humi);
-    ESP_LOGD(TAG, "ADC temperature: %" PRIu32, adc_temp);
-    ESP_LOGD(TAG, "ADC pressure:    %" PRIu32, adc_press);
-    ESP_LOGD(TAG, "ADC gas:         %" PRIu16, adc_gas_r);
+    ESP_LOGD(TAG, "ADC humidity:    %u", adc_humi);
+    ESP_LOGD(TAG, "ADC temperature: %lu", adc_temp);
+    ESP_LOGD(TAG, "ADC pressure:    %lu", adc_press);
+    ESP_LOGD(TAG, "ADC gas:         %u", adc_gas_r);
+    ESP_LOGD(TAG, "ADC gas index:  %u", gas_index);
 
     /* initialize data structure */
     data->temperature    = adc_temp;
@@ -1072,6 +1095,96 @@ esp_err_t bme680_get_adc_signals(bme680_handle_t handle, bme680_adc_data_t *cons
         return ret;
 }
 
+esp_err_t bme680_get_adc_signals_by_heater_profile(bme680_handle_t handle, uint8_t profile_index, bme680_adc_data_t *const data) {
+    esp_err_t       ret             = ESP_OK;
+    bool            data_is_ready   = false;
+    uint8_t         gas_index       = 0;
+    uint16_t        adc_gas_r;
+    uint32_t        adc_press;
+    uint16_t        adc_humi;
+    uint32_t        adc_temp;
+    bit104_uint8_buffer_t rx;
+    bme680_status0_register_t status0_reg;
+    bme680_control_gas1_register_t ctrl_gas1_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle && data );
+
+    if ((handle->dev_config.heater_profile_size == 0) || (handle->dev_config.heater_profile_size > 10)) {
+        ESP_RETURN_ON_FALSE( false, ESP_ERR_INVALID_ARG, TAG, "heater duration or temperature profile are empty and cannot be larger than 10, get adc signals by heater profile failed");
+    }
+
+    /* trigger measurement when in forced mode */
+    if(handle->dev_config.power_mode == BME680_POWER_MODE_FORCED) {
+        bme680_set_power_mode(handle, handle->dev_config.power_mode);
+    }
+
+    /* attempt to read control gas 1 register */
+    ESP_RETURN_ON_ERROR(bme680_get_control_gas1_register(handle, &ctrl_gas1_reg), TAG, "read control gas 1 register for setup heater failed");
+
+    ctrl_gas1_reg.bits.heater_setpoint = (bme680_heater_setpoints_t)profile_index;
+
+    /* attempt to write control gas 1 register */
+    ESP_RETURN_ON_ERROR(bme680_set_control_gas1_register(handle, ctrl_gas1_reg), TAG, "write control gas 1 register for setup heater failed");
+
+    /* set start time for timeout monitoring */
+    uint64_t start_time = esp_timer_get_time();
+
+    /* attempt to poll until data is available or timeout */
+    do {
+        /* attempt to check if data is ready */
+        //ESP_GOTO_ON_ERROR( bme680_get_data_status(handle, &data_is_ready), err, TAG, "data ready for get adc signals failed." );
+        ESP_GOTO_ON_ERROR( bme680_get_status0_register(handle, &status0_reg), err, TAG, "status 0 register for get adc signals failed." );
+
+        data_is_ready = status0_reg.bits.new_data;
+        gas_index = status0_reg.bits.gas_measurement_index;
+
+        /* delay task before next i2c transaction */
+        vTaskDelay(pdMS_TO_TICKS(BME680_DATA_READY_DELAY_MS));
+
+        /* validate timeout condition */
+        if (ESP_TIMEOUT_CHECK(start_time, BME680_DATA_POLL_TIMEOUT_MS * 1000))
+            return ESP_ERR_TIMEOUT;
+    } while (data_is_ready == false);
+
+    // need to read in one sequence to ensure they match.
+    ESP_GOTO_ON_ERROR( bme680_i2c_read_from(handle, BME680_REG_PRESS, rx, BIT104_UINT8_BUFFER_SIZE), err, TAG, "read adc data failed" );
+
+    /* instantiate gas lsb register */
+    bme680_gas_lsb_register_t gas_lsb_reg = { .reg = rx[12] };
+
+    /* concat parameters */
+    adc_press = ((uint32_t)rx[0] << 12) | ((uint32_t)rx[1] << 4) | ((uint32_t)rx[2] >> 4);
+    adc_temp  = ((uint32_t)rx[3] << 12) | ((uint32_t)rx[4] << 4) | ((uint32_t)rx[5] >> 4);
+    adc_humi  = ((uint16_t)rx[6] << 8) | (uint16_t)rx[7];
+    adc_gas_r = ((uint16_t)rx[11] << 2) | ((uint16_t)rx[12] >> 6);
+
+    ESP_LOGD(TAG, "ADC humidity:    %u", adc_humi);
+    ESP_LOGD(TAG, "ADC temperature: %lu", adc_temp);
+    ESP_LOGD(TAG, "ADC pressure:    %lu", adc_press);
+    ESP_LOGD(TAG, "ADC gas:         %u", adc_gas_r);
+    ESP_LOGD(TAG, "ADC gas index:   %u", gas_index);
+
+    /* initialize data structure */
+    data->temperature    = adc_temp;
+    data->humidity       = adc_humi;
+    data->pressure       = adc_press;
+    data->gas            = adc_gas_r;
+    data->gas_index      = gas_index;
+    data->gas_range      = gas_lsb_reg.bits.gas_range;
+    data->heater_stable  = gas_lsb_reg.bits.heater_stable;
+    data->gas_valid      = gas_lsb_reg.bits.gas_valid;
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(BME680_CMD_DELAY_MS));
+
+    return ESP_OK;
+
+    err:
+        return ret;
+}
+
+
 esp_err_t bme680_get_data(bme680_handle_t handle, bme680_data_t *const data) {
     bme680_adc_data_t adc_data;
 
@@ -1080,6 +1193,39 @@ esp_err_t bme680_get_data(bme680_handle_t handle, bme680_data_t *const data) {
 
     /* attempt to read adc signals */
     ESP_RETURN_ON_ERROR( bme680_get_adc_signals(handle, &adc_data), TAG, "read adc signals failed" );
+
+    /* initialize data structure */
+    data->air_temperature       = bme680_compensate_temperature(handle, adc_data.temperature);
+    data->relative_humidity     = bme680_compensate_humidity(handle, adc_data.humidity);
+    data->dewpoint_temperature  = bme680_calculate_dewpoint(data->air_temperature, data->relative_humidity);
+    data->barometric_pressure   = bme680_compensate_pressure(handle, adc_data.pressure);
+    data->gas_resistance        = bme680_compensate_gas_resistance(handle, adc_data.gas, adc_data.gas_range);
+    data->gas_range             = adc_data.gas_range;
+    data->heater_stable         = adc_data.heater_stable;
+    data->gas_valid             = adc_data.gas_valid;
+    data->gas_index             = adc_data.gas_index;
+
+    /* compute scores */
+    bme680_compute_iaq(data);
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(BME680_CMD_DELAY_MS));
+
+    return ESP_OK;
+}
+
+esp_err_t bme680_get_data_by_heater_profile(bme680_handle_t handle, const uint8_t profile_index, bme680_data_t *const data) {
+    bme680_adc_data_t adc_data;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle && data );
+
+    if ((handle->dev_config.heater_profile_size == 0) || (handle->dev_config.heater_profile_size > 10)) {
+        ESP_RETURN_ON_FALSE( false, ESP_ERR_INVALID_ARG, TAG, "heater duration or temperature profile are empty and cannot be larger than 10, get data by heater profile failed");
+    }
+
+    /* attempt to read adc signals */
+    ESP_RETURN_ON_ERROR( bme680_get_adc_signals_by_heater_profile(handle, profile_index, &adc_data), TAG, "read adc signals failed" );
 
     /* initialize data structure */
     data->air_temperature       = bme680_compensate_temperature(handle, adc_data.temperature);
@@ -1292,6 +1438,51 @@ esp_err_t bme680_set_iir_filter(bme680_handle_t handle, const bme680_iir_filters
 
     /* attempt to write configuration register */
     ESP_RETURN_ON_ERROR( bme680_set_configuration_register(handle, config_reg), TAG, "write configuration register for set IIR filter failed" );
+
+    return ESP_OK;
+}
+
+esp_err_t bme680_get_standby_time(bme680_handle_t handle, bme680_standby_times_t *const standby_time) {
+    bme680_config_register_t   config_reg;
+    bme680_control_gas1_register_t gas1_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR( bme680_get_configuration_register(handle, &config_reg), TAG, "read configuration register for get stand-by time failed" );
+
+    /* attempt to read gas 1 register */
+    ESP_RETURN_ON_ERROR( bme680_get_control_gas1_register(handle, &gas1_reg), TAG, "read control gas 1 register for get stand-by time failed" );
+
+    /* set standby time */
+    *standby_time = (bme680_standby_times_t)(gas1_reg.bits.standby_period_msb<<3 | config_reg.bits.standby_period_lsb);
+
+    return ESP_OK;
+}
+
+esp_err_t bme680_set_standby_time(bme680_handle_t handle, const bme680_standby_times_t standby_time) {
+    bme680_config_register_t   config_reg;
+    bme680_control_gas1_register_t gas1_reg;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt to read configuration register */
+    ESP_RETURN_ON_ERROR( bme680_get_configuration_register(handle, &config_reg), TAG, "read configuration register for set stand-by time failed" );
+
+    /* attempt to read gas 1 register */
+    ESP_RETURN_ON_ERROR( bme680_get_control_gas1_register(handle, &gas1_reg), TAG, "read control gas 1 register for set stand-by time failed" );
+
+    /* set standby time */
+    gas1_reg.bits.standby_period_msb = standby_time>>3 & 1;
+    config_reg.bits.standby_period_lsb = standby_time & 0b111;
+
+    /* attempt to write configuration register */
+    ESP_RETURN_ON_ERROR( bme680_set_configuration_register(handle, config_reg), TAG, "write configuration register for set stand-by time failed" );
+
+    /* attempt to write gas 1 register */
+    ESP_RETURN_ON_ERROR( bme680_set_control_gas1_register(handle, gas1_reg), TAG, "write control gas 1 register for set stand-by time failed" );
 
     return ESP_OK;
 }

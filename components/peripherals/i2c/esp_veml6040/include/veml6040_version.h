@@ -43,7 +43,7 @@ extern "C" {
 
 #define VEML6040_COMPONENT_NAME              "esp_veml6040"
 /** Version release date  */
-#define VEML6040_FW_VERSION_DATE             "2025-04-04"
+#define VEML6040_FW_VERSION_DATE             "2025-04-10"
 /** Major version number (X.x.x) */
 #define VEML6040_FW_VERSION_MAJOR            1
 /** Minor version number (x.X.x) */
@@ -51,9 +51,9 @@ extern "C" {
 /** Patch version number (x.x.X) */
 #define VEML6040_FW_VERSION_PATCH            6
 /** Semantic version number (X.X.X-X) */
-#define VEML6040_FW_SEMANTIC_VERSION         "1.2.6-22"
+#define VEML6040_FW_SEMANTIC_VERSION         "1.2.6-23"
 /** Git version hash */
-#define VEML6040_FW_GIT_SHORT_SHA            "1de286d"
+#define VEML6040_FW_GIT_SHORT_SHA            "856d8ae"
 
 
 /**

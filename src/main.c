@@ -80,6 +80,7 @@
 #include <hdc1080_task.h>
 #include <hmc5883l_task.h>
 #include <ina226_task.h>
+#include <ina228_task.h>
 #include <ltr390uv_task.h>
 #include <mlx90614_task.h>
 #include <mmc56x3_task.h>
@@ -95,6 +96,9 @@
 #include <ds18b20_task.h>
 
 /* spi component tasks */
+
+/* schedule tasks */
+#include <time_into_interval_task.h>
 
 /* utilities tasks */
 #include <uuid_task.h>
@@ -117,6 +121,7 @@ typedef enum i2c_components_tag {
     I2C_COMPONENT_HDC1080,
     I2C_COMPONENT_HMC5883L,
     I2C_COMPONENT_INA226,
+    I2C_COMPONENT_INA228,
     I2C_COMPONENT_LTR390UV,
     I2C_COMPONENT_MLX90614,
     I2C_COMPONENT_MMC56X3,
@@ -150,6 +155,12 @@ typedef enum utils_components_tag {
     UTILS_COMPONENT_UUID,
 } utils_components_t;
 
+/**
+ * @brief Schedule components examples enumerator.
+ */
+typedef enum sch_components_tag {
+    SCH_COMPONENT_TIME_INTO_INTERVAL,
+} sch_components_t;
 
 // initialize master i2c 0 bus configuration
 i2c_master_bus_config_t  i2c0_bus_cfg = I2C0_MASTER_CONFIG_DEFAULT;
@@ -167,6 +178,7 @@ spi_bus_config_t         spi1_bus_cfg = SPI1_MASTER_CONFIG_DEFAULT;
 spi_device_handle_t      spi1_dev_hdl;
 bool                     spi1_component_tasked = false;
 
+bool                     sch_component_tasked = false;
 bool                     utils_component_tasked = false;
 
 esp_err_t i2c_master_bus_detect_devices(i2c_master_bus_handle_t handle) {
@@ -201,6 +213,36 @@ esp_err_t i2c_master_bus_detect_devices(i2c_master_bus_handle_t handle) {
 
 /**
  * @brief Creates a task pinned to the application core (1) by task function
+ * and task name to run an schedule component example.
+ * 
+ * @param task Task function reference.
+ * @param name Task reference name.
+ */
+static inline void sch_task_create(TaskFunction_t task, const char* name) {
+    /*  
+        note: only one task can run at a time
+    */
+
+    /* validate utilities component flag */
+    if(sch_component_tasked == true) {
+        ESP_LOGE(APP_TAG, "A schedule component sample is already running, failed to create schedule task");
+        return;
+    }
+    /* create task pinned to the app core */
+    xTaskCreatePinnedToCore( 
+        task,
+        name, 
+        SCH_TASK_STACK_SIZE, 
+        NULL, 
+        SCH_TASK_PRIORITY, 
+        NULL, 
+        APP_CPU_NUM );
+    /* set schedule component flag */
+    sch_component_tasked = true;
+}
+
+/**
+ * @brief Creates a task pinned to the application core (1) by task function
  * and task name to run an utilities component example.
  * 
  * @param task Task function reference.
@@ -208,12 +250,12 @@ esp_err_t i2c_master_bus_detect_devices(i2c_master_bus_handle_t handle) {
  */
 static inline void utils_task_create(TaskFunction_t task, const char* name) {
     /*  
-        note: only one task on the one wire master bus 0 can run at a time
+        note: only one task can run at a time
     */
 
     /* validate utilities component flag */
     if(utils_component_tasked == true) {
-        ESP_LOGE(APP_TAG, "A utilities component sample is already running on one wire master bus 0, failed to create owb0 task");
+        ESP_LOGE(APP_TAG, "A utilities component sample is already running, failed to create utilities task");
         return;
     }
     /* create task pinned to the app core */
@@ -291,6 +333,25 @@ static inline void i2c0_task_create(TaskFunction_t task, const char* name) {
         APP_CPU_NUM );
     /* set i2c0 component flag */
     i2c0_component_tasked = true;
+}
+
+/**
+ * @brief SCH example to run in the application by component name.
+ * 
+ * @param component SCH component example to run in the application
+ */
+static inline void sch_component_example_start(const sch_components_t component) {
+    /*  
+        device task functions use a common naming nomenclature
+        for owb, i2c and adc peripherals, as an example: utils_[device]_task
+
+        note: only one utilities 0 task can run at a time
+     */
+    switch(component) {
+        case SCH_COMPONENT_TIME_INTO_INTERVAL:
+            sch_task_create(sch_time_into_interval_task, SCH_TIME_INTO_INTERVAL_TASK_NAME);
+            break;
+    }
 }
 
 /**
@@ -400,6 +461,10 @@ static inline void i2c0_component_example_start(const i2c_components_t component
             /* starts ina226 task */
             i2c0_task_create(i2c0_ina226_task, I2C0_INA226_TASK_NAME);
             break;
+        case I2C_COMPONENT_INA228:
+            /* starts ina228 task */
+            i2c0_task_create(i2c0_ina228_task, I2C0_INA228_TASK_NAME);
+            break;
         case I2C_COMPONENT_LTR390UV:
             /* starts ltr390uv task */
             i2c0_task_create(i2c0_ltr390uv_task, I2C0_LTR390UV_TASK_NAME);
@@ -489,7 +554,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
     //i2c0_component_example_start(I2C_COMPONENT_AS3935);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
-    //i2c0_component_example_start(I2C_COMPONENT_BME680);
+    i2c0_component_example_start(I2C_COMPONENT_BME680);
     //i2c0_component_example_start(I2C_COMPONENT_BMP280);
     //i2c0_component_example_start(I2C_COMPONENT_BMP390);
     //i2c0_component_example_start(I2C_COMPONENT_CCS811);
@@ -497,6 +562,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_HDC1080);
     //i2c0_component_example_start(I2C_COMPONENT_HMC5883L);
     //i2c0_component_example_start(I2C_COMPONENT_INA226);
+    //i2c0_component_example_start(I2C_COMPONENT_INA228);
     //i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
     //i2c0_component_example_start(I2C_COMPONENT_MLX90614);
     //i2c0_component_example_start(I2C_COMPONENT_MMC56X3);
@@ -510,5 +576,7 @@ void app_main( void ) {
 
     //owb0_component_example_start(OWB_COMPONENT_DS18B20);
 
-    utils_component_example_start(UTILS_COMPONENT_UUID);
+    //sch_component_example_start(SCH_COMPONENT_TIME_INTO_INTERVAL);
+
+    //utils_component_example_start(UTILS_COMPONENT_UUID);
 }

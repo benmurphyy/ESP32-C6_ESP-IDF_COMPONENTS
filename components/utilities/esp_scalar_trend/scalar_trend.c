@@ -70,7 +70,7 @@ static inline double q_inv(const double x) {
 	double tempo, xp, xa = x;
 	int i;
 	
-	double c[4] = {2.515517,0.802853,0.010328,0.0};
+	double c[4] = {2.515517, 0.802853, 0.010328, 0.0};
 	double d[4] = {1.0, 1.432788, 0.189269, 0.001308};
 	
 	if(xa<=0.0)
