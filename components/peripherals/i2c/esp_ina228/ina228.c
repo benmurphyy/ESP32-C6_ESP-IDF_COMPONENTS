@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// https://github.com/cybergear-robotics/ina226/blob/master/ina226.c
+// https://github.com/RobTillaart/INA228/blob/master/INA228.cpp
 /**
  * @file ina226.c
  *
@@ -46,17 +46,26 @@
 
 
 #define INA228_REG_CONFIG               (0x00)
-#define INA228_REG_SHUNT_V              (0x01)
-#define INA228_REG_BUS_V                (0x02)
-#define INA228_REG_POWER                (0x03)
-#define INA228_REG_CURRENT              (0x04)
-#define INA228_REG_CALIBRATION          (0x05)
-#define INA228_REG_MSK_ENA              (0x06)
-#define INA228_REG_MANU_ID              (0xfe)
-#define INA228_REG_DIE_ID               (0xff)
+#define INA228_REG_ADC_CONFIG           (0x01)
+#define INA228_REG_SHUNT_CAL            (0x02)
+#define INA228_REG_SHUNT_TEMP_COEF      (0x03)
+#define INA228_REG_VOLT_SHUNT           (0x04)
+#define INA228_REG_VOLT_BUS             (0x05)
+#define INA228_REG_DIE_TEMP             (0x06)
+#define INA228_REG_CURRENT              (0x07)
+#define INA228_REG_POWER                (0x08)
+#define INA228_REG_ENERGY               (0x09)
+#define INA228_REG_CHARGE               (0x0a)
+#define INA228_REG_DIAG_ALERT           (0x0b)
+#define INA228_REG_SHUNT_OVL_THRESH     (0x0c)
+#define INA228_REG_SHUNT_UVL_THRESH     (0x0d)
+#define INA228_REG_BUS_OVL_THRESH       (0x0e)
+#define INA228_REG_BUS_UVL_THRESH       (0x0f)
+#define INA228_REG_TEMP_OVL_THRESH      (0x10)
+#define INA228_REG_POWER_OVL_THRESH     (0x11)
+#define INA228_REG_MANU_ID              (0x3e)
+#define INA228_REG_DEVICE_ID            (0x3f)
 
-#define INA228_DEF_CONFIG               0x399f
-//#define INA228_ASUKIAAA_DEFAULT_CONFIG  0x4127
 
 #define INA228_MIN_SHUNT_RESISTANCE     (0.001)         /*!< minimum allowable shunt resistance in ohms */
 #define INA228_MAX_SHUNT_VOLTAGE        (81.92 / 1000)  /*!< maximum allowable shunt voltage in volts */
@@ -85,6 +94,26 @@ static const char *TAG = "ina226";
 * functions and subroutines
 */
 
+static inline esp_err_t ina228_i2c_read_uint24_from(ina228_handle_t handle, const uint8_t reg_addr, uint32_t *const uint32) {
+    const bit8_uint8_buffer_t tx = { reg_addr };
+    bit24_uint8_buffer_t rx = { 0 };
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ina228_i2c_read_uint24_from failed" );
+
+    /* set output parameter */
+    //*uint32 = ((uint32_t)rx[0] << 24) | (uint32_t)rx[1] << 16 | (uint32_t)rx[2] << 8 | (uint32_t)rx[3];
+    uint32_t val = 0;
+    //val = (val << 8) | (uint32_t)rx[3];
+    val = (val << 8) | (uint32_t)rx[2];
+    val = (val << 8) | (uint32_t)rx[1];
+    val = (val << 8) | (uint32_t)rx[0];
+    *uint32 = val;
+
+    return ESP_OK;
+}
 
 /**
  * @brief INA228 I2C read halfword from register address transaction.
@@ -163,12 +192,16 @@ esp_err_t ina228_set_configuration_register(ina228_handle_t handle, const ina228
     return ESP_OK;
 }
 
-esp_err_t ina228_get_calibration_register(ina228_handle_t handle, uint16_t *const reg) {
+esp_err_t ina228_get_adc_configuration_register(ina228_handle_t handle, ina228_adc_config_register_t *const reg) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
+    uint16_t cfg;
+
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_CONFIG, reg), TAG, "read calibration register failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_ADC_CONFIG, &cfg), TAG, "read adc configuration register failed" );
+
+    reg->reg = cfg;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
@@ -176,12 +209,14 @@ esp_err_t ina228_get_calibration_register(ina228_handle_t handle, uint16_t *cons
     return ESP_OK;
 }
 
-esp_err_t ina228_set_calibration_register(ina228_handle_t handle, const uint16_t reg) {
+esp_err_t ina228_set_adc_configuration_register(ina228_handle_t handle, const ina228_adc_config_register_t reg) {
+    ina228_adc_config_register_t config = { .reg = reg.reg };
+
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_write_word_to(handle, INA228_REG_CALIBRATION, reg), TAG, "write calibration register failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_write_word_to(handle, INA228_REG_ADC_CONFIG, config.reg), TAG, "write adc configuration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
@@ -189,14 +224,44 @@ esp_err_t ina228_set_calibration_register(ina228_handle_t handle, const uint16_t
     return ESP_OK;
 }
 
-esp_err_t ina228_get_mask_enable_register(ina228_handle_t handle, ina228_mask_enable_register_t *const reg) {
+esp_err_t ina228_get_shunt_calibration_register(ina228_handle_t handle, ina228_shunt_calibration_register_t *const reg) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    uint16_t cfg;
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_SHUNT_CAL, &cfg), TAG, "read shunt calibration register failed" );
+
+    reg->reg = cfg;
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
+    
+    return ESP_OK;
+}
+
+esp_err_t ina228_set_shunt_calibration_register(ina228_handle_t handle, const ina228_shunt_calibration_register_t reg) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( ina228_i2c_write_word_to(handle, INA228_REG_SHUNT_CAL, reg.reg), TAG, "write shunt calibration register failed" );
+
+    /* delay before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
+    
+    return ESP_OK;
+}
+
+esp_err_t ina228_get_diagnostic_alert_register(ina228_handle_t handle, ina228_diagnostic_alert_register_t *const reg) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     uint16_t mske;
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_MSK_ENA, &mske), TAG, "read mask-enable register failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_DIAG_ALERT, &mske), TAG, "read mask-enable register failed" );
 
     reg->reg = mske;
 
@@ -260,26 +325,26 @@ esp_err_t ina228_init(i2c_master_bus_handle_t master_handle, const ina228_config
         return ret;
 }
 
-esp_err_t ina228_calibrate(ina228_handle_t handle, const float max_current, const float shunt_resistance) {
+esp_err_t ina228_shunt_calibration(ina228_handle_t handle, const float max_current, const float shunt_resistance) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    float shunt_volt = max_current * shunt_resistance;
+    ESP_RETURN_ON_FALSE((max_current > 0.001), ESP_ERR_INVALID_ARG, TAG, "invalid maximum current, too low, shunt calibration failed");
+    ESP_RETURN_ON_FALSE((shunt_resistance > INA228_MIN_SHUNT_RESISTANCE), ESP_ERR_INVALID_ARG, TAG, "invalid shunt resistance, too low, shunt calibration failed");
 
-    ESP_RETURN_ON_FALSE((shunt_volt < INA228_MAX_SHUNT_VOLTAGE), ESP_ERR_INVALID_ARG, TAG, "invalid shunt voltage, too high, calibration failed");
-    ESP_RETURN_ON_FALSE((max_current > 0.001), ESP_ERR_INVALID_ARG, TAG, "invalid maximum current, too low, calibration failed");
-    ESP_RETURN_ON_FALSE((shunt_resistance > INA228_MIN_SHUNT_RESISTANCE), ESP_ERR_INVALID_ARG, TAG, "invalid shunt resistance, too low, calibration failed");
+    handle->current_lsb = max_current / powf(2.0f, 19.0f);
 
-    float minimum_lsb = max_current / 32767;
-    float current_lsb = (uint16_t)(minimum_lsb * 100000000);
-    current_lsb /= 100000000;
-    current_lsb /= 0.0001;
-    current_lsb = ceil(current_lsb);
-    current_lsb *= 0.0001;
-    handle->current_lsb = current_lsb;
-    uint16_t cal = (uint16_t)((0.00512) / (current_lsb * shunt_resistance));
+    //  PAGE 31 (8.1.2)
+    float shunt_cal = 13107.2e6 * handle->current_lsb * shunt_resistance;
 
-    ESP_RETURN_ON_ERROR(ina228_set_calibration_register(handle, cal), TAG, "unable to write calibration register, calibration failed");
+    if(handle->dev_config.adc_range == INA228_ADC_RANGE_40_96MV) {
+        shunt_cal *= 4;
+    }
+
+    ina228_shunt_calibration_register_t shunt_cal_reg;
+    shunt_cal_reg.bits.shunt_calibration = (uint16_t)shunt_cal;
+
+    ESP_RETURN_ON_ERROR( ina228_set_shunt_calibration_register(handle, shunt_cal_reg), TAG, "write shunt calibration register failed" );
 
     return ESP_OK;
 }
@@ -288,140 +353,73 @@ esp_err_t ina228_get_shunt_voltage(ina228_handle_t handle, float *const voltage)
     /* validate arguments */
     ESP_ARG_CHECK( handle && voltage );
 
-    uint16_t sig;
+    uint32_t sig;
+    float shunt_lsb = 312.5e-9;  //  312.5 nV
+    if(handle->dev_config.adc_range == INA228_ADC_RANGE_40_96MV) {
+        shunt_lsb = 78.125e-9;     //  78.125 nV
+    }
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_SHUNT_V, &sig), TAG, "read shunt voltage failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_uint24_from(handle, INA228_REG_VOLT_SHUNT, &sig), TAG, "read shunt voltage failed" );
 
-    *voltage = (float)sig * 2.5e-6f; /* fixed to 2.5 uV */
+    int32_t signal = (int32_t)sig >> 4; // remove reserved bits
+
+    //  handle negative values (20 bit)
+    if (signal & 0x00080000) {
+        signal |= 0xFFF00000;
+    }
+
+    *voltage = signal * shunt_lsb;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
 
     return ESP_OK;
-}
-
-esp_err_t ina228_get_triggered_shunt_voltage(ina228_handle_t handle, float *const voltage) {
-    esp_err_t     ret           = ESP_OK;
-    uint64_t      start_time    = esp_timer_get_time();
-    bool          is_data_ready = false;
-    uint16_t      sig;
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle && voltage );
-
-    /* attempt to trigger bus voltage */
-    ESP_RETURN_ON_ERROR( ina228_set_operating_mode(handle, INA228_OP_MODE_TRIG_SHUNT_VOLT), TAG, "unable to trigger shunt voltage, get triggered shunt voltage failed" );
-
-    /* attempt to poll status until data is available or timeout occurs  */
-    do {
-        ina228_mask_enable_register_t mske;
-
-        /* attempt to check if data is ready */
-        ESP_GOTO_ON_ERROR( ina228_get_mask_enable_register(handle, &mske), err, TAG, "unable to read mask-enable register, get triggered shunt voltage failed." );
-
-        is_data_ready = mske.bits.conversion_ready_flag;
-
-        /* delay task before next i2c transaction */
-        vTaskDelay(pdMS_TO_TICKS(INA228_DATA_READY_DELAY_MS));
-
-        /* validate timeout condition */
-        if (ESP_TIMEOUT_CHECK(start_time, (INA228_DATA_POLL_TIMEOUT_MS * 1000)))
-            return ESP_ERR_TIMEOUT;
-    } while (is_data_ready == false);
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_SHUNT_V, &sig), TAG, "unable to read shunt voltage, get triggered shunt voltage failed" );
-
-    *voltage = (float)sig * 2.5e-6f; /* fixed to 2.5 uV */
-
-    /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
-
-    return ESP_OK;
-
-    err:
-        return ret;
 }
 
 esp_err_t ina228_get_bus_voltage(ina228_handle_t handle, float *const voltage) {
     /* validate arguments */
     ESP_ARG_CHECK( handle && voltage );
 
-    uint16_t sig;
+    uint32_t sig;
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_BUS_V, &sig), TAG, "read bus voltage failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_uint24_from(handle, INA228_REG_VOLT_BUS, &sig), TAG, "read bus voltage failed" );
 
-    *voltage = (float)sig * 0.00125f;
+    int32_t signal = (int32_t)sig >> 4; // remove reserved bits
+    float bus_lsb  = 195.3125e-6;  //  195.3125 uV
+
+    *voltage = (float)signal * bus_lsb; /* 195.3125 uV */
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
 
     return ESP_OK;
-}
-
-esp_err_t ina228_get_triggered_bus_voltage(ina228_handle_t handle, float *const voltage) {
-    esp_err_t     ret           = ESP_OK;
-    uint64_t      start_time    = esp_timer_get_time();
-    bool          is_data_ready = false;
-    uint16_t      sig;
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle && voltage );
-
-    /* attempt to trigger bus voltage */
-    ESP_RETURN_ON_ERROR( ina228_set_operating_mode(handle, INA228_OP_MODE_TRIG_BUS_VOLT), TAG, "unable to trigger bus voltage, get triggered bus voltage failed" );
-
-    /* attempt to poll status until data is available or timeout occurs  */
-    do {
-        ina228_mask_enable_register_t mske;
-
-        /* attempt to check if data is ready */
-        ESP_GOTO_ON_ERROR( ina228_get_mask_enable_register(handle, &mske), err, TAG, "unable to read mask-enable register, get triggered bus voltage failed." );
-
-        is_data_ready = mske.bits.conversion_ready_flag;
-
-        /* delay task before next i2c transaction */
-        vTaskDelay(pdMS_TO_TICKS(INA228_DATA_READY_DELAY_MS));
-
-        /* validate timeout condition */
-        if (ESP_TIMEOUT_CHECK(start_time, (INA228_DATA_POLL_TIMEOUT_MS * 1000)))
-            return ESP_ERR_TIMEOUT;
-    } while (is_data_ready == false);
-
-    /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_BUS_V, &sig), TAG, "unable to read bus voltage, get triggered bus voltage failed" );
-
-    *voltage = (float)sig * 0.00125f;
-
-    /* delay before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
-
-    return ESP_OK;
-
-    err:
-        return ret;
 }
 
 esp_err_t ina228_get_current(ina228_handle_t handle, float *const current) {
     /* validate arguments */
     ESP_ARG_CHECK( handle && current );
 
-    uint16_t sig;
+    uint32_t sig;
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_CURRENT, &sig), TAG, "read bus voltage failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_uint24_from(handle, INA228_REG_CURRENT, &sig), TAG, "read bus voltage failed" );
 
-    *current = (float)sig * handle->current_lsb;
+    int32_t signal = (int32_t)sig >> 4; // remove reserved bits
+
+    //  handle negative values (20 bit)
+    if (signal & 0x00080000) {
+        signal |= 0xFFF00000;
+    }
+
+    *current = (float)signal * handle->current_lsb;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
 
     return ESP_OK;
 }
-
-
 
 esp_err_t ina228_get_power(ina228_handle_t handle, float *const power) {
     /* validate arguments */
@@ -430,9 +428,9 @@ esp_err_t ina228_get_power(ina228_handle_t handle, float *const power) {
     uint16_t sig;
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_POWER, &sig), TAG, "read bus voltage failed" );
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_POWER, &sig), TAG, "read power failed" );
 
-    *power = (float)sig * handle->current_lsb * 25;
+    *power = (float)sig * handle->current_lsb * 3.2f;
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA228_CMD_DELAY_MS));
@@ -440,35 +438,51 @@ esp_err_t ina228_get_power(ina228_handle_t handle, float *const power) {
     return ESP_OK;
 }
 
+esp_err_t ina228_get_temperature(ina228_handle_t handle, float *const temperature) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle && temperature );
+
+    uint16_t sig;
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( ina228_i2c_read_word_from(handle, INA228_REG_DIE_TEMP, &sig), TAG, "read temperature failed" );
+
+    float lsb = 7.8125e-3;  //  milli degree Celsius
+
+    *temperature = (float)sig * lsb;
+
+    return ESP_OK;
+}
+
 esp_err_t ina228_get_mode(ina228_handle_t handle, ina228_operating_modes_t *const mode) {
-    ina228_config_register_t config;
+    ina228_adc_config_register_t adc_config;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
-    /* attempt to read configuration register */
-    ESP_RETURN_ON_ERROR( ina228_get_configuration_register(handle, &config), TAG, "read configuration register failed" );
+    /* attempt to read adc configuration register */
+    ESP_RETURN_ON_ERROR( ina228_get_adc_configuration_register(handle, &adc_config), TAG, "read configuration register failed" );
 
     /* set mode */
-    //*mode = config.bits.operating_mode;
+    *mode = adc_config.bits.operating_mode;
 
     return ESP_OK;
 }
 
 esp_err_t ina228_set_mode(ina228_handle_t handle, const ina228_operating_modes_t mode) {
-    ina228_config_register_t config;
+    ina228_adc_config_register_t adc_config;
 
     /* validate arguments */
     ESP_ARG_CHECK( handle );
 
     /* attempt to read configuration register */
-    ESP_RETURN_ON_ERROR( ina228_get_configuration_register(handle, &config), TAG, "read configuration register failed" );
+    ESP_RETURN_ON_ERROR( ina228_get_adc_configuration_register(handle, &adc_config), TAG, "read configuration register failed" );
 
     /* set mode */
-    //config.bits.operating_mode = mode;
+    adc_config.bits.operating_mode = mode;
 
     /* attempt to write configuration register */
-    ESP_RETURN_ON_ERROR( ina228_set_configuration_register(handle, config), TAG, "write configuration register failed" );
+    ESP_RETURN_ON_ERROR( ina228_set_adc_configuration_register(handle, adc_config), TAG, "write configuration register failed" );
 
     return ESP_OK;
 }
@@ -478,6 +492,9 @@ esp_err_t ina228_reset(ina228_handle_t handle) {
     ESP_ARG_CHECK( handle );
 
     ina228_config_register_t config;
+    ina228_adc_config_register_t adc_config;
+
+    /* attempt to read configuration register */
 
     config.bits.reset_enabled = true;
 
@@ -490,15 +507,22 @@ esp_err_t ina228_reset(ina228_handle_t handle) {
     /* attempt to configure device */
     ESP_RETURN_ON_ERROR(ina228_get_configuration_register(handle, &config), TAG, "unable to read configuration register, reset failed");
 
-    //config.bits.operating_mode      = handle->dev_config.operating_mode;
-    //config.bits.averaging_mode      = handle->dev_config.averaging_mode;
-    //config.bits.bus_volt_conv_time  = handle->dev_config.bus_voltage_conv_time;
-    //config.bits.shun_volt_conv_time = handle->dev_config.shunt_voltage_conv_time;
+    /* attempt to configure device */
+    ESP_RETURN_ON_ERROR(ina228_get_adc_configuration_register(handle, &adc_config), TAG, "unable to read adc configuration register, reset failed");
+
+    config.bits.adc_range                   = handle->dev_config.adc_range;
+
+    adc_config.bits.operating_mode          = handle->dev_config.operating_mode;
+    adc_config.bits.averaging_mode          = handle->dev_config.averaging_mode;
+    adc_config.bits.bus_voltage_conv_time   = handle->dev_config.bus_voltage_conv_time;
+    adc_config.bits.shunt_voltage_conv_time = handle->dev_config.shunt_voltage_conv_time;
+    adc_config.bits.temperature_conv_time   = handle->dev_config.temperature_conv_time;
 
     ESP_RETURN_ON_ERROR(ina228_set_configuration_register(handle, config), TAG, "unable to write configuration register, reset failed");
 
-    /* attempt to write calibration factor */
-    ESP_RETURN_ON_ERROR(ina228_calibrate(handle, handle->dev_config.max_current, handle->dev_config.shunt_resistance), TAG, "unable to calibrate device, reset failed");
+    ESP_RETURN_ON_ERROR(ina228_set_adc_configuration_register(handle, adc_config), TAG, "unable to write adc configuration register, reset failed");
+
+    ESP_RETURN_ON_ERROR(ina228_shunt_calibration(handle, handle->dev_config.max_current, handle->dev_config.shunt_resistance), TAG, "unable to write shunt calibration register, reset failed");
 
     return ESP_OK;
 }

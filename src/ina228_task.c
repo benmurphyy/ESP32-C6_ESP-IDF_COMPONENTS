@@ -72,15 +72,18 @@ void i2c0_ina228_task( void *pvParameters ) {
     }
 
     ina228_config_register_t config;
+    ina228_adc_config_register_t adc_config;
     ina228_get_configuration_register(dev_hdl, &config);
-    ESP_LOGI(APP_TAG, "Configuration (0x%04x): %s", config.reg, uint16_to_binary(config.reg));
+    ina228_get_adc_configuration_register(dev_hdl, &adc_config);
+    ESP_LOGI(APP_TAG, "Configuration     (0x%04x): %s", config.reg, uint16_to_binary(config.reg));
+    ESP_LOGI(APP_TAG, "ADC Configuration (0x%04x): %s", adc_config.reg, uint16_to_binary(adc_config.reg));
     
     // task loop entry point
     for ( ;; ) {
         ESP_LOGI(APP_TAG, "######################## INA228 - START #########################");
         
         // handle sensor
-        float bus_voltage, shunt_voltage, power, current;
+        float bus_voltage, shunt_voltage, power, current, temperature;
         esp_err_t result = ina228_get_bus_voltage(dev_hdl, &bus_voltage);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ina228 device read bus voltage failed (%s)", esp_err_to_name(result));
@@ -104,6 +107,12 @@ void i2c0_ina228_task( void *pvParameters ) {
             ESP_LOGE(APP_TAG, "ina228 device power failed (%s)", esp_err_to_name(result));
         } else {
             ESP_LOGI(APP_TAG, "power:           %.2f mW", power * 1000);
+        }
+        result = ina228_get_temperature(dev_hdl, &temperature);
+        if(result != ESP_OK) {
+            ESP_LOGE(APP_TAG, "ina228 device temperature failed (%s)", esp_err_to_name(result));
+        } else {
+            ESP_LOGI(APP_TAG, "temperature:     %.2f C", temperature);
         }
 
         

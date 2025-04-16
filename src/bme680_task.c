@@ -116,14 +116,13 @@ void i2c0_bme680_task( void *pvParameters ) {
         //}
 
         ESP_LOGI(APP_TAG, "Index Air(°C) Dew-Point(°C) Humidity(%%) Pressure(hPa) Gas-Resistance(kΩ) Gas-Range Gas-Valid Gas-Index Heater-Stable IAQ-Score");
-        
+
         for(uint8_t i = 0; i < dev_hdl->dev_config.heater_profile_size; i++) {
             bme680_data_t data;
             result = bme680_get_data_by_heater_profile(dev_hdl, i, &data);
             if(result != ESP_OK) {
                 ESP_LOGE(APP_TAG, "bme680 device read failed (%s)", esp_err_to_name(result));
             }
-            //ESP_LOGI(APP_TAG, "Index Air(°C) Dew-Point(°C) Humidity(%%) Pressure(hPa) Gas-Resistance(kΩ) Gas-Range Gas-Valid Gas-Index Heater-Stable IAQ-Score");
             ESP_LOGI(APP_TAG, "%u    %.2f    %.2f          %.2f         %.2f          %.2f               %u        %s        %u        %s            %u (%s)",
                 i,
                 data.air_temperature,

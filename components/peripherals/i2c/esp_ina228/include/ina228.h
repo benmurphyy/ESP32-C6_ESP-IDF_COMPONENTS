@@ -99,8 +99,9 @@ INA266 Wiring for Voltage & Current
     .averaging_mode             = INA228_AVG_MODE_1,                        \
     .shunt_voltage_conv_time    = INA228_CONV_TIME_50US,                    \
     .bus_voltage_conv_time      = INA228_CONV_TIME_50US,                    \
+    .temperature_conv_time      = INA228_CONV_TIME_50US,                    \
     .operating_mode             = INA228_OP_MODE_CONT_BUS_SHUNT_VOLT_TEMP,  \
-    .shunt_resistance           = 0.002,                                    \
+    .shunt_resistance           = 0.015,                                    \
     .max_current                = 0.5                                       \
     }
 
@@ -170,7 +171,7 @@ typedef enum ina228_adc_conversion_steps_e {
 } ina228_adc_conversion_steps_t;
 
 /**
- * @brief Delay for initial ADC conversion in steps of 2 milliseconds.
+ * @brief .
  */
 typedef enum ina228_adc_range_e {
     INA228_ADC_RANGE_163_84MV = 0,  /* +/- 163.84 mV */
@@ -249,7 +250,7 @@ typedef union __attribute__((packed)) ina228_shunt_temperature_coefficient_regis
 /**
  * @brief Alert configuration and Conversion Ready flag.
  */
-typedef union __attribute__((packed)) ina228_mask_enable_register_u {
+typedef union __attribute__((packed)) ina228_diagnostic_alert_register_u {
     struct {
         bool        memory_checksum_error:1;    /*!<  (bit:0) */
         bool        conversion_ready_flag:1;    /*!<  (bit:1) */
@@ -269,7 +270,7 @@ typedef union __attribute__((packed)) ina228_mask_enable_register_u {
         bool        alert_latch_enable:1;       /*!<  (bit:15) */
     } bits;                  /*!< represents the 16-bit mask/enable register parts in bits. */
     uint16_t reg;           /*!< represents the 16-bit mask/enable register as `uint16_t` */
-} ina228_mask_enable_register_t;
+} ina228_diagnostic_alert_register_t;
 
 /**
  * @brief INA228 device configuration.
@@ -277,13 +278,13 @@ typedef union __attribute__((packed)) ina228_mask_enable_register_u {
 typedef struct ina228_config_s {
     uint16_t                        i2c_address;                /*!< ina228 i2c device address */
     uint32_t                        i2c_clock_speed;            /*!< ina228 i2c device scl clock speed  */
+    ina228_adc_range_t              adc_range;                  /*!< ina228 adc range */
     ina228_averaging_modes_t        averaging_mode;             /*!< ina228 averaging mode */
     ina228_conversion_times_t       shunt_voltage_conv_time;    /*!< ina228 shunt voltage conversion time */
     ina228_conversion_times_t       bus_voltage_conv_time;      /*!< ina228 bus voltage conversion time */
     ina228_conversion_times_t       temperature_conv_time;      /*!< ina228 temperature conversion time */
     ina228_operating_modes_t        operating_mode;             /*!< ina228 operating mode */
     float                           shunt_resistance;           /*!< ina228 shunt resistance, Ohm */
-    //float                           shunt_voltage;              /*!< ina228 shunt voltage, V */
     float                           max_current;                /*!< ina228 maximum expected current, A */
 } ina228_config_t;
 
@@ -326,13 +327,31 @@ esp_err_t ina228_get_configuration_register(ina228_handle_t handle, ina228_confi
 esp_err_t ina228_set_configuration_register(ina228_handle_t handle, const ina228_config_register_t reg);
 
 /**
+ * @brief Reads the ADC configuration register from the INA228.
+ * 
+ * @param handle INA228 device handle.
+ * @param reg INA228 ADC configuration register
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ina228_get_adc_configuration_register(ina228_handle_t handle, ina228_adc_config_register_t *const reg);
+
+/**
+ * @brief Writes the ADC configuration register to the INA228.
+ * 
+ * @param handle INA228 device handle.
+ * @param reg INA228 ADC configuration register
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t ina228_set_adc_configuration_register(ina228_handle_t handle, const ina228_adc_config_register_t reg);
+
+/**
  * @brief Reads the calibration register from the INA228.
  * 
  * @param handle INA228 device handle.
  * @param reg INA228 calibration register
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ina228_get_calibration_register(ina228_handle_t handle, uint16_t *const reg);
+esp_err_t ina228_get_shunt_calibration_register(ina228_handle_t handle, ina228_shunt_calibration_register_t *const reg);
 
 /**
  * @brief Writes the calibration register to the INA228.
@@ -341,7 +360,7 @@ esp_err_t ina228_get_calibration_register(ina228_handle_t handle, uint16_t *cons
  * @param reg INA228 calibration register
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ina228_set_calibration_register(ina228_handle_t handle, const uint16_t reg);
+esp_err_t ina228_set_shunt_calibration_register(ina228_handle_t handle, const ina228_shunt_calibration_register_t reg);
 
 /**
  * @brief Reads the mask/enable register from the INA228.
@@ -350,7 +369,7 @@ esp_err_t ina228_set_calibration_register(ina228_handle_t handle, const uint16_t
  * @param reg INA228 mask/enable register
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t ina228_get_mask_enable_register(ina228_handle_t handle, ina228_mask_enable_register_t *const reg);
+esp_err_t ina228_get_diagnostic_alert_register(ina228_handle_t handle, ina228_diagnostic_alert_register_t *const reg);
 
 /**
  * @brief initializes an INA228 device onto the I2C master bus.
@@ -363,16 +382,6 @@ esp_err_t ina228_get_mask_enable_register(ina228_handle_t handle, ina228_mask_en
 esp_err_t ina228_init(i2c_master_bus_handle_t master_handle, const ina228_config_t *ina228_config, ina228_handle_t *ina228_handle);
 
 /**
- * @brief Calibrates the INA228.
- *
- * @param[in] handle INA228 device handle
- * @param[in] max_current Maximum expected current, A
- * @param[in] shunt_resistance Shunt resistance, Ohm
- * @return ESP_OK on success.
- */
-esp_err_t ina228_calibrate(ina228_handle_t handle, const float max_current, const float shunt_resistance);
-
-/**
  * @brief Reads bus voltage (V) from INA228.
  *
  * @param[in] handle INA228 device handle.
@@ -382,15 +391,6 @@ esp_err_t ina228_calibrate(ina228_handle_t handle, const float max_current, cons
 esp_err_t ina228_get_bus_voltage(ina228_handle_t handle, float *const voltage);
 
 /**
- * @brief Triggers and reads bus voltage (V) from INA228.
- *
- * @param[in] handle INA228 device handle.
- * @param[out] voltage INA228 bus voltage, V.
- * @return ESP_OK on success.
- */
-esp_err_t ina228_get_triggered_bus_voltage(ina228_handle_t handle, float *const voltage);
-
-/**
  * @brief Reads shunt voltage (V) from INA228.
  *
  * @param[in] handle INA228 device handle.
@@ -398,15 +398,6 @@ esp_err_t ina228_get_triggered_bus_voltage(ina228_handle_t handle, float *const 
  * @return ESP_OK on success.
  */
 esp_err_t ina228_get_shunt_voltage(ina228_handle_t handle, float *const voltage);
-
-/**
- * @brief Triggers and reads shunt voltage (V) from INA228.
- *
- * @param[in] handle INA228 device handle.
- * @param[out] voltage INA228 shunt voltage, V.
- * @return ESP_OK on success.
- */
-esp_err_t ina228_get_triggered_shunt_voltage(ina228_handle_t handle, float *const voltage);
 
 /**
  * @brief Reads current (A) from INA228.
@@ -420,17 +411,6 @@ esp_err_t ina228_get_triggered_shunt_voltage(ina228_handle_t handle, float *cons
 esp_err_t ina228_get_current(ina228_handle_t handle, float *const current);
 
 /**
- * @brief Triggers and reads current (A) from INA228.
- *
- * @note This function works properly only after calibration.
- *
- * @param[in] handle INA228 device handle.
- * @param[out] current INA228 current, A.
- * @return ESP_OK on success.
- */
-esp_err_t ina228_get_triggered_current(ina228_handle_t handle, float *const current);
-
-/**
  * @brief Reads power (W) from INA228.
  *
  * @note This function works properly only after calibration.
@@ -440,6 +420,9 @@ esp_err_t ina228_get_triggered_current(ina228_handle_t handle, float *const curr
  * @return ESP_OK on success.
  */
 esp_err_t ina228_get_power(ina228_handle_t handle, float *const power);
+
+esp_err_t ina228_get_temperature(ina228_handle_t handle, float *const temperature);
+
 
 /**
  * @brief Reads operating mode from the INA228.

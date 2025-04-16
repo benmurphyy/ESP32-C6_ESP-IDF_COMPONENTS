@@ -168,7 +168,7 @@ esp_err_t ina226_get_calibration_register(ina226_handle_t handle, uint16_t *cons
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( ina226_i2c_read_word_from(handle, INA226_REG_CONFIG, reg), TAG, "read calibration register failed" );
+    ESP_RETURN_ON_ERROR( ina226_i2c_read_word_from(handle, INA226_REG_CALIBRATION, reg), TAG, "read calibration register failed" );
 
     /* delay before next i2c transaction */
     vTaskDelay(pdMS_TO_TICKS(INA226_CMD_DELAY_MS));
