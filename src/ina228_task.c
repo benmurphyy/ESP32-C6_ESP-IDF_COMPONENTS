@@ -94,13 +94,13 @@ void i2c0_ina228_task( void *pvParameters ) {
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ina228 device read shunt voltage failed (%s)", esp_err_to_name(result));
         } else {
-            ESP_LOGI(APP_TAG, "shunt voltage:   %.2f mV", shunt_voltage * 1000);
+            ESP_LOGI(APP_TAG, "shunt voltage:   %.2f mV", shunt_voltage);
         }
         result = ina228_get_current(dev_hdl, &current);
         if(result != ESP_OK) {
             ESP_LOGE(APP_TAG, "ina228 device current failed (%s)", esp_err_to_name(result));
         } else {
-            ESP_LOGI(APP_TAG, "current:         %.2f mA", current * 1000);
+            ESP_LOGI(APP_TAG, "current:         %.2f mA", current);
         }
         result = ina228_get_power(dev_hdl, &power);
         if(result != ESP_OK) {

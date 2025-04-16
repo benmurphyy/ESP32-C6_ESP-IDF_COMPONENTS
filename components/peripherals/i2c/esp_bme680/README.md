@@ -17,7 +17,7 @@ The component is hosted on github and is located here: <https://github.com/K0I05
 
 ## General Usage
 
-To get started, simply copy the component to your project's `components` folder and reference the `bme680.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.
+To get started, simply copy the component to your project's `components` folder and reference the `bme680.h` header file as an include.  The component includes documentation for the peripheral such as the datasheet, application notes, and/or user manual where applicable.  There are 3 power modes supported by the BME680.  Unfortunately, 2 of three power modes (i.e. SEQUENTIAL and PARRALLEL) are not documented by Bosch and not fully implemented since these modes are not fully understood operationally.  However, the component does support multiple heater profiles through the `bme680_get_data_by_heater_profile` function.
 
 ```text
 components
