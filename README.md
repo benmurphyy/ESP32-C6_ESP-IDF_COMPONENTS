@@ -119,6 +119,7 @@ Supported drivers include the following device peripherals:
 - I2C: [AKM AK8975](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_ak8975>)
 - I2C: [AMS AS3935](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as3935>)
 - I2C: [OSRAM AS7341](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_as7341>)
+- I2C: [Microchip AT24CXXX](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_at24cxxx>)
 - I2C: [ROHM BH1750FVI](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bh1750>)
 - I2C: [Bosch BME680](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bme680>)
 - I2C: [Bosch BMP280](<https://github.com/K0I05/ESP32-S3_ESP-IDF_COMPONENTS/tree/main/components/peripherals/i2c/esp_bmp280>)
