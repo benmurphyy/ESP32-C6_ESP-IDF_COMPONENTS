@@ -54,8 +54,8 @@ extern "C" {
  * public constant definitions
  */
 
-#define I2C_AT24CXXX_DEV_CLK_SPD   UINT32_C(100000) /*!< ahtxx i2c device scl clock frequency (100KHz) */
-#define I2C_AT24CXXX_DEV_ADDR      UINT8_C(0x38)    /*!< ahtxx i2c device address */
+#define I2C_AT24CXXX_DEV_CLK_SPD   UINT32_C(100000) /*!< at24cxxx i2c device scl clock frequency (100KHz) */
+#define I2C_AT24CXXX_DEV_ADDR      UINT8_C(0x50)    /*!< at24cxxx i2c device address */
 
 #define I2C_XFR_TIMEOUT_MS      (500)          //!< I2C transaction timeout in milliseconds
 
@@ -69,7 +69,7 @@ extern "C" {
 #define I2C_AT24C128_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AT24CXXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AT24CXXX_DEV_CLK_SPD,       \
-    .eeprom_type     = AT24CXXX_24C128 }
+    .eeprom_type     = AT24CXXX_AT24C128 }
 
 /**
  * @brief Macro that initializes `at24cxxx_config_t` to default configuration settings for the 256 EEPROM type.
@@ -77,7 +77,7 @@ extern "C" {
 #define I2C_AT24C256_CONFIG_DEFAULT {                  \
     .i2c_address     = I2C_AT24CXXX_DEV_ADDR,          \
     .i2c_clock_speed = I2C_AT24CXXX_DEV_CLK_SPD,       \
-    .eeprom_type     = AT24CXXX_24C256 }
+    .eeprom_type     = AT24CXXX_AT24C256 }
 
 
 
@@ -108,6 +108,7 @@ typedef struct at24cxxx_memory_mapping_s {
     uint16_t page_size_bytes;       /*!< at24cxxx page size in bytes */
     uint16_t number_of_pages;       /*!< at24cxxx number of pages */
     uint16_t max_data_address;      /*!< at24cxxx maximum data word address */
+    uint8_t write_time_ms;          /*!< at24cxxx write time in ms */
 } at24cxxx_memory_mapping_t;
 
 /**
@@ -126,6 +127,7 @@ struct at24cxxx_context_t {
     at24cxxx_config_t           dev_config;    /*!< at24cxxx device configuration */
     i2c_master_dev_handle_t     i2c_handle;    /*!< at24cxxx i2c device handle */
     at24cxxx_memory_mapping_t   memory_map;    /*!< at24cxxx memory map structure */
+    uint8_t                    *buffer;        /*!< at24cxxx data buffer */
 };
 
 /**
@@ -154,16 +156,16 @@ typedef struct at24cxxx_context_t* at24cxxx_handle_t;
 esp_err_t at24cxxx_init(const i2c_master_bus_handle_t master_handle, const at24cxxx_config_t *at24cxxx_config, at24cxxx_handle_t *const at24cxxx_handle);
 
 /**
- * @brief Reads data from AT24CXXX EEPROM.  See datasheet for details.
+ * @brief Reads data from AT24CXXX EEPROM at current address.  See datasheet for details.
  * 
  * @param[in] handle AT24CXXX device handle.
  * @param[out] data AT24CXXX data read.
  * @return esp_err_t ESP_OK on success.
  */
-esp_err_t at24cxxx_read_byte(at24cxxx_handle_t handle, uint8_t *const data);
+esp_err_t at24cxxx_read_current_address(at24cxxx_handle_t handle, uint8_t *const data);
 
 /**
- * @brief Reads data from AT24CXXX EEPROM.  See datasheet for details.
+ * @brief Reads random data from AT24CXXX EEPROM.  See datasheet for details.
  * 
  * @param[in] handle AT24CXXX device handle.
  * @param[in] data_addr AT24CXXX data address to read from.
@@ -172,7 +174,26 @@ esp_err_t at24cxxx_read_byte(at24cxxx_handle_t handle, uint8_t *const data);
  */
 esp_err_t at24cxxx_read_random_byte(at24cxxx_handle_t handle, const uint16_t data_addr, uint8_t *const data);
 
-esp_err_t at24cxxx_read_sequential_bytes(at24cxxx_handle_t handle, const uint16_t data_addr, uint8_t *const data);
+/**
+ * @brief Reads data sequentially from AT24CXXX EEPROM at current address.  See datasheet for details. 
+ * 
+ * @param handle AT24CXXX device handle.
+ * @param data AT24CXXX data to read.
+ * @param size AT24CXXX size of data to read.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t at24cxxx_read_sequential_bytes(at24cxxx_handle_t handle, uint8_t *data, const uint16_t size);
+
+/**
+ * @brief Reads a page of data from AT24CXXX EEPROM.
+ * 
+ * @param handle AT24CXXX device handle.
+ * @param data_addr AT24CXXX data address to read from.
+ * @param data AT24CXXX data to read.
+ * @param size AT24CXXX size of data read.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t at24cxxx_read_page(at24cxxx_handle_t handle, const uint16_t data_addr, uint8_t *data, uint16_t *const size);
 
 /**
  * @brief Writes data to AT24CXXX EEPROM.  See datasheet for details.
@@ -184,11 +205,20 @@ esp_err_t at24cxxx_read_sequential_bytes(at24cxxx_handle_t handle, const uint16_
  */
 esp_err_t at24cxxx_write_byte(at24cxxx_handle_t handle, const uint16_t data_addr, const uint8_t data);
 
-esp_err_t at24cxxx_write_page(at24cxxx_handle_t handle, const uint16_t data_addr, const uint8_t *data);
+/**
+ * @brief Writes a page of data to AT24CXXX EEPROM.
+ * 
+ * @param handle AT24CXXX device handle.
+ * @param data_addr AT24CXXX data address to write to.
+ * @param data AT24CXXX data to write.
+ * @param size AT24CXXX size of data to write.
+ * @return esp_err_t ESP_OK on success.
+ */
+esp_err_t at24cxxx_write_page(at24cxxx_handle_t handle, const uint16_t data_addr, const uint8_t *data, const uint16_t size);
 
 
 /**
- * @brief Erases data from AT24CXXX EEPROM.  See datasheet for details.
+ * @brief Erases data onboard the AT24CXXX EEPROM.  See datasheet for details.
  *
  * @param handle AT24CXXX device handle.
  * @return esp_err_t ESP_OK on success.

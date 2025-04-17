@@ -94,25 +94,6 @@ static const char *TAG = "ina226";
 * functions and subroutines
 */
 
-static inline esp_err_t ina228_i2c_read_from___(ina228_handle_t handle, const uint8_t reg_addr, uint8_t *const byte) {
-    const bit8_uint8_buffer_t tx = { reg_addr };
-    bit24_uint8_buffer_t rx = { 0 };
-
-    /* validate arguments */
-    ESP_ARG_CHECK( handle );
-
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT8_UINT8_BUFFER_SIZE, rx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "ina228_i2c_read_uint24_from failed" );
-
-    /* set output parameter */
-    //uint32_t val = 0;
-    //val = (val << 8) | (uint32_t)rx[2];
-    //val = (val << 8) | (uint32_t)rx[1];
-    //val = (val << 8) | (uint32_t)rx[0];
-    //*uint32 = val;
-
-    return ESP_OK;
-}
-
 /**
  * @brief INA228 I2C read from register address transaction.  This is a write and then read process.
  * 
@@ -134,7 +115,7 @@ static inline esp_err_t ina228_i2c_read_from(ina228_handle_t handle, const uint8
 }
 
 /**
- * @brief INA228 I2C read halfword from register address transaction.
+ * @brief INA228 I2C read halfword (two's compliment) from register address transaction.
  * 
  * @param handle INA228 device handle.
  * @param reg_addr INA228 register address to read from.
@@ -157,7 +138,7 @@ static inline esp_err_t ina228_i2c_read_word_from(ina228_handle_t handle, const 
 }
 
 /**
- * @brief INA228 I2C write halfword to register address transaction.
+ * @brief INA228 I2C write halfword (two's compliment) to register address transaction.
  * 
  * @param handle INA228 device handle.
  * @param reg_addr INA228 register address to write to.
@@ -175,6 +156,15 @@ static inline esp_err_t ina228_i2c_write_word_to(ina228_handle_t handle, const u
                         
     return ESP_OK;
 }
+
+static inline int32_t ina228_20bit_to_int32(const bit24_uint8_buffer_t buffer) {
+    // convert bytes to unsigned 32-bit integer using two's complement
+    uint32_t sig = ((uint32_t)buffer[0] << 24) | ((uint32_t)buffer[1] << 16) | ((uint32_t)buffer[2] << 8) | (uint32_t)buffer[3];
+    // shift right by 12, i.e. 20-bits are interest, and sign value
+    int32_t sigd = (int32_t)sig >> 12;
+    return sigd;
+}
+
 
 esp_err_t ina228_get_configuration_register(ina228_handle_t handle, ina228_config_register_t *const reg) {
     /* validate arguments */
@@ -298,12 +288,12 @@ esp_err_t ina228_init(i2c_master_bus_handle_t master_handle, const ina228_config
 
     /* validate device exists on the master bus */
     esp_err_t ret = i2c_master_probe(master_handle, ina228_config->i2c_address, I2C_XFR_TIMEOUT_MS);
-    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ccs811 device handle initialization failed", ina228_config->i2c_address);
+    ESP_GOTO_ON_ERROR(ret, err, TAG, "device does not exist at address 0x%02x, ina228 device handle initialization failed", ina228_config->i2c_address);
 
     /* validate memory availability for handle */
     ina228_handle_t out_handle;
     out_handle = (ina228_handle_t)calloc(1, sizeof(*out_handle));
-    ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c ini226 device");
+    ESP_GOTO_ON_FALSE(out_handle, ESP_ERR_NO_MEM, err, TAG, "no memory for i2c ini228 device");
 
     /* copy configuration */
     out_handle->dev_config = *ina228_config;
@@ -367,16 +357,6 @@ esp_err_t ina228_shunt_calibration(ina228_handle_t handle, const float max_curre
     return ESP_OK;
 }
 
-static inline int32_t ina228_bit24_to_int32(const bit24_uint8_buffer_t buffer) {
-    int32_t sig = (int32_t)(((0xFF & buffer[0]) << 16) | ((0xFF & buffer[1]) << 8) | (0xFF & buffer[2]) );
-    if ((sig & 0x00800000) > 0) { 
-        sig = (int32_t)((uint32_t)sig|(uint32_t)0xFF000000); 
-    } else { 
-        sig = (int32_t)((uint32_t)sig & (uint32_t)0x00FFFFFF); 
-    }
-    return sig;
-}
-
 esp_err_t ina228_get_shunt_voltage(ina228_handle_t handle, float *const voltage) {
     /* validate arguments */
     ESP_ARG_CHECK( handle && voltage );
@@ -391,7 +371,7 @@ esp_err_t ina228_get_shunt_voltage(ina228_handle_t handle, float *const voltage)
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ina228_i2c_read_from(handle, INA228_REG_VOLT_SHUNT, rx, BIT24_UINT8_BUFFER_SIZE), TAG, "read shunt voltage failed" );
 
-    int32_t sig = ina228_bit24_to_int32(rx);
+    int32_t sig = ina228_20bit_to_int32(rx);
 
     *voltage =(float)sig * shunt_lsb;
 
@@ -410,7 +390,7 @@ esp_err_t ina228_get_bus_voltage(ina228_handle_t handle, float *const voltage) {
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ina228_i2c_read_from(handle, INA228_REG_VOLT_BUS, rx, BIT24_UINT8_BUFFER_SIZE), TAG, "read bus voltage failed" );
  
-    int32_t sig = ina228_bit24_to_int32(rx);
+    int32_t sig = ina228_20bit_to_int32(rx);
 
     float bus_lsb  = 195.3125e-6;  //  195.3125 uV
 
@@ -431,7 +411,7 @@ esp_err_t ina228_get_current(ina228_handle_t handle, float *const current) {
     /* attempt i2c read transaction */
     ESP_RETURN_ON_ERROR( ina228_i2c_read_from(handle, INA228_REG_CURRENT, rx, BIT24_UINT8_BUFFER_SIZE), TAG, "read current failed" );
 
-    int32_t sig = ina228_bit24_to_int32(rx);
+    int32_t sig = ina228_20bit_to_int32(rx);
 
     *current = (float)sig * handle->current_lsb;
 

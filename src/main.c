@@ -70,6 +70,7 @@
 #include <ahtxx_task.h>
 #include <ak8975_task.h>
 #include <as7341_task.h>
+#include <at24cxxx_task.h>
 #include <as3935_task.h>
 #include <bh1750_task.h>
 #include <bme680_task.h>
@@ -85,6 +86,7 @@
 #include <mlx90614_task.h>
 #include <mmc56x3_task.h>
 #include <mpu6050_task.h>
+#include <pct2075_task.h>
 #include <sgp4x_task.h>
 #include <sht4x_task.h>
 #include <ssd1306_task.h>
@@ -111,6 +113,7 @@ typedef enum i2c_components_tag {
     I2C_COMPONENT_AHTXX,
     I2C_COMPONENT_AS7341,
     I2C_COMPONENT_AS3935,
+    I2C_COMPONENT_AT24CXXX,
     I2C_COMPONENT_AK8975,
     I2C_COMPONENT_BH1750,
     I2C_COMPONENT_BME680,
@@ -126,6 +129,7 @@ typedef enum i2c_components_tag {
     I2C_COMPONENT_MLX90614,
     I2C_COMPONENT_MMC56X3,
     I2C_COMPONENT_MPU6050,
+    I2C_COMPONENT_PCT2075,
     I2C_COMPONENT_SGP4X,
     I2C_COMPONENT_SHT4X,
     I2C_COMPONENT_SSD1306,
@@ -421,6 +425,10 @@ static inline void i2c0_component_example_start(const i2c_components_t component
             /* starts as7341 task */
             i2c0_task_create(i2c0_as7341_task, I2C0_AS7341_TASK_NAME);
             break;
+        case I2C_COMPONENT_AT24CXXX:
+            /* starts at24cxxx task */
+            i2c0_task_create(i2c0_at24cxxx_task, I2C0_AT24CXXX_TASK_NAME);
+            break;
         case I2C_COMPONENT_AS3935:
             /* starts as3935 task */
             i2c0_task_create(i2c0_as3935_task, I2C0_AS3935_TASK_NAME);
@@ -480,6 +488,10 @@ static inline void i2c0_component_example_start(const i2c_components_t component
         case I2C_COMPONENT_MPU6050:
             /* starts mpu6050 task */
             i2c0_task_create(i2c0_mpu6050_task, I2C0_MPU6050_TASK_NAME);
+            break;
+        case I2C_COMPONENT_PCT2075:
+            /* starts pct2075 task */
+            i2c0_task_create(i2c0_pct2075_task, I2C0_PCT2075_TASK_NAME);
             break;
         case I2C_COMPONENT_SGP4X:
             /* starts sgp4x task */
@@ -552,6 +564,7 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_AHTXX);
     //i2c0_component_example_start(I2C_COMPONENT_AK8975);
     //i2c0_component_example_start(I2C_COMPONENT_AS7341);
+    i2c0_component_example_start(I2C_COMPONENT_AT24CXXX);
     //i2c0_component_example_start(I2C_COMPONENT_AS3935);
     //i2c0_component_example_start(I2C_COMPONENT_BH1750);
     //i2c0_component_example_start(I2C_COMPONENT_BME680);
@@ -562,11 +575,12 @@ void app_main( void ) {
     //i2c0_component_example_start(I2C_COMPONENT_HDC1080);
     //i2c0_component_example_start(I2C_COMPONENT_HMC5883L);
     //i2c0_component_example_start(I2C_COMPONENT_INA226);
-    i2c0_component_example_start(I2C_COMPONENT_INA228);
+    //i2c0_component_example_start(I2C_COMPONENT_INA228);
     //i2c0_component_example_start(I2C_COMPONENT_LTR390UV);
     //i2c0_component_example_start(I2C_COMPONENT_MLX90614);
     //i2c0_component_example_start(I2C_COMPONENT_MMC56X3);
     //i2c0_component_example_start(I2C_COMPONENT_MPU6050);
+    //i2c0_component_example_start(I2C_COMPONENT_PCT2075);
     //i2c0_component_example_start(I2C_COMPONENT_SGP4X);
     //i2c0_component_example_start(I2C_COMPONENT_SHT4X);
     //i2c0_component_example_start(I2C_COMPONENT_SSD1306);

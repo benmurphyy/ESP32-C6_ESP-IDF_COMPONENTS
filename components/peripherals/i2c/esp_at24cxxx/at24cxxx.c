@@ -75,12 +75,17 @@ static const char* TAG = "at24cxxx";
 /**
  * @brief AT24CXXX memory layout by EEPROM type.
  */
-static const at24cxxx_memory_mapping_t at24cxxx_memory_maps[5] = { 
-    { AT24CXXX_AT24C32,  32,  32768,  4096,  32,  128, (128 * 32) - 1  },   // AT24C32
-    { AT24CXXX_AT24C64,  64,  64536,  8192,  32,  256, (128 * 64) - 1  },   // AT24C64
-    { AT24CXXX_AT24C128, 128, 131072, 16384, 64,  256, (128 * 128) - 1 },   // AT24C128
-    { AT24CXXX_AT24C256, 256, 262144, 32768, 64,  512, (128 * 256) - 1 },   // AT24C256
-    { AT24CXXX_AT24C512, 512, 524288, 65536, 128, 512, (128 * 512) - 1 },   // AT24C512
+static const at24cxxx_memory_mapping_t at24cxxx_memory_maps[5] = {
+    { .eeprom_type=AT24CXXX_AT24C32,  .memory_size_kbits=32,  .memory_size_bits=32768,  .memory_size_bytes=4096,  
+        .page_size_bytes=32,  .number_of_pages=128, .max_data_address=(128 * 32) - 1,  .write_time_ms=10+5 },  // AT24C32
+    { .eeprom_type=AT24CXXX_AT24C64,  .memory_size_kbits=64,  .memory_size_bits=64536,  .memory_size_bytes=8192,  
+        .page_size_bytes=32,  .number_of_pages=256, .max_data_address=(128 * 64) - 1,  .write_time_ms=10+5 },  // AT24C64
+    { .eeprom_type=AT24CXXX_AT24C128, .memory_size_kbits=128, .memory_size_bits=131072, .memory_size_bytes=16384, 
+        .page_size_bytes=64,  .number_of_pages=256, .max_data_address=(128 * 128) - 1, .write_time_ms=5+5 },   // AT24C128
+    { .eeprom_type=AT24CXXX_AT24C256, .memory_size_kbits=256, .memory_size_bits=262144, .memory_size_bytes=32768, 
+        .page_size_bytes=64,  .number_of_pages=512, .max_data_address=(128 * 256) - 1, .write_time_ms=5+5 },   // AT24C256
+    { .eeprom_type=AT24CXXX_AT24C512, .memory_size_kbits=512, .memory_size_bits=524288, .memory_size_bytes=65536, 
+        .page_size_bytes=128, .number_of_pages=512, .max_data_address=(128 * 512) - 1, .write_time_ms=5+5 },   // AT24C512
 };
 
 /**
@@ -91,9 +96,33 @@ static const at24cxxx_memory_mapping_t at24cxxx_memory_maps[5] = {
  * function and subroutine declarations
  */
 
+ static inline esp_err_t at24cxxx_i2c_read(at24cxxx_handle_t handle, uint8_t *data, const uint16_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_receive(handle->i2c_handle, data, size, I2C_XFR_TIMEOUT_MS), TAG, "at24cxxx_i2c_read failed" );
+
+    return ESP_OK;
+}
+
+static inline esp_err_t at24cxxx_i2c_read_from(at24cxxx_handle_t handle, const uint16_t reg_addr, uint8_t *data, uint16_t *const size) {
+    const bit16_uint8_buffer_t tx = { (uint8_t)((reg_addr >> 8) & 0xff), (uint8_t)(reg_addr & 0xff) }; // msb, lsb (register)
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt i2c read transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, data, handle->memory_map.page_size_bytes, I2C_XFR_TIMEOUT_MS), TAG, "at24cxxx_i2c_read_from failed" );
+
+    /* set output parameters */
+    *size = handle->memory_map.page_size_bytes;
+
+    return ESP_OK;
+}
 
 /**
- * @brief AT24CXXX I2C read halfword from register address transaction.
+ * @brief AT24CXXX I2C read byte from word register address transaction.
  * 
  * @param handle AT24CXXX device handle.
  * @param reg_addr AT24CXXX word register address to read from.
@@ -108,10 +137,37 @@ static inline esp_err_t at24cxxx_i2c_read_byte_from(at24cxxx_handle_t handle, co
     ESP_ARG_CHECK( handle );
 
     /* attempt i2c read transaction */
-    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "at24cxxx_i2c_read_word_from failed" );
+    ESP_RETURN_ON_ERROR( i2c_master_transmit_receive(handle->i2c_handle, tx, BIT16_UINT8_BUFFER_SIZE, rx, BIT8_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "at24cxxx_i2c_read_byte_from failed" );
 
     /* set output parameter */
     *byte = rx[0];
+
+    return ESP_OK;
+}
+
+static inline esp_err_t at24cxxx_i2c_write_to(at24cxxx_handle_t handle, const uint16_t reg_addr, const uint8_t *data, const uint16_t size) {
+    uint16_t idx = 0;
+
+    /* validate arguments */
+    ESP_ARG_CHECK( handle && data );
+
+    /* reset data buffer */
+    memset(handle->buffer, 0, handle->memory_map.page_size_bytes + 2);
+
+    /* append register address to data buffer */
+    handle->buffer[idx++] = (uint8_t)((reg_addr >> 8) & 0xff);  // msb
+    handle->buffer[idx++] = (uint8_t)(reg_addr & 0xff);         // lsb
+
+    /* append data to data buffer */
+    for(uint16_t i = 0; i < size; i++) {
+        handle->buffer[idx++] = data[i];
+    }
+
+    /* attempt i2c write transaction */
+    ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, handle->buffer, size + 2, I2C_XFR_TIMEOUT_MS), TAG, "at24cxxx_i2c_write_to, i2c write failed" );
+                 
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(handle->memory_map.write_time_ms));
 
     return ESP_OK;
 }
@@ -133,6 +189,9 @@ static inline esp_err_t at24cxxx_i2c_write_byte_to(at24cxxx_handle_t handle, con
     /* attempt i2c write transaction */
     ESP_RETURN_ON_ERROR( i2c_master_transmit(handle->i2c_handle, tx, BIT24_UINT8_BUFFER_SIZE, I2C_XFR_TIMEOUT_MS), TAG, "at24cxxx_i2c_write_word_to, i2c write failed" );
                         
+    /* delay task before next i2c transaction */
+    vTaskDelay(pdMS_TO_TICKS(handle->memory_map.write_time_ms));
+
     return ESP_OK;
 }
 
@@ -154,6 +213,11 @@ esp_err_t at24cxxx_init(const i2c_master_bus_handle_t master_handle, const at24c
 
     /* copy configuration */
     out_handle->dev_config = *at24cxxx_config;
+    out_handle->memory_map = at24cxxx_memory_maps[out_handle->dev_config.eeprom_type];
+
+    /* validate memory availability for device buffer */
+    out_handle->buffer = (uint8_t*)calloc(1, out_handle->memory_map.page_size_bytes + 2);
+    ESP_GOTO_ON_FALSE(out_handle->buffer, ESP_ERR_NO_MEM, err_handle, TAG, "no memory for i2c at24cxxx device buffer, init failed");
 
     /* set i2c device configuration */
     const i2c_device_config_t i2c_dev_conf = {
@@ -166,9 +230,6 @@ esp_err_t at24cxxx_init(const i2c_master_bus_handle_t master_handle, const at24c
     if (out_handle->i2c_handle == NULL) {
         ESP_GOTO_ON_ERROR(i2c_master_bus_add_device(master_handle, &i2c_dev_conf, &out_handle->i2c_handle), err_handle, TAG, "i2c new bus for init failed");
     }
-
-    /* configure EEPROM settings */
-    out_handle->memory_map = at24cxxx_memory_maps[out_handle->dev_config.eeprom_type];
 
     /* set device handle */
     *at24cxxx_handle = out_handle;
@@ -188,6 +249,16 @@ esp_err_t at24cxxx_init(const i2c_master_bus_handle_t master_handle, const at24c
         return ret;
 }
 
+esp_err_t at24cxxx_read_current_address(at24cxxx_handle_t handle, uint8_t *const data) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt read i2c transaction */
+    ESP_RETURN_ON_ERROR( at24cxxx_i2c_read(handle, data, 1), TAG, "i2c read current address failed" );
+
+    return ESP_OK;
+}
+
 esp_err_t at24cxxx_read_random_byte(at24cxxx_handle_t handle, const uint16_t data_addr, uint8_t *const data) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
@@ -197,8 +268,25 @@ esp_err_t at24cxxx_read_random_byte(at24cxxx_handle_t handle, const uint16_t dat
     /* attempt read i2c transaction */
     ESP_RETURN_ON_ERROR( at24cxxx_i2c_read_byte_from(handle, data_addr, data), TAG, "i2c read from word address 0x%04x failed", data_addr );
 
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AT24CXXX_READ_DELAY_MS));
+    return ESP_OK;
+}
+
+esp_err_t at24cxxx_read_sequential_bytes(at24cxxx_handle_t handle, uint8_t *data, const uint16_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt read i2c transaction */
+    ESP_RETURN_ON_ERROR( at24cxxx_i2c_read(handle, data, size), TAG, "i2c sequential read failed" );
+
+    return ESP_OK;
+}
+
+esp_err_t at24cxxx_read_page(at24cxxx_handle_t handle, const uint16_t data_addr, uint8_t *data, uint16_t *const size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    /* attempt read i2c transaction */
+    ESP_RETURN_ON_ERROR( at24cxxx_i2c_read_from(handle, data_addr, data, size), TAG, "i2c page read failed" );
 
     return ESP_OK;
 }
@@ -212,8 +300,19 @@ esp_err_t at24cxxx_write_byte(at24cxxx_handle_t handle, const uint16_t data_addr
     /* attempt write i2c transaction */
     ESP_RETURN_ON_ERROR( at24cxxx_i2c_write_byte_to(handle, data_addr, data), TAG, "i2c write to word address 0x%04x failed", data_addr );
 
-    /* delay task before next i2c transaction */
-    vTaskDelay(pdMS_TO_TICKS(AT24CXXX_WRITE_DELAY_MS));
+    return ESP_OK;
+}
+
+esp_err_t at24cxxx_write_page(at24cxxx_handle_t handle, const uint16_t data_addr, const uint8_t *data, const uint16_t size) {
+    /* validate arguments */
+    ESP_ARG_CHECK( handle );
+
+    ESP_RETURN_ON_FALSE((data_addr <= handle->memory_map.max_data_address), ESP_ERR_INVALID_ARG, TAG, "data address 0x%04x is out of range", data_addr);
+    ESP_RETURN_ON_FALSE((data_addr+size <= handle->memory_map.max_data_address), ESP_ERR_INVALID_ARG, TAG, "data address 0x%04x is out of range for page size", data_addr);
+    ESP_RETURN_ON_FALSE((size <= handle->memory_map.page_size_bytes), ESP_ERR_INVALID_ARG, TAG, "page size is out of range");
+
+    /* attempt write i2c transaction */
+    ESP_RETURN_ON_ERROR( at24cxxx_i2c_write_to(handle, data_addr, data, size), TAG, "i2c write to page address 0x%04x failed", data_addr );
 
     return ESP_OK;
 }
@@ -221,6 +320,20 @@ esp_err_t at24cxxx_write_byte(at24cxxx_handle_t handle, const uint16_t data_addr
 esp_err_t at24cxxx_erase(at24cxxx_handle_t handle) {
     /* validate arguments */
     ESP_ARG_CHECK( handle );
+
+    /* iterate through each page */
+    for(uint16_t i = 0; i < handle->memory_map.number_of_pages; i++) {
+        uint8_t buffer[handle->memory_map.page_size_bytes];
+
+        /* set data address */
+        uint16_t data_addr = (i * handle->memory_map.page_size_bytes);
+
+        /* copy 0xff to page bytes */
+        memset(buffer, 0xff, handle->memory_map.page_size_bytes);
+
+        /* attempt to write page */
+        ESP_RETURN_ON_ERROR(at24cxxx_i2c_write_to(handle, data_addr, buffer, handle->memory_map.page_size_bytes), TAG, "unable to write page, erase failed");
+    }
 
     return ESP_OK;
 }

@@ -1,4 +1,4 @@
-# Microchip AT24C Series of EEPROM - Work in Progress
+# Microchip AT24C Series of EEPROM
 
 [![K0I05](https://img.shields.io/badge/K0I05-a9a9a9?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODgiIGhlaWdodD0iMTg3Ij48cGF0aCBmaWxsPSIjNDU0QjU0IiBkPSJNMTU1LjU1NSAyMS45M2MxOS4yNzMgMTUuOTggMjkuNDcyIDM5LjM0NSAzMi4xNjggNjMuNzg5IDEuOTM3IDIyLjkxOC00LjU1MyA0Ni42Ni0xOC44NDggNjQuNzgxQTUwOS40NzggNTA5LjQ3OCAwIDAgMSAxNjUgMTU1bC0xLjQ4NCAxLjg4M2MtMTMuMTk2IDE2LjUzMS0zNS41NTUgMjcuMjE1LTU2LjMzOSAyOS45MDItMjguMzEyIDIuOC01Mi4yNTUtNC43MzctNzQuNzMyLTIxLjcxNUMxMy4xNzIgMTQ5LjA5IDIuOTczIDEyNS43MjUuMjc3IDEwMS4yODEtMS42NiA3OC4zNjMgNC44MyA1NC42MjEgMTkuMTI1IDM2LjVBNTA5LjQ3OCA1MDkuNDc4IDAgMCAxIDIzIDMybDEuNDg0LTEuODgzQzM3LjY4IDEzLjU4NiA2MC4wNCAyLjkwMiA4MC44MjMuMjE1YzI4LjMxMi0yLjggNTIuMjU1IDQuNzM3IDc0LjczMiAyMS43MTVaIi8+PHBhdGggZmlsbD0iI0ZERkRGRCIgZD0iTTExOS44NjcgNDUuMjdDMTI4LjkzMiA1Mi4yNiAxMzMuODIgNjMgMTM2IDc0Yy42MyA0Ljk3Mi44NDIgOS45NTMuOTUzIDE0Ljk2LjA0NCAxLjkxMS4xMjIgMy44MjIuMjAzIDUuNzMxLjM0IDEyLjIxLjM0IDEyLjIxLTMuMTU2IDE3LjMwOWE5NS42MDQgOTUuNjA0IDAgMCAxLTQuMTg4IDMuNjI1Yy00LjUgMy43MTctNi45NzQgNy42ODgtOS43MTcgMTIuODAzQzEwNi45NCAxNTIuNzkyIDEwNi45NCAxNTIuNzkyIDk3IDE1N2MtMy40MjMuNTkyLTUuODAxLjY4NS04Ljg3OS0xLjA3NC05LjgyNi03Ljg4LTE2LjAzNi0xOS41OS0yMS44NTgtMzAuNTEyLTIuNTM0LTQuNTc1LTUuMDA2LTcuMjEtOS40NjYtMTAuMDItMy43MTQtMi44ODItNS40NS02Ljk4Ni02Ljc5Ny0xMS4zOTQtLjU1LTQuODg5LS41NjEtOS4zMTYgMS0xNCAuMDkzLTEuNzYzLjE4Mi0zLjUyNy4yMzktNS4yOTIuNDkxLTEzLjg4NCAzLjg2Ni0yNy4wNTcgMTQuMTU2LTM3LjAyOCAxNy4yMTgtMTQuMzM2IDM1Ljg1OC0xNS4wNjYgNTQuNDcyLTIuNDFaIi8+PHBhdGggZmlsbD0iI0M2RDVFMCIgZD0iTTEwOSAzOWMxMS43MDMgNS4yNTUgMTkuMjA2IDEzLjE4NiAyNC4yOTMgMjUuMDA0IDIuODU3IDguMjQgMy40NyAxNi4zMTYgMy42NiAyNC45NTYuMDQ0IDEuOTExLjEyMiAzLjgyMi4yMDMgNS43MzEuMzQgMTIuMjEuMzQgMTIuMjEtMy4xNTYgMTcuMzA5YTk1LjYwNCA5NS42MDQgMCAwIDEtNC4xODggMy42MjVjLTQuNSAzLjcxNy02Ljk3NCA3LjY4OC05LjcxNyAxMi44MDNDMTA2LjgwNCAxNTMuMDQxIDEwNi44MDQgMTUzLjA0MSA5NyAxNTdjLTIuMzMyLjA3OC00LjY2OC4wOS03IDBsMi4xMjUtMS44NzVjNS40My01LjQ0NSA4Ljc0NC0xMi41NzcgMTEuNzU0LTE5LjU1OWEzNDkuNzc1IDM0OS43NzUgMCAwIDEgNC40OTYtOS44NzlsMS42NDgtMy41NWMyLjI0LTMuNTU1IDQuNDEtNC45OTYgNy45NzctNy4xMzcgMi4zMjMtMi42MSAyLjMyMy0yLjYxIDQtNWwtMyAxYy0yLjY4LjE0OC01LjMxOS4yMy04IC4yNWwtMi4xOTUuMDYzYy01LjI4Ny4wMzktNS4yODcuMDM5LTcuNzc4LTEuNjUzLTEuNjY2LTIuNjkyLTEuNDUzLTQuNTYtMS4wMjctNy42NiAyLjM5NS00LjM2MiA0LjkyNC04LjA0IDkuODI4LTkuNTcgMi4zNjQtLjQ2OCA0LjUxNC0uNTI4IDYuOTIyLS40OTNsMi40MjIuMDI4TDEyMSA5MmwtMS0yYTkyLjc1OCA5Mi43NTggMCAwIDEtLjM2LTQuNTg2QzExOC42IDY5LjYzMiAxMTYuNTE3IDU2LjA5NCAxMDQgNDVjLTUuOTA0LTQuNjY0LTExLjYtNi4wODgtMTktNyA3LjU5NC00LjI2NCAxNi4yMjMtMS44MSAyNCAxWiIvPjxwYXRoIGZpbGw9IiM0OTUwNTgiIGQ9Ik03NyA5MmM0LjYxMyAxLjY3MSA3LjI2IDMuOTQ1IDEwLjA2MyA3LjkzOCAxLjA3OCAzLjUyMy45NzYgNS41NDYtLjA2MyA5LjA2Mi0yLjk4NCAyLjk4NC02LjI1NiAyLjM2OC0xMC4yNSAyLjM3NWwtMi4yNzcuMDc0Yy01LjI5OC4wMjgtOC4yNTQtLjk4My0xMi40NzMtNC40NDktMi44MjYtMy41OTctMi40MTYtNy42MzQtMi0xMiA0LjUwMi00LjcyOCAxMC45OS0zLjc2IDE3LTNaIi8+PHBhdGggZmlsbD0iIzQ4NEY1NyIgZD0ibTExOCA5MS43NSAzLjEyNS0uMDc4YzMuMjU0LjM3MSA0LjU5NyAxLjAwMiA2Ljg3NSAzLjMyOC42MzkgNC4yMzEuMjkgNi40NDItMS42ODggMTAuMjUtMy40MjggNC4wNzgtNS44MjcgNS41OTgtMTEuMTk1IDYuMTQ4LTEuNDE0LjAwOC0yLjgyOCAwLTQuMjQyLS4wMjNsLTIuMTY4LjAzNWMtMi45OTgtLjAxNy01LjE1Ny0uMDMzLTcuNjcyLTEuNzU4LTEuNjgxLTIuNjg0LTEuNDYtNC41NTItMS4wMzUtNy42NTIgMi4zNzUtNC4zMjUgNC44OTQtOC4wMDkgOS43NS05LjU1OSAyLjc3Ny0uNTQ0IDUuNDItLjY0OSA4LjI1LS42OTFaIi8+PHBhdGggZmlsbD0iIzUyNTg2MCIgZD0iTTg2IDEzNGgxNmwxIDRjLTIgMi0yIDItNS4xODggMi4yNjZMOTQgMTQwLjI1bC0zLjgxMy4wMTZDODcgMTQwIDg3IDE0MCA4NSAxMzhsMS00WiIvPjwvc3ZnPg==)](https://github.com/K0I05)
 [![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
@@ -9,7 +9,7 @@
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/k0i05/library/esp_at24cxxx.svg)](https://registry.platformio.org/libraries/k0i05/esp_at24cxxx)
 [![ESP Component Registry](https://components.espressif.com/components/k0i05/esp_at24cxxx/badge.svg)](https://components.espressif.com/components/k0i05/esp_at24cxxx)
 
-This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Microchip AT24C8, AT24C16, AT24C32, AT24C64, AT24C128, AT24C256, AT24C512 series of EEPROM..  Information on features and functionality are documented and can be found in the `at24cxxx.h` header file and in the `documentation` folder.
+This ESP32 espressif IoT development framework (esp-idf) i2c peripheral driver was developed for the Microchip AT24C32, AT24C64, AT24C128, AT24C256, AT24C512 series of EEPROM..  Information on features and functionality are documented and can be found in the `at24cxxx.h` header file and in the `documentation` folder.
 
 ## Repository
 
@@ -37,12 +37,110 @@ components
 
 ## Basic Example
 
-Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and makes a measurement request from the sensor at user defined interval and prints the results.
+Once a driver instance is instantiated the sensor is ready for usage as shown in the below example.   This basic implementation of the driver utilizes default configuration settings and performs the following:
+
+- writes a sentence on two seperate pages and writes two bytes on a third page of the EEPROM
+- reads both sentences and both bytes from the EEPROM and prints the results
+- after 5 iterations the EEPROM is erased
+- on the 6th iteration the original information is rewritten to the EEPROM and the process repeats
 
 ```c
 #include <at24cxxx.h>
+#include <string.h>
+
+void i2c0_at24cxxx_setup( at24cxxx_handle_t handle) {
+    char *char_0 = "Hello World, this is a test!";
+    char *char_1 = "This is just a random sentence!";
+
+    at24cxxx_write_page(handle, 0, (uint8_t*)char_0, strlen(char_0) + 1);    // page 1 - 64-bytes
+
+    at24cxxx_write_page(handle, 64+1, (uint8_t*)char_1, strlen(char_1) + 1);  // page 2 - 64-bytes
+    
+    at24cxxx_write_byte(handle, 128+1, 0x55);
+
+    at24cxxx_write_byte(handle, 128+2, 0x45);
+}
 
 
+void i2c0_at24cxxx_task( void *pvParameters ) {
+    // initialize the xLastWakeTime variable with the current time.
+    TickType_t         last_wake_time   = xTaskGetTickCount ();
+    //
+    // initialize i2c device configuration
+    at24cxxx_config_t dev_cfg          = I2C_AT24C256_CONFIG_DEFAULT;
+    at24cxxx_handle_t dev_hdl;
+    //
+    // init device
+    at24cxxx_init(i2c0_bus_hdl, &dev_cfg, &dev_hdl);
+    if (dev_hdl == NULL) {
+        ESP_LOGE(APP_TAG, "at24cxxx handle init failed");
+        assert(dev_hdl);
+    }
+    //
+    i2c0_at24cxxx_setup(dev_hdl);
+
+    uint8_t count = 0;
+    //
+    // task loop entry point
+    for ( ;; ) {
+        ESP_LOGI(APP_TAG, "######################## AT24CXXX - START #########################");
+
+        esp_err_t ret = ESP_OK;
+        uint16_t size = 0;
+        uint8_t b;
+        uint8_t c;
+
+        if(count == 5) {
+            ret = at24cxxx_erase(dev_hdl);
+            if(ret != ESP_OK) {   
+                ESP_LOGE(APP_TAG, "at24cxxx device erase failed (%s)", esp_err_to_name(ret));
+            }
+        }
+
+        if(count == 6) {
+            count = 0;
+            i2c0_at24cxxx_setup(dev_hdl);
+        }
+
+        char *data_0 = (char*)calloc(1, dev_hdl->memory_map.page_size_bytes);
+        ret = at24cxxx_read_page(dev_hdl, 0, (uint8_t*)data_0, &size);
+        if(ret != ESP_OK) {   
+            ESP_LOGE(APP_TAG, "at24cxxx device read page failed (%s)", esp_err_to_name(ret));
+        }
+        ESP_LOGI(APP_TAG, "%s", data_0);
+
+        char *data_1 = (char*)calloc(1, dev_hdl->memory_map.page_size_bytes);
+        ret = at24cxxx_read_page(dev_hdl, 64+1, (uint8_t*)data_1, &size);
+        if(ret != ESP_OK) {   
+            ESP_LOGE(APP_TAG, "at24cxxx device read page failed (%s)", esp_err_to_name(ret));
+        }
+        ESP_LOGI(APP_TAG, "%s", data_1);
+
+        ret = at24cxxx_read_random_byte(dev_hdl, 128+1, &b);
+        if(ret != ESP_OK) {   
+            ESP_LOGE(APP_TAG, "at24cxxx device read failed (%s)", esp_err_to_name(ret));
+        }
+        ret = at24cxxx_read_random_byte(dev_hdl, 128+2, &c);
+        if(ret != ESP_OK) {   
+            ESP_LOGE(APP_TAG, "at24cxxx device read failed (%s)", esp_err_to_name(ret));
+        }
+
+        ESP_LOGI(APP_TAG, "%d (0x%02x)", b, b);
+        ESP_LOGI(APP_TAG, "%d (0x%02x)", c, c);
+
+        count += 1;
+
+        ESP_LOGI(APP_TAG, "######################## AT24CXXX - END ###########################");
+        //
+        //
+        // pause the task per defined wait period
+        vTaskDelaySecUntil( &last_wake_time, 60 );
+    }
+    //
+    // free resources
+    at24cxxx_delete( dev_hdl );
+    vTaskDelete( NULL );
+}
 ```
 
 Copyright (c) 2024 Eric Gionet (<gionet.c.eric@gmail.com>)
