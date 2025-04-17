@@ -73,7 +73,7 @@
 static const char* TAG = "at24cxxx";
 
 /**
- * @brief AT24CXXX memory layout by EEPROM type.
+ * @brief AT24CXXX memory layout by EEPROM type.  See datasheets by EEPROM family type for details.
  */
 static const at24cxxx_memory_mapping_t at24cxxx_memory_maps[5] = {
     { .eeprom_type=AT24CXXX_AT24C32,  .memory_size_kbits=32,  .memory_size_bits=32768,  .memory_size_bytes=4096,  
