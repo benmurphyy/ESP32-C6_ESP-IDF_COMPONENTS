@@ -1,6 +1,6 @@
 # Welcome
 
-## This is a work in progress of porting the drivers for some of the components that are supported for ESP32-S3 from the branch this repo was forked from for ESP32-C6.__
+## This is a work in progress of porting the drivers for some of the components that are supported for ESP32-S3 from the branch this repo was forked from for ESP32-C6.
 
 Tested components that work on ESP32-C6:
 - none so far
